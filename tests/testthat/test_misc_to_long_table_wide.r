@@ -2,7 +2,7 @@
 
 context("Checking misc: to.long() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("to.long() works correctly for measure='MD'", {
 
@@ -190,3 +190,5 @@ test_that("to.wide() works correctly.", {
    expect_equivalent(dat.c$design, c("i-n", "i-g-n", "i-g-n", "i-n", "i-n", "i-n", "i-s", "i-n", "i-n", "i-g-s", "i-g-s", "i-n", "s-n", "s-n", "i-n", "i-g", "i-g", "g-s", "i-n", "i-n", "g-n", "s-n", "i-n", "i-n", "i-n", "i-n"))
 
 })
+
+rm(list=ls())

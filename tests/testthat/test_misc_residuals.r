@@ -2,7 +2,7 @@
 
 context("Checking misc: residuals() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("residuals are correct for rma().", {
 
@@ -44,7 +44,7 @@ test_that("residuals are correct for rma.mv().", {
 
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, subset=1:6)
 
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, sparse=sparse)
    expect_equivalent(c(residuals(res)), c(dat$yi - coef(res)))
    expect_equivalent(rstandard(res)$z, c(0.1401, -0.9930, -0.4719, -1.0476, 1.6462, 0.4825), tolerance=.tol[["test"]])
    expect_equivalent(rstandard(res, cluster=alloc)$cluster$X2, c(3.7017, 3.6145), tolerance=.tol[["test"]])
@@ -86,3 +86,5 @@ test_that("residuals are correct for rma.glmm().", {
    expect_equivalent(c(residuals(res)), c(dat$yi - coef(res)))
 
 })
+
+rm(list=ls())

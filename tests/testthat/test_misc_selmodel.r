@@ -2,7 +2,7 @@
 
 context("Checking misc: selmodel() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("results are correct for a step function model.", {
 
@@ -156,3 +156,5 @@ test_that("results are correct for a pirori chosen step function models.", {
    expect_equivalent(sapply(sav, function(x) x$tau2), c(0.0045, 0.009544, 0.002774, 0.005652),  tolerance=.tol[["var"]])
 
 })
+
+rm(list=ls())

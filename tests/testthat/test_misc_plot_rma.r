@@ -2,7 +2,7 @@
 
 context("Checking misc: plot() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("plot can be drawn for rma().", {
 
@@ -34,3 +34,5 @@ test_that("plot can be drawn for rma.peto().", {
    plot(res)
 
 })
+
+rm(list=ls())

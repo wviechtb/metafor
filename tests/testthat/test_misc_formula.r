@@ -2,7 +2,7 @@
 
 context("Checking misc: formula() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
@@ -23,3 +23,5 @@ test_that("formula() works correctly for 'rma.uni' objects.", {
    expect_error(formula(res, type="scale"))
 
 })
+
+rm(list=ls())

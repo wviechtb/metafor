@@ -2,7 +2,7 @@
 
 context("Checking analysis example: jackson2014")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("confint() gives correct results for example 1 in Jackson et al. (2014).", {
 
@@ -85,3 +85,5 @@ test_that("confint() gives correct results for example 2 in Jackson et al. (2014
    expect_equivalent(ci$random[1,3], 0.1564, tolerance=.tol[["var"]])
 
 })
+
+rm(list=ls())

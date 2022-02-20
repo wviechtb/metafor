@@ -2,7 +2,7 @@
 
 context("Checking misc: rma() function with location-scale models")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("location-scale model results are correct for in intercept-only model", {
 
@@ -22,7 +22,7 @@ test_that("location-scale model results are correct for a categorical predictor"
 
    res1 <- rma(yi ~ alloc, vi, scale = ~ alloc - 1, data=dat)
    res2 <- rma(yi ~ alloc, vi, scale = ~ alloc - 1, link = "identity", data=dat)
-   res3 <- rma.mv(yi ~ alloc, vi, random = ~ alloc | trial, struct="DIAG", data=dat)
+   res3 <- rma.mv(yi ~ alloc, vi, random = ~ alloc | trial, struct="DIAG", data=dat, sparse=sparse)
    expect_equivalent(as.vector(exp(coef(res1)$alpha)), as.vector(coef(res2)$alpha), tolerance=.tol[["var"]])
    expect_equivalent(as.vector(exp(coef(res1)$alpha)), res3$tau2, tolerance=.tol[["var"]])
 
@@ -64,3 +64,5 @@ test_that("location-scale model results are correct for a continuous predictor",
    expect_equivalent(sav, c(-0.479, -0.588, -0.831, -0.711, -0.494, -0.254, -0.661, -0.458, -0.542, -0.039, -0.039, -0.13, -0.405, -0.764, -0.357), tolerance=.tol[["var"]])
 
 })
+
+rm(list=ls())

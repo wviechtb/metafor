@@ -2,7 +2,7 @@
 
 context("Checking misc: rma.glmm() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 dat <- dat.nielweise2007
 
@@ -66,3 +66,5 @@ test_that("rma.glmm() works correctly when using 'nlminb' or 'minqa'.", {
    expect_equivalent(c(vcov(res3)), 0.0786, tolerance=.tol[["var"]])
 
 })
+
+rm(list=ls())

@@ -2,7 +2,7 @@
 
 context("Checking analysis example: law2016")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("results are correct for example 1.", {
 
@@ -54,7 +54,7 @@ test_that("results are correct for example 1.", {
    X <- contrmat(EG1, grp1="trt", grp2="ref", append=FALSE, last=NA)[,-1] # remove 'A' to make it the reference level
 
    ### fit model assuming consistency (tau^2_omega=0)
-   modC <- rma.mv(y, S1, mods=X, intercept=FALSE, random = ~ contr | study, rho=1/2, data=EG1)
+   modC <- rma.mv(y, S1, mods=X, intercept=FALSE, random = ~ contr | study, rho=1/2, data=EG1, sparse=sparse)
    ci <- confint(modC)
 
    expect_equivalent(modC$tau2, 0.0000, tolerance=.tol[["var"]])
@@ -62,7 +62,7 @@ test_that("results are correct for example 1.", {
    expect_equivalent(ci$random[1,2:3], c(0.0000, 0.0708), tolerance=.tol[["var"]])
 
    ### fit Jackson's model
-   modI <- rma.mv(y, S1, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG1)
+   modI <- rma.mv(y, S1, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG1, sparse=sparse)
    ci <- confint(modI)
 
    out <- capture.output(print(ci))
@@ -126,7 +126,7 @@ test_that("results are correct for example 2.", {
    X <- contrmat(EG2, grp1="trt", grp2="ref", append=FALSE, last=NA)[,-1] # remove 'A' to make it the reference level
 
    ### fit model assuming consistency (tau^2_omega=0)
-   modC <- rma.mv(y, S2, mods=X, intercept=FALSE, random = ~ contr | study, rho=1/2, data=EG2)
+   modC <- rma.mv(y, S2, mods=X, intercept=FALSE, random = ~ contr | study, rho=1/2, data=EG2, sparse=sparse)
    ci <- confint(modC)
 
    expect_equivalent(modC$tau2, 0.5482, tolerance=.tol[["var"]])
@@ -134,7 +134,7 @@ test_that("results are correct for example 2.", {
    expect_equivalent(ci$random[1,2:3], c(0.0788, 2.0156), tolerance=.tol[["var"]])
 
    ### fit Jackson's model
-   modI <- rma.mv(y, S2, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG2)
+   modI <- rma.mv(y, S2, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG2, sparse=sparse)
    ci <- confint(modI)
 
    expect_equivalent(modI$tau2, 0.1036, tolerance=.tol[["var"]])
@@ -160,3 +160,5 @@ test_that("results are correct for example 2.", {
    expect_equivalent(sav$pi.lb, c(-4.029, -1.2853, -1.2853, -1.2853, -1.2853, -1.2853, -0.4911, -0.4911, -1.137, -1.137, -4.029, -2.7699, -1.2853, -0.4911, -1.2853, -0.4911), tolerance=.tol[["pred"]])
 
 })
+
+rm(list=ls())

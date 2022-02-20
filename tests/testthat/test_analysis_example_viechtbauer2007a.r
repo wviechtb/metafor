@@ -4,7 +4,7 @@
 
 context("Checking analysis example: viechtbauer2007a")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ### load data
 dat <- dat.collins1985b[,1:7]
@@ -60,8 +60,8 @@ test_that("CI is correct for the Biggerstaff–Tweedie method.", {
 
 test_that("CI is correct for the profile likelihood method.", {
 
-   res.ML <- rma.mv(yi, vi, random = ~ 1 | id, data=dat, method="ML")
-   res.REML <- rma.mv(yi, vi, random = ~ 1 | id, data=dat, method="REML")
+   res.ML <- rma.mv(yi, vi, random = ~ 1 | id, data=dat, method="ML", sparse=sparse)
+   res.REML <- rma.mv(yi, vi, random = ~ 1 | id, data=dat, method="REML", sparse=sparse)
 
    sav <- confint(res.ML)
    sav <- c(sav$random["sigma^2","ci.lb"], sav$random["sigma^2","ci.ub"])
@@ -175,3 +175,5 @@ test_that("CI is correct for the non-parametric bootstrap method.", {
    }
 
 })
+
+rm(list=ls())

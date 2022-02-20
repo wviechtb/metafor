@@ -4,7 +4,7 @@
 
 context("Checking analysis example: lipsey2001")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ### create dataset
 dat <- data.frame(
@@ -107,3 +107,5 @@ test_that("results are correct for the comutation of R^2 via the anova() functio
    expect_equivalent(tmp$R2, 81.2023, tolerance=.tol[["r2"]])
 
 })
+
+rm(list=ls())

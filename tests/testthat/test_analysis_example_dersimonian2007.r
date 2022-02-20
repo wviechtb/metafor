@@ -2,7 +2,7 @@
 
 ### see also: https://www.metafor-project.org/doku.php/analyses:dersimonian2007
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 context("Checking analysis example: dersimonian2007")
 
@@ -57,3 +57,5 @@ test_that("results are correct for the CLASP example.", {
    expect_equivalent(tmp[,3], expected[,3], tolerance=.tol[["se"]])
 
 })
+
+rm(list=ls())

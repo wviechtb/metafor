@@ -2,7 +2,7 @@
 
 context("Checking misc: anova() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("anova() works correctly for comparing nested models.", {
 
@@ -70,3 +70,5 @@ test_that("anova() works correctly when using the 'X' argument.", {
    expect_equivalent(sav$QMp, 0.7412, tolerance=.tol[["pval"]])
 
 })
+
+rm(list=ls())

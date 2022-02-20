@@ -2,7 +2,7 @@
 
 context("Checking misc: regtest() and ranktest() functions")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("regtest() works correctly for 'rma.uni' objects.", {
 
@@ -51,3 +51,5 @@ test_that("ranktest() works correctly for 'rma.uni' objects.", {
    out <- capture.output(print(sav)) ### so that print.ranktest.rma() is run (at least once)
 
 })
+
+rm(list=ls())

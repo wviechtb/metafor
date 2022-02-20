@@ -2,7 +2,7 @@
 
 context("Checking misc: funnel() functions")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("funnel() works correctly.", {
 
@@ -65,3 +65,5 @@ test_that("funnel() works correctly.", {
    par(opar)
 
 })
+
+rm(list=ls())

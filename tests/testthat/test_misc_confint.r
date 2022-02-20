@@ -2,7 +2,7 @@
 
 context("Checking misc: confint() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("confint() works correctly for 'rma.uni' objects.", {
 
@@ -34,3 +34,5 @@ test_that("confint() works correctly for 'rma.peto' objects.", {
    expect_equivalent(sav$fixed, c(0.6222, 0.5746, 0.6738), tolerance=.tol[["ci"]])
 
 })
+
+rm(list=ls())

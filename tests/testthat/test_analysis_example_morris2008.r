@@ -4,7 +4,7 @@
 
 context("Checking analysis example: morris2008")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ### create datasets
 
@@ -80,3 +80,5 @@ test_that("calculations of escalc() are correct for measure='SMCC'.", {
    expect_equivalent(dat$vi, c(0.1086, 0.0544, 0.6159, 0.3872, 0.1447), tolerance=.tol[["var"]])
 
 })
+
+rm(list=ls())

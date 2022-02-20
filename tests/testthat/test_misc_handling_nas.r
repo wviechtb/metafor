@@ -2,7 +2,7 @@
 
 context("Checking misc: handling of NAs")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 dat <- data.frame(yi = c(NA, 1, 3, 2, 5, 4, 6), vi = c(1, NA, 1, 1, 1, 1, 1), xi = c(0, 1, NA, 3, 4, 5, 6))
 
@@ -64,6 +64,8 @@ test_that("NAs are correctly handled by various method functions for rma.uni() i
    expect_equivalent(length(simulate(res, seed=1234)[[1]]), 7)
    expect_equivalent(weights(res), c(NA, NA, 20, 20, 20, 20, 20))
 
+   options(na.action = "na.omit")
+
 })
 
 test_that("NAs are correctly handled by various method functions for rma.uni() meta-regression models.", {
@@ -121,26 +123,30 @@ test_that("NAs are correctly handled by various method functions for rma.uni() m
    expect_equivalent(length(simulate(res, seed=1234)[[1]]), 7)
    expect_equivalent(weights(res), c(NA, NA, NA, 25, 25, 25, 25))
 
+   options(na.action = "na.omit")
+
 })
 
 test_that("NAs are correctly handled by rma.mv() intercept-only models.", {
 
    dat <- dat.konstantopoulos2011
 
-   res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat)
-   res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat)
+   res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=sparse)
+   res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat, sparse=sparse)
    expect_equivalent(logLik(res1), logLik(res2), tolerance=.tol[["fit"]])
 
    dat$yi[1:2] <- NA
 
-   expect_warning(res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat))
-   expect_warning(res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat))
+   expect_warning(res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=sparse))
+   expect_warning(res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat, sparse=sparse))
    expect_equivalent(logLik(res1), logLik(res2), tolerance=.tol[["fit"]])
 
    dat$yi[1:4] <- NA # entire district 11 is missing
 
-   expect_warning(res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat))
-   expect_warning(res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat))
+   expect_warning(res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=sparse))
+   expect_warning(res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat, sparse=sparse))
    expect_equivalent(logLik(res1), logLik(res2), tolerance=.tol[["fit"]])
 
 })
+
+rm(list=ls())

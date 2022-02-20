@@ -2,7 +2,7 @@
 
 context("Checking misc: rma.uni() against metan with 'dat.bcg'")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("results match (EE model, measure='RR').", {
 
@@ -136,3 +136,5 @@ test_that("results match (RE model w/ DL estimator, measure='RD').", {
 })
 
 #expect_that(rma(yi ~ ablat, vi, data=dat, subset=1:2), throws_error("Number of parameters to be estimated is larger than the number of observations."))
+
+rm(list=ls())

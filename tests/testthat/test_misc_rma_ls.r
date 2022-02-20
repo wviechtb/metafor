@@ -2,14 +2,14 @@
 
 context("Checking misc: location-scale models")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 dat <- dat.bangertdrowns2004
 
 test_that("location-scale model works correctly for an intercept-only model", {
 
    res1 <- rma(yi, vi, data=dat)
-   res2 <- rma.mv(yi, vi, random = ~ 1 | id, data=dat)
+   res2 <- rma.mv(yi, vi, random = ~ 1 | id, data=dat, sparse=sparse)
    res3 <- rma(yi, vi, data=dat, scale = ~ 1)
    res4 <- rma(yi, vi, data=dat, scale = res3$Z)
 
@@ -21,7 +21,7 @@ test_that("location-scale model works correctly for an intercept-only model", {
 
 test_that("location-scale model works correctly for two subgroups with different tau^2 values", {
 
-   res1 <- rma.mv(yi, vi, data=dat, random = ~ factor(meta) | id, struct="DIAG", subset=!is.na(meta), cvvc="transf")
+   res1 <- rma.mv(yi, vi, data=dat, random = ~ factor(meta) | id, struct="DIAG", subset=!is.na(meta), cvvc="transf", sparse=sparse)
    expect_warning(res2 <- rma(yi, vi, data=dat, scale = ~ meta))
    expect_warning(res3 <- rma(yi, vi, data=dat, scale = res2$Z.f))
 
@@ -53,7 +53,7 @@ test_that("profile() and confint() work correctly for location-scale models", {
    conf1 <- confint(res1, type="PL")
    abline(v=conf1$random[1,2:3], lty="dotted")
 
-   res2  <- rma.mv(yi, vi, random = ~ 1 | id, data=dat)
+   res2  <- rma.mv(yi, vi, random = ~ 1 | id, data=dat, sparse=sparse)
    prof2 <- profile(res2, progbar=FALSE, cline=TRUE, xlim=c(.01,.15))
    conf2 <- confint(res2)
    abline(v=conf2$random[1,2:3], lty="dotted")
@@ -95,7 +95,7 @@ test_that("location-scale model works correctly for a continuous predictor", {
    expect_equivalent(res2$alpha, c(0.042926535, 0.002729234), tolerance=.tol[["coef"]])
    #expect_equivalent(res1$tau2, res2$tau2, tolerance=.tol[["var"]]) # not true
 
-   res3 <- rma.mv(yi, vi, data=dat, random = ~ sqrt(grade) | id, rho=0, struct="GEN", cvvc=TRUE)
+   res3 <- rma.mv(yi, vi, data=dat, random = ~ sqrt(grade) | id, rho=0, struct="GEN", cvvc=TRUE, sparse=sparse)
    expect_equivalent(c(res2$alpha), diag(res3$G), tolerance=.tol[["coef"]])
    expect_equivalent(diag(res2$M),  diag(res3$M), tolerance=.tol[["var"]])
    expect_equivalent(unname(sqrt(diag(res3$vvc))), res2$se.alpha, tolerance=.tol[["se"]])
@@ -227,3 +227,5 @@ test_that("anova() works correctly for location-scale models", {
    expect_error(anova(res1, X=c(0,1,-1,0,0,0), Z=c(0,1,-1,0,0,0)))
 
 })
+
+rm(list=ls())

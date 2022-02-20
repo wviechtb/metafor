@@ -4,7 +4,7 @@
 
 context("Checking analysis example: normand1999")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("results are correct for the first example (using dat.hine1989).", {
 
@@ -102,3 +102,5 @@ test_that("results are correct for the second example (using dat.normand1999).",
    expect_equivalent(res$tau2,  685.1965, tolerance=.tol[["var"]])
 
 })
+
+rm(list=ls())

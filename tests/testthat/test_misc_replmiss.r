@@ -2,7 +2,7 @@
 
 context("Checking misc: replmiss() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("replmiss() works correctly.", {
 
@@ -14,3 +14,5 @@ test_that("replmiss() works correctly.", {
    expect_error(replmiss(var1, 1:9))
 
 })
+
+rm(list=ls())

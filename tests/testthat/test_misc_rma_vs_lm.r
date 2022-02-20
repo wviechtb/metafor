@@ -2,7 +2,7 @@
 
 context("Checking tip: rma() results match up with those from lm()")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("results for rma() and lm() match.", {
 
@@ -24,7 +24,7 @@ test_that("results for rma.mv() and lm() match.", {
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat.molloy2014)
    dat$id <- 1:nrow(dat)
 
-   res1 <- rma.mv(yi, 0, random = ~ 1 | id, data=dat)
+   res1 <- rma.mv(yi, 0, random = ~ 1 | id, data=dat, sparse=sparse)
    res2 <- lm(yi ~ 1, data=dat)
 
    ### coefficients should be the same
@@ -51,3 +51,5 @@ test_that("results for rma.mv() and lm() match.", {
    expect_equivalent(sav$random[1,2:3], c(.0111, .0474), tolerance=.tol[["var"]])
 
 })
+
+rm(list=ls())

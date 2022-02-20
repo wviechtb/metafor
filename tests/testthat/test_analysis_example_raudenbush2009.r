@@ -4,7 +4,7 @@
 
 context("Checking analysis example: raudenbush2009")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ### load data
 dat <- dat.raudenbush1985
@@ -137,3 +137,5 @@ test_that("results are correct for the random-effects model (Huber-White method)
    expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
 
 })
+
+rm(list=ls())

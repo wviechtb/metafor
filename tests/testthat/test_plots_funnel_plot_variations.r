@@ -2,6 +2,8 @@
 
 ### see also: https://www.metafor-project.org/doku.php/plots:funnel_plot_variations
 
+source("settings.r")
+
 context("Checking plots example: funnel plot variations")
 
 test_that("plot can be drawn.", {
@@ -27,3 +29,5 @@ test_that("plot can be drawn.", {
    par(opar)
 
 })
+
+rm(list=ls())

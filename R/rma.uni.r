@@ -60,7 +60,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("knha", "link", "alpha", "outlist", "onlyo1", "addyi", "addvi", "time", "skipr2", "skiphes", "i2def", "r2def", "abbrev"))
+   .chkdots(ddd, c("knha", "link", "alpha", "outlist", "onlyo1", "addyi", "addvi", "time", "skipr2", "skiphes", "i2def", "r2def", "abbrev", "dfs"))
 
    ### handle 'knha' argument from ... (note: overrides test argument)
 
@@ -2194,7 +2194,11 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    ### ddf calculation
 
    if (is.element(test, c("knha","adhoc","t"))) {
-      ddf <- k-p
+      if (is.null(ddd$dfs)) {
+         ddf <- k-p
+      } else {
+         ddf <- ddd$dfs[1]
+      }
    } else {
       ddf <- NA
    }

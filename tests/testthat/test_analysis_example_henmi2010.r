@@ -2,7 +2,7 @@
 
 ### see also: https://www.metafor-project.org/doku.php/analyses:henmi2010
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 context("Checking analysis example: henmi2010")
 
@@ -40,3 +40,5 @@ test_that("results are correct for the Henmi & Copas method.", {
    expect_equivalent(sav$ci.ub, -0.0295, tolerance=.tol[["ci"]])
 
 })
+
+rm(list=ls())

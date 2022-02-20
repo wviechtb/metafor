@@ -2,7 +2,7 @@
 
 context("Checking tip: rma() results match up with those from lm()")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ### this is essentially checking the equivalence of the results as explained here:
 ### https://www.metafor-project.org/doku.php/tips:regression_with_rma
@@ -48,3 +48,5 @@ test_that("results for rma() and lm() match for method='FE'.", {
    expect_equivalent(cooks.distance(res.lm), cooks.distance(res.rma)/res.rma$p, tolerance=.tol[["inf"]])
 
 })
+
+rm(list=ls())

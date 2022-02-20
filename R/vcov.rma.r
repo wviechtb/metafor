@@ -32,7 +32,7 @@ vcov.rma <- function(object, type="fixed", ...) {
       if (inherits(object, c("rma.uni","rma.mv"))) {
 
          out <- matrix(NA_real_, nrow=object$k.f, ncol=object$k.f)
-         out[object$not.na, object$not.na] <- object$M
+         out[object$not.na, object$not.na] <- as.matrix(object$M) # as.matrix() needed when sparse=TRUE
 
          rownames(out) <- colnames(out) <- object$slab
 
@@ -90,7 +90,7 @@ vcov.rma <- function(object, type="fixed", ...) {
       if (inherits(object, "robust.rma")) {
          ve <- ImH %*% tcrossprod(object$meat,ImH)
       } else {
-         ve <- ImH %*% tcrossprod(object$M,ImH)
+         ve <- ImH %*% tcrossprod(as.matrix(object$M),ImH) # as.matrix() needed when sparse=TRUE
       }
 
       if (na.act == "na.omit") {

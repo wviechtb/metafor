@@ -2,7 +2,7 @@
 
 context("Checking misc: handling of edge cases due to zeros")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("rma.peto(), rma.mh(), and rma.glmm() handle outcome1 never occurring properly.", {
 
@@ -47,3 +47,5 @@ test_that("rma.peto(), rma.mh(), and rma.glmm() handle outcome2 never occurring 
    expect_error(suppressWarnings(rma.glmm(measure="OR", ai=ai, bi=bi, ci=ci, di=di)))
 
 })
+
+rm(list=ls())

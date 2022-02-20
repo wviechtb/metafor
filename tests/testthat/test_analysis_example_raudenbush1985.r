@@ -4,7 +4,7 @@
 
 context("Checking analysis example: raudenbush1985")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ### load data
 dat <- dat.raudenbush1985
@@ -101,3 +101,5 @@ test_that("results are correct for the mixed-effects model.", {
    par(opar)
 
 })
+
+rm(list=ls())

@@ -2,7 +2,7 @@
 
 context("Checking misc: rma.uni() against direct computations")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("results match (FE model).", {
 
@@ -33,3 +33,5 @@ test_that("results match (FE model).", {
    expect_equivalent(resid(res), c(ei))
 
 })
+
+rm(list=ls())

@@ -2,7 +2,7 @@
 
 context("Checking misc: matreg() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("matreg() works correctly for 'dat.craft2003'.", {
 
@@ -26,7 +26,7 @@ test_that("matreg() works correctly for 'dat.craft2003'.", {
       levels=c("acog.perf", "asom.perf", "conf.perf", "acog.asom", "acog.conf", "asom.conf"))
 
    ### multivariate random-effects model
-   expect_warning(res <- rma.mv(yi, V, mods = ~ var1.var2 - 1, random = ~ var1.var2 | study, struct="UN", data=dat))
+   expect_warning(res <- rma.mv(yi, V, mods = ~ var1.var2 - 1, random = ~ var1.var2 | study, struct="UN", data=dat, sparse=sparse))
 
    ### restructure estimated mean correlations into a 4x4 matrix
    R <- matrix(NA, nrow=4, ncol=4)
@@ -46,3 +46,5 @@ test_that("matreg() works correctly for 'dat.craft2003'.", {
    expect_equivalent(fit$tab, sav, tolerance=.tol[["misc"]])
 
 })
+
+rm(list=ls())

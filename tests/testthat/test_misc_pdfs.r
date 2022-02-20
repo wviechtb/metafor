@@ -2,7 +2,7 @@
 
 context("Checking misc: pdfs of various measures")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that(".dsmd() works correctly.", {
 
@@ -30,3 +30,5 @@ test_that(".dzcor() works correctly.", {
    expect_equivalent(d, 0.1183, tolerance=.tol[["den"]])
 
 })
+
+rm(list=ls())

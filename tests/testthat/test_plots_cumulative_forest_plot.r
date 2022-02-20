@@ -2,6 +2,8 @@
 
 ### see also: https://www.metafor-project.org/doku.php/plots:cumulative_forest_plot
 
+source("settings.r")
+
 context("Checking plots example: cumulative forest plot")
 
 test_that("plot can be drawn for 'rma.uni' object.", {
@@ -81,3 +83,5 @@ test_that("plot can be drawn for 'rma.peto' object.", {
    par(opar)
 
 })
+
+rm(list=ls())

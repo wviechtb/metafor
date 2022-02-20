@@ -2,7 +2,7 @@
 
 context("Checking misc: fsn() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("confint() gives correct results for the 'expectancy data' in Becker (2005).", {
 
@@ -61,3 +61,5 @@ test_that("confint() gives correct results for the 'interview data' in Becker (2
    expect_equivalent(sav$fsnum, 45528)
 
 })
+
+rm(list=ls())

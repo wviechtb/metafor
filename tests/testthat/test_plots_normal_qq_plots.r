@@ -2,6 +2,8 @@
 
 ### see also: https://www.metafor-project.org/doku.php/plots:normal_qq_plots
 
+source("settings.r")
+
 context("Checking plots example: normal QQ plots")
 
 test_that("plot can be drawn for 'rma.uni' object.", {
@@ -70,7 +72,9 @@ test_that("plot can be drawn for 'rma.peto' object.", {
 test_that("plot cannot be drawn for 'rma.mv' object.", {
 
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, sparse=sparse)
    expect_error(qqnorm(res))
 
 })
+
+rm(list=ls())

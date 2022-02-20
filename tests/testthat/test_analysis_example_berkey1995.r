@@ -2,7 +2,7 @@
 
 ### see also: https://www.metafor-project.org/doku.php/analyses:berkey1995
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 context("Checking analysis example: berkey1995")
 
@@ -67,3 +67,5 @@ test_that("results are correct for the fixed-effects meta-regression model.", {
    expect_equivalent(tmp$pred, c(0.5516, 0.4336), tolerance=.tol[["pred"]])
 
 })
+
+rm(list=ls())

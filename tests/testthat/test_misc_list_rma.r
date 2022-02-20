@@ -2,7 +2,7 @@
 
 context("Checking misc: head.list.rma() and tail.list.rma() functions")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("head.list.rma() works correctly.", {
 
@@ -55,3 +55,5 @@ test_that("as.matrix.list.rma() works correctly.", {
    expect_equivalent(res, sav, tolerance=.tol[["misc"]])
 
 })
+
+rm(list=ls())

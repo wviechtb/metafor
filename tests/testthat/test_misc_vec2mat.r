@@ -2,7 +2,7 @@
 
 context("Checking misc: vec2mat() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("vec2mat() works correctly.", {
 
@@ -19,3 +19,5 @@ test_that("vec2mat() works correctly.", {
    expect_identical(sav, structure(c(NA, 1L, 2L, 3L, 1L, NA, 4L, 5L, 2L, 4L, NA, 6L, 3L, 5L, 6L, NA), .Dim = c(4L, 4L), .Dimnames = list(c("A", "B", "C", "D"), c("A", "B", "C", "D"))))
 
 })
+
+rm(list=ls())

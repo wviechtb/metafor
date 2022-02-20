@@ -2,7 +2,7 @@
 
 context("Checking misc: rma() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
@@ -101,3 +101,5 @@ test_that("rma() works directly with input for measure='AHW'", {
    expect_equivalent(res2$tau2, 0.0011, tolerance=.tol[["var"]])
 
 })
+
+rm(list=ls())

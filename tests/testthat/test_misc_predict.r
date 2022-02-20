@@ -2,7 +2,7 @@
 
 context("Checking misc: predict() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("predict() correctly matches named vectors in 'newmods'", {
 
@@ -58,3 +58,5 @@ test_that("predict() gives correct results when vcov=TRUE", {
    expect_equivalent(sav$pred$se, c(sqrt(diag(sav$vcov))), tolerance=.tol[["se"]])
 
 })
+
+rm(list=ls())

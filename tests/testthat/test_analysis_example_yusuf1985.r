@@ -4,7 +4,7 @@
 
 context("Checking analysis example: yusuf1985")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ### create dataset for example
 dat <- dat.yusuf1985
@@ -51,3 +51,5 @@ test_that("results are correct for the analysis using the inverse-variance metho
    expect_equivalent(tmp, c(.9332, .7385, 1.1792), tolerance=.tol[["pred"]])
 
 })
+
+rm(list=ls())

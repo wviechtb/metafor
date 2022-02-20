@@ -2,7 +2,7 @@
 
 context("Checking misc: vif() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("vif() works correctly for 'rma.uni' objects.", {
 
@@ -28,3 +28,5 @@ test_that("vif() works correctly for 'rma.uni' objects.", {
    expect_equivalent(sav$gvif, gvif)
 
 })
+
+rm(list=ls())

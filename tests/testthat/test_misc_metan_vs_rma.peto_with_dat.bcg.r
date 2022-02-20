@@ -2,7 +2,7 @@
 
 context("Checking misc: rma.peto() against metan with 'dat.bcg'")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("results match (EE model, measure='OR').", {
 
@@ -25,3 +25,5 @@ test_that("results match (EE model, measure='OR').", {
    expect_equivalent(sav$ci.ub, 0.6738, tolerance=.tol[["ci"]])
 
 })
+
+rm(list=ls())

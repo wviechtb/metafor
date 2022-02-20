@@ -2,7 +2,7 @@
 
 context("Checking misc: permutest() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ### load data
 dat <- dat.hine1989
@@ -129,3 +129,5 @@ test_that("permutest() gives correct results for example in Follmann & Proschan 
    }
 
 })
+
+rm(list=ls())

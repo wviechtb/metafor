@@ -2,6 +2,8 @@
 
 ### see also: https://www.metafor-project.org/doku.php/plots:plot_of_influence_diagnostics
 
+source("settings.r")
+
 context("Checking plots example: plot of influence diagnostics")
 
 test_that("plot can be drawn.", {
@@ -27,3 +29,5 @@ test_that("plot can be drawn.", {
    par(opar)
 
 })
+
+rm(list=ls())

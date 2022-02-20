@@ -2,7 +2,7 @@
 
 context("Checking misc: rma.mh() against metan with 'dat.bcg'")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("results match (EE model, measure='RR').", {
 
@@ -66,3 +66,5 @@ test_that("results match (EE model, measure='RD').", {
    # asymptotically correct in both the sparse-data and large-strata case)
 
 })
+
+rm(list=ls())

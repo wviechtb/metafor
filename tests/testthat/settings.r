@@ -1,3 +1,5 @@
+############################################################################
+
 .tol <- c(est   = .01, # effect size estimates
           coef  = .01, # model coefficients
           pred  = .01, # predicted values, BLUPs, also residuals
@@ -21,3 +23,10 @@
 
 # note to self: search for "]]/10 or "]]*10 to find adjusted tolerances in tests
 # some hardcoded tolerances; search for: tolerance=.0
+
+############################################################################
+
+sparse <- FALSE
+#sparse <- TRUE
+
+############################################################################

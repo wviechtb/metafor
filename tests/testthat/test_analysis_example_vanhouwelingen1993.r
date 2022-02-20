@@ -4,7 +4,7 @@
 
 context("Checking analysis example: vanhouwelingen1993")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ### load data
 dat <- dat.collins1985a
@@ -71,3 +71,5 @@ test_that("results of the random-effects conditional logistic model are correct.
    expect_equivalent(res$tau2, 0.1192, tolerance=.tol[["var"]])
 
 })
+
+rm(list=ls())

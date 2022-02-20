@@ -2,7 +2,7 @@
 
 context("Checking misc: update() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("update() works for rma().", {
 
@@ -26,11 +26,11 @@ test_that("update() works for rma.mv().", {
 
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   res1 <- rma.mv(yi, vi, data=dat, method="EE")
+   res1 <- rma.mv(yi, vi, data=dat, method="EE", sparse=sparse)
    res2 <- update(res1, random = ~ 1 | trial, method="REML")
-   res3 <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, method="REML")
+   res3 <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, method="REML", sparse=sparse)
    res4 <- update(res3, ~ ablat)
-   res5 <- rma.mv(yi, vi, random = ~ 1 | trial, mods = ~ ablat, data=dat, method="REML")
+   res5 <- rma.mv(yi, vi, random = ~ 1 | trial, mods = ~ ablat, data=dat, method="REML", sparse=sparse)
    res2$time <- NULL
    res3$time <- NULL
    res4$time <- NULL
@@ -59,3 +59,5 @@ test_that("update() works for rma.glmm().", {
    expect_equivalent(res4, res5)
 
 })
+
+rm(list=ls())

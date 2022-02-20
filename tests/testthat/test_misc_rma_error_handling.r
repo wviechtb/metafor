@@ -2,7 +2,7 @@
 
 context("Checking misc: proper handling of errors in rma()")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("rma() handles NAs correctly.", {
 
@@ -24,3 +24,5 @@ test_that("rma() handles NAs correctly.", {
    ### TODO: complete this ...
 
 })
+
+rm(list=ls())

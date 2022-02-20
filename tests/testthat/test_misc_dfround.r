@@ -2,7 +2,7 @@
 
 context("Checking misc: dfround() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("dfround() works correctly.", {
 
@@ -13,3 +13,5 @@ test_that("dfround() works correctly.", {
    expect_identical(dat$vi, c(0.016, 0.022, 0.028, 0.139, 0.136, 0.011, 0.011, 0.048, 0.027, 0.063, 0.091, 0.05, 0.084, 0.084, 0.025, 0.028, 0.019, 0.009, 0.03))
 
 })
+
+rm(list=ls())

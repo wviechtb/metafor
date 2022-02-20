@@ -4,7 +4,7 @@
 
 context("Checking analysis example: stijnen2010")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ### load data
 dat <- dat.nielweise2007
@@ -207,3 +207,5 @@ test_that("results for the Poisson-normal model are correct (measure=='IRR')", {
    expect_equivalent(tmp$ci.ub, 0.9897, tolerance=.tol[["ci"]])
 
 })
+
+rm(list=ls())

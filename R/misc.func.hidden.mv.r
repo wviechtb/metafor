@@ -1165,6 +1165,9 @@
 
    X2 <- c(rbind(delresid) %*% sve %*% cbind(delresid))
 
+   if (is.list(X2)) # when sparse=TRUE, this is a list with a one-element matrix
+      X2 <- X2[[1]][1]
+
    return(list(delresid = delresid, sedelresid = sedelresid, X2 = X2, k.id = k.id, pos = which(incl)))
 
 }

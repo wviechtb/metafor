@@ -2,7 +2,7 @@
 
 context("Checking misc: tes() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("tes() works correctly for 'dat.dorn2007'.", {
 
@@ -34,3 +34,5 @@ test_that("tes() works correctly for 'dat.dorn2007'.", {
    expect_equivalent(sav$pval, 0.003928794, tolerance=.tol[["pval"]])
 
 })
+
+rm(list=ls())

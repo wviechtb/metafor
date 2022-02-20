@@ -2,6 +2,8 @@
 
 ### see also: https://www.metafor-project.org/doku.php/plots:caterpillar_plot
 
+source("settings.r")
+
 context("Checking plots example: Caterpillar plot")
 
 test_that("plot can be drawn.", {
@@ -46,3 +48,5 @@ test_that("plot can be drawn.", {
    par(opar)
 
 })
+
+rm(list=ls())

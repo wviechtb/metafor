@@ -2,7 +2,7 @@
 
 context("Checking misc: model diagnostic functions for rma.mv()")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 dat1 <- dat.konstantopoulos2011
 
@@ -21,8 +21,8 @@ dat1$study56 <- ifelse(dat1$study == 56, 1, 0) ### dummies for studies in distri
 #dat2 <- dat1[sample(nrow(dat1)),] ### reshuffled dataset
 dat2 <- dat1[c(23, 2, 6, 3, 19, 14, 20, 12, 21, 9, 13, 7, 11, 8, 10, 22, 18, 1, 5, 4, 17, 15, 16),]
 
-res1 <- suppressWarnings(rma.mv(yi, vi, mods = ~ district11 + study53 + study54 + study55 + study56, random = ~ 1 | district/school, data=dat1, slab=study))
-res2 <- suppressWarnings(rma.mv(yi, vi, mods = ~ district11 + study53 + study54 + study55 + study56, random = ~ 1 | district/school, data=dat2, slab=study))
+res1 <- suppressWarnings(rma.mv(yi, vi, mods = ~ district11 + study53 + study54 + study55 + study56, random = ~ 1 | district/school, data=dat1, slab=study, sparse=sparse))
+res2 <- suppressWarnings(rma.mv(yi, vi, mods = ~ district11 + study53 + study54 + study55 + study56, random = ~ 1 | district/school, data=dat2, slab=study, sparse=sparse))
 
 test_that("model diagnostic functions work with 'na.omit'.", {
 
@@ -284,4 +284,8 @@ test_that("model diagnostic functions work with 'na.pass'.", {
    expect_equivalent(is.na(sav1$district$intrcpt), c(FALSE, TRUE, rep(FALSE,4)))
    expect_equivalent(is.na(sav1$`district/school`$intrcpt), c(rep(FALSE,4), rep(TRUE,4), FALSE, TRUE, rep(FALSE,13)))
 
+   options(na.action="na.omit")
+
 })
+
+rm(list=ls())

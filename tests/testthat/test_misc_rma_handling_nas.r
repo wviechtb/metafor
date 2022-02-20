@@ -2,7 +2,7 @@
 
 context("Checking misc: proper handling of missing values")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("rma.glmm() handles NAs correctly.", {
 
@@ -92,3 +92,5 @@ test_that("rma.glmm() handles NAs correctly.", {
    expect_equivalent(length(res$vi.f), 10)
 
 })
+
+rm(list=ls())

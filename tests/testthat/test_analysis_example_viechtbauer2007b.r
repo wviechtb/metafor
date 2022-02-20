@@ -4,7 +4,7 @@
 
 context("Checking analysis example: viechtbauer2007b")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ### create dataset for example
 dat <- escalc(measure="RR", ai=ai, ci=ci, n1i=n1i, n2i=n2i, data=dat.linde2005)
@@ -118,3 +118,5 @@ test_that("results are correct for the mixed-effects model.", {
    expect_equivalent(res$se.tau2, c(0.0197, 0.0764, 0.0376, 0.0528, 0.0436, 0.0437, 0.046, 0.046, 0.0222, 0.0409, 0.046), tolerance=.tol[["sevar"]])
 
 })
+
+rm(list=ls())

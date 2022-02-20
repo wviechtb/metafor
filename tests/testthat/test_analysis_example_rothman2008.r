@@ -4,7 +4,7 @@
 
 context("Checking analysis example: rothman2008")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ############################################################################
 
@@ -397,3 +397,5 @@ test_that("results are correct for Mantel-Haenszel method.", {
 })
 
 ############################################################################
+
+rm(list=ls())

@@ -2,7 +2,7 @@
 
 context("Checking misc: influence() and related functions")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("influence() works for rma().", {
 
@@ -85,7 +85,7 @@ test_that("hatvalues() works for rma().", {
 test_that("hatvalues() works for rma.mv().", {
 
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
-   res <- rma.mv(yi, vi, mods = ~ ablat, random = ~ 1 | trial, data=dat)
+   res <- rma.mv(yi, vi, mods = ~ ablat, random = ~ 1 | trial, data=dat, sparse=sparse)
 
    expect_equivalent(hatvalues(res), c(0.049, 0.1493, 0.0351, 0.3481, 0.2248, 0.2367, 0.064, 0.357, 0.0926, 0.1157, 0.2309, 0.0189, 0.0778), tolerance=.tol[["inf"]])
 
@@ -106,7 +106,7 @@ test_that("cooks.distance() works for rma().", {
 test_that("cooks.distance() works for rma.mv().", {
 
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
-   res <- rma.mv(yi, vi, mods = ~ ablat, random = ~ 1 | trial, data=dat)
+   res <- rma.mv(yi, vi, mods = ~ ablat, random = ~ 1 | trial, data=dat, sparse=sparse)
 
    expect_equivalent(cooks.distance(res), c(0.0048, 0.0489, 0.0104, 0.2495, 0.0072, 0.2883, 0.3643, 0.2719, 0.02, 0.1645, 0.0009, 0.0404, 0.1434), tolerance=.tol[["inf"]])
    expect_equivalent(cooks.distance(res, cluster=alloc), c(0.2591, 2.4372, 0.1533), tolerance=.tol[["inf"]])
@@ -143,6 +143,8 @@ test_that("influence() correctly works with 'na.omit' and 'na.pass'.", {
    expect_equivalent(sum(is.na(sav$inf$hat)), 3)
    expect_equivalent(sum(is.na(sav$dfbs$intrcpt)), 4)
 
+   options(na.action="na.omit")
+
 })
 
 test_that("'infonly' argument works correctly with influence().", {
@@ -156,3 +158,5 @@ test_that("'infonly' argument works correctly with influence().", {
    expect_equivalent(length(sav$rstudent), 3)
 
 })
+
+rm(list=ls())

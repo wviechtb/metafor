@@ -2,7 +2,7 @@
 
 context("Checking misc: reporter() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("reporter() works correctly for 'rma.uni' objects.", {
 
@@ -14,3 +14,5 @@ test_that("reporter() works correctly for 'rma.uni' objects.", {
    reporter(res, open=FALSE)
 
 })
+
+rm(list=ls())

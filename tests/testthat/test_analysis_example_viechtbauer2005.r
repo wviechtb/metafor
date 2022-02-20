@@ -4,7 +4,7 @@
 
 context("Checking analysis example: viechtbauer2005")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ### create dataset for example 1
 dat <- data.frame(
@@ -68,3 +68,5 @@ test_that("results are correct for example 2.", {
    expect_equivalent(res$se.tau2, c(0.0138, 0.0217, 0.0159, 0.0151, 0.0167, 0.0156, 0.0118), tolerance=.tol[["sevar"]])
 
 })
+
+rm(list=ls())

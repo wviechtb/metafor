@@ -2,7 +2,7 @@
 
 context("Checking analysis example: ishak2007")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ### load dataset
 dat <- dat.ishak2007
@@ -27,7 +27,7 @@ V <- V[!is.miss,!is.miss] ### remove missing measurement occasions from V
 test_that("results are correct for diag(V) and struct='DIAG'.", {
 
    res <- rma.mv(yi, diag(V), mods = ~ factor(time) - 1, random = ~ factor(time) | study,
-                 struct = "DIAG", data = dat.long)
+                 struct = "DIAG", data = dat.long, sparse=sparse)
 
    ### Table 1, column "Time-specific (Independence)"
    expect_equivalent(coef(res), c(-24.8686, -27.4728, -28.5239, -24.1415), tolerance=.tol[["coef"]])
@@ -37,7 +37,7 @@ test_that("results are correct for diag(V) and struct='DIAG'.", {
 
 test_that("results are correct for diag(V) and random study effects.", {
 
-   res <- rma.mv(yi, diag(V), mods = ~ factor(time) - 1, random = ~ 1 | study, data = dat.long)
+   res <- rma.mv(yi, diag(V), mods = ~ factor(time) - 1, random = ~ 1 | study, data = dat.long, sparse=sparse)
 
    ### Table 1, column "Random study effects"
    expect_equivalent(coef(res), c(-26.2127, -27.1916, -28.5464, -25.6339), tolerance=.tol[["coef"]])
@@ -48,7 +48,7 @@ test_that("results are correct for diag(V) and random study effects.", {
 test_that("results are correct for diag(V) and struct='ID'.", {
 
    res <- rma.mv(yi, diag(V), mods = ~ factor(time) - 1, random = ~ factor(time) | study,
-                 struct = "ID", data = dat.long)
+                 struct = "ID", data = dat.long, sparse=sparse)
 
    ### not in paper
    expect_equivalent(coef(res), c(-24.8792, -27.4670, -28.5185, -24.1502), tolerance=.tol[["coef"]])
@@ -59,7 +59,7 @@ test_that("results are correct for diag(V) and struct='ID'.", {
 test_that("results are correct for diag(V) and struct='HAR'.", {
 
    res <- rma.mv(yi, diag(V), mods = ~ factor(time) - 1, random = ~ time | study,
-                 struct = "HAR", data = dat.long)
+                 struct = "HAR", data = dat.long, sparse=sparse)
 
    ### Table 1, column "Correlated random time effects"
    expect_equivalent(coef(res), c(-25.9578, -27.3100, -28.5543, -25.7923), tolerance=.tol[["coef"]]) # -27.5 in Table vs -27.3
@@ -71,7 +71,7 @@ test_that("results are correct for diag(V) and struct='HAR'.", {
 test_that("results are correct for struct='HAR'.", {
 
    res <- rma.mv(yi, V, mods = ~ factor(time) - 1, random = ~ time | study,
-                 struct = "HAR", data = dat.long)
+                 struct = "HAR", data = dat.long, sparse=sparse)
 
    ### Table 1, column "Multivariate model"
    expect_equivalent(coef(res), c(-25.9047, -27.4608, -28.6559, -26.4934), tolerance=.tol[["coef"]])
@@ -83,7 +83,7 @@ test_that("results are correct for struct='HAR'.", {
 test_that("results are correct for struct='AR'.", {
 
    res <- rma.mv(yi, V, mods = ~ factor(time) - 1, random = ~ time | study,
-                 struct = "AR", data = dat.long)
+                 struct = "AR", data = dat.long, sparse=sparse)
 
    ### not in paper
    expect_equivalent(coef(res), c(-25.9418, -27.3937, -28.7054, -26.3970), tolerance=.tol[["coef"]])
@@ -95,7 +95,7 @@ test_that("results are correct for struct='AR'.", {
 test_that("results are correct for struct='HCS'.", {
 
    res <- rma.mv(yi, V, mods = ~ factor(time) - 1, random = ~ factor(time) | study,
-                 struct = "HCS", data = dat.long)
+                 struct = "HCS", data = dat.long, sparse=sparse)
 
    ### not in paper
    expect_equivalent(coef(res), c(-25.8814, -27.3293, -28.6510, -26.6631), tolerance=.tol[["coef"]])
@@ -106,7 +106,7 @@ test_that("results are correct for struct='HCS'.", {
 test_that("results are correct for struct='CAR'.", {
 
    res <- rma.mv(yi, V, mods = ~ factor(time) - 1, random = ~ time | study,
-                 struct = "CAR", data = dat.long)
+                 struct = "CAR", data = dat.long, sparse=sparse)
 
    ### not in paper
    expect_equivalent(coef(res), c(-25.9418, -27.3937, -28.7054, -26.3970), tolerance=.tol[["coef"]])
@@ -123,7 +123,7 @@ test_that("results are correct for struct='CAR' with unequally spaced time point
    dat.long$time[dat.long$time == 1] <-  3/3
 
    res <- rma.mv(yi, V, mods = ~ factor(time) - 1, random = ~ time | study,
-                 struct = "CAR", data = dat.long)
+                 struct = "CAR", data = dat.long, sparse=sparse)
 
    ### not in paper
    expect_equivalent(coef(res), c(-26.0293, -27.3838, -28.7339, -26.0515), tolerance=.tol[["coef"]])
@@ -131,3 +131,5 @@ test_that("results are correct for struct='CAR' with unequally spaced time point
    expect_equivalent(res$rho, 0.9171, tolerance=.tol[["cor"]])
 
 })
+
+rm(list=ls())

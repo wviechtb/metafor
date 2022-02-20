@@ -2,6 +2,8 @@
 
 ### see also: https://www.metafor-project.org/doku.php/plots:forest_plot_with_subgroups
 
+source("settings.r")
+
 context("Checking plots example: forest plot with subgroups")
 
 test_that("plot can be drawn.", {
@@ -82,3 +84,5 @@ test_that("plot can be drawn.", {
    par(opar)
 
 })
+
+rm(list=ls())

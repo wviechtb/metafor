@@ -4,7 +4,7 @@
 
 context("Checking analysis example: vanhouwelingen2002")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ### load data
 dat <- dat.colditz1994
@@ -136,14 +136,14 @@ levels(dat.long$group) <- c("CON", "EXP")
 
 test_that("results for the bivariate model are correct.", {
 
-   res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | trial, struct="UN", data=dat.long, method="ML")
+   res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | trial, struct="UN", data=dat.long, method="ML", sparse=sparse)
 
    ### compare with results on pages 604-605 (in text)
    expect_equivalent(coef(res), c(-4.0960, -4.8337), tolerance=.tol[["coef"]])
    expect_equivalent(res$tau2, c(2.4073, 1.4314), tolerance=.tol[["var"]])
    expect_equivalent(res$rho, .9467, tolerance=.tol[["cor"]])
 
-   res <- rma.mv(yi, vi, mods = ~ group, random = ~ group | trial, struct="UN", data=dat.long, method="ML")
+   res <- rma.mv(yi, vi, mods = ~ group, random = ~ group | trial, struct="UN", data=dat.long, method="ML", sparse=sparse)
 
    ### compare with results on pages 604-605 (in text)
    expect_equivalent(coef(res), c(-4.0960, -0.7378), tolerance=.tol[["coef"]])
@@ -160,13 +160,13 @@ test_that("results for the bivariate model are correct.", {
    expect_equivalent(tmp, 0.3241, tolerance=.tol[["var"]])
 
    ### regression of log(odds)_EXP on log(odds)_CON
-   res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | trial, struct="UN", data=dat.long, method="ML")
+   res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | trial, struct="UN", data=dat.long, method="ML", sparse=sparse)
    reg <- matreg(y=2, x=1, R=res$G, cov=TRUE, means=coef(res), n=res$g.levels.comb.k)
    expect_equivalent(reg$tab$beta, c(-1.8437, 0.7300), tolerance=.tol[["coef"]])
    expect_equivalent(reg$tab$se,   c( 0.3265, 0.0749), tolerance=.tol[["se"]])
 
    ### same idea but now use var-cov matrix of tau^2_1, tau_12, tau^2_2 for this
-   res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | trial, struct="UN", data=dat.long, method="ML", cvvc="varcov", control=list(nearpd=TRUE))
+   res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | trial, struct="UN", data=dat.long, method="ML", cvvc="varcov", control=list(nearpd=TRUE), sparse=sparse)
    reg <- matreg(y=2, x=1, R=res$G, cov=TRUE, means=coef(res), V=res$vvc)
    expect_equivalent(reg$tab$beta, c(-1.8437, 0.7300), tolerance=.tol[["coef"]])
    expect_equivalent(reg$tab$se,   c( 0.3548, 0.0866), tolerance=.tol[["se"]])
@@ -185,7 +185,7 @@ test_that("results for the meta-regression analyses are correct.", {
    expect_equivalent(res$tau2, 0.0040, tolerance=.tol[["var"]])
    expect_equivalent(res$R2, 98.6691, tolerance=.tol[["r2"]])
 
-   res <- rma.mv(yi, vi, mods = ~ group + group:I(ablat-33) - 1, random = ~ group | trial, struct="UN", data=dat.long, method="ML")
+   res <- rma.mv(yi, vi, mods = ~ group + group:I(ablat-33) - 1, random = ~ group | trial, struct="UN", data=dat.long, method="ML", sparse=sparse)
 
    ### compare with results on pages 612-613 (in text)
    expect_equivalent(coef(res), c(-4.1174, -4.8257, 0.0725, 0.0391), tolerance=.tol[["coef"]])
@@ -193,7 +193,7 @@ test_that("results for the meta-regression analyses are correct.", {
    expect_equivalent(res$tau2, c(1.1819, 1.2262), tolerance=.tol[["var"]])
    expect_equivalent(res$rho, 1.0000, tolerance=.tol[["cor"]])
 
-   res <- rma.mv(yi, vi, mods = ~ group*I(ablat-33), random = ~ group | trial, struct="UN", data=dat.long, method="ML")
+   res <- rma.mv(yi, vi, mods = ~ group*I(ablat-33), random = ~ group | trial, struct="UN", data=dat.long, method="ML", sparse=sparse)
 
    ### compare with results on pages 612-613 (in text)
    expect_equivalent(coef(res), c(-4.1174, -0.7083, 0.0725, -0.0333), tolerance=.tol[["coef"]])
@@ -202,3 +202,5 @@ test_that("results for the meta-regression analyses are correct.", {
    expect_equivalent(res$rho, 1.0000, tolerance=.tol[["cor"]])
 
 })
+
+rm(list=ls())

@@ -4,7 +4,7 @@
 
 context("Checking analysis example: miller1978")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 ### create dataset
 dat <- data.frame(xi=c(3, 6, 10, 1), ni=c(11, 17, 21, 6))
@@ -89,3 +89,5 @@ test_that("back-transformations work as intended for individual studies and the 
    par(opar)
 
 })
+
+rm(list=ls())

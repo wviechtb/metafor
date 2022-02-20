@@ -2,7 +2,7 @@
 
 context("Checking misc: robust() function")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("robust() works correctly for 'rma' objects.", {
 
@@ -38,7 +38,7 @@ test_that("robust() works correctly for 'rma.mv' objects.", {
 
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, sparse=sparse)
 
    sav <- robust(res, cluster=trial)
    expect_equivalent(c(vcov(sav)), 0.032106, tolerance=.tol[["var"]])
@@ -55,7 +55,7 @@ test_that("robust() works correctly for 'rma.mv' objects.", {
    expect_equivalent(sav$dfs, 11.04125, tolerance=.tol[["misc"]])
    expect_equivalent(sav$zval, -3.97616, tolerance=.tol[["test"]])
 
-   res <- rma.mv(yi, vi, W=1, random = ~ 1 | trial, data=dat)
+   res <- rma.mv(yi, vi, W=1, random = ~ 1 | trial, data=dat, sparse=sparse)
 
    sav <- robust(res, cluster=trial)
    expect_equivalent(c(vcov(sav)), 0.037028, tolerance=.tol[["var"]])
@@ -63,3 +63,5 @@ test_that("robust() works correctly for 'rma.mv' objects.", {
    expect_equivalent(sav$zval, -3.848996, tolerance=.tol[["test"]])
 
 })
+
+rm(list=ls())

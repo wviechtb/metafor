@@ -2,7 +2,7 @@
 
 context("Checking misc: transformation functions")
 
-source("tolerances.r") # read in tolerances
+source("settings.r")
 
 test_that("transformations work correctly.", {
 
@@ -41,3 +41,5 @@ test_that("transformations work correctly.", {
    expect_equivalent(transf.ilogit.int(transf.logit(.1), targs=list(tau2=0.1)), 0.103591, tolerance=.tol[["est"]])
 
 })
+
+rm(list=ls())
