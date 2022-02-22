@@ -1,2 +1,0 @@
-#sparse <- FALSE
-sparse <- TRUE

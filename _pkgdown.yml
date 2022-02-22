@@ -1,8 +1,13 @@
+url: https://wviechtb.github.io/metafor/
+
 template:
   package: preferably
   #bootstrap: 5
   params:
     toggle: manual
+    docsearch:
+      api_key: 6f896dc572e54bfe35d65ca2ae0572c5
+      index_name: metafor
   #params:
   #  bootswatch: cosmo
   opengraph:

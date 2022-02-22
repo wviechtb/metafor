@@ -64,7 +64,7 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat,
 res <- rma(yi, vi, data=dat)
 
 \dontrun{
-### generate pdf report
+### generate report
 reporter(res)}
 }
 \keyword{methods}

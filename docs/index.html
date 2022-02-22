@@ -23,7 +23,9 @@
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Meta-Analysis Package for R">
+<script src="pkgdown.js"></script><!-- docsearch --><script src="docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
+<link href="docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Meta-Analysis Package for R">
 <meta property="og:description" content="A comprehensive collection of functions for conducting meta-analyses in R. The package includes functions to calculate various effect sizes or outcome measures, fit equal-, fixed-, random-, and mixed-effects models to such data, carry out moderator and meta-regression analyses, and create various types of meta-analytical plots (e.g., forest, funnel, radial, LAbbe, Baujat, bubble, and GOSH plots). For meta-analyses of binomial and person-time data, the package also provides functions that implement specialized methods, including the Mantel-Haenszel method, Petos method, and a variety of suitable generalized linear (mixed-effects) models (i.e., mixed-effects logistic and Poisson regression models). Finally, the package provides functionality for fitting meta-analytic multivariate/multilevel models that account for non-independent sampling errors and/or true effects (e.g., due to the inclusion of multiple treatment studies, multiple endpoints, or other forms of clustering). Network meta-analyses and meta-analyses accounting for known correlation structures (e.g., due to phylogenetic relatedness) can also be conducted. An introduction to the package can be found in Viechtbauer (2010) &lt;doi:10.18637/jss.v036.i03&gt;.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@wviechtb">
@@ -53,7 +55,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-44</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-45</span>
       </span>
     </div>
 
@@ -105,7 +107,13 @@
 
 
       </ul>
+<form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
+      </form>
+      
+    </div>
 <!--/.nav-collapse -->
   </div>
 <!--/.container -->
@@ -149,7 +157,7 @@
 </h2>
 <p>A good starting place for those interested in using the <code>metafor</code> package is the following paper:</p>
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software, 36</em>(3), 1-48. <a href="https://doi.org/10.18637/jss.v036.i03" class="external-link">https://doi.org/10.18637/jss.v036.i03</a></p>
-<p>In addition to reading the paper, carefully read the <a href="https://wviechtb.github.io/metafor/reference/metafor-package.html" class="external-link">package intro</a> and then the help pages for the <a href="https://wviechtb.github.io/metafor/reference/escalc.html" class="external-link"><code>escalc</code></a> and the <a href="https://wviechtb.github.io/metafor/reference/rma.uni.html" class="external-link"><code>rma.uni</code></a> functions (or the <a href="https://wviechtb.github.io/metafor/reference/rma.mh.html" class="external-link"><code>rma.mh</code></a>, <a href="https://wviechtb.github.io/metafor/reference/rma.peto.html" class="external-link"><code>rma.peto</code></a>, <a href="https://wviechtb.github.io/metafor/reference/rma.glmm.html" class="external-link"><code>rma.glmm</code></a>, <a href="https://wviechtb.github.io/metafor/reference/rma.mv.html" class="external-link"><code>rma.mv</code></a> functions if you intend to use these methods). The help pages for these functions provide links to many additional functions, which can be used after fitting a model. You can also read the entire documentation online at <a href="https://wviechtb.github.io/metafor/" class="external-link">https://wviechtb.github.io/metafor/</a> (where it is nicely formatted, equations are shown correctly, and the output from all examples is provided).</p>
+<p>In addition to reading the paper, carefully read the <a href="https://wviechtb.github.io/metafor/reference/metafor-package.html">package intro</a> and then the help pages for the <a href="https://wviechtb.github.io/metafor/reference/escalc.html"><code>escalc</code></a> and the <a href="https://wviechtb.github.io/metafor/reference/rma.uni.html"><code>rma.uni</code></a> functions (or the <a href="https://wviechtb.github.io/metafor/reference/rma.mh.html"><code>rma.mh</code></a>, <a href="https://wviechtb.github.io/metafor/reference/rma.peto.html"><code>rma.peto</code></a>, <a href="https://wviechtb.github.io/metafor/reference/rma.glmm.html"><code>rma.glmm</code></a>, <a href="https://wviechtb.github.io/metafor/reference/rma.mv.html"><code>rma.mv</code></a> functions if you intend to use these methods). The help pages for these functions provide links to many additional functions, which can be used after fitting a model. You can also read the entire documentation online at <a href="https://wviechtb.github.io/metafor/">https://wviechtb.github.io/metafor/</a> (where it is nicely formatted, equations are shown correctly, and the output from all examples is provided).</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -212,7 +220,7 @@
 <li><a href="https://github.com/wviechtb/metafor/actions" class="external-link"><img src="https://github.com/wviechtb/metafor/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://app.codecov.io/gh/wviechtb/metafor" class="external-link"><img src="https://codecov.io/gh/wviechtb/metafor/branch/master/graph/badge.svg" alt="Code Coverage"></a></li>
 <li><a href="https://cran.r-project.org/package=metafor" class="external-link"><img src="https://www.r-pkg.org/badges/version/metafor" alt="CRAN Version"></a></li>
-<li><a href="https://www.metafor-project.org/doku.php/installation#development_version" class="external-link"><img src="https://img.shields.io/badge/devel-3.1–44-brightgreen.svg" alt="devel Version"></a></li>
+<li><a href="https://www.metafor-project.org/doku.php/installation#development_version" class="external-link"><img src="https://img.shields.io/badge/devel-3.1–45-brightgreen.svg" alt="devel Version"></a></li>
 <li><a href="https://cranlogs.r-pkg.org/badges/metafor" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/metafor" alt="Monthly Downloads"></a></li>
 <li><a href="https://cranlogs.r-pkg.org/badges/grand-total/metafor" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/metafor" alt="Total Downloads"></a></li>
 </ul>
@@ -237,9 +245,20 @@
 </div>
 
   
-
-
-  
-
-  </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
+  docsearch({
+    
+    
+    apiKey: '6f896dc572e54bfe35d65ca2ae0572c5',
+    indexName: 'metafor',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+</body>
 </html>
