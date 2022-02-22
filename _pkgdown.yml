@@ -7,7 +7,7 @@ template:
     bootswatch: cosmo
     #toggle: manual
     docsearch:
-      api_key: fe535b92daaed8f92a5f77f8e5ec3d02
+      api_key: 6e17971079b7e4a7de4851f47bf7e707
       index_name: metafor
   opengraph:
     #image:
