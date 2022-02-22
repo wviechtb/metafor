@@ -1,14 +1,15 @@
 url: https://wviechtb.github.io/metafor/
 
 template:
-  #package: preferably
+  package: preferably
   #bootstrap: 5
   params:
-    bootswatch: cosmo
-    #toggle: manual
+    #bootswatch: cosmo
+    toggle: manual
     docsearch:
       api_key: b56f56470243cf9799f796a3d6ecaedd
       index_name: metafor
+      app_id: SFWCWKDGL8
   opengraph:
     #image:
     #  src: man/figures/card.png
