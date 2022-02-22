@@ -359,7 +359,11 @@ level=95, digits, verbose=FALSE, ...) {
 
    ll.ML     <- -1/2 * (k.yi)   * log(2*base::pi)                   - 1/2 * sum(log(vi))                      - 1/2 * RSS
    ll.REML   <- -1/2 * (k.yi-1) * log(2*base::pi) + 1/2 * log(k.yi) - 1/2 * sum(log(vi)) - 1/2 * log(sum(wi)) - 1/2 * RSS
-   dev.ML    <- -2 * (ll.ML - sum(dnorm(yi, mean=yi, sd=sqrt(vi), log=TRUE)))
+   if (any(vi <= 0)) {
+      dev.ML <- -2 * ll.ML
+   } else {
+      dev.ML <- -2 * (ll.ML - sum(dnorm(yi, mean=yi, sd=sqrt(vi), log=TRUE)))
+   }
    AIC.ML    <- -2 * ll.ML   + 2
    BIC.ML    <- -2 * ll.ML   + log(k.yi)
    AICc.ML   <- -2 * ll.ML   + 2 * max(k.yi, 3) / (max(k.yi, 3) - 2)

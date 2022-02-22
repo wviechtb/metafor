@@ -2329,7 +2329,11 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                -1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS.f
 
    if (k > p) {
-      dev.ML <- -2 * (ll.ML - sum(dnorm(yi, mean=yi, sd=sqrt(vi), log=TRUE)))
+      if (any(vi <= 0)) {
+         dev.ML <- -2 * ll.ML
+      } else {
+         dev.ML <- -2 * (ll.ML - sum(dnorm(yi, mean=yi, sd=sqrt(vi), log=TRUE)))
+      }
    } else {
       dev.ML <- 0
    }
