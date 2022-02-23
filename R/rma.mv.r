@@ -219,6 +219,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    if (inherits(yi, "formula")) {
       formula.yi <- yi
+      formula.mods <- formula.yi[-2]
       options(na.action = "na.pass")                   ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
       mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so [a] further below is skipped)
       attr(mods, "assign") <- NULL                     ### strip assign attribute (not needed at the moment)
@@ -1216,7 +1217,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    ### note: need to save coef.na for functions that modify the data/model and then refit the model (regtest() and the
    ### various function that leave out an observation); so we can check if there are redundant/dropped predictors then
 
-   tmp <- lm(yi ~ X - 1)
+   tmp <- try(lm(yi ~ X - 1), silent=TRUE)
    coef.na <- is.na(coef(tmp))
    if (any(coef.na)) {
       warning(mstyle$warning("Redundant predictors dropped from the model."), call.=FALSE)

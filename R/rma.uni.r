@@ -187,6 +187,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (inherits(yi, "formula")) {
          formula.yi <- yi
+         formula.mods <- formula.yi[-2]
          options(na.action = "na.pass")                   ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
          mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so [a] further below is skipped)
          attr(mods, "assign") <- NULL                     ### strip assign attribute (not needed at the moment)
