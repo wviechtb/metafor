@@ -946,7 +946,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             }
 
             if (inherits(res.FE, "try-error"))
-               stop(mstyle$stop("Cannot fit FE model."))
+               stop(mstyle$stop(paste0("Cannot fit FE model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))))
 
             ### log-likelihood
 
@@ -973,7 +973,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
                if (inherits(res.QE, "try-error")) {
 
-                  warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
+                  warning(mstyle$warning(paste0("Cannot fit saturated model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))), call.=FALSE)
 
                } else {
 
@@ -1028,7 +1028,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                }
 
                if (inherits(res.ML, "try-error"))
-                  stop(mstyle$stop("Cannot fit ML model."))
+                  stop(mstyle$stop(paste0("Cannot fit ML model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))))
 
                ### log-likelihood
 
@@ -1131,7 +1131,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             }
 
             if (inherits(res.FE, "try-error"))
-               stop(mstyle$stop("Cannot fit FE model."))
+               stop(mstyle$stop(paste0("Cannot fit FE model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))))
 
             ### log-likelihood
 
@@ -1188,7 +1188,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
                if (inherits(res.QE, "try-error")) {
 
-                  warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
+                  warning(mstyle$warning(paste0("Cannot fit saturated model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))), call.=FALSE)
 
                } else {
 
@@ -1281,7 +1281,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                }
 
                if (inherits(res.ML, "try-error"))
-                  stop(mstyle$stop("Cannot fit ML model."))
+                  stop(mstyle$stop(paste0("Cannot fit ML model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))))
 
                ### log-likelihood
 
@@ -1406,7 +1406,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          res.FE <- try(glm(dat.grp ~ -1 + X.fit, offset=dat.off, family=binomial, control=glmCtrl), silent=!verbose)
 
          if (inherits(res.FE, "try-error"))
-            stop(mstyle$stop("Cannot fit FE model."))
+            stop(mstyle$stop(paste0("Cannot fit FE model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))))
 
          ### log-likelihood
 
@@ -1433,7 +1433,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             if (inherits(res.QE, "try-error")) {
 
-               warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
+               warning(mstyle$warning(paste0("Cannot fit saturated model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))), call.=FALSE)
 
             } else {
 
@@ -1488,7 +1488,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             }
 
             if (inherits(res.ML, "try-error"))
-               stop(mstyle$stop("Cannot fit ML model."))
+               stop(mstyle$stop(paste0("Cannot fit ML model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))))
 
             ### log-likelihood
 
@@ -1676,7 +1676,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             }
 
             if (inherits(res.FE, "try-error"))
-               stop(mstyle$stop("Cannot fit FE model. Use verbose=TRUE and see help(rma.glmm) for more details on the optimization routines."))
+               stop(mstyle$stop(paste0("Cannot fit FE model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))))
 
             ### convergence checks
 
@@ -1768,7 +1768,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                   }
 
                   if (inherits(res.QE, "try-error")) {
-                     warning(mstyle$warning("Cannot fit saturated model. Use verbose=TRUE and see help(rma.glmm) for more details on the optimization routines."), call.=FALSE)
+                     warning(mstyle$warning(paste0("Cannot fit saturated model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))), call.=FALSE)
                      QEconv <- FALSE
                      ll.QE <- NA
                   }
@@ -1925,7 +1925,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             }
 
             if (inherits(res.FE, "try-error"))
-               stop(mstyle$stop("Cannot fit FE model."))
+               stop(mstyle$stop(paste0("Cannot fit FE model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))))
 
             ### fit saturated FE model (= QE model)
             ### notes: 1) must figure out which terms are aliased in saturated model and remove those terms before fitting
@@ -1963,7 +1963,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                }
 
                if (inherits(res.QE, "try-error"))
-                  stop(mstyle$stop("Cannot fit saturated model."))
+                  stop(mstyle$stop(paste0("Cannot fit saturated model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))))
 
                ### log-likelihood
 
@@ -2016,7 +2016,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             }
 
             if (inherits(res.ML, "try-error"))
-               stop(mstyle$stop("Cannot fit ML model. Use verbose=TRUE and see help(rma.glmm) for more details on the optimization routines."))
+               stop(mstyle$stop(paste0("Cannot fit ML model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))))
 
             ### convergence checks
 
@@ -2187,7 +2187,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       res.FE <- try(glm(dat.grp ~ -1 + X.fit, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
 
       if (inherits(res.FE, "try-error"))
-         stop(mstyle$stop("Cannot fit FE model."))
+         stop(mstyle$stop(paste0("Cannot fit FE model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))))
 
       ### log-likelihood
 
@@ -2219,7 +2219,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          if (inherits(res.QE, "try-error")) {
 
-            warning(mstyle$warning("Cannot fit saturated model."), call.=FALSE)
+            warning(mstyle$warning(paste0("Cannot fit saturated model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))), call.=FALSE)
 
          } else {
 
@@ -2276,7 +2276,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
          }
 
          if (inherits(res.ML, "try-error"))
-            stop(mstyle$stop("Cannot fit ML model."))
+            stop(mstyle$stop(paste0("Cannot fit ML model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))))
 
          #return(res.ML)
 
