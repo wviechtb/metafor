@@ -5,11 +5,13 @@
    Split a block diagonal matrix into a list of sub-matrices.
 }
 \usage{
-blsplit(x, cluster, sort=FALSE)
+blsplit(x, cluster, fun, args, sort=FALSE)
 }
 \arguments{
    \item{x}{a block diagonal matrix.}
    \item{cluster}{vector to specify the clustering variable to use for splitting.}
+   \item{fun}{optional argument to specify a function to apply to each sub-matrix.}
+   \item{args}{optional argument to specify any additional argument(s) for the function specified via \code{fun}.}
    \item{sort}{logical to indicate whether to sort the list by the unique cluster values (the default is \code{FALSE}).}
 }
 \value{
@@ -34,5 +36,9 @@ V <- vcalc(vi, cluster=study, obs=esid, data=dat, rho=0.6)
 Vs <- blsplit(V, cluster=dat$study)
 Vs[1:2]
 lapply(Vs[1:2], cov2cor)
+
+### illustrate the use of the fun and args arguments
+blsplit(V, cluster=dat$study, cov2cor)[1:2]
+blsplit(V, cluster=dat$study, round, 3)[1:2]
 }
 \keyword{manip}

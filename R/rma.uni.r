@@ -2323,7 +2323,8 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       message(mstyle$message("Computing fit statistics and log likelihood ..."))
 
    ### note: tau2 is not counted as a parameter when it was fixed by the user (same for fixed alpha values)
-   parms <- p + ifelse(model == "rma.uni", ifelse(is.element(method[1], c("FE","EE","CE")) || tau2.fix, 0, 1), sum(is.na(alpha.val)))
+   q.est <- ifelse(model == "rma.uni", 0, sum(is.na(alpha.val)))
+   parms <- p + ifelse(model == "rma.uni", ifelse(is.element(method[1], c("FE","EE","CE")) || tau2.fix, 0, 1), q.est)
 
    ll.ML    <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS.f
    ll.REML  <- -1/2 * (k-p) * log(2*base::pi) + ifelse(con$REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +

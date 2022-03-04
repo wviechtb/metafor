@@ -1,4 +1,4 @@
-blsplit <- function(x, cluster, sort=FALSE) {
+blsplit <- function(x, cluster, fun, args, sort=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -28,6 +28,17 @@ blsplit <- function(x, cluster, sort=FALSE) {
    }
 
    names(res) <- clusters
+
+   if (!missing(fun)) {
+      if (missing(args)) {
+         res <- lapply(res, fun)
+      } else {
+         args <- as.list(args)
+         for (i in 1:length(res)) {
+            res[[i]] <- do.call(fun, c(unname(res[i]), args))
+         }
+      }
+   }
 
    return(res)
 

@@ -63,7 +63,7 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
 
    To account for this, arguments \code{grp1} and \code{grp2} should be specified to indicate (within each cluster) which two groups were compared in the computation of each effect size (e.g., in the example above, the coding could be \code{grp1=c(1,2)} and \code{grp2=c(3,3)}; whether numbers or strings are used as identifiers is irrelevant).
 
-   The degree of correlation between two contrast-type effect sizes that is induced by the use of a shared condition is a function of the size of the groups involved in the computation of the two effect sizes (or, more generally, the inverse-sampling variance weights of the condition-specific outcomes). By default, the group sizes (weights) are assumed to be identical across conditions, which implies a correlation of 0.5. If the group sizes (weights) are known, they can be specified via arguments \code{w1} and \code{w2}.
+   The degree of correlation between two contrast-type effect sizes that is induced by the use of a shared condition is a function of the size of the groups involved in the computation of the two effect sizes (or, more generally, the inverse-sampling variance weights of the condition-specific outcomes). By default, the group sizes (weights) are assumed to be identical across conditions, which implies a correlation of 0.5. If the group sizes (weights) are known, they can be specified via arguments \code{w1} and \code{w2} (in which case this information is used by the function to calculate a more accurate estimate of the correlation induced by the shared condition).
 
    In fact, a contrast-type effect size can be based on a between- or a within-subjects design. When at least one or more of the contrast-type effect sizes are based on a within-subjects design, then \code{time1} and \code{time2} should be used in combination with \code{grp1} and \code{grp2} to indicate for each effect size the group(s) and time point(s) involved.
 
@@ -134,16 +134,16 @@ V <- vcalc(vi, cluster=study, obs=esid, data=dat, rho=0.6)
 round(V[dat$study \%in\% c(1,2), dat$study \%in\% c(1,2)], 4)
 
 ### or show as list of matrices
-lapply(blsplit(V, dat$study)[1:2], round, 4)
+blsplit(V, dat$study, round, 4)[1:2]
 
 ### use a correlation of 0.7 for effect sizes corresponding to the same type of
 ### delinquent behavior and a correlation of 0.5 for effect sizes corresponding
 ### to different types of delinquent behavior
 V <- vcalc(vi, cluster=study, type=deltype, obs=esid, data=dat, rho=c(0.7, 0.5))
-lapply(blsplit(V, dat$study)[16], round, 3)
+blsplit(V, dat$study, round, 3)[16]
 
 ### examine the correlation matrix for study 16
-lapply(blsplit(V, dat$study)[16], cov2cor)
+blsplit(V, dat$study, cov2cor)[16]
 
 ############################################################################
 
@@ -172,7 +172,7 @@ cov2cor(V[1:8, 1:8])
 
 ### or show as a list of matrices
 blsplit(V, dat$study)[1:5]
-lapply(blsplit(V, dat$study)[1:5], cov2cor)
+blsplit(V, dat$study, cov2cor)[1:5]
 
 ############################################################################
 
@@ -200,7 +200,7 @@ V
 round(cov2cor(V), 2)
 
 ### or show as a list of matrices
-lapply(blsplit(V, dat$author), function(x) round(cov2cor(x), 2))
+blsplit(V, dat$author, function(x) round(cov2cor(x), 2))
 
 ### construct the variance-covariance matrix assuming rho = 0.4 for effect sizes
 ### corresponding to the 'PD' and 'AL' outcome types

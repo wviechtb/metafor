@@ -374,7 +374,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, ...) {
       ### but have to check for a ML/REML mismatch
 
       if ((model.f$method == "ML" && model.r$method == "REML") || model.r$method == "ML" && model.f$method == "REML")
-         stop(mstyle$stop("Mismatch between the use of ML and REML in the full versus reduced model."))
+         stop(mstyle$stop(paste0("Mismatch between the use of ", model.f$method, " and ", model.r$method, " estimation in the full versus reduced model.")))
 
       ### for LRTs, using anything besides ML/REML is strictly speaking incorrect
 
