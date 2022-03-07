@@ -282,6 +282,10 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          }
       }
 
+      ### check 'vi' argument for potential misuse
+
+      .chkviarg(mf$vi)
+
       ### in case user passes a matrix to vi, convert it to a vector
       ### note: only a row or column matrix with the right dimensions will end with the right length
 
@@ -826,7 +830,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    ### make sure that there is at least one column in X ([b])
 
    if (is.null(mods) && !intercept) {
-      warning(mstyle$warning("Must either include an intercept and/or moderators in model.\n  Coerced intercept into the model."), call.=FALSE)
+      warning(mstyle$warning("Must either include an intercept and/or moderators in model.\nCoerced intercept into the model."), call.=FALSE)
       intercept <- TRUE
    }
 
@@ -1438,7 +1442,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                   ll <- -1/2 * (k-p) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS
 
                if (ll0 - ll > con$tol && tau2 > con$threshold) {
-                  warning(mstyle$warning("Fisher scoring algorithm may have gotten stuck at a local maximum.\n  Setting tau^2 = 0. Check the profile likelihood plot with profile()."), call.=FALSE)
+                  warning(mstyle$warning("Fisher scoring algorithm may have gotten stuck at a local maximum.\nSetting tau^2 = 0. Check the profile likelihood plot with profile()."), call.=FALSE)
                   tau2 <- 0
                }
 

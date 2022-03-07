@@ -95,6 +95,10 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
    if (length(yi) != length(vi))
       stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') is not the same."))
 
+   ### check 'vi' argument for potential misuse
+
+   .chkviarg(mf$vi)
+
    ### if a subset of studies is specified
 
    if (!is.null(subset)) {

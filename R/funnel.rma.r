@@ -38,7 +38,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       if (is.null(x$ni))
          stop(mstyle$stop("No sample size information stored in model object."))
       if (anyNA(x$ni))
-         warning(mstyle$warning("Sample size information stored in model object \n  contains NAs. Not all studies will be plotted."), call.=FALSE)
+         warning(mstyle$warning("Sample size information stored in model object\ncontains NAs. Not all studies will be plotted."), call.=FALSE)
    }
 
    ### set y-axis label if not specified

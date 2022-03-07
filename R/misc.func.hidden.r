@@ -337,7 +337,7 @@
       } else {
          mf.txt <- paste0(" ('", mf.txt, "') ")
       }
-      stop(mstyle$stop(paste0(deparse(mf)[1], ":\n  The object/variable", mf.txt, "specified for the '", x, "' argument is NULL.")), call.=FALSE)
+      stop(mstyle$stop(paste0(deparse(mf)[1], ":\nThe object/variable", mf.txt, "specified for the '", x, "' argument is NULL.")), call.=FALSE)
    }
 
    return(out)
@@ -395,6 +395,48 @@
    if (!missing(notav) && any(is.element(notav, class)))
       stop(mstyle$stop(paste0(type, " not available for objects of class \"", class[1], "\".")), call.=FALSE)
       #stop(mstyle$stop(paste0("Method not available for objects of class \"", paste0(class, collapse=", "), "\".")), call.=FALSE)
+
+}
+
+############################################################################
+
+.chkviarg <- function(x) {
+
+   runvicheck <- .getfromenv("runvicheck", default=TRUE)
+
+   if (runvicheck) {
+
+      x <- deparse(x)
+      xl <- tolower(x)
+
+      ok <- TRUE
+
+      # starts with 'se' or 'std'
+      if (any(grepl("^se", xl)))
+         ok <- FALSE
+      if (any(grepl("^std", xl)))
+         ok <- FALSE
+      # catch cases where vi=<data frame>$se and vi=<data frame>$std
+      if (any(grepl("^[[:alpha:]][[:alnum:]_.]*\\$se", xl)))
+         ok <- FALSE
+      if (any(grepl("^[[:alpha:]][[:alnum:]_.]*\\$std", xl)))
+         ok <- FALSE
+
+      # but if ^, *, or ( appears, don't issue a warning
+      if (any(grepl("^", xl, fixed=TRUE)))
+         ok <- TRUE
+      if (any(grepl("*", xl, fixed=TRUE)))
+         ok <- TRUE
+      if (any(grepl("(", xl, fixed=TRUE)))
+         ok <- TRUE
+
+      if (!ok) {
+         mstyle <- .get.mstyle("crayon" %in% .packages())
+         warning(mstyle$warning(paste0("The 'vi' argument is for specifying the sampling variances,\nbut '", x, "' sounds like this variable may contain standard\nerrors (maybe use 'sei=", x, "' instead?).")), call.=FALSE)
+         try(assign("runvicheck", FALSE, envir=.metafor), silent=TRUE)
+      }
+
+   }
 
 }
 

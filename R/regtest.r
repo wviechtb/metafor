@@ -148,6 +148,10 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
       if (!is.null(ni) && length(ni) != k)
          stop(mstyle$stop("Length of 'yi' and 'ni' is not the same."))
 
+      ### check 'vi' argument for potential misuse
+
+      .chkviarg(mf$vi)
+
       ### if ni has not been specified but is an attribute of yi, get it
 
       if (is.null(ni) && !is.null(attr(yi, "ni")))

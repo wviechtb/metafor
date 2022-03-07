@@ -101,6 +101,10 @@ tes <- function(x, vi, sei, subset, data,
       if (length(yi) != length(vi))
          stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') is not the same."))
 
+      ### check 'vi' argument for potential misuse
+
+      .chkviarg(mf$vi)
+
       #########################################################################
 
       if (length(alpha) != 1L)
