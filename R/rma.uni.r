@@ -18,14 +18,14 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                               "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
                               "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",       ### - measures for matched pairs data
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
-                              "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
+                              "MD","SMD","SMDH","SMD1","ROM",                      ### two-group mean/SD measures
                               "CVR","VR",                                          ### coefficient of variation ratio, variability ratio
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 ### - transformations to r_PB, r_BIS, and log(OR)
                               "COR","UCOR","ZCOR",                                 ### correlations (raw and r-to-z transformed)
                               "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
-                              "MN","MNLN","CVLN","SDLN","SMD1",                    ### mean, log(mean), log(CV), log(SD), single-group SMD
+                              "MN","MNLN","CVLN","SDLN","SMN",                     ### mean, log(mean), log(CV), log(SD), standardized mean
                               "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      ### raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT",                                  ### alpha (and transformations thereof)
                               "GEN")))
@@ -408,7 +408,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       }
 
-      if (is.element(measure, c("MD","SMD","SMDH","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
+      if (is.element(measure, c("MD","SMD","SMDH","SMD1","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
 
          m1i  <- .getx("m1i",  mf=mf, data=data)
          m2i  <- .getx("m2i",  mf=mf, data=data)
@@ -513,7 +513,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       }
 
-      if (is.element(measure, c("MN","MNLN","CVLN","SDLN","SMD1"))) {
+      if (is.element(measure, c("MN","MNLN","CVLN","SDLN","SMN"))) {
 
          mi  <- .getx("mi",  mf=mf, data=data)
          sdi <- .getx("sdi", mf=mf, data=data)

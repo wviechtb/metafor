@@ -304,13 +304,13 @@
 
 .chkdots <- function(ddd, okargs) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
-
    for (i in seq_along(okargs))
       ddd[okargs[i]] <- NULL
 
-   if (length(ddd) > 0L)
+   if (length(ddd) > 0L) {
+      mstyle <- .get.mstyle("crayon" %in% .packages())
       warning(mstyle$warning(paste0("Extra argument", ifelse(length(ddd) > 1L, "s ", " "), "(", paste0("'", names(ddd), "'", collapse=", "), ") disregarded.")), call.=FALSE)
+   }
 
 }
 
@@ -539,7 +539,7 @@
             lab <- ifelse(short, lab, "Transformed Mean Difference")
          }
       }
-      if (is.element(measure, c("SMD","SMDH","PBIT","OR2D","OR2DN","OR2DL","SMD1"))) {
+      if (is.element(measure, c("SMD","SMDH","SMD1","PBIT","OR2D","OR2DN","OR2DL"))) {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, "SMD", "Standardized Mean Difference")
          } else {
@@ -754,6 +754,13 @@
                lab <- ifelse(short, "Mean", "Mean (log scale)")
             if (any(sapply(funlist, identical, transf.char)))
                lab <- ifelse(short, "Mean", "Mean")
+         }
+      }
+      if (measure == "SMN") {
+         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
+            lab <- ifelse(short, "SM", "Standardized Mean")
+         } else {
+            lab <- ifelse(short, lab, "Transformed Standardized Mean")
          }
       }
       if (measure == "CVLN") {

@@ -18,14 +18,14 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                               "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
                               "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",       ### - measures for matched pairs / pre-post data
                               "IRR","IRD","IRSD",                                  ### two-group person-time data measures
-                              "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
+                              "MD","SMD","SMDH","SMD1","ROM",                      ### two-group mean/SD measures
                               "CVR","VR",                                          ### coefficient of variation ratio, variability ratio
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 ### - transformations to r_PB, r_BIS, and log(OR)
                               "COR","UCOR","ZCOR",                                 ### correlations (raw and r-to-z transformed)
                               "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
-                              "MN","MNLN","CVLN","SDLN","SMD1",                    ### mean, log(mean), log(CV), log(SD), single-group SMD
+                              "MN","MNLN","CVLN","SDLN","SMN",                     ### mean, log(mean), log(CV), log(SD), standardized mean
                               "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      ### raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT",                                  ### alpha (and transformations thereof)
                               "GEN")))
@@ -165,7 +165,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (!.all.specified(ai, bi, ci, di))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
-         if (is.element(measure, c("MPORM")) && !.all.specified(ri))
+         if (measure == "MPORM" && !.all.specified(ri))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
          k.all <- length(ai)
@@ -190,12 +190,12 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(c(n1i < 0, n2i < 0), na.rm=TRUE))
             stop(mstyle$stop("One or more group sizes are < 0."))
 
-         if (is.element(measure, c("MPORM")) && any(abs(ri) > 1, na.rm=TRUE))
+         if (measure == "MPORM" && any(abs(ri) > 1, na.rm=TRUE))
                stop(mstyle$stop("One or more correlations are > 1 or < -1."))
 
          ni.u <- ai + bi + ci + di ### unadjusted total sample sizes
 
-         if (is.element(measure, c("MPORM")))
+         if (measure == "MPORM")
             ni.u <- round(ni.u / 2)
 
          k <- length(ai)
@@ -280,7 +280,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          n2i <- ci + di
          ni  <- n1i + n2i ### ni.u computed earlier is always the 'unadjusted' total sample size
 
-         if (is.element(measure, c("MPORM")))
+         if (measure == "MPORM")
             ni <- round(ni / 2)
 
          ### compute proportions for the two groups (unadjusted and adjusted)
@@ -716,11 +716,11 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       ######################################################################
 
-      if (is.element(measure, c("MD","SMD","SMDH","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
+      if (is.element(measure, c("MD","SMD","SMDH","SMD1","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
 
          m1i  <- .getx("m1i",  mf=mf, data=data) ### for VR, do not need to supply this
          m2i  <- .getx("m2i",  mf=mf, data=data) ### for VR, do not need to supply this
-         sd1i <- .getx("sd1i", mf=mf, data=data)
+         sd1i <- .getx("sd1i", mf=mf, data=data) ### for SMD1, do not need to supply this
          sd2i <- .getx("sd2i", mf=mf, data=data)
          n1i  <- .getx("n1i",  mf=mf, data=data)
          n2i  <- .getx("n2i",  mf=mf, data=data)
@@ -739,12 +739,24 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ### for this measure, need sd1i, sd2i, n1i, and n2i
 
-         if (is.element(measure, c("VR"))) {
+         if (measure == "VR") {
 
             if (!.all.specified(sd1i, sd2i, n1i, n2i))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
 
             if (!.equal.length(sd1i, sd2i, n1i, n2i))
+               stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+         }
+
+         ### for this measure, need m1i, m2i, sdi, n1i, and n2i
+
+         if (measure == "SMD1") {
+
+            if (!.all.specified(m1i, m2i, sd2i, n1i, n2i))
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
+
+            if (!.equal.length(m1i, m2i, sd2i, n1i, n2i))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          }
@@ -772,8 +784,15 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          k <- length(n1i)
 
          ni <- ni.u
-         mi <- ni - 2
-         sdpi <- sqrt(((n1i-1)*sd1i^2 + (n2i-1)*sd2i^2)/mi)
+         if (measure == "SMD1") {
+            mi <- n2i - 1
+            sdpi <- sd2i
+            npi <- n2i
+         } else {
+            mi <- ni - 2
+            sdpi <- sqrt(((n1i-1)*sd1i^2 + (n2i-1)*sd2i^2)/mi)
+            npi <- ni
+         }
          di <- (m1i - m2i) / sdpi
 
          ### (raw) mean difference (with heteroscedastic variances)
@@ -805,9 +824,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          }
 
-         ### standardized mean difference (with pooled SDs)
+         ### standardized mean difference (with pooled SDs or just the SD of group 2)
 
-         if (measure == "SMD") {
+         if (is.element(measure, c("SMD","SMD1"))) {
 
             ### apply bias-correction to di values
 
@@ -832,15 +851,15 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
                ### large sample approximation to the sampling variance
                if (vtype[i] == "LS")
-                  vi[i] <- 1/n1i[i] + 1/n2i[i] + yi[i]^2/(2*ni[i])
+                  vi[i] <- 1/n1i[i] + 1/n2i[i] + yi[i]^2/(2*npi[i])
 
                ### estimator assuming homogeneity (using sample size weighted average of the yi's)
                if (vtype[i] == "AV")
-                  vi[i] <- 1/n1i[i] + 1/n2i[i] + mnwyi^2/(2*ni[i])
+                  vi[i] <- 1/n1i[i] + 1/n2i[i] + mnwyi^2/(2*npi[i])
 
                ### large sample approximation to the sampling variance (using equation 4.24 from Borenstein, 2009)
                if (vtype[i] == "LS2")
-                  vi[i] <- cmi[i]^2 * (1/n1i[i] + 1/n2i[i] + di[i]^2/(2*ni[i]))
+                  vi[i] <- cmi[i]^2 * (1/n1i[i] + 1/n2i[i] + di[i]^2/(2*npi[i]))
 
             }
 
@@ -1600,7 +1619,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       ######################################################################
 
-      if (is.element(measure, c("MN","MNLN","CVLN","SDLN","SMD1"))) {
+      if (is.element(measure, c("MN","MNLN","CVLN","SDLN","SMN"))) {
 
          mi  <- .getx("mi",  mf=mf, data=data) ### for SDLN, do not need to supply this
          sdi <- .getx("sdi", mf=mf, data=data)
@@ -1608,7 +1627,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ### for these measures, need mi, sdi, and ni
 
-         if (is.element(measure, c("MN","MNLN","CVLN","SMD1"))) {
+         if (is.element(measure, c("MN","MNLN","CVLN","SMN"))) {
 
             if (!.all.specified(mi, sdi, ni))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
@@ -1620,7 +1639,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ### for this measure, need sdi and ni
 
-         if (is.element(measure, c("SDLN"))) {
+         if (measure == "SDLN") {
 
             if (!.all.specified(sdi, ni))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required \n  information is specified via the appropriate arguments."))
@@ -1682,9 +1701,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             vi <- 1/(2*(ni-1))
          }
 
-         ### single-group SMD
+         ### single-group standardized mean
 
-         if (measure == "SMD1") {
+         if (measure == "SMN") {
             cmi <- .cmicalc(ni-1)
             yi <- cmi * mi / sdi
             vi <- 1/ni + yi^2/(2*ni)
@@ -1715,7 +1734,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          }
 
-         if (is.element(measure, c("SMCR"))) {
+         if (measure == "SMCR") {
 
             ### for this measure, need m1i, m2i, sd1i, ni, and ri (do not need sd2i)
 
@@ -1727,7 +1746,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          }
 
-         if (is.element(measure, c("VRC"))) {
+         if (measure == "VRC") {
 
             ### for this measure, need sd1i, sd2i, ni, and ri
 
@@ -1756,7 +1775,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                stop(mstyle$stop("One or more standard deviations are negative."))
          }
 
-         if (is.element(measure, c("SMCR"))) {
+         if (measure == "SMCR") {
             if (any(sd1i < 0, na.rm=TRUE))
                stop(mstyle$stop("One or more standard deviations are negative."))
          }
