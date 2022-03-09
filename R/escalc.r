@@ -187,8 +187,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(c(ai, bi, ci, di) < 0, na.rm=TRUE))
             stop(mstyle$stop("One or more counts are negative."))
 
-         if (any(c(n1i < 0, n2i < 0), na.rm=TRUE))
-            stop(mstyle$stop("One or more group sizes are < 0."))
+         if (any(c(n1i <= 0, n2i <= 0), na.rm=TRUE))
+            stop(mstyle$stop("One or more group sizes are <= 0."))
 
          if (measure == "MPORM" && any(abs(ri) > 1, na.rm=TRUE))
                stop(mstyle$stop("One or more correlations are > 1 or < -1."))
@@ -776,8 +776,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(c(sd1i, sd2i) < 0, na.rm=TRUE))
             stop(mstyle$stop("One or more standard deviations are negative."))
 
-         if (any(c(n1i, n2i) < 1, na.rm=TRUE))
-            stop(mstyle$stop("One or more sample sizes are < 1."))
+         if (any(c(n1i, n2i) <= 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more group sizes are <= 0."))
 
          ni.u <- n1i + n2i ### unadjusted total sample sizes
 
@@ -1026,8 +1026,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(abs(ri) > 1, na.rm=TRUE))
             stop(mstyle$stop("One or more correlations are > 1 or < -1."))
 
-         if (any(ni < 1, na.rm=TRUE))
-            stop(mstyle$stop("One or more sample sizes are < 1."))
+         if (any(ni <= 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more sample sizes are <= 0."))
 
          if (measure != "UCOR" && vtype == "UB")
             stop(mstyle$stop("Use of vtype='UB' only permitted when measure='UCOR'."))
@@ -1136,14 +1136,14 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (measure=="SPCOR" && any(r2i > 1 | r2i < 0, na.rm=TRUE))
             stop(mstyle$stop("One or more R^2 values are > 1 or < 0."))
 
-         if (any(ni < 1, na.rm=TRUE))
-            stop(mstyle$stop("One or more sample sizes are < 1."))
+         if (any(ni <= 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more sample sizes are <= 0."))
 
          if (any(mi < 0, na.rm=TRUE))
             stop(mstyle$stop("One or more mi values are negative."))
 
-         if (any(ni - mi - 1 < 1, na.rm=TRUE))
-            stop(mstyle$stop("One or more dfs are < 1."))
+         if (any(ni - mi - 1 <= 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more dfs are <= 0."))
 
          ni.u <- ni ### unadjusted total sample sizes
 
@@ -1256,8 +1256,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(c(xi, mi) < 0, na.rm=TRUE))
             stop(mstyle$stop("One or more counts are negative."))
 
-         if (any(ni < 1, na.rm=TRUE))
-            stop(mstyle$stop("One or more group sizes are < 1."))
+         if (any(ni <= 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more group sizes are <= 0."))
 
          ni.u <- ni ### unadjusted total sample sizes
 
@@ -1661,8 +1661,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(sdi < 0, na.rm=TRUE))
             stop(mstyle$stop("One or more standard deviations are negative."))
 
-         if (any(ni < 1, na.rm=TRUE))
-            stop(mstyle$stop("One or more sample sizes are < 1."))
+         if (any(ni <= 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more sample sizes are <= 0."))
 
          if (is.element(measure, c("MNLN","CVLN")) && any(mi < 0, na.rm=TRUE))
             stop(mstyle$stop("One or more means are negative."))
@@ -1783,8 +1783,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(abs(ri) > 1, na.rm=TRUE))
             stop(mstyle$stop("One or more correlations are > 1 or < -1."))
 
-         if (any(ni < 1, na.rm=TRUE))
-            stop(mstyle$stop("One or more sample sizes are < 1."))
+         if (any(ni <= 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more sample sizes are <= 0."))
 
          ni.u <- ni ### unadjusted total sample sizes
 
@@ -1930,8 +1930,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(mi < 2, na.rm=TRUE))
             stop(mstyle$stop("One or more mi values are < 2."))
 
-         if (any(ni < 1, na.rm=TRUE))
-            stop(mstyle$stop("One or more sample sizes are < 1."))
+         if (any(ni <= 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more sample sizes are <= 0."))
 
          ni.u <- ni ### unadjusted total sample sizes
 

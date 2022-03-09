@@ -652,7 +652,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       pval.min <- con$pval.min
 
    if (k < p + ifelse(is.element(x$method, c("FE","EE","CE")) || x$tau2.fix, 0, 1) + sum(is.na(delta)))
-      stop(mstyle$stop("Number of studies (k=", k, ") is too small to fit the selection model."))
+      stop(mstyle$stop(paste0("Number of studies (k=", k, ") is too small to fit the selection model.")))
 
    ############################################################################
 

@@ -43,7 +43,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
       y.pos <- pmatch(y, rownames(R)) # NA if no match or there are duplicates
 
       if (is.na(y.pos))
-         stop(mstyle$stop("Could not find variable '", y, "' in the 'R' matrix."))
+         stop(mstyle$stop(paste0("Could not find variable '", y, "' in the 'R' matrix.")))
 
       y <- y.pos
 

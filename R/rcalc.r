@@ -65,7 +65,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
 
       ### check that there are really 4 variables
       if (ncol(dat) != 4L)
-         stop(mstyle$stop("Formula should contain 4 variables, but contains ", ncol(dat), " variables."))
+         stop(mstyle$stop(paste0("Formula should contain 4 variables, but contains ", ncol(dat), " variables.")))
 
       ### check that there are no missings in the variable identifiers
       if (anyNA(c(dat[[2]],dat[[3]])))
@@ -98,8 +98,8 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
 
       for (i in seq_along(dat)) {
 
-         if (any(ni[[i]] < 0, na.rm=TRUE))
-            stop(mstyle$stop("One or more sample sizes are negative in study ", dat[[i]][[4]][[1]], "."))
+         if (any(ni[[i]] <= 0, na.rm=TRUE))
+            stop(mstyle$stop(paste0("One or more sample sizes are <= 0 in study ", dat[[i]][[4]][[1]], ".")))
 
          if (is.function(nfun)) {
             nfunnmi <- nfun(ni[[i]])
@@ -122,16 +122,16 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
 
          var1.var2.eq <- var1 == var2
          if (any(var1.var2.eq))
-            stop(mstyle$stop("Identical var1-var2 pair", ifelse(sum(var1.var2.eq) >= 2L, "s", ""), " (", paste0(var1.var2[var1.var2.eq], collapse=", "), ") in study ", dat[[i]][[4]][[1]], "."))
+            stop(mstyle$stop(paste0("Identical var1-var2 pair", ifelse(sum(var1.var2.eq) >= 2L, "s", ""), " (", paste0(var1.var2[var1.var2.eq], collapse=", "), ") in study ", dat[[i]][[4]][[1]], ".")))
 
          var1.var2.dup <- duplicated(var1.var2)
          if (any(var1.var2.dup))
-            stop(mstyle$stop("Duplicated var1-var2 pair", ifelse(sum(var1.var2.dup) >= 2L, "s", ""), " (", paste0(var1.var2[var1.var2.dup], collapse=", "), ") in study ", dat[[i]][[4]][[1]], "."))
+            stop(mstyle$stop(paste0("Duplicated var1-var2 pair", ifelse(sum(var1.var2.dup) >= 2L, "s", ""), " (", paste0(var1.var2[var1.var2.dup], collapse=", "), ") in study ", dat[[i]][[4]][[1]], ".")))
 
          ri <- dat[[i]][[1]]
 
          if (any(abs(ri) > 1, na.rm=TRUE))
-            stop(mstyle$stop("One or more correlations are > 1 or < -1 in study ", dat[[i]][[4]][[1]], "."))
+            stop(mstyle$stop(paste0("One or more correlations are > 1 or < -1 in study ", dat[[i]][[4]][[1]], ".")))
 
          vars <- sort(unique(c(var1, var2)))
 
@@ -264,10 +264,10 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
    if (any(abs(ri) > 1, na.rm=TRUE))
       stop(mstyle$stop("One or more correlations are > 1 or < -1."))
 
-   ### check that sample sizes are non-negative
+   ### check that sample sizes are > 0
 
-   if (isTRUE(ni < 0))
-      stop(mstyle$stop("One or more sample sizes are negative."))
+   if (isTRUE(ni <= 0))
+      stop(mstyle$stop("One or more sample sizes are <= 0."))
 
    ### apply r-to-z transformation if requested
 

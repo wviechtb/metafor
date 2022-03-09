@@ -1,5 +1,32 @@
 ############################################################################
 
+.chktargsint <- function(targs) {
+
+   if (length(targs) > 3L)
+      stop("Length of 'targs' argument must be <= 3.", call.=FALSE)
+
+   if (.is.vector(targs)) {
+      if (is.null(names(targs))) {
+         names(targs) <- c("tau2", "lower", "upper")[seq_along(targs)]
+         targs <- as.list(targs)
+      } else {
+         targs <- list(tau2=unname(targs[startsWith(names(targs), "t")]), lower=unname(targs[startsWith(names(targs), "l")]), upper=unname(targs[startsWith(names(targs), "u")]))
+         targs <- targs[sapply(targs, length) > 0L]
+      }
+   }
+
+   if (any(sapply(targs, length) > 1L))
+      stop("Elements of 'targs' arguments must be scalars.", call.=FALSE)
+
+   if (is.null(targs$tau2))
+      targs$tau2 <- 0
+
+   return(targs)
+
+}
+
+############################################################################
+
 transf.rtoz <- function(xi, ...)                   ### resulting value between -Inf (for -1) and +Inf (for +1)
    atanh(xi)
 
@@ -8,8 +35,11 @@ transf.ztor <- function(xi, ...)
 
 transf.ztor.int <- function(xi, targs=NULL, ...) {
 
-   if (is.null(targs$tau2))
-      targs$tau2 <- 0
+   if (is.na(xi))
+      return(NA)
+
+   targs <- .chktargsint(targs)
+
    if (is.null(targs$lower))
       targs$lower <- xi-10*sqrt(targs$tau2)
    if (is.null(targs$upper))
@@ -35,8 +65,11 @@ transf.ztor.int <- function(xi, targs=NULL, ...) {
 
 transf.exp.int <- function(xi, targs=NULL, ...) {
 
-   if (is.null(targs$tau2))
-      targs$tau2 <- 0
+   if (is.na(xi))
+      return(NA)
+
+   targs <- .chktargsint(targs)
+
    if (is.null(targs$lower))
       targs$lower <- xi-10*sqrt(targs$tau2)
    if (is.null(targs$upper))
@@ -68,8 +101,11 @@ transf.ilogit <- function(xi, ...)
 
 transf.ilogit.int <- function(xi, targs=NULL, ...) {
 
-   if (is.null(targs$tau2))
-      targs$tau2 <- 0
+   if (is.na(xi))
+      return(NA)
+
+   targs <- .chktargsint(targs)
+
    if (is.null(targs$lower))
       targs$lower <- xi-10*sqrt(targs$tau2)
    if (is.null(targs$upper))
@@ -104,28 +140,31 @@ transf.iarcsin <- function(xi, ...) {
 }
 
 # transf.iarcsin.int <- function(xi, targs=NULL, ...) {
-
-#    if (is.null(targs$tau2))
-#       targs$tau2 <- 0
-#    if (is.null(targs$lower))
-#       targs$lower <- 0
-#    if (is.null(targs$upper))
-#       targs$upper <- asin(1)
-
-#    toint <- function(zval, xi, tau2)
-#       transf.iarcsin(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
-
-#    cfunc <- function(xi, tau2, lower, upper)
-#       integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2)$value
-
-#    if (targs$tau2 == 0) {
-#       zi <- transf.iarcsin(xi)
-#    } else {
-#       zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
-#    }
-
-#    return(c(zi))
-
+#
+#   if (is.na(xi))
+#      return(NA)
+#
+#   targs <- .chktargsint(targs)
+#
+#   if (is.null(targs$lower))
+#      targs$lower <- 0
+#   if (is.null(targs$upper))
+#      targs$upper <- asin(1)
+#
+#   toint <- function(zval, xi, tau2)
+#      transf.iarcsin(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
+#
+#   cfunc <- function(xi, tau2, lower, upper)
+#      integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2)$value
+#
+#   if (targs$tau2 == 0) {
+#      zi <- transf.iarcsin(xi)
+#   } else {
+#      zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
+#   }
+#
+#   return(c(zi))
+#
 # }
 
 ############################################################################
