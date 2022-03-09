@@ -1,4 +1,4 @@
-anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, ...) {
+anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -365,8 +365,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, ...) {
       if (test == "Wald" && (model.f$method != model.r$method))
          stop(mstyle$stop("Full and reduced model must use the same 'method' for the model fitting."))
 
-      ### for LRT, reduced model may use method="FE/EE/CE" and full model method="(RE)ML"
-      ### which is fine, but the other way around doesn't really make sense
+      ### for LRTs, reduced model may use method="FE/EE/CE" and full model method="(RE)ML" but the other way around doesn't really make sense
 
       if (is.element(model.f$method, c("FE","EE","CE")) && !is.element(model.r$method, c("FE","EE","CE")))
          stop(mstyle$stop("Full model uses a fixed- and reduced model uses a random/mixed-effects model."))
@@ -380,6 +379,28 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, ...) {
 
       if (test == "LRT" && (!is.element(model.f$method, c("FE","EE","CE","ML","REML")) || !is.element(model.r$method, c("FE","EE","CE","ML","REML"))))
          warning(mstyle$warning("LRTs should be based on ML/REML estimation."))
+
+      ### for LRTs based on REML estimation, check if fixed effects differ
+      if (test == "LRT" && model.f$method == "REML" && (!identical(model.f$X, model.r$X))) {
+         if (refit) {
+            #message(mstyle$message("Refitting models with ML (instead of REML) estimation ..."))
+            model.f <- try(update(model.f, method="ML"), silent=TRUE)
+            if (inherits(model.f, "try-error"))
+               stop(mstyle$stop("Refitting the full model with ML estimation failed."))
+            model.r <- try(update(model.r, method="ML"), silent=TRUE)
+            if (inherits(model.r, "try-error"))
+               stop(mstyle$stop("Refitting the reduced model with ML estimation failed."))
+            parms.f <- model.f$parms
+            parms.r <- model.r$parms
+         } else {
+            warning(mstyle$warning("REML comparisons not meaningful for models with different fixed effects\n(use 'refit=TRUE' to refit both models based on ML estimation)."), call.=FALSE)
+         }
+      }
+
+      ### in this case, one could consider just taking the ML deviances, but this
+      ### is really ad-hoc; there is some theory in Welham & Thompson (1997) about
+      ### LRTs for fixed effects when using REML estimation, but this involves
+      ### additional work
 
       ### could do even more checks for cases where the models are clearly not nested
 
@@ -440,23 +461,11 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, ...) {
             fit.stats.f <- t(model.f$fit.stats)["REML",] # to keep (row)names of fit.stats
             fit.stats.r <- t(model.r$fit.stats)["REML",] # to keep (row)names of fit.stats
 
-            if (!identical(model.f$X, model.r$X))
-               warning(mstyle$warning("Models with different fixed effects. REML comparisons are not meaningful."), call.=FALSE)
-
-            ### in this case, one could consider just taking the ML deviances, but this
-            ### is really ad-hoc; there is some theory in Welham & Thompson (1997) about
-            ### LRTs for fixed effects when using REML estimation, but this involves
-            ### additional work
-
          } else {
 
             LRT <- model.r$fit.stats["dev","ML"] - model.f$fit.stats["dev","ML"]
             fit.stats.f <- t(model.f$fit.stats)["ML",]
             fit.stats.r <- t(model.r$fit.stats)["ML",]
-
-            ### in principle, a 'rma.uni' model may have been fitted with something besides ML
-            ### estimation (for tau^2), so technically the deviance is then not really that as
-            ### obtained with proper ML estimation; issue a warning about this?
 
          }
 

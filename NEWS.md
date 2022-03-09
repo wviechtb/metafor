@@ -1,4 +1,4 @@
-# metafor 3.1-48 (2022-03-09)
+# metafor 3.1-49 (2022-03-09)
 
 - added `misc-models` and `misc-options` help pages
 
@@ -10,7 +10,7 @@
 
 - results from `robust()` are no longer printed with `print.robust.rma()` but with the print methods `print.rma.uni()` and `print.rma.mv()`
 
-- `anova.rma()` now gives a warning when running LRTs not based on ML/REML estimation and gains `rhs` argument
+- `anova.rma()` now gives a warning when running LRTs not based on ML/REML estimation and gains `rhs` argument; it also now has a `refit` argument
 
 - setting `dfs="contain"` in `rma.mv()` automatically sets `test="t"`
 
