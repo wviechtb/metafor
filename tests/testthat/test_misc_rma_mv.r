@@ -91,11 +91,11 @@ test_that("rma.mv() works correctly with test='t'", {
 
 test_that("rma.mv() works correctly with different optimizers", {
 
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="optim", optmethod="BFGS"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="BFGS"), sparse=sparse)
    expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="optim", optmethod="L-BFGS-B"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="L-BFGS-B"), sparse=sparse)
    expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="optim", optmethod="Nelder-Mead"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="Nelder-Mead"), sparse=sparse)
    expect_equivalent(res$sigma2, 0.3133, tolerance=.tol[["var"]])
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nlminb"), sparse=sparse)
    expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])

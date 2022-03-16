@@ -10,7 +10,7 @@ test_that("location-scale model results are correct for in intercept-only model"
 
    res1 <- rma(yi, vi, data=dat, test="t")
    res2 <- rma(yi, vi, scale = ~ 1, data=dat, test="t", control=list(optimizer="optim"))
-   res3 <- suppressWarnings(rma(yi, vi, scale = ~ 1, link="identity", data=dat, test="t", control=list(optimizer="optim", optmethod="Nelder-Mead")))
+   res3 <- suppressWarnings(rma(yi, vi, scale = ~ 1, link="identity", data=dat, test="t", control=list(optimizer="Nelder-Mead")))
    expect_equivalent(res1$tau2, as.vector(exp(coef(res2)$alpha)), tolerance=.tol[["var"]])
    expect_equivalent(res1$tau2, as.vector(coef(res3)$alpha), tolerance=.tol[["var"]])
 

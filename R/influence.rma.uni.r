@@ -259,18 +259,18 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
    if (measure == "rstudent") {
 
       if (na.act == "na.omit") {
-         resid.f   <- resid
-         seresid.f <- seresid
-         stresid.f <- stresid
+         resid.f   <- c(resid)
+         seresid.f <- c(seresid)
+         stresid.f <- c(stresid)
       }
 
       if (na.act == "na.exclude" || na.act == "na.pass") {
          resid.f   <- rep(NA_real_, x$k.f)
          seresid.f <- rep(NA_real_, x$k.f)
          stresid.f <- rep(NA_real_, x$k.f)
-         resid.f[x$not.na]   <- resid
-         seresid.f[x$not.na] <- seresid
-         stresid.f[x$not.na] <- stresid
+         resid.f[x$not.na]   <- c(resid)
+         seresid.f[x$not.na] <- c(seresid)
+         stresid.f[x$not.na] <- c(stresid)
       }
 
       out <- list(resid=resid.f, se=seresid.f, z=stresid.f, slab=out$inf$slab, digits=digits)
