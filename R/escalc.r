@@ -187,8 +187,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(c(ai, bi, ci, di) < 0, na.rm=TRUE))
             stop(mstyle$stop("One or more counts are negative."))
 
-         if (any(c(n1i <= 0, n2i <= 0), na.rm=TRUE))
-            stop(mstyle$stop("One or more group sizes are <= 0."))
+         if (any(c(n1i < 0, n2i < 0), na.rm=TRUE)) # note: in cross-sectional sampling, group sizes could be 0
+            stop(mstyle$stop("One or more group sizes are negative."))
 
          if (measure == "MPORM" && any(abs(ri) > 1, na.rm=TRUE))
                stop(mstyle$stop("One or more correlations are > 1 or < -1."))

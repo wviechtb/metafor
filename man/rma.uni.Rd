@@ -289,12 +289,12 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### fit a random-effects model using the log risk ratios and variances as input
+### fit a random-effects model using the log risk ratios and sampling variances as input
 ### note: method="REML" is the default, so one could leave this out
 rma(yi, vi, data=dat, method="REML")
 
 ### fit a random-effects model using the log risk ratios and standard errors as input
-### note: the second argument of rma() is for the *variances*, so we use the
+### note: the second argument of rma() is for the *sampling variances*, so we use the
 ### named argument 'sei' to supply the standard errors to the function
 dat$sei <- sqrt(dat$vi)
 rma(yi, sei=sei, data=dat)

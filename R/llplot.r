@@ -141,8 +141,8 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       if (any(c(ai, bi, ci, di) < 0, na.rm=TRUE))
          stop(mstyle$stop("One or more counts are negative."))
 
-      if (any(c(n1i <= 0, n2i <= 0), na.rm=TRUE))
-         stop(mstyle$stop("One or more group sizes are <= 0."))
+      if (any(c(n1i < 0, n2i < 0), na.rm=TRUE))
+         stop(mstyle$stop("One or more group sizes are negative."))
 
       k <- length(ai) ### number of outcomes before subsetting
 
