@@ -1,4 +1,4 @@
-# metafor 3.1-51 (2022-03-20)
+# metafor 3.1-52 (2022-03-21)
 
 - added `misc-models` and `misc-options` help pages
 
@@ -19,6 +19,8 @@
 - `rma.mv()` gains `cvvc` argument (for calculating the var-cov matrix of the variance/correlation/covariance components)
 
 - added measure `"MPORM"` to `escalc()` for computing marginal log odds ratios based on marginal 2x2 tables directly (which requires specification of the correlation coefficients in the paired tables for the calculation of the sampling variances via the `ri` argument)
+
+- added measure `"REH"` to `escalc()` for computing the (log transformed) relative excess heterozygosity (to assess deviations from the Hardy-Weinberg equilibrium)
 
 - `aggregate.escalc()` gains `checkpd` argument and `struct="CS+CAR"`
 

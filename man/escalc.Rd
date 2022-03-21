@@ -413,6 +413,14 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
       }
 
+      \subsection{Relative Excess Heterozygosity}{
+
+         Ziegler et al. (2011) describe the use of meta-analytic methods to examine deviations from the Hardy-Weinberg equilibrium across multiple studies. The relative excess heterozygosity (REH) is the proposed measure for such a meta-analysis, which can be computed by setting \code{measure="REH"}. Here, one needs to specify \code{ai} for the number of individuals with homozygous dominant alleles, \code{bi} for the number of individuals with heterozygous alleles, and \code{ci} for the number of individuals with homozygous recessives alleles.
+
+         Note that the log is taken of the REH values, which makes this outcome measure symmetric around 0 and yields a corresponding sampling distribution that is closer to normality.
+
+      }
+
    }
 
    \subsection{Converting a Data Frame to an 'escalc' Object}{
@@ -547,6 +555,8 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    Yule, G. U. (1912). On the methods of measuring association between two attributes. \emph{Journal of the Royal Statistical Society}, \bold{75}(6), 579--652. \verb{https://doi.org/10.2307/2340126}
 
    Yusuf, S., Peto, R., Lewis, J., Collins, R., & Sleight, P. (1985). Beta blockade during and after myocardial infarction: An overview of the randomized trials. \emph{Progress in Cardiovascular Disease}, \bold{27}(5), 335--371. \verb{https://doi.org/10.1016/s0033-0620(85)80003-7}
+
+   Ziegler, A., Steen, K. V. & Wellek, S. (2011). Investigating Hardy-Weinberg equilibrium in case-control or cohort studies or meta-analysis. \emph{Breast Cancer Research and Treatment}, \bold{128}(1), 197--201. \verb{https://doi.org/10.1007/s10549-010-1295-z}
 
    Zou, G. Y. (2007). One relative risk versus two odds ratios: Implications for meta-analyses involving paired and unpaired binary data. \emph{Clinical Trials}, \bold{4}(1), 25--31. \verb{https://doi.org/10.1177/1740774506075667}
 }

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-50</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-52</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.1-50" id="metafor-31-50-2022-03-16">metafor 3.1-50 (2022-03-16)<a class="anchor" aria-label="anchor" href="#metafor-31-50-2022-03-16"></a></h2>
+<h2 class="page-header" data-toc-text="3.1-52" id="metafor-31-52-2022-03-21">metafor 3.1-52 (2022-03-21)<a class="anchor" aria-label="anchor" href="#metafor-31-52-2022-03-21"></a></h2>
 <ul><li><p>added <code>misc-models</code> and <code>misc-options</code> help pages</p></li>
 <li><p>simplified <code><a href="../reference/regtest.html">regtest()</a></code>, <code><a href="../reference/ranktest.html">ranktest()</a></code>, and <code><a href="../reference/tes.html">tes()</a></code> to single functions instead of using generics and methods; this way, a <code>data</code> argument could be added</p></li>
 <li><p>added <code><a href="../reference/vcalc.html">vcalc()</a></code> and <code><a href="../reference/blsplit.html">blsplit()</a></code> functions</p></li>
@@ -107,6 +107,7 @@
 <li><p>elements of <code>rho</code> and <code>phi</code> in <code><a href="../reference/rma.mv.html">rma.mv()</a></code> are now based on the lower triangular part of the respective correlation matrix (instead of the upper triangular part) for consistency with other functions; note that this is in principle a backwards incompatible change, although this should only be a concern in very special circumstances</p></li>
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> gains <code>cvvc</code> argument (for calculating the var-cov matrix of the variance/correlation/covariance components)</p></li>
 <li><p>added measure <code>"MPORM"</code> to <code><a href="../reference/escalc.html">escalc()</a></code> for computing marginal log odds ratios based on marginal 2x2 tables directly (which requires specification of the correlation coefficients in the paired tables for the calculation of the sampling variances via the <code>ri</code> argument)</p></li>
+<li><p>added measure <code>"REH"</code> to <code><a href="../reference/escalc.html">escalc()</a></code> for computing the (log transformed) relative excess heterozygosity (to assess deviations from the Hardy-Weinberg equilibrium)</p></li>
 <li><p><code><a href="../reference/aggregate.escalc.html">aggregate.escalc()</a></code> gains <code>checkpd</code> argument and <code>struct="CS+CAR"</code></p></li>
 <li><p><code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> now has entire array of optimizers available for <code>model="CM.EL"</code> and <code>measure="OR"</code>; switched the default from <code><a href="https://rdrr.io/r/stats/optim.html" class="external-link">optim()</a></code> with method <code>BFGS</code> to <code><a href="https://rdrr.io/r/stats/nlminb.html" class="external-link">nlminb()</a></code> for consistency with <code><a href="../reference/rma.mv.html">rma.mv()</a></code>, <code><a href="../reference/rma.uni.html">rma.uni()</a></code>, and <code><a href="../reference/selmodel.html">selmodel.rma.uni()</a></code></p></li>
 <li><p><code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> gains <code>coding</code> and <code>cor</code> arguments and hence more flexibility how the group variable should be coded in the random effects structure and whether the random study effects should be allowed to be correlated with the random group effects</p></li>
