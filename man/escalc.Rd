@@ -415,9 +415,11 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
       \subsection{Relative Excess Heterozygosity}{
 
-         Ziegler et al. (2011) describe the use of meta-analytic methods to examine deviations from the Hardy-Weinberg equilibrium across multiple studies. The relative excess heterozygosity (REH) is the proposed measure for such a meta-analysis, which can be computed by setting \code{measure="REH"}. Here, one needs to specify \code{ai} for the number of individuals with homozygous dominant alleles, \code{bi} for the number of individuals with heterozygous alleles, and \code{ci} for the number of individuals with homozygous recessives alleles.
+         Ziegler et al. (2011) describe the use of meta-analytic methods to examine deviations from Hardy-Weinberg equilibrium across multiple studies. The relative excess heterozygosity (REH) is the proposed measure for such a meta-analysis, which can be computed by setting \code{measure="REH"}. Here, one needs to specify \code{ai} for the number of individuals with homozygous dominant alleles, \code{bi} for the number of individuals with heterozygous alleles, and \code{ci} for the number of individuals with homozygous recessives alleles.
 
          Note that the log is taken of the REH values, which makes this outcome measure symmetric around 0 and yields a corresponding sampling distribution that is closer to normality.
+
+         A dataset corresponding to data of this type is provided in \code{\link[metadat]{dat.frank2008}}.
 
       }
 
