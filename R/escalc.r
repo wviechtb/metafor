@@ -28,6 +28,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                               "MN","MNLN","CVLN","SDLN","SMN",                     ### mean, log(mean), log(CV), log(SD), standardized mean
                               "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      ### raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT",                                  ### alpha (and transformations thereof)
+                              "REH",                                               ### relative excess heterozygosity
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
@@ -1960,6 +1961,47 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             yi <- -log(1-ai) ### but with this, yi remains a monotonically increasing function of ai
             vi <- 2*mi / ((mi-1)*(ni-2))
          }
+
+      }
+
+      ######################################################################
+
+      if (measure == "REH") {
+
+         ai <- .getx("ai", mf=mf, data=data)
+         bi <- .getx("bi", mf=mf, data=data)
+         ci <- .getx("ci", mf=mf, data=data)
+
+         if (!.all.specified(ai, bi, ci))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+
+         if (!.equal.length(ai, bi, ci))
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+         k.all <- length(ai)
+
+         if (!is.null(subset)) {
+            subset <- .setnafalse(subset, k=k.all)
+            ai <- ai[subset]
+            bi <- bi[subset]
+            ci <- ci[subset]
+         }
+
+         if (any(ai < 0, na.rm=TRUE) || any(bi < 0, na.rm=TRUE) || any(ci < 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more group sizes are negative."))
+
+         ni <- ai + bi + ci
+
+         ni.u <- ni ### unadjusted total sample sizes
+
+         k <- length(ai)
+
+         p0i <- ai / ni
+         p1i <- bi / ni
+         p2i <- ci / ni
+
+         yi <- log(p1i) - log(2 * sqrt(p0i * p2i))
+         vi <- ((1-p1i) / (4 * p0i * p2i) + 1 / p1i) / ni
 
       }
 

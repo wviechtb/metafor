@@ -28,6 +28,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                               "MN","MNLN","CVLN","SDLN","SMN",                     ### mean, log(mean), log(CV), log(SD), standardized mean
                               "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      ### raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT",                                  ### alpha (and transformations thereof)
+                              "REH",                                               ### relative excess heterozygosity
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
@@ -580,6 +581,26 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          }
 
          args <- list(measure=measure, ai=ai, mi=mi, ni=ni, vtype=vtype)
+
+      }
+
+      if (measure == "REH") {
+
+         ai <- .getx("ai", mf=mf, data=data)
+         bi <- .getx("bi", mf=mf, data=data)
+         ci <- .getx("ci", mf=mf, data=data)
+
+         k <- length(ai) ### number of outcomes before subsetting
+         k.all <- k
+
+         if (!is.null(subset)) {
+            subset <- .setnafalse(subset, k=k)
+            ai <- ai[subset]
+            bi <- bi[subset]
+            ci <- ci[subset]
+         }
+
+         args <- list(measure=measure, ai=ai, bi=bi, ci=ci, vtype=vtype)
 
       }
 

@@ -913,6 +913,19 @@
          }
       }
       ######################################################################
+      if (measure == "REH") {
+         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
+            lab <- ifelse(short, "Log[REH]", "Log Relative Excess Heterozygosity")
+         } else {
+            lab <- ifelse(short, lab, "Transformed Log Relative Excess Heterozygosity")
+            funlist <- lapply(list(exp, transf.exp.int), deparse)
+            if (any(sapply(funlist, identical, atransf.char)))
+               lab <- ifelse(short, "Relative Excess Heterozygosity", "Relative Excess Heterozygosity (log scale)")
+            if (any(sapply(funlist, identical, transf.char)))
+               lab <- ifelse(short, "Relative Excess Heterozygosity", "Relative Excess Heterozygosity")
+         }
+      }
+      ######################################################################
 
    }
 
