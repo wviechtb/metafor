@@ -1122,7 +1122,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    ll0   <- c(logLik(x, REML=FALSE))
    LRT   <- max(0, -2 * (ll0 - ll))
    LRTdf <- sum(is.na(delta.val) & delta.LRT)
-   LRTp  <- ifelse(LRTdf > 0, pchisq(LRT, df=LRTdf, lower.tail=FALSE), NA)
+   LRTp  <- ifelse(LRTdf > 0, pchisq(LRT, df=LRTdf, lower.tail=FALSE), NA_real_)
 
    ############################################################################
 

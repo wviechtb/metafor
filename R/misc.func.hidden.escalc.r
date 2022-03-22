@@ -11,7 +11,7 @@
    #cmi[is.na] <- 1 - 3/(4*mi[is.na] - 1)
 
    ### this avoids the problem with overflow altogether
-   cmi <- ifelse(mi <= 1, NA, exp(lgamma(mi/2) - log(sqrt(mi/2)) - lgamma((mi-1)/2)))
+   cmi <- ifelse(mi <= 1, NA_real_, exp(lgamma(mi/2) - log(sqrt(mi/2)) - lgamma((mi-1)/2)))
    return(cmi)
 
 }

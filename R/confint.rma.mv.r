@@ -500,7 +500,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       vc <- c(vc, vc.lb, vc.ub)
 
       if (is.element(comp, c("sigma2", "tau2", "gamma2"))) {
-         vcsqrt <- sqrt(ifelse(vc >= 0, vc, NA))
+         vcsqrt <- sqrt(ifelse(vc >= 0, vc, NA_real_))
          res.random <- rbind(vc, vcsqrt)
          if (comp == "sigma2") {
             if (length(x$sigma2) == 1L) {

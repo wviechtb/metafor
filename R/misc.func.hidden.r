@@ -216,7 +216,7 @@
    len.n   <- nchar(names(x))
    len.x   <- nchar(x, keepNA=FALSE)
    len.max <- pmax(len.n, len.x)
-   format  <- sapply(len.max, function(x) paste("%", x, "s", sep=""))
+   #format  <- sapply(len.max, function(x) paste("%", x, "s", sep=""))
 
    #row.n <- paste(sprintf(format, names(x)), collapse="  ") # sprintf("%3s", "\u00b9") isn't right
    #row.x <- paste(sprintf(format, x), collapse="  ")

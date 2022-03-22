@@ -353,7 +353,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
       vc <- c(vc, vc.lb, vc.ub)
 
       if (comp == "tau2") {
-         vcsqrt <- sqrt(ifelse(vc >= 0, vc, NA))
+         vcsqrt <- sqrt(ifelse(vc >= 0, vc, NA_real_))
          res.random <- rbind(vc, vcsqrt)
          rownames(res.random) <- c("tau^2", "tau")
       }

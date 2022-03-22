@@ -961,7 +961,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             if (!isTRUE(ddd$skiphet)) {
 
-               if (verbose)
+               if (k > 1 && verbose)
                   message(mstyle$message("Fitting saturated model ..."))
 
                if (k > 1) {
@@ -1146,7 +1146,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             if (!isTRUE(ddd$skiphet)) {
 
-               if (verbose)
+               if (k > 1 && verbose)
                   message(mstyle$message("Fitting saturated model ..."))
 
                if (k > 1) {
@@ -1421,7 +1421,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
          if (!isTRUE(ddd$skiphet)) {
 
-            if (verbose)
+            if (k > 1 && verbose)
                message(mstyle$message("Fitting saturated model ..."))
 
             if (k > 1) {
@@ -1715,7 +1715,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                h.FE <- numDeriv::hessian(.dnchg, x=res.FE$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
             if (con$hesspack == "pracma")
                h.FE <- pracma::hessian(.dnchg, x0=res.FE$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
-            #return(list(res.FE, h.FE))
+            #return(list(res.FE=res.FE, h.FE=h.FE))
 
             ### log-likelihood
 
@@ -1736,7 +1736,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             if (QEconv) { # QEconv is FALSE when skiphet=TRUE so this then also gets skipped automatically
 
-               if (verbose)
+               if (k > 1 && verbose)
                   message(mstyle$message("Fitting saturated model ..."))
 
                if (k > 1) {
@@ -1836,7 +1836,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
             }
 
-            if (QEconv) {
+            if (k > 1 && QEconv) {
 
                ### log-likelihood
 
@@ -2082,7 +2082,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                   warning(mstyle$warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition."), call.=FALSE)
                   vb <- try(qr.solve(h.FE[seq_len(p),seq_len(p)]), silent=!verbose) # see if Hessian can be inverted with qr.solve()
                   if (inherits(vb, "try-error"))
-                     stop(mstyle$stop("Cannot invert Hessian for ML model."))
+                     stop(mstyle$stop(paste0("Cannot invert Hessian for the ", method, " model.")))
                } else {
                   vb <- chol2inv(chol.h)
                }
@@ -2107,7 +2107,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                warning(mstyle$warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition."), call.=FALSE)
                vb.f <- try(qr.solve(h.ML), silent=!verbose) # see if Hessian can be inverted with qr.solve()
                if (inherits(vb.f, "try-error"))
-                  stop(mstyle$stop("Cannot invert Hessian for ML model."))
+                  stop(mstyle$stop("Cannot invert Hessian for the ML model."))
             } else {
                vb.f <- chol2inv(chol.h)
             }
@@ -2203,7 +2203,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
       if (!isTRUE(ddd$skiphet)) {
 
-         if (verbose)
+         if (k > 1 && verbose)
             message(mstyle$message("Fitting saturated model ..."))
 
          if (k > 1) {
@@ -2348,7 +2348,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    if (verbose > 1)
       message(mstyle$message("Conducting heterogeneity tests ..."))
 
-   if (QEconv) {
+   if (k > 1 && QEconv) {
 
       ### for OR, CM.EL, & optim/nlminb/minqa, QE.Wld is already calculated, so skip this part then
 
@@ -2467,7 +2467,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    rownames(beta) <- rownames(vb) <- colnames(vb) <- colnames(X.f) <- colnames(X)
 
    ve <- diag(vb)
-   se <- ifelse(ve >= 0, sqrt(ve), NA)
+   se <- ifelse(ve >= 0, sqrt(ve), NA_real_)
    names(se) <- NULL
    zval <- c(beta/se)
 

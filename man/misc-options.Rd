@@ -158,4 +158,3 @@ res$time}
 }
 \keyword{documentation}
 \keyword{misc}
-\keyword{internal}

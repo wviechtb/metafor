@@ -324,6 +324,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       crit <- qnorm(level/2, lower.tail=FALSE)
    }
 
+   vpred[vpred < 0] <- NA_real_
    se <- sqrt(vpred)
    ci.lb <- pred - crit * se
    ci.ub <- pred + crit * se

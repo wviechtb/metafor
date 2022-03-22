@@ -157,4 +157,3 @@ For further discussions of the distinction between the equal-, fixed-, and rando
 }
 \keyword{documentation}
 \keyword{models}
-\keyword{internal}

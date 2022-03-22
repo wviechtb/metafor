@@ -486,7 +486,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
       H2.ub <- tau2.ub / x$vt + 1
 
       tau2 <- c(x$tau2, tau2.lb, tau2.ub)
-      tau  <- sqrt(c(ifelse(x$tau2 >= 0, x$tau2, NA), ifelse(tau2.lb >= 0, tau2.lb, NA), ifelse(tau2.ub >= 0, tau2.ub, NA)))
+      tau  <- sqrt(c(ifelse(x$tau2 >= 0, x$tau2, NA_real_), ifelse(tau2.lb >= 0, tau2.lb, NA_real_), ifelse(tau2.ub >= 0, tau2.ub, NA_real_)))
       I2   <- c(x$I2, I2.lb, I2.ub)
       H2   <- c(x$H2, H2.lb, H2.ub)
 

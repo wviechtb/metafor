@@ -342,9 +342,8 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       lls.sum <- rep(NA_real_, k)
       for (i in seq_len(k)) {
          lls.sum[i] <- trapezoid(xs[!is.na(lls[i,])], lls[i,!is.na(lls[i,])])
+         lls[i,] <- lls[i,] / lls.sum[i]
       }
-      #lls.sum <- rowSums(lls, na.rm=TRUE)
-      lls <- apply(lls, 2, "/", lls.sum)
    }
 
    lls[out] <- NA

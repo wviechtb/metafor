@@ -177,7 +177,7 @@ transf.pft <- function(xi, ni, ...) {              ### Freeman-Tukey transformat
 
 transf.ipft <- function(xi, ni, ...) {             ### inverse of Freeman-Tukey transformation for individual proportions
    zi <- suppressWarnings(1/2 * (1 - sign(cos(2*xi)) * sqrt(1 - (sin(2*xi)+(sin(2*xi)-1/sin(2*xi))/ni)^2)))
-   zi <- ifelse(is.nan(zi), NA, zi)
+   zi <- ifelse(is.nan(zi), NA_real_, zi)
    zi[xi > transf.pft(1,ni)] <- 1                  ### if xi is above upper limit, return 1
    zi[xi < transf.pft(0,ni)] <- 0                  ### if xi is below lower limit, return 0
    return(c(zi))
@@ -193,7 +193,7 @@ transf.ipft.hm <- function(xi, targs, ...) {       ### inverse of Freeman-Tukey 
    }
    nhm <- 1/(mean(1/ni, na.rm=TRUE))               ### calculate harmonic mean of the ni's
    zi <- suppressWarnings(1/2 * (1 - sign(cos(2*xi)) * sqrt(1 - (sin(2*xi)+(sin(2*xi)-1/sin(2*xi))/nhm)^2)))
-   zi <- ifelse(is.nan(zi), NA, zi)                ### it may not be possible to calculate zi
+   zi <- ifelse(is.nan(zi), NA_real_, zi)          ### it may not be possible to calculate zi
    zi[xi > transf.pft(1,nhm)] <- 1                 ### if xi is above upper limit, return 1
    zi[xi < transf.pft(0,nhm)] <- 0                 ### if xi is below lower limit, return 0
    return(c(zi))
@@ -217,7 +217,7 @@ transf.irft <- function(xi, ti, ...) {             ### Freeman-Tukey transformat
 transf.iirft <- function(xi, ti, ...) {            ### inverse of Freeman-Tukey transformation for incidence rates (see Freeman-Tukey_incidence.r in code directory)
    #zi <- (1/ti - 2*xi^2 + ti*xi^4)/(4*xi^2*ti)    ### old version where transf.irft was not multiplied by 1/2
    zi <- (1/ti - 8*xi^2 + 16*ti*xi^4)/(16*xi^2*ti) ### xi is the incidence rate (not the number of events!)
-   zi <- ifelse(is.nan(zi), NA, zi)
+   zi <- ifelse(is.nan(zi), NA_real_, zi)
    zi[xi < transf.irft(0,ti)] <- 0                 ### if xi is below lower limit, return 0
    zi[zi <= .Machine$double.eps] <- 0              ### avoid finite precision errors in back-transformed values (transf.iirft(transf.irft(0, 1:200), 1:200))
    return(c(zi))
@@ -234,7 +234,7 @@ transf.ahw <- function(xi, ...) {                  ### resulting value between 0
 transf.iahw <- function(xi, ...) {
    #zi <- 1-xi^3
    zi <- 1 - (1-xi)^3
-   zi <- ifelse(is.nan(zi), NA, zi)
+   zi <- ifelse(is.nan(zi), NA_real_, zi)
    zi[xi > 1] <- 1                                 ### if xi is above upper limit, return 1
    zi[xi < 0] <- 0                                 ### if xi is below lower limit, return 0
    return(c(zi))
@@ -253,7 +253,7 @@ transf.iabt <- function(xi, ...) {                 ### inverse of Bonett (2002) 
    #zi <- 1 - exp(xi) * ni / (ni-1)
    #zi <- 1 - exp(xi)
    zi <- 1 - exp(-xi)
-   zi <- ifelse(is.nan(zi), NA, zi)
+   zi <- ifelse(is.nan(zi), NA_real_, zi)
    zi[xi < 0] <- 0                                 ### if xi is below lower limit, return 0
    return(c(zi))
 }

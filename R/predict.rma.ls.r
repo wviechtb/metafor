@@ -309,6 +309,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    }
 
+   vpred[vpred < 0] <- NA_real_
    se <- sqrt(vpred)
    ci.lb <- pred - crit * se
    ci.ub <- pred + crit * se
