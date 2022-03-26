@@ -2,6 +2,8 @@
 
 - added `misc-models` and `misc-options` help pages
 
+- added `as.data.frame.confint.rma()` and `as.data.frame.list.confint.rma` methods
+
 - simplified `regtest()`, `ranktest()`, and `tes()` to single functions instead of using generics and methods; this way, a `data` argument could be added
 
 - added `vcalc()` and `blsplit()` functions
