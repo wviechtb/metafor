@@ -206,6 +206,7 @@ reference:
     contents:
       - methods.escalc
       - methods.list.rma
+      - methods.confint.rma
   - title: "Miscellaneous Documentation"
     desc: >
       Miscellaneous documentation.
