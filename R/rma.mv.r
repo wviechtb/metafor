@@ -781,23 +781,6 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    vi <- diag(V)
 
-   ### check for non-positive sampling variances (and set negative values to 0)
-
-   if (any(vi <= 0, na.rm=TRUE)) {
-      allvipos <- FALSE
-      if (!V0)
-         warning(mstyle$warning("There are outcomes with non-positive sampling variances."), call.=FALSE)
-      vi.neg <- vi < 0
-      if (any(vi.neg, na.rm=TRUE)) {
-         V[vi.neg,] <- 0 ### note: entire row set to 0 (so covariances are also 0)
-         V[,vi.neg] <- 0 ### note: entire col set to 0 (so covariances are also 0)
-         vi[vi.neg] <- 0
-         warning(mstyle$warning("Negative sampling variances constrained to zero."), call.=FALSE)
-      }
-   } else {
-      allvipos <- TRUE
-   }
-
    ### save full data (including potential NAs in yi/vi/V/W/ni/mods)
 
    yi.f    <- yi
@@ -1179,6 +1162,23 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    if (k <= 1)
       stop(mstyle$stop("Processing terminated since k <= 1."))
+
+   ### check for non-positive sampling variances (and set negative values to 0)
+
+   if (any(vi <= 0)) {
+      allvipos <- FALSE
+      if (!V0)
+         warning(mstyle$warning("There are outcomes with non-positive sampling variances."), call.=FALSE)
+      vi.neg <- vi < 0
+      if (any(vi.neg)) {
+         V[vi.neg,] <- 0 ### note: entire row set to 0 (so covariances are also 0)
+         V[,vi.neg] <- 0 ### note: entire col set to 0 (so covariances are also 0)
+         vi[vi.neg] <- 0
+         warning(mstyle$warning("Negative sampling variances constrained to zero."), call.=FALSE)
+      }
+   } else {
+      allvipos <- TRUE
+   }
 
    ### check for V being positive definite (this should also cover non-positive variances)
    ### skipped: even if V is not positive definite, the marginal var-cov matrix can still be; so just check for pd during the optimization
@@ -2446,7 +2446,11 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    ll.ML   <- fitcall$llvals[1]
    ll.REML <- fitcall$llvals[2]
 
-   dev.ML    <- -2 * (ll.ML - ll.QE)
+   if (allvipos) {
+      dev.ML <- -2 * (ll.ML - ll.QE)
+   } else {
+      dev.ML <- -2 * ll.ML
+   }
    AIC.ML    <- -2 * ll.ML   + 2*parms
    BIC.ML    <- -2 * ll.ML   +   parms * log(k)
    AICc.ML   <- -2 * ll.ML   + 2*parms * max(k, parms+2) / (max(k, parms+2) - parms - 1)

@@ -1032,6 +1032,7 @@
          cat(mstyle$verbose(paste0("phi =",    paste(ifelse(is.na(phi),    NA, formatC(phi,    digits=digits[["var"]], format="f", flag=" ")), collapse=" "), "  ")))
       }
       cat("\n")
+
    }
 
    return(-1 * c(llval))

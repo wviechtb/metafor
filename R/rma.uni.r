@@ -761,21 +761,6 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    k <- length(yi)
 
-   ### check for non-positive sampling variances (and set negative values to 0)
-
-   if (any(vi <= 0, na.rm=TRUE)) {
-      allvipos <- FALSE
-      if (!vi0)
-         warning(mstyle$warning("There are outcomes with non-positive sampling variances."), call.=FALSE)
-      vi.neg <- vi < 0
-      if (any(vi.neg, na.rm=TRUE)) {
-         vi[vi.neg] <- 0
-         warning(mstyle$warning("Negative sampling variances constrained to zero."), call.=FALSE)
-      }
-   } else {
-      allvipos <- TRUE
-   }
-
    ### check for (and correct?) negative/infinite weights
 
    if (any(weights < 0, na.rm=TRUE))
@@ -840,6 +825,25 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    if (k < 1L)
       stop(mstyle$stop("Processing terminated since k = 0."))
+
+   ### check for non-positive sampling variances (and set negative values to 0)
+   ### note: done after removing NAs since only the included studies are relevant
+
+   if (any(vi <= 0)) {
+      allvipos <- FALSE
+      if (!vi0)
+         warning(mstyle$warning("There are outcomes with non-positive sampling variances."), call.=FALSE)
+      vi.neg <- vi < 0
+      if (any(vi.neg)) {
+         vi[vi.neg] <- 0
+         warning(mstyle$warning("Negative sampling variances constrained to zero."), call.=FALSE)
+      }
+   } else {
+      allvipos <- TRUE
+   }
+
+   ### but even in vi.f, constrain negative sampling variances to 0 (not needed)
+   #vi.f[vi.f < 0] <- 0
 
    ### if k=1 and test != "z", set test="z" (other methods cannot be used)
 
@@ -1409,7 +1413,10 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                   adj <- (crossprod(Y,P) %*% Y * k/(k-p) - k) / sum(wi)
                }
 
-               adj <- adj * con$stepadj # apply (user-defined) step adjustment
+               adj <- c(adj) * con$stepadj # apply (user-defined) step adjustment
+
+               if (is.na(adj)) # can happen for a saturated model when fixing tau^2
+                  adj <- 0
 
                while (tau2 + adj < con$tau2.min) # use step-halving if necessary
                   adj <- adj / 2
@@ -2356,10 +2363,10 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                -1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS.f
 
    if (k > p) {
-      if (any(vi <= 0)) {
-         dev.ML <- -2 * ll.ML
-      } else {
+      if (allvipos) {
          dev.ML <- -2 * (ll.ML - sum(dnorm(yi, mean=yi, sd=sqrt(vi), log=TRUE)))
+      } else {
+         dev.ML <- -2 * ll.ML
       }
    } else {
       dev.ML <- 0

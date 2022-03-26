@@ -126,8 +126,6 @@
       if (comp == "phi")
          phi.arg[phi.pos] <- val
 
-      obj$control$hessian  <- FALSE
-
       args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=sigma2.arg, tau2=tau2.arg, rho=rho.arg, gamma2=gamma2.arg, phi=phi.arg, sparse=obj$sparse, dist=obj$dist, control=obj$control, outlist="minimal")
       res <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
