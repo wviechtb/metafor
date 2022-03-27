@@ -40,7 +40,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
       stop(mstyle$stop("No missing values allowed in 'cluster' variable."))
 
    if (length(cluster) == 0L)
-      stop(mstyle$stop(paste0("Cannot find 'cluster' variable (or it has zero length).")))
+      stop(mstyle$stop("Cannot find 'cluster' variable (or it has zero length)."))
 
    ### number of clusters
 
@@ -61,7 +61,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
    if (clubSandwich) {
 
       if (!suppressMessages(requireNamespace("clubSandwich", quietly=TRUE)))
-         stop(mstyle$stop(paste0("Please install the 'clubSandwich' package to make use of its methods.")))
+         stop(mstyle$stop("Please install the 'clubSandwich' package to make use of its methods."))
 
       ### check for vcov, coef_test, conf_test, and wald_test arguments in ... and set values accordingly
 
@@ -95,19 +95,19 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
       vb <- try(clubSandwich::vcovCR(x, cluster=cluster, type=ddd$vcov), silent=!isTRUE(ddd$verbose))
 
       if (inherits(vb, "try-error"))
-         stop(mstyle$stop(paste0("Could not obtain the cluster-robust variance-covariance matrix (use verbose=TRUE for more details).")))
+         stop(mstyle$stop("Could not obtain the cluster-robust variance-covariance matrix (use verbose=TRUE for more details)."))
 
       ### obtain cluster-robust inferences
 
       cs.coef <- try(clubSandwich::coef_test(x, cluster=cluster, vcov=vb, test=ddd$coef_test, p_values=TRUE), silent=!isTRUE(ddd$verbose))
 
       if (inherits(cs.coef, "try-error"))
-         stop(mstyle$stop(paste0("Could not obtain the cluster-robust tests (use verbose=TRUE for more details).")))
+         stop(mstyle$stop("Could not obtain the cluster-robust tests (use verbose=TRUE for more details)."))
 
       cs.conf <- try(clubSandwich::conf_int(x, cluster=cluster, vcov=vb, test=ddd$conf_test, level=1-level), silent=!isTRUE(ddd$verbose))
 
       if (inherits(cs.conf, "try-error"))
-         stop(mstyle$stop(paste0("Could not obtain the cluster-robust confidence intervals (use verbose=TRUE for more details).")))
+         stop(mstyle$stop("Could not obtain the cluster-robust confidence intervals (use verbose=TRUE for more details)."))
 
       if (x$int.only) {
 
@@ -118,7 +118,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
          cs.wald <- try(clubSandwich::Wald_test(x, cluster=cluster, vcov=vb, test=ddd$wald_test, constraints=clubSandwich::constrain_zero(x$btt)), silent=!isTRUE(ddd$verbose))
 
          if (inherits(cs.wald, "try-error"))
-            stop(mstyle$stop(paste0("Could not obtain the cluster-robust Wald test (use verbose=TRUE for more details).")))
+            stop(mstyle$stop("Could not obtain the cluster-robust Wald test (use verbose=TRUE for more details)."))
 
       }
 

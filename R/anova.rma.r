@@ -83,7 +83,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                cs.wald <- try(clubSandwich::Wald_test(x, cluster=x$cluster, vcov=x$vb, test=x$wald_test, constraints=clubSandwich::constrain_zero(btt)), silent=!isTRUE(ddd$verbose))
 
                if (inherits(cs.wald, "try-error"))
-                  stop(mstyle$stop(paste0("Could not obtain the cluster-robust Wald test (use verbose=TRUE for more details).")))
+                  stop(mstyle$stop("Could not obtain the cluster-robust Wald test (use verbose=TRUE for more details)."))
 
                QM   <- max(0, cs.wald$Fstat)
                QMdf <- c(cs.wald$df_num, cs.wald$df_denom)
@@ -236,7 +236,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                cs.lc <- try(clubSandwich::linear_contrast(x, cluster=x$cluster, vcov=x$vb, test=x$coef_test, contrasts=X, p_values=TRUE), silent=!isTRUE(ddd$verbose))
 
                if (inherits(cs.lc, "try-error"))
-                  stop(mstyle$stop(paste0("Could not obtain the cluster-robust test(s) (use verbose=TRUE for more details).")))
+                  stop(mstyle$stop("Could not obtain the cluster-robust test(s) (use verbose=TRUE for more details)."))
 
                ddf <- cs.lc$df
 
@@ -245,8 +245,8 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
                rhs <- rep(0, m)
 
-               Xb <- cs.lc$Est
-               se <- cs.lc$SE
+               Xb   <- cs.lc$Est
+               se   <- cs.lc$SE
                zval <- c(Xb/se)
                pval <- cs.lc$p_val
 
@@ -261,7 +261,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                   cs.wald <- try(clubSandwich::Wald_test(x, cluster=x$cluster, vcov=x$vb, test=x$wald_test, constraints=X), silent=!isTRUE(ddd$verbose))
 
                   if (inherits(cs.wald, "try-error"))
-                     stop(mstyle$stop(paste0("Could not obtain the cluster-robust omnibus Wald test (use verbose=TRUE for more details).")))
+                     stop(mstyle$stop("Could not obtain the cluster-robust omnibus Wald test (use verbose=TRUE for more details)."))
 
                   QM   <- max(0, cs.wald$Fstat)
                   QMdf <- c(cs.wald$df_num, cs.wald$df_denom)

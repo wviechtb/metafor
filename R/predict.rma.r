@@ -45,7 +45,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("pi.type", "newvi"))
+   .chkdots(ddd, c("pi.type", "newvi", "verbose"))
 
    if (is.null(ddd$pi.type)) {
       pi.type <- "default"
@@ -69,7 +69,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          ### for rma.uni, rma.mh, rma.peto, and rma.glmm objects
 
          if (x$int.only) {                                                  # if intercept-only model predict only the intercept
-            k.new <- 1                                                      #
+            k.new <- 1L                                                     #
             X.new <- cbind(1)                                               #
          } else {                                                           # otherwise predict for all k.f studies (including studies with NAs)
             k.new <- x$k.f                                                  #
@@ -82,7 +82,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
          if (x$int.only) {                                                       # if intercept-only model:
             if (!x$withG) {                                                      #   # if there is no G structure (and hence also no H structure)
-               k.new <- 1                                                        #   # then we just need to predict the intercept once
+               k.new <- 1L                                                       #   # then we just need to predict the intercept once
                X.new <- cbind(1)                                                 #
             }                                                                    #
             if (x$withG && x$withH) {                                            #   # if there is both a G and H structure
@@ -148,7 +148,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          X.new <- cbind(c(newmods))                                  #
       } else {                                                       # in case the model has more than one predictor:
          if (.is.vector(newmods) || nrow(newmods) == 1L) {           #   # if user gives one vector or one row matrix (only one k.new):
-            k.new <- 1                                               #
+            k.new <- 1L                                              #
             X.new <- rbind(newmods)                                  #
          } else {                                                    #   # if user gives multiple rows and columns (multiple k.new):
             k.new <- nrow(newmods)                                   #
@@ -187,7 +187,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       }
 
       if (inherits(X.new[1,1], "character"))
-         stop(mstyle$stop(paste0("Argument 'newmods' should only contain numeric variables.")))
+         stop(mstyle$stop("Argument 'newmods' should only contain numeric variables."))
 
       ### if the user has specified newmods and an intercept was included in the original model, add the intercept to X.new
       ### but user can also decide to remove the intercept from the predictions with intercept=FALSE
@@ -213,7 +213,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    if (inherits(object, "rma.mv") && x$withG) {
 
-      if (x$tau2s > 1) {
+      if (x$tau2s > 1L) {
 
          if (is.null(tau2.levels)) {
 
@@ -254,7 +254,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    if (inherits(object, "rma.mv") && x$withH) {
 
-      if (x$gamma2s > 1) {
+      if (x$gamma2s > 1L) {
 
          if (is.null(gamma2.levels)) {
 
@@ -293,41 +293,68 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    #########################################################################
 
-   ### ddf calculation for x$test %in% c("knha","adhoc","t") but also need this
-   ### for pi.ddf calculation when test="z" and pi.type %in% c("riley","t")
+   if (inherits(x, "robust.rma") && x$robumethod == "clubSandwich") {
 
-   if (length(x$ddf) == 1L) {
-      ddf <- rep(x$ddf, k.new)
-   } else {
-      ddf <- rep(NA, k.new)
-      for (j in seq_len(k.new)) {
-         bn0 <- X.new[j,] != 0     # determine which coefficients are involved in the linear contrast
-         ddf[j] <- min(x$ddf[bn0]) # take the smallest ddf value for those coefficients
-      }
-   }
-   ddf[is.na(ddf)] <- x$k - x$p
+      if (x$coef_test == "saddlepoint")
+         stop(mstyle$stop("Cannot use method when saddlepoint correction was used."))
 
-   ### predicted values, SEs, and confidence intervals
+      cs.lc <- try(clubSandwich::linear_contrast(x, cluster=x$cluster, vcov=x$vb, test=x$coef_test, contrasts=X.new, p_values=FALSE), silent=!isTRUE(ddd$verbose))
 
-   pred  <- rep(NA_real_, k.new)
-   vpred <- rep(NA_real_, k.new)
+      if (inherits(cs.lc, "try-error"))
+         stop(mstyle$stop("Could not obtain the linear contrast(s) (use verbose=TRUE for more details)."))
 
-   for (i in seq_len(k.new)) {
-      Xi.new   <- X.new[i,,drop=FALSE]
-      pred[i]  <- Xi.new %*% x$beta
-      vpred[i] <- Xi.new %*% tcrossprod(x$vb, Xi.new)
-   }
-
-   if (is.element(x$test, c("knha","adhoc","t"))) {
+      ddf  <- cs.lc$df
       crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/2, df=ddf[j], lower.tail=FALSE) else NA)
-   } else {
-      crit <- qnorm(level/2, lower.tail=FALSE)
-   }
 
-   vpred[vpred < 0] <- NA_real_
-   se <- sqrt(vpred)
-   ci.lb <- pred - crit * se
-   ci.ub <- pred + crit * se
+      pred  <- cs.lc$Est
+      se    <- cs.lc$SE
+      vpred <- se^2
+      #ci.lb <- pred - crit * se
+      #ci.ub <- pred + crit * se
+      ci.lb <- cs.lc$CI_L
+      ci.ub <- cs.lc$CI_U
+
+      x$test <- switch(x$coef_test, "z"="z", "naive-t"="t", "naive-tp"="t", "Satterthwaite"="t")
+
+   } else {
+
+      ### ddf calculation for x$test %in% c("knha","adhoc","t") but also need this
+      ### for pi.ddf calculation when test="z" and pi.type %in% c("riley","t")
+
+      if (length(x$ddf) == 1L) {
+         ddf <- rep(x$ddf, k.new)     # when test="z", x$ddf is NA, so this then results in a vector of NAs
+      } else {
+         ddf <- rep(NA, k.new)
+         for (j in seq_len(k.new)) {
+            bn0 <- X.new[j,] != 0     # determine which coefficients are involved in the linear contrast
+            ddf[j] <- min(x$ddf[bn0]) # take the smallest ddf value for those coefficients
+         }
+      }
+      ddf[is.na(ddf)] <- x$k - x$p    # when test="z", turn all NAs into the usual k-p dfs
+
+      ### predicted values, SEs, and confidence intervals
+
+      pred  <- rep(NA_real_, k.new)
+      vpred <- rep(NA_real_, k.new)
+
+      for (i in seq_len(k.new)) {
+         Xi.new   <- X.new[i,,drop=FALSE]
+         pred[i]  <- Xi.new %*% x$beta
+         vpred[i] <- Xi.new %*% tcrossprod(x$vb, Xi.new)
+      }
+
+      if (is.element(x$test, c("knha","adhoc","t"))) {
+         crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/2, df=ddf[j], lower.tail=FALSE) else NA)
+      } else {
+         crit <- qnorm(level/2, lower.tail=FALSE)
+      }
+
+      vpred[vpred < 0] <- NA_real_
+      se <- sqrt(vpred)
+      ci.lb <- pred - crit * se
+      ci.ub <- pred + crit * se
+
+   }
 
    #########################################################################
 
@@ -388,7 +415,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
          ### if there is a G structure but no H structure
 
-         if (x$tau2s == 1) {
+         if (x$tau2s == 1L) {
 
             ### if there is only a single tau^2 value, always add that (in addition to the sum of all of the sigma^2 values)
 
@@ -427,7 +454,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
          ### if there is a G structure and an H structure
 
-         if (x$tau2s == 1 && x$gamma2s == 1) {
+         if (x$tau2s == 1L && x$gamma2s == 1L) {
 
             ### if there is only a single tau^2 and gamma^2 value, always add that (in addition to the sum of all of the sigma^2 values)
 
@@ -561,12 +588,12 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    ### add tau2.levels values to list
 
-   if (inherits(object, "rma.mv") && x$withG && x$tau2s > 1)
+   if (inherits(object, "rma.mv") && x$withG && x$tau2s > 1L)
       out$tau2.level <- tau2.levels
 
    ### add gamma2.levels values to list
 
-   if (inherits(object, "rma.mv") && x$withH && x$gamma2s > 1)
+   if (inherits(object, "rma.mv") && x$withH && x$gamma2s > 1L)
       out$gamma2.level <- gamma2.levels
 
    ### remove cr part for models with a GEN structure
