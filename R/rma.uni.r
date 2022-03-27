@@ -688,7 +688,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          } else {
             options(na.action = "na.pass")
             Z <- model.matrix(scale, data=data)
-            colnames(Z)[grep("(Intercept)", colnames(Z))] <- "intrcpt"
+            colnames(Z)[grep("(Intercept)", colnames(Z), fixed=TRUE)] <- "intrcpt"
             attr(Z, "assign") <- NULL
             attr(Z, "contrasts") <- NULL
             options(na.action = na.act)

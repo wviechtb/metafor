@@ -2,7 +2,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma.uni", notav="rma.uni.selmodel")
+   .chkclass(class(x), must="rma.uni", notav=c("rma.uni.selmodel", ifelse(clubSandwich, "rma.ls", NA)))
 
    if (missing(cluster))
       stop(mstyle$stop("Must specify 'cluster' variable."))
@@ -17,7 +17,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("vcov", "test", "wald_test", "verbose"))
+   .chkdots(ddd, c("vcov", "coef_test", "conf_test", "wald_test", "verbose"))
 
    #########################################################################
 
@@ -73,7 +73,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
       if (is.null(ddd$coef_test)) {
          ddd$coef_test <- "Satterthwaite"
       } else {
-         ddd$coef_test <- match.arg(ddd$coef_test, c("z", "naive-t", "Satterthwaite", "saddlepoint"))
+         ddd$coef_test <- match.arg(ddd$coef_test, c("z", "naive-t", "naive-tp", "Satterthwaite", "saddlepoint"))
       }
       if (is.null(ddd$conf_test)) {
          ddd$conf_test <- ddd$coef_test
@@ -82,12 +82,12 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
             warning(mstyle$warning("Cannot use 'saddlepoint' for conf_test() - using 'Satterthwaite' instead."), call.=FALSE)
          }
       } else {
-         ddd$conf_test <- match.arg(ddd$conf_test, c("z", "naive-t", "Satterthwaite"))
+         ddd$conf_test <- match.arg(ddd$conf_test, c("z", "naive-t", "naive-tp", "Satterthwaite"))
       }
       if (is.null(ddd$wald_test)) {
          ddd$wald_test <- "HTZ"
       } else {
-         ddd$wald_test <- match.arg(ddd$conf_test, c("chi-sq", "Naive-F", "HTA", "HTB", "HTZ", "EDF", "EDT"))
+         ddd$wald_test <- match.arg(ddd$wald_test, c("chi-sq", "Naive-F", "Naive-Fp", "HTA", "HTB", "HTZ", "EDF", "EDT"))
       }
 
       ### calculate cluster-robust var-cov matrix of the estimated fixed effects
@@ -99,12 +99,12 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
 
       ### obtain cluster-robust inferences
 
-      cs.coef <- try(clubSandwich::coef_test(x, cluster=cluster, vcov=vb, test=ddd$coef_test), silent=!isTRUE(ddd$verbose))
+      cs.coef <- try(clubSandwich::coef_test(x, cluster=cluster, vcov=vb, test=ddd$coef_test, p_values=TRUE), silent=!isTRUE(ddd$verbose))
 
       if (inherits(cs.coef, "try-error"))
          stop(mstyle$stop(paste0("Could not obtain the cluster-robust tests (use verbose=TRUE for more details).")))
 
-      cs.conf <- try(clubSandwich::conf_int(x,  cluster=cluster, vcov=vb, test=ddd$conf_test, level=1-level), silent=!isTRUE(ddd$verbose))
+      cs.conf <- try(clubSandwich::conf_int(x, cluster=cluster, vcov=vb, test=ddd$conf_test, level=1-level), silent=!isTRUE(ddd$verbose))
 
       if (inherits(cs.conf, "try-error"))
          stop(mstyle$stop(paste0("Could not obtain the cluster-robust confidence intervals (use verbose=TRUE for more details).")))
@@ -129,8 +129,8 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
       beta  <- x$beta
       se    <- cs.coef$SE
       zval  <- cs.coef$tstat
-      pval  <- switch(ddd$coef_test, "z" = cs.coef$p_z, "naive-t" = cs.coef$p_t, "Satterthwaite" = cs.coef$p_Satt, "saddlepoint" = cs.coef$p_saddle)
-      dfs   <- switch(ddd$coef_test, "z" = Inf, "naive-t" = n-1, "Satterthwaite" = cs.coef$df, "saddlepoint" = NA)
+      pval  <- switch(ddd$coef_test, "z" = cs.coef$p_z,  "naive-t" = cs.coef$p_t,  "naive-tp" = cs.coef$p_tp,  "Satterthwaite" = cs.coef$p_Satt, "saddlepoint" = cs.coef$p_saddle)
+      dfs   <- switch(ddd$coef_test, "z" = cs.coef$df_z, "naive-t" = cs.coef$df_t, "naive-tp" = cs.coef$df_tp, "Satterthwaite" = cs.coef$df,     "saddlepoint" = NA)
       ci.lb <- cs.conf$CI_L # note: if ddd$coef_test != ddd$conf_test, dfs for CI may be different
       ci.ub <- cs.conf$CI_U
 
@@ -149,6 +149,8 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
       x$conf_test <- ddd$conf_test
       x$wald_test <- ddd$wald_test
 
+      cluster.o <- cluster
+
    } else {
 
       ### note: since we use split() below and then put things back together into a block-diagonal matrix,
@@ -157,7 +159,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
       ### the cluster variable (including the cluster variable itself)
 
       ocl <- order(cluster)
-      cluster <- cluster[ocl]
+      cluster.o <- cluster[ocl]
 
       ### construct bread = (X'WX)^-1 X'W, where W is the weight matrix
 
@@ -198,9 +200,9 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
       ei <- c(x$yi - x$X %*% x$beta) # use this instead of resid(), since this guarantees that the length is correct
       ei <- ei[ocl]
 
-      cluster <- factor(cluster, levels=unique(cluster))
+      cluster.o <- factor(cluster.o, levels=unique(cluster.o))
 
-      meat <- bldiag(lapply(split(ei, cluster), function(e) tcrossprod(e)))
+      meat <- bldiag(lapply(split(ei, cluster.o), function(e) tcrossprod(e)))
 
       ### construct robust var-cov matrix
 
@@ -259,7 +261,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
    #########################################################################
 
    ### table of cluster variable
-   tcl <- table(cluster)
+   tcl <- table(cluster.o)
 
    x$digits <- digits
 
@@ -281,7 +283,8 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
    x$test  <- "t"
    x$vbest <- vbest
    x$s2w   <- 1 # just in case test="knha" originally
-   x$robumethod <- ifelse(clubSandwich, "clubsw", "default")
+   x$robumethod <- ifelse(clubSandwich, "clubSandwich", "default")
+   x$cluster <- cluster
 
    class(x) <- c("robust.rma", "rma", "rma.uni")
    return(x)

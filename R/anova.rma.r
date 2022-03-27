@@ -12,7 +12,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("test", "L"))
+   .chkdots(ddd, c("test", "L", "verbose"))
 
    if (!is.null(ddd$L))
       X <- ddd$L
@@ -25,9 +25,9 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
    if (missing(object2)) {
 
-      ### if only 'object' has been specified, can use function to test (sets) of coefficients via
-      ### the 'btt' (or 'att') argument or one or more linear contrasts of the coefficients via the
-      ### 'X' (or 'Z') argument
+      ### if only 'object' has been specified, can use function to test one or multiple coefficients
+      ### via the 'btt' (or 'att') argument or one or more linear contrasts of the coefficients via
+      ### the 'X' (or 'Z') argument
 
       x <- object
 
@@ -42,7 +42,12 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
             ### set/check 'att' argument
 
-            att <- .set.btt(att, x$q, x$Z.int.incl, colnames(x$Z))
+            if (missing(att) || is.null(att)) {
+               att <- x$att
+            } else {
+               att <- .set.btt(att, x$q, x$Z.int.incl, colnames(x$Z))
+            }
+
             m <- length(att)
 
             QS <- try(as.vector(t(x$alpha)[att] %*% chol2inv(chol(x$va[att,att])) %*% x$alpha[att]), silent=TRUE)
@@ -65,21 +70,41 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
             ### set/check 'btt' argument
 
-            btt <- .set.btt(btt, x$p, x$int.incl, colnames(x$X))
+            if (missing(btt) || is.null(btt)) {
+               btt <- x$btt
+            } else {
+               btt <- .set.btt(btt, x$p, x$int.incl, colnames(x$X))
+            }
+
             m <- length(btt)
 
-            QM <- try(as.vector(t(x$beta)[btt] %*% chol2inv(chol(x$vb[btt,btt])) %*% x$beta[btt]), silent=TRUE)
+            if (inherits(x, "robust.rma") && x$robumethod == "clubSandwich") {
 
-            if (inherits(QM, "try-error"))
-               QM <- NA
+               cs.wald <- try(clubSandwich::Wald_test(x, cluster=x$cluster, vcov=x$vb, test=x$wald_test, constraints=clubSandwich::constrain_zero(btt)), silent=!isTRUE(ddd$verbose))
 
-            if (is.element(x$test, c("knha","adhoc","t"))) {
-               QM   <- QM / m
-               QMdf <- c(m, x$QMdf[2])
-               QMp  <- pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE)
+               if (inherits(cs.wald, "try-error"))
+                  stop(mstyle$stop(paste0("Could not obtain the cluster-robust Wald test (use verbose=TRUE for more details).")))
+
+               QM   <- max(0, cs.wald$Fstat)
+               QMdf <- c(cs.wald$df_num, cs.wald$df_denom)
+               QMp  <- cs.wald$p_val
+
             } else {
-               QMdf <- c(m, NA)
-               QMp  <- pchisq(QM, df=QMdf[1], lower.tail=FALSE)
+
+               QM <- try(as.vector(t(x$beta)[btt] %*% chol2inv(chol(x$vb[btt,btt])) %*% x$beta[btt]), silent=TRUE)
+
+               if (inherits(QM, "try-error"))
+                  QM <- NA
+
+               if (is.element(x$test, c("knha","adhoc","t"))) {
+                  QM   <- QM / m
+                  QMdf <- c(m, x$QMdf[2])
+                  QMp  <- pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE)
+               } else {
+                  QMdf <- c(m, NA)
+                  QMp  <- pchisq(QM, df=QMdf[1], lower.tail=FALSE)
+               }
+
             }
 
             res <- list(QM=QM, QMdf=QMdf, QMp=QMp, btt=btt, k=x$k, p=x$p, m=m, test=x$test, digits=digits, type="Wald.btt", class=class(x))
@@ -206,72 +231,114 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
             m <- nrow(X)
 
-            ### ddf calculation
+            if (inherits(x, "robust.rma") && x$robumethod == "clubSandwich") {
 
-            if (is.element(x$test, c("knha","adhoc","t"))) {
-               if (length(x$ddf) == 1L) {
-                  ddf <- rep(x$ddf, m)
-               } else {
-                  ddf <- rep(NA, m)
-                  for (j in seq_len(m)) {
-                     bn0 <- X[j,] != 0
-                     ddf[j] <- min(x$ddf[bn0])
-                  }
-               }
-            } else {
-               ddf <- rep(NA, m)
-            }
+               cs.lc <- try(clubSandwich::linear_contrast(x, cluster=x$cluster, vcov=x$vb, test=x$coef_test, contrasts=X, p_values=TRUE), silent=!isTRUE(ddd$verbose))
 
-            ### specification of the right-hand side
+               if (inherits(cs.lc, "try-error"))
+                  stop(mstyle$stop(paste0("Could not obtain the cluster-robust test(s) (use verbose=TRUE for more details).")))
 
-            if (missing(rhs)) {
+               ddf <- cs.lc$df
+
+               if (!missing(rhs))
+                  warning(mstyle$warning("Cannot use 'rhs' argument for 'robust.rma' objects based on 'clubSandwich'."))
+
                rhs <- rep(0, m)
+
+               Xb <- cs.lc$Est
+               se <- cs.lc$SE
+               zval <- c(Xb/se)
+               pval <- cs.lc$p_val
+
+               ### omnibus test of all hypotheses (only possible if 'X' is of full rank)
+
+               QM   <- NA ### need this in case QMp cannot be calculated below
+               QMdf <- NA ### need this in case X is not of full rank
+               QMp  <- NA ### need this in case QMp cannot be calculated below
+
+               if (rankMatrix(X) == m) {
+
+                  cs.wald <- try(clubSandwich::Wald_test(x, cluster=x$cluster, vcov=x$vb, test=x$wald_test, constraints=X), silent=!isTRUE(ddd$verbose))
+
+                  if (inherits(cs.wald, "try-error"))
+                     stop(mstyle$stop(paste0("Could not obtain the cluster-robust omnibus Wald test (use verbose=TRUE for more details).")))
+
+                  QM   <- max(0, cs.wald$Fstat)
+                  QMdf <- c(cs.wald$df_num, cs.wald$df_denom)
+                  QMp  <- cs.wald$p_val
+
+               }
+
             } else {
-               if (length(rhs) == 1L)
-                  rhs <- rep(rhs, m)
-               if (length(rhs) != m)
-                  stop(mstyle$stop(paste0("Length of 'rhs' (", length(rhs), ") does not match the number of linear combinations (", m, ").")))
-            }
 
-            ### test of individual hypotheses
-
-            Xb  <- X %*% x$beta - rhs
-            vXb <- X %*% x$vb %*% t(X)
-
-            se <- sqrt(diag(vXb))
-            zval <- c(Xb/se)
-
-            if (is.element(x$test, c("knha","adhoc","t"))) {
-               pval <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) 2*pt(abs(zval[j]), df=ddf[j], lower.tail=FALSE) else NA)
-            } else {
-               pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
-            }
-
-            ### omnibus test of all hypotheses (only possible if 'X' is of full rank)
-
-            QM   <- NA ### need this in case QMp cannot be calculated below
-            QMdf <- NA ### need this in case X is not of full rank
-            QMp  <- NA ### need this in case QMp cannot be calculated below
-
-            if (rankMatrix(X) == m) {
-
-               ### use try(), since this could fail: this could happen when the var-cov matrix of the
-               ### fixed effects has been estimated using robust() -- 'vb' is then only guaranteed to
-               ### be positive semidefinite, so for certain linear combinations, vXb could be singular
-               ### (see Cameron & Miller, 2015, p. 326)
-
-               QM <- try(as.vector(t(Xb) %*% chol2inv(chol(vXb)) %*% Xb), silent=TRUE)
-
-               if (inherits(QM, "try-error"))
-                  QM <- NA
+               ### ddf calculation
 
                if (is.element(x$test, c("knha","adhoc","t"))) {
-                  QM   <- QM / m
-                  QMdf <- c(m, min(ddf))
-                  QMp  <- if (QMdf[2] > 0) pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE) else NA
+                  if (length(x$ddf) == 1L) {
+                     ddf <- rep(x$ddf, m)
+                  } else {
+                     ddf <- rep(NA, m)
+                     for (j in seq_len(m)) {
+                        bn0 <- X[j,] != 0
+                        ddf[j] <- min(x$ddf[bn0])
+                     }
+                  }
                } else {
-                  QMdf <- c(m, NA)
-                  QMp  <- pchisq(QM, df=QMdf[1], lower.tail=FALSE)
+                  ddf <- rep(NA, m)
+               }
+
+               ### specification of the right-hand side
+
+               if (missing(rhs)) {
+                  rhs <- rep(0, m)
+               } else {
+                  if (length(rhs) == 1L)
+                     rhs <- rep(rhs, m)
+                  if (length(rhs) != m)
+                     stop(mstyle$stop(paste0("Length of 'rhs' (", length(rhs), ") does not match the number of linear combinations (", m, ").")))
+               }
+
+               ### test of individual hypotheses
+
+               Xb  <- X %*% x$beta - rhs
+               vXb <- X %*% x$vb %*% t(X)
+
+               se <- sqrt(diag(vXb))
+               zval <- c(Xb/se)
+
+               if (is.element(x$test, c("knha","adhoc","t"))) {
+                  pval <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) 2*pt(abs(zval[j]), df=ddf[j], lower.tail=FALSE) else NA)
+               } else {
+                  pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
+               }
+
+               ### omnibus test of all hypotheses (only possible if 'X' is of full rank)
+
+               QM   <- NA ### need this in case QMp cannot be calculated below
+               QMdf <- NA ### need this in case X is not of full rank
+               QMp  <- NA ### need this in case QMp cannot be calculated below
+
+               if (rankMatrix(X) == m) {
+
+                  ### use try(), since this could fail: this could happen when the var-cov matrix of the
+                  ### fixed effects has been estimated using robust() -- 'vb' is then only guaranteed to
+                  ### be positive semidefinite, so for certain linear combinations, vXb could be singular
+                  ### (see Cameron & Miller, 2015, p. 326)
+
+                  QM <- try(as.vector(t(Xb) %*% chol2inv(chol(vXb)) %*% Xb), silent=TRUE)
+
+                  if (inherits(QM, "try-error"))
+                     QM <- NA
+
+                  if (is.element(x$test, c("knha","adhoc","t"))) {
+                     QM   <- QM / m
+                     QMdf <- c(m, min(ddf))
+                     QMp  <- if (QMdf[2] > 0) pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE) else NA
+                  } else {
+                     QMdf <- c(m, NA)
+                     QMp  <- pchisq(QM, df=QMdf[1], lower.tail=FALSE)
+                  }
+
                }
 
             }

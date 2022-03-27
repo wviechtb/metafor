@@ -25,7 +25,7 @@
 
    \enumerate{
 
-   \item When a single model is specified (via argument \code{object}), the function provides Wald-type tests of one or more model coefficients (i.e., \mjseqn{\mbox{H}_0{:}\; \beta_{j \in S} = 0}, where \mjseqn{\beta_{j \in S}} is the set of coefficients to be tested).
+   \item When a single model is specified (via argument \code{object}), the function provides Wald-type tests of one or more model coefficients (i.e., \mjseqn{\mbox{H}_0{:}\; \beta_{j \in H_0} = 0}, where \mjseqn{\beta_{j \in H_0}} is the set of coefficients to be tested).
 
    In particular, for equal- or random-effects models (i.e., models without moderators), this is just the test of the single coefficient of the model (i.e., \mjseqn{\mbox{H}_0{:}\; \theta = 0} or \mjseqn{\mbox{H}_0{:}\; \mu = 0}). For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all coefficients in the model including the first.
 
@@ -37,7 +37,7 @@
 
    For location-scale models fitted with the \code{\link{rma.uni}} function, one can use the \code{Z} argument in an analogous manner to specify one or multiple linear combinations of the scale coefficients in the model that should be tested.
 
-   \item When specifying two models for comparison (via arguments \code{object} and \code{object2}), the function provides a likelihood ratio test (LRT) comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the LRT to make sense. Also, LRTs are not meaningful when using REML estimation and the two models differ in terms of their fixed effects (setting \code{refit=TRUE} automatically refits the two models using ML estimation). Also, the theory underlying LRTs is only really applicable when comparing models that were fitted with ML/REML estimation.
+   \item When specifying two models for comparison (via arguments \code{object} and \code{object2}), the function provides a likelihood ratio test (LRT) comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the LRT to make sense. Also, LRTs are not meaningful when using REML estimation and the two models differ in terms of their fixed effects (setting \code{refit=TRUE} automatically refits the two models using ML estimation). Also, the theory underlying LRTs is only really applicable when comparing models that were fitted with ML/REML estimation, so if some other estimation was used to fit the two models, the results should be treated with caution.
 
    }
 
