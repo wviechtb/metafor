@@ -14,7 +14,7 @@ permutest(x, \dots)
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}.}
    \item{exact}{logical to specify whether an exact permutation test should be carried out or not (the default is \code{FALSE}). See \sQuote{Details}.}
-   \item{iter}{integer to specify the number of iterations for the permutation test when not doing an exact test (the default is \code{1000} iterations).}
+   \item{iter}{integer to specify the number of iterations for the permutation test when not doing an exact test (the default is \code{1000}).}
    \item{permci}{logical to specify whether permutation-based CIs should also be constructed (the default is \code{FALSE}). Can also be a vector of indices to specify for which coefficients a permutation-based CI should be obtained.}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{TRUE}).}
    \item{retpermdist}{logical to specify whether the permutation distributions of the test statistics should be returned (the default is \code{FALSE}).}

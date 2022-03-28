@@ -27,11 +27,8 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE
 
       grp1.pos <- charmatch(grp1, varnames)
 
-      if (is.na(grp1.pos))
-         stop(mstyle$stop("Argument 'grp1' must be the name of a variable in the data frame."))
-
-      if (grp1.pos == 0L)
-         stop(mstyle$stop("No ambiguous match found for variable name specified via 'grp1' argument."))
+      if (is.na(grp1.pos) || grp1.pos == 0L)
+         stop(mstyle$stop("Could not find or uniquely identify variable specified via the 'grp1' argument."))
 
    } else {
 
@@ -65,11 +62,8 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE
 
       grp2.pos <- charmatch(grp2, varnames)
 
-      if (is.na(grp2.pos))
-         stop(mstyle$stop("Argument 'grp2' must be the name of a variable in the data frame."))
-
-      if (grp2.pos == 0L)
-         stop(mstyle$stop("No ambiguous match found for variable name specified via 'grp2' argument."))
+      if (is.na(grp2.pos) || grp2.pos == 0L)
+         stop(mstyle$stop("Could not find or uniquely identify variable specified via the 'grp2' argument."))
 
    } else {
 
@@ -118,11 +112,8 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE
 
    last.pos <- charmatch(last, lvls)
 
-   if (is.na(last.pos))
-      stop(mstyle$stop("Could not find specified group in 'grp1' or 'grp2' variables."))
-
-   if (last.pos == 0L)
-      stop(mstyle$stop("No ambiguous match found for group specified via 'last' argument."))
+   if (is.na(last.pos) || last.pos == 0L)
+      stop(mstyle$stop("Could not find or uniquely identify group specified via the 'last' argument."))
 
    last <- lvls[last.pos]
 

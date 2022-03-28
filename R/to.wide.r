@@ -41,11 +41,8 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
       study.pos <- charmatch(study, varnames)
 
-      if (is.na(study.pos))
-         stop(mstyle$stop("Argument 'study' must be the name of a variable in the data frame."))
-
-      if (study.pos == 0L)
-         stop(mstyle$stop("No ambiguous match found for variable name specified via 'study' argument."))
+      if (is.na(study.pos) || study.pos == 0L)
+         stop(mstyle$stop("Could not find or uniquely identify variable specified via the 'study' argument."))
 
    } else {
 
@@ -79,11 +76,8 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
       grp.pos <- charmatch(grp, varnames)
 
-      if (is.na(grp.pos))
-         stop(mstyle$stop("Argument 'grp' must be the name of a variable in the data frame."))
-
-      if (grp.pos == 0L)
-         stop(mstyle$stop("No ambiguous match found for variable name specified via 'grp' argument."))
+      if (is.na(grp.pos) || grp.pos == 0L)
+         stop(mstyle$stop("Could not find or uniquely identify variable specified via the 'grp' argument."))
 
    } else {
 
@@ -125,11 +119,8 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    ref.pos <- charmatch(ref, lvls)
 
-   if (is.na(ref.pos))
-      stop(mstyle$stop("Could not find specified reference group in 'grp' variable."))
-
-   if (ref.pos == 0L)
-      stop(mstyle$stop("No ambiguous match found for reference group specified via 'ref' argument."))
+   if (is.na(ref.pos) || ref.pos == 0L)
+      stop(mstyle$stop("Could not find or uniquely identify reference group specified via the 'ref' argument."))
 
    ############################################################################
 
@@ -154,11 +145,8 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
       grpvars.pos <- unique(charmatch(grpvars, varnames))
 
-      if (anyNA(grpvars.pos))
-         stop(mstyle$stop("Argument 'grpvars' must be the names of variables in the data frame."))
-
-      if (any(grpvars.pos == 0L))
-         stop(mstyle$stop("One or multiple ambiguous matches for variable names specified via 'grpvars' argument."))
+      if (anyNA(grpvars.pos) || any(grpvars.pos == 0L))
+         stop(mstyle$stop("Could not find or uniquely identify variable(s) specified via the 'grpvars' argument."))
 
    } else {
 

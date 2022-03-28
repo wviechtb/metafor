@@ -121,6 +121,29 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    level <- .level(level)
 
+   ddd <- list(...)
+
+   lplot    <- function(..., grep, fixed) plot(...)
+   laxis    <- function(..., grep, fixed) axis(...)
+   lpolygon <- function(..., grep, fixed) polygon(...)
+   llines   <- function(..., grep, fixed) lines(...)
+   lpoints  <- function(..., grep, fixed) points(...)
+   labline  <- function(..., grep, fixed) abline(...)
+   lbox     <- function(..., grep, fixed) box(...)
+   ltext    <- function(..., grep, fixed) text(...)
+
+   if (is.null(ddd$fixed)) {
+      fixed <- FALSE
+   } else {
+      fixed <- .isTRUE(ddd$fixed)
+   }
+
+   if (is.null(ddd$grep)) {
+      grep <- FALSE
+   } else {
+      grep <- .isTRUE(ddd$grep)
+   }
+
    ############################################################################
 
    ### checks on mod argument
@@ -141,13 +164,21 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    if (is.character(mod)) {
 
-      mod.pos <- charmatch(mod, colnames(x$X))
+      if (grep) {
 
-      if (is.na(mod.pos))
-         stop(mstyle$stop("Argument 'mod' must be the name of a moderator variable in the model."))
+         mod.pos <- grep(mod, colnames(x$X), fixed=fixed)
 
-      if (mod.pos == 0L)
-         stop(mstyle$stop("No ambiguous match found for variable name specified via 'mod' argument."))
+         if (length(mod.pos) != 1L)
+            stop(mstyle$stop("Could not find or uniquely identify moderator variable specified via the 'mod' argument."))
+
+      } else {
+
+         mod.pos <- charmatch(mod, colnames(x$X))
+
+         if (is.na(mod.pos) || mod.pos == 0L)
+            stop(mstyle$stop("Could not find or uniquely identify moderator variable specified via the 'mod' argument."))
+
+      }
 
    } else {
 
@@ -536,7 +567,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    ### set up plot
 
-   plot(NA, xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, yaxt="n", ...)
+   lplot(NA, xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, yaxt="n", ...)
 
    ### generate y-axis positions if none are specified
 
@@ -563,25 +594,25 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    ### add y-axis
 
-   axis(side=2, at=at, labels=at.lab, ...)
+   laxis(side=2, at=at, labels=at.lab, ...)
 
    ### add predicted values / CI bounds
 
    if (shade) {
       if (pi)
-         polygon(c(xs, rev(xs)), c(pi.lb, rev(pi.ub)), border=NA, col=shadecol[2], ...)
+         lpolygon(c(xs, rev(xs)), c(pi.lb, rev(pi.ub)), border=NA, col=shadecol[2], ...)
       if (ci)
-         polygon(c(xs, rev(xs)), c(ci.lb, rev(ci.ub)), border=NA, col=shadecol[1], ...)
+         lpolygon(c(xs, rev(xs)), c(ci.lb, rev(ci.ub)), border=NA, col=shadecol[1], ...)
    }
 
    if (ci) {
-      lines(xs, ci.lb, col=lcol[2], lty=lty[2], lwd=lwd[2], ...)
-      lines(xs, ci.ub, col=lcol[2], lty=lty[2], lwd=lwd[2], ...)
+      llines(xs, ci.lb, col=lcol[2], lty=lty[2], lwd=lwd[2], ...)
+      llines(xs, ci.ub, col=lcol[2], lty=lty[2], lwd=lwd[2], ...)
    }
 
    if (pi) {
-      lines(xs, pi.lb, col=lcol[3], lty=lty[3], lwd=lwd[3], ...)
-      lines(xs, pi.ub, col=lcol[3], lty=lty[3], lwd=lwd[3], ...)
+      llines(xs, pi.lb, col=lcol[3], lty=lty[3], lwd=lwd[3], ...)
+      llines(xs, pi.ub, col=lcol[3], lty=lty[3], lwd=lwd[3], ...)
    }
 
    ### add grid
@@ -591,14 +622,14 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    ### add refline
 
-   abline(h=refline, col=lcol[4], lty=lty[4], lwd=lwd[4], ...)
+   labline(h=refline, col=lcol[4], lty=lty[4], lwd=lwd[4], ...)
 
    if (addpred)
-      lines(xs, pred, col=lcol[1], lty=lty[1], lwd=lwd[1], ...)
+      llines(xs, pred, col=lcol[1], lty=lty[1], lwd=lwd[1], ...)
 
    ### redraw box
 
-   box(...)
+   lbox(...)
 
    ### order points by psize for plotting
 
@@ -613,7 +644,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    ### add points
 
-   points(x=xi.o, y=yi.o, pch=pch.o, col=col.o, bg=bg.o, cex=psize.o, ...)
+   lpoints(x=xi.o, y=yi.o, pch=pch.o, col=col.o, bg=bg.o, cex=psize.o, ...)
 
    ### labeling of points
 
@@ -641,9 +672,9 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       for (i in which(label)) {
 
          if (isTRUE(yi[i] > yi.pred[i])) { # yi.pred might be NULL, so use isTRUE()
-            text(xi[i], yi[i] + offset[1] + offset[2]*psize[i]^offset[3], slab[i], cex=labsize, ...)
+            ltext(xi[i], yi[i] + offset[1] + offset[2]*psize[i]^offset[3], slab[i], cex=labsize, ...)
          } else {
-            text(xi[i], yi[i] - offset[1] - offset[2]*psize[i]^offset[3], slab[i], cex=labsize, ...)
+            ltext(xi[i], yi[i] - offset[1] - offset[2]*psize[i]^offset[3], slab[i], cex=labsize, ...)
          }
 
       }

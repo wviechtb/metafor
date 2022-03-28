@@ -159,6 +159,19 @@
 .is.vector <- function(x)
    is.atomic(x) && !is.matrix(x) && !is.null(x)
 
+### function to test if a string is an integer and to return the integer if so (otherwise return NA)
+
+.is.stringint <- function(x) {
+   is.int <- grepl("^[0-9]+L?$", x)
+   if (is.int) {
+      x <- sub("L", "", x, fixed=TRUE)
+      x <- as.integer(x)
+   } else {
+      x <- NA
+   }
+   return(x)
+}
+
 ############################################################################
 
 ### function to format p-values

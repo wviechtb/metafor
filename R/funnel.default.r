@@ -30,7 +30,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    k <- length(yi)
 
-   ### check if sample size information is available if plotting (some function of) of the the sample sizes on the y-axis
+   ### check if sample size information is available if plotting (some function of) of the sample sizes on the y-axis
 
    if (missing(ni))
       ni <- NULL
