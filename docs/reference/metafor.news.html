@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-54</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-56</span>
       </span>
     </div>
 
@@ -121,12 +121,19 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \dontrun{</span></span>
 <span class="r-in"><span class="fu">metafor.news</span><span class="op">(</span><span class="op">)</span><span class="co"># }</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.1-54 (2022-03-27)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.1-56 (2022-04-03)                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added misc-models and misc-options help pages</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added as.data.frame.confint.rma() and as.data.frame.list.confint.rma</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     methods</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - permutest() can now also do permutation tests for location-scale</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     models; it also always returns the permutation distributions; hence,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     argument retpermdist was removed</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - added plot.permutest.rma.uni() function to plot the permutation</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     distributions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - simplified regtest(), ranktest(), and tes() to single functions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     instead of using generics and methods; this way, a data argument</span>
@@ -137,16 +144,19 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - robust() gains clubSandwich argument; if set to TRUE, the methods</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     from the clubSandwich package</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     (https://cran.r-project.org/package=clubSandwich) are used to obtain</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     the cluster-robust results</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     the cluster-robust results; anova.rma() and predict.rma() updated to</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     work appropriately in this case</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - results from robust() are no longer printed with print.robust.rma()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     but with the print methods print.rma.uni() and print.rma.mv()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - anova.rma() now gives a warning when running LRTs not based on</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ML/REML estimation and gains rhs argument; it also now has a refit</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     argument</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     argument (to refit REML fits with ML in case the fixed effects of</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     the models differ)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - setting dfs="contain" in rma.mv() automatically sets test="t"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - setting dfs="contain" in rma.mv() automatically sets test="t" for</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     convenience</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - elements of rho and phi in rma.mv() are now based on the lower</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     triangular part of the respective correlation matrix (instead of the</span>

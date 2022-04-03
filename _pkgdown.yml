@@ -109,6 +109,7 @@ reference:
       - llplot
       - gosh
       - plot.gosh.rma
+      - plot.permutest.rma.uni
       - plot.rma
       - plot.cumul.rma
       - plot.infl.rma.uni

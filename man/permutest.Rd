@@ -1,6 +1,7 @@
 \name{permutest}
 \alias{permutest}
 \alias{permutest.rma.uni}
+\alias{permutest.rma.ls}
 \title{Permutation Tests for 'rma.uni' Objects}
 \description{
    The function carries out permutation tests for objects of class \code{"rma.uni"}. \loadmathjax
@@ -9,7 +10,7 @@
 permutest(x, \dots)
 
 \method{permutest}{rma.uni}(x, exact=FALSE, iter=1000, permci=FALSE,
-          progbar=TRUE, retpermdist=FALSE, digits, control, \dots)
+          progbar=TRUE, digits, control, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}.}
@@ -17,7 +18,6 @@ permutest(x, \dots)
    \item{iter}{integer to specify the number of iterations for the permutation test when not doing an exact test (the default is \code{1000}).}
    \item{permci}{logical to specify whether permutation-based CIs should also be constructed (the default is \code{FALSE}). Can also be a vector of indices to specify for which coefficients a permutation-based CI should be obtained.}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{TRUE}).}
-   \item{retpermdist}{logical to specify whether the permutation distributions of the test statistics should be returned (the default is \code{FALSE}).}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{control}{list of control values for numerical comparisons (\code{comptol}) and for \code{uniroot} (i.e., \code{tol} and \code{maxiter}). The latter is only relevant when \code{permci=TRUE}. See \sQuote{Note}.}
    \item{\dots}{other arguments.}
@@ -27,30 +27,32 @@ permutest(x, \dots)
 
    For models with moderators, the permutation test is carried out by permuting the rows of the model matrix (i.e., \mjseqn{X}). The (two-sided) p-value for a particular model coefficient is then equal to the proportion of times that the absolute value of the test statistic for the coefficient under the permuted data is as extreme or more extreme than under the actually observed data. Similarly, for the omnibus test, the p-value is the proportion of times that the test statistic for the omnibus test is as extreme or more extreme than the actually observed one. See Higgins and Thompson (2004) and Viechtbauer et al. (2015) for more details.
 
-   If \code{exact=TRUE}, the function will try to carry out an exact permutation test. An exact permutation test requires fitting the model to each possible permutation once. However, the number of possible permutations increases rapidly with the number of outcomes/studies (i.e., \mjseqn{k}). For models without moderators, there are \mjseqn{2^k} possible permutations of the signs. Therefore, for \mjseqn{k=5}, there are 32 possible permutations, for \mjseqn{k=10}, there are already 1024, and for \mjseqn{k=20}, there are over one million permutations of the signs.
+   If \code{exact=TRUE}, the function will try to carry out an exact permutation test. An exact permutation test requires fitting the model to each possible permutation once. However, the number of possible permutations increases rapidly with the number of outcomes/studies (i.e., \mjseqn{k}). For models without moderators, there are \mjseqn{2^k} possible permutations of the signs. Therefore, for \mjseqn{k=5}, there are 32 possible permutations, for \mjseqn{k=10}, there are already 1024, and for \mjseqn{k=20}, there are over one million such permutations.
 
    For models with moderators, the increase in the number of possible permutations may be even more severe. The total number of possible permutations of the model matrix is \mjseqn{k!}. Therefore, for \mjseqn{k=5}, there are 120 possible permutations, for \mjseqn{k=10}, there are 3,628,800, and for \mjseqn{k=20}, there are over \mjeqn{10^{18}}{10^18} permutations of the model matrix.
 
-   Therefore, going through all possible permutations may become infeasible. Instead of using an exact permutation test, one can set \code{exact=FALSE} (which is also the default). In that case, the function approximates the exact permutation-based p-value(s) by going through a smaller number (as specified by the \code{iter} argument) of \emph{random} permutations. Therefore, running the function twice on the same data can yield (slightly) different p-values. Setting \code{iter} sufficiently large ensures that the results become stable. Note that if \code{exact=FALSE} and \code{iter} is actually larger than the number of iterations required for an exact permutation test, then an exact test will be carried out.
+   Therefore, going through all possible permutations may become infeasible. Instead of using an exact permutation test, one can set \code{exact=FALSE} (which is also the default). In that case, the function approximates the exact permutation-based p-value(s) by going through a smaller number (as specified by the \code{iter} argument) of \emph{random} permutations. Therefore, running the function twice on the same data can yield (slightly) different p-values. Setting \code{iter} sufficiently large ensures that the results become stable. For full reproducibility, one can also set the seed of the random number generator before running the function (see \sQuote{Examples}). Note that if \code{exact=FALSE} and \code{iter} is actually larger than the number of iterations required for an exact permutation test, then an exact test will be carried out.
 
    For models with moderators, the exact permutation test actually only requires fitting the model to each \emph{unique} permutation of the model matrix. The number of unique permutations will be smaller than \mjseqn{k!} when the model matrix contains recurring rows. This may be the case when only including categorical moderators (i.e., factors) in the model or when any quantitative moderators included in the model can only take on a small number of unique values. When \code{exact=TRUE}, the function therefore uses an algorithm to restrict the test to only the unique permutations of the model matrix, which may make the use of the exact test feasible even when \mjseqn{k} is large.
 
    When using random permutations, the function ensures that the very first permutation will always correspond to the original data. This avoids p-values equal to 0.
 
    When \code{permci=TRUE}, the function also tries to obtain permutation-based CIs of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes by some amount and finding the most extreme values for this amount for which the permutation-based test would just lead to non-rejection. This is computationally expensive and may take a long time to complete. For models with moderators, one can also set \code{permci} to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as \code{NA} in the output.
+
+   The function also works with location-scale models (see \code{\link{rma.uni}} for details). Permutation tests will then be carried out for both the location and scale parts of the model. However, note that permutation-based CIs are not available for location-scale models.
 }
 \value{
    An object of class \code{"permutest.rma.uni"}. The object is a list containing the following components:
    \item{pval}{p-value(s) based on the permutation test.}
    \item{QMp}{p-value for the omnibus test of moderators based on the permutation test.}
-   \item{zval.perm}{values of the test statistics of the coefficients under the various permutations (only when \code{retpermdist=TRUE}).}
-   \item{b.perm}{the model coefficients under the various permutations (only when \code{retpermdist=TRUE}).}
-   \item{QM.perm}{the test statistic of the omnibus test of moderators under the various permutations (only when \code{retpermdist=TRUE}).}
+   \item{zval.perm}{values of the test statistics of the coefficients under the various permutations.}
+   \item{b.perm}{the model coefficients under the various permutations.}
+   \item{QM.perm}{the test statistic of the omnibus test of moderators under the various permutations.}
    \item{ci.lb}{lower bound of the confidence intervals for the coefficients (permutation-based when \code{permci=TRUE}).}
    \item{ci.ub}{upper bound of the confidence intervals for the coefficients (permutation-based when \code{permci=TRUE}).}
    \item{\dots}{some additional elements/values are passed on.}
 
-   The results are formatted and printed with the \code{\link[=print.permutest.rma.uni]{print}} function. One can also use \code{\link[=coef.permutest.rma.uni]{coef}} to obtain the table with the model coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds.
+   The results are formatted and printed with the \code{\link[=print.permutest.rma.uni]{print}} function. One can also use \code{\link[=coef.permutest.rma.uni]{coef}} to obtain the table with the model coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds. The permutation distribution(s) can be plotted with the \code{\link[=plot.permutest.rma.uni]{plot}} function.
 }
 \note{
    The p-values obtained with permutation tests cannot reach conventional levels of statistical significance (i.e., \mjseqn{p \le .05}) when \mjseqn{k} is very small. In particular, for models without moderators, the smallest possible (two-sided) p-value is .0625 when \mjseqn{k=5} and .03125 when \mjseqn{k=6}. Therefore, the permutation test is only able to reject the null hypothesis at \mjseqn{\alpha=.05} when \mjseqn{k} is at least equal to 6. For models with moderators, the smallest possible (two-sided) p-value for a particular model coefficient is .0833 when \mjseqn{k=4} and .0167 when \mjseqn{k=5} (assuming that each row in the model matrix is unique). Therefore, the permutation test is only able to reject the null hypothesis at \mjseqn{\alpha=.05} when \mjseqn{k} is at least equal to 5. Consequently, permutation-based CIs can also only be obtained when \mjseqn{k} is sufficiently large.
@@ -78,7 +80,7 @@ permutest(x, \dots)
 \seealso{
    \code{\link{rma.uni}} for the function to fit models for which permutation tests can be conducted.
 
-   \code{\link{print.permutest.rma.uni}} for the print method.
+   \code{\link{print.permutest.rma.uni}} and \code{\link{plot.permutest.rma.uni}} for the print and plot methods.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances
@@ -101,22 +103,18 @@ res
 ### permutation test (approximate only; exact not feasible)
 \dontrun{
 
+### permutation test (approximate)
 set.seed(1234) # for reproducibility
-permres <- permutest(res, iter=10000, retpermdist=TRUE)
+permres <- permutest(res, iter=10000)
 permres
 
-### histogram of permutation distribution for absolute latitude
-### dashed horizontal line: the observed value of the test statistic
-### red curve: standard normal density
+### histograms of permutation distributions for absolute latitude
+### dashed horizontal line: the observed value of the test statistic (in both tails)
+### black curve: standard normal density
 ### blue curve: kernel density estimate of the permutation distribution
 ### note that the tail area under the permutation distribution is larger
 ### than under a standard normal density (hence, the larger p-value)
-hist(permres$zval.perm[,2], breaks=120, freq=FALSE, xlim=c(-5,5), ylim=c(0,.4),
-     main="Permutation Distribution", xlab="Value of Test Statistic", col="gray90")
-abline(v=res$zval[2], lwd=2, lty="dashed")
-abline(v=0, lwd=2)
-curve(dnorm, from=-5, to=5, add=TRUE, lwd=2, col=rgb(1,0,0,alpha=.7))
-lines(density(permres$zval.perm[,2]), lwd=2, col=rgb(0,0,1,alpha=.7))
+plot(permres, beta=2, lwd=c(2,3,3,4), xlim=c(-5,5), ylim=c(0,.4))
 }
 }
 \keyword{models}

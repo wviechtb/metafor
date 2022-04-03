@@ -6,11 +6,11 @@ print.vif.rma <- function(x, digits=x$digits, ...) {
 
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 
-   .space()
-
    ddd <- list(...)
 
    .chkdots(ddd, c("num"))
+
+   .space()
 
    if (is.null(x$gvif)) {
 

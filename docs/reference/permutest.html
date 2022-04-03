@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-54</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-56</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@
 
 <span class="co"># S3 method for rma.uni</span>
 <span class="fu">permutest</span><span class="op">(</span><span class="va">x</span>, exact<span class="op">=</span><span class="cn">FALSE</span>, iter<span class="op">=</span><span class="fl">1000</span>, permci<span class="op">=</span><span class="cn">FALSE</span>,
-          progbar<span class="op">=</span><span class="cn">TRUE</span>, retpermdist<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+          progbar<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -115,13 +115,11 @@
 <dt>exact</dt>
 <dd><p>logical to specify whether an exact permutation test should be carried out or not (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
 <dt>iter</dt>
-<dd><p>integer to specify the number of iterations for the permutation test when not doing an exact test (the default is <code>1000</code> iterations).</p></dd>
+<dd><p>integer to specify the number of iterations for the permutation test when not doing an exact test (the default is <code>1000</code>).</p></dd>
 <dt>permci</dt>
 <dd><p>logical to specify whether permutation-based CIs should also be constructed (the default is <code>FALSE</code>). Can also be a vector of indices to specify for which coefficients a permutation-based CI should be obtained.</p></dd>
 <dt>progbar</dt>
 <dd><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>).</p></dd>
-<dt>retpermdist</dt>
-<dd><p>logical to specify whether the permutation distributions of the test statistics should be returned (the default is <code>FALSE</code>).</p></dd>
 <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
 <dt>control</dt>
@@ -133,12 +131,13 @@
     <h2>Details</h2>
     <p>For models without moderators, the permutation test is carried out by permuting the signs of the observed effect sizes or outcomes. The (two-sided) p-value of the permutation test is then equal to the proportion of times that the absolute value of the test statistic under the permuted data is as extreme or more extreme than under the actually observed data. See Follmann and Proschan (1999) for more details.</p>
 <p>For models with moderators, the permutation test is carried out by permuting the rows of the model matrix (i.e., <em></em>\(X\)). The (two-sided) p-value for a particular model coefficient is then equal to the proportion of times that the absolute value of the test statistic for the coefficient under the permuted data is as extreme or more extreme than under the actually observed data. Similarly, for the omnibus test, the p-value is the proportion of times that the test statistic for the omnibus test is as extreme or more extreme than the actually observed one. See Higgins and Thompson (2004) and Viechtbauer et al. (2015) for more details.</p>
-<p>If <code>exact=TRUE</code>, the function will try to carry out an exact permutation test. An exact permutation test requires fitting the model to each possible permutation once. However, the number of possible permutations increases rapidly with the number of outcomes/studies (i.e., <em></em>\(k\)). For models without moderators, there are <em></em>\(2^k\) possible permutations of the signs. Therefore, for <em></em>\(k=5\), there are 32 possible permutations, for <em></em>\(k=10\), there are already 1024, and for <em></em>\(k=20\), there are over one million permutations of the signs.</p>
+<p>If <code>exact=TRUE</code>, the function will try to carry out an exact permutation test. An exact permutation test requires fitting the model to each possible permutation once. However, the number of possible permutations increases rapidly with the number of outcomes/studies (i.e., <em></em>\(k\)). For models without moderators, there are <em></em>\(2^k\) possible permutations of the signs. Therefore, for <em></em>\(k=5\), there are 32 possible permutations, for <em></em>\(k=10\), there are already 1024, and for <em></em>\(k=20\), there are over one million such permutations.</p>
 <p>For models with moderators, the increase in the number of possible permutations may be even more severe. The total number of possible permutations of the model matrix is <em></em>\(k!\). Therefore, for <em></em>\(k=5\), there are 120 possible permutations, for <em></em>\(k=10\), there are 3,628,800, and for <em></em>\(k=20\), there are over <em></em>\(10^{18}\) permutations of the model matrix.</p>
-<p>Therefore, going through all possible permutations may become infeasible. Instead of using an exact permutation test, one can set <code>exact=FALSE</code> (which is also the default). In that case, the function approximates the exact permutation-based p-value(s) by going through a smaller number (as specified by the <code>iter</code> argument) of <em>random</em> permutations. Therefore, running the function twice on the same data can yield (slightly) different p-values. Setting <code>iter</code> sufficiently large ensures that the results become stable. Note that if <code>exact=FALSE</code> and <code>iter</code> is actually larger than the number of iterations required for an exact permutation test, then an exact test will be carried out.</p>
+<p>Therefore, going through all possible permutations may become infeasible. Instead of using an exact permutation test, one can set <code>exact=FALSE</code> (which is also the default). In that case, the function approximates the exact permutation-based p-value(s) by going through a smaller number (as specified by the <code>iter</code> argument) of <em>random</em> permutations. Therefore, running the function twice on the same data can yield (slightly) different p-values. Setting <code>iter</code> sufficiently large ensures that the results become stable. For full reproducibility, one can also set the seed of the random number generator before running the function (see ‘Examples’). Note that if <code>exact=FALSE</code> and <code>iter</code> is actually larger than the number of iterations required for an exact permutation test, then an exact test will be carried out.</p>
 <p>For models with moderators, the exact permutation test actually only requires fitting the model to each <em>unique</em> permutation of the model matrix. The number of unique permutations will be smaller than <em></em>\(k!\) when the model matrix contains recurring rows. This may be the case when only including categorical moderators (i.e., factors) in the model or when any quantitative moderators included in the model can only take on a small number of unique values. When <code>exact=TRUE</code>, the function therefore uses an algorithm to restrict the test to only the unique permutations of the model matrix, which may make the use of the exact test feasible even when <em></em>\(k\) is large.</p>
 <p>When using random permutations, the function ensures that the very first permutation will always correspond to the original data. This avoids p-values equal to 0.</p>
 <p>When <code>permci=TRUE</code>, the function also tries to obtain permutation-based CIs of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes by some amount and finding the most extreme values for this amount for which the permutation-based test would just lead to non-rejection. This is computationally expensive and may take a long time to complete. For models with moderators, one can also set <code>permci</code> to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as <code>NA</code> in the output.</p>
+<p>The function also works with location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code> for details). Permutation tests will then be carried out for both the location and scale parts of the model. However, note that permutation-based CIs are not available for location-scale models.</p>
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -148,18 +147,18 @@
 <dt>QMp</dt>
 <dd><p>p-value for the omnibus test of moderators based on the permutation test.</p></dd>
 <dt>zval.perm</dt>
-<dd><p>values of the test statistics of the coefficients under the various permutations (only when <code>retpermdist=TRUE</code>).</p></dd>
+<dd><p>values of the test statistics of the coefficients under the various permutations.</p></dd>
 <dt>b.perm</dt>
-<dd><p>the model coefficients under the various permutations (only when <code>retpermdist=TRUE</code>).</p></dd>
+<dd><p>the model coefficients under the various permutations.</p></dd>
 <dt>QM.perm</dt>
-<dd><p>the test statistic of the omnibus test of moderators under the various permutations (only when <code>retpermdist=TRUE</code>).</p></dd>
+<dd><p>the test statistic of the omnibus test of moderators under the various permutations.</p></dd>
 <dt>ci.lb</dt>
 <dd><p>lower bound of the confidence intervals for the coefficients (permutation-based when <code>permci=TRUE</code>).</p></dd>
 <dt>ci.ub</dt>
 <dd><p>upper bound of the confidence intervals for the coefficients (permutation-based when <code>permci=TRUE</code>).</p></dd>
 <dt>...</dt>
 <dd><p>some additional elements/values are passed on.</p></dd>
-</dl><p>The results are formatted and printed with the <code><a href="print.permutest.rma.uni.html">print</a></code> function. One can also use <code><a href="coef.permutest.rma.uni.html">coef</a></code> to obtain the table with the model coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds.</p>
+</dl><p>The results are formatted and printed with the <code><a href="print.permutest.rma.uni.html">print</a></code> function. One can also use <code><a href="coef.permutest.rma.uni.html">coef</a></code> to obtain the table with the model coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds. The permutation distribution(s) can be plotted with the <code><a href="plot.permutest.rma.uni.html">plot</a></code> function.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -183,7 +182,7 @@
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="rma.uni.html">rma.uni</a></code> for the function to fit models for which permutation tests can be conducted.</p>
-<p><code><a href="print.permutest.rma.uni.html">print.permutest.rma.uni</a></code> for the print method.</p></div>
+<p><code><a href="print.permutest.rma.uni.html">print.permutest.rma.uni</a></code> and <code><a href="plot.permutest.rma.uni.html">plot.permutest.rma.uni</a></code> for the print and plot methods.</p></div>
     </div>
 
     <div id="ref-examples">
@@ -218,7 +217,7 @@
 <span class="r-in"><span class="co">### permutation test (approximate and exact)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span> <span class="co"># for reproducibility</span></span>
 <span class="r-in"><span class="fu">permutest</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Running 1000 iterations for approximate permutation test.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Running 1000 iterations for an approximate permutation test.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -231,7 +230,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1) p-value based on permutation testing</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span class="fu">permutest</span><span class="op">(</span><span class="va">res</span>, exact<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="co"># }</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Running 8192 iterations for exact permutation test.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Running 8192 iterations for an exact permutation test.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -276,9 +275,10 @@
 <span class="r-in"><span class="co">### permutation test (approximate only; exact not feasible)</span></span>
 <span class="r-in"><span class="co"># \dontrun{</span></span>
 <span class="r-in"></span>
+<span class="r-in"><span class="co">### permutation test (approximate)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span> <span class="co"># for reproducibility</span></span>
-<span class="r-in"><span class="va">permres</span> <span class="op">&lt;-</span> <span class="fu">permutest</span><span class="op">(</span><span class="va">res</span>, iter<span class="op">=</span><span class="fl">10000</span>, retpermdist<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Running 10000 iterations for approximate permutation test.</span>
+<span class="r-in"><span class="va">permres</span> <span class="op">&lt;-</span> <span class="fu">permutest</span><span class="op">(</span><span class="va">res</span>, iter<span class="op">=</span><span class="fl">10000</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Running 10000 iterations for an approximate permutation test.</span>
 <span class="r-in"><span class="va">permres</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 2:3):¹</span>
@@ -297,18 +297,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1) p-values based on permutation testing</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### histogram of permutation distribution for absolute latitude</span></span>
-<span class="r-in"><span class="co">### dashed horizontal line: the observed value of the test statistic</span></span>
-<span class="r-in"><span class="co">### red curve: standard normal density</span></span>
+<span class="r-in"><span class="co">### histograms of permutation distributions for absolute latitude</span></span>
+<span class="r-in"><span class="co">### dashed horizontal line: the observed value of the test statistic (in both tails)</span></span>
+<span class="r-in"><span class="co">### black curve: standard normal density</span></span>
 <span class="r-in"><span class="co">### blue curve: kernel density estimate of the permutation distribution</span></span>
 <span class="r-in"><span class="co">### note that the tail area under the permutation distribution is larger</span></span>
 <span class="r-in"><span class="co">### than under a standard normal density (hence, the larger p-value)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">permres</span><span class="op">$</span><span class="va">zval.perm</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>, breaks<span class="op">=</span><span class="fl">120</span>, freq<span class="op">=</span><span class="cn">FALSE</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>,<span class="fl">5</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">.4</span><span class="op">)</span>,</span>
-<span class="r-in">     main<span class="op">=</span><span class="st">"Permutation Distribution"</span>, xlab<span class="op">=</span><span class="st">"Value of Test Statistic"</span>, col<span class="op">=</span><span class="st">"gray90"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">res</span><span class="op">$</span><span class="va">zval</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, lwd<span class="op">=</span><span class="fl">2</span>, lty<span class="op">=</span><span class="st">"dashed"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="fl">0</span>, lwd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="va">dnorm</span>, from<span class="op">=</span><span class="op">-</span><span class="fl">5</span>, to<span class="op">=</span><span class="fl">5</span>, add<span class="op">=</span><span class="cn">TRUE</span>, lwd<span class="op">=</span><span class="fl">2</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span>,<span class="fl">0</span>,alpha<span class="op">=</span><span class="fl">.7</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/density.html" class="external-link">density</a></span><span class="op">(</span><span class="va">permres</span><span class="op">$</span><span class="va">zval.perm</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">2</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span>,alpha<span class="op">=</span><span class="fl">.7</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">permres</span>, beta<span class="op">=</span><span class="fl">2</span>, lwd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">4</span><span class="op">)</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>,<span class="fl">5</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">.4</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="permutest-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>

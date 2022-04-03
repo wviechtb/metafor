@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-54</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-56</span>
       </span>
     </div>
 
@@ -126,7 +126,7 @@
 <h3 id="styled-output-with-the-crayon-package">Styled Output with the <span class="pkg">crayon</span> Package<a class="anchor" aria-label="anchor" href="#styled-output-with-the-crayon-package"></a></h3>
 
 
-<p>The <a href="https://cran.r-project.org/package=crayon" class="external-link">crayon</a> package provides a way to create colored output. The <span class="pkg">metafor</span> package is designed to automatically make use of this feature when the <span class="pkg">crayon</span> package is installed and loaded (with <code><a href="https://github.com/r-lib/crayon#readme" class="external-link">library(crayon)</a></code>). Note that this only works on terminals that support ‘ANSI’ color and highlight codes (e.g., not under RGui on Windows or R.app on macOS, but the RStudio console and all modern terminals should support this).</p>
+<p>The <a href="https://cran.r-project.org/package=crayon" class="external-link">crayon</a> package provides a way to create colored output. The <span class="pkg">metafor</span> package is designed to automatically make use of this feature when the <span class="pkg">crayon</span> package is installed (<code>install.packages("crayon")</code>) and loaded (<code><a href="https://github.com/r-lib/crayon#readme" class="external-link">library(crayon)</a></code>). Note that this only works on terminals that support ‘ANSI’ color and highlight codes (e.g., not under RGui on Windows or R.app on macOS, but the RStudio console and all modern terminals should support this).</p>
 <p>The default color theme that is used is quite plain, but should work with a light or dark colored background. One can modify the color theme by creating an object in the workspace named <code>.mtheme</code>, which should be a list whose elements specify the styles for various parts of the output (see below for some examples and the documentation of the <span class="pkg">crayon</span> package for the syntax to specify styles). The following elements are recognized:</p><ul><li><p><code>header</code> for the header of tables (underlined by default),</p></li>
 <li><p><code>body1</code> for odd numbered rows in the body of tables,</p></li>
 <li><p><code>body2</code> for even numbered rows in the body of tables,</p></li>
@@ -175,7 +175,7 @@
 <span class="fu"><a href="../reference/print.rma.html">summary</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></code></pre></div>
 
 <p>For example, using the color scheme above (for a light colored background), the output should look like this:   <img src="figures/crayon1.png" width="800"><img src="figures/crayon2.png" width="800"></p>
-<p>Support for 256 different colors and formatting such as underlined and bold text differs across terminals.</p>
+<p>Note that support for 256 different colors and text formatting (such as underlined and bold text) differs across terminals.</p>
 <p></p>
 </div>
 

@@ -1,8 +1,8 @@
-permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=TRUE, digits, control, ...) {
+permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, control, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma.uni", notav=c("robust.rma", "rma.ls", "rma.uni.selmodel"))
+   .chkclass(class(x), must="rma.ls")
 
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
@@ -12,10 +12,13 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tol", "time", "seed", "verbose", "retpermdist"))
+   .chkdots(ddd, c("tol", "time", "seed", "verbose", "retpermdist", "permci"))
 
    if (!is.null(ddd$tol)) # in case user specifies comptol in the old manner
       comptol <- ddd$tol
+
+   if (.isTRUE(ddd$permci))
+      warning(mstyle$warning("Permutation-based CIs for location-scale models are currently not available."), call.=FALSE)
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
@@ -75,7 +78,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    }
 
    if (X.iter == Inf)
-      stop(mstyle$stop("Too many iterations required for an exact permutation test."))
+      stop(mstyle$stop("Too many iterations required for an exact permutation test of the location model."))
 
    #########################################################################
 
@@ -89,9 +92,8 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    if (missing(control))
       control <- list()
 
-   con <- list(comptol=.Machine$double.eps^0.5, tol=.Machine$double.eps^0.25,
-               maxiter=100, alternative="two.sided", p2defn="abs", stat="test",
-               cialt="one.sided", distfac=1)
+   con <- list(comptol=.Machine$double.eps^0.5,
+                            alternative="two.sided", p2defn="abs", stat="test")
    con.pos <- pmatch(names(control), names(con))
    con[c(na.omit(con.pos))] <- control[!is.na(con.pos)]
 
@@ -117,7 +119,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    #########################################################################
 
    if (progbar)
-      cat(mstyle$verbose(paste0("Running ", X.iter, " iterations for an ", ifelse(X.exact, "exact", "approximate"), " permutation test.\n")))
+      cat(mstyle$verbose(paste0("Running ", X.iter, " iterations for an ", ifelse(X.exact, "exact", "approximate"), " permutation test of the location model.\n")))
 
    if (x$int.only) {
 
@@ -147,7 +149,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
          for (i in seq_len(X.iter)) {
 
-            args <- list(yi=signmat[i,]*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=1, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE, outlist=outlist)
+            args <- list(yi=signmat[i,]*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, scale=x$Z, link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=1, alpha=ifelse(x$alpha.fix, x$alpha, NA), control=x$control, skiphes=TRUE, outlist=outlist)
             res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
 
             if (inherits(res, "try-error"))
@@ -171,7 +173,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             signs <- sample(c(-1,1), x$k, replace=TRUE) # easier to understand (a tad slower for small k, but faster for larger k)
             #signs <- 2*rbinom(x$k,1,.5)-1
 
-            args <- list(yi=signs*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=1, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE, outlist=outlist)
+            args <- list(yi=signs*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, scale=x$Z, link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=1, alpha=ifelse(x$alpha.fix, x$alpha, NA), control=x$control, skiphes=TRUE, outlist=outlist)
             res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
 
             if (inherits(res, "try-error"))
@@ -283,7 +285,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
          for (i in seq_len(X.iter)) {
 
-            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=cbind(X[permmat[i,],]), intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=x$btt, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE, outlist=outlist)
+            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=cbind(X[permmat[i,],]), intercept=FALSE, scale=x$Z, link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=x$btt, alpha=ifelse(x$alpha.fix, x$alpha, NA), control=x$control, skiphes=FALSE, outlist=outlist)
             res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
 
             if (inherits(res, "try-error"))
@@ -304,7 +306,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
          while (i <= X.iter) {
 
-            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=cbind(X[sample(x$k),]), intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=x$btt, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE, outlist=outlist)
+            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=cbind(X[sample(x$k),]), intercept=FALSE, scale=x$Z, link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=x$btt, alpha=ifelse(x$alpha.fix, x$alpha, NA), control=x$control, skiphes=FALSE, outlist=outlist)
             res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
 
             if (inherits(res, "try-error"))
@@ -400,102 +402,241 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    #########################################################################
    #########################################################################
 
-   ### permutation-based CI
+   ### calculate number of permutations for an exact permutation test
 
-   ci.lb <- x$ci.lb
-   ci.ub <- x$ci.ub
+   if (x$Z.int.only) {
 
-   if (.isTRUE(permci) || is.numeric(permci)) {
+      ### for intercept-only models, cannot run a permutation test
 
-      level <- .level(x$level)
+      Z.exact.iter <- 0
 
-      ### check if it is even possible to reject at level
+      warning(mstyle$warning("Cannot carry out a permutation test for an intercept-only scale model."), call.=FALSE)
 
-      if (1/X.iter > level / ifelse(con$cialt == "one.sided", 1, 2)) {
+   } else {
 
-         permci <- FALSE
-         warning(mstyle$warning(paste0("Cannot obtain ", 100*(1-x$level), "% permutation-based CI; number of permutations (", X.iter, ") too low.")), call.=FALSE)
+      Z <- as.data.frame(x$Z)[do.call(order, as.data.frame(x$Z)),]
+      Z.indices <- cumsum(c(TRUE, !duplicated(Z)[-1]))
+      Z.indices <- rep(cumsum(rle(Z.indices)$lengths) - (rle(Z.indices)$lengths - 1), rle(Z.indices)$lengths)
+      ind.table <- table(Z.indices)
+      Z.exact.iter <- round(prod((max(ind.table)+1):x$k) / prod(factorial(ind.table[-which.max(ind.table)])))
 
+   }
+
+   Z.exact <- exact
+   Z.iter  <- iter
+
+   if (Z.exact || (Z.exact.iter <= Z.iter)) {
+      Z.exact <- TRUE
+      Z.iter <- Z.exact.iter
+   }
+
+   if (Z.iter == Inf)
+      stop(mstyle$stop("Too many iterations required for an exact permutation test of the scale model."))
+
+   #########################################################################
+
+   ### generate seed (needed when Z.exact=FALSE)
+
+   if (!Z.exact)
+      seed <- as.integer(runif(1)*2e9)
+
+   ### set control parameters and possibly replace with user-defined values (already done for location part)
+
+   if (!Z.exact) {
+      if (!is.null(ddd$seed)) {
+         set.seed(ddd$seed)
       } else {
+         set.seed(seed)
+      }
+   }
 
-         ### if permci is numeric, check if existing coefficients have been specified
-         ### otherwise, CIs will be obtained for all model coefficients
+   ### elements that need to be returned
 
-         if (is.numeric(permci)) {
-            coefs <- unique(round(permci))
-            if (any(coefs > x$p) || any(coefs < 1))
-               stop(mstyle$stop("Non-existent coefficients specified via 'permci'."))
-            permci <- TRUE
-         } else {
-            coefs <- seq_len(x$p)
+   outlist <- "alpha=alpha, zval.alpha=zval.alpha, QS=QS"
+
+   #########################################################################
+
+   if (progbar && !x$Z.int.only)
+      cat(mstyle$verbose(paste0("Running ", Z.iter, " iterations for an ", ifelse(Z.exact, "exact", "approximate"), " permutation test of the scale model.\n")))
+
+   if (x$Z.int.only) {
+
+      alpha.perm <- NA
+      zval.alpha.perm <- NA
+      QS.perm <- NA
+      pval.alpha <- x$pval.alpha
+      QSp <- NA
+
+   } else {
+
+      ### permutation test for the scale model
+
+      zval.alpha.perm <- try(suppressWarnings(matrix(NA_real_, nrow=Z.iter, ncol=x$q)), silent=TRUE)
+
+      if (inherits(zval.alpha.perm, "try-error"))
+         stop(mstyle$stop("Number of iterations requested too large."))
+
+      alpha.perm <- try(suppressWarnings(matrix(NA_real_, nrow=Z.iter, ncol=x$q)), silent=TRUE)
+
+      if (inherits(alpha.perm, "try-error"))
+         stop(mstyle$stop("Number of iterations requested too large."))
+
+      QS.perm <- try(rep(NA_real_, Z.iter), silent=TRUE)
+
+      if (inherits(QS.perm, "try-error"))
+         stop(mstyle$stop("Number of iterations requested too large."))
+
+      if (progbar)
+         pbar <- pbapply::startpb(min=0, max=Z.iter)
+
+      if (Z.exact) { # exact permutation test for meta-regression models
+
+         #permmat <- .genperms(x$k)
+         permmat <- .genuperms(Z.indices) # use recursive algorithm to obtain all unique permutations
+
+         for (i in seq_len(Z.iter)) {
+
+            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, scale=cbind(Z[permmat[i,],]), link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, att=x$att, alpha=ifelse(x$alpha.fix, x$alpha, NA), control=x$control, skiphes=FALSE, outlist=outlist)
+            res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
+
+            if (inherits(res, "try-error"))
+               next
+
+            alpha.perm[i,] <- res$alpha[,1]
+            zval.alpha.perm[i,] <- res$zval.alpha
+            QS.perm[i] <- res$QS
+
+            if (progbar)
+               pbapply::setpb(pbar, i)
+
          }
 
-         ci.lb <- rep(NA, x$p)
-         ci.ub <- rep(NA, x$p)
+      } else { # approximate permutation test for meta-regression models
 
-         for (j in coefs) {
+         i <- 1
 
-            if (progbar)
-               cat(mstyle$verbose(paste0("Searching for lower CI bound of coefficient ", j, ": \n")))
+         while (i <= Z.iter) {
 
-            if (con$cialt == "one.sided") {
-               con$alternative <- "greater"
-            } else {
-               con$alternative <- "two.sided"
-            }
+            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, scale=cbind(Z[sample(x$k),]), link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, att=x$att, alpha=ifelse(x$alpha.fix, x$alpha, NA), control=x$control, skiphes=FALSE, outlist=outlist)
+            res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
 
-            #tmp <- try(uniroot(.permci, interval=c(x$ci.lb[j], x$beta[j,1]), extendInt="upX", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=X.exact, iter=X.iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
-            tmp <- try(uniroot(.permci, interval=c(x$ci.lb[j] - con$distfac*(x$beta[j,1] - x$ci.lb[j]), x$beta[j,1]), extendInt="no", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=X.exact, iter=X.iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
+            if (inherits(res, "try-error"))
+               next
 
-            if (inherits(tmp, "try-error")) {
-               ci.lb[j] <- NA
-            } else {
-               ci.lb[j] <- tmp
-            }
+            alpha.perm[i,] <- res$alpha[,1]
+            zval.alpha.perm[i,] <- res$zval.alpha
+            QS.perm[i] <- res$QS
+
+            i <- i + 1
 
             if (progbar)
-               cat(mstyle$verbose(paste0("Searching for upper CI bound of coefficient ", j, ": \n")))
+               pbapply::setpb(pbar, i)
 
-            if (con$cialt == "one.sided") {
-               con$alternative <- "less"
+         }
+
+      }
+
+      ### the first random permutation is always the observed data (avoids possibility of p=0)
+
+      if (!Z.exact) {
+         alpha.perm[1,] <- x$alpha[,1]
+         zval.alpha.perm[1,] <- x$zval.alpha
+         QS.perm[1] <- x$QS
+      }
+
+      if (con$alternative == "two.sided") {
+
+         if (con$p2defn == "abs") {
+
+            ### absolute value definition of the two-sided p-value
+
+            if (con$stat == "test") {
+               pval.alpha <- rowMeans(t(abs(zval.alpha.perm)) >= abs(x$zval.alpha) - con$comptol, na.rm=TRUE) # based on test statistics
             } else {
-               con$alternative <- "two.sided"
+               pval.alpha <- rowMeans(t(abs(alpha.perm)) >= abs(c(x$alpha)) - con$comptol, na.rm=TRUE) # based on coefficients
             }
 
-            #tmp <- try(uniroot(.permci, interval=c(x$beta[j,1], x$ci.ub[j]), extendInt="downX", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=X.exact, iter=X.iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
-            tmp <- try(uniroot(.permci, interval=c(x$beta[j,1], x$ci.ub[j] + con$distfac*(x$ci.ub[j] - x$beta[j,1])), extendInt="no", tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=X.exact, iter=X.iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
+         } else {
 
-            if (inherits(tmp, "try-error")) {
-               ci.ub[j] <- NA
+            ### two times the one-sided p-value definition of the two-sided p-value
+
+            pval.alpha <- rep(NA_real_, x$q)
+
+            if (con$stat == "test") {
+               for (j in seq_len(x$q)) {
+                  if (x$zval.alpha[j] > median(zval.alpha.perm[,j], na.rm=TRUE)) {
+                     pval.alpha[j] <- 2*mean(zval.alpha.perm[,j] >= x$zval.alpha.[j] - con$comptol, na.rm=TRUE)
+                  } else {
+                     pval.alpha[j] <- 2*mean(zval.alpha.perm[,j] <= x$zval.alpha.[j] + con$comptol, na.rm=TRUE)
+                  }
+               }
             } else {
-               ci.ub[j] <- tmp
+               for (j in seq_len(x$q)) {
+                  if (c(x$alpha)[j] > median(alpha.perm[,j], na.rm=TRUE)) {
+                     pval.alpha[j] <- 2*mean(alpha.perm[,j] >= c(x$alpha)[j] - con$comptol, na.rm=TRUE)
+                  } else {
+                     pval.alpha[j] <- 2*mean(alpha.perm[,j] <= c(x$alpha)[j] + con$comptol, na.rm=TRUE)
+                  }
+               }
             }
 
          }
 
       }
 
+      if (con$alternative == "less") {
+         if (con$stat == "test") {
+            pval.alpha <- rowMeans(t(zval.alpha.perm) <= x$zval.alpha + con$comptol, na.rm=TRUE) # based on test statistics
+         } else {
+            pval.alpha <- rowMeans(t(alpha.perm) <= c(x$alpha) + con$comptol, na.rm=TRUE) # based on coefficients
+         }
+      }
+
+      if (con$alternative == "greater") {
+         if (con$stat == "test") {
+            pval.alpha <- rowMeans(t(zval.alpha.perm) >= x$zval.alpha - con$comptol, na.rm=TRUE)    # based on test statistics
+         } else {
+            pval.alpha <- rowMeans(t(alpha.perm) >= c(x$alpha) - con$comptol, na.rm=TRUE) # based on coefficients
+         }
+      }
+
+      pval.alpha[pval.alpha > 1] <- 1
+
+      QSp <- mean(QS.perm >= x$QS - con$comptol, na.rm=TRUE)
+
    }
 
-   #########################################################################
+   if (progbar)
+      pbapply::closepb(pbar)
 
-   out <- list(pval=pval, QMdf=x$QMdf, QMp=QMp, beta=x$beta, se=x$se, zval=x$zval, ci.lb=ci.lb, ci.ub=ci.ub, QM=x$QM,
+   ############################################################################
+   ############################################################################
+   ############################################################################
+
+   out <- list(pval=pval, QMdf=x$QMdf, QMp=QMp, beta=x$beta, se=x$se, zval=x$zval, ci.lb=x$ci.lb, ci.ub=x$ci.ub, QM=x$QM,
+               pval.alpha=pval.alpha, QSdf=x$QSdf, QSp=QSp, alpha=x$alpha, se.alpha=x$se.alpha, zval.alpha=x$zval.alpha, ci.lb.alpha=x$ci.lb.alpha, ci.ub.alpha=x$ci.ub.alpha, QS=x$QS,
                k=x$k, p=x$p, btt=x$btt, m=x$m, test=x$test, dfs=x$dfs, ddf=x$ddf,
-               int.only=x$int.only, int.incl=x$int.incl,
-               digits=digits, exact.iter=X.exact.iter,
-               permci=permci, alternative=con$alternative, p2defn=con$p2defn, stat=con$stat)
+                      q=x$q, att=x$att, m.alpha=x$m.alpha, ddf.alpha=x$ddf.alpha,
+               int.only=x$int.only, int.incl=x$int.incl, Z.int.only=x$Z.int.only, Z.int.incl=x$Z.int.incl,
+               digits=digits, exact.iter=X.exact.iter, Z.exact.iter=Z.exact.iter,
+               permci=FALSE, alternative=con$alternative, p2defn=con$p2defn, stat=con$stat)
 
    out$QM.perm <- QM.perm
    out$zval.perm <- data.frame(zval.perm)
    out$beta.perm <- data.frame(beta.perm)
    names(out$zval.perm) <- names(out$beta.perm) <- colnames(x$X)
 
+   out$QS.perm <- QS.perm
+   out$zval.alpha.perm <- data.frame(zval.alpha.perm)
+   out$alpha.perm <- data.frame(alpha.perm)
+   names(out$zval.alpha.perm) <- names(out$alpha.perm) <- colnames(x$Z)
+
    if (.isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }
 
-   class(out) <- "permutest.rma.uni"
+   class(out) <- c("permutest.rma.ls", "permutest.rma.uni")
    return(out)
 
 }

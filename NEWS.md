@@ -1,20 +1,24 @@
-# metafor 3.1-54 (2022-03-27)
+# metafor 3.1-56 (2022-04-03)
 
 - added `misc-models` and `misc-options` help pages
 
 - added `as.data.frame.confint.rma()` and `as.data.frame.list.confint.rma` methods
 
+- `permutest()` can now also do permutation tests for location-scale models; it also always returns the permutation distributions; hence, argument `retpermdist` was removed
+
+- added `plot.permutest.rma.uni()` function to plot the permutation distributions
+
 - simplified `regtest()`, `ranktest()`, and `tes()` to single functions instead of using generics and methods; this way, a `data` argument could be added
 
 - added `vcalc()` and `blsplit()` functions
 
-- `robust()` gains `clubSandwich` argument; if set to `TRUE`, the methods from the `clubSandwich` package (https://cran.r-project.org/package=clubSandwich) are used to obtain the cluster-robust results
+- `robust()` gains `clubSandwich` argument; if set to `TRUE`, the methods from the `clubSandwich` package (https://cran.r-project.org/package=clubSandwich) are used to obtain the cluster-robust results; `anova.rma()` and `predict.rma()` updated to work appropriately in this case
 
 - results from `robust()` are no longer printed with `print.robust.rma()` but with the print methods `print.rma.uni()` and `print.rma.mv()`
 
-- `anova.rma()` now gives a warning when running LRTs not based on ML/REML estimation and gains `rhs` argument; it also now has a `refit` argument
+- `anova.rma()` now gives a warning when running LRTs not based on ML/REML estimation and gains `rhs` argument; it also now has a `refit` argument (to refit REML fits with ML in case the fixed effects of the models differ)
 
-- setting `dfs="contain"` in `rma.mv()` automatically sets `test="t"`
+- setting `dfs="contain"` in `rma.mv()` automatically sets `test="t"` for convenience
 
 - elements of `rho` and `phi` in `rma.mv()` are now based on the lower triangular part of the respective correlation matrix (instead of the upper triangular part) for consistency with other functions; note that this is in principle a backwards incompatible change, although this should only be a concern in very special circumstances
 

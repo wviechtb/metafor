@@ -10,6 +10,10 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
       digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
    }
 
+   ddd <- list(...)
+
+   .chkdots(ddd, c("num"))
+
    .space()
 
    if (is.element(x$method, c("FE","EE","CE"))) {
@@ -137,10 +141,6 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
       res.table <- cbind(res.table, signif)
       colnames(res.table)[ncol(res.table)] <- ""
    }
-
-   ddd <- list(...)
-
-   .chkdots(ddd, c("num"))
 
    if (.isTRUE(ddd$num))
       rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))

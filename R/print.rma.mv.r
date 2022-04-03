@@ -16,6 +16,12 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
    .chkdots(ddd, c("num", "legend"))
 
+   if (is.null(ddd$legend)) {
+      legend <- ifelse(inherits(x, "robust.rma"), TRUE, FALSE)
+   } else {
+      legend <- .isTRUE(ddd$legend)
+   }
+
    .space()
 
    cat(mstyle$section("Multivariate Meta-Analysis Model"))
@@ -398,12 +404,6 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
    if (.isTRUE(ddd$num))
       rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
-
-   if (is.null(ddd$legend)) {
-      legend <- ifelse(inherits(x, "robust.rma"), TRUE, FALSE)
-   } else {
-      legend <- .isTRUE(ddd$legend)
-   }
 
    if (x$int.only)
       res.table <- res.table[1,]

@@ -116,7 +116,7 @@ test_that("permutest() gives correct results for example in Follmann & Proschan 
       dat <- escalc(measure="PETO", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat)
 
       res <- rma(yi, vi, data=dat, method="DL")
-      sav <- permutest(res, permci=TRUE, progbar=FALSE, retpermdist=TRUE, control=list(stat="coef"))
+      sav <- permutest(res, permci=TRUE, progbar=FALSE, control=list(stat="coef"))
 
       expect_equivalent(sav$pval, 10/256)
       expect_equivalent(sav$ci.lb, -0.3677, tolerance=.tol[["ci"]])

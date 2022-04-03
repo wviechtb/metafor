@@ -8,10 +8,24 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
 
    .space()
 
+   ddd <- list(...)
+
+   .chkdots(ddd, c("num", "legend"))
+
+   if (is.null(ddd$legend)) {
+      legend <- TRUE
+   } else {
+      legend <- .isTRUE(ddd$legend)
+   }
+
    footsym <- .get.footsym()
 
    if (!x$int.only) {
-      cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):", footsym[1])))
+      if (inherits(x, "permutest.rma.ls")) {
+         cat(mstyle$section(paste0("Test of Location Coefficients (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):", footsym[1])))
+      } else {
+         cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):", footsym[1])))
+      }
       cat("\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
          cat(mstyle$result(paste0("F(df1 = ", x$QMdf[1], ", df2 = ", round(x$QMdf[2], 2), ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
@@ -39,23 +53,17 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
       colnames(res.table)[ncol(res.table)] <- ""
    }
 
-   ddd <- list(...)
-
-   .chkdots(ddd, c("num", "legend"))
-
    if (.isTRUE(ddd$num))
       rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
-
-   if (is.null(ddd$legend)) {
-      legend <- TRUE
-   } else {
-      legend <- .isTRUE(ddd$legend)
-   }
 
    if (x$int.only)
       res.table <- res.table[1,]
 
-   cat(mstyle$section("Model Results:"))
+   if (inherits(x, "permutest.rma.ls")) {
+      cat(mstyle$section("Model Results (Location):"))
+   } else {
+      cat(mstyle$section("Model Results:"))
+   }
    cat("\n\n")
    if (x$int.only) {
       tmp <- capture.output(.print.vector(res.table))
@@ -64,6 +72,55 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
    }
    tmp[1] <- paste0(tmp[1], "\u200b")
    .print.table(tmp, mstyle)
+
+   if (inherits(x, "permutest.rma.ls")) {
+
+      cat("\n")
+
+      if (!x$Z.int.only) {
+         cat(mstyle$section(paste0("Test of Scale Coefficients (coefficient", ifelse(x$m.alpha == 1, " ", "s "), .format.btt(x$att),"):", footsym[1])))
+         cat("\n")
+         if (is.element(x$test, c("knha","adhoc","t"))) {
+            cat(mstyle$result(paste0("F(df1 = ", x$QSdf[1], ", df2 = ", round(x$QSdf[2], 2), ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+         } else {
+            cat(mstyle$result(paste0("QS(df = ", x$QSdf[1], ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         }
+         cat("\n\n")
+      }
+
+      if (is.element(x$test, c("knha","adhoc","t"))) {
+         res.table <- data.frame(estimate=.fcf(c(x$alpha), digits[["est"]]), se=.fcf(x$se.alpha, digits[["se"]]), tval=.fcf(x$zval.alpha, digits[["test"]]), df=round(x$ddf.alpha,2), "pval"=.pval(x$pval.alpha, digits[["pval"]]), ci.lb=.fcf(x$ci.lb.alpha, digits[["ci"]]), ci.ub=.fcf(x$ci.ub.alpha, digits[["ci"]]), stringsAsFactors=FALSE)
+         if (!x$Z.int.only)
+            colnames(res.table)[5] <- paste0("pval", footsym[1])
+      } else {
+         res.table <- data.frame(estimate=.fcf(c(x$alpha), digits[["est"]]), se=.fcf(x$se.alpha, digits[["se"]]), zval=.fcf(x$zval.alpha, digits[["test"]]), "pval"=.pval(x$pval.alpha, digits[["pval"]]), ci.lb=.fcf(x$ci.lb.alpha, digits[["ci"]]), ci.ub=.fcf(x$ci.ub.alpha, digits[["ci"]]), stringsAsFactors=FALSE)
+         if (!x$Z.int.only)
+            colnames(res.table)[4] <- paste0("pval", footsym[1])
+      }
+      rownames(res.table) <- rownames(x$alpha)
+      signif <- symnum(x$pval.alpha, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
+      if (signif.stars) {
+         res.table <- cbind(res.table, signif)
+         colnames(res.table)[ncol(res.table)] <- ""
+      }
+
+      if (.isTRUE(ddd$num))
+         rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
+
+      if (x$Z.int.only)
+         res.table <- res.table[1,]
+
+      cat(mstyle$section("Model Results (Scale):"))
+      cat("\n\n")
+      if (x$int.only) {
+         tmp <- capture.output(.print.vector(res.table))
+      } else {
+         tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
+      }
+      tmp[1] <- paste0(tmp[1], "\u200b")
+      .print.table(tmp, mstyle)
+
+   }
 
    if (signif.legend || legend) {
       cat("\n")

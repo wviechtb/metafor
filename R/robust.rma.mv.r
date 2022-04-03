@@ -97,6 +97,9 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, .
       if (inherits(vb, "try-error"))
          stop(mstyle$stop("Could not obtain the cluster-robust variance-covariance matrix (use verbose=TRUE for more details)."))
 
+      #meat <- try(clubSandwich::vcovCR(x, cluster=cluster, type=ddd$vcov, form="meat"), silent=!isTRUE(ddd$verbose))
+      meat <- NA
+
       ### obtain cluster-robust inferences
 
       cs.coef <- try(clubSandwich::coef_test(x, cluster=cluster, vcov=vb, test=ddd$coef_test, p_values=TRUE), silent=!isTRUE(ddd$verbose))
@@ -192,14 +195,14 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, .
       cluster.o <- factor(cluster.o, levels=unique(cluster.o))
 
       if (x$sparse) {
-         meat <- bdiag(lapply(split(ei, cluster.o), function(e) tcrossprod(e)))
+         meat.o <- bdiag(lapply(split(ei, cluster.o), function(e) tcrossprod(e)))
       } else {
-         meat <- bldiag(lapply(split(ei, cluster.o), function(e) tcrossprod(e)))
+         meat.o <- bldiag(lapply(split(ei, cluster.o), function(e) tcrossprod(e)))
       }
 
       ### construct robust var-cov matrix
 
-      vb <- bread %*% meat %*% t(bread)
+      vb <- bread %*% meat.o %*% t(bread)
 
       ### apply adjustments to vb as needed
 
@@ -252,8 +255,8 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, .
 
       ### don't need this anymore at the moment
 
-      #x$meat <- matrix(NA_real_, nrow=nrow(meat), ncol=ncol(meat))
-      #x$meat[ocl,ocl] <- as.matrix(meat)
+      meat <- matrix(NA_real_, nrow=nrow(meat.o), ncol=ncol(meat.o))
+      meat[ocl,ocl] <- as.matrix(meat.o)
 
    }
 
@@ -283,6 +286,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, .
    x$vbest <- vbest
    x$robumethod <- ifelse(clubSandwich, "clubSandwich", "default")
    x$cluster <- cluster
+   x$meat <- meat
 
    class(x) <- c("robust.rma", "rma", "rma.mv")
    return(x)

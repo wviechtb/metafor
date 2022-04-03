@@ -31,7 +31,7 @@ This page documents some miscellaneous options and features that do not fit very
 
    \subsection{Styled Output with the \pkg{crayon} Package}{
 
-   The \href{https://cran.r-project.org/package=crayon}{crayon} package provides a way to create colored output. The \pkg{metafor} package is designed to automatically make use of this feature when the \pkg{crayon} package is installed and loaded (with \code{library(crayon)}). Note that this only works on terminals that support \sQuote{ANSI} color and highlight codes (e.g., not under RGui on Windows or R.app on macOS, but the RStudio console and all modern terminals should support this).
+   The \href{https://cran.r-project.org/package=crayon}{crayon} package provides a way to create colored output. The \pkg{metafor} package is designed to automatically make use of this feature when the \pkg{crayon} package is installed (\code{install.packages("crayon")}) and loaded (\code{library(crayon)}). Note that this only works on terminals that support \sQuote{ANSI} color and highlight codes (e.g., not under RGui on Windows or R.app on macOS, but the RStudio console and all modern terminals should support this).
 
    The default color theme that is used is quite plain, but should work with a light or dark colored background. One can modify the color theme by creating an object in the workspace named \code{.mtheme}, which should be a list whose elements specify the styles for various parts of the output (see below for some examples and the documentation of the \pkg{crayon} package for the syntax to specify styles). The following elements are recognized:
    \itemize{
@@ -99,7 +99,7 @@ summary(res)}
    \figure{crayon1.png}{options: width=800}
    \figure{crayon2.png}{options: width=800}}{}
 
-   Support for 256 different colors and formatting such as underlined and bold text differs across terminals.
+   Note that support for 256 different colors and text formatting (such as underlined and bold text) differs across terminals.
 
    }
 

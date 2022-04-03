@@ -2230,8 +2230,8 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       if (is.null(ddd$dfs)) {
          ddf <- k-p
       } else {
-         ddf <- ddd$dfs[1]
-      }
+         ddf <- ddd$dfs[1] # would be nice to allow multiple dfs values, but tricky
+      }                    # since some methods are set up for a single df value
    } else {
       ddf <- NA
    }
