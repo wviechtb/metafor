@@ -112,7 +112,7 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
 
       cat(mstyle$section("Model Results (Scale):"))
       cat("\n\n")
-      if (x$int.only) {
+      if (x$Z.int.only) {
          tmp <- capture.output(.print.vector(res.table))
       } else {
          tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
@@ -135,7 +135,11 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
 
    if (legend) {
       cat("\n")
-      cat(mstyle$legend(paste0(footsym[2], " p-value", ifelse(x$int.only, "", "s"), ifelse(x$permci, " and CI bounds", ""), " based on permutation testing")))
+      if (inherits(x, "permutest.rma.ls")) {
+         cat(mstyle$legend(paste0(footsym[2], " p-values based on permutation testing")))
+      } else {
+         cat(mstyle$legend(paste0(footsym[2], " p-value", ifelse(x$int.only, "", "s"), ifelse(x$permci, " and CI bounds", ""), " based on permutation testing")))
+      }
       cat("\n")
    }
 
