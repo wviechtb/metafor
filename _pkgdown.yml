@@ -213,4 +213,5 @@ reference:
       Miscellaneous documentation.
     contents:
       - misc-models
+      - misc-recs
       - misc-options

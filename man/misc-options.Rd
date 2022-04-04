@@ -6,7 +6,7 @@ This page documents some miscellaneous options and features that do not fit very
 }
 \details{
 
-\subsection{Controlling the Number of Digits in the Output}{
+   \subsection{Controlling the Number of Digits in the Output}{
 
    Many functions in the \pkg{metafor} package have a \code{digits} argument, which can be used to control the number of digits that are displayed in the output when printing numeric values. For more control over the displayed output, one can set this argument to a named vector of the form:
    \preformatted{digits=c(est=2, se=3, test=2, pval=3, ci=2, var=3, sevar=3, fit=3, het=3)}

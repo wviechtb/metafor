@@ -56,7 +56,7 @@
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \cr
    package website: \url{https://www.metafor-project.org} \cr
-   author homepage: \url{https://www.wvbauer.com} \cr
+   author homepage: \verb{https://www.wvbauer.com} \cr
 
    Suggestions on how to obtain help with using the package can found on the package website at: \url{https://www.metafor-project.org/doku.php/help}
 }

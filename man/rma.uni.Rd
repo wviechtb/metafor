@@ -58,7 +58,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{vtype}{see the documentation of the \code{\link{escalc}} function.}
    \item{method}{character string to specify whether an equal- or a random-effects model should be fitted. An equal-effects model is fitted when using \code{method="EE"}. A random-effects model is fitted by setting \code{method} equal to one of the following: \code{"DL"}, \code{"HE"}, \code{"HS"}, \code{"HSk"}, \code{"SJ"}, \code{"ML"}, \code{"REML"}, \code{"EB"}, \code{"PM"}, \code{"GENQ"}, \code{"PMM"}, or \code{"GENQM"}. Default is \code{"REML"}. See \sQuote{Details}.}
    \item{weighted}{logical to specify whether weighted (default) or unweighted estimation should be used to fit the model (the default is \code{TRUE}).}
-   \item{test}{character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (\code{test="z"}), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When \code{test="t"}, a t-distribution is used instead. When \code{test="knha"}, the method by Knapp and Hartung (2003) is used. See \sQuote{Details}.}
+   \item{test}{character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (\code{test="z"}), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When \code{test="t"}, a t-distribution is used instead. When \code{test="knha"}, the method by Knapp and Hartung (2003) is used. See \sQuote{Details} and also \link[=misc-recs]{here}.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. See also \link[=misc-options]{here} for further details on how to control the number of digits in the output.}
    \item{btt}{optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to \code{\link{grep}} for. See \sQuote{Details}.}
@@ -86,19 +86,19 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
       A \emph{random-effects model} can be fitted with the same code but setting the \code{method} argument to one of the various estimators for the amount of heterogeneity:
       \itemize{
-      \item \code{method="DL"} = DerSimonian-Laird estimator,
-      \item \code{method="HE"} = Hedges estimator,
-      \item \code{method="HS"} = Hunter-Schmidt estimator,
-      \item \code{method="HSk"} = Hunter-Schmidt estimator with a small sample-size correction,
-      \item \code{method="SJ"} = Sidik-Jonkman estimator,
-      \item \code{method="ML"} = maximum likelihood estimator,
-      \item \code{method="REML"} = restricted maximum likelihood estimator,
-      \item \code{method="EB"} = empirical Bayes estimator,
-      \item \code{method="PM"} = Paule-Mandel estimator,
-      \item \code{method="GENQ"} = generalized Q-statistic estimator,
-      \item \code{method="PMM"} = median-unbiased Paule-Mandel estimator,
-      \item \code{method="GENQM"} = median-unbiased generalized Q-statistic estimator.
-      } For a description of the various estimators, see Brannick et al. (2019), DerSimonian and Kacker (2007), Raudenbush (2009), Veroniki et al. (2016), Viechtbauer (2005), and Viechtbauer et al. (2015). Note that the Hedges estimator is also called the \sQuote{variance component estimator} or \sQuote{Cochran estimator}, the Sidik-Jonkman estimator is also called the \sQuote{model error variance estimator}, the empirical Bayes estimator is actually identical to the Paule-Mandel estimator (Paule & Mandel, 1982), and the generalized Q-statistic estimator is a general method-of-moments estimator (DerSimonian & Kacker, 2007) requiring the specification of weights (the HE and DL estimators are just special cases with equal and inverse sampling variance weights, respectively). Finally, the two median-unbiased estimators are versions of the Paule-Mandel and generalized Q-statistic estimators that equate the respective estimating equations not to their expected values, but to the medians of their theoretical distributions.
+      \item \code{method="DL"} = DerSimonian-Laird estimator (DerSimonian & Laird, 1986; Raudenbush, 2009),
+      \item \code{method="HE"} = Hedges estimator (Hedges, 1983, 1992),
+      \item \code{method="HS"} = Hunter-Schmidt estimator (Hunter & Schmidt, 1990; Viechtbauer et al., 2015),
+      \item \code{method="HSk"} = Hunter-Schmidt estimator with a small sample-size correction (Brannick et al., 2019),
+      \item \code{method="SJ"} = Sidik-Jonkman estimator (Sidik & Jonkman, 2005b, 2007),
+      \item \code{method="ML"} = maximum likelihood estimator (Hardy & Thompson, 1996; Raudenbush, 2009),
+      \item \code{method="REML"} = restricted maximum likelihood estimator (Viechtbauer, 2005; Raudenbush, 2009)
+      \item \code{method="EB"} = empirical Bayes estimator (Morris, 1983; Berkey et al. 1995),
+      \item \code{method="PM"} = Paule-Mandel estimator (Paule & Mandel, 1982; Viechtbauer et al., 2015),
+      \item \code{method="GENQ"} = generalized Q-statistic estimator (DerSimonian & Kacker, 2007; Jackson et al., 2014),
+      \item \code{method="PMM"} = median-unbiased Paule-Mandel estimator (Viechtbauer, 2021),
+      \item \code{method="GENQM"} = median-unbiased generalized Q-statistic estimator (Viechtbauer, 2021).
+      } For a description of the various estimators, see Brannick et al. (2019), DerSimonian and Kacker (2007), Raudenbush (2009), Veroniki et al. (2016), Viechtbauer (2005), and Viechtbauer et al. (2015). Note that the Hedges estimator is also called the \sQuote{variance component estimator} or \sQuote{Cochran estimator}, the Sidik-Jonkman estimator is also called the \sQuote{model error variance estimator}, the empirical Bayes estimator is actually identical to the Paule-Mandel estimator (Viechtbauer et al., 2015), and the generalized Q-statistic estimator is a general method-of-moments estimator (DerSimonian & Kacker, 2007) requiring the specification of weights (the HE and DL estimators are just special cases with equal and inverse sampling variance weights, respectively). Finally, the two median-unbiased estimators are versions of the Paule-Mandel and generalized Q-statistic estimators that equate the respective estimating equations not to their expected values, but to the medians of their theoretical distributions (Viechtbauer, 2021).
 
       One or more moderators can be included in a model via the \code{mods} argument. A single moderator can be given as a (row or column) vector of length \mjseqn{k} specifying the values of the moderator. Multiple moderators are specified by giving an appropriate model matrix (i.e., \mjseqn{X}) with \mjseqn{k} rows and as many columns as there are moderator variables (e.g., \code{mods = cbind(mod1, mod2, mod3)}, where \code{mod1}, \code{mod2}, and \code{mod3} correspond to the names of the variables for three moderator variables). The intercept is added to the model matrix by default unless \code{intercept=FALSE}.
 
@@ -122,7 +122,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \subsection{Tests and Confidence Intervals}{
 
-      By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set \code{test="t"}, in which case tests of individual coefficients and confidence intervals are based on a t-distribution with \mjseqn{k-p} degrees of freedom, while the omnibus test statistic then uses an F-distribution with \mjseqn{m} and \mjseqn{k-p} degrees of freedom (with \mjseqn{k} denoting the total number of estimates included in the analysis and \mjseqn{p} the total number of model coefficients including the intercept if it is present). Furthermore, when \code{test="knha"}, the method by Hartung (1999), Sidik and Jonkman (2002), and Knapp and Hartung (2003) (the Knapp-Hartung method; also referred to as the Hartung-Knapp-Sidik-Jonkman method) is used, which applies an adjustment to the standard errors of the estimated coefficients (to account for the uncertainty in the estimate of the amount of (residual) heterogeneity) and uses t- and F-distributions as described above. Finally, one can set \code{test="adhoc"}, in which case the Knapp-Hartung method is used, but with the restriction that the adjustment to the standard errors can never result in adjusted standard errors that are smaller than the unadjusted ones (see Jackson et al., 2017, section 4.3).
+      By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set \code{test="t"}, in which case tests of individual coefficients and confidence intervals are based on a t-distribution with \mjseqn{k-p} degrees of freedom, while the omnibus test then uses an F-distribution with \mjseqn{m} and \mjseqn{k-p} degrees of freedom (with \mjseqn{k} denoting the total number of estimates included in the analysis and \mjseqn{p} the total number of model coefficients including the intercept if it is present). Furthermore, when \code{test="knha"}, the method by Hartung (1999), Sidik and Jonkman (2002), and Knapp and Hartung (2003) (the Knapp-Hartung method; also referred to as the Hartung-Knapp-Sidik-Jonkman method) is used, which applies an adjustment to the standard errors of the estimated coefficients (to account for the uncertainty in the estimate of the amount of (residual) heterogeneity) and uses t- and F-distributions as described above (see also \link[=misc-recs]{here}). Finally, one can set \code{test="adhoc"}, in which case the Knapp-Hartung method is used, but with the restriction that the adjustment to the standard errors can never result in adjusted standard errors that are smaller than the unadjusted ones (see Jackson et al., 2017, section 4.3).
 
    }
 
@@ -242,17 +242,23 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    DerSimonian, R., & Kacker, R. (2007). Random-effects model for meta-analysis of clinical trials: An update. \emph{Contemporary Clinical Trials}, \bold{28}(2), 105--114. \verb{https://doi.org/10.1016/j.cct.2006.04.004}
 
+   Hardy, R. J. & Thompson, S. G. (1996). A likelihood approach to meta-analysis with random effects. \emph{Statistics in Medicine}, \bold{15}(6), 619--629. \verb{https://doi.org/10.1002/(SICI)1097-0258(19960330)15:6<619::AID-SIM188>3.0.CO;2-A}
+
    Hartung, J. (1999). An alternative method for meta-analysis. \emph{Biometrical Journal}, \bold{41}(8), 901--916. \verb{https://doi.org/10.1002/(SICI)1521-4036(199912)41:8<901::AID-BIMJ901>3.0.CO;2-W}
 
    Harville, D. A. (1977). Maximum likelihood approaches to variance component estimation and to related problems. \emph{Journal of the American Statistical Association}, \bold{72}(358), 320--338. \verb{https://doi.org/10.2307/2286796}
 
    Hedges, L. V. (1983). A random effects model for effect sizes. \emph{Psychological Bulletin}, \bold{93}(2), 388--395. \verb{https://doi.org/10.1037/0033-2909.93.2.388}
 
+   Hedges, L. V. (1992). Meta-analysis. \emph{Journal of Educational Statistics}, \bold{17}(4), 279--296. \verb{https://doi.org/10.3102/10769986017004279}
+
    Hedges, L. V., & Olkin, I. (1985). \emph{Statistical methods for meta-analysis}. San Diego, CA: Academic Press.
 
    Henmi, M., & Copas, J. B. (2010). Confidence intervals for random effects meta-analysis and robustness to publication bias. \emph{Statistics in Medicine}, \bold{29}(29), 2969--2983. \verb{https://doi.org/10.1002/sim.4029}
 
-   Hunter, J. E., & Schmidt, F. L. (2004). \emph{Methods of meta-analysis: Correcting error and bias in research findings} (2nd ed.). Thousand Oaks, CA: Sage.
+   Hunter, J. E., & Schmidt, F. L. (1990). \emph{Methods of meta-analysis: Correcting error and bias in research findings}. Thousand Oaks, CA: Sage.
+
+   Jackson, D., Turner, R., Rhodes, K. & Viechtbauer, W. (2014). Methods for calculating confidence and credible intervals for the residual between-study variance in random effects meta-regression models. \emph{BMC Medical Research Methodology}, \bold{14}, 103. \verb{https://doi.org/10.1186/1471-2288-14-103}
 
    Jackson, D., Law, M., \enc{Rücker}{Ruecker}, G., & Schwarzer, G. (2017). The Hartung-Knapp modification for random-effects meta-analysis: A useful refinement but are there any residual concerns? \emph{Statistics in Medicine}, \bold{36}(25), 3923--3934. \verb{https://doi.org/10.1002/sim.7411}
 
@@ -279,6 +285,8 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    Viechtbauer, W. (2005). Bias and efficiency of meta-analytic variance estimators in the random-effects model. \emph{Journal of Educational and Behavioral Statistics}, \bold{30}(3), 261--293. \verb{https://doi.org/10.3102/10769986030003261}
 
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
+
+   Viechtbauer, W. (2021). Median-unbiased estimators for the amount of heterogeneity in meta-analysis. \emph{European Congress of Methodology}, Valencia, Spain. \verb{https://www.wvbauer.com/lib/exe/fetch.php/talks:2021_viechtbauer_eam_median_tau2.pdf}
 
    Viechtbauer, W., \enc{López-López}{Lopez-Lopez}, J. A., \enc{Sánchez-Meca}{Sanchez-Meca}, J., & \enc{Marín-Martínez}{Marin-Martinez}, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}, \bold{20}(3), 360--374. \verb{https://doi.org/10.1037/met0000023}
 }

@@ -207,10 +207,8 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (x$method == "GENQ" && model == "ME")
       tau2.ref <- "[@jackson2014]"
 
-   if (x$method == "GENQM" && model == "RE")
-      tau2.ref <- "[@dersimonian2007]"
-   if (x$method == "GENQM" && model == "ME")
-      tau2.ref <- "[@jackson2014]"
+   if (x$method == "GENQM")
+      tau2.ref <- "[@viechtbauer2021]"
 
    if (x$method == "SJ")
       tau2.ref <- "[@sidik2005]"
@@ -235,10 +233,8 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (x$method == "PM" && model == "ME")
       tau2.ref <- "[@viechtbauer2015]"
 
-   if (x$method == "PMM" && model == "RE")
-      tau2.ref <- "[@paule1982]"
-   if (x$method == "PMM" && model == "ME")
-      tau2.ref <- "[@viechtbauer2015]"
+   if (x$method == "PMM")
+      tau2.ref <- "[@viechtbauer2021]"
 
    ### Q-test reference
 

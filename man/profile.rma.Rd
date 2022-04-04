@@ -1,5 +1,6 @@
 \name{profile.rma}
 \alias{profile}
+\alias{profile.rma}
 \alias{profile.rma.uni}
 \alias{profile.rma.mv}
 \alias{profile.rma.uni.selmodel}

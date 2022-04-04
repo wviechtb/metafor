@@ -167,7 +167,7 @@
 <dt>cor</dt>
 <dd><p>logical to indicate whether the random study effects should be allowed to be correlated with the random group effects for random/mixed-effects models when <code>model="UM.RS"</code> (the default is <code>FALSE</code>). See ‘Note’.</p></dd>
 <dt>test</dt>
-<dd><p>character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (<code>test="z"</code>), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When <code>test="t"</code>, a t-distribution is used instead. See ‘Details’.</p></dd>
+<dd><p>character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (<code>test="z"</code>), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When <code>test="t"</code>, a t-distribution is used instead. See ‘Details’ and also <a href="misc-recs.html">here</a>.</p></dd>
 <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
 <dt>digits</dt>
@@ -247,7 +247,7 @@
 <h3 id="tests-and-confidence-intervals">Tests and Confidence Intervals<a class="anchor" aria-label="anchor" href="#tests-and-confidence-intervals"></a></h3>
 
 
-<p>By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set <code>test="t"</code>, in which case tests of individual coefficients and confidence intervals are based on a t-distribution with <em></em>\(k-p\) degrees of freedom, while the omnibus test statistic then uses an F-distribution with <em></em>\(m\) and <em></em>\(k-p\) degrees of freedom (with <em></em>\(k\) denoting the total number of estimates included in the analysis and <em></em>\(p\) the total number of model coefficients including the intercept if it is present). Note that <code>test="t"</code> is not the same as <code>test="knha"</code> in <code><a href="rma.uni.html">rma.uni</a></code>, as no adjustment to the standard errors of the estimated coefficients is made.</p>
+<p>By default, tests of individual coefficients in the model (and the corresponding confidence intervals) are based on a standard normal distribution, while the omnibus test is based on a chi-square distribution (see above). As an alternative, one can set <code>test="t"</code>, in which case tests of individual coefficients and confidence intervals are based on a t-distribution with <em></em>\(k-p\) degrees of freedom, while the omnibus test then uses an F-distribution with <em></em>\(m\) and <em></em>\(k-p\) degrees of freedom (with <em></em>\(k\) denoting the total number of estimates included in the analysis and <em></em>\(p\) the total number of model coefficients including the intercept if it is present). Note that <code>test="t"</code> is not the same as <code>test="knha"</code> in <code><a href="rma.uni.html">rma.uni</a></code>, as no adjustment to the standard errors of the estimated coefficients is made.</p>
 <p></p>
 </div>
 

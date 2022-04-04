@@ -4,7 +4,7 @@
 \alias{robust.rma.mv}
 \title{Cluster-Robust Tests and Confidence Intervals for 'rma' Objects}
 \description{
-   The function provides cluster-robust tests and confidence intervals of the model coefficients for objects of class \code{"rma"}. \loadmathjax
+   The function provides cluster-robust tests and confidence intervals (also known as robust variance estimation) of the model coefficients for objects of class \code{"rma"}. \loadmathjax
 }
 \usage{
 robust(x, cluster, \dots)
@@ -21,9 +21,9 @@ robust(x, cluster, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   The function constructs a cluster-robust estimate of the variance-covariance matrix of the model coefficients based on a sandwich-type estimator and then computes tests and confidence intervals of the model coefficients.
+   The function constructs a cluster-robust estimate of the variance-covariance matrix of the model coefficients based on a sandwich-type estimator and then computes tests and confidence intervals of the model coefficients. This function will often be part of a general workflow for meta-analyses involving complex dependency structures as described \link[=misc-recs]{here}.
 
-   By default, tests of individual coefficients and confidence intervals are based on a t-distribution with \mjseqn{n-p} degrees of freedom, while the omnibus test statistic uses an F-distribution with \mjseqn{m} and \mjseqn{n-p} degrees of freedom, where \mjseqn{n} is the number of clusters, \mjseqn{p} denotes the total number of model coefficients (including the intercept if it is present), and \mjseqn{m} denotes the number of coefficients tested by the omnibus test. This is sometimes called the \sQuote{residual} method for approximating the (denominator) degrees of freedom.
+   By default, tests of individual coefficients and confidence intervals are based on a t-distribution with \mjseqn{n-p} degrees of freedom, while the omnibus test uses an F-distribution with \mjseqn{m} and \mjseqn{n-p} degrees of freedom, where \mjseqn{n} is the number of clusters, \mjseqn{p} denotes the total number of model coefficients (including the intercept if it is present), and \mjseqn{m} denotes the number of coefficients tested by the omnibus test. This is sometimes called the \sQuote{residual} method for approximating the (denominator) degrees of freedom.
 
    When \code{adjust=TRUE} (the default), the cluster-robust estimate of the variance-covariance matrix is multiplied by the factor \mjseqn{n/(n-p)}, which serves as a small-sample adjustment that tends to improve the performance of the method when the number of clusters is small. This is sometimes called the \sQuote{CR1} adjustment/estimator (in contrast to \sQuote{CR0} when \code{adjust=FALSE}).
 
@@ -43,6 +43,8 @@ robust(x, cluster, \dots)
    \item{\dots}{some additional elements/values.}
 
    The results are formatted and printed with the \code{\link{print.rma.uni}} and \code{\link{print.rma.mv}} functions (depending on the type of model).
+
+   Predicted/fitted values based on \code{"robust.rma"} objects can be obtained with the \code{\link[=predict.rma]{predict}} function. Tests for sets of model coefficients or linear combinations thereof can be obtained with the \code{\link[=anova.rma]{anova}} function.
 }
 \note{
    The variable specified via \code{cluster} is assumed to be of the same length as the data originally passed to the \code{rma.uni} or \code{rma.mv} functions (and if the \code{data} argument was used in the original model fit, then the variable will be searched for within this data frame first). Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the \code{cluster} argument.

@@ -1,6 +1,6 @@
 # metafor 3.1-56 (2022-04-03)
 
-- added `misc-models` and `misc-options` help pages
+- added `misc-models`, `misc-recs`, and `misc-options` help pages
 
 - added `as.data.frame.confint.rma()` and `as.data.frame.list.confint.rma` methods
 
