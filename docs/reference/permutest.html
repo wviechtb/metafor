@@ -113,7 +113,7 @@
     <dl><dt>x</dt>
 <dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
 <dt>exact</dt>
-<dd><p>logical to specify whether an exact permutation test should be carried out or not (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
+<dd><p>logical to specify whether an exact permutation test should be carried out (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
 <dt>iter</dt>
 <dd><p>integer to specify the number of iterations for the permutation test when not doing an exact test (the default is <code>1000</code>).</p></dd>
 <dt>permci</dt>
@@ -123,7 +123,7 @@
 <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
 <dt>control</dt>
-<dd><p>list of control values for numerical comparisons (<code>comptol</code>) and for <code>uniroot</code> (i.e., <code>tol</code> and <code>maxiter</code>). The latter is only relevant when <code>permci=TRUE</code>. See ‘Note’.</p></dd>
+<dd><p>list of control values for numerical comparisons (<code>comptol</code>) and for <code><a href="https://rdrr.io/r/stats/uniroot.html" class="external-link">uniroot</a></code> (i.e., <code>tol</code> and <code>maxiter</code>). The latter is only relevant when <code>permci=TRUE</code>. See ‘Note’.</p></dd>
 <dt>...</dt>
 <dd><p>other arguments.</p></dd>
 </dl></div>
@@ -136,7 +136,7 @@
 <p>Therefore, going through all possible permutations may become infeasible. Instead of using an exact permutation test, one can set <code>exact=FALSE</code> (which is also the default). In that case, the function approximates the exact permutation-based p-value(s) by going through a smaller number (as specified by the <code>iter</code> argument) of <em>random</em> permutations. Therefore, running the function twice on the same data can yield (slightly) different p-values. Setting <code>iter</code> sufficiently large ensures that the results become stable. For full reproducibility, one can also set the seed of the random number generator before running the function (see ‘Examples’). Note that if <code>exact=FALSE</code> and <code>iter</code> is actually larger than the number of iterations required for an exact permutation test, then an exact test will be carried out.</p>
 <p>For models with moderators, the exact permutation test actually only requires fitting the model to each <em>unique</em> permutation of the model matrix. The number of unique permutations will be smaller than <em></em>\(k!\) when the model matrix contains recurring rows. This may be the case when only including categorical moderators (i.e., factors) in the model or when any quantitative moderators included in the model can only take on a small number of unique values. When <code>exact=TRUE</code>, the function therefore uses an algorithm to restrict the test to only the unique permutations of the model matrix, which may make the use of the exact test feasible even when <em></em>\(k\) is large.</p>
 <p>When using random permutations, the function ensures that the very first permutation will always correspond to the original data. This avoids p-values equal to 0.</p>
-<p>When <code>permci=TRUE</code>, the function also tries to obtain permutation-based CIs of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes by some amount and finding the most extreme values for this amount for which the permutation-based test would just lead to non-rejection. This is computationally expensive and may take a long time to complete. For models with moderators, one can also set <code>permci</code> to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as <code>NA</code> in the output.</p>
+<p>When <code>permci=TRUE</code>, the function also tries to obtain permutation-based CIs of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes by some amount and finding the most extreme values for this amount for which the permutation-based test would just lead to non-rejection. This is computationally very expensive and may take a long time to complete. For models with moderators, one can also set <code>permci</code> to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as <code>NA</code> in the output.</p>
 <p>The function also works with location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code> for details). Permutation tests will then be carried out for both the location and scale parts of the model. However, note that permutation-based CIs are not available for location-scale models.</p>
     </div>
     <div id="value">
@@ -297,11 +297,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1) p-values based on permutation testing</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### histograms of permutation distributions for absolute latitude</span></span>
+<span class="r-in"><span class="co">### plot of the permutation distribution for absolute latitude</span></span>
 <span class="r-in"><span class="co">### dashed horizontal line: the observed value of the test statistic (in both tails)</span></span>
-<span class="r-in"><span class="co">### black curve: standard normal density</span></span>
+<span class="r-in"><span class="co">### black curve: standard normal density (theoretical reference/null distribution)</span></span>
 <span class="r-in"><span class="co">### blue curve: kernel density estimate of the permutation distribution</span></span>
-<span class="r-in"><span class="co">### note that the tail area under the permutation distribution is larger</span></span>
+<span class="r-in"><span class="co">### note: the tail area under the permutation distribution is larger</span></span>
 <span class="r-in"><span class="co">### than under a standard normal density (hence, the larger p-value)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">permres</span>, beta<span class="op">=</span><span class="fl">2</span>, lwd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">4</span><span class="op">)</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>,<span class="fl">5</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">.4</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="permutest-1.png" alt="" width="864" height="768"></span>

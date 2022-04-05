@@ -68,7 +68,7 @@
 }
 \value{
    An object of class \code{"infl.rma.uni"}, which is a list containing the following components:
-   \item{inf}{an element of class \code{"list.rma"} with the externally standardized residuals, DFFITS values, Cook's distances, covariance ratios, leave-one-out \mjseqn{\tau^2} estimates, leave-one-out (residual) heterogeneity test statistics, hat values, weights, and an indicator whether a case is influential or not.}
+   \item{inf}{an element of class \code{"list.rma"} with the externally standardized residuals, DFFITS values, Cook's distances, covariance ratios, leave-one-out \mjseqn{\tau^2} estimates, leave-one-out (residual) heterogeneity test statistics, hat values, weights, and an indicator whether a case is influential.}
    \item{dfbs}{an element of class \code{"list.rma"} with the DFBETAS values.}
    \item{\dots}{some additional elements/values.}
 

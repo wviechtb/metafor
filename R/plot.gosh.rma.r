@@ -100,7 +100,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
       breaks <- "Sturges"
 
    if (length(breaks) == 1L)
-      breaks <- list(breaks, breaks) ### use list so can also specify two vectors
+      breaks <- list(breaks, breaks) # use list so can also specify two vectors (or two functions)
 
    if (missing(adjust))
       adjust <- 1

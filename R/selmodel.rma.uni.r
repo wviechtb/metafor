@@ -630,7 +630,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (is.null(ddd$mapfun)) {
       mapfun <- rep(NA, deltas)
    } else {
-      if (length(ddd$mapfun) == 1L) {
+      if (length(ddd$mapfun) == 1L) { # note: mapfun must be given as character string
          mapfun <- rep(ddd$mapfun, deltas)
       } else {
          mapfun <- ddd$mapfun
@@ -639,7 +639,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (is.null(ddd$mapinvfun)) {
       mapinvfun <- rep(NA, deltas)
    } else {
-      if (length(ddd$mapinvfun) == 1L) {
+      if (length(ddd$mapinvfun) == 1L) { # note: mapinvfun must be given as character string
          mapinvfun <- rep(ddd$mapinvfun, deltas)
       } else {
          mapinvfun <- ddd$mapinvfun

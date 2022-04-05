@@ -84,7 +84,7 @@ regplot(x, \dots)
    \item{psize}{the point sizes of the points that were plotted.}
    \item{col}{the colors of the points that were plotted.}
    \item{bg}{the background colors of the points that were plotted.}
-   \item{label}{logical vector indicating whether a point was labeled or not.}
+   \item{label}{logical vector indicating whether a point was labeled.}
 
    Note that the object is returned invisibly. Using \code{points.regplot}, one can redraw the points (and labels) in case one wants to superimpose the points on top of any elements that were added manually to the plot (see \sQuote{Examples}).
 }

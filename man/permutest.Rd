@@ -14,12 +14,12 @@ permutest(x, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}.}
-   \item{exact}{logical to specify whether an exact permutation test should be carried out or not (the default is \code{FALSE}). See \sQuote{Details}.}
+   \item{exact}{logical to specify whether an exact permutation test should be carried out (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{iter}{integer to specify the number of iterations for the permutation test when not doing an exact test (the default is \code{1000}).}
    \item{permci}{logical to specify whether permutation-based CIs should also be constructed (the default is \code{FALSE}). Can also be a vector of indices to specify for which coefficients a permutation-based CI should be obtained.}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{TRUE}).}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
-   \item{control}{list of control values for numerical comparisons (\code{comptol}) and for \code{uniroot} (i.e., \code{tol} and \code{maxiter}). The latter is only relevant when \code{permci=TRUE}. See \sQuote{Note}.}
+   \item{control}{list of control values for numerical comparisons (\code{comptol}) and for \code{\link{uniroot}} (i.e., \code{tol} and \code{maxiter}). The latter is only relevant when \code{permci=TRUE}. See \sQuote{Note}.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -37,7 +37,7 @@ permutest(x, \dots)
 
    When using random permutations, the function ensures that the very first permutation will always correspond to the original data. This avoids p-values equal to 0.
 
-   When \code{permci=TRUE}, the function also tries to obtain permutation-based CIs of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes by some amount and finding the most extreme values for this amount for which the permutation-based test would just lead to non-rejection. This is computationally expensive and may take a long time to complete. For models with moderators, one can also set \code{permci} to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as \code{NA} in the output.
+   When \code{permci=TRUE}, the function also tries to obtain permutation-based CIs of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes by some amount and finding the most extreme values for this amount for which the permutation-based test would just lead to non-rejection. This is computationally very expensive and may take a long time to complete. For models with moderators, one can also set \code{permci} to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as \code{NA} in the output.
 
    The function also works with location-scale models (see \code{\link{rma.uni}} for details). Permutation tests will then be carried out for both the location and scale parts of the model. However, note that permutation-based CIs are not available for location-scale models.
 }
@@ -108,11 +108,11 @@ set.seed(1234) # for reproducibility
 permres <- permutest(res, iter=10000)
 permres
 
-### histograms of permutation distributions for absolute latitude
+### plot of the permutation distribution for absolute latitude
 ### dashed horizontal line: the observed value of the test statistic (in both tails)
-### black curve: standard normal density
+### black curve: standard normal density (theoretical reference/null distribution)
 ### blue curve: kernel density estimate of the permutation distribution
-### note that the tail area under the permutation distribution is larger
+### note: the tail area under the permutation distribution is larger
 ### than under a standard normal density (hence, the larger p-value)
 plot(permres, beta=2, lwd=c(2,3,3,4), xlim=c(-5,5), ylim=c(0,.4))
 }
