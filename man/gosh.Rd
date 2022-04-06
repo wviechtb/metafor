@@ -72,6 +72,7 @@ sav
 ### create GOSH plot
 ### red points for subsets that include and blue points
 ### for subsets that exclude study 16 (the ISIS-4 trial)
-plot(sav, out=16, breaks=100)}
+plot(sav, out=16, breaks=100)
+}
 }
 \keyword{methods}

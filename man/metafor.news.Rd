@@ -18,6 +18,7 @@ metafor.news()
 }
 \examples{
 \dontrun{
-metafor.news()}
+metafor.news()
+}
 }
 \keyword{utilities}

@@ -65,6 +65,7 @@ res <- rma(yi, vi, data=dat)
 
 \dontrun{
 ### generate report
-reporter(res)}
+reporter(res)
+}
 }
 \keyword{methods}

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-56</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-57</span>
       </span>
     </div>
 
@@ -305,7 +305,7 @@
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Rows with NAs omitted from model fitting.</span>
 <span class="r-in"><span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="vec2mat.html">vec2mat</a></span><span class="op">(</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"perf"</span>, <span class="st">"acog"</span>, <span class="st">"asom"</span>, <span class="st">"conf"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">matreg</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, R<span class="op">=</span><span class="va">R</span>, V<span class="op">=</span><span class="fu"><a href="vcov.rma.html">vcov</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>, ztor<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="co"># }</span></span>
+<span class="r-in"><span class="fu">matreg</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, R<span class="op">=</span><span class="va">R</span>, V<span class="op">=</span><span class="fu"><a href="vcov.rma.html">vcov</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>, ztor<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       estimate      se     zval    pval    ci.lb   ci.ub     ​ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> acog    0.1362  0.1697   0.8023  0.4224  -0.1965  0.4688      </span>
@@ -315,6 +315,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">############################################################################</span></span>
 <span class="r-in"></span>

@@ -142,7 +142,8 @@ abline(v=sav$random[1,2:3], lty="dotted")
 profile(res, sigma2=2, steps=40, cline=TRUE)
 sav <- confint(res, sigma2=2)
 sav
-abline(v=sav$random[1,2:3], lty="dotted")}
+abline(v=sav$random[1,2:3], lty="dotted")
+}
 
 ### multivariate parameterization of the model
 res <- rma.mv(yi, vi, random = ~ school | district, data=dat.konstantopoulos2011)
@@ -157,6 +158,7 @@ abline(v=sav$random[1,2:3], lty="dotted")
 profile(res, rho=1, steps=40, cline=TRUE)
 sav <- confint(res, rho=1)
 sav
-abline(v=sav$random[1,2:3], lty="dotted")}
+abline(v=sav$random[1,2:3], lty="dotted")
+}
 }
 \keyword{models}

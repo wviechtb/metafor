@@ -162,7 +162,8 @@ res
 par(mfrow=c(3,1))
 profile(res, tau2=1)
 profile(res, tau2=2)
-profile(res, rho=1, xlim=c(.90, .98))}
+profile(res, rho=1, xlim=c(.90, .98))
+}
 
 ### an example where the peak is at 0
 dat <- escalc(measure="RD", n1i=n1i, n2i=n2i, ai=ai, ci=ci, data=dat.hine1989)

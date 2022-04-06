@@ -122,7 +122,7 @@ anova(res2, X=rbind(c(0,1,0), c(0,0,1)))
 ### corresponding likelihood ratio test
 anova(res1, res2)
 
-### test of a linear combination
+### Wald-type test of a linear combination
 anova(res2, X=c(1,35,1970))
 
 ### use predict() to obtain the same linear combination (with its CI)
@@ -132,7 +132,7 @@ predict(res2, newmods=c(35,1970))
 res3 <- rma(yi, vi, mods = ~ ablat + year + alloc, data=dat, method="ML")
 res3
 
-### test the 'alloc' factor
+### Wald-type test of the 'alloc' factor
 anova(res3, btt=4:5)
 
 ### instead of specifying the coefficient numbers, grep for "alloc"
@@ -144,16 +144,50 @@ anova(res3, btt="alloc")
 dat <- dat.konstantopoulos2011
 res <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat)
 
-### test the district-level variance component
+### likelihood ratio test of the district-level variance component
 res0 <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat, sigma2=c(0,NA))
 anova(res, res0)
 
-### test the school-level variance component
+### likelihood ratio test of the school-level variance component
 res0 <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat, sigma2=c(NA,0))
 anova(res, res0)
 
-### test both variance components simultaneously
+### likelihood ratio test of both variance components simultaneously
 res0 <- rma.mv(yi, vi, data=dat)
 anova(res, res0)
+
+############################################################################
+
+### an example illustrating a workflow involving cluster-robust inference
+dat <- dat.assink2016
+
+### assume that the effect sizes within studies are correlated with rho=0.6
+V <- vcalc(vi, cluster=study, obs=esid, data=dat, rho=0.6)
+
+### fit multilevel model using this approximate V matrix
+res <- rma.mv(yi, V, random = ~ 1 | study/esid, data=dat)
+res
+
+### likelihood ratio tests of the two variance components
+res0 <- rma.mv(yi, V, random = ~ 1 | study/esid, data=dat, sigma2=c(0,NA))
+anova(res, res0)
+res0 <- rma.mv(yi, V, random = ~ 1 | study/esid, data=dat, sigma2=c(NA,0))
+anova(res, res0)
+
+### use cluster-robust methods for inferences about the fixed effects
+sav <- robust(res, cluster=study, clubSandwich=TRUE)
+sav
+
+### examine if 'deltype' is a potential moderator
+res <- rma.mv(yi, V, mods = ~ deltype, random = ~ 1 | study/esid, data=dat)
+sav <- robust(res, cluster=study, clubSandwich=TRUE)
+sav
+
+### note: the (denominator) dfs for the omnibus F-test are very low, so the results
+### of this test may not be trustworthy; consider using cluster wild bootstrapping
+\dontrun{
+library(wildmeta)
+Wald_test_cwb(res, constraints=constrain_zero(2:3), R=1000, seed=1234)
+}
 }
 \keyword{models}

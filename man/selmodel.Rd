@@ -236,7 +236,8 @@ sel <- selmodel(res, type="beta")
 sel
 
 # plot selection function
-plot(sel, ylim=c(0,40))}
+plot(sel, ylim=c(0,40))
+}
 
 # fit mixed-effects meta-regression model with 'blind' dummy variable as moderator
 res <- rma(smd, se^2, data=dat, mods = ~ blind, method="ML", digits=3)
@@ -249,7 +250,8 @@ predict(res, newmods=c(0,1))
 \dontrun{
 sel <- selmodel(res, type="beta")
 sel
-predict(sel, newmods=c(0,1))}
+predict(sel, newmods=c(0,1))
+}
 
 ############################################################################
 
@@ -300,7 +302,8 @@ predict(res,  transf=exp, digits=2)
 predict(sel1, transf=exp, digits=2)
 predict(sel2, transf=exp, digits=2)
 predict(sel3, transf=exp, digits=2)
-predict(sel4, transf=exp, digits=2)}
+predict(sel4, transf=exp, digits=2)
+}
 
 # fit selection models including standard error as precision measure (note: using
 # scaleprec=FALSE here since Preston et al. (2004) did not use the rescaling)
@@ -321,7 +324,8 @@ predict(res,  transf=exp, digits=2)
 predict(sel1, transf=exp, digits=2)
 predict(sel2, transf=exp, digits=2)
 predict(sel3, transf=exp, digits=2)
-predict(sel4, transf=exp, digits=2)}
+predict(sel4, transf=exp, digits=2)
+}
 
 ############################################################################
 
@@ -344,7 +348,8 @@ sel <- selmodel(res, type="stepfun", alternative="greater", steps=c(.025,.10,.50
 sel
 
 # plot selection function
-plot(sel)}
+plot(sel)
+}
 
 ############################################################################
 
@@ -383,7 +388,8 @@ sel <- lapply(tab[-1], function(delta) selmodel(res, type="stepfun", steps=tab$s
 # estimates (transformed correlation) and tau^2 values
 sav <- data.frame(estimate = round(c(res$beta, sapply(sel, function(x) x$beta)), 2),
                   varcomp  = round(c(res$tau2, sapply(sel, function(x) x$tau2)), 3))
-sav}
+sav
+}
 
 ############################################################################
 }

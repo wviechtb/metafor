@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-56</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-57</span>
       </span>
     </div>
 
@@ -407,8 +407,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># plot selection function</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">40</span><span class="op">)</span><span class="op">)</span><span class="co"># }</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">40</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="selmodel-2.png" alt="" width="864" height="768"></span>
+<span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># fit mixed-effects meta-regression model with 'blind' dummy variable as moderator</span></span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">smd</span>, <span class="va">se</span><span class="op">^</span><span class="fl">2</span>, data<span class="op">=</span><span class="va">dat</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">blind</span>, method<span class="op">=</span><span class="st">"ML"</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
@@ -480,12 +481,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">sel</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="co"># }</span></span>
+<span class="r-in"><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">sel</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     pred    se  ci.lb ci.ub  pi.lb pi.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  0.134 0.171 -0.200 0.469 -0.200 0.469 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 -0.002 0.199 -0.392 0.388 -0.392 0.388 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">############################################################################</span></span>
 <span class="r-in"></span>
@@ -615,11 +617,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  pred ci.lb ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.74  0.49  1.13 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">sel4</span>, transf<span class="op">=</span><span class="va">exp</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="co"># }</span></span>
+<span class="r-in"><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">sel4</span>, transf<span class="op">=</span><span class="va">exp</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  pred ci.lb ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.74  0.49  1.12 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># fit selection models including standard error as precision measure (note: using</span></span>
 <span class="r-in"><span class="co"># scaleprec=FALSE here since Preston et al. (2004) did not use the rescaling)</span></span>
@@ -661,11 +664,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  pred ci.lb ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.68  0.50  0.93 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">sel4</span>, transf<span class="op">=</span><span class="va">exp</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="co"># }</span></span>
+<span class="r-in"><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">sel4</span>, transf<span class="op">=</span><span class="va">exp</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  pred ci.lb ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.69  0.50  0.96 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">############################################################################</span></span>
 <span class="r-in"></span>
@@ -776,8 +780,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># plot selection function</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel</span><span class="op">)</span><span class="co"># }</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="selmodel-6.png" alt="" width="864" height="768"></span>
+<span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">############################################################################</span></span>
 <span class="r-in"></span>
@@ -884,13 +889,14 @@
 <span class="r-in"><span class="co"># estimates (transformed correlation) and tau^2 values</span></span>
 <span class="r-in"><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>estimate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">beta</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">sel</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="va">beta</span><span class="op">)</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span class="r-in">                  varcomp  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">tau2</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">sel</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">$</span><span class="va">tau2</span><span class="op">)</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sav</span><span class="co"># }</span></span>
+<span class="r-in"><span class="va">sav</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             estimate varcomp</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 0.38   0.001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta.mod.1     0.35   0.005</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta.sev.1     0.32   0.010</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta.mod.2     0.36   0.003</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta.sev.2     0.33   0.006</span>
+<span class="r-in"><span class="co"># }</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">############################################################################</span></span>
 </code></pre></div>

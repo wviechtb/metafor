@@ -94,7 +94,8 @@ res
 ### permutation test (approximate and exact)
 set.seed(1234) # for reproducibility
 permutest(res)
-permutest(res, exact=TRUE)}
+permutest(res, exact=TRUE)
+}
 
 ### mixed-effects model with two moderators (absolute latitude and publication year)
 res <- rma(yi, vi, mods = ~ ablat + year, data=dat)

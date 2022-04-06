@@ -105,7 +105,8 @@ dat$var1.var2 <- factor(dat$var1.var2,
 res <- rma.mv(yi, V, mods = ~ var1.var2 - 1, random = ~ var1.var2 | study, struct="UN", data=dat)
 R <- vec2mat(coef(res))
 rownames(R) <- colnames(R) <- c("perf", "acog", "asom", "conf")
-matreg(1, 2:4, R=R, V=vcov(res), ztor=TRUE)}
+matreg(1, 2:4, R=R, V=vcov(res), ztor=TRUE)
+}
 
 ############################################################################
 
