@@ -61,8 +61,9 @@ test_that("results are correct for example 1.", {
    expect_equivalent(coef(modC), c(-0.2243, -0.1667, -0.3274, -0.3152, -0.3520, -0.6489, -0.2758), tolerance=.tol[["coef"]])
    expect_equivalent(ci$random[1,2:3], c(0.0000, 0.0708), tolerance=.tol[["var"]])
 
-   ### fit Jackson's model
-   modI <- rma.mv(y, S1, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG1, sparse=sparse)
+   ### fit inconsistency model (switch optimizer so that model converges also under Atlas)
+   #modI <- rma.mv(y, S1, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG1, sparse=sparse)
+   modI <- rma.mv(y, S1, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG1, sparse=sparse, control=list(optimizer="optim"))
    ci <- confint(modI)
 
    out <- capture.output(print(ci))
@@ -133,7 +134,7 @@ test_that("results are correct for example 2.", {
    expect_equivalent(coef(modC), c(-1.8847, -1.3366, -0.7402), tolerance=.tol[["coef"]])
    expect_equivalent(ci$random[1,2:3], c(0.0788, 2.0156), tolerance=.tol[["var"]])
 
-   ### fit Jackson's model
+   ### fit inconsistency model
    modI <- rma.mv(y, S2, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG2, sparse=sparse)
    ci <- confint(modI)
 

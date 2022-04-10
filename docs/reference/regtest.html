@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-57</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.1-58</span>
       </span>
     </div>
 
@@ -381,7 +381,12 @@
 <span class="r-in"><span class="va">reg</span> <span class="op">&lt;-</span> <span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, predictor<span class="op">=</span><span class="st">"vi"</span><span class="op">)</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### add regression line to funnel plot (using the sampling variances as predictor)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">reg</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">reg</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">*</span><span class="va">se</span><span class="op">^</span><span class="fl">2</span>, <span class="va">se</span>, lwd<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">reg</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">reg</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">*</span><span class="va">se</span><span class="op">^</span><span class="fl">2</span>, <span class="va">se</span>, lwd<span class="op">=</span><span class="fl">3</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### add legend</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"bottomright"</span>, inset<span class="op">=</span><span class="fl">.02</span>, lty<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"solid"</span>,<span class="st">"dotted"</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">3</span>, cex<span class="op">=</span><span class="fl">0.9</span>, bg<span class="op">=</span><span class="st">"white"</span>,</span>
+<span class="r-in">       legend<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Standard Errors as Predictor"</span>,</span>
+<span class="r-in">                <span class="st">"Sampling Variances as Predictor"</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-plt img"><img src="regtest-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### testing for asymmetry after accounting for the influence of a moderator</span></span>

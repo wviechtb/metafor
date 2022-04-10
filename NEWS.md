@@ -1,4 +1,4 @@
-# metafor 3.1-57 (2022-04-06)
+# metafor 3.1-58 (2022-04-10)
 
 - added `misc-models`, `misc-recs`, and `misc-options` help pages
 

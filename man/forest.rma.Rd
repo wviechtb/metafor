@@ -236,7 +236,7 @@ forest(res, xlim=c(-16, 4.6), at=log(c(.05, .25, 1, 4)), atransf=exp,
 op <- par(cex=0.75, font=2)
 text(c(-9.5,-8,-6,-4.5), 20, c("TB+", "TB-", "TB+", "TB-"))
 text(c(-8.75,-5.25),     21, c("Vaccinated", "Control"))
-op <- par(font=4)
+par(font=4)
 text(-16, c(18,12,3), c("Systematic Allocation", "Random Allocation",
                         "Alternate Allocation"), pos=4)
 par(op)
@@ -259,8 +259,9 @@ res <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat,
 dd <- c(0,diff(dat$district))
 dd[dd > 0] <- 1
 rows <- (1:res$k) + cumsum(dd)
-par(tck=-.01, mgp = c(1.6,.2,0))
+op <- par(tck=-.01, mgp = c(1.6,.2,0), mar=c(3,8,1,6))
 forest(res, cex=0.5, header=TRUE, rows=rows, ylim=c(0.5,max(rows)+3))
 abline(h = rows[c(1,diff(rows)) == 2] - 1, lty="dotted")
+par(op)
 }
 \keyword{hplot}

@@ -149,7 +149,12 @@ lines(coef(reg$fit)[1] + coef(reg$fit)[2]*se, se, lwd=3)
 reg <- regtest(res, predictor="vi")
 
 ### add regression line to funnel plot (using the sampling variances as predictor)
-lines(coef(reg$fit)[1] + coef(reg$fit)[2]*se^2, se, lwd=3)
+lines(coef(reg$fit)[1] + coef(reg$fit)[2]*se^2, se, lwd=3, lty="dotted")
+
+### add legend
+legend("bottomright", inset=.02, lty=c("solid","dotted"), lwd=3, cex=0.9, bg="white",
+       legend=c("Standard Errors as Predictor",
+                "Sampling Variances as Predictor"))
 
 ### testing for asymmetry after accounting for the influence of a moderator
 res <- rma(yi, vi, mods = ~ year, data=dat)

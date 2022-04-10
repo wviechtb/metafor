@@ -28,7 +28,7 @@ This page documents some recommended practices when working with the \pkg{metafo
 
    \subsection{General Workflow for Meta-Analyses Involving Complex Dependency Structures}{
 
-   Many meta-analyses involve observed outcomes / effect size estimates that cannot be assumed to be independent, because some estimates were computed based on the same sample of subjects (or at least a partially overlapping set). In this case, one should compute the covariances for any pair of estimates that involve (fully or partially) overlapping subjects. Doing so is difficult, but we can often construct an approximate variance-covariance matrix (say \mjseqn{V}) of such dependent estimates. This can be done with the \code{\link{vcalc}} function. We can then fit a multivariate/multilevel model to the estimates with the \code{\link{rma.mv}} function, using \mjseqn{V} as the approximate var-cov matrix of the estimates and adding fixed and random effects to the model as deemed necessary. However, since \mjseqn{V} is often just a rough approximation (and since the random effects structure may not fully capture all dependencies in the underlying true outcomes/effects), we can then apply cluster-robust inference methods (also known as robust variance estimation) to the model. This can be done with the \code{\link{robust}} function, which also interfaces with the improved inference methods implemented in the \href{https://cran.r-project.org/package=clubSandwich}{clubSandwich} package to obtain the cluster-robust tests and confidence intervals. Finally, we can compute predicted outcomes (with corresponding confidence intervals) and test sets of coefficients or linear combinations thereof using the \code{\link[=predict.rma]{predict}} and \code{\link[=anova.rma]{anova}} functions. See Pustejovsky and Tipton (2022) for a paper describing such a workflow for various cases.
+   Many meta-analyses involve observed outcomes / effect size estimates that cannot be assumed to be independent, because some estimates were computed based on the same sample of subjects (or at least a partially overlapping set). In this case, one should compute the covariances for any pair of estimates that involve (fully or partially) overlapping subjects. Doing so is difficult, but we can often construct an approximate variance-covariance matrix (say \mjseqn{V}) of such dependent estimates. This can be done with the \code{\link{vcalc}} function. We can then fit a multivariate/multilevel model to the estimates with the \code{\link{rma.mv}} function, using \mjseqn{V} as the approximate var-cov matrix of the estimates and adding fixed and random effects to the model as deemed necessary. However, since \mjseqn{V} is often just a rough approximation (and since the random effects structure may not fully capture all dependencies in the underlying true outcomes/effects), we can then apply cluster-robust inference methods (also known as robust variance estimation) to the model. This can be done with the \code{\link{robust}} function, which also interfaces with the improved inference methods implemented in the \href{https://cran.r-project.org/package=clubSandwich}{clubSandwich} package to obtain the cluster-robust tests and confidence intervals.\mjseqn{^1} Finally, we can compute predicted outcomes (with corresponding confidence intervals) and test sets of coefficients or linear combinations thereof using the \code{\link[=predict.rma]{predict}} and \code{\link[=anova.rma]{anova}} functions. See Pustejovsky and Tipton (2022) for a paper describing such a workflow for various cases.
 
    To summarize, the general workflow therefore will often consist of these steps:
 
@@ -63,6 +63,10 @@ anova(sav, ...)}
 
    }
 
+   ---------
+
+   \mjseqn{^1} In small meta-analyses, the (denominator) degrees of freedom for the approximate t- and F-tests provided by the cluster-robust inference methods might be very low, in which case the tests may not be trustworthy and overly conservative (Joshi et al., in press). Under these circumstances, one can consider the use of cluster wild bootstrapping (as implemented in the \href{https://cran.r-project.org/package=wildmeta}{wildmeta} package) as an alternative method for making inferences.
+
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
@@ -71,6 +75,8 @@ anova(sav, ...)}
    Hartung, J. (1999). An alternative method for meta-analysis. \emph{Biometrical Journal}, \bold{41}(8), 901--916. \verb{https://doi.org/10.1002/(SICI)1521-4036(199912)41:8<901::AID-BIMJ901>3.0.CO;2-W}
 
    Harville, D. A. (1977). Maximum likelihood approaches to variance component estimation and to related problems. \emph{Journal of the American Statistical Association}, \bold{72}(358), 320--338. \verb{https://doi.org/10.2307/2286796}
+
+   Joshi, M., Pustejovsky, J. E., & Beretvas, S. N. (in press). Cluster wild bootstrapping to handle dependent effect sizes in meta-analysis with a small number of studies. \emph{Research Synthesis Methods}. \verb{https://doi.org/10.1002/jrsm.1554}
 
    Knapp, G., & Hartung, J. (2003). Improved tests for a random effects meta-regression with a single covariate. \emph{Statistics in Medicine}, \bold{22}(17), 2693--2710. \verb{https://doi.org/10.1002/sim.1482}
 

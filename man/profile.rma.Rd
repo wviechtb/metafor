@@ -159,7 +159,7 @@ res
 ### profile over tau^2_1, tau^2_2, and rho
 ### note: for rho, adjust region over which profiling is done ('zoom in' on area around estimate)
 \dontrun{
-par(mfrow=c(3,1))
+par(mfrow=c(2,2))
 profile(res, tau2=1)
 profile(res, tau2=2)
 profile(res, rho=1, xlim=c(.90, .98))

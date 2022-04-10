@@ -291,6 +291,10 @@ plot(sel2, add=TRUE, col="blue")
 plot(sel3, add=TRUE, col="red")
 plot(sel4, add=TRUE, col="green")
 
+# add legend
+legend("topright", inset=.02, lty="solid", lwd=2, col=c("black","blue","red","green"),
+       legend=c("Half-normal", "Negative-exponential", "Logistic", "Power"))
+
 # show estimates of delta (and corresponding SEs)
 tab <- data.frame(delta = c(sel1$delta, sel2$delta, sel3$delta, sel4$delta),
                   se    = c(sel1$se.delta, sel2$se.delta, sel3$se.delta, sel4$se.delta))
