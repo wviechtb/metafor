@@ -1,3 +1,7 @@
+# metafor 3.5-0 (2022-04-21)
+
+- placeholder for devel version
+
 # metafor 3.4-0 (2022-04-21)
 
 - added `misc-models`, `misc-recs`, and `misc-options` help pages
