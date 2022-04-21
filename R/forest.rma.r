@@ -233,6 +233,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       weighttype  <- match.arg(showweights, c("diagonal", "rowsum"))
       if (weighttype == "rowsum" && !inherits(x, "rma.mv"))
          weighttype <- "diagonal"
+      if (weighttype == "rowsum" && !x$int.only)
+         stop(mstyle$stop("Row-sum weights are only meaningful for intercept-only models."))
       showweights <- TRUE
    } else {
       weighttype <- "diagonal"
