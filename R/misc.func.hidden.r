@@ -329,28 +329,32 @@
 
 ############################################################################
 
-.getx <- function(x, mf, data, enclos=sys.frame(sys.parent(n=2))) {
+.getx <- function(x, mf, data, enclos=sys.frame(sys.parent(n=2)), checknull=TRUE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    mf.x <- mf[[match(x, names(mf))]]
    out <- try(eval(mf.x, data, enclos), silent=TRUE) # NULL if x was not specifified
 
-   spec <- x %in% names(mf)
-
    if (inherits(out, "try-error") || is.function(out))
       stop(mstyle$stop(paste0("Cannot find the object/variable ('", deparse(mf.x), "') specified for the '", x, "' argument.")), call.=FALSE)
 
    # note: is.function() check catches case where 'vi' is the utils::vi() function and other shenanigans
 
-   if (spec && is.null(out)) {
-      mf.txt <- deparse(mf.x)
-      if (mf.txt == "NULL") {
-         mf.txt <- " "
-      } else {
-         mf.txt <- paste0(" ('", mf.txt, "') ")
+   if (checknull) {
+
+      spec <- x %in% names(mf)
+
+      if (spec && is.null(out)) {
+         mf.txt <- deparse(mf.x)
+         if (mf.txt == "NULL") {
+            mf.txt <- " "
+         } else {
+            mf.txt <- paste0(" ('", mf.txt, "') ")
+         }
+         stop(mstyle$stop(paste0(deparse(mf)[1], ":\nThe object/variable", mf.txt, "specified for the '", x, "' argument is NULL.")), call.=FALSE)
       }
-      stop(mstyle$stop(paste0(deparse(mf)[1], ":\nThe object/variable", mf.txt, "specified for the '", x, "' argument is NULL.")), call.=FALSE)
+
    }
 
    return(out)

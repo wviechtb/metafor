@@ -3,7 +3,7 @@ annotate=TRUE,                                                header=FALSE,
 xlim, alim, olim, ylim, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab,             ilab, ilab.xpos, ilab.pos,
 transf, atransf, targs, rows,
-efac=1, pch=15, psize=1,                        col,
+efac=1, pch, psize,                           col,
 lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    #########################################################################
@@ -37,8 +37,13 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (missing(at))
       at <- NULL
 
-   if (missing(ilab))
+   mf <- match.call()
+
+   if (missing(ilab)) {
       ilab <- NULL
+   } else {
+      ilab <- .getx("ilab", mf=mf, data=x$data)
+   }
 
    if (missing(ilab.xpos))
       ilab.xpos <- NULL
@@ -46,8 +51,23 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (missing(ilab.pos))
       ilab.pos <- NULL
 
-   if (missing(col))
-      col <- NULL
+   if (missing(col)) {
+      col <- "black"
+   } else {
+      col <- .getx("col", mf=mf, data=x$data)
+   }
+
+   if (missing(pch)) {
+      pch <- 15
+   } else {
+      pch <- .getx("pch", mf=mf, data=x$data)
+   }
+
+   if (missing(psize)) {
+      psize <- 1
+   } else {
+      psize <- .getx("psize", mf=mf, data=x$data)
+   }
 
    if (missing(cex))
       cex <- NULL
@@ -199,24 +219,21 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    if (length(pch) == 1L)
       pch <- rep(pch, k)
+
    if (length(pch) != k)
       stop(mstyle$stop(paste0("Length of the 'pch' argument (", length(pch), ") does not correspond to the number of outcomes (", k, ").")))
 
    if (length(psize) == 1L)
       psize <- rep(psize, k)
+
    if (length(psize) != k)
       stop(mstyle$stop(paste0("Length of the 'psize' argument (", length(psize), ") does not correspond to the number of outcomes (", k, ").")))
 
-   ### if user has set the col argument
+   if (length(col) == 1L)
+      col <- rep(col, k)
 
-   if (!is.null(col)) {
-      if (length(col) == 1L)
-         col <- rep(col, k)
-      if (length(col) != k)
-         stop(mstyle$stop(paste0("Length of the 'col' argument (", length(col), ") does not correspond to the number of outcomes (", k, ").")))
-   } else {
-      col <- rep("black", k)
-   }
+   if (length(col) != k)
+      stop(mstyle$stop(paste0("Length of the 'col' argument (", length(col), ") does not correspond to the number of outcomes (", k, ").")))
 
    ### set rows value
 

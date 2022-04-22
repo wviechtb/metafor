@@ -1,6 +1,8 @@
-# metafor 3.5-0 (2022-04-21)
+# metafor 3.5-1 (2022-04-22)
 
-- placeholder for devel version
+- `replmiss()` gains a `data` argument
+
+- `cumul()` functions also store data, so that arguments `ilab`, `col`, `pch`, and `psize` in the `forest.cumul.rma()` function can look for variables therein
 
 # metafor 3.4-0 (2022-04-21)
 

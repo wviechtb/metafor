@@ -5,11 +5,12 @@
    Function to replace missing (\code{NA}) values in a vector.
 }
 \usage{
-replmiss(x, y)
+replmiss(x, y, data)
 }
 \arguments{
    \item{x}{vector that may include one or more missing values.}
    \item{y}{either a scalar or a vector of the same length as \code{x} with the value(s) to replace missing values with.}
+   \item{data}{optional data frame containing the variables given to the arguments above.}
 }
 \value{
    Vector \code{x} with the missing values replaced based on the scalar or vector \code{y}.

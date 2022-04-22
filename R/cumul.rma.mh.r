@@ -72,6 +72,11 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    not.na <- x$not.na[order]
    slab   <- x$slab[order]
    ids    <- x$ids[order]
+   if (inherits(x$data, "environment")) {
+      data <- NULL
+   } else {
+      data <- x$data[order,]
+   }
 
    beta  <- rep(NA_real_, x$k.f)
    se    <- rep(NA_real_, x$k.f)
@@ -161,12 +166,14 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
       out <- list(estimate=beta[not.na], se=se[not.na], zval=zval[not.na], pval=pval[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], Q=QE[not.na], Qp=QEp[not.na], I2=I2[not.na], H2=H2[not.na])
       out$slab <- slab[not.na]
       out$ids  <- ids[not.na]
+      out$data <- data[not.na,]
    }
 
    if (na.act == "na.exclude" || na.act == "na.pass") {
       out <- list(estimate=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, Q=QE, Qp=QEp, I2=I2, H2=H2)
       out$slab <- slab
       out$ids  <- ids
+      out$data <- data
    }
 
    if (na.act == "na.fail" && any(!x$not.na))

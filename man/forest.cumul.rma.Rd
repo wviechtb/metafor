@@ -10,7 +10,7 @@
        level=x$level, refline=0, digits=2L, width,
        xlab, ilab, ilab.xpos, ilab.pos,
        transf, atransf, targs, rows,
-       efac=1, pch=15, psize=1, col,
+       efac=1, pch, psize, col,
        lty, fonts, cex, cex.lab, cex.axis, \dots)
 }
 \arguments{

@@ -1,6 +1,23 @@
-replmiss <- function(x, y) {
+replmiss <- function(x, y, data) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
+
+   ### check if data argument has been specified
+
+   if (missing(data))
+      data <- NULL
+
+   if (is.null(data)) {
+      data <- sys.frame(sys.parent())
+   } else {
+      if (!is.data.frame(data))
+         data <- data.frame(data)
+   }
+
+   mf <- match.call()
+
+   x <- .getx("x", mf=mf, data=data, checknull=FALSE)
+   y <- .getx("y", mf=mf, data=data, checknull=FALSE)
 
    if (length(y) == 0L)
       return(x)
