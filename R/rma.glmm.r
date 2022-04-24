@@ -2111,7 +2111,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
             } else {
                vb.f <- chol2inv(chol.h)
             }
-            vb     <- vb.f[seq_len(p),seq_len(p),drop=FALSE]
+            vb <- vb.f[seq_len(p),seq_len(p),drop=FALSE]
+            if (any(diag(vb) <= 0))
+               stop(mstyle$stop("Cannot compute var-cov matrix of the fixed effects."))
             tau2   <- exp(res.ML$par[p+1])
             sigma2 <- NA
             parms  <- p + 1
@@ -2129,9 +2131,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                gvar1 <- det(vcov(tmp))
                gvar2 <- det(vb)
                ratio <- (gvar1 / gvar2)^(1/(2*m))
-               if (ratio >= 100)
+               if (!is.na(ratio) && ratio >= 100)
                   warning(mstyle$warning("Standard errors of fixed effects appear to be unusually small. Treat results with caution."), call.=FALSE)
-               if (ratio <= 1/100)
+               if (!is.na(ratio) && ratio <= 1/100)
                   warning(mstyle$warning("Standard errors of fixed effects appear to be unusually large. Treat results with caution."), call.=FALSE)
             }
 

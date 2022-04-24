@@ -152,6 +152,31 @@ test_that("location-scale model works correctly for multiple predictors", {
 
    out <- capture.output(print(res1))
 
+   expect_warning(res2  <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="Nelder-Mead")))
+   expect_warning(res3  <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="BFGS")))
+   expect_warning(res4  <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="bobyqa")))
+   expect_warning(res5  <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="nloptr")))
+   expect_warning(res6  <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="hjk")))
+   expect_warning(res7  <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="nmk")))
+   expect_warning(res8  <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="mads")))
+   expect_warning(res9  <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="ucminf")))
+   expect_warning(res10 <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="lbfgsb3c")))
+   expect_warning(res11 <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="subplex")))
+   expect_warning(res12 <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="BBoptim")))
+
+   expect_equivalent(res1$alpha,  c(-1.08826059, -0.03429344, 2.09197456, -0.28439165), tolerance=.tol[["coef"]])
+   expect_equivalent(res2$alpha,  c(-1.08879415, -0.03426271, 2.09166227, -0.28432946), tolerance=.tol[["coef"]])
+   expect_equivalent(res3$alpha,  c(-1.08791095, -0.03439789, 2.09179476, -0.28438389), tolerance=.tol[["coef"]])
+   expect_equivalent(res4$alpha,  c(-1.08826099, -0.03429340, 2.09197460, -0.28439162), tolerance=.tol[["coef"]])
+   expect_equivalent(res5$alpha,  c(-1.09036615, -0.03393392, 2.09205708, -0.28429889), tolerance=.tol[["coef"]])
+   expect_equivalent(res6$alpha,  c(-1.08825599, -0.03429422, 2.09197166, -0.28439180), tolerance=.tol[["coef"]])
+   expect_equivalent(res7$alpha,  c(-1.08867491, -0.03415188, 2.09213170, -0.28436838), tolerance=.tol[["coef"]])
+   expect_equivalent(res8$alpha,  c(-1.08825988, -0.03429568, 2.09198084, -0.28439174), tolerance=.tol[["coef"]])
+   expect_equivalent(res9$alpha,  c(-1.08826216, -0.03429383, 2.09197932, -0.28439198), tolerance=.tol[["coef"]])
+   expect_equivalent(res10$alpha, c(-1.08847719, -0.03428306, 2.09219886, -0.28439198), tolerance=.tol[["coef"]])
+   expect_equivalent(res11$alpha, c(-1.08826074, -0.03429341, 2.09197437, -0.28439162), tolerance=.tol[["coef"]])
+   expect_equivalent(res11$alpha, c(-1.08824263, -0.03429451, 2.09195305, -0.28439121), tolerance=.tol[["coef"]])
+
 })
 
 test_that("predict() works correctly for location-scale models", {

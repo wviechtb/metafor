@@ -14,21 +14,21 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    ### check argument specifications
    ### (arguments "to" and "vtype" are checked inside escalc function)
 
-   if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
-                              "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
-                              "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",       ### - measures for matched pairs data
-                              "IRR","IRD","IRSD",                                  ### two-group person-time data measures
-                              "MD","SMD","SMDH","SMD1","ROM",                      ### two-group mean/SD measures
-                              "CVR","VR",                                          ### coefficient of variation ratio, variability ratio
-                              "RPB","RBIS","D2OR","D2ORN","D2ORL",                 ### - transformations to r_PB, r_BIS, and log(OR)
-                              "COR","UCOR","ZCOR",                                 ### correlations (raw and r-to-z transformed)
-                              "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
-                              "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
-                              "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
-                              "MN","MNLN","CVLN","SDLN","SMN",                     ### mean, log(mean), log(CV), log(SD), standardized mean
-                              "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      ### raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
-                              "ARAW","AHW","ABT",                                  ### alpha (and transformations thereof)
-                              "REH",                                               ### relative excess heterozygosity
+   if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", # 2x2 table measures
+                              "PBIT","OR2D","OR2DN","OR2DL",                       # - transformations to SMD
+                              "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",       # - measures for matched pairs data
+                              "IRR","IRD","IRSD",                                  # two-group person-time data measures
+                              "MD","SMD","SMDH","SMD1","ROM",                      # two-group mean/SD measures
+                              "CVR","VR",                                          # coefficient of variation ratio, variability ratio
+                              "RPB","RBIS","D2OR","D2ORN","D2ORL",                 # - transformations to r_PB, r_BIS, and log(OR)
+                              "COR","UCOR","ZCOR",                                 # correlations (raw and r-to-z transformed)
+                              "PCOR","ZPCOR","SPCOR",                              # partial and semi-partial correlations
+                              "PR","PLN","PLO","PAS","PFT",                        # single proportions (and transformations thereof)
+                              "IR","IRLN","IRS","IRFT",                            # single-group person-time data (and transformations thereof)
+                              "MN","MNLN","CVLN","SDLN","SMN",                     # mean, log(mean), log(CV), log(SD), standardized mean
+                              "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
+                              "ARAW","AHW","ABT",                                  # alpha (and transformations thereof)
+                              "REH",                                               # relative excess heterozygosity
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
@@ -74,19 +74,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       stop(mstyle$stop("Invalid option selected for 'test' argument."))
 
    if (missing(scale)) {
-
       model <- "rma.uni"
-
    } else {
-
-      #if (!inherits(scale, "formula"))
-      #   stop(mstyle$stop("Must specify a formula for the 'scale' argument."))
-
-      #if (is.element(test, c("knha", "adhoc")))
-      #   stop(mstyle$stop("Cannot use Knapp & Hartung method with location-scale models."))
-
       model <- "rma.ls"
-
    }
 
    if (!is.null(ddd$link)) {
@@ -189,36 +179,36 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       if (inherits(yi, "formula")) {
          formula.yi <- yi
          formula.mods <- formula.yi[-2]
-         options(na.action = "na.pass")                   ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
-         mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so [a] further below is skipped)
-         attr(mods, "assign") <- NULL                     ### strip assign attribute (not needed at the moment)
-         attr(mods, "contrasts") <- NULL                  ### strip contrasts attribute (not needed at the moment)
-         yi <- model.response(model.frame(yi, data=data)) ### extract yi values from model frame
-         options(na.action = na.act)                      ### set na.action back to na.act
-         names(yi) <- NULL                                ### strip names (1:k) from yi (so res$yi is the same whether yi is a formula or not)
-         intercept <- FALSE                               ### set to FALSE since formula now controls whether the intercept is included or not
-      }                                                   ### note: code further below ([b]) actually checks whether intercept is included or not
+         options(na.action = "na.pass")                   # set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
+         mods <- model.matrix(yi, data=data)              # extract model matrix (now mods is no longer a formula, so [a] further below is skipped)
+         attr(mods, "assign") <- NULL                     # strip assign attribute (not needed at the moment)
+         attr(mods, "contrasts") <- NULL                  # strip contrasts attribute (not needed at the moment)
+         yi <- model.response(model.frame(yi, data=data)) # extract yi values from model frame
+         options(na.action = na.act)                      # set na.action back to na.act
+         names(yi) <- NULL                                # strip names (1:k) from yi (so res$yi is the same whether yi is a formula or not)
+         intercept <- FALSE                               # set to FALSE since formula now controls whether the intercept is included or not
+      }                                                   # note: code further below ([b]) actually checks whether intercept is included or not
 
       ### if yi is an escalc object, try to extract yi and vi (note that moderators must then be specified via the mods argument)
 
       if (inherits(yi, "escalc")) {
 
-         if (!is.null(attr(yi, "yi.names"))) { ### if yi.names attributes is available
-            yi.name <- attr(yi, "yi.names")[1] ### take the first entry to be the yi variable
-         } else {                              ### if not, see if 'yi' is in the object and assume that is the yi variable
+         if (!is.null(attr(yi, "yi.names"))) { # if yi.names attributes is available
+            yi.name <- attr(yi, "yi.names")[1] # take the first entry to be the yi variable
+         } else {                              # if not, see if 'yi' is in the object and assume that is the yi variable
             if (!is.element("yi", names(yi)))
                stop(mstyle$stop("Cannot determine name of the 'yi' variable."))
             yi.name <- "yi"
          }
-         if (!is.null(attr(yi, "vi.names"))) { ### if vi.names attributes is available
-            vi.name <- attr(yi, "vi.names")[1] ### take the first entry to be the vi variable
-         } else {                              ### if not, see if 'vi' is in the object and assume that is the vi variable
+         if (!is.null(attr(yi, "vi.names"))) { # if vi.names attributes is available
+            vi.name <- attr(yi, "vi.names")[1] # take the first entry to be the vi variable
+         } else {                              # if not, see if 'vi' is in the object and assume that is the vi variable
             if (!is.element("vi", names(yi)))
                stop(mstyle$stop("Cannot determine name of the 'vi' variable."))
             vi.name <- "vi"
          }
 
-         ### get vi and yi variables from the escalc object (vi first, then yi)
+         ### get vi and yi variables from the escalc object (vi first, then yi, since yi is overwritten)
 
          vi <- yi[[vi.name]]
          yi <- yi[[yi.name]]

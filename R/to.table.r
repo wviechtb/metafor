@@ -11,20 +11,20 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
    if (!is.character(measure))
       stop(mstyle$stop("The 'measure' argument must be a character string."))
 
-   if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", ### 2x2 table measures
-                              "PBIT","OR2D","OR2DN","OR2DL",                       ### - transformations to SMD
-                              "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",       ### - measures for matched pairs data
-                              "IRR","IRD","IRSD",                                  ### two-group person-time data measures
-                              "MD","SMD","SMDH","ROM",                             ### two-group mean/SD measures
-                              "CVR","VR",                                          ### coefficient of variation ratio, variability ratio
-                              "RPB","RBIS","D2OR","D2ORN","D2ORL",                 ### - transformations to r_PB, r_BIS, and log(OR)
-                              "COR","UCOR","ZCOR",                                 ### correlations (raw and r-to-z transformed)
-                              "PCOR","ZPCOR","SPCOR",                              ### partial and semi-partial correlations
-                              "PR","PLN","PLO","PAS","PFT",                        ### single proportions (and transformations thereof)
-                              "IR","IRLN","IRS","IRFT",                            ### single-group person-time data (and transformations thereof)
-                              "MN","MNLN","CVLN","SDLN","SMN",                     ### mean, log(mean), log(CV), log(SD), standardized mean
-                              "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      ### raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
-                              "ARAW","AHW","ABT")))                                ### alpha (and transformations thereof)
+   if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", # 2x2 table measures
+                              "PBIT","OR2D","OR2DN","OR2DL",                       # - transformations to SMD
+                              "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",       # - measures for matched pairs data
+                              "IRR","IRD","IRSD",                                  # two-group person-time data measures
+                              "MD","SMD","SMDH","ROM",                             # two-group mean/SD measures
+                              "CVR","VR",                                          # coefficient of variation ratio, variability ratio
+                              "RPB","RBIS","D2OR","D2ORN","D2ORL",                 # - transformations to r_PB, r_BIS, and log(OR)
+                              "COR","UCOR","ZCOR",                                 # correlations (raw and r-to-z transformed)
+                              "PCOR","ZPCOR","SPCOR",                              # partial and semi-partial correlations
+                              "PR","PLN","PLO","PAS","PFT",                        # single proportions (and transformations thereof)
+                              "IR","IRLN","IRS","IRFT",                            # single-group person-time data (and transformations thereof)
+                              "MN","MNLN","CVLN","SDLN","SMN",                     # mean, log(mean), log(CV), log(SD), standardized mean
+                              "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
+                              "ARAW","AHW","ABT")))                                # alpha (and transformations thereof)
       stop(mstyle$stop("Unknown 'measure' specified."))
 
    if (is.element(measure, c("CVR","VR","PCOR","ZPCOR","SPCOR","CVLN","SDLN","VRC")))
