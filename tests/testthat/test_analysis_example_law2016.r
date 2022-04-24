@@ -66,6 +66,7 @@ test_that("results are correct for example 1.", {
    modI <- rma.mv(y, S1, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG1, sparse=sparse, control=list(optimizer="optim"))
    ci <- confint(modI)
 
+   out <- capture.output(print(modI))
    out <- capture.output(print(ci))
 
    expect_equivalent(modI$tau2, 0.0000, tolerance=.tol[["var"]])

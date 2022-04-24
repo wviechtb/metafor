@@ -13,6 +13,10 @@ test_that("confint() gives correct results for the 'expectancy data' in Becker (
 
    out <- capture.output(print(sav)) ### so that print.fsn() is run (at least once)
 
+   ### use Fisher's test
+   sav <- fsn(yi, vi, data=dat.raudenbush1985, test="Fisher")
+   expect_equivalent(sav$fsnum, 40)
+
    sav <- fsn(yi, data=dat.raudenbush1985, type="Orwin", target=.05)
    expect_equivalent(sav$fsnum, 44)
    ### note: Becker finds N = 4, but uses the FE model estimate with 1/vi weights for
@@ -24,6 +28,10 @@ test_that("confint() gives correct results for the 'expectancy data' in Becker (
    expect_equivalent(sav$fsnum, 0)
 
    out <- capture.output(print(sav)) ### so that print.fsn() is run (at least once) with type="Rosenberg"
+
+   ### fsn() based on random-effects model
+   sav <- fsn(yi, vi, data=dat.raudenbush1985, type="REM")
+   expect_equivalent(sav$fsnum, 16)
 
 })
 

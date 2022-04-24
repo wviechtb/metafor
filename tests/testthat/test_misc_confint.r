@@ -15,6 +15,9 @@ test_that("confint() works correctly for 'rma.uni' objects.", {
    expect_equivalent(sav$random[3,], c(92.1173, 81.9177, 97.6781), tolerance=.tol[["het"]])
    expect_equivalent(sav$random[4,], c(12.6861, 5.5303, 43.0680), tolerance=.tol[["het"]])
 
+   sav <- round(as.data.frame(sav), 4)
+   expect_equivalent(sav[,1], c(0.4896, 0.3088, 0.5557, 92.1173, 12.6861))
+
 })
 
 test_that("confint() works correctly for 'rma.mh' objects.", {

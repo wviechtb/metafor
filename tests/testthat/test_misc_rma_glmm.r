@@ -84,17 +84,17 @@ test_that("rma.glmm() works correctly when using 'clogit' or 'clogistic'.", {
 
    skip_on_cran()
 
-   expect_warning(res1 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="UM.FS", method="EE"))
-   expect_warning(res2 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="UM.FS", method="EE", control=list(optimizer="clogit")))
-   expect_warning(res3 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="UM.FS", method="EE", control=list(optimizer="clogistic")))
+   expect_warning(res1 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", method="EE"))
+   expect_warning(res2 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", method="EE", control=list(optimizer="clogit")))
+   expect_warning(res3 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", method="EE", control=list(optimizer="clogistic")))
 
-   expect_equivalent(coef(res1), -1.2286, tolerance=.tol[["coef"]])
-   expect_equivalent(coef(res2), -1.2286, tolerance=.tol[["coef"]])
-   expect_equivalent(coef(res3), -1.2286, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res1), -1.2236, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res2), -1.2236, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res3), -1.2236, tolerance=.tol[["coef"]])
 
-   expect_equivalent(c(vcov(res1)), 0.0504, tolerance=.tol[["var"]])
-   expect_equivalent(c(vcov(res2)), 0.0504, tolerance=.tol[["var"]])
-   expect_equivalent(c(vcov(res3)), 0.0504, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res1)), 0.0502, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res2)), 0.0502, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res3)), 0.0502, tolerance=.tol[["var"]])
 
 })
 

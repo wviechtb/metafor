@@ -179,6 +179,22 @@ test_that("location-scale model works correctly for multiple predictors", {
 
 })
 
+test_that("permutation tests work correctly for a location-scale model", {
+
+   expect_warning(res <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni)))
+
+   set.seed(1234)
+   sav <- permutest(res, iter=100, progbar=FALSE)
+
+   out <- capture.output(print(sav))
+
+   expect_equivalent(sav$pval, 0.01)
+   expect_equivalent(sav$pval.alpha, c(0.81, 0.95, 0.02, 0.04))
+
+   plot(sav)
+
+})
+
 test_that("predict() works correctly for location-scale models", {
 
    expect_warning(res <- rma(yi, vi, data=dat, mods = ~ meta, scale = ~ meta))
@@ -250,6 +266,17 @@ test_that("anova() works correctly for location-scale models", {
    expect_equivalent(sav$Za[1,1], tmp$pred, tolerance=.tol[["test"]])
 
    expect_error(anova(res1, X=c(0,1,-1,0,0,0), Z=c(0,1,-1,0,0,0)))
+
+})
+
+test_that("vif() works correctly for location-scale models", {
+
+   expect_warning(res <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni)))
+   sav <- round(vif(res)$vif, 4)
+   expect_equivalent(sav, c(grade = 1.3087, meta = 1.06, `sqrt(ni)` = 1.2847))
+   sav <- round(vif(res, table=TRUE)$vif, 4)
+   expected <- structure(list(estimate = c(-1.0883, -0.0343, 2.092, -0.2844), se = c(2.1641, 0.3875, 1.0675, 0.1323), zval = c(-0.5029, -0.0885, 1.9597, -2.1503), pval = c(0.6151, 0.9295, 0.05, 0.0315), ci.lb = c(-5.3299, -0.7938, -2e-04, -0.5436), ci.ub = c(3.1534, 0.7252, 4.1842, -0.0252), vif = c(NA, 1.3087, 1.06, 1.2847), sif = c(NA, 1.144, 1.0296, 1.1334)), row.names = c("intrcpt", "grade", "meta", "sqrt(ni)"), class = "data.frame")
+   expect_equivalent(sav, expected)
 
 })
 
