@@ -44,21 +44,25 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
    ############################################################################
 
-   if (missing(beta)) {
-      if (x$int.only) {
-         beta <- 1
-      } else {
-         if (x$int.incl) {
-            beta <- 2:x$p
-         } else {
-            beta <- 1:x$p
-         }
-      }
+   if (x$skip.beta) {
+      beta <- NULL
    } else {
-      if (all(is.na(beta))) { # set beta=NA to not plot any location coefficients
-         beta <- NULL
+      if (missing(beta)) {
+         if (x$int.only) {
+            beta <- 1
+         } else {
+            if (x$int.incl) {
+               beta <- 2:x$p
+            } else {
+               beta <- 1:x$p
+            }
+         }
       } else {
-         beta <- .set.btt(beta, x$p, x$int.incl, names(x$zval.perm))
+         if (all(is.na(beta))) { # set beta=NA to not plot any location coefficients
+            beta <- NULL
+         } else {
+            beta <- .set.btt(beta, x$p, x$int.incl, names(x$zval.perm))
+         }
       }
    }
 
@@ -70,7 +74,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
       obs1  <- x$beta[beta,1]
    }
 
-   if (x$int.only) {
+   if (x$int.only || x$skip.beta) {
       QM.perm <- NULL
    } else {
       if (QM) {
@@ -80,7 +84,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
       }
    }
 
-   if (inherits(x, "permutest.rma.ls") && !x$Z.int.only) {
+   if (inherits(x, "permutest.rma.ls") && !x$skip.alpha) {
 
       if (missing(alpha)) {
          if (x$Z.int.only) {
@@ -356,7 +360,6 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
          labline(v=0, lwd=lwd[4], ...)
 
       }
-
 
    }
 

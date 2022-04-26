@@ -485,6 +485,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
                digits=digits, exact.iter=X.exact.iter,
                permci=permci, alternative=con$alternative, p2defn=con$p2defn, stat=con$stat)
 
+   out$skip.beta <- FALSE
    out$QM.perm <- QM.perm
    out$zval.perm <- data.frame(zval.perm)
    out$beta.perm <- data.frame(beta.perm)
