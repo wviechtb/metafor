@@ -1,4 +1,4 @@
-# metafor 3.5-1 (2022-04-22)
+# metafor 3.5-2 (2022-04-26)
 
 - `replmiss()` gains a `data` argument
 
