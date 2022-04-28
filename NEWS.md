@@ -1,5 +1,7 @@
 # metafor 3.5-3 (2022-04-28)
 
+- documented the possibility to use an identity link (with `link="identity"`) in `rma.uni()` when fitting location-scale models (although this will often lead to estimation problems); added `solnp()` as an additional optimizer for this case
+
 - `aggregate.escalc()` gains `addk` argument
 
 - `replmiss()` gains `data` argument

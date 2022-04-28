@@ -245,4 +245,19 @@
 
 }
 
+.rma.ls.solnp.ineqfun <- function(par, yi, vi, X, Z, reml, k, pX, alpha.val, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, tau2.min, tau2.max) {
+
+   alpha <- par
+
+   if (alpha.transf)
+      alpha <- mapply(.mapfun.alpha, alpha, alpha.min, alpha.max)
+
+   alpha <- ifelse(is.na(alpha.val), alpha, alpha.val)
+
+   tau2 <- c(Z %*% alpha)
+
+   return(tau2)
+
+}
+
 ############################################################################

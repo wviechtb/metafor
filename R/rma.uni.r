@@ -943,7 +943,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                alpha.init = NULL,         # initial values for scale parameters
                alpha.min = -Inf,          # min possible value(s) for scale parameter(s)
                alpha.max = Inf,           # max possible value(s) for scale parameter(s)
-               optimizer = "nlminb",      # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim") for location-scale models
+               optimizer = "nlminb",      # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","solnp") for location-scale models
                optmethod = "BFGS",        # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),         # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,                 # arguments for optimParallel()
@@ -1555,7 +1555,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       ### get optimizer arguments from control argument
 
-      optimizer <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
+      optimizer <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","solnp","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
       optmethod <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
       if (optimizer %in% c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent")) {
          optmethod <- optimizer
@@ -1574,10 +1574,15 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       if (ncpus > 1L)
          optimizer <- "optimParallel"
 
-      ### when using an identify link, force optimizer to constrOptim
+      ### when using an identify link, automatically set constrOptim as the default optimizer
 
-      if (link == "identity")
-         optimizer <- "constrOptim"
+      if (link == "identity") {
+         if (!is.element(optimizer, c("constrOptim","solnp"))) {
+            if (optimizer != "nlminb")
+               warning(mstyle$warning("Can only use optimizers 'constrOptim' or 'solnp' when link='identity' (resetting to 'constrOptim')."), call.=FALSE)
+            optimizer <- "constrOptim"
+         }
+      }
 
       if (link == "log" && optimizer == "constrOptim")
          stop(mstyle$stop("Cannot use 'constrOptim' optimizer when using a log link."))
@@ -1611,6 +1616,11 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       if (optimizer == "BBoptim" && !is.element("trace", names(optcontrol)))
          optcontrol$trace <- FALSE
 
+      ### for solnp, set trace=FALSE by default
+
+      if (optimizer == "solnp" && !is.element("trace", names(optcontrol)))
+         optcontrol$trace <- FALSE
+
       ### check that the required packages are installed
 
       if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
@@ -1631,6 +1641,11 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       if (optimizer == "BBoptim") {
          if (!requireNamespace("BB", quietly=TRUE))
             stop(mstyle$stop("Please install the 'BB' package to use this optimizer."))
+      }
+
+      if (optimizer == "solnp") {
+         if (!requireNamespace("Rsolnp", quietly=TRUE))
+            stop(mstyle$stop("Please install the 'Rsolnp' package to use this optimizer."))
       }
 
       if (!isTRUE(ddd$skiphes) && !requireNamespace(con$hesspack, quietly=TRUE))
@@ -1790,6 +1805,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       alpha.min <- con$alpha.min
       alpha.max <- con$alpha.max
 
+      if (link == "identity" && (any(alpha.min != -Inf) || any(alpha.max != Inf)))
+         stop(mstyle$stop("Cannot use constraints on scale coefficients when using an identity link."))
+
       alpha.init <- pmax(alpha.init, alpha.min)
       alpha.init <- pmin(alpha.init, alpha.max)
 
@@ -1852,6 +1870,12 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          ctrl.arg <- ", quiet=TRUE, control=optcontrol"
       }
 
+      if (optimizer == "solnp") {
+         par.arg <- "pars"
+         optimizer <- "Rsolnp::solnp"
+         ctrl.arg <- ", control=optcontrol"
+      }
+
       if (optimizer == "optimParallel") {
 
          par.arg <- "par"
@@ -1905,10 +1929,19 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (link == "identity") {
 
-         optcall <- paste0("constrOptim(theta=alpha.init, f=.ll.rma.ls, grad=NULL, ui=Z, ci=rep(0,k),
-                           yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=verbose, digits=digits,
-                           REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
-                           tau2.min=con$tau2.min, tau2.max=con$tau2.max", ctrl.arg, ")\n")
+         if (optimizer == "constrOptim") {
+            optcall <- paste0("constrOptim(theta=alpha.init, f=.ll.rma.ls, grad=NULL, ui=Z, ci=rep(0,k),
+                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=verbose, digits=digits,
+                              REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
+                              tau2.min=con$tau2.min, tau2.max=con$tau2.max", ctrl.arg, ")\n")
+         }
+
+         if (optimizer == "Rsolnp::solnp") {
+            optcall <- paste0("Rsolnp::solnp(pars=alpha.init, fun=.ll.rma.ls, ineqfun=.rma.ls.solnp.ineqfun, ineqLB=rep(0,k), ineqUB=rep(Inf,k),
+                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, verbose=verbose, digits=digits,
+                              REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
+                              tau2.min=con$tau2.min, tau2.max=con$tau2.max", ctrl.arg, ")\n")
+         }
 
       }
 
@@ -1932,7 +1965,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       ### convergence checks
 
-      if (is.element(optimizer, c("optim","constrOptim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","optimParallel::optimParallel")) && opt.res$convergence != 0)
+      if (is.element(optimizer, c("optim","constrOptim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rsolnp::solnp","optimParallel::optimParallel")) && opt.res$convergence != 0)
          stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")))
 
       if (is.element(optimizer, c("dfoptim::mads")) && opt.res$convergence > optcontrol$tol)
@@ -1959,6 +1992,8 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          opt.res$par <- opt.res$solution
       if (optimizer=="nlm")
          opt.res$par <- opt.res$estimate
+      if (optimizer=="Rsolnp::solnp")
+         opt.res$par <- opt.res$pars
 
       ### back-transform in case constraints were placed on alpha values
 
