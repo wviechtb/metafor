@@ -1,4 +1,6 @@
-aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi, weighted=TRUE, checkpd=TRUE, fun, na.rm=TRUE, subset, select, digits, ...) {
+aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
+                             weighted=TRUE, checkpd=TRUE, fun, na.rm=TRUE,
+                             addk=FALSE, subset, select, digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -377,6 +379,13 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi, we
 
    xagg[which(names(xagg) == yi.name)] <- yi.agg
    xagg[which(names(xagg) == vi.name)] <- vi.agg
+
+   ### add k per cluster as variable to dataset
+
+   if (addk) {
+      ki <- sapply(xsplit, nrow)
+      xagg <- cbind(xagg, ki) # this way, an existing 'ki' variable will not be overwritten
+   }
 
    ### add back some attributes
 

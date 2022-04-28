@@ -1,9 +1,9 @@
 \name{model.matrix.rma}
 \alias{model.matrix}
 \alias{model.matrix.rma}
-\title{Model Matrix for 'rma' Objects}
+\title{Extract the Model Matrix from 'rma' Objects}
 \description{
-   The function extracts the model matrix for objects of class \code{"rma"}.
+   The function extracts the model matrix from objects of class \code{"rma"}.
 }
 \usage{
 \method{model.matrix}{rma}(object, \dots)

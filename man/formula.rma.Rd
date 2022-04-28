@@ -1,9 +1,9 @@
 \name{formula.rma}
 \alias{formula}
 \alias{formula.rma}
-\title{Model Formulae for 'rma' Objects}
+\title{Extract the Model Formula from 'rma' Objects}
 \description{
-   The function extracts model formulae for objects of class \code{"rma"}.
+   The function extracts the model formula from objects of class \code{"rma"}.
 }
 \usage{
 \method{formula}{rma}(x, type="mods", \dots)

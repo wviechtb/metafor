@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-3</span>
       </span>
     </div>
 
@@ -222,7 +222,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### obtain results based on the sandwich method</span></span>
+<span class="r-in"><span class="co">### use cluster-robust inference methods</span></span>
 <span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">id</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 48; tau^2 estimator: REML)</span>
@@ -251,7 +251,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t-test and confidence interval, dfs = residual method)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### use methods from clubSandwich package</span></span>
+<span class="r-in"><span class="co">### use methods from the clubSandwich package</span></span>
 <span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">id</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 48; tau^2 estimator: REML)</span>
@@ -309,7 +309,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### obtain results based on the sandwich method</span></span>
+<span class="r-in"><span class="co">### use cluster-robust inference methods</span></span>
 <span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">id</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 46; tau^2 estimator: REML)</span>
@@ -343,7 +343,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t/F-tests and confidence intervals, dfs = residual method)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### use methods from clubSandwich package</span></span>
+<span class="r-in"><span class="co">### use methods from the clubSandwich package</span></span>
 <span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">id</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 46; tau^2 estimator: REML)</span>
@@ -406,7 +406,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### obtain results based on the sandwich method</span></span>
+<span class="r-in"><span class="co">### use cluster-robust inference methods</span></span>
 <span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">district</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 56; method: REML)</span>
@@ -436,7 +436,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t-test and confidence interval, dfs = residual method)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### use methods from clubSandwich package</span></span>
+<span class="r-in"><span class="co">### use methods from the clubSandwich package</span></span>
 <span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">district</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 56; method: REML)</span>
@@ -511,7 +511,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### obtain results based on sandwich method</span></span>
+<span class="r-in"><span class="co">### use cluster-robust inference methods</span></span>
 <span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">trial</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 10; method: REML)</span>
@@ -552,7 +552,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t/F-tests and confidence intervals, dfs = residual method)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
-<span class="r-in"><span class="co">### use methods from clubSandwich package</span></span>
+<span class="r-in"><span class="co">### use methods from the clubSandwich package</span></span>
 <span class="r-in"><span class="fu">robust</span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">trial</span>, clubSandwich<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 10; method: REML)</span>

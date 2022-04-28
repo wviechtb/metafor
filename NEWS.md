@@ -1,6 +1,8 @@
-# metafor 3.5-2 (2022-04-26)
+# metafor 3.5-3 (2022-04-28)
 
-- `replmiss()` gains a `data` argument
+- `aggregate.escalc()` gains `addk` argument
+
+- `replmiss()` gains `data` argument
 
 - `cumul()` functions also store data, so that arguments `ilab`, `col`, `pch`, and `psize` in the `forest.cumul.rma()` function can look for variables therein
 

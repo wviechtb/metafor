@@ -104,20 +104,20 @@ dat <- dat.bangertdrowns2004
 res <- rma(yi, vi, data=dat)
 res
 
-### obtain results based on the sandwich method
+### use cluster-robust inference methods
 robust(res, cluster=id)
 
-### use methods from clubSandwich package
+### use methods from the clubSandwich package
 robust(res, cluster=id, clubSandwich=TRUE)
 
 ### fit meta-regression model
 res <- rma(yi, vi, mods = ~ length, data=dat)
 res
 
-### obtain results based on the sandwich method
+### use cluster-robust inference methods
 robust(res, cluster=id)
 
-### use methods from clubSandwich package
+### use methods from the clubSandwich package
 robust(res, cluster=id, clubSandwich=TRUE)
 
 ############################################################################
@@ -129,10 +129,10 @@ dat <- dat.konstantopoulos2011
 res <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat)
 res
 
-### obtain results based on the sandwich method
+### use cluster-robust inference methods
 robust(res, cluster=district)
 
-### use methods from clubSandwich package
+### use methods from the clubSandwich package
 robust(res, cluster=district, clubSandwich=TRUE)
 
 ############################################################################
@@ -149,10 +149,10 @@ V <- vcalc(vi=1, cluster=author, rvars=c(v1i, v2i), data=dat)
 res <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="UN", data=dat)
 res
 
-### obtain results based on sandwich method
+### use cluster-robust inference methods
 robust(res, cluster=trial)
 
-### use methods from clubSandwich package
+### use methods from the clubSandwich package
 robust(res, cluster=trial, clubSandwich=TRUE)
 
 ############################################################################

@@ -198,9 +198,9 @@ reference:
       - reporter
       - matreg
       - vec2mat
-      - transf
       - aggregate.escalc
       - metafor.news
+      - transf
   - title: "Other Methods"
     desc: >
       Other method functions.

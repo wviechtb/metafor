@@ -7,7 +7,8 @@
 }
 \usage{
 \method{aggregate}{escalc}(x, cluster, time, obs, V, struct="CS", rho, phi,
-          weighted=TRUE, checkpd=TRUE, fun, na.rm=TRUE, subset, select, digits, \dots)
+          weighted=TRUE, checkpd=TRUE, fun, na.rm=TRUE,
+          addk=FALSE, subset, select, digits, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"escalc"}.}
@@ -22,6 +23,7 @@
    \item{checkpd}{logical to specify whether to check that the variance-covariance matrices of the sampling errors within clusters are positive definite (the default is \code{TRUE}).}
    \item{fun}{optional list with three functions for aggregating other variables besides the effect sizes or outcomes within clusters (for numeric/integer variables, for logicals, and for all other types, respectively).}
    \item{na.rm}{logical to specify whether \code{NA} values should be removed before aggregating values within clusters. Can also be a vector with two logicals (the first pertaining to the effect sizes or outcomes, the second to all other variables).}
+   \item{addk}{logical to specify whether to add the cluster size as a new variable (called \code{ki}) to the dataset (the default is \code{FALSE}).}
    \item{subset}{optional (logical or numeric) vector to specify the subset of rows to include when aggregating the effect sizes or outcomes.}
    \item{select}{optional vector to specify the names of the variables to include in the aggregated dataset.}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
@@ -73,7 +75,7 @@ head(dat, 11)
 
 ### aggregate estimates to the district level, assuming independent sampling
 ### errors for multiples studies/schools within the same district
-agg <- aggregate(dat, cluster=district, struct="ID")
+agg <- aggregate(dat, cluster=district, struct="ID", addk=TRUE)
 agg
 
 ### copy data into 'dat' and examine data
