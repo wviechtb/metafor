@@ -25,7 +25,7 @@
          btt <- grep(btt, Xnames)
 
          if (length(btt) == 0L)
-            stop(mstyle$stop("Cannot identify coefficient(s) corresponding to the specified 'btt' string."))
+            stop(mstyle$stop("Cannot identify coefficient(s) corresponding to the specified 'btt' string."), call.=FALSE)
 
       } else {
 
@@ -34,7 +34,7 @@
 
          ### check for mix of positive and negative values
          if (any(btt < 0) && any(btt > 0))
-            stop(mstyle$stop("Cannot mix positive and negative 'btt' values."))
+            stop(mstyle$stop("Cannot mix positive and negative 'btt' values."), call.=FALSE)
 
          ### keep/remove from 1:p vector as specified
          btt <- seq_len(p)[btt]
@@ -44,7 +44,7 @@
 
          ### make sure that at least one valid value is left
          if (length(btt) == 0L)
-            stop(mstyle$stop("Non-existent coefficients specified via 'btt'."))
+            stop(mstyle$stop("Non-existent coefficients specified via 'btt'."), call.=FALSE)
 
       }
 
@@ -209,7 +209,12 @@
 
    if (!allow.vector && length(level) != 1L) {
       mstyle <- .get.mstyle("crayon" %in% .packages())
-      stop(mstyle$stop("Argument 'level' must specify a single value."))
+      stop(mstyle$stop("Argument 'level' must specify a single value."), call.=FALSE)
+   }
+
+   if (!is.numeric(level)) {
+      mstyle <- .get.mstyle("crayon" %in% .packages())
+      stop(mstyle$stop("The 'level' argument must be numeric."), call.=FALSE)
    }
 
    ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
@@ -329,7 +334,7 @@
 
 ############################################################################
 
-.getx <- function(x, mf, data, enclos=sys.frame(sys.parent(n=2)), checknull=TRUE) {
+.getx <- function(x, mf, data, enclos=sys.frame(sys.parent(n=2)), checknull=TRUE, checknumeric=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -356,6 +361,9 @@
       }
 
    }
+
+   if (checknumeric && !is.null(out) && !is.list(out) && !is.numeric(out))
+      stop(mstyle$stop(paste0("The object/variable specified for the '", x, "' argument is not numeric.")), call.=FALSE)
 
    return(out)
 

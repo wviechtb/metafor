@@ -150,12 +150,12 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    if (is.element(measure, c("OR","RR","RD"))) {
 
-      ai  <- .getx("ai",  mf=mf, data=data)
-      bi  <- .getx("bi",  mf=mf, data=data)
-      ci  <- .getx("ci",  mf=mf, data=data)
-      di  <- .getx("di",  mf=mf, data=data)
-      n1i <- .getx("n1i", mf=mf, data=data)
-      n2i <- .getx("n2i", mf=mf, data=data)
+      ai  <- .getx("ai",  mf=mf, data=data, checknumeric=TRUE)
+      bi  <- .getx("bi",  mf=mf, data=data, checknumeric=TRUE)
+      ci  <- .getx("ci",  mf=mf, data=data, checknumeric=TRUE)
+      di  <- .getx("di",  mf=mf, data=data, checknumeric=TRUE)
+      n1i <- .getx("n1i", mf=mf, data=data, checknumeric=TRUE)
+      n2i <- .getx("n2i", mf=mf, data=data, checknumeric=TRUE)
 
       if (is.null(bi)) bi <- n1i - ai
       if (is.null(di)) di <- n2i - ci
@@ -177,10 +177,10 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    if (is.element(measure, c("IRR"))) {
 
-      x1i <- .getx("x1i", mf=mf, data=data)
-      x2i <- .getx("x2i", mf=mf, data=data)
-      t1i <- .getx("t1i", mf=mf, data=data)
-      t2i <- .getx("t2i", mf=mf, data=data)
+      x1i <- .getx("x1i", mf=mf, data=data, checknumeric=TRUE)
+      x2i <- .getx("x2i", mf=mf, data=data, checknumeric=TRUE)
+      t1i <- .getx("t1i", mf=mf, data=data, checknumeric=TRUE)
+      t2i <- .getx("t2i", mf=mf, data=data, checknumeric=TRUE)
 
       k <- length(x1i) # number of outcomes before subsetting
       k.all <- k
@@ -199,9 +199,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    if (is.element(measure, c("PLO","PR","PLN"))) {
 
-      xi <- .getx("xi", mf=mf, data=data)
-      mi <- .getx("mi", mf=mf, data=data)
-      ni <- .getx("ni", mf=mf, data=data)
+      xi <- .getx("xi", mf=mf, data=data, checknumeric=TRUE)
+      mi <- .getx("mi", mf=mf, data=data, checknumeric=TRUE)
+      ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
 
       if (is.null(mi)) mi <- ni - xi
 
@@ -220,8 +220,8 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    if (is.element(measure, c("IRLN"))) {
 
-      xi <- .getx("xi", mf=mf, data=data)
-      ti <- .getx("ti", mf=mf, data=data)
+      xi <- .getx("xi", mf=mf, data=data, checknumeric=TRUE)
+      ti <- .getx("ti", mf=mf, data=data, checknumeric=TRUE)
 
       k <- length(xi) # number of outcomes before subsetting
       k.all <- k

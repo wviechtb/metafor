@@ -47,7 +47,7 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, ...) {
 
    mf <- match.call()
 
-   vi       <- .getx("vi",       mf=mf, data=data)
+   vi       <- .getx("vi",       mf=mf, data=data, checknumeric=TRUE)
    cluster  <- .getx("cluster",  mf=mf, data=data)
    subgroup <- .getx("subgroup", mf=mf, data=data)
    type     <- .getx("type",     mf=mf, data=data)

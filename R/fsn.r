@@ -72,11 +72,11 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
 
    mf <- match.call()
 
-   yi     <- .getx("yi",      mf=mf, data=data)
-   vi     <- .getx("vi",      mf=mf, data=data)
-   sei    <- .getx("sei",     mf=mf, data=data)
-   #weight <- .getx("weights", mf=mf, data=data)
-   subset <- .getx("subset",  mf=mf, data=data)
+   yi     <- .getx("yi",      mf=mf, data=data, checknumeric=TRUE)
+   vi     <- .getx("vi",      mf=mf, data=data, checknumeric=TRUE)
+   sei    <- .getx("sei",     mf=mf, data=data, checknumeric=TRUE)
+   #weight <- .getx("weights", mf=mf, data=data, checknumeric=TRUE)
+   subset <- .getx("subset",  mf=mf, data=data, checknumeric=TRUE)
 
    if (type %in% c("Rosenthal", "Rosenberg", "REM") || (type == "Orwin" && weighted)) {
       if (is.null(vi)) {

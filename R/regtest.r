@@ -52,7 +52,7 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
 
       } else {
 
-         ni <- .getx("ni", mf=mf, data=data)
+         ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
 
          if (!is.null(ni)) {
 
@@ -109,6 +109,11 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
 
       yi <- x
 
+      ### check if yi is numeric
+
+      if (!is.numeric(yi))
+         stop(mstyle$stop("The object/variable specified for the 'x' argument is not numeric."))
+
       ### set defaults for digits
 
       if (missing(digits)) {
@@ -125,9 +130,9 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
 
       k <- length(yi)
 
-      vi     <- .getx("vi",     mf=mf, data=data)
-      sei    <- .getx("sei",    mf=mf, data=data)
-      ni     <- .getx("ni",     mf=mf, data=data)
+      vi     <- .getx("vi",     mf=mf, data=data, checknumeric=TRUE)
+      sei    <- .getx("sei",    mf=mf, data=data, checknumeric=TRUE)
+      ni     <- .getx("ni",     mf=mf, data=data, checknumeric=TRUE)
       subset <- .getx("subset", mf=mf, data=data)
 
       if (is.null(vi)) {

@@ -76,9 +76,9 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    if (measure == "GEN") {
 
-      yi  <- .getx("yi",  mf=mf, data=data)
-      vi  <- .getx("vi",  mf=mf, data=data)
-      sei <- .getx("sei", mf=mf, data=data)
+      yi  <- .getx("yi",  mf=mf, data=data, checknumeric=TRUE)
+      vi  <- .getx("vi",  mf=mf, data=data, checknumeric=TRUE)
+      sei <- .getx("sei", mf=mf, data=data, checknumeric=TRUE)
 
       if (is.null(vi)) {
          if (is.null(sei)) {
@@ -108,12 +108,12 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    if (measure == "OR") {
 
-      ai  <- .getx("ai",  mf=mf, data=data)
-      bi  <- .getx("bi",  mf=mf, data=data)
-      ci  <- .getx("ci",  mf=mf, data=data)
-      di  <- .getx("di",  mf=mf, data=data)
-      n1i <- .getx("n1i", mf=mf, data=data)
-      n2i <- .getx("n2i", mf=mf, data=data)
+      ai  <- .getx("ai",  mf=mf, data=data, checknumeric=TRUE)
+      bi  <- .getx("bi",  mf=mf, data=data, checknumeric=TRUE)
+      ci  <- .getx("ci",  mf=mf, data=data, checknumeric=TRUE)
+      di  <- .getx("di",  mf=mf, data=data, checknumeric=TRUE)
+      n1i <- .getx("n1i", mf=mf, data=data, checknumeric=TRUE)
+      n2i <- .getx("n2i", mf=mf, data=data, checknumeric=TRUE)
 
       if (!.equal.length(ai, bi, ci, di, n1i, n2i))
          stop(mstyle$stop("Supplied data vectors are not all of the same length."))

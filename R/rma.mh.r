@@ -106,12 +106,12 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
 
       x1i <- x2i <- t1i <- t2i <- x1i.f <- x2i.f <- t1i.f <- t2i.f <- NA
 
-      ai  <- .getx("ai",  mf=mf, data=data)
-      bi  <- .getx("bi",  mf=mf, data=data)
-      ci  <- .getx("ci",  mf=mf, data=data)
-      di  <- .getx("di",  mf=mf, data=data)
-      n1i <- .getx("n1i", mf=mf, data=data)
-      n2i <- .getx("n2i", mf=mf, data=data)
+      ai  <- .getx("ai",  mf=mf, data=data, checknumeric=TRUE)
+      bi  <- .getx("bi",  mf=mf, data=data, checknumeric=TRUE)
+      ci  <- .getx("ci",  mf=mf, data=data, checknumeric=TRUE)
+      di  <- .getx("di",  mf=mf, data=data, checknumeric=TRUE)
+      n1i <- .getx("n1i", mf=mf, data=data, checknumeric=TRUE)
+      n2i <- .getx("n2i", mf=mf, data=data, checknumeric=TRUE)
 
       if (is.null(bi)) bi <- n1i - ai
       if (is.null(di)) di <- n2i - ci

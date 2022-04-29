@@ -46,7 +46,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
 
       ### extract ni
       mf <- match.call()
-      ni <- .getx("ni", mf=mf, data=data)
+      ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
 
       ### get all variables from data
       options(na.action = "na.pass")

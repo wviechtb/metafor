@@ -162,7 +162,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    ### extract weights, slab, subset, mods, and scale values, possibly from the data frame specified via data or yi (arguments not specified are NULL)
 
-   weights <- .getx("weights", mf=mf, data=data)
+   weights <- .getx("weights", mf=mf, data=data, checknumeric=TRUE)
    slab    <- .getx("slab",    mf=mf, data=data)
    subset  <- .getx("subset",  mf=mf, data=data)
    mods    <- .getx("mods",    mf=mf, data=data)
@@ -228,6 +228,11 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       }
 
+      ### check if yi is numeric
+
+      if (!is.numeric(yi))
+         stop(mstyle$stop("The object/variable specified for the 'yi' argument is not numeric."))
+
       ### in case user passed a matrix to yi, convert it to a vector
 
       if (is.matrix(yi))
@@ -252,14 +257,14 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (!yi.escalc) {
 
-         vi  <- .getx("vi",  mf=mf, data=data)
-         sei <- .getx("sei", mf=mf, data=data)
+         vi  <- .getx("vi",  mf=mf, data=data, checknumeric=TRUE)
+         sei <- .getx("sei", mf=mf, data=data, checknumeric=TRUE)
 
       }
 
       ### extract ni argument
 
-      ni <- .getx("ni", mf=mf, data=data)
+      ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
 
       ### if neither vi nor sei is specified, then throw an error
       ### if only sei is specified, then square those values to get vi
@@ -355,13 +360,13 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM"))) {
 
-         ai  <- .getx("ai",  mf=mf, data=data)
-         bi  <- .getx("bi",  mf=mf, data=data)
-         ci  <- .getx("ci",  mf=mf, data=data)
-         di  <- .getx("di",  mf=mf, data=data)
-         n1i <- .getx("n1i", mf=mf, data=data)
-         n2i <- .getx("n2i", mf=mf, data=data)
-         ri  <- .getx("ri",  mf=mf, data=data)
+         ai  <- .getx("ai",  mf=mf, data=data, checknumeric=TRUE)
+         bi  <- .getx("bi",  mf=mf, data=data, checknumeric=TRUE)
+         ci  <- .getx("ci",  mf=mf, data=data, checknumeric=TRUE)
+         di  <- .getx("di",  mf=mf, data=data, checknumeric=TRUE)
+         n1i <- .getx("n1i", mf=mf, data=data, checknumeric=TRUE)
+         n2i <- .getx("n2i", mf=mf, data=data, checknumeric=TRUE)
+         ri  <- .getx("ri",  mf=mf, data=data, checknumeric=TRUE)
 
          if (is.null(bi)) bi <- n1i - ai
          if (is.null(di)) di <- n2i - ci
@@ -383,10 +388,10 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (is.element(measure, c("IRR","IRD","IRSD"))) {
 
-         x1i <- .getx("x1i", mf=mf, data=data)
-         x2i <- .getx("x2i", mf=mf, data=data)
-         t1i <- .getx("t1i", mf=mf, data=data)
-         t2i <- .getx("t2i", mf=mf, data=data)
+         x1i <- .getx("x1i", mf=mf, data=data, checknumeric=TRUE)
+         x2i <- .getx("x2i", mf=mf, data=data, checknumeric=TRUE)
+         t1i <- .getx("t1i", mf=mf, data=data, checknumeric=TRUE)
+         t2i <- .getx("t2i", mf=mf, data=data, checknumeric=TRUE)
 
          k <- length(x1i) ### number of outcomes before subsetting
          k.all <- k
@@ -405,12 +410,12 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (is.element(measure, c("MD","SMD","SMDH","SMD1","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
 
-         m1i  <- .getx("m1i",  mf=mf, data=data)
-         m2i  <- .getx("m2i",  mf=mf, data=data)
-         sd1i <- .getx("sd1i", mf=mf, data=data)
-         sd2i <- .getx("sd2i", mf=mf, data=data)
-         n1i  <- .getx("n1i",  mf=mf, data=data)
-         n2i  <- .getx("n2i",  mf=mf, data=data)
+         m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE)
+         m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE)
+         sd1i <- .getx("sd1i", mf=mf, data=data, checknumeric=TRUE)
+         sd2i <- .getx("sd2i", mf=mf, data=data, checknumeric=TRUE)
+         n1i  <- .getx("n1i",  mf=mf, data=data, checknumeric=TRUE)
+         n2i  <- .getx("n2i",  mf=mf, data=data, checknumeric=TRUE)
 
          k <- length(n1i) ### number of outcomes before subsetting
          k.all <- k
@@ -431,8 +436,8 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (is.element(measure, c("COR","UCOR","ZCOR"))) {
 
-         ri <- .getx("ri", mf=mf, data=data)
-         ni <- .getx("ni", mf=mf, data=data)
+         ri <- .getx("ri", mf=mf, data=data, checknumeric=TRUE)
+         ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
 
          k <- length(ri) ### number of outcomes before subsetting
          k.all <- k
@@ -449,10 +454,10 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (is.element(measure, c("PCOR","ZPCOR","SPCOR"))) {
 
-         ti  <- .getx("ti",  mf=mf, data=data)
-         r2i <- .getx("r2i", mf=mf, data=data)
-         mi  <- .getx("mi",  mf=mf, data=data)
-         ni  <- .getx("ni",  mf=mf, data=data)
+         ti  <- .getx("ti",  mf=mf, data=data, checknumeric=TRUE)
+         r2i <- .getx("r2i", mf=mf, data=data, checknumeric=TRUE)
+         mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE)
+         ni  <- .getx("ni",  mf=mf, data=data, checknumeric=TRUE)
 
          k <- length(ti) ### number of outcomes before subsetting
          k.all <- k
@@ -471,9 +476,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (is.element(measure, c("PR","PLN","PLO","PAS","PFT"))) {
 
-         xi <- .getx("xi", mf=mf, data=data)
-         mi <- .getx("mi", mf=mf, data=data)
-         ni <- .getx("ni", mf=mf, data=data)
+         xi <- .getx("xi", mf=mf, data=data, checknumeric=TRUE)
+         mi <- .getx("mi", mf=mf, data=data, checknumeric=TRUE)
+         ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
 
          if (is.null(mi)) mi <- ni - xi
 
@@ -492,8 +497,8 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (is.element(measure, c("IR","IRLN","IRS","IRFT"))) {
 
-         xi <- .getx("xi", mf=mf, data=data)
-         ti <- .getx("ti", mf=mf, data=data)
+         xi <- .getx("xi", mf=mf, data=data, checknumeric=TRUE)
+         ti <- .getx("ti", mf=mf, data=data, checknumeric=TRUE)
 
          k <- length(xi) ### number of outcomes before subsetting
          k.all <- k
@@ -510,9 +515,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (is.element(measure, c("MN","MNLN","CVLN","SDLN","SMN"))) {
 
-         mi  <- .getx("mi",  mf=mf, data=data)
-         sdi <- .getx("sdi", mf=mf, data=data)
-         ni  <- .getx("ni",  mf=mf, data=data)
+         mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE)
+         sdi <- .getx("sdi", mf=mf, data=data, checknumeric=TRUE)
+         ni  <- .getx("ni",  mf=mf, data=data, checknumeric=TRUE)
 
          k <- length(ni) ### number of outcomes before subsetting
          k.all <- k
@@ -530,12 +535,12 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC"))) {
 
-         m1i  <- .getx("m1i",  mf=mf, data=data)
-         m2i  <- .getx("m2i",  mf=mf, data=data)
-         sd1i <- .getx("sd1i", mf=mf, data=data)
-         sd2i <- .getx("sd2i", mf=mf, data=data)
-         ri   <- .getx("ri",   mf=mf, data=data)
-         ni   <- .getx("ni",   mf=mf, data=data)
+         m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE)
+         m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE)
+         sd1i <- .getx("sd1i", mf=mf, data=data, checknumeric=TRUE)
+         sd2i <- .getx("sd2i", mf=mf, data=data, checknumeric=TRUE)
+         ri   <- .getx("ri",   mf=mf, data=data, checknumeric=TRUE)
+         ni   <- .getx("ni",   mf=mf, data=data, checknumeric=TRUE)
 
          k <- length(m1i) ### number of outcomes before subsetting
          k.all <- k
@@ -556,9 +561,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (is.element(measure, c("ARAW","AHW","ABT"))) {
 
-         ai <- .getx("ai", mf=mf, data=data)
-         mi <- .getx("mi", mf=mf, data=data)
-         ni <- .getx("ni", mf=mf, data=data)
+         ai <- .getx("ai", mf=mf, data=data, checknumeric=TRUE)
+         mi <- .getx("mi", mf=mf, data=data, checknumeric=TRUE)
+         ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
 
          k <- length(ai) ### number of outcomes before subsetting
          k.all <- k
@@ -576,9 +581,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (measure == "REH") {
 
-         ai <- .getx("ai", mf=mf, data=data)
-         bi <- .getx("bi", mf=mf, data=data)
-         ci <- .getx("ci", mf=mf, data=data)
+         ai <- .getx("ai", mf=mf, data=data, checknumeric=TRUE)
+         bi <- .getx("bi", mf=mf, data=data, checknumeric=TRUE)
+         ci <- .getx("ci", mf=mf, data=data, checknumeric=TRUE)
 
          k <- length(ai) ### number of outcomes before subsetting
          k.all <- k

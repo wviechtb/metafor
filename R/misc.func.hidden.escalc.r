@@ -25,7 +25,7 @@
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (!requireNamespace("mvtnorm", quietly=TRUE))
-      stop(mstyle$stop("Please install the 'mvtnorm' package to compute this measure."))
+      stop(mstyle$stop("Please install the 'mvtnorm' package to compute this measure."), call.=FALSE)
 
    fn <- function(par, ai, bi, ci, di, maxcor, fixcut=FALSE) {
 
@@ -168,7 +168,7 @@
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (!requireNamespace("gsl", quietly=TRUE))
-      stop(mstyle$stop("Please install the 'gsl' package to use measure='UCOR'."))
+      stop(mstyle$stop("Please install the 'gsl' package to use measure='UCOR'."), call.=FALSE)
 
    k.g <- length(g)
    k.x <- length(x)

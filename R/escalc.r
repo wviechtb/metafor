@@ -141,13 +141,13 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any("~" %in% as.character(mf.ai)))
             stop(mstyle$stop("The 'formula interface' to escalc() has been deprecated."))
 
-         ai  <- .getx("ai",  mf=mf, data=data)
-         bi  <- .getx("bi",  mf=mf, data=data)
-         ci  <- .getx("ci",  mf=mf, data=data)
-         di  <- .getx("di",  mf=mf, data=data)
-         n1i <- .getx("n1i", mf=mf, data=data)
-         n2i <- .getx("n2i", mf=mf, data=data)
-         ri  <- .getx("ri",  mf=mf, data=data)
+         ai  <- .getx("ai",  mf=mf, data=data, checknumeric=TRUE)
+         bi  <- .getx("bi",  mf=mf, data=data, checknumeric=TRUE)
+         ci  <- .getx("ci",  mf=mf, data=data, checknumeric=TRUE)
+         di  <- .getx("di",  mf=mf, data=data, checknumeric=TRUE)
+         n1i <- .getx("n1i", mf=mf, data=data, checknumeric=TRUE)
+         n2i <- .getx("n2i", mf=mf, data=data, checknumeric=TRUE)
+         ri  <- .getx("ri",  mf=mf, data=data, checknumeric=TRUE)
 
          if (!.equal.length(ai, bi, ci, di, n1i, n2i, ri))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -580,10 +580,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("IRR","IRD","IRSD"))) {
 
-         x1i <- .getx("x1i", mf=mf, data=data)
-         x2i <- .getx("x2i", mf=mf, data=data)
-         t1i <- .getx("t1i", mf=mf, data=data)
-         t2i <- .getx("t2i", mf=mf, data=data)
+         x1i <- .getx("x1i", mf=mf, data=data, checknumeric=TRUE)
+         x2i <- .getx("x2i", mf=mf, data=data, checknumeric=TRUE)
+         t1i <- .getx("t1i", mf=mf, data=data, checknumeric=TRUE)
+         t2i <- .getx("t2i", mf=mf, data=data, checknumeric=TRUE)
 
          if (!.all.specified(x1i, x2i, t1i, t2i))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
@@ -719,12 +719,12 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("MD","SMD","SMDH","SMD1","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
 
-         m1i  <- .getx("m1i",  mf=mf, data=data) ### for VR, do not need to supply this
-         m2i  <- .getx("m2i",  mf=mf, data=data) ### for VR, do not need to supply this
-         sd1i <- .getx("sd1i", mf=mf, data=data) ### for SMD1, do not need to supply this
-         sd2i <- .getx("sd2i", mf=mf, data=data)
-         n1i  <- .getx("n1i",  mf=mf, data=data)
-         n2i  <- .getx("n2i",  mf=mf, data=data)
+         m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE) ### for VR, do not need to supply this
+         m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE) ### for VR, do not need to supply this
+         sd1i <- .getx("sd1i", mf=mf, data=data, checknumeric=TRUE) ### for SMD1, do not need to supply this
+         sd2i <- .getx("sd2i", mf=mf, data=data, checknumeric=TRUE)
+         n1i  <- .getx("n1i",  mf=mf, data=data, checknumeric=TRUE)
+         n2i  <- .getx("n2i",  mf=mf, data=data, checknumeric=TRUE)
 
          ### for these measures, need m1i, m2i, sd1i, sd2i, n1i, and n2i
 
@@ -1007,8 +1007,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("COR","UCOR","ZCOR"))) {
 
-         ri <- .getx("ri", mf=mf, data=data)
-         ni <- .getx("ni", mf=mf, data=data)
+         ri <- .getx("ri", mf=mf, data=data, checknumeric=TRUE)
+         ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
 
          if (!.all.specified(ri, ni))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
@@ -1107,10 +1107,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("PCOR","ZPCOR","SPCOR"))) {
 
-         ti  <- .getx("ti",  mf=mf, data=data)
-         r2i <- .getx("r2i", mf=mf, data=data)
-         mi  <- .getx("mi",  mf=mf, data=data)
-         ni  <- .getx("ni",  mf=mf, data=data)
+         ti  <- .getx("ti",  mf=mf, data=data, checknumeric=TRUE)
+         r2i <- .getx("r2i", mf=mf, data=data, checknumeric=TRUE)
+         mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE)
+         ni  <- .getx("ni",  mf=mf, data=data, checknumeric=TRUE)
 
          if (measure=="PCOR" && !.all.specified(ti, ni, mi))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
@@ -1224,9 +1224,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("PR","PLN","PLO","PAS","PFT"))) {
 
-         xi <- .getx("xi", mf=mf, data=data)
-         mi <- .getx("mi", mf=mf, data=data)
-         ni <- .getx("ni", mf=mf, data=data)
+         xi <- .getx("xi", mf=mf, data=data, checknumeric=TRUE)
+         mi <- .getx("mi", mf=mf, data=data, checknumeric=TRUE)
+         ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
 
          if (!.equal.length(xi, mi, ni))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -1495,8 +1495,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("IR","IRLN","IRS","IRFT"))) {
 
-         xi <- .getx("xi", mf=mf, data=data)
-         ti <- .getx("ti", mf=mf, data=data)
+         xi <- .getx("xi", mf=mf, data=data, checknumeric=TRUE)
+         ti <- .getx("ti", mf=mf, data=data, checknumeric=TRUE)
 
          if (!.all.specified(xi, ti))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
@@ -1622,9 +1622,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("MN","MNLN","CVLN","SDLN","SMN"))) {
 
-         mi  <- .getx("mi",  mf=mf, data=data) ### for SDLN, do not need to supply this
-         sdi <- .getx("sdi", mf=mf, data=data)
-         ni  <- .getx("ni",  mf=mf, data=data)
+         mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE) ### for SDLN, do not need to supply this
+         sdi <- .getx("sdi", mf=mf, data=data, checknumeric=TRUE)
+         ni  <- .getx("ni",  mf=mf, data=data, checknumeric=TRUE)
 
          ### for these measures, need mi, sdi, and ni
 
@@ -1716,12 +1716,12 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC"))) {
 
-         m1i  <- .getx("m1i",  mf=mf, data=data) ### for VRC, do not need to supply this
-         m2i  <- .getx("m2i",  mf=mf, data=data) ### for VRC, do not need to supply this
-         sd1i <- .getx("sd1i", mf=mf, data=data)
-         sd2i <- .getx("sd2i", mf=mf, data=data) ### for SMCR, do not need to supply this
-         ri   <- .getx("ri",   mf=mf, data=data)
-         ni   <- .getx("ni",   mf=mf, data=data)
+         m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE) ### for VRC, do not need to supply this
+         m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE) ### for VRC, do not need to supply this
+         sd1i <- .getx("sd1i", mf=mf, data=data, checknumeric=TRUE)
+         sd2i <- .getx("sd2i", mf=mf, data=data, checknumeric=TRUE) ### for SMCR, do not need to supply this
+         ri   <- .getx("ri",   mf=mf, data=data, checknumeric=TRUE)
+         ni   <- .getx("ni",   mf=mf, data=data, checknumeric=TRUE)
 
          if (is.element(measure, c("MC","SMCC","SMCRH","ROMC","CVRC"))) {
 
@@ -1906,9 +1906,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("ARAW","AHW","ABT"))) {
 
-         ai <- .getx("ai", mf=mf, data=data)
-         mi <- .getx("mi", mf=mf, data=data)
-         ni <- .getx("ni", mf=mf, data=data)
+         ai <- .getx("ai", mf=mf, data=data, checknumeric=TRUE)
+         mi <- .getx("mi", mf=mf, data=data, checknumeric=TRUE)
+         ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
 
          if (!.all.specified(ai, mi, ni))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
@@ -1968,9 +1968,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (measure == "REH") {
 
-         ai <- .getx("ai", mf=mf, data=data)
-         bi <- .getx("bi", mf=mf, data=data)
-         ci <- .getx("ci", mf=mf, data=data)
+         ai <- .getx("ai", mf=mf, data=data, checknumeric=TRUE)
+         bi <- .getx("bi", mf=mf, data=data, checknumeric=TRUE)
+         ci <- .getx("ci", mf=mf, data=data, checknumeric=TRUE)
 
          if (!.all.specified(ai, bi, ci))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
@@ -2011,11 +2011,16 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       ### in case yi is not NULL (so user wants to convert a regular data frame to an 'escalc' object)
 
+      ### check if yi is numeric
+
+      if (!is.numeric(yi))
+         stop(mstyle$stop("The object/variable specified for the 'yi' argument is not numeric."))
+
       ### get vi, sei, and ni
 
-      vi  <- .getx("vi",  mf=mf, data=data)
-      sei <- .getx("sei", mf=mf, data=data)
-      ni  <- .getx("ni",  mf=mf, data=data)
+      vi  <- .getx("vi",  mf=mf, data=data, checknumeric=TRUE)
+      sei <- .getx("sei", mf=mf, data=data, checknumeric=TRUE)
+      ni  <- .getx("ni",  mf=mf, data=data, checknumeric=TRUE)
 
       ### if neither vi nor sei is specified, then throw an error
       ### if only sei is specified, then square those values to get vi

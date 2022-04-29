@@ -230,6 +230,11 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
       intercept <- FALSE                               ### set to FALSE since formula now controls whether the intercept is included or not
    }                                                   ### note: code further below ([b]) actually checks whether intercept is included or not
 
+   ### check if yi is numeric
+
+   if (!is.numeric(yi))
+      stop(mstyle$stop("The object/variable specified for the 'yi' argument is not numeric."))
+
    ### in case user passed a matrix to yi, convert it to a vector
 
    if (is.matrix(yi))
@@ -331,6 +336,11 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    if (sparse && inherits(V, "matrix"))
       V <- Matrix(V, sparse=TRUE)
 
+   ### check if V is numeric (but only for 'regular' matrices, since this is always FALSE for sparse matrices)
+
+   if (inherits(V, "matrix") && !is.numeric(V))
+      stop(mstyle$stop("The object/variable specified for the 'V' argument is not numeric."))
+
    ### process W if it was specified
 
    if (!is.null(W)) {
@@ -381,6 +391,9 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
       if (sparse && inherits(A, "matrix"))
          A <- Matrix(A, sparse=TRUE)
+
+      if (inherits(A, "matrix") && !is.numeric(A))
+         stop(mstyle$stop("The object/variable specified for the 'W' argument is not numeric."))
 
    } else {
 

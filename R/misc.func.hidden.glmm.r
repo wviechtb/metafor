@@ -26,19 +26,19 @@
    uu <- min(n1, m1)
 
    if (n1 < 0 | n2 < 0)
-      stop(mstyle$stop("'n1' or 'n2' negative in dnoncenhypergeom()."))
+      stop(mstyle$stop("'n1' or 'n2' negative in dnoncenhypergeom()."), call.=FALSE)
 
    if (m1 < 0 | m1 > (n1 + n2))
       stop(mstyle$stop("'m1' out of range in dnoncenhypergeom()."))
 
    if (psi <= 0)
-      stop(mstyle$stop("'psi' [odds ratio] negative in dnoncenhypergeom()."))
+      stop(mstyle$stop("'psi' [odds ratio] negative in dnoncenhypergeom()."), call.=FALSE)
 
    if (!is.na(x) & (x < ll | x > uu))
       stop(mstyle$stop("'x' out of bounds in dnoncenhypergeom()."))
 
    if (!is.na(x) & length(x) > 1L)
-      stop(mstyle$stop("'x' neither missing or scalar in dnoncenhypergeom()."))
+      stop(mstyle$stop("'x' neither missing or scalar in dnoncenhypergeom()."), call.=FALSE)
 
    mode <- mode.compute(n1, n2, m1, psi, ll, uu)
    pi <- array(1, uu - ll + 1)
