@@ -40,7 +40,9 @@ test_that("results are correct for the beta function model.", {
 
    skip_on_cran()
 
-   # data from Baskerville, N. B., Liddy, C., & Hogg, W. (2012). Systematic review and meta-analysis of practice facilitation within primary care settings. Annals of Family Medicine, 10(1), 63-74.
+   # data from Baskerville, N. B., Liddy, C., & Hogg, W. (2012). Systematic
+   # review and meta-analysis of practice facilitation within primary care
+   # settings. Annals of Family Medicine, 10(1), 63-74.
 
    yi  <- c(1.01, 0.82, 0.59, 0.44, 0.84, 0.73, 1.12, 0.04, 0.24, 0.32, 1.04, 1.31, 0.59, 0.66, 0.62, 0.47, 1.08, 0.98, 0.26, 0.39, 0.60, 0.94, 0.11)
    sei <- c(0.52, 0.46, 0.23, 0.18, 0.29, 0.29, 0.36, 0.37, 0.15, 0.40, 0.32, 0.57, 0.29, 0.19, 0.31, 0.27, 0.32, 0.32, 0.18, 0.18, 0.31, 0.53, 0.27)
@@ -85,7 +87,9 @@ test_that("results are correct for the various exponential function models.", {
 
    skip_on_cran()
 
-   # data from Preston, C., Ashby, D., & Smyth, R. (2004). Adjusting for publication bias: Modelling the selection process. Journal of Evaluation in Clinical Practice, 10(2), 313-322.   ai  <- c(4,0,34,7,6,1,0,11,2,0,0,33)
+   # data from Preston, C., Ashby, D., & Smyth, R. (2004). Adjusting for
+   # publication bias: Modelling the selection process. Journal of Evaluation
+   # in Clinical Practice, 10(2), 313-322.
 
    ai  <- c(4,0,34,7,6,1,0,11,2,0,0,33)
    n1i <- c(19,18,341,71,45,94,22,88,82,33,15,221)
