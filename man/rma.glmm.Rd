@@ -27,7 +27,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \item{ti}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{ni}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{mods}{optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \mjseqn{k} specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \mjseqn{k} rows and as many columns as there are moderator variables. Alternatively, a model \code{\link{formula}} can be used to specify the model. See \sQuote{Details}.}
-   \item{measure}{character string to specify the outcome measure to use for the meta-analysis. Possible options are the odds ratio (\code{"OR"}), the incidence rate ratio (\code{"IRR"}), the logit transformed proportion (\code{"PLO"}), or the log transformed incidence rate (\code{"IRLN"}).}
+   \item{measure}{character string to specify the outcome measure to use for the meta-analysis. Possible options are \code{"OR"} for the (log transformed) odds ratio, \code{"IRR"} for the (log transformed) incidence rate ratio, \code{"PLO"} for the (logit transformed) proportion, or \code{"IRLN"} for the (log transformed) incidence rate.}
    \item{intercept}{logical to specify whether an intercept should be added to the model (the default is \code{TRUE}).}
    \item{data}{optional data frame containing the data supplied to the function.}
    \item{slab}{optional vector with labels for the \mjseqn{k} studies.}
@@ -36,7 +36,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \item{to}{character string to specify when the values under \code{add} should be added (either \code{"only0"}, \code{"all"}, \code{"if0all"}, or \code{"none"}). See below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{drop00}{logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped. See the documentation of the \code{\link{escalc}} function for more details.}
    \item{vtype}{character string to specify the type of sampling variances to calculate when calculating the observed effect sizes or outcomes. See the documentation of the \code{\link{escalc}} function for more details.}
-   \item{model}{character string to specify the general model type to use for the analysis (either \code{"UM.FS"} (the default), \code{"UM.RS"}, \code{"CM.EL"}, or \code{"CM.AL"}). See \sQuote{Details}.}
+   \item{model}{character string to specify the general model type to use for the analysis. Either \code{"UM.FS"} (the default), \code{"UM.RS"}, \code{"CM.EL"}, or \code{"CM.AL"}. See \sQuote{Details}.}
    \item{method}{character string to specify whether an equal- or a random-effects model should be fitted. An equal-effects model is fitted when using \code{method="EE"}. A random-effects model is fitted by setting \code{method="ML"} (the default). See \sQuote{Details}.}
    \item{coding}{numeric scalar to indicate how the group variable should be coded in the random effects structure for random/mixed-effects models (the default is \code{1/2}). See \sQuote{Note}.}
    \item{cor}{logical to indicate whether the random study effects should be allowed to be correlated with the random group effects for random/mixed-effects models when \code{model="UM.RS"} (the default is \code{FALSE}). See \sQuote{Note}.}
@@ -53,12 +53,12 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 
    \subsection{Specifying the Data}{
 
-      The function can be used in combination with the following effect size or outcome measures:
+      The function can be used in combination with the following effect sizes or outcome measures:
       \itemize{
-      \item \code{measure="OR"} for odds ratios (analyzed in log units)
-      \item \code{measure="IRR"} for incidence rate ratios (analyzed in log units)
-      \item \code{measure="PLO"} for logit transformed proportions (i.e., log odds)
-      \item \code{measure="IRLN"} for log transformed incidence rates.
+      \item \code{measure="OR"} for (log transformed) odds ratios,
+      \item \code{measure="IRR"} for (log transformed) incidence rate ratios,
+      \item \code{measure="PLO"} for (logit transformed) proportions (i.e., log odds),
+      \item \code{measure="IRLN"} for (log transformed) incidence rates.
       }
       The \code{\link{escalc}} function describes the data/arguments that should be specified/used for these measures.
 
@@ -68,12 +68,12 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 
       A variety of model types are available when analyzing \mjeqn{2 \times 2}{2x2} table data (i.e., when \code{measure="OR"}) or two-group event count data (i.e., when \code{measure="IRR"}):
       \itemize{
-      \item \code{model="UM.FS"} for an unconditional generalized linear mixed-effects model with fixed study effects
-      \item \code{model="UM.RS"} for an unconditional generalized linear mixed-effects model with random study effects
-      \item \code{model="CM.AL"} for a conditional generalized linear mixed-effects model (approximate likelihood)
+      \item \code{model="UM.FS"} for an unconditional generalized linear mixed-effects model with fixed study effects,
+      \item \code{model="UM.RS"} for an unconditional generalized linear mixed-effects model with random study effects,
+      \item \code{model="CM.AL"} for a conditional generalized linear mixed-effects model (approximate likelihood),
       \item \code{model="CM.EL"} for a conditional generalized linear mixed-effects model (exact likelihood).
       }
-      For \code{measure="OR"}, models \code{"UM.FS"} and \code{"UM.RS"} are essentially (mixed-effects) logistic regression models, while for \code{measure="IRR"}, these models are (mixed-effects) Poisson regression models. A choice must be made on how to model study level variability (i.e., differences in outcomes across studies irrespective of group membership). One can choose between using fixed study effects (which means that \mjseqn{k} dummy variables are added to the model) or random study effects (which means that random effects corresponding to the levels of the study factor are added to the model).
+      For \code{measure="OR"}, models \code{"UM.FS"} and \code{"UM.RS"} are essentially (mixed-effects) logistic regression models, while for \code{measure="IRR"}, these models are (mixed-effects) Poisson regression models. The difference between \code{"UM.FS"} and \code{"UM.RS"} is how study level variability (i.e., differences in outcomes across studies irrespective of group membership) is modeled. One can choose between using fixed study effects (which means that \mjseqn{k} dummy variables are added to the model) or random study effects (which means that random effects corresponding to the levels of the study factor are added to the model).
 
       The conditional model (\code{model="CM.EL"}) avoids having to model study level variability by conditioning on the total numbers of cases/events in each study. For \code{measure="OR"}, this leads to a non-central hypergeometric distribution for the data within each study and the corresponding model is then a (mixed-effects) conditional logistic model. Fitting this model can be difficult and computationally expensive. When the number of cases in each study is small relative to the group sizes, one can approximate the exact likelihood by a binomial distribution, which leads to a regular (mixed-effects) logistic regression model (\code{model="CM.AL"}). For \code{measure="IRR"}, the conditional model leads directly to a binomial distribution for the data within each study and the resulting model is again a (mixed-effects) logistic regression model (no approximate likelihood model is needed here).
 
@@ -100,13 +100,13 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 
    \subsection{Omnibus Test of Moderators}{
 
-      For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} (\sQuote{betas to test}) argument (i.e., to test \mjseqn{\mbox{H}_0{:}\; \beta_{j \in H_0} = 0}, where \mjseqn{\beta_{j \in H_0}} is the set of coefficients to be tested). For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string. The omnibus test is called the \mjseqn{Q_M}-test and follows, under the assumptions of the model, a chi-square distribution with \mjseqn{m} degrees of freedom (with \mjseqn{m} denoting the number of coefficients tested) under the null hypothesis (that the true value of all coefficients tested is equal to 0).
+      For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} (\sQuote{betas to test}) argument (i.e., to test \mjseqn{\mbox{H}_0{:}\; \beta_{j \in H_0} = 0}, where \mjseqn{\beta_{j \in H_0}} is the set of coefficients to be tested). For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string. The omnibus test is called the \mjseqn{Q_M}-test and follows asymptotically a chi-square distribution with \mjseqn{m} degrees of freedom (with \mjseqn{m} denoting the number of coefficients tested) under the null hypothesis (that the true value of all coefficients tested is equal to 0).
 
    }
 
    \subsection{Categorical Moderators}{
 
-      Categorical moderator variables can be included in the model via the \code{mods} argument in the same way that appropriately (dummy) coded categorical variables can be included in linear models. One can either do the dummy coding manually or use a model formula together with the \code{\link{factor}} function to autoamte the coding (note that string/character variables in a model formula are automatically converted to factors).
+      Categorical moderator variables can be included in the model via the \code{mods} argument in the same way that appropriately (dummy) coded categorical variables can be included in linear models. One can either do the dummy coding manually or use a model formula together with the \code{\link{factor}} function to automate the coding (note that string/character variables in a model formula are automatically converted to factors).
 
    }
 
@@ -124,7 +124,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 
    \subsection{Observed Effect Sizes or Outcomes of the Individual Studies}{
 
-      The various models do not require the calculation of the observed effect sizes or outcomes of the individual studies (e.g., the observed odds ratios of the \mjseqn{k} studies) and directly make use of the table/event counts. Zero cells/events are not a problem (except in extreme cases, such as when one of the two outcomes never occurs or when there are no events in any of the studies). Therefore, it is unnecessary to add some constant to the cell/event counts when there are zero cells/events.
+      The various models do not require the calculation of the observed effect sizes or outcomes of the individual studies (e.g., the observed log odds ratios of the \mjseqn{k} studies) and directly make use of the table/event counts. Zero cells/events are not a problem (except in extreme cases, such as when one of the two outcomes never occurs or when there are no events in any of the studies). Therefore, it is unnecessary to add some constant to the cell/event counts when there are zero cells/events.
 
       However, for plotting and various other functions, it is necessary to calculate the observed effect sizes or outcomes for the \mjseqn{k} studies. Here, zero cells/events can be problematic, so adding a constant value to the cell/event counts ensures that all \mjseqn{k} values can be calculated. The \code{add} and \code{to} arguments are used to specify what value should be added to the cell/event counts and under what circumstances when calculating the observed effect sizes or outcomes. The documentation of the \code{\link{escalc}} function explains how the \code{add} and \code{to} arguments work. Note that \code{drop00} is set to \code{TRUE} by default, since studies where \code{ai=ci=0} or \code{bi=di=0} or studies where \code{x1i=x2i=0} are uninformative about the size of the effect.
 
@@ -166,7 +166,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 
    When \code{code=1}, the first group is coded with \code{1} and the second group with \code{0}. Finally, when \code{code=0}, the first group is coded with \code{0} and the second group with \code{1}. Note that these coding schemes are not invariant under group label switching.
 
-   Also, when \code{model="UM.RS"} and \code{method="ML"}, one has to decide whether the random study effects are allowed to be correlated with the random group effects. By default (i.e., when \code{cor=FALSE}), no such correlation is allowed (which is typically an appropriate assumption when \code{code=1/2}). When using a different coding scheme for the group variable (i.e., \code{code=1} or \code{code=0}), allowing the random study and group effects to be correlated (i.e., using \code{cor=TRUE}) is usually recommended.
+   When \code{model="UM.RS"} and \code{method="ML"}, one has to decide whether the random study effects are allowed to be correlated with the random group effects. By default (i.e., when \code{cor=FALSE}), no such correlation is allowed (which is typically an appropriate assumption when \code{code=1/2}). When using a different coding scheme for the group variable (i.e., \code{code=1} or \code{code=0}), allowing the random study and group effects to be correlated (i.e., using \code{cor=TRUE}) is usually recommended.
 
    Fitting the various types of models requires several different iterative algorithms:
    \itemize{
@@ -174,21 +174,31 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \item For \code{model="UM.RS"}, adaptive Gauss-Hermite quadrature as implemented in the \code{\link[lme4]{glmer}} function is used to fit all of the models.
    \item For \code{model="CM.EL"} and \code{measure="OR"}, the quasi-Newton method optimizer as implemented in the \code{\link{nlminb}} function is used by default for fitting the equal-effects and the saturated models. For \code{method="ML"}, the same algorithm is used, together with adaptive quadrature as implemented in the \code{\link{integrate}} function (for the integration over the density of the non-central hypergeometric distribution). Standard errors of the parameter estimates are obtained by inverting the Hessian, which is numerically approximated using the \code{\link[numDeriv]{hessian}} function from the \code{numDeriv} package.
 
-   One can also chose a different optimizer from \code{\link{optim}} via the \code{control} argument (e.g., \code{control=list(optimizer="BFGS")} or \code{control=list(optimizer="Nelder-Mead")}). Besides \code{\link{nlminb}} and one of the methods from \code{\link{optim}}, one can also choose one of the optimizers from the \code{minqa} package (i.e., \code{\link[minqa]{uobyqa}}, \code{\link[minqa]{newuoa}}, or \code{\link[minqa]{bobyqa}}), one of the (derivative-free) algorithms from the \code{\link[nloptr]{nloptr}} package, the Newton-type algorithm implemented in \code{\link{nlm}}, the various algorithms implemented in the \code{dfoptim} package (\code{\link[dfoptim]{hjk}} for the Hooke-Jeeves, \code{\link[dfoptim]{nmk}} for the Nelder-Mead, and \code{\link[dfoptim]{mads}} for the Mesh Adaptive Direct Searches (MADS) algorithm), the quasi-Newton type optimizers \code{\link[ucminf]{ucminf}} and \code{\link[lbfgsb3c]{lbfgsb3c}} and the subspace-searching simplex algorithm \code{\link[subplex]{subplex}} from the packages of the same name, the Barzilai-Borwein gradient decent method implemented in \code{\link[BB]{BBoptim}}, or the parallelized version of the L-BFGS-B algorithm implemented in \code{\link[optimParallel]{optimParallel}} from the package of the same name.
+   One can also chose a different optimizer from \code{\link{optim}} via the \code{control} argument (e.g., \code{control=list(optimizer="BFGS")} or \code{control=list(optimizer="Nelder-Mead")}). Besides \code{\link{nlminb}} and one of the methods from \code{\link{optim}}, one can also choose one of the optimizers from the \code{minqa} package (i.e., \code{\link[minqa]{uobyqa}}, \code{\link[minqa]{newuoa}}, or \code{\link[minqa]{bobyqa}}), one of the (derivative-free) algorithms from the \code{\link[nloptr]{nloptr}} package, the Newton-type algorithm implemented in \code{\link{nlm}}, the various algorithms implemented in the \code{dfoptim} package (\code{\link[dfoptim]{hjk}} for the Hooke-Jeeves, \code{\link[dfoptim]{nmk}} for the Nelder-Mead, and \code{\link[dfoptim]{mads}} for the Mesh Adaptive Direct Searches algorithm), the quasi-Newton type optimizers \code{\link[ucminf]{ucminf}} and \code{\link[lbfgsb3c]{lbfgsb3c}} and the subspace-searching simplex algorithm \code{\link[subplex]{subplex}} from the packages of the same name, the Barzilai-Borwein gradient decent method implemented in \code{\link[BB]{BBoptim}}, or the parallelized version of the L-BFGS-B algorithm implemented in \code{\link[optimParallel]{optimParallel}} from the package of the same name.
 
    The optimizer name must be given as a character string (i.e., in quotes). Additional control parameters can be specified via the \code{optCtrl} elements of the \code{control} argument (e.g., \code{control=list(optCtrl=list(iter.max=1000, rel.tol=1e-8))}). For \code{\link[nloptr]{nloptr}}, the default is to use the BOBYQA implementation from that package with a relative convergence criterion of \code{1e-8} on the function value (i.e., log-likelihood), but this can be changed via the \code{algorithm} and \code{ftop_rel} arguments (e.g., \code{control=list(optimizer="nloptr", optCtrl=list(algorithm="NLOPT_LN_SBPLX", ftol_rel=1e-6))}). For \code{\link[optimParallel]{optimParallel}}, the control argument \code{ncpus} can be used to specify the number of cores to use for the parallelization (e.g., \code{control=list(optimizer="optimParallel", ncpus=2)}). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.} When \code{model="CM.EL"} and \code{measure="OR"}, actually \code{model="CM.AL"} is used first to obtain starting values for \code{\link{optim}}, so either 4 (if \code{method="EE"}) or 6 (if \code{method="ML"}) models need to be fitted in total.
 
    Various additional control parameters can be adjusted via the \code{control} argument:
    \itemize{
       \item \code{glmCtrl} is a list of named arguments to be passed on to the \code{control} argument of the \code{\link{glm}} function,
-      \item \code{glmerCtrl} is a list of named arguments to be passed on to the \code{control} argument of the \code{\link[lme4]{glmer}} function, and
-      \item \code{intCtrl} is a list of named arguments (i.e., \code{rel.tol} and \code{subdivisions}) to be passed on to the \code{\link{integrate}} function.
+      \item \code{glmerCtrl} is a list of named arguments to be passed on to the \code{control} argument of the \code{\link[lme4]{glmer}} function,
+      \item \code{intCtrl} is a list of named arguments (i.e., \code{rel.tol} and \code{subdivisions}) to be passed on to the \code{\link{integrate}} function, and
       \item \code{hessianCtrl} is a list of named arguments to be passed on to the \code{method.args} argument of the \code{\link[numDeriv]{hessian}} function. Most important is the \code{r} argument, which is set to 16 by default (i.e., \code{control=list(hessianCtrl=list(r=16))}). If the Hessian cannot be inverted, it may be necessary to adjust the \code{r} argument to a different number (e.g., try \code{r=4}, \code{r=6}, or \code{r=8}).
    } Also, for \code{\link[lme4]{glmer}}, the \code{nAGQ} argument is used to specify the number of quadrature points. The default value is 7, which should provide sufficient accuracy in the evaluation of the log-likelihood in most cases, but at the expense of speed. Setting this to 1 corresponds to the Laplacian approximation (which is faster, but less accurate).
+
+   Instead of \code{\link[lme4]{glmer}}, one can also choose to use \code{\link[GLMMadaptive]{mixed_model}} from the \code{GLMMadaptive} package or \code{\link[glmmTMB]{glmmTMB}} from the \code{glmmTMB} package for the model fitting. This is done by setting \code{control=list(package="GLMMadaptive")} or \code{control=list(package="glmmTMB")}, respectively.
 
    Information on the progress of the various algorithms can be obtained by setting \code{verbose=TRUE}. Since fitting the various models can be computationally expensive, this option is useful to determine how the model fitting is progressing. One can also set \code{verbose} to an integer (\code{verbose=2} yields even more information and \code{verbose=3} also sets \code{option(warn=1)} temporarily).
 
    For \code{model="CM.EL"} and \code{measure="OR"}, optimization involves repeated calculation of the density of the non-central hypergeometric distribution. When \code{method="ML"}, this also requires integration over the same density. This is currently implemented in a rather brute-force manner and may not be numerically stable, especially when models with moderators are fitted. Stability can be improved by scaling the moderators in a similar manner (i.e., don't use a moderator that is coded 0 and 1, while another uses values in the 1000s). For models with an intercept and moderators, the function actually rescales (non-dummy) variables to z-scores during the model fitting (results are given after back-scaling, so this should be transparent to the user). For models without an intercept, this is not done, so sensitivity analyses are highly recommended here (to ensure that the results do not depend on the scaling of the moderators).
+
+   Finally, there is also (highly experimental!) support for the following measures:
+   \itemize{
+   \item \code{measure="RR"} for log transformed risk ratios,
+   \item \code{measure="RD"} for raw risk differences,
+   \item \code{measure="PLN"} for log transformed proportions,
+   \item \code{measure="PR"} for raw proportions,
+   } (the first two only for models \code{"UM.FS"} and \code{"UM.RS"}) by using log and identity links for the binomial models. However, model fitting with these measures is often going to lead to numerical problems.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

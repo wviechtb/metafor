@@ -54,11 +54,11 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{\dots}{other arguments.}
 }
 \details{
-   Before a meta-analysis can be conducted, the relevant results from each study must be quantified in such a way that the resulting values can be further aggregated and compared. Depending on (a) the goals of the meta-analysis, (b) the design and types of studies included, and (c) the information provided therein, one of the various effect size or outcome measures described below may be appropriate for the meta-analysis and can be computed with the \code{escalc} function.
+   Before a meta-analysis can be conducted, the relevant results from each study must be quantified in such a way that the resulting values can be further aggregated and compared. Depending on (a) the goals of the meta-analysis, (b) the design and types of studies included, and (c) the information provided therein, one of the various effect sizes or outcome measures described below may be appropriate for the meta-analysis and can be computed with the \code{escalc} function.
 
    The \code{measure} argument is a character string to specify the outcome measure that should be calculated (see below for the various options), arguments \code{ai} through \code{ni} are then used to specify the information needed to calculate the various measures (depending on the chosen outcome measure, different arguments need to be specified), and \code{data} can be used to specify a data frame containing the variables given to the previous arguments. The \code{add}, \code{to}, and \code{drop00} arguments may be needed when dealing with frequency or count data that may need special handling when some of the frequencies or counts are equal to zero (see below for details). Finally, the \code{vtype} argument is used to specify how the sampling variances should be estimated (again, see below for details).
 
-   To provide a structure to the various effect size or outcome measures that can be calculated with the \code{escalc} function, we can distinguish between measures that are used to:
+   To provide a structure to the various effect sizes or outcome measures that can be calculated with the \code{escalc} function, we can distinguish between measures that are used to:
    \itemize{
    \item contrast two independent (either experimentally created or naturally occurring) groups,
    \item describe the direction and strength of the association between two variables,

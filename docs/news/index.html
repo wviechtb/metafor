@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-4</span>
       </span>
     </div>
 
@@ -96,8 +96,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.5-3" id="metafor-35-3-2022-04-28">metafor 3.5-3 (2022-04-28)<a class="anchor" aria-label="anchor" href="#metafor-35-3-2022-04-28"></a></h2>
+<h2 class="page-header" data-toc-text="3.5-4" id="metafor-35-4-2022-04-29">metafor 3.5-4 (2022-04-29)<a class="anchor" aria-label="anchor" href="#metafor-35-4-2022-04-29"></a></h2>
 <ul><li><p>documented the possibility to use an identity link (with <code>link="identity"</code>) in <code><a href="../reference/rma.uni.html">rma.uni()</a></code> when fitting location-scale models (although this will often lead to estimation problems); added <code>solnp()</code> as an additional optimizer for this case</p></li>
+<li><p>added (experimental!) support for measures <code>"RR"</code>, <code>"RD"</code>, <code>"PLN"</code>, and <code>"PR"</code> to <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> (but using these measures will often lead to estimation problems)</p></li>
 <li><p><code><a href="../reference/aggregate.escalc.html">aggregate.escalc()</a></code> gains <code>addk</code> argument</p></li>
 <li><p><code><a href="../reference/replmiss.html">replmiss()</a></code> gains <code>data</code> argument</p></li>
 <li><p><code><a href="../reference/cumul.html">cumul()</a></code> functions also store data, so that arguments <code>ilab</code>, <code>col</code>, <code>pch</code>, and <code>psize</code> in the <code><a href="../reference/forest.cumul.rma.html">forest.cumul.rma()</a></code> function can look for variables therein</p></li>
@@ -585,8 +586,7 @@
 <li><p><code><a href="../reference/rma.mh.html">rma.mh()</a></code> with <code>measure="RD"</code> now computes the standard error of the estimated risk difference based on Sato, Greenland, &amp; Robins (1989), which provides a consistent estimate under both large-stratum and sparse-data limiting models</p></li>
 <li><p>the restricted maximum likelihood (REML) is now calculated using the full likelihood equation (without leaving out additive constants)</p></li>
 <li><p>the model deviance is now calculated as -2 times the difference between the model log-likelihood and the log-likelihood under the saturated model (this is a more appropriate definition of the deviance than just taking -2 times the model log-likelihood)</p></li>
-<li>naming scheme of illustrative datasets bundled with the package has been changed; now datasets are called <code>&lt;dat.authoryear&gt;</code>; therefore, the datasets are now called (<code>old name -&gt; new name</code>):
-<ul><li><code>dat.bcg      -&gt; dat.colditz1994</code></li>
+<li>naming scheme of illustrative datasets bundled with the package has been changed; now datasets are called <code>&lt;dat.authoryear&gt;</code>; therefore, the datasets are now called (<code>old name -&gt; new name</code>):<ul><li><code>dat.bcg      -&gt; dat.colditz1994</code></li>
 <li><code>dat.warfarin -&gt; dat.hart1999</code></li>
 <li><code>dat.los      -&gt; dat.normand1999</code></li>
 <li><code>dat.co2      -&gt; dat.curtis1998</code></li>
@@ -732,12 +732,10 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5-1" id="metafor-05-1-2009-06-14">metafor 0.5-1 (2009-06-14)<a class="anchor" aria-label="anchor" href="#metafor-05-1-2009-06-14"></a></h2>
-<ul><li>made some small changes to the documentation (some typos corrected, some confusing points clarified)</li>
-</ul></div>
+<ul><li>made some small changes to the documentation (some typos corrected, some confusing points clarified)</li></ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5-0" id="metafor-05-0-2009-06-05">metafor 0.5-0 (2009-06-05)<small>2009-06-05</small><a class="anchor" aria-label="anchor" href="#metafor-05-0-2009-06-05"></a></h2>
-<ul><li>first version released on CRAN</li>
-</ul></div>
+<ul><li>first version released on CRAN</li></ul></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -752,7 +750,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

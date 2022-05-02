@@ -2,6 +2,8 @@
 
 - documented the possibility to use an identity link (with `link="identity"`) in `rma.uni()` when fitting location-scale models (although this will often lead to estimation problems); added `solnp()` as an additional optimizer for this case
 
+- added (experimental!) support for measures `"RR"`, `"RD"`, `"PLN"`, and `"PR"` to `rma.glmm()` (but using these measures will often lead to estimation problems)
+
 - `aggregate.escalc()` gains `addk` argument
 
 - `replmiss()` gains `data` argument
