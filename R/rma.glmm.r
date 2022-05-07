@@ -657,7 +657,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       stop(mstyle$stop("Cannot use 'clogit' or 'clogistic' with method='ML'."))
 
    if (package == "lme4" && is.element(measure, c("OR","RR","RD","IRR")) && model == "UM.RS" && method == "ML" && nAGQ > 1) {
-      warning(mstyle$warning("Currently not possible to fit RE/ME model='UM.RS' with nAGQ > 1. nAGQ automatically set to 1."), call.=FALSE)
+      warning(mstyle$warning("Not possible to fit RE/ME model='UM.RS' with nAGQ > 1 with glmer(). nAGQ automatically set to 1."), call.=FALSE)
       nAGQ <- 1
    }
 

@@ -151,10 +151,10 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The following transformation functions are currently implemented:</p><ul><li><p><code>transf.rtoz</code>: Fisher's r-to-z transformation for correlations.</p></li>
-<li><p><code>transf.ztor</code>: inverse of Fisher's r-to-z transformation.</p></li>
-<li><p><code>transf.logit</code>: logit (log odds) transformation for proportions.</p></li>
-<li><p><code>transf.ilogit</code>: inverse of the logit transformation.</p></li>
+    <p>The following transformation functions are currently implemented:</p><ul><li><p><code>transf.rtoz</code>: Fisher's r-to-z transformation for correlations (same as <code>atanh(x)</code>).</p></li>
+<li><p><code>transf.ztor</code>: inverse of Fisher's r-to-z transformation (i.e., the z-to-r transformation; same as <code>tanh(x)</code>).</p></li>
+<li><p><code>transf.logit</code>: logit (log odds) transformation for proportions (same as <code>qlogis(x)</code>).</p></li>
+<li><p><code>transf.ilogit</code>: inverse of the logit transformation (same as <code>plogis(x)</code>).</p></li>
 <li><p><code>transf.arcsin</code>: arcsine square root transformation for proportions.</p></li>
 <li><p><code>transf.iarcsin</code>: inverse of the arcsine transformation.</p></li>
 <li><p><code>transf.pft</code>: Freeman-Tukey (double arcsine) transformation for proportions. See Freeman &amp; Tukey (1950). The <code>xi</code> argument is used to specify the proportions and the <code>ni</code> argument the corresponding sample sizes.</p></li>
@@ -163,17 +163,17 @@
 <li><p><code>transf.isqrt</code>: inverse of the square root transformation (i.e., function to square a number).</p></li>
 <li><p><code>transf.irft</code>: Freeman-Tukey transformation for incidence rates. See Freeman &amp; Tukey (1950). The <code>xi</code> argument is used to specify the incidence rates and the <code>ti</code> argument the corresponding person-times at risk.</p></li>
 <li><p><code>transf.iirft</code>: inverse of the Freeman-Tukey transformation for incidence rates.</p></li>
-<li><p><code>transf.ahw</code>: transformation of coefficient alpha as suggested by Hakstian &amp; Whalen (1976).</p></li>
+<li><p><code>transf.ahw</code>: transformation of coefficient alpha as suggested by Hakstian &amp; Whalen (1976), except that <em></em>\(1-(1-\alpha)^{1/3}\) is used (so that the transformed values are a monotonically increasing function of the <em></em>\(\alpha\) values).</p></li>
 <li><p><code>transf.iahw</code>: inverse of the transformation of coefficient alpha as suggested by Hakstian &amp; Whalen (1976).</p></li>
-<li><p><code>transf.abt</code>: transformation of coefficient alpha as suggested by Bonett (2002).</p></li>
+<li><p><code>transf.abt</code>: transformation of coefficient alpha as suggested by Bonett (2002), except that <em></em>\(-\ln(1-\alpha)\) is used (so that the transformed values are a monotonically increasing function of the <em></em>\(\alpha\) values).</p></li>
 <li><p><code>transf.iabt</code>: inverse of the transformation of coefficient alpha as suggested by Bonett (2002).</p></li>
 <li><p><code>transf.ztor.int</code>: integral transformation method for the z-to-r transformation.</p></li>
 <li><p><code>transf.exp.int</code>: integral transformation method for the exponential transformation.</p></li>
 <li><p><code>transf.ilogit.int</code>: integral transformation method for the inverse of the logit transformation.</p></li>
-<li><p><code>transf.dtou1</code>: transformation of standardized mean differences to Cohen's U1 values (Cohen, 1988).</p></li>
-<li><p><code>transf.dtou2</code>: transformation of standardized mean differences to Cohen's U2 values (Cohen, 1988).</p></li>
-<li><p><code>transf.dtou3</code>: transformation of standardized mean differences to Cohen's U3 values (Cohen, 1988).</p></li>
-<li><p><code>transf.dtocles</code>: transformation of standardized mean differences to common language effect size values (McGraw &amp; Wong, 1992).</p></li>
+<li><p><code>transf.dtou1</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_1\) values (Cohen, 1988). Under the assumption that the data for those in the first (say, treated) and second (say, control) group are normally distributed with equal variances but potentially different means, Cohen's <em></em>\(U_1\) indicates the proportion of non-overlap between the two distributions (i.e., when <em></em>\(d=0\), then <em></em>\(U_1\) is equal to 0, which goes to 1 as <em></em>\(d\) increases).</p></li>
+<li><p><code>transf.dtou2</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_2\) values (Cohen, 1988). Under the same assumption as above, Cohen's <em></em>\(U_2\) indicates the proportion in the first group that exceeds the same proportion in the second group (i.e., when <em></em>\(d=0\), then <em></em>\(U_2\) is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>
+<li><p><code>transf.dtou3</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_3\) values (Cohen, 1988). Under the same assumption as above, Cohen's <em></em>\(U_3\) indicates the proportion of individuals in the first group that have a higher value than the mean of those in the second group (i.e., when <em></em>\(d=0\), then <em></em>\(U_3\) is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>
+<li><p><code>transf.dtocles</code>: transformation of standardized mean differences to common language effect size (CLES) values (McGraw &amp; Wong, 1992) (also called the probability of superiority). A CLES value indicates the probability that a randomly sampled individual from the first group has a higher value than a randomly sampled individual from the second group (i.e., when <em></em>\(d=0\), then the CLES is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>
 <li><p><code>transf.dtorpb</code>: transformation of standardized mean differences to point-biserial correlations. If <code>n1i</code> and <code>n2i</code> are not specified, the function assumes <code>n1i=n2i</code> and uses an approximate formula. If <code>n1i</code> and <code>n2i</code> are specified, the exact transformation formula is used.</p></li>
 <li><p><code>transf.dtobesd</code>: transformation of standardized mean differences to binomial effect size display values (Rosenthal &amp; Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply one minus the proportion in the first group scoring above the median).</p></li>
 <li><p><code>transf.dtomd</code>: transformation of standardized mean differences to mean differences given a known standard deviation, which must be specified via the <code>targs</code> argument.</p></li>
@@ -186,7 +186,7 @@
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>The integral transformation method for a transformation function <em></em>\(h(z)\) integrates <em></em>\(h(z) f(z)\) over <em></em>\(z\) using the limits <code>targs$lower</code> and <code>targs$upper</code>, where <em></em>\(f(z)\) is the density of a normal distribution with mean equal to <code>xi</code> and variance equal to <code>targs$tau2</code>. An example is provided below.</p>
+    <p>The integral transformation method for a transformation function <em></em>\(h(z)\) is given by \[\int_{\textrm{lower}}^{\textrm{upper}} h(z) f(z) dz\] using the limits <code>targs$lower</code> and <code>targs$upper</code>, where <em></em>\(f(z)\) is the density of a normal distribution with mean equal to <code>xi</code> and variance equal to <code>targs$tau2</code>. An example is provided below.</p>
     </div>
     <div id="author">
     <h2>Author</h2>

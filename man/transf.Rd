@@ -74,10 +74,10 @@ transf.logortorr(xi, pc, \dots)
 \details{
    The following transformation functions are currently implemented:
    \itemize{
-   \item \code{transf.rtoz}: Fisher's r-to-z transformation for correlations.
-   \item \code{transf.ztor}: inverse of Fisher's r-to-z transformation.
-   \item \code{transf.logit}: logit (log odds) transformation for proportions.
-   \item \code{transf.ilogit}: inverse of the logit transformation.
+   \item \code{transf.rtoz}: Fisher's r-to-z transformation for correlations (same as \code{atanh(x)}).
+   \item \code{transf.ztor}: inverse of Fisher's r-to-z transformation (i.e., the z-to-r transformation; same as \code{tanh(x)}).
+   \item \code{transf.logit}: logit (log odds) transformation for proportions (same as \code{qlogis(x)}).
+   \item \code{transf.ilogit}: inverse of the logit transformation (same as \code{plogis(x)}).
    \item \code{transf.arcsin}: arcsine square root transformation for proportions.
    \item \code{transf.iarcsin}: inverse of the arcsine transformation.
    \item \code{transf.pft}: Freeman-Tukey (double arcsine) transformation for proportions. See Freeman & Tukey (1950). The \code{xi} argument is used to specify the proportions and the \code{ni} argument the corresponding sample sizes.
@@ -86,17 +86,17 @@ transf.logortorr(xi, pc, \dots)
    \item \code{transf.isqrt}: inverse of the square root transformation (i.e., function to square a number).
    \item \code{transf.irft}: Freeman-Tukey transformation for incidence rates. See Freeman & Tukey (1950). The \code{xi} argument is used to specify the incidence rates and the \code{ti} argument the corresponding person-times at risk.
    \item \code{transf.iirft}: inverse of the Freeman-Tukey transformation for incidence rates.
-   \item \code{transf.ahw}: transformation of coefficient alpha as suggested by Hakstian & Whalen (1976).
+   \item \code{transf.ahw}: transformation of coefficient alpha as suggested by Hakstian & Whalen (1976), except that \mjeqn{1-(1-\alpha)^{1/3}}{1-(1-\alpha)^(1/3)} is used (so that the transformed values are a monotonically increasing function of the \mjseqn{\alpha} values).
    \item \code{transf.iahw}: inverse of the transformation of coefficient alpha as suggested by Hakstian & Whalen (1976).
-   \item \code{transf.abt}: transformation of coefficient alpha as suggested by Bonett (2002).
+   \item \code{transf.abt}: transformation of coefficient alpha as suggested by Bonett (2002), except that \mjeqn{-\ln(1-\alpha)}{-ln(1-\alpha)} is used (so that the transformed values are a monotonically increasing function of the \mjseqn{\alpha} values).
    \item \code{transf.iabt}: inverse of the transformation of coefficient alpha as suggested by Bonett (2002).
    \item \code{transf.ztor.int}: integral transformation method for the z-to-r transformation.
    \item \code{transf.exp.int}: integral transformation method for the exponential transformation.
    \item \code{transf.ilogit.int}: integral transformation method for the inverse of the logit transformation.
-   \item \code{transf.dtou1}: transformation of standardized mean differences to Cohen's U1 values (Cohen, 1988).
-   \item \code{transf.dtou2}: transformation of standardized mean differences to Cohen's U2 values (Cohen, 1988).
-   \item \code{transf.dtou3}: transformation of standardized mean differences to Cohen's U3 values (Cohen, 1988).
-   \item \code{transf.dtocles}: transformation of standardized mean differences to common language effect size values (McGraw & Wong, 1992).
+   \item \code{transf.dtou1}: transformation of standardized mean differences to Cohen's \mjseqn{U_1} values (Cohen, 1988). Under the assumption that the data for those in the first (say, treated) and second (say, control) group are normally distributed with equal variances but potentially different means, Cohen's \mjseqn{U_1} indicates the proportion of non-overlap between the two distributions (i.e., when \mjseqn{d=0}, then \mjseqn{U_1} is equal to 0, which goes to 1 as \mjseqn{d} increases).
+   \item \code{transf.dtou2}: transformation of standardized mean differences to Cohen's \mjseqn{U_2} values (Cohen, 1988). Under the same assumption as above, Cohen's \mjseqn{U_2} indicates the proportion in the first group that exceeds the same proportion in the second group (i.e., when \mjseqn{d=0}, then \mjseqn{U_2} is equal to 0.5, which goes to 1 as \mjseqn{d} increases).
+   \item \code{transf.dtou3}: transformation of standardized mean differences to Cohen's \mjseqn{U_3} values (Cohen, 1988). Under the same assumption as above, Cohen's \mjseqn{U_3} indicates the proportion of individuals in the first group that have a higher value than the mean of those in the second group (i.e., when \mjseqn{d=0}, then \mjseqn{U_3} is equal to 0.5, which goes to 1 as \mjseqn{d} increases).
+   \item \code{transf.dtocles}: transformation of standardized mean differences to common language effect size (CLES) values (McGraw & Wong, 1992) (also called the probability of superiority). A CLES value indicates the probability that a randomly sampled individual from the first group has a higher value than a randomly sampled individual from the second group (i.e., when \mjseqn{d=0}, then the CLES is equal to 0.5, which goes to 1 as \mjseqn{d} increases).
    \item \code{transf.dtorpb}: transformation of standardized mean differences to point-biserial correlations. If \code{n1i} and \code{n2i} are not specified, the function assumes \code{n1i=n2i} and uses an approximate formula. If \code{n1i} and \code{n2i} are specified, the exact transformation formula is used.
    \item \code{transf.dtobesd}: transformation of standardized mean differences to binomial effect size display values (Rosenthal & Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply one minus the proportion in the first group scoring above the median).
    \item \code{transf.dtomd}: transformation of standardized mean differences to mean differences given a known standard deviation, which must be specified via the \code{targs} argument.
@@ -108,7 +108,7 @@ transf.logortorr(xi, pc, \dots)
    A vector with the transformed values.
 }
 \note{
-   The integral transformation method for a transformation function \mjseqn{h(z)} integrates \mjseqn{h(z) f(z)} over \mjseqn{z} using the limits \code{targs$lower} and \code{targs$upper}, where \mjseqn{f(z)} is the density of a normal distribution with mean equal to \code{xi} and variance equal to \code{targs$tau2}. An example is provided below.
+   The integral transformation method for a transformation function \mjseqn{h(z)} is given by \mjsdeqn{\int_{\textrm{lower}}^{\textrm{upper}} h(z) f(z) dz} using the limits \code{targs$lower} and \code{targs$upper}, where \mjseqn{f(z)} is the density of a normal distribution with mean equal to \code{xi} and variance equal to \code{targs$tau2}. An example is provided below.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
