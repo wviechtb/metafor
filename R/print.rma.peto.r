@@ -22,7 +22,7 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
       names(fs) <- c("logLik", "deviance", "AIC", "BIC", "AICc")
       cat("\n")
       tmp <- capture.output(print(fs, quote=FALSE, print.gap=2))
-      tmp[1] <- paste0(tmp[1], "\u200b")
+      #tmp[1] <- paste0(tmp[1], "\u200b")
       .print.table(tmp, mstyle)
    }
 

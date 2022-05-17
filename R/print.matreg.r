@@ -25,7 +25,7 @@ print.matreg <- function(x, digits=x$digits, signif.stars=getOption("show.signif
    }
 
    tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
-   tmp[1] <- paste0(tmp[1], "\u200b")
+   #tmp[1] <- paste0(tmp[1], "\u200b")
    .print.table(tmp, mstyle)
 
    if (signif.legend) {

@@ -38,7 +38,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       names(fs) <- c("logLik", "Deviance", "AIC", "BIC", "AICc")
       cat("\n")
       tmp <- capture.output(print(fs, quote=FALSE, print.gap=2))
-      tmp[1] <- paste0(tmp[1], "\u200b")
+      #tmp[1] <- paste0(tmp[1], "\u200b")
       .print.table(tmp, mstyle)
       cat("\n")
    } else {
@@ -415,7 +415,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
    } else {
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
    }
-   tmp[1] <- paste0(tmp[1], "\u200b")
+   #tmp[1] <- paste0(tmp[1], "\u200b")
    .print.table(tmp, mstyle)
 
    if (signif.legend || legend) {

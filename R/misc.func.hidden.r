@@ -1081,7 +1081,7 @@
 
    for (i in seq_along(x)) {
       if (is.header[i]) {
-         x[i] <- trimws(x[i], which="right")
+         #x[i] <- trimws(x[i], which="right")
          x[i] <- mstyle$header(x[i])
       } else {
          x[i] <- gsub("NA", mstyle$na("NA"), x[i], fixed=TRUE)
