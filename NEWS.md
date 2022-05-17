@@ -10,6 +10,8 @@
 
 - `cumul()` functions also store data, so that arguments `ilab`, `col`, `pch`, and `psize` in the `forest.cumul.rma()` function can look for variables therein
 
+- fixed issue with rendering Rmarkdown documents with `metafor` output due to the use of a zero-width space
+
 # metafor 3.4-0 (2022-04-21)
 
 - added `misc-models`, `misc-recs`, and `misc-options` help pages

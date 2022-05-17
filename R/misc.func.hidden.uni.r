@@ -194,34 +194,40 @@
       tau2 <- c(Z %*% alpha)
    }
 
-   if (any(is.na(tau2)) || any(tau2 < tau2.min) || any(tau2 > tau2.max))
-      return(Inf)
+   if (any(is.na(tau2)) || any(tau2 < tau2.min) || any(tau2 > tau2.max)) {
 
-   llcomp <- TRUE
-
-   if (any(tau2 < 0)) {
-
-      llval  <- -Inf
+      llval <- -Inf
       llcomp <- FALSE
 
    } else {
 
-      ### compute weights / weights matrix
-      wi <- 1/(vi + tau2)
-      W <- diag(wi, nrow=k, ncol=k)
+      llcomp <- TRUE
 
-      if (!optbeta) {
+      if (any(tau2 < 0)) {
 
-         stXWX <- try(.invcalc(X=X, W=W, k=k), silent=TRUE)
+         llval  <- -Inf
+         llcomp <- FALSE
 
-         if (inherits(stXWX, "try-error")) {
+      } else {
 
-            llval  <- -Inf
-            llcomp <- FALSE
+         ### compute weights / weights matrix
+         wi <- 1/(vi + tau2)
+         W <- diag(wi, nrow=k, ncol=k)
 
-         } else {
+         if (!optbeta) {
 
-            beta <- stXWX %*% crossprod(X,W) %*% as.matrix(yi)
+            stXWX <- try(.invcalc(X=X, W=W, k=k), silent=TRUE)
+
+            if (inherits(stXWX, "try-error")) {
+
+               llval  <- -Inf
+               llcomp <- FALSE
+
+            } else {
+
+               beta <- stXWX %*% crossprod(X,W) %*% as.matrix(yi)
+
+            }
 
          }
 

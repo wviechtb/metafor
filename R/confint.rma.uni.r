@@ -372,8 +372,6 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
       ### PL method ###
       #################
 
-      ### note: cannot actually use this at the moment
-
       if (type == "PL") {
 
          if (con$tau2.min > x$tau2)

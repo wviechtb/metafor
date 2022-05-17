@@ -228,9 +228,9 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (x$method == "EB" && model == "ME")
       tau2.ref <- "[@berkey1995]"
 
-   if (x$method == "PM" && model == "RE")
+   if (is.element(x$method, c("PM","MP")) && model == "RE")
       tau2.ref <- "[@paule1982]"
-   if (x$method == "PM" && model == "ME")
+   if (is.element(x$method, c("PM","MP")) && model == "ME")
       tau2.ref <- "[@viechtbauer2015]"
 
    if (x$method == "PMM")

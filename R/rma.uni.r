@@ -32,7 +32,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
-   if (!is.element(method[1], c("FE","EE","CE","HS","HSk","HE","DL","DLIT","GENQ","GENQM","SJ","SJIT","PM","PMM","ML","REML","EB")))
+   if (!is.element(method[1], c("FE","EE","CE","HS","HSk","HE","DL","DLIT","GENQ","GENQM","SJ","SJIT","PM","MP","PMM","ML","REML","EB")))
       stop(mstyle$stop("Unknown 'method' specified."))
 
    ### in case user specifies more than one add/to value (as one can do with rma.mh() and rma.peto())
@@ -970,7 +970,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    con <- list(verbose = FALSE,
                tau2.init = NULL,          # initial value for iterative estimators (ML, REML, EB, SJ, SJIT, DLIT)
                tau2.min = 0,              # lower bound for tau^2 value
-               tau2.max = 100,            # upper bound for tau^2 value (for PM/PMM/GENQM estimators; and passed down for tau^2 CI obtained with confint())
+               tau2.max = 100,            # upper bound for tau^2 value (for PM/PMM/GENQM estimators; can also be used in ls model (but see [c]) and passed down to confint.rma.uni())
                threshold = 10^-5,         # convergence threshold (for ML, REML, EB, SJIT, DLIT)
                tol = .Machine$double.eps^0.25, # convergence tolerance for uniroot() as used for PM, PMM, and GENQM (also used in 'll0 - ll > con$tol' check for ML/REML)
                ll0check = TRUE,           # should the 'll0 - ll > con$tol' check be conducted for ML/REML?
@@ -990,6 +990,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                hessianCtrl=list(r=8),     # arguments passed on to 'method.args' of hessian()
                hesspack = "numDeriv",     # package for computing the Hessian (numDeriv or pracma)
                scaleZ = TRUE)
+
+   ### for some applications, tau2.max = 100 may not be enough; use an adaptive max instead
+   con$tau2.max <- max(con$tau2.max, 10*mad(yi)^2)
 
    ### replace defaults with any user-defined values
 
@@ -1012,18 +1015,20 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    } else {
 
-      ### can constrain the tau^2 values in location-scale models, but this is done in a very crude way
+      ### [c] can constrain the tau^2 values in location-scale models, but this is done in a very crude way
       ### in the optimization (by returning Inf when any tau^2 value falls outside the bounds) and this is
-      ### not recommended / documented (instead, one can constrain the alpha values via alpha.min / alpha.max);
-      ### note: the tau^2 bounds are only in effect when either tau2.min or tau2.max was changed from their
-      ### defaults (if not, tau2.min and tau2.max are set to 0 and Inf, respectively)
+      ### not recommended/documented (instead, one can constrain the alpha values via alpha.min/alpha.max);
+      ### note: the tau^2 bounds are only in effect when tau2.min or tau2.max are actually used in 'control'
+      ### (if not, tau2.min and tau2.max are set to 0 and Inf, respectively)
 
-      if (con$tau2.min != 0 || con$tau2.max != 100) {
+      if (is.element("tau2.min", names(control))) {
          con$tau2.min[con$tau2.min < 0] <- 0
       } else {
          con$tau2.min <- 0
-         con$tau2.max <- Inf
       }
+
+      if (is.element("tau2.max", names(control)))
+         con$tau2.min <- Inf
 
    }
 
@@ -1344,15 +1349,15 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
          ### Paule-Mandel (PM) estimator (regular and median unbiased version)
 
-         if (is.element(method[1], c("PM","PMM"))) {
+         if (is.element(method[1], c("PM","MP","PMM"))) {
 
             if (!allvipos)
                stop(mstyle$stop(method[1], " estimator cannot be used when there are non-positive sampling variances in the data."))
 
-            if (method[1] == "PM") {
-               target <- k-p
-            } else {
+            if (method[1] == "PMM") {
                target <- qchisq(0.5, df=k-p)
+            } else {
+               target <- k-p
             }
 
             if (!tau2.fix) {
@@ -1557,7 +1562,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                se.tau2 <- sqrt(2/sum(wi^2)) # note: wi = 1/(vi + tau2) for ML, REML, EB, PM, PMM, and SJIT
             if (method[1] == "REML")
                se.tau2 <- sqrt(2/sum(P*P))
-            if (is.element(method[1], c("EB","PM","PMM","SJIT"))) {
+            if (is.element(method[1], c("EB","PM","MP","PMM","SJIT"))) {
                wi  <- 1/(vi + tau2)
                #V  <- diag(vi, nrow=k, ncol=k)
                #PV <- P %*% V # note: this is not symmetric
