@@ -1,4 +1,4 @@
-# metafor 3.5-4 (2022-04-29)
+# metafor 3.5-5 (2022-05-17)
 
 - documented the possibility to use an identity link (with `link="identity"`) in `rma.uni()` when fitting location-scale models (although this will often lead to estimation problems); added `solnp()` as an additional optimizer for this case
 

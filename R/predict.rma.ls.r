@@ -201,12 +201,12 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    }
 
-   # four possibilities:
+   # four possibilities for location-scale models:
    # 1) newmods not specified, newscale not specified: get the fitted values of the studies and ci/pi bounds thereof
    # 2) newmods     specified, newscale not specified: get the predicted mu values for these newmods values and ci bounds thereof
-   #                                                      (note: cannot compute pi bounds, since the tau^2 values cannot be predicted)
-   # 3) newmods not specified, newscale     specified: get the predicted log(tau^2) values and ci bounds thereof
-   #                                                      (transf=exp to obtain predicted tau^2 values when using the default log link)
+   #                                                   (note: cannot compute pi bounds, since the tau^2 values cannot be predicted)
+   # 3) newmods not specified, newscale     specified: get the predicted log(tau^2) (or tau^2) values and ci bounds thereof
+   #                                                   (transf=exp to obtain predicted tau^2 values when using the default log link)
    # 4) newmods     specified, newscale     specified: get the predicted mu values for these newmods values and ci/pi bounds thereof
 
    pred.mui <- TRUE

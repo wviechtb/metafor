@@ -19,7 +19,7 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
    if (length(var.names) != 3L)
       stop(mstyle$stop("Argument 'var.names' must of length 3."))
 
-   if (class(var.names) != "character")
+   if (!inherits(var.names, "character"))
       stop(mstyle$stop("Argument 'var.names' must of vector with character strings."))
 
    if (any(var.names != make.names(var.names, unique=TRUE))) {

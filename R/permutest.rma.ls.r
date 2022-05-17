@@ -173,7 +173,7 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
 
             for (i in seq_len(X.iter)) {
 
-               args <- list(yi=signmat[i,]*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, scale=x$Z, link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=1, alpha=ifelse(x$alpha.fix, x$alpha, NA), control=x$control, skiphes=TRUE, outlist=outlist)
+               args <- list(yi=signmat[i,]*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, scale=x$Z, link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=1, alpha=ifelse(x$alpha.fix, x$alpha, NA), optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA), control=x$control, skiphes=TRUE, outlist=outlist)
                res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
 
                if (inherits(res, "try-error"))
@@ -197,7 +197,7 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
                signs <- sample(c(-1,1), x$k, replace=TRUE) # easier to understand (a tad slower for small k, but faster for larger k)
                #signs <- 2*rbinom(x$k,1,.5)-1
 
-               args <- list(yi=signs*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, scale=x$Z, link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=1, alpha=ifelse(x$alpha.fix, x$alpha, NA), control=x$control, skiphes=TRUE, outlist=outlist)
+               args <- list(yi=signs*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, scale=x$Z, link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=1, alpha=ifelse(x$alpha.fix, x$alpha, NA), optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA), control=x$control, skiphes=TRUE, outlist=outlist)
                res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
 
                if (inherits(res, "try-error"))
@@ -309,7 +309,7 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
 
             for (i in seq_len(X.iter)) {
 
-               args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=cbind(X[permmat[i,],]), intercept=FALSE, scale=x$Z, link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=x$btt, alpha=ifelse(x$alpha.fix, x$alpha, NA), control=x$control, skiphes=FALSE, outlist=outlist)
+               args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=cbind(X[permmat[i,],]), intercept=FALSE, scale=x$Z, link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=x$btt, alpha=ifelse(x$alpha.fix, x$alpha, NA), optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA), control=x$control, skiphes=FALSE, outlist=outlist)
                res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
 
                if (inherits(res, "try-error"))
@@ -330,7 +330,7 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
 
             while (i <= X.iter) {
 
-               args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=cbind(X[sample(x$k),]), intercept=FALSE, scale=x$Z, link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=x$btt, alpha=ifelse(x$alpha.fix, x$alpha, NA), control=x$control, skiphes=FALSE, outlist=outlist)
+               args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=cbind(X[sample(x$k),]), intercept=FALSE, scale=x$Z, link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, btt=x$btt, alpha=ifelse(x$alpha.fix, x$alpha, NA), optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA), control=x$control, skiphes=FALSE, outlist=outlist)
                res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
 
                if (inherits(res, "try-error"))
@@ -510,7 +510,7 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
 
          for (i in seq_len(Z.iter)) {
 
-            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, scale=cbind(Z[permmat[i,],]), link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, att=x$att, alpha=ifelse(x$alpha.fix, x$alpha, NA), control=x$control, skiphes=FALSE, outlist=outlist)
+            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, scale=cbind(Z[permmat[i,],]), link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, att=x$att, alpha=ifelse(x$alpha.fix, x$alpha, NA), optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA), control=x$control, skiphes=FALSE, outlist=outlist)
             res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
 
             if (inherits(res, "try-error"))
@@ -531,7 +531,7 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
 
          while (i <= Z.iter) {
 
-            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, scale=cbind(Z[sample(x$k),]), link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, att=x$att, alpha=ifelse(x$alpha.fix, x$alpha, NA), control=x$control, skiphes=FALSE, outlist=outlist)
+            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, scale=cbind(Z[sample(x$k),]), link=x$link, method=x$method, weighted=x$weighted, test=x$test, level=x$level, att=x$att, alpha=ifelse(x$alpha.fix, x$alpha, NA), optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA), control=x$control, skiphes=FALSE, outlist=outlist)
             res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
 
             if (inherits(res, "try-error"))
@@ -615,6 +615,7 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
       }
 
       pval.alpha[pval.alpha > 1] <- 1
+      pval.alpha[x$alpha.fix] <- NA
 
       QSp <- mean(QS.perm >= x$QS - con$comptol, na.rm=TRUE)
 

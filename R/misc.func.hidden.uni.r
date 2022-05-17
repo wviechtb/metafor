@@ -169,14 +169,17 @@
 
 ### -1 times the log likelihood (regular or restricted) for location-scale model
 
-.ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX, alpha.val, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, tau2.min, tau2.max) {
+.ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX, alpha.val, beta.val, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, tau2.min, tau2.max, optbeta) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   #beta  <- par[seq_len(pX)]
-   #alpha <- par[-seq_len(pX)]
-
-   alpha <- par
+   if (optbeta) {
+      beta  <- par[seq_len(pX)]
+      beta  <- ifelse(is.na(beta.val), beta, beta.val)
+      alpha <- par[-seq_len(pX)]
+   } else {
+      alpha <- par
+   }
 
    if (alpha.transf)
       alpha <- mapply(.mapfun.alpha, alpha, alpha.min, alpha.max)
@@ -194,40 +197,49 @@
    if (any(is.na(tau2)) || any(tau2 < tau2.min) || any(tau2 > tau2.max))
       return(Inf)
 
+   llcomp <- TRUE
+
    if (any(tau2 < 0)) {
 
-      llval <- -Inf
+      llval  <- -Inf
+      llcomp <- FALSE
 
    } else {
 
-      ### compute weights
+      ### compute weights / weights matrix
       wi <- 1/(vi + tau2)
-
-      ### when using this, the optimization only pertains to the parameter(s) in 'alpha', as 'beta' is then fully
-      ### determined by the current value(s) of 'alpha'; this is actually also how the standard RE/ME model is fitted;
-      ### but is this really the best way of doing this? one could also optimize over beta and alpha jointly!
       W <- diag(wi, nrow=k, ncol=k)
-      stXWX <- try(.invcalc(X=X, W=W, k=k), silent=TRUE)
 
-      if (inherits(stXWX, "try-error")) {
+      if (!optbeta) {
 
-         llval <- -Inf
+         stXWX <- try(.invcalc(X=X, W=W, k=k), silent=TRUE)
 
-      } else {
+         if (inherits(stXWX, "try-error")) {
 
-         beta <- stXWX %*% crossprod(X,W) %*% as.matrix(yi)
+            llval  <- -Inf
+            llcomp <- FALSE
 
-         ### compute residual sum of squares
-         RSS <- sum(wi*c(yi - X %*% beta)^2)
-
-         ### log-likelihood (could leave out additive constants)
-         if (!reml) {
-            llval <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS
          } else {
-            llval <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
-                     -1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS
+
+            beta <- stXWX %*% crossprod(X,W) %*% as.matrix(yi)
+
          }
 
+      }
+
+   }
+
+   if (llcomp) {
+
+      ### compute residual sum of squares
+      RSS <- sum(wi*c(yi - X %*% beta)^2)
+
+      ### compute log-likelihood
+      if (!reml) {
+         llval <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS
+      } else {
+         llval <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
+                  -1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS
       }
 
    }
@@ -237,6 +249,8 @@
 
    if (verbose) {
       cat(mstyle$verbose(paste0("ll = ",          ifelse(is.na(llval), NA, formatC(llval, digits=digits[["fit"]], format="f", flag=" ")), "  ")))
+      if (optbeta)
+         cat(mstyle$verbose(paste0("beta = ",  paste(ifelse(is.na(beta),  NA, formatC(beta,  digits=digits[["est"]], format="f", flag=" ")), collapse=" "), "  ")))
       cat(mstyle$verbose(paste0("alpha = ", paste(ifelse(is.na(alpha), NA, formatC(alpha, digits=digits[["est"]], format="f", flag=" ")), collapse=" "))))
       cat("\n")
    }
@@ -245,9 +259,13 @@
 
 }
 
-.rma.ls.solnp.ineqfun <- function(par, yi, vi, X, Z, reml, k, pX, alpha.val, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, tau2.min, tau2.max) {
+.rma.ls.solnp.ineqfun <- function(par, yi, vi, X, Z, reml, k, pX, alpha.val, beta.val, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, tau2.min, tau2.max, optbeta) {
 
-   alpha <- par
+   if (optbeta) {
+      alpha <- par[-seq_len(pX)]
+   } else {
+      alpha <- par
+   }
 
    if (alpha.transf)
       alpha <- mapply(.mapfun.alpha, alpha, alpha.min, alpha.max)

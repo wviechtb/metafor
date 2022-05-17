@@ -38,6 +38,9 @@ profile.rma.ls <- function(fitted, alpha,
 
    }
 
+   if (x$optbeta)
+      stop(mstyle$stop("Profiling not yet implemented for 'optbeta=TRUE'."))
+
    if (!progbar) {
       pbo <- pbapply::pboptions(type="none")
       on.exit(pbapply::pboptions(pbo), add=TRUE)

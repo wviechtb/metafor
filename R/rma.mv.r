@@ -230,15 +230,25 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
       intercept <- FALSE                               ### set to FALSE since formula now controls whether the intercept is included or not
    }                                                   ### note: code further below ([b]) actually checks whether intercept is included or not
 
-   ### check if yi is numeric
+   ### check if yi is a (multicolumn) data frame
 
-   if (!is.numeric(yi))
-      stop(mstyle$stop("The object/variable specified for the 'yi' argument is not numeric."))
+   if (is.data.frame(yi)) {
+      if (ncol(yi) == 1L) {
+         yi <- yi[[1]]
+      } else {
+         stop(mstyle$stop("The object/variable specified for the 'yi' argument is a data frame with multiple columns."))
+      }
+   }
 
    ### in case user passed a matrix to yi, convert it to a vector
 
    if (is.matrix(yi))
       yi <- as.vector(yi)
+
+   ### check if yi is numeric
+
+   if (!is.numeric(yi))
+      stop(mstyle$stop("The object/variable specified for the 'yi' argument is not numeric."))
 
    ### number of outcomes before subsetting
 
@@ -429,7 +439,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    if (inherits(mods, "formula")) {
       formula.mods <- mods
-      if (isTRUE(all.equal(formula.mods, ~1))) { # needed so 'mods = ~ 1' without 'data' specified works
+      if (isTRUE(all.equal(formula.mods, ~ 1))) { # needed so 'mods = ~ 1' without 'data' specified works
          mods <- matrix(1, nrow=k, ncol=1)
          intercept <- FALSE
       } else {
@@ -1747,7 +1757,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    if (ncpus > 1L)
       optimizer <- "optimParallel"
 
-   reml <- ifelse(method=="REML", TRUE, FALSE)
+   reml <- ifelse(method == "REML", TRUE, FALSE)
 
    ### set NLOPT_LN_BOBYQA as the default algorithm for nloptr optimizer
    ### and by default use a relative convergence criterion of 1e-8 on the function value

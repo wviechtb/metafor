@@ -46,6 +46,9 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
       control$vc.max <- ddd$xlim[2]
    }
 
+   if (x$optbeta)
+      stop(mstyle$stop("CI calculation not yet implemented for 'optbeta=TRUE'."))
+
    ### check if user has specified alpha argument
 
    random <- !missing(alpha)
