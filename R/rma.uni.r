@@ -1021,14 +1021,11 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       ### note: the tau^2 bounds are only in effect when tau2.min or tau2.max are actually used in 'control'
       ### (if not, tau2.min and tau2.max are set to 0 and Inf, respectively)
 
-      if (is.element("tau2.min", names(control))) {
+      if (is.element("tau2.min", names(control)))
          con$tau2.min[con$tau2.min < 0] <- 0
-      } else {
-         con$tau2.min <- 0
-      }
 
-      if (is.element("tau2.max", names(control)))
-         con$tau2.min <- Inf
+      if (!is.element("tau2.max", names(control)))
+         con$tau2.max <- Inf
 
    }
 

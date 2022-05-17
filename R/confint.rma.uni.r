@@ -70,8 +70,8 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
          type <- "QP"
       }
    } else {
-      #type <- match.arg(type, c("QP", "GENQ", "PL"))
-      if (!is.element(type, c("QP", "GENQ", "PL")))
+      #type <- match.arg(type, c("QP","GENQ","PL"))
+      if (!is.element(type, c("QP","GENQ","PL","Wald","Wald.log","Wald.sqrt")))
          stop(mstyle$stop("Unknown 'type' specified."))
    }
 
@@ -460,6 +460,53 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
          ### end search for upper bound
 
          ###################################################################
+
+      }
+
+      ######################################################################
+
+      if (is.element(type, c("Wald","Wald.log","Wald.sqrt"))) {
+         crit    <- qnorm(level/2, lower.tail=FALSE)
+         lb.conv <- TRUE
+         ub.conv <- TRUE
+      }
+
+      ###################
+      ### Wald method ###
+      ###################
+
+      if (type == "Wald") {
+
+         tau2.lb <- x$tau2 - crit * x$se.tau2
+         tau2.ub <- x$tau2 + crit * x$se.tau2
+         tau2.lb <- max(ifelse(is.null(x$control$tau2.min), 0, x$control$tau2.min), tau2.lb)
+
+      }
+
+      #######################
+      ### Wald.log method ###
+      #######################
+
+      if (type == "Wald.log") {
+
+         if (x$tau2 >= 0) {
+            tau2.lb <- exp(log(x$tau2) - crit * x$se.tau2 / x$tau2)
+            tau2.ub <- exp(log(x$tau2) + crit * x$se.tau2 / x$tau2)
+            tau2.ub <- max(x$tau2, tau2.ub) # if tau2 is 0, then CI is 0 to tau2
+         }
+
+      }
+
+      ########################
+      ### Wald.sqrt method ###
+      ########################
+
+      if (type == "Wald.sqrt") {
+
+         if (x$tau2 >= 0) {
+            tau2.lb <- (max(0, sqrt(x$tau2) - crit * x$se.tau2 / (2 * sqrt(x$tau2))))^2
+            tau2.ub <- (sqrt(x$tau2) + crit * x$se.tau2 / (2 * sqrt(x$tau2)))^2
+         }
 
       }
 
