@@ -112,7 +112,7 @@ dat
 
 ```r
 # fit random-effects model
-res <- rma(yi, vi, data=dat)
+res <- rma(yi, vi, data=dat, test="knha")
 res
 ```
 
@@ -129,8 +129,8 @@ res
 ##
 ## Model Results:
 ##
-## estimate      se     zval    pval    ci.lb    ci.ub
-##  -0.7145  0.1798  -3.9744  <.0001  -1.0669  -0.3622  ***
+## estimate      se     tval  df    pval    ci.lb    ci.ub
+##  -0.7145  0.1808  -3.9522  12  0.0019  -1.1084  -0.3206  **
 ##
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -143,7 +143,7 @@ predict(res, transf=exp, digits=2)
 
 ```
 ## pred ci.lb ci.ub pi.lb pi.ub
-## 0.49  0.34  0.70  0.15  1.55
+## 0.49  0.33  0.73  0.14  1.76
 ```
 
 ```r
@@ -175,13 +175,13 @@ regtest(res)
 ## Model:     mixed-effects meta-regression model
 ## Predictor: standard error
 ##
-## Test for Funnel Plot Asymmetry: z = -0.8033, p = 0.4218
-## Limit Estimate (as sei -> 0):   b = -0.5104 (CI: -1.1182, 0.0974)
+## Test for Funnel Plot Asymmetry: t = -0.7812, df = 11, p = 0.4512
+## Limit Estimate (as sei -> 0):   b = -0.5104 (CI: -1.2123, 0.1915)
 ```
 
 ```r
 # mixed-effects model with absolute latitude as moderators
-res <- rma(yi, vi, mods = ~ ablat, data=dat)
+res <- rma(yi, vi, mods = ~ ablat, data=dat, test="knha")
 res
 ```
 
@@ -198,13 +198,13 @@ res
 ## QE(df = 11) = 30.7331, p-val = 0.0012
 ##
 ## Test of Moderators (coefficient 2):
-## QM(df = 1) = 16.3571, p-val < .0001
+## F(df1 = 1, df2 = 11) = 12.5905, p-val = 0.0046
 ##
 ## Model Results:
 ##
-##          estimate      se     zval    pval    ci.lb    ci.ub
-## intrcpt    0.2515  0.2491   1.0095  0.3127  -0.2368   0.7397
-## ablat     -0.0291  0.0072  -4.0444  <.0001  -0.0432  -0.0150  ***
+##          estimate      se     tval  df    pval    ci.lb    ci.ub
+## intrcpt    0.2515  0.2839   0.8857  11  0.3948  -0.3735   0.8764
+## ablat     -0.0291  0.0082  -3.5483  11  0.0046  -0.0472  -0.0111  **
 ##
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
@@ -214,7 +214,7 @@ res
 # bubble plot (with points outside of the prediction interval labeled)
 regplot(res, mod="ablat", pi=TRUE, xlab="Absolute Latitude",
         xlim=c(0,60), predlim=c(0,60), transf=exp, refline=1, legend=TRUE,
-        label="piout", labsize=0.8, bty="l", las=1, digits=1)
+        label="piout", labsize=0.9, bty="l", las=1, digits=1)
 ```
 
 ![](man/figures/ex_bubble_plot.png)

@@ -222,7 +222,7 @@
 <span class="co">## 13    13       Comstock et al 1976   27 16886   29 17825    33 systematic -0.0173 0.0714</span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># fit random-effects model</span>
-<span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span>
+<span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, test<span class="op">=</span><span class="st">"knha"</span><span class="op">)</span>
 <span class="va">res</span></code></pre></div>
 <pre><code><span class="co">## Random-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="co">##</span>
@@ -236,8 +236,8 @@
 <span class="co">##</span>
 <span class="co">## Model Results:</span>
 <span class="co">##</span>
-<span class="co">## estimate      se     zval    pval    ci.lb    ci.ub</span>
-<span class="co">##  -0.7145  0.1798  -3.9744  &lt;.0001  -1.0669  -0.3622  ***</span>
+<span class="co">## estimate      se     tval  df    pval    ci.lb    ci.ub</span>
+<span class="co">##  -0.7145  0.1808  -3.9522  12  0.0019  -1.1084  -0.3206  **</span>
 <span class="co">##</span>
 <span class="co">## ---</span>
 <span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre>
@@ -245,7 +245,7 @@
 <code class="sourceCode R"><span class="co"># predicted pooled risk ratio (with 95% CI/PI)</span>
 <span class="fu"><a href="reference/predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## pred ci.lb ci.ub pi.lb pi.ub</span>
-<span class="co">## 0.49  0.34  0.70  0.15  1.55</span></code></pre>
+<span class="co">## 0.49  0.33  0.73  0.14  1.76</span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># forest plot</span>
 <span class="fu"><a href="reference/forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, atransf<span class="op">=</span><span class="va">exp</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.05</span>, <span class="fl">.25</span>, <span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">16</span>,<span class="fl">6</span><span class="op">)</span>,
@@ -266,11 +266,11 @@
 <span class="co">## Model:     mixed-effects meta-regression model</span>
 <span class="co">## Predictor: standard error</span>
 <span class="co">##</span>
-<span class="co">## Test for Funnel Plot Asymmetry: z = -0.8033, p = 0.4218</span>
-<span class="co">## Limit Estimate (as sei -&gt; 0):   b = -0.5104 (CI: -1.1182, 0.0974)</span></code></pre>
+<span class="co">## Test for Funnel Plot Asymmetry: t = -0.7812, df = 11, p = 0.4512</span>
+<span class="co">## Limit Estimate (as sei -&gt; 0):   b = -0.5104 (CI: -1.2123, 0.1915)</span></code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># mixed-effects model with absolute latitude as moderators</span>
-<span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span>
+<span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span>, test<span class="op">=</span><span class="st">"knha"</span><span class="op">)</span>
 <span class="va">res</span></code></pre></div>
 <pre><code><span class="co">## Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="co">##</span>
@@ -284,13 +284,13 @@
 <span class="co">## QE(df = 11) = 30.7331, p-val = 0.0012</span>
 <span class="co">##</span>
 <span class="co">## Test of Moderators (coefficient 2):</span>
-<span class="co">## QM(df = 1) = 16.3571, p-val &lt; .0001</span>
+<span class="co">## F(df1 = 1, df2 = 11) = 12.5905, p-val = 0.0046</span>
 <span class="co">##</span>
 <span class="co">## Model Results:</span>
 <span class="co">##</span>
-<span class="co">##          estimate      se     zval    pval    ci.lb    ci.ub</span>
-<span class="co">## intrcpt    0.2515  0.2491   1.0095  0.3127  -0.2368   0.7397</span>
-<span class="co">## ablat     -0.0291  0.0072  -4.0444  &lt;.0001  -0.0432  -0.0150  ***</span>
+<span class="co">##          estimate      se     tval  df    pval    ci.lb    ci.ub</span>
+<span class="co">## intrcpt    0.2515  0.2839   0.8857  11  0.3948  -0.3735   0.8764</span>
+<span class="co">## ablat     -0.0291  0.0082  -3.5483  11  0.0046  -0.0472  -0.0111  **</span>
 <span class="co">##</span>
 <span class="co">## ---</span>
 <span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre>
@@ -298,7 +298,7 @@
 <code class="sourceCode R"><span class="co"># bubble plot (with points outside of the prediction interval labeled)</span>
 <span class="fu"><a href="reference/regplot.html">regplot</a></span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, pi<span class="op">=</span><span class="cn">TRUE</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>,
         xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, predlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, transf<span class="op">=</span><span class="va">exp</span>, refline<span class="op">=</span><span class="fl">1</span>, legend<span class="op">=</span><span class="cn">TRUE</span>,
-        label<span class="op">=</span><span class="st">"piout"</span>, labsize<span class="op">=</span><span class="fl">0.8</span>, bty<span class="op">=</span><span class="st">"l"</span>, las<span class="op">=</span><span class="fl">1</span>, digits<span class="op">=</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+        label<span class="op">=</span><span class="st">"piout"</span>, labsize<span class="op">=</span><span class="fl">0.9</span>, bty<span class="op">=</span><span class="st">"l"</span>, las<span class="op">=</span><span class="fl">1</span>, digits<span class="op">=</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/ex_bubble_plot.png"></p>
 </div>
 <div class="section level2">
