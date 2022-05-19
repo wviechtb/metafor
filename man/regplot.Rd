@@ -33,8 +33,8 @@ regplot(x, \dots)
    \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{at}{position of the y-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.}
    \item{digits}{integer to specify the number of decimal places to which the tick mark labels of the y-axis should be rounded. When specifying an integer (e.g., \code{2L}), trailing zeros after the decimal mark are dropped for the y-axis labels. When specifying a numeric value (e.g., \code{2}), trailing zeros are retained.}
-   \item{transf}{optional argument to specify a function that should be used to transform the observed outcomes, predicted values, and confidence/prediction interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
-   \item{atransf}{optional argument to specify a function that should be used to transform the y-axis labels (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify a function to transform the observed outcomes, predicted values, and confidence/prediction interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{atransf}{optional argument to specify a function to transform the y-axis labels (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{level}{numeric value between 0 and 100 to specify the confidence/prediction interval level (the default is to take the value from the object).}
    \item{pch}{plotting symbol to use for the observed outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}

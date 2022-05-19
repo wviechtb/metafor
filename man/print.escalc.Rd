@@ -22,7 +22,7 @@
    \item{replace}{logical to specify whether existing values for \code{sei}, \code{zi}, \code{ci.lb}, and \code{ci.ub} in the data frame should be replaced. Only relevant when the data frame already contains these variables. If \code{replace=TRUE} (the default), all of the existing values will be overwritten. If \code{replace=FALSE}, only \code{NA} values will be replaced.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
    \item{olim}{optional argument to specify observation/outcome limits. If unspecified, no limits are used.}
-   \item{transf}{optional argument to specify a function that should be used to transform the observed effect sizes or outcomes and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via \code{\dots}.}
+   \item{transf}{optional argument to specify a function to transform the observed effect sizes or outcomes and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via \code{\dots}.}
    \item{\dots}{other arguments.}
 }
 \value{

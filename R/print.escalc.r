@@ -29,6 +29,8 @@ print.escalc <- function(x, digits=attr(x,"digits"), ...) {
    is.expr <- sapply(x, is.expression)
    x[is.expr] <- lapply(x[is.expr], as.character)
 
+   ### turn x into a regular data frame
+
    x <- data.frame(x)
    rownames(x) <- rnames
 
@@ -54,6 +56,8 @@ print.escalc <- function(x, digits=attr(x,"digits"), ...) {
 
    if (length(ci.ub.pos) > 0L)
       x[ci.ub.pos] <- apply(x[ci.ub.pos], 2, .fcf, digits[["ci"]])
+
+   ### print data frame with styling
 
    .space()
 

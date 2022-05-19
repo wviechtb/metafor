@@ -18,8 +18,8 @@
    \item{digits}{optional integer to specify the number of decimal places to which the annotations should be rounded.}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}
    \item{mlab}{optional character string giving a label for the summary estimate polygon. If unspecified, the function sets a default label.}
-   \item{transf}{optional argument to specify a function that should be used to transform the summary estimate and confidence interval bound (e.g., \code{transf=exp}; see also \link{transf}).}
-   \item{atransf}{optional argument to specify a function that should be used to transform the annotations (e.g., \code{atransf=exp}; see also \link{transf}).}
+   \item{transf}{optional argument to specify a function to transform the summary estimate and confidence interval bound (e.g., \code{transf=exp}; see also \link{transf}).}
+   \item{atransf}{optional argument to specify a function to transform the annotations (e.g., \code{atransf=exp}; see also \link{transf}).}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{efac}{optional vertical expansion factor for the polygon.}
    \item{col}{optional character string to specify color to use for the polygon. If unspecified, the function sets a default color.}

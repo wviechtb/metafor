@@ -40,8 +40,8 @@
    \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via \code{ilab} (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.}
    \item{order}{optional character string to specify how the studies should be ordered. Can also be a variable based on which the studies will be ordered. See \sQuote{Details}.}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the plot.}
-   \item{transf}{optional argument to specify a function that should be used to transform the observed outcomes and corresponding confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
-   \item{atransf}{optional argument to specify a function that should be used to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify a function to transform the observed outcomes and corresponding confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{atransf}{optional argument to specify a function to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{rows}{optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row). If unspecified, the function sets this value automatically.}
    \item{efac}{vertical expansion factor for confidence interval limits and arrows. The default value of 1 should usually work okay. Can also be a vector of two numbers, the first for CI limits, the second for arrows.}

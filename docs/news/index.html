@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-6</span>
       </span>
     </div>
 
@@ -96,12 +96,13 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.5-4" id="metafor-35-4-2022-04-29">metafor 3.5-4 (2022-04-29)<a class="anchor" aria-label="anchor" href="#metafor-35-4-2022-04-29"></a></h2>
+<h2 class="page-header" data-toc-text="3.5-6" id="metafor-35-6-2022-05-19">metafor 3.5-6 (2022-05-19)<a class="anchor" aria-label="anchor" href="#metafor-35-6-2022-05-19"></a></h2>
 <ul><li><p>documented the possibility to use an identity link (with <code>link="identity"</code>) in <code><a href="../reference/rma.uni.html">rma.uni()</a></code> when fitting location-scale models (although this will often lead to estimation problems); added <code>solnp()</code> as an additional optimizer for this case</p></li>
 <li><p>added (experimental!) support for measures <code>"RR"</code>, <code>"RD"</code>, <code>"PLN"</code>, and <code>"PR"</code> to <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> (but using these measures will often lead to estimation problems)</p></li>
 <li><p><code><a href="../reference/aggregate.escalc.html">aggregate.escalc()</a></code> gains <code>addk</code> argument</p></li>
 <li><p><code><a href="../reference/replmiss.html">replmiss()</a></code> gains <code>data</code> argument</p></li>
 <li><p><code><a href="../reference/cumul.html">cumul()</a></code> functions also store data, so that arguments <code>ilab</code>, <code>col</code>, <code>pch</code>, and <code>psize</code> in the <code><a href="../reference/forest.cumul.rma.html">forest.cumul.rma()</a></code> function can look for variables therein</p></li>
+<li><p>fixed issue with rendering Rmarkdown documents with <code>metafor</code> output due to the use of a zero-width space</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.4-0" id="metafor-34-0-2022-04-21">metafor 3.4-0 (2022-04-21)<small>2022-04-21</small><a class="anchor" aria-label="anchor" href="#metafor-34-0-2022-04-21"></a></h2>
@@ -445,7 +446,7 @@
 <li><p>the various <code><a href="../reference/forest.html">forest()</a></code> functions now have a new argument, <code>clim</code>, to set limits for the confidence/prediction interval bounds</p></li>
 <li><p><code>cumul.mh()</code> and <code>cumul.peto()</code> now get the order of the studies right when there are missing values in the data</p></li>
 <li><p>the <code>transf</code> argument of <code><a href="../reference/leave1out.html">leave1out.rma.mh()</a></code>, <code><a href="../reference/leave1out.html">leave1out.rma.peto()</a></code>, <code><a href="../reference/cumul.html">cumul.rma.mh()</a></code>, and <code><a href="../reference/cumul.html">cumul.rma.peto()</a></code> should now be used to specify the actual function for the transformation (the former behavior of setting this argument to <code>TRUE</code> to exponentiate log RRs, log ORs, or log IRRs still works for back-compatibility); this is more consistent with how the <code><a href="../reference/cumul.html">cumul.rma.uni()</a></code> and <code><a href="../reference/leave1out.html">leave1out.rma.uni()</a></code> functions work and is also more flexible</p></li>
-<li><p>added <code><a href="../reference/bldiag.html">bldiag()</a></code> function to construct a block diagonal matrix from (a list of) matrices (may be needed to construct the <code>V</code> matrix when using the <code><a href="../reference/rma.mv.html">rma.mv()</a></code> function); <code>bdiag()</code> function from the <code>Matrix</code> package does the same thing, but creates sparse matrix objects</p></li>
+<li><p>added <code><a href="../reference/bldiag.html">bldiag()</a></code> function to construct a block diagonal matrix from (a list of) matrices (may be needed to construct the <code>V</code> matrix when using the <code><a href="../reference/rma.mv.html">rma.mv()</a></code> function); <code><a href="https://rdrr.io/pkg/Matrix/man/bdiag.html" class="external-link">bdiag()</a></code> function from the <code>Matrix</code> package does the same thing, but creates sparse matrix objects</p></li>
 <li><p><code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code> now has a <code>startmethod</code> argument; by setting this to <code>"prev"</code>, successive model fits are started at the parameter estimates from the previous model fit; this may speed things up a bit; also, the method for automatically choosing the <code>xlim</code> values has been changed</p></li>
 <li><p>slight improvement to <code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code> function, which would throw an error if the last model fit did not converge</p></li>
 <li><p>added a new dataset (<code>dat.linde2005</code>) for replication of the analyses in Viechtbauer (2007)</p></li>

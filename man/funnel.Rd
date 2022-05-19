@@ -37,7 +37,7 @@ funnel(x, \dots)
    \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{steps}{the number of tick marks for the y-axis (the default is 5).}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.}
-   \item{atransf}{optional argument to specify a function that should be used to transform the x-axis labels (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{atransf}{optional argument to specify a function to transform the x-axis labels (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{atransf}.}
    \item{digits}{optional integer to specify the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first to specify the number of decimal places for the x-axis, the second for the y-axis labels (e.g., \code{digits=c(2,3)}). If unspecified, the function tries to set the argument to some sensible values.}
    \item{level}{numeric value between 0 and 100 to specify the level of the pseudo confidence interval region (for \code{"rma"} objects, the default is to take the value from the object). May also be a vector of values to obtain multiple regions. See \sQuote{Examples}.}

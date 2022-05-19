@@ -27,7 +27,7 @@ galbraith(x, \dots)
    \item{level}{numeric value between 0 and 100 to specify the level of the z-axis error region (the default is to take the value from the object).}
    \item{digits}{integer to specify the number of decimal places to which the tick mark labels of the y-axis should be rounded (the default is 2).}
    \item{back}{color of the z-axis error region. Set to \code{NA} to suppress shading of the region.}
-   \item{transf}{optional argument to specify a function that should be used to transform the y-axis labels (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify a function to transform the y-axis labels (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf}.}
    \item{pch}{plotting symbol. By default, a filled circle is used. See \code{\link{points}} for other options.}
    \item{arc.res}{integer to specify the number of line segments to use when drawing the y-axis and confidence interval arcs (the default is 100).}

@@ -21,7 +21,7 @@ labbe(x, \dots)
    \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
    \item{add}{See \sQuote{Details} and the documentation of the \code{\link{escalc}} function for more details.}
    \item{to}{See \sQuote{Details} and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{transf}{optional argument to specify a function that should be used to transform the outcomes (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify a function to transform the outcomes (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{pch}{plotting symbol to use for the outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
    \item{psize}{optional numeric vector to specify the point sizes for the outcomes. If unspecified, the point sizes are a function of the precision of the outcomes. Can also be a vector of values.}

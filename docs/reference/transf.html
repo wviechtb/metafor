@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-6</span>
       </span>
     </div>
 
@@ -151,7 +151,7 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The following transformation functions are currently implemented:</p><ul><li><p><code>transf.rtoz</code>: Fisher's r-to-z transformation for correlations (same as <code>atanh(x)</code>).</p></li>
+    <p>The following transformation functions are currently implemented:</p><ul><li><p><code>transf.rtoz</code>: Fisher's r-to-z transformation for correlation coefficients (same as <code>atanh(x)</code>).</p></li>
 <li><p><code>transf.ztor</code>: inverse of Fisher's r-to-z transformation (i.e., the z-to-r transformation; same as <code>tanh(x)</code>).</p></li>
 <li><p><code>transf.logit</code>: logit (log odds) transformation for proportions (same as <code>qlogis(x)</code>).</p></li>
 <li><p><code>transf.ilogit</code>: inverse of the logit transformation (same as <code>plogis(x)</code>).</p></li>
@@ -171,10 +171,10 @@
 <li><p><code>transf.exp.int</code>: integral transformation method for the exponential transformation.</p></li>
 <li><p><code>transf.ilogit.int</code>: integral transformation method for the inverse of the logit transformation.</p></li>
 <li><p><code>transf.dtou1</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_1\) values (Cohen, 1988). Under the assumption that the data for those in the first (say, treated) and second (say, control) group are normally distributed with equal variances but potentially different means, Cohen's <em></em>\(U_1\) indicates the proportion of non-overlap between the two distributions (i.e., when <em></em>\(d=0\), then <em></em>\(U_1\) is equal to 0, which goes to 1 as <em></em>\(d\) increases).</p></li>
-<li><p><code>transf.dtou2</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_2\) values (Cohen, 1988). Under the same assumption as above, Cohen's <em></em>\(U_2\) indicates the proportion in the first group that exceeds the same proportion in the second group (i.e., when <em></em>\(d=0\), then <em></em>\(U_2\) is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>
-<li><p><code>transf.dtou3</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_3\) values (Cohen, 1988). Under the same assumption as above, Cohen's <em></em>\(U_3\) indicates the proportion of individuals in the first group that have a higher value than the mean of those in the second group (i.e., when <em></em>\(d=0\), then <em></em>\(U_3\) is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>
+<li><p><code>transf.dtou2</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_2\) values (Cohen, 1988). Under the same assumptions as above, Cohen's <em></em>\(U_2\) indicates the proportion in the first group that exceeds the same proportion in the second group (i.e., when <em></em>\(d=0\), then <em></em>\(U_2\) is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>
+<li><p><code>transf.dtou3</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_3\) values (Cohen, 1988). Under the same assumptions as above, Cohen's <em></em>\(U_3\) indicates the proportion of individuals in the first group that have a higher value than the mean of those in the second group (i.e., when <em></em>\(d=0\), then <em></em>\(U_3\) is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>
 <li><p><code>transf.dtocles</code>: transformation of standardized mean differences to common language effect size (CLES) values (McGraw &amp; Wong, 1992) (also called the probability of superiority). A CLES value indicates the probability that a randomly sampled individual from the first group has a higher value than a randomly sampled individual from the second group (i.e., when <em></em>\(d=0\), then the CLES is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>
-<li><p><code>transf.dtorpb</code>: transformation of standardized mean differences to point-biserial correlations. If <code>n1i</code> and <code>n2i</code> are not specified, the function assumes <code>n1i=n2i</code> and uses an approximate formula. If <code>n1i</code> and <code>n2i</code> are specified, the exact transformation formula is used.</p></li>
+<li><p><code>transf.dtorpb</code>: transformation of standardized mean differences to point-biserial correlations. If <code>n1i</code> and <code>n2i</code> are not specified, the function assumes <code>n1i = n2i</code> and uses the approximate formula <em></em>\(r_{pb} = \frac{d}{\sqrt{d^2 + 4}}\). If <code>n1i</code> and <code>n2i</code> are specified, uses the exact transformation formula <em></em>\(r_{pb} = \frac{d}{\sqrt{d^2 + h}}\), where <em></em>\(h = \frac{m}{n_1} + \frac{m}{n_2}\) and <em></em>\(m = n_1 + n_2 - 2\).</p></li>
 <li><p><code>transf.dtobesd</code>: transformation of standardized mean differences to binomial effect size display values (Rosenthal &amp; Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply one minus the proportion in the first group scoring above the median).</p></li>
 <li><p><code>transf.dtomd</code>: transformation of standardized mean differences to mean differences given a known standard deviation, which must be specified via the <code>targs</code> argument.</p></li>
 <li><p><code>transf.logortord</code>: transformation of log odds ratios to risk differences, assuming a particular value for the control group risk (which needs to be specified via the <code>pc</code> argument).</p></li>

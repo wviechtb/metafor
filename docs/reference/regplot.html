@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-6</span>
       </span>
     </div>
 
@@ -146,9 +146,9 @@
 <dt>digits</dt>
 <dd><p>integer to specify the number of decimal places to which the tick mark labels of the y-axis should be rounded. When specifying an integer (e.g., <code>2L</code>), trailing zeros after the decimal mark are dropped for the y-axis labels. When specifying a numeric value (e.g., <code>2</code>), trailing zeros are retained.</p></dd>
 <dt>transf</dt>
-<dd><p>optional argument to specify a function that should be used to transform the observed outcomes, predicted values, and confidence/prediction interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dd><p>optional argument to specify a function to transform the observed outcomes, predicted values, and confidence/prediction interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
 <dt>atransf</dt>
-<dd><p>optional argument to specify a function that should be used to transform the y-axis labels (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dd><p>optional argument to specify a function to transform the y-axis labels (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
 <dt>targs</dt>
 <dd><p>optional arguments needed by the function specified via <code>transf</code> or <code>atransf</code>.</p></dd>
 <dt>level</dt>
@@ -268,7 +268,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate      se     zval    pval    ci.lb    ci.ub     ​ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate      se     zval    pval    ci.lb    ci.ub      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt    0.2515  0.2491   1.0095  0.3127  -0.2368   0.7397      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ablat     -0.0291  0.0072  -4.0444  &lt;.0001  -0.0432  -0.0150  *** </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -321,7 +321,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate       se     zval    pval     ci.lb    ci.ub    ​ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate       se     zval    pval     ci.lb    ci.ub     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt   -3.5455  29.0959  -0.1219  0.9030  -60.5724  53.4814     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ablat     -0.0280   0.0102  -2.7371  0.0062   -0.0481  -0.0080  ** </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> year       0.0019   0.0147   0.1299  0.8966   -0.0269   0.0307     </span>
@@ -358,7 +358,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             estimate      se     zval    pval    ci.lb   ci.ub   ​ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             estimate      se     zval    pval    ci.lb   ci.ub    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt      -0.3889  0.6285  -0.6188  0.5360  -1.6207  0.8429    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ablat         0.0218  0.0464   0.4699  0.6385  -0.0692  0.1128    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> I(ablat^2)   -0.0008  0.0007  -1.1100  0.2670  -0.0022  0.0006    </span>
@@ -403,7 +403,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        estimate      se     zval    pval    ci.lb   ci.ub   ​ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        estimate      se     zval    pval    ci.lb   ci.ub    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt                  0.0209  0.8027   0.0260  0.9792  -1.5525  1.5942    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ablat                   -0.0183  0.0239  -0.7658  0.4438  -0.0653  0.0286    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocrandom              0.0068  0.9689   0.0070  0.9944  -1.8922  1.9058    </span>

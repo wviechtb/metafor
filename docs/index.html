@@ -55,7 +55,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-6</span>
       </span>
     </div>
 
@@ -172,6 +172,136 @@
 <p>This builds the package from source based on the current version on <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>.</p>
 </div>
 <div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># load metafor package</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.metafor-project.org" class="external-link">metafor</a></span><span class="op">)</span>
+
+<span class="co"># examine the BCG vaccine dataset</span>
+<span class="va">dat.bcg</span></code></pre></div>
+<pre><code><span class="co">##    trial               author year tpos  tneg cpos  cneg ablat      alloc</span>
+<span class="co">## 1      1              Aronson 1948    4   119   11   128    44     random</span>
+<span class="co">## 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random</span>
+<span class="co">## 3      3      Rosenthal et al 1960    3   228   11   209    42     random</span>
+<span class="co">## 4      4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random</span>
+<span class="co">## 5      5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate</span>
+<span class="co">## 6      6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate</span>
+<span class="co">## 7      7     Vandiviere et al 1973    8  2537   10   619    19     random</span>
+<span class="co">## 8      8           TPT Madras 1980  505 87886  499 87892    13     random</span>
+<span class="co">## 9      9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random</span>
+<span class="co">## 10    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic</span>
+<span class="co">## 11    11       Comstock et al 1974  186 50448  141 27197    18 systematic</span>
+<span class="co">## 12    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic</span>
+<span class="co">## 13    13       Comstock et al 1976   27 16886   29 17825    33 systematic</span></code></pre>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># tpos  - number of TB positive cases in the treated (vaccinated) group</span>
+<span class="co"># tneg  - number of TB negative cases in the treated (vaccinated) group</span>
+<span class="co"># cpos  - number of TB positive cases in the control (non-vaccinated) group</span>
+<span class="co"># cneg  - number of TB negative cases in the control (non-vaccinated) group</span>
+<span class="co"># ablat - absolute latitude of the study location (in degrees)</span>
+<span class="co"># alloc - method of treatment allocation (random, alternate, or systematic assignment)</span>
+
+<span class="co"># calculate log risk ratios and corresponding sampling variances for the BCG vaccine dataset</span>
+<span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="va">dat.bcg</span>,
+              slab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">author</span>, <span class="va">year</span>, sep<span class="op">=</span><span class="st">", "</span><span class="op">)</span><span class="op">)</span> <span class="co"># also add study labels</span>
+<span class="va">dat</span></code></pre></div>
+<pre><code><span class="co">##    trial               author year tpos  tneg cpos  cneg ablat      alloc      yi     vi</span>
+<span class="co">## 1      1              Aronson 1948    4   119   11   128    44     random -0.8893 0.3256</span>
+<span class="co">## 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random -1.5854 0.1946</span>
+<span class="co">## 3      3      Rosenthal et al 1960    3   228   11   209    42     random -1.3481 0.4154</span>
+<span class="co">## 4      4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random -1.4416 0.0200</span>
+<span class="co">## 5      5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate -0.2175 0.0512</span>
+<span class="co">## 6      6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate -0.7861 0.0069</span>
+<span class="co">## 7      7     Vandiviere et al 1973    8  2537   10   619    19     random -1.6209 0.2230</span>
+<span class="co">## 8      8           TPT Madras 1980  505 87886  499 87892    13     random  0.0120 0.0040</span>
+<span class="co">## 9      9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random -0.4694 0.0564</span>
+<span class="co">## 10    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic -1.3713 0.0730</span>
+<span class="co">## 11    11       Comstock et al 1974  186 50448  141 27197    18 systematic -0.3394 0.0124</span>
+<span class="co">## 12    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic  0.4459 0.5325</span>
+<span class="co">## 13    13       Comstock et al 1976   27 16886   29 17825    33 systematic -0.0173 0.0714</span></code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># fit random-effects model</span>
+<span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span>
+<span class="va">res</span></code></pre></div>
+<pre><code><span class="co">## Random-Effects Model (k = 13; tau^2 estimator: REML)</span>
+<span class="co">##</span>
+<span class="co">## tau^2 (estimated amount of total heterogeneity): 0.3132 (SE = 0.1664)</span>
+<span class="co">## tau (square root of estimated tau^2 value):      0.5597</span>
+<span class="co">## I^2 (total heterogeneity / total variability):   92.22%</span>
+<span class="co">## H^2 (total variability / sampling variability):  12.86</span>
+<span class="co">##</span>
+<span class="co">## Test for Heterogeneity:</span>
+<span class="co">## Q(df = 12) = 152.2330, p-val &lt; .0001</span>
+<span class="co">##</span>
+<span class="co">## Model Results:</span>
+<span class="co">##</span>
+<span class="co">## estimate      se     zval    pval    ci.lb    ci.ub</span>
+<span class="co">##  -0.7145  0.1798  -3.9744  &lt;.0001  -1.0669  -0.3622  ***</span>
+<span class="co">##</span>
+<span class="co">## ---</span>
+<span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># predicted pooled risk ratio (with 95% CI/PI)</span>
+<span class="fu"><a href="reference/predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## pred ci.lb ci.ub pi.lb pi.ub</span>
+<span class="co">## 0.49  0.34  0.70  0.15  1.55</span></code></pre>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># forest plot</span>
+<span class="fu"><a href="reference/forest.html">forest</a></span><span class="op">(</span><span class="va">res</span>, atransf<span class="op">=</span><span class="va">exp</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.05</span>, <span class="fl">.25</span>, <span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">16</span>,<span class="fl">6</span><span class="op">)</span>,
+       ilab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">tpos</span>, <span class="va">tneg</span>, <span class="va">cpos</span>, <span class="va">cneg</span><span class="op">)</span>, ilab.xpos<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">9.5</span>,<span class="op">-</span><span class="fl">8</span>,<span class="op">-</span><span class="fl">6</span>,<span class="op">-</span><span class="fl">4.5</span><span class="op">)</span>,
+       header<span class="op">=</span><span class="st">"Author(s) and Year"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">9.5</span>,<span class="op">-</span><span class="fl">8</span>,<span class="op">-</span><span class="fl">6</span>,<span class="op">-</span><span class="fl">4.5</span><span class="op">)</span>, <span class="fl">15</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TB+"</span>, <span class="st">"TB-"</span>, <span class="st">"TB+"</span>, <span class="st">"TB-"</span><span class="op">)</span>, font<span class="op">=</span><span class="fl">2</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">8.75</span>,<span class="op">-</span><span class="fl">5.25</span><span class="op">)</span>,     <span class="fl">16</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vaccinated"</span>, <span class="st">"Control"</span><span class="op">)</span>, font<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/ex_forest_plot.png"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># funnel plot</span>
+<span class="fu"><a href="reference/funnel.html">funnel</a></span><span class="op">(</span><span class="va">res</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.8</span><span class="op">)</span>, las<span class="op">=</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/ex_funnel_plot.png"></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># regression test for funnel plot asymmetry</span>
+<span class="fu"><a href="reference/regtest.html">regtest</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></code></pre></div>
+<pre><code><span class="co">## Regression Test for Funnel Plot Asymmetry</span>
+<span class="co">##</span>
+<span class="co">## Model:     mixed-effects meta-regression model</span>
+<span class="co">## Predictor: standard error</span>
+<span class="co">##</span>
+<span class="co">## Test for Funnel Plot Asymmetry: z = -0.8033, p = 0.4218</span>
+<span class="co">## Limit Estimate (as sei -&gt; 0):   b = -0.5104 (CI: -1.1182, 0.0974)</span></code></pre>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># mixed-effects model with absolute latitude as moderators</span>
+<span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span>
+<span class="va">res</span></code></pre></div>
+<pre><code><span class="co">## Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
+<span class="co">##</span>
+<span class="co">## tau^2 (estimated amount of residual heterogeneity):     0.0764 (SE = 0.0591)</span>
+<span class="co">## tau (square root of estimated tau^2 value):             0.2763</span>
+<span class="co">## I^2 (residual heterogeneity / unaccounted variability): 68.39%</span>
+<span class="co">## H^2 (unaccounted variability / sampling variability):   3.16</span>
+<span class="co">## R^2 (amount of heterogeneity accounted for):            75.62%</span>
+<span class="co">##</span>
+<span class="co">## Test for Residual Heterogeneity:</span>
+<span class="co">## QE(df = 11) = 30.7331, p-val = 0.0012</span>
+<span class="co">##</span>
+<span class="co">## Test of Moderators (coefficient 2):</span>
+<span class="co">## QM(df = 1) = 16.3571, p-val &lt; .0001</span>
+<span class="co">##</span>
+<span class="co">## Model Results:</span>
+<span class="co">##</span>
+<span class="co">##          estimate      se     zval    pval    ci.lb    ci.ub</span>
+<span class="co">## intrcpt    0.2515  0.2491   1.0095  0.3127  -0.2368   0.7397</span>
+<span class="co">## ablat     -0.0291  0.0072  -4.0444  &lt;.0001  -0.0432  -0.0150  ***</span>
+<span class="co">##</span>
+<span class="co">## ---</span>
+<span class="co">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></code></pre>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># bubble plot (with points outside of the prediction interval labeled)</span>
+<span class="fu"><a href="reference/regplot.html">regplot</a></span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, pi<span class="op">=</span><span class="cn">TRUE</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>,
+        xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, predlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, transf<span class="op">=</span><span class="va">exp</span>, refline<span class="op">=</span><span class="fl">1</span>, legend<span class="op">=</span><span class="cn">TRUE</span>,
+        label<span class="op">=</span><span class="st">"piout"</span>, labsize<span class="op">=</span><span class="fl">0.8</span>, bty<span class="op">=</span><span class="st">"l"</span>, las<span class="op">=</span><span class="fl">1</span>, digits<span class="op">=</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<p><img src="reference/figures/ex_bubble_plot.png"></p>
+</div>
+<div class="section level2">
 <h2 id="meta">Meta<a class="anchor" aria-label="anchor" href="#meta"></a>
 </h2>
 <p>The metafor package was written by <a href="https://www.wvbauer.com/" class="external-link">Wolfgang Viechtbauer</a>. It is licensed under the <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt" class="external-link">GNU General Public License</a>. For citation info, type <code>citation(package='metafor')</code> in R. To report any issues or bugs or to suggest enhancements to the package, please go <a href="https://github.com/wviechtb/metafor/issues" class="external-link">here</a>.</p>
@@ -220,7 +350,7 @@
 <li><a href="https://github.com/wviechtb/metafor/actions" class="external-link"><img src="https://github.com/wviechtb/metafor/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://app.codecov.io/gh/wviechtb/metafor" class="external-link"><img src="https://codecov.io/gh/wviechtb/metafor/branch/master/graph/badge.svg" alt="Code Coverage"></a></li>
 <li><a href="https://cran.r-project.org/package=metafor" class="external-link"><img src="https://www.r-pkg.org/badges/version/metafor" alt="CRAN Version"></a></li>
-<li><a href="https://www.metafor-project.org/doku.php/installation#development_version" class="external-link"><img src="https://img.shields.io/badge/devel-3.5–4-brightgreen.svg" alt="devel Version"></a></li>
+<li><a href="https://www.metafor-project.org/doku.php/installation#development_version" class="external-link"><img src="https://img.shields.io/badge/devel-3.5–6-brightgreen.svg" alt="devel Version"></a></li>
 <li><a href="https://cranlogs.r-pkg.org/badges/metafor" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/metafor" alt="Monthly Downloads"></a></li>
 <li><a href="https://cranlogs.r-pkg.org/badges/grand-total/metafor" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/metafor" alt="Total Downloads"></a></li>
 </ul>
