@@ -43,8 +43,8 @@ residuals.rma <- function(object, type="response", ...) {
 
    if (type == "pearson") {
 
-      if (inherits(object, c("rma.mh", "rma.peto", "rma.glmm")))
-         stop(mstyle$stop("Extraction of Pearson residuals not available for objects of class \"rma.mh\", \"rma.peto\", or \"rma.glmm\"."))
+      if (inherits(object, "rma.glmm"))
+         stop(mstyle$stop("Extraction of Pearson residuals not available for objects of class \"rma.glmm\"."))
 
       out <- c(object$yi.f - object$X.f %*% object$beta)
       out[abs(out) < 100 * .Machine$double.eps] <- 0

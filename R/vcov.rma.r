@@ -76,9 +76,9 @@ vcov.rma <- function(object, type="fixed", ...) {
 
    if (type=="resid") {
 
-      ### don't allow this; the SEs of the residuals cannot be estimated consistently for "robust.rma" objects
+      ### the SEs of the residuals cannot be estimated consistently for "robust.rma" objects
 
-      if (inherits(object, "robust.rma"))
+      if (inherits(object, c("robust.rma", "rma.nn")))
          stop(mstyle$stop("Extraction of var-cov matrix of the residuals not available for objects of this type."))
 
       options(na.action="na.omit")

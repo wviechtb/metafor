@@ -41,7 +41,7 @@ tes <- function(x, vi, sei, subset, data,
 
       on.exit(options(na.action=na.act), add=TRUE)
 
-      .chkclass(class(x), must="rma", notav=c("rma.glmm", "rma.mv", "robust.rma", "rma.ls", "rma.uni.selmodel"))
+      .chkclass(class(x), must="rma", notav=c("rma.glmm", "rma.mv", "robust.rma", "rma.ls", "rma.nn", "rma.uni.selmodel"))
 
       ### set defaults for digits
 

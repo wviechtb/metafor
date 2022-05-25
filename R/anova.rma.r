@@ -476,7 +476,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
       ### for 'rma.uni' objects, calculate pseudo R^2 value (based on the
       ### proportional reduction in tau^2) comparing full vs. reduced model
 
-      if (inherits(object, "rma.uni") && !inherits(object, "rma.ls") && !inherits(object2, "rma.ls")) {
+      if (inherits(object, "rma.uni") && !inherits(object, "rma.ls") && !inherits(object, "rma.nn")) {
          if (is.element(model.f$method, c("FE","EE","CE"))) {
             if (model.f$weighted) {
                if (is.null(model.f$weights)) {
@@ -510,7 +510,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
       ### for 'rma.uni' objects, extract tau^2 estimates
 
-      if (inherits(object, "rma.uni") && !inherits(object, "rma.ls") && !inherits(object2, "rma.ls")) {
+      if (inherits(object, "rma.uni") && !inherits(object, "rma.ls") && !inherits(object, "rma.nn")) {
          tau2.f <- model.f$tau2
          tau2.r <- model.r$tau2
       } else {

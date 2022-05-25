@@ -2,7 +2,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma.uni", notav=c("robust.rma", "rma.ls", "rma.uni.selmodel"))
+   .chkclass(class(x), must="rma.uni", notav=c("robust.rma", "rma.ls", "rma.nn", "rma.uni.selmodel"))
 
    if (!suppressMessages(suppressWarnings(requireNamespace("rmarkdown", quietly=TRUE))))
       stop(mstyle$stop("Please install the 'rmarkdown' package to use the reporter function."))

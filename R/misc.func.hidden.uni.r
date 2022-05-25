@@ -285,3 +285,38 @@
 }
 
 ############################################################################
+
+### -1 times the log likelihood for non-normal models
+
+.ll.rma.nn <- function(par, yi, vi, X, k, pX, beta.val, pars.val, mtype, verbose, digits) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
+   beta <- par[seq_len(pX)]
+   beta <- ifelse(is.na(beta.val), beta, beta.val)
+   pars <- par[-seq_len(pX)]
+
+   if (mtype == "gaussian")
+      pars <- exp(pars)
+   if (mtype == "laplace")
+      pars <- exp(pars)
+
+   pars <- ifelse(is.na(pars.val), pars, pars.val)
+
+   if (mtype == "gaussian")
+      llval <- sum(dnorm(yi, X %*% beta, sqrt(pars + vi), log=TRUE))
+   #if (mtype == "laplace")
+   #   llval <- k * log(nu) + 1/2 * nu^2 * sum(vi) + sum(log(exp(nu*(yi-mu)) * pnorm(-nu*sei-(yi-mu)/sei) + exp(-nu*(yi-mu)) * pnorm((yi-mu)/sei - nu*sei)))
+
+   if (verbose) {
+      cat(mstyle$verbose(paste0("ll = ",         ifelse(is.na(llval), NA, formatC(llval, digits=digits[["fit"]], format="f", flag=" ")), "  ")))
+      cat(mstyle$verbose(paste0("beta = ", paste(ifelse(is.na(beta),  NA, formatC(beta,  digits=digits[["est"]], format="f", flag=" ")), collapse=" "), "  ")))
+      cat(mstyle$verbose(paste0("pars = ", paste(ifelse(is.na(pars),  NA, formatC(pars,  digits=digits[["est"]], format="f", flag=" ")), collapse=" "))))
+      cat("\n")
+   }
+
+   return(-1 * llval)
+
+}
+
+############################################################################

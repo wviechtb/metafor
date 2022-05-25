@@ -1,4 +1,6 @@
-# metafor 3.5-6 (2022-05-19)
+# metafor 3.5-7 (2022-05-25)
+
+- improved the stability of the calculations in `rma.uni()` with some internal rescaling of the `yi` values
 
 - documented the possibility to use an identity link (with `link="identity"`) in `rma.uni()` when fitting location-scale models (although this will often lead to estimation problems); added `solnp()` as an additional optimizer for this case
 

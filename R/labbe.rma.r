@@ -3,7 +3,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma", notav=c("rma.ls", "rma.uni.selmodel"))
+   .chkclass(class(x), must="rma", notav=c("rma.ls", "rma.nn", "rma.uni.selmodel"))
 
    if (!x$int.only)
       stop(mstyle$stop("L'Abbe plots can only be drawn for models without moderators."))

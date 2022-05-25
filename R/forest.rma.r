@@ -10,7 +10,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma", notav="rma.ls")
+   .chkclass(class(x), must="rma", notav=c("rma.ls", "rma.nn"))
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act), add=TRUE)

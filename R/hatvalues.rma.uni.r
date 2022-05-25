@@ -2,7 +2,7 @@ hatvalues.rma.uni <- function(model, type="diagonal", ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(model), must="rma.uni", notav="rma.uni.selmodel")
+   .chkclass(class(model), must="rma.uni", notav=c("rma.uni.selmodel", "rma.nn"))
 
    na.act <- getOption("na.action")
 

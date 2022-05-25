@@ -11,7 +11,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(object), must="rma.uni", notav=c("robust.rma", "rma.ls"))
+   .chkclass(class(object), must="rma.uni", notav=c("robust.rma", "rma.ls", "rma.nn"))
 
    if (!missing(parm))
       warning(mstyle$warning("Argument 'parm' (currently) ignored."), call.=FALSE)

@@ -5,7 +5,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(object), must="rma", notav="rma.ls")
+   .chkclass(class(object), must="rma", notav=c("rma.ls", "rma.nn"))
 
    na.act <- getOption("na.action")
 

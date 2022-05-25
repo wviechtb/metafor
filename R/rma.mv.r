@@ -1759,56 +1759,9 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    reml <- ifelse(method == "REML", TRUE, FALSE)
 
-   ### set NLOPT_LN_BOBYQA as the default algorithm for nloptr optimizer
-   ### and by default use a relative convergence criterion of 1e-8 on the function value
+   optcontrol <- .chkopt1(optimizer, optcontrol)
 
-   if (optimizer == "nloptr" && !is.element("algorithm", names(optcontrol)))
-      optcontrol$algorithm <- "NLOPT_LN_BOBYQA"
-
-   if (optimizer == "nloptr" && !is.element("ftol_rel", names(optcontrol)))
-      optcontrol$ftol_rel <- 1e-8
-
-   ### for mads, set trace=FALSE and tol=1e-6 by default
-
-   if (optimizer == "mads" && !is.element("trace", names(optcontrol)))
-      optcontrol$trace <- FALSE
-
-   if (optimizer == "mads" && !is.element("tol", names(optcontrol)))
-      optcontrol$tol <- 1e-6
-
-   ### for subplex, set reltol=1e-8 by default (the default in subplex() is .Machine$double.eps)
-
-   if (optimizer == "subplex" && !is.element("reltol", names(optcontrol)))
-      optcontrol$reltol <- 1e-8
-
-   ### for BBoptim, set trace=FALSE by default
-
-   if (optimizer == "BBoptim" && !is.element("trace", names(optcontrol)))
-      optcontrol$trace <- FALSE
-
-   #return(list(con=con, optimizer=optimizer, optmethod=optmethod, parallel=parallel, cl=cl, ncpus=ncpus, evtol=evtol, nearpd=nearpd, optcontrol=optcontrol))
-
-   ### check that the required packages are installed
-
-   if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
-      if (!requireNamespace("minqa", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'minqa' package to use this optimizer."))
-   }
-
-   if (is.element(optimizer, c("nloptr","ucminf","lbfgsb3c","subplex","optimParallel"))) {
-      if (!requireNamespace(optimizer, quietly=TRUE))
-         stop(mstyle$stop(paste0("Please install the '", optimizer, "' package to use this optimizer.")))
-   }
-
-   if (is.element(optimizer, c("hjk","nmk","mads"))) {
-      if (!requireNamespace("dfoptim", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'dfoptim' package to use this optimizer."))
-   }
-
-   if (optimizer == "BBoptim") {
-      if (!requireNamespace("BB", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'BB' package to use this optimizer."))
-   }
+   con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma"))
 
    if ((.isTRUE(cvvc) || cvvc %in% c("varcor","varcov","transf")) && !requireNamespace(con$hesspack, quietly=TRUE))
       stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to compute the Hessian.")))
@@ -1926,58 +1879,12 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    ### estimate sigma2, tau2, rho, gamma2, and phi as needed
 
-   if (optimizer == "optim") {
-      par.arg <- "par"
-      ctrl.arg <- ", control=optcontrol"
-   }
+   tmp <- .chkopt2(optimizer, optcontrol)
+   optimizer <- tmp$optimizer
+   par.arg   <- tmp$par.arg
+   ctrl.arg  <- tmp$ctrl.arg
 
-   if (optimizer == "nlminb") {
-      par.arg <- "start"
-      ctrl.arg <- ", control=optcontrol"
-   }
-
-   if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
-      par.arg <- "par"
-      optimizer <- paste0("minqa::", optimizer)
-      ctrl.arg <- ", control=optcontrol"
-   }
-
-   if (optimizer == "nloptr") {
-      par.arg <- "x0"
-      optimizer <- paste0("nloptr::nloptr")
-      ctrl.arg <- ", opts=optcontrol"
-   }
-
-   if (optimizer == "nlm") {
-      par.arg <- "p" ### because of this, must use argument name pX for p (number of columns in X matrix)
-      ctrl.arg <- paste(names(optcontrol), unlist(optcontrol), sep="=", collapse=", ")
-      if (nchar(ctrl.arg) != 0L)
-         ctrl.arg <- paste0(", ", ctrl.arg)
-   }
-
-   if (is.element(optimizer, c("hjk","nmk","mads"))) {
-      par.arg <- "par"
-      optimizer <- paste0("dfoptim::", optimizer)
-      ctrl.arg <- ", control=optcontrol"
-   }
-
-   if (is.element(optimizer, c("ucminf","lbfgsb3c","subplex"))) {
-      par.arg <- "par"
-      optimizer <- paste0(optimizer, "::", optimizer)
-      ctrl.arg <- ", control=optcontrol"
-   }
-
-   if (optimizer == "BBoptim") {
-      par.arg <- "par"
-      optimizer <- "BB::BBoptim"
-      ctrl.arg <- ", quiet=TRUE, control=optcontrol"
-   }
-
-   if (optimizer == "optimParallel") {
-
-      par.arg <- "par"
-      optimizer <- paste0("optimParallel::optimParallel")
-      ctrl.arg <- ", control=optcontrol, parallel=parallel"
+   if (optimizer == "optimParallel::optimParallel") {
 
       parallel$cl <- NULL
 
@@ -2020,7 +1927,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
       if (anyNA(c(sigma2, tau2, rho, gamma2, phi))) {
 
          optcall <- paste(optimizer, "(", par.arg, "=c(con$sigma2.init, con$tau2.init, con$rho.init, con$gamma2.init, con$phi.init),
-            .ll.rma.mv, reml=reml, ", ifelse(optimizer=="optim", "method=optmethod, ", ""), "Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
+            .ll.rma.mv, reml=reml, ", ifelse(optimizer=="optim", "method=optmethod, ", ""), "Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
             D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
             sigma2.val=sigma2, tau2.val=tau2, rho.val=rho, gamma2.val=gamma2, phi.val=phi,
             sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
@@ -2042,43 +1949,9 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
          #return(opt.res)
 
-         if (optimizer == "optimParallel::optimParallel" && verbose) {
-            tmp <- capture.output(print(opt.res$loginfo))
-            .print.output(tmp, mstyle$verbose)
-         }
+         ### convergence checks (if verbose print optimParallel log, if verbose > 2 print opt.res, and unify opt.res$par)
 
-         if (inherits(opt.res, "try-error"))
-            stop(mstyle$stop("Error during the optimization. Use verbose=TRUE and see help(rma.mv) for more details on the optimization routines."))
-
-         ### convergence checks
-
-         if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","optimParallel::optimParallel")) && opt.res$convergence != 0)
-            stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")))
-
-         if (is.element(optimizer, c("dfoptim::mads")) && opt.res$convergence > optcontrol$tol)
-            stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")))
-
-         if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")) && opt.res$ierr != 0)
-            stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (ierr = ", opt.res$ierr, ").")))
-
-         if (optimizer=="nloptr::nloptr" && !(opt.res$status >= 1 && opt.res$status <= 4))
-            stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (status = ", opt.res$status, ").")))
-
-         if (optimizer=="ucminf::ucminf" && !(opt.res$convergence == 1 || opt.res$convergence == 2))
-            stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")))
-
-         if (verbose > 2) {
-            cat("\n")
-            tmp <- capture.output(print(opt.res))
-            .print.output(tmp, mstyle$verbose)
-         }
-
-         ### copy estimated values to 'par' so code below works
-
-         if (optimizer=="nloptr::nloptr")
-            opt.res$par <- opt.res$solution
-         if (optimizer=="nlm")
-            opt.res$par <- opt.res$estimate
+         opt.res$par <- .chkconv(optimizer=optimizer, opt.res=opt.res, optcontrol=optcontrol, fun="rma.mv", verbose=verbose)
 
          if (p == k) {
 
@@ -2119,7 +1992,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    ### do the final model fit with estimated variance components
 
-   fitcall <- .ll.rma.mv(opt.res$par, reml=reml, Y=Y, M=V, A=A, X.fit=X, k=k, pX=p,
+   fitcall <- .ll.rma.mv(opt.res$par, reml=reml, Y=Y, M=V, A=A, X=X, k=k, pX=p,
       D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
       sigma2.val=sigma2, tau2.val=tau2, rho.val=rho, gamma2.val=gamma2, phi.val=phi,
       sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
@@ -2292,7 +2165,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
          if (con$hesspack == "numDeriv")
             hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = c(sigma2, tau2, cov1, gamma2, cov2),
-               method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
+               method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
                D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
                sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
                sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
@@ -2302,7 +2175,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
                verbose=verbose, digits=digits, REMLf=con$REMLf, hessian=TRUE), silent=TRUE)
          if (con$hesspack == "pracma")
             hessian <- try(pracma::hessian(f=.ll.rma.mv, x0 = c(sigma2, tau2, cov1, gamma2, cov2),
-               reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
+               reml=reml, Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
                D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
                sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
                sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
@@ -2317,7 +2190,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
          if (con$hesspack == "numDeriv")
             hessian <- try(numDeriv::hessian(func=.ll.rma.mv, x = if (cvvc=="transf") opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
-               method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
+               method.args=con$hessianCtrl, reml=reml, Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
                D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
                sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
                sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
@@ -2328,7 +2201,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
                verbose=verbose, digits=digits, REMLf=con$REMLf, hessian=TRUE), silent=TRUE)
          if (con$hesspack == "pracma")
             hessian <- try(pracma::hessian(f=.ll.rma.mv, x0 = if (cvvc=="transf") opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
-               reml=reml, Y=Y, M=V, A=NULL, X.fit=X, k=k, pX=p,
+               reml=reml, Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
                D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
                sigma2.val=sigma2.val, tau2.val=tau2.val, rho.val=rho.val, gamma2.val=gamma2.val, phi.val=phi.val,
                sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,

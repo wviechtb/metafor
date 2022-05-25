@@ -2,7 +2,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma.uni", notav=c("rma.uni.selmodel", "rma.ls"))
+   .chkclass(class(x), must="rma.uni", notav=c("rma.ls", "rma.nn", "rma.uni.selmodel"))
 
    if (missing(cluster))
       stop(mstyle$stop("Must specify 'cluster' variable."))

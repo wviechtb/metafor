@@ -2,7 +2,7 @@ rstandard.rma.uni <- function(model, digits, type="marginal", ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(model), must="rma.uni", notav=c("robust.rma", "rma.uni.selmodel"))
+   .chkclass(class(model), must="rma.uni", notav=c("robust.rma", "rma.nn", "rma.uni.selmodel"))
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act), add=TRUE)

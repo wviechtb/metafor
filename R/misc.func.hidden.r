@@ -1435,3 +1435,185 @@ tidy.rma <- function (x, ...) {
 }
 
 ############################################################################
+
+.chkopt1 <- function(optimizer, optcontrol) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
+   ### set NLOPT_LN_BOBYQA as the default algorithm for nloptr optimizer
+   ### and by default use a relative convergence criterion of 1e-8 on the function value
+
+   if (optimizer == "nloptr" && !is.element("algorithm", names(optcontrol)))
+      optcontrol$algorithm <- "NLOPT_LN_BOBYQA"
+
+   if (optimizer == "nloptr" && !is.element("ftol_rel", names(optcontrol)))
+      optcontrol$ftol_rel <- 1e-8
+
+   ### for mads, set trace=FALSE and tol=1e-6 by default
+
+   if (optimizer == "mads" && !is.element("trace", names(optcontrol)))
+      optcontrol$trace <- FALSE
+
+   if (optimizer == "mads" && !is.element("tol", names(optcontrol)))
+      optcontrol$tol <- 1e-6
+
+   ### for subplex, set reltol=1e-8 by default (the default in subplex() is .Machine$double.eps)
+
+   if (optimizer == "subplex" && !is.element("reltol", names(optcontrol)))
+      optcontrol$reltol <- 1e-8
+
+   ### for BBoptim, set trace=FALSE by default
+
+   if (optimizer == "BBoptim" && !is.element("trace", names(optcontrol)))
+      optcontrol$trace <- FALSE
+
+   ### for solnp, set trace=FALSE by default
+
+   if (optimizer == "solnp" && !is.element("trace", names(optcontrol)))
+      optcontrol$trace <- FALSE
+
+   ### check that the required packages are installed
+
+   if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
+      if (!requireNamespace("minqa", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'minqa' package to use this optimizer."), call.=FALSE)
+   }
+
+   if (is.element(optimizer, c("nloptr","ucminf","lbfgsb3c","subplex","optimParallel"))) {
+      if (!requireNamespace(optimizer, quietly=TRUE))
+         stop(mstyle$stop(paste0("Please install the '", optimizer, "' package to use this optimizer.")), call.=FALSE)
+   }
+
+   if (is.element(optimizer, c("hjk","nmk","mads"))) {
+      if (!requireNamespace("dfoptim", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'dfoptim' package to use this optimizer."), call.=FALSE)
+   }
+
+   if (optimizer == "BBoptim") {
+      if (!requireNamespace("BB", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'BB' package to use this optimizer."), call.=FALSE)
+   }
+
+   if (optimizer == "solnp") {
+      if (!requireNamespace("Rsolnp", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'Rsolnp' package to use this optimizer."), call.=FALSE)
+   }
+
+   return(optcontrol)
+
+}
+
+.chkopt2 <- function(optimizer, optcontrol) {
+
+   if (is.element(optimizer, c("optim","constrOptim"))) {
+      par.arg <- "par"
+      ctrl.arg <- ", control=optcontrol"
+   }
+
+   if (optimizer == "nlminb") {
+      par.arg <- "start"
+      ctrl.arg <- ", control=optcontrol"
+   }
+
+   if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
+      par.arg <- "par"
+      optimizer <- paste0("minqa::", optimizer) ### need to use this since loading nloptr masks bobyqa() and newuoa() functions
+      ctrl.arg <- ", control=optcontrol"
+   }
+
+   if (optimizer == "nloptr") {
+      par.arg <- "x0"
+      optimizer <- paste0("nloptr::nloptr") ### need to use this due to requireNamespace()
+      ctrl.arg <- ", opts=optcontrol"
+   }
+
+   if (optimizer == "nlm") {
+      par.arg <- "p" ### because of this, must use argument name pX for p (number of columns in X matrix)
+      ctrl.arg <- paste(names(optcontrol), unlist(optcontrol), sep="=", collapse=", ")
+      if (nchar(ctrl.arg) != 0L)
+         ctrl.arg <- paste0(", ", ctrl.arg)
+   }
+
+   if (is.element(optimizer, c("hjk","nmk","mads"))) {
+      par.arg <- "par"
+      optimizer <- paste0("dfoptim::", optimizer) ### need to use this so that the optimizers can be found
+      ctrl.arg <- ", control=optcontrol"
+   }
+
+   if (is.element(optimizer, c("ucminf","lbfgsb3c","subplex"))) {
+      par.arg <- "par"
+      optimizer <- paste0(optimizer, "::", optimizer) ### need to use this due to requireNamespace()
+      ctrl.arg <- ", control=optcontrol"
+   }
+
+   if (optimizer == "BBoptim") {
+      par.arg <- "par"
+      optimizer <- "BB::BBoptim"
+      ctrl.arg <- ", quiet=TRUE, control=optcontrol"
+   }
+
+   if (optimizer == "solnp") {
+      par.arg <- "pars"
+      optimizer <- "Rsolnp::solnp"
+      ctrl.arg <- ", control=optcontrol"
+   }
+
+   if (optimizer == "optimParallel") {
+      par.arg <- "par"
+      optimizer <- "optimParallel::optimParallel"
+      ctrl.arg <- ", control=optcontrol, parallel=parallel"
+   }
+
+   return(list(optimizer=optimizer, par.arg=par.arg, ctrl.arg=ctrl.arg))
+
+}
+
+.chkconv <- function(optimizer, opt.res, optcontrol, fun, verbose) {
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
+   if (optimizer == "optimParallel::optimParallel" && verbose) {
+      tmp <- capture.output(print(opt.res$loginfo))
+      .print.output(tmp, mstyle$verbose)
+   }
+
+   ### convergence checks
+
+   if (inherits(opt.res, "try-error"))
+      stop(mstyle$stop(paste0("Error during the optimization. Use verbose=TRUE and see help(", fun, ") for more details on the optimization routines.")), call.=FALSE)
+
+   if (is.element(optimizer, c("optim","constrOptim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rsolnp::solnp","optimParallel::optimParallel")) && opt.res$convergence != 0)
+      stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")), call.=FALSE)
+
+   if (is.element(optimizer, c("dfoptim::mads")) && opt.res$convergence > optcontrol$tol)
+      stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")), call.=FALSE)
+
+   if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")) && opt.res$ierr != 0)
+      stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (ierr = ", opt.res$ierr, ").")), call.=FALSE)
+
+   if (optimizer=="nloptr::nloptr" && !(opt.res$status >= 1 && opt.res$status <= 4))
+      stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (status = ", opt.res$status, ").")), call.=FALSE)
+
+   if (optimizer=="ucminf::ucminf" && !(opt.res$convergence == 1 || opt.res$convergence == 2))
+      stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")), call.=FALSE)
+
+   if (verbose > 2) {
+      cat("\n")
+      tmp <- capture.output(print(opt.res))
+      .print.output(tmp, mstyle$verbose)
+   }
+
+   ### copy estimated values to 'par'
+
+   if (optimizer=="nloptr::nloptr")
+      opt.res$par <- opt.res$solution
+   if (optimizer=="nlm")
+      opt.res$par <- opt.res$estimate
+   if (optimizer=="Rsolnp::solnp")
+      opt.res$par <- opt.res$pars
+
+   return(opt.res$par)
+
+}
+
+############################################################################
