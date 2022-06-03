@@ -1535,6 +1535,11 @@ tidy.rma <- function (x, ...) {
          stop(mstyle$stop("Please install the 'Rsolnp' package to use this optimizer."), call.=FALSE)
    }
 
+   if (optimizer == "constrOptim.nl") {
+      if (!requireNamespace("alabama", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'alabama' package to use this optimizer."), call.=FALSE)
+   }
+
    #########################################################################
 
    if (is.element(optimizer, c("optim","constrOptim"))) {
@@ -1590,6 +1595,21 @@ tidy.rma <- function (x, ...) {
       ctrl.arg <- ", control=optcontrol"
    }
 
+   if (optimizer == "constrOptim.nl") {
+      par.arg <- "par"
+      optimizer <- "alabama::constrOptim.nl"
+      if ("control.outer" %in% names(optcontrol)) {
+         # can specify 'control.outer' to be passed to constrOptim.nl(), but when using
+         # the 'method' argument, must escape " or use ' for this to work; for example:
+         # control=list(optimizer="constrOptim.nl", control.outer=list(method="'Nelder-Mead'"))
+         control.outer <- paste0("control.outer=list(", paste(names(optcontrol$control.outer), unlist(optcontrol$control.outer), sep="=", collapse=", "), ")")
+         ctrl.arg <- paste0(", control.optim=optcontrol, ", control.outer)
+         optcontrol$control.outer <- NULL
+      } else {
+         ctrl.arg <- ", control.optim=optcontrol, control.outer=list(trace=FALSE)"
+      }
+   }
+
    if (optimizer == "optimParallel") {
       par.arg <- "par"
       optimizer <- "optimParallel::optimParallel"
@@ -1614,7 +1634,7 @@ tidy.rma <- function (x, ...) {
    if (inherits(opt.res, "try-error"))
       stop(mstyle$stop(paste0("Error during the optimization. Use verbose=TRUE and see help(", fun, ") for more details on the optimization routines.")), call.=FALSE)
 
-   if (is.element(optimizer, c("optim","constrOptim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rsolnp::solnp","optimParallel::optimParallel")) && opt.res$convergence != 0)
+   if (is.element(optimizer, c("optim","constrOptim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rsolnp::solnp","alabama::constrOptim.nl","optimParallel::optimParallel")) && opt.res$convergence != 0)
       stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")), call.=FALSE)
 
    if (is.element(optimizer, c("dfoptim::mads")) && opt.res$convergence > optcontrol$tol)

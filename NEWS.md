@@ -1,5 +1,7 @@
 # metafor 3.5-8 (2022-06-03)
 
+- optimizers `nloptr` and `constrOptim.nl` (the latter from the `alabama` package) are now available in `rma.uni()` for location-scale models when using an identity link
+
 - added measure `SMD1H` to `escalc()`
 
 - for `measure="SMD"`, `escalc()` now also allows the user to specify d-values and t-test statistics via arguments `di` and `ti`, respectively

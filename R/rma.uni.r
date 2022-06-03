@@ -1008,7 +1008,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
           list(beta.init = NULL,               # initial values for model coefficients / location parameters (only relevant when optbeta=TRUE)
                hesspack = "numDeriv",          # package for computing the Hessian (numDeriv or pracma)
                htransf = FALSE,                # FALSE/TRUE: Hessian is computed for the untransformed/transformed parameter estimates
-               optimizer = "nlminb",           # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","solnp") for location-scale models
+               optimizer = "nlminb",           # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","solnp","constrOptim.nl") for location-scale models
                optmethod = "BFGS",             # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),              # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,                      # arguments for optimParallel()
@@ -1639,7 +1639,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       ### get optimizer arguments from control argument
 
-      optimizer <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","solnp","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
+      optimizer <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","solnp","constrOptim.nl","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
       optmethod <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
       if (optimizer %in% c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent")) {
          optmethod <- optimizer
@@ -1661,17 +1661,17 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       ### when using an identify link, automatically set constrOptim as the default optimizer (but solnp when optbeta=TRUE)
 
       if (link == "identity") {
-         if (!is.element(optimizer, c("constrOptim","solnp"))) {
+         if (!is.element(optimizer, c("constrOptim","solnp","nloptr","constrOptim.nl"))) {
             if (optimizer != "nlminb")
-               warning(mstyle$warning("Can only use optimizers 'constrOptim' or 'solnp' when link='identity' (resetting to 'constrOptim')."), call.=FALSE)
+               warning(mstyle$warning("Can only use optimizers 'constrOptim', 'solnp', 'nloptr', or 'constrOptim.nl' when link='identity' (resetting to 'constrOptim')."), call.=FALSE)
             optimizer <- "constrOptim"
          }
          if (optbeta)
             optimizer <- "solnp"
       }
 
-      if (link == "log" && optimizer == "constrOptim")
-         stop(mstyle$stop("Cannot use 'constrOptim' optimizer when using a log link.")) # but can use solnp
+      if (link == "log" && is.element(optimizer, c("constrOptim","constrOptim.nl")))
+         stop(mstyle$stop(paste0("Cannot use '", optimizer, "' optimizer when using a log link."))) # but can use solnp and nloptr
 
       reml <- ifelse(method[1] == "REML", TRUE, FALSE)
 
@@ -1890,6 +1890,11 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       par.arg    <- tmp$par.arg
       ctrl.arg   <- tmp$ctrl.arg
 
+      ### when using nloptr, have to use NLOPT_LN_COBYLA to allow for nonlinear inequality constraints
+
+      if (link == "identity" && optimizer == "nloptr::nloptr")
+         optcontrol$algorithm <- "NLOPT_LN_COBYLA"
+
       if (optimizer == "optimParallel::optimParallel") {
 
          parallel$cl <- NULL
@@ -1940,7 +1945,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       if (link == "identity") {
 
          if (optimizer == "Rsolnp::solnp")
-            optcall <- paste0("Rsolnp::solnp(pars=c(beta.init, alpha.init), fun=.ll.rma.ls, ineqfun=.rma.ls.solnp.ineqfun, ineqLB=rep(0,k), ineqUB=rep(Inf,k),
+            optcall <- paste0("Rsolnp::solnp(pars=c(beta.init, alpha.init), fun=.ll.rma.ls, ineqfun=.rma.ls.ineqfun.pos, ineqLB=rep(0,k), ineqUB=rep(Inf,k),
                               yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, beta.val=beta, verbose=verbose, digits=digits,
                               REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
                               tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
@@ -1951,8 +1956,21 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                               REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
                               tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
 
+         if (optimizer == "nloptr::nloptr")
+            optcall <- paste0("nloptr::nloptr(x0=c(beta.init, alpha.init), eval_f=.ll.rma.ls, eval_g_ineq=.rma.ls.ineqfun.neg,
+                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, beta.val=beta, verbose=verbose, digits=digits,
+                              REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
+                              tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
+
+         if (optimizer == "alabama::constrOptim.nl")
+            optcall <- paste0("alabama::constrOptim.nl(par=c(beta.init, alpha.init), fn=.ll.rma.ls, hin=.rma.ls.ineqfun.pos,
+                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, beta.val=beta, verbose=verbose, digits=digits,
+                              REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
+                              tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
+
       }
 
+      #print(optcall)
       #return(optcall)
 
       if (verbose) {

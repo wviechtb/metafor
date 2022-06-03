@@ -180,6 +180,20 @@ test_that("BLUPs are calculated correctly for the three-level random-effects mod
 
 })
 
+test_that("restarting with 'restart=TRUE' works.", {
+
+   skip_on_cran()
+
+   expect_error(res <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, control=list(maxiter=4)))
+   expect_error(res <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, control=list(maxiter=4), restart=TRUE))
+   res <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, control=list(maxiter=4), restart=TRUE)
+
+   expect_equivalent(coef(res), 0.1845, tolerance=.tol[["coef"]])
+   expect_equivalent(res$se, 0.0805, tolerance=.tol[["se"]])
+   expect_equivalent(res$sigma2, c(0.0577, 0.0329), tolerance=.tol[["var"]])
+
+})
+
 test_that("results are correct when allowing for different tau^2 per district.", {
 
    skip_on_cran()
@@ -207,3 +221,4 @@ test_that("results are correct when allowing for different tau^2 per district.",
 })
 
 rm(list=ls())
+
