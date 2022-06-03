@@ -2,7 +2,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma.uni", notav=c("robust.rma", "rma.ls", "rma.nn", "rma.uni.selmodel"))
+   .chkclass(class(x), must="rma.uni", notav=c("robust.rma", "rma.ls", "rma.gen", "rma.uni.selmodel"))
 
    na.act <- getOption("na.action")
 
@@ -56,8 +56,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    ###       original dataset passed to the model fitting function and so we apply
    ###       the same subsetting (if necessary) as was done during model fitting
 
-   if (!is.null(x$subset))
-      order <- order[x$subset]
+   order <- .getsubset(order, x$subset)
 
    order <- order(order, decreasing=decreasing)
 

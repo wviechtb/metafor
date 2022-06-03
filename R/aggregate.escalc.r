@@ -222,12 +222,12 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
 
    if (!is.null(subset)) {
 
-      subset <- .setnafalse(subset, k=k)
+      subset <- .chksubset(subset, k)
 
-      x  <- x[subset,,drop=FALSE]
-      yi <- yi[subset]
-      V  <- V[subset,subset,drop=FALSE]
-      cluster <- cluster[subset]
+      x  <- .getsubset(x,  subset)
+      yi <- .getsubset(yi, subset)
+      V  <- .getsubset(V,  subset, col=TRUE)
+      cluster <- .getsubset(cluster, subset)
 
       k <- nrow(x)
       ucluster <- unique(cluster)

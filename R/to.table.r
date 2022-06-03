@@ -90,11 +90,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       k <- length(ai) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         ai <- ai[subset]
-         bi <- bi[subset]
-         ci <- ci[subset]
-         di <- di[subset]
+         subset <- .chksubset(subset, k)
+         ai <- .getsubset(ai, subset)
+         bi <- .getsubset(bi, subset)
+         ci <- .getsubset(ci, subset)
+         di <- .getsubset(di, subset)
       }
 
       n1i <- ai + bi
@@ -185,11 +185,11 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       k <- length(x1i) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         x1i <- x1i[subset]
-         x2i <- x2i[subset]
-         t1i <- t1i[subset]
-         t2i <- t2i[subset]
+         subset <- .chksubset(subset, k)
+         x1i <- .getsubset(x1i, subset)
+         x2i <- .getsubset(x2i, subset)
+         t1i <- .getsubset(t1i, subset)
+         t2i <- .getsubset(t2i, subset)
       }
 
       if (any(c(x1i, x2i) < 0, na.rm=TRUE))
@@ -268,13 +268,13 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       k <- length(n1i) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         m1i  <- m1i[subset]
-         m2i  <- m2i[subset]
-         sd1i <- sd1i[subset]
-         sd2i <- sd2i[subset]
-         n1i  <- n1i[subset]
-         n2i  <- n2i[subset]
+         subset <- .chksubset(subset, k)
+         m1i  <- .getsubset(m1i,  subset)
+         m2i  <- .getsubset(m2i,  subset)
+         sd1i <- .getsubset(sd1i, subset)
+         sd2i <- .getsubset(sd2i, subset)
+         n1i  <- .getsubset(n1i,  subset)
+         n2i  <- .getsubset(n2i,  subset)
       }
 
       if (any(c(sd1i, sd2i) < 0, na.rm=TRUE))
@@ -303,9 +303,9 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       k <- length(ri) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         ri <- ri[subset]
-         ni <- ni[subset]
+         subset <- .chksubset(subset, k)
+         ri <- .getsubset(ri, subset)
+         ni <- .getsubset(ni, subset)
       }
 
       if (any(abs(ri) > 1, na.rm=TRUE))
@@ -342,9 +342,9 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       k <- length(xi) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         xi <- xi[subset]
-         mi <- mi[subset]
+         subset <- .chksubset(subset, k)
+         xi <- .getsubset(xi, subset)
+         mi <- .getsubset(mi, subset)
       }
 
       ni <- xi + mi
@@ -415,9 +415,9 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       k <- length(xi) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         xi <- xi[subset]
-         ti <- ti[subset]
+         subset <- .chksubset(subset, k)
+         xi <- .getsubset(xi, subset)
+         ti <- .getsubset(ti, subset)
       }
 
       if (any(xi < 0, na.rm=TRUE))
@@ -481,10 +481,10 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       k <- length(ni) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         mi  <- mi[subset]
-         sdi <- sdi[subset]
-         ni  <- ni[subset]
+         subset <- .chksubset(subset, k)
+         mi  <- .getsubset(mi,  subset)
+         sdi <- .getsubset(sdi, subset)
+         ni  <- .getsubset(ni,  subset)
       }
 
       if (any(sdi < 0, na.rm=TRUE))
@@ -532,13 +532,13 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       }
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         m1i  <- m1i[subset]
-         m2i  <- m2i[subset]
-         sd1i <- sd1i[subset]
-         sd2i <- sd2i[subset]
-         ni   <- ni[subset]
-         ri   <- ri[subset]
+         subset <- .chksubset(subset, k)
+         m1i  <- .getsubset(m1i,  subset)
+         m2i  <- .getsubset(m2i,  subset)
+         sd1i <- .getsubset(sd1i, subset)
+         sd2i <- .getsubset(sd2i, subset)
+         ni   <- .getsubset(ni,   subset)
+         ri   <- .getsubset(ri,   subset)
       }
 
       if (is.element(measure, c("MC","SMCC","SMCRH","ROMC","CVRC"))) {
@@ -576,10 +576,10 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       k <- length(ai) ### number of outcomes before subsetting
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         ai <- ai[subset]
-         mi <- mi[subset]
-         ni <- ni[subset]
+         subset <- .chksubset(subset, k)
+         ai <- .getsubset(ai, subset)
+         mi <- .getsubset(mi, subset)
+         ni <- .getsubset(ni, subset)
       }
 
       if (any(ai > 1, na.rm=TRUE))
@@ -621,7 +621,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
    ### if a subset of studies is specified
 
    if (!is.null(subset))
-      slab <- slab[subset]
+      slab <- .getsubset(slab, subset)
 
    ### check if study labels are unique; if not, make them unique
 

@@ -164,11 +164,11 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       k.all <- k
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         ai <- ai[subset]
-         bi <- bi[subset]
-         ci <- ci[subset]
-         di <- di[subset]
+         subset <- .chksubset(subset, k)
+         ai <- .getsubset(ai, subset)
+         bi <- .getsubset(bi, subset)
+         ci <- .getsubset(ci, subset)
+         di <- .getsubset(di, subset)
       }
 
       args <- list(measure=measure, ai=ai, bi=bi, ci=ci, di=di, add=add, to=to, drop00=drop00, vtype=vtype, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
@@ -186,11 +186,11 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       k.all <- k
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         x1i <- x1i[subset]
-         x2i <- x2i[subset]
-         t1i <- t1i[subset]
-         t2i <- t2i[subset]
+         subset <- .chksubset(subset, k)
+         x1i <- .getsubset(x1i, subset)
+         x2i <- .getsubset(x2i, subset)
+         t1i <- .getsubset(t1i, subset)
+         t2i <- .getsubset(t2i, subset)
       }
 
       args <- list(measure=measure, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, add=add, to=to, drop00=drop00, vtype=vtype, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
@@ -209,9 +209,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       k.all <- k
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         xi <- xi[subset]
-         mi <- mi[subset]
+         subset <- .chksubset(subset, k)
+         xi <- .getsubset(xi, subset)
+         mi <- .getsubset(mi, subset)
       }
 
       args <- list(measure=measure, xi=xi, mi=mi, add=add, to=to, vtype=vtype, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
@@ -227,9 +227,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       k.all <- k
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         xi <- xi[subset]
-         ti <- ti[subset]
+         subset <- .chksubset(subset, k)
+         xi <- .getsubset(xi, subset)
+         ti <- .getsubset(ti, subset)
       }
 
       args <- list(measure=measure, xi=xi, ti=ti, add=add, to=to, vtype=vtype, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
@@ -319,9 +319,9 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
       if (verbose > 1)
          message(mstyle$message("Subsetting ..."))
 
-      mods <- mods[subset,,drop=FALSE]
-      slab <- slab[subset]
-      ids  <- ids[subset]
+      mods <- .getsubset(mods, subset, col=TRUE)
+      slab <- .getsubset(slab, subset)
+      ids  <- .getsubset(ids,  subset)
 
    }
 

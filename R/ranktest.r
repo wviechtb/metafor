@@ -101,9 +101,9 @@ ranktest <- function(x, vi, sei, subset, data, digits, ...) {
       ### if a subset of studies is specified
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=length(yi))
-         yi <- yi[subset]
-         vi <- vi[subset]
+         subset <- .chksubset(subset, length(yi))
+         yi <- .getsubset(yi, subset)
+         vi <- .getsubset(vi, subset)
       }
 
       ### check for NAs and act accordingly

@@ -1,4 +1,6 @@
-# metafor 3.5-7 (2022-05-25)
+# metafor 3.5-8 (2022-06-03)
+
+- for `measure="SMD"`, `escalc()` now also allows the user to specify d-values and t-test statistics via arguments `di` and `ti`, respectively
 
 - improved the stability of the calculations in `rma.uni()` with some internal rescaling of the `yi` values
 

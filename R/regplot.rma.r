@@ -219,8 +219,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    if (length(pch) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'pch' argument (", length(pch), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-   if (!is.null(x$subset))
-      pch <- pch[x$subset]
+   pch <- .getsubset(pch, x$subset)
 
    psize.char <- FALSE
 
@@ -246,8 +245,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          if (length(psize) != x$k.all)
             stop(mstyle$stop(paste0("Length of the 'psize' argument (", length(psize), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-         if (!is.null(x$subset))
-            psize <- psize[x$subset]
+         psize <- .getsubset(psize, x$subset)
 
       }
 
@@ -259,8 +257,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    if (length(col) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'col' argument (", length(col), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-   if (!is.null(x$subset))
-      col <- col[x$subset]
+   col <- .getsubset(col, x$subset)
 
    if (length(bg) == 1L)
       bg <- rep(bg, x$k.all)
@@ -268,8 +265,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    if (length(bg) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'bg' argument (", length(bg), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-   if (!is.null(x$subset))
-      bg <- bg[x$subset]
+   bg <- .getsubset(bg, x$subset)
 
    if (!is.null(label)) {
 
@@ -281,8 +277,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
             label <- rep(TRUE, x$k.all)
 
-            if (!is.null(x$subset))
-               label <- label[x$subset]
+            label <- .getsubset(label, x$subset)
 
          }
 
@@ -297,8 +292,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          if (length(label) != x$k.all)
             stop(mstyle$stop(paste0("Length of the 'label' argument (", length(label), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-         if (!is.null(x$subset))
-            label <- label[x$subset]
+         label <- .getsubset(label, x$subset)
 
       } else if (is.numeric(label)) {
 

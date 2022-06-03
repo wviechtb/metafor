@@ -4,7 +4,7 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(y), must="rma.uni", notav=c("rma.nn", "rma.uni.selmodel"))
+   .chkclass(class(y), must="rma.uni", notav=c("rma.gen", "rma.uni.selmodel"))
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act), add=TRUE)

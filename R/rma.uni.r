@@ -61,7 +61,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("knha", "onlyo1", "addyi", "addvi", "i2def", "r2def", "skipr2", "abbrev", "dfs", "time", "outlist", "link", "optbeta", "alpha", "beta", "skiphes"))#, "model", "pars"))
+   .chkdots(ddd, c("knha", "onlyo1", "addyi", "addvi", "i2def", "r2def", "skipr2", "abbrev", "dfs", "time", "outlist", "link", "optbeta", "alpha", "beta", "skiphes"))
 
    ### handle 'knha' argument from ... (note: overrides test argument)
 
@@ -90,31 +90,6 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    i2def <- ifelse(is.null(ddd$i2def), "1", ddd$i2def)
    r2def <- ifelse(is.null(ddd$r2def), "1", ddd$r2def)
 
-   ### handle model argument
-
-   if (!is.null(ddd$model)) {
-      mtype <- match.arg(ddd$model, c("normal", "gaussian", "laplace"))
-   } else {
-      mtype <- "normal"
-   }
-
-   if (!is.null(ddd$pars)) {
-      pars <- ddd$pars
-   } else {
-      pars <- NA
-   }
-
-   if (mtype != "normal" && !missing(scale))
-      stop("Can only use model='normal' for location-scale models.")
-
-   if (mtype != "normal" && !weighted)
-      stop(mstyle$stop("Must use 'weighted=TRUE' for non-normal models."))
-
-   if (mtype != "normal" && method[1] != "ML") {
-      warning(mstyle$warning("Must use method='ML' for non-normal models (resetting to use 'ML')."))
-      method <- "ML"
-   }
-
    ### handle arguments for location-scale models
 
    if (!is.null(ddd$link)) {
@@ -128,9 +103,6 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    } else {
       optbeta <- FALSE
    }
-
-   if (mtype != "normal")
-      optbeta <- TRUE
 
    if (optbeta && !weighted)
       stop(mstyle$stop("Must use 'weighted=TRUE' when 'optbeta=TRUE'."))
@@ -218,12 +190,8 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    ai <- bi <- ci <- di <- x1i <- x2i <- t1i <- t2i <- NA
 
-   if (!is.null(weights)) {
-      if (mtype != "normal")
-         stop(mstyle$stop("Cannot use custom weights with non-normal models."))
-      if (optbeta)
-         stop(mstyle$stop("Cannot use custom weights when 'optbeta=TRUE'."))
-   }
+   if (!is.null(weights) && optbeta)
+      stop(mstyle$stop("Cannot use custom weights when 'optbeta=TRUE'."))
 
    if (!is.null(yi)) {
 
@@ -321,10 +289,8 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       ### extract vi and sei values (but only if yi wasn't an escalc object)
 
       if (!yi.escalc) {
-
          vi  <- .getx("vi",  mf=mf, data=data, checknumeric=TRUE)
          sei <- .getx("sei", mf=mf, data=data, checknumeric=TRUE)
-
       }
 
       ### extract ni argument
@@ -408,10 +374,10 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       if (!is.null(subset)) {
 
-         subset <- .setnafalse(subset, k=k)
-         yi <- yi[subset]
-         vi <- vi[subset]
-         ni <- ni[subset]
+         subset <- .chksubset(subset, k)
+         yi <- .getsubset(yi, subset)
+         vi <- .getsubset(vi, subset)
+         ni <- .getsubset(ni, subset)
 
          attr(yi, "measure") <- measure ### add measure attribute back
          attr(yi, "ni")      <- ni      ### add ni attribute back
@@ -439,11 +405,11 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k)
-            ai <- ai[subset]
-            bi <- bi[subset]
-            ci <- ci[subset]
-            di <- di[subset]
+            subset <- .chksubset(subset, k)
+            ai <- .getsubset(ai, subset)
+            bi <- .getsubset(bi, subset)
+            ci <- .getsubset(ci, subset)
+            di <- .getsubset(di, subset)
          }
 
          args <- list(measure=measure, ai=ai, bi=bi, ci=ci, di=di, ri=ri, add=add, to=to, drop00=drop00, vtype=vtype, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
@@ -461,11 +427,11 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k)
-            x1i <- x1i[subset]
-            x2i <- x2i[subset]
-            t1i <- t1i[subset]
-            t2i <- t2i[subset]
+            subset <- .chksubset(subset, k)
+            x1i <- .getsubset(x1i, subset)
+            x2i <- .getsubset(x2i, subset)
+            t1i <- .getsubset(t1i, subset)
+            t2i <- .getsubset(t2i, subset)
          }
 
          args <- list(measure=measure, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, add=add, to=to, drop00=drop00, vtype=vtype, addyi=addyi, addvi=addvi)
@@ -480,18 +446,34 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          sd2i <- .getx("sd2i", mf=mf, data=data, checknumeric=TRUE)
          n1i  <- .getx("n1i",  mf=mf, data=data, checknumeric=TRUE)
          n2i  <- .getx("n2i",  mf=mf, data=data, checknumeric=TRUE)
+         di   <- .getx("di",   mf=mf, data=data, checknumeric=TRUE)
+         ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
+
+         if (measure == "SMD") {
+
+            if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti))
+               stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+            di <- replmiss(di, ti * sqrt(1/n1i + 1/n2i))
+
+            m1i[!is.na(di)]  <- di[!is.na(di)]
+            m2i[!is.na(di)]  <- 0
+            sd1i[!is.na(di)] <- 1
+            sd2i[!is.na(di)] <- 1
+
+         }
 
          k <- length(n1i) ### number of outcomes before subsetting
          k.all <- k
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k)
-            m1i  <- m1i[subset]
-            m2i  <- m2i[subset]
-            sd1i <- sd1i[subset]
-            sd2i <- sd2i[subset]
-            n1i  <- n1i[subset]
-            n2i  <- n2i[subset]
+            subset <- .chksubset(subset, k)
+            m1i  <- .getsubset(m1i,  subset)
+            m2i  <- .getsubset(m2i,  subset)
+            sd1i <- .getsubset(sd1i, subset)
+            sd2i <- .getsubset(sd2i, subset)
+            n1i  <- .getsubset(n1i,  subset)
+            n2i  <- .getsubset(n2i,  subset)
          }
 
          args <- list(measure=measure, m1i=m1i, m2i=m2i, sd1i=sd1i, sd2i=sd2i, n1i=n1i, n2i=n2i, vtype=vtype)
@@ -507,9 +489,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k)
-            ri <- ri[subset]
-            ni <- ni[subset]
+            subset <- .chksubset(subset, k)
+            ri <- .getsubset(ri, subset)
+            ni <- .getsubset(ni, subset)
          }
 
          args <- list(measure=measure, ri=ri, ni=ni, vtype=vtype)
@@ -527,11 +509,11 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k)
-            ti  <- ti[subset]
-            r2i <- r2i[subset]
-            mi  <- mi[subset]
-            ni  <- ni[subset]
+            subset <- .chksubset(subset, k)
+            ti  <- .getsubset(ti,  subset)
+            r2i <- .getsubset(r2i, subset)
+            mi  <- .getsubset(mi,  subset)
+            ni  <- .getsubset(ni,  subset)
          }
 
          args <- list(measure=measure, ti=ti, r2i=r2i, mi=mi, ni=ni, vtype=vtype)
@@ -550,9 +532,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k)
-            xi <- xi[subset]
-            mi <- mi[subset]
+            subset <- .chksubset(subset, k)
+            xi <- .getsubset(xi, subset)
+            mi <- .getsubset(mi, subset)
          }
 
          args <- list(measure=measure, xi=xi, mi=mi, add=add, to=to, vtype=vtype, addyi=addyi, addvi=addvi)
@@ -568,9 +550,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k)
-            xi <- xi[subset]
-            ti <- ti[subset]
+            subset <- .chksubset(subset, k)
+            xi <- .getsubset(xi, subset)
+            ti <- .getsubset(ti, subset)
          }
 
          args <- list(measure=measure, xi=xi, ti=ti, add=add, to=to, vtype=vtype, addyi=addyi, addvi=addvi)
@@ -587,10 +569,10 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k)
-            mi  <- mi[subset]
-            sdi <- sdi[subset]
-            ni  <- ni[subset]
+            subset <- .chksubset(subset, k)
+            mi  <- .getsubset(mi,  subset)
+            sdi <- .getsubset(sdi, subset)
+            ni  <- .getsubset(ni,  subset)
          }
 
          args <- list(measure=measure, mi=mi, sdi=sdi, ni=ni, vtype=vtype)
@@ -610,13 +592,13 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k)
-            m1i  <- m1i[subset]
-            m2i  <- m2i[subset]
-            sd1i <- sd1i[subset]
-            sd2i <- sd2i[subset]
-            ni   <- ni[subset]
-            ri   <- ri[subset]
+            subset <- .chksubset(subset, k)
+            m1i  <- .getsubset(m1i,  subset)
+            m2i  <- .getsubset(m2i,  subset)
+            sd1i <- .getsubset(sd1i, subset)
+            sd2i <- .getsubset(sd2i, subset)
+            ni   <- .getsubset(ni,   subset)
+            ri   <- .getsubset(ri,   subset)
          }
 
          args <- list(measure=measure, m1i=m1i, m2i=m2i, sd1i=sd1i, sd2i=sd2i, ri=ri, ni=ni, vtype=vtype)
@@ -633,10 +615,10 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k)
-            ai <- ai[subset]
-            mi <- mi[subset]
-            ni <- ni[subset]
+            subset <- .chksubset(subset, k)
+            ai <- .getsubset(ai, subset)
+            mi <- .getsubset(mi, subset)
+            ni <- .getsubset(ni, subset)
          }
 
          args <- list(measure=measure, ai=ai, mi=mi, ni=ni, vtype=vtype)
@@ -653,10 +635,10 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          k.all <- k
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k)
-            ai <- ai[subset]
-            bi <- bi[subset]
-            ci <- ci[subset]
+            subset <- .chksubset(subset, k)
+            ai <- .getsubset(ai, subset)
+            bi <- .getsubset(bi, subset)
+            ci <- .getsubset(ci, subset)
          }
 
          args <- list(measure=measure, ai=ai, bi=bi, ci=ci, vtype=vtype)
@@ -691,7 +673,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    ### subsetting of weights
 
    if (!is.null(subset))
-      weights <- weights[subset]
+      weights <- .getsubset(weights, subset)
 
    #########################################################################
 
@@ -736,7 +718,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    if (!is.null(mods) && nrow(mods) != k)
       stop(mstyle$stop(paste0("Number of rows in the model matrix (", nrow(mods), ") does not match length of the outcome vector (", k, ").")))
 
-   ### for rma.ls models, get model matrix for scale part
+   ### for rma.ls models, get model matrix for the scale part
 
    if (model == "rma.ls") {
       if (inherits(scale, "formula")) {
@@ -800,10 +782,10 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       if (verbose > 1)
          message(mstyle$message("Subsetting ..."))
 
-      mods <- mods[subset,,drop=FALSE]
-      slab <- slab[subset]
-      ids  <- ids[subset]
-      Z    <- Z[subset,,drop=FALSE]
+      mods <- .getsubset(mods, subset)
+      slab <- .getsubset(slab, subset)
+      ids  <- .getsubset(ids,  subset)
+      Z    <- .getsubset(Z,    subset)
 
    }
 
@@ -972,7 +954,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       int.only <- FALSE
    }
 
-   ### check if there are too many parameters for given k
+   ### check if there are too many parameters for given k (TODO: what about rma.ls models?)
 
    if (!(int.only && k == 1L)) {
       if (is.element(method[1], c("FE","EE","CE"))) { ### have to estimate p parms
@@ -999,32 +981,53 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    ### set default control parameters
 
    con <- list(verbose = FALSE,
-               tau2.init = NULL,          # initial value for iterative estimators (ML, REML, EB, SJ, SJIT, DLIT)
-               tau2.min = 0,              # lower bound for tau^2 value
-               tau2.max = 100,            # upper bound for tau^2 value (for PM/PMM/GENQM estimators; can also be used in ls model (but see [c]) and passed down to confint.rma.uni())
-               threshold = 10^-5,         # convergence threshold (for ML, REML, EB, SJIT, DLIT)
-               tol = .Machine$double.eps^0.25, # convergence tolerance for uniroot() as used for PM, PMM, and GENQM (also used in 'll0 - ll > con$tol' check for ML/REML)
-               ll0check = TRUE,           # should the 'll0 - ll > con$tol' check be conducted for ML/REML?
-               maxiter = 100,             # maximum number of iterations (for ML, REML, EB, SJIT, DLIT)
-               stepadj = 1,               # step size adjustment for Fisher scoring algorithm (for ML, REML, EB)
-               REMLf = TRUE,              # should |X'X| term be included in the REML log likelihood?
-               evtol = 1e-07,             # lower bound for eigenvalues to determine if model matrix is positive definite (also for checking if vimaxmin >= 1/con$evtol)
-               beta.init = NULL,          # initial values for location parameters (only relevant when optbeta=TRUE)
-               alpha.init = NULL,         # initial values for scale parameters
-               pars.init = NULL,          # initial values for parameters besides beta in non-normal models
-               alpha.min = -Inf,          # min possible value(s) for scale parameter(s)
-               alpha.max = Inf,           # max possible value(s) for scale parameter(s)
-               optimizer = "nlminb",      # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","solnp") for location-scale models
-               optmethod = "BFGS",        # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
-               parallel = list(),         # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
-               cl = NULL,                 # arguments for optimParallel()
-               ncpus = 1L,                # arguments for optimParallel()
-               hessianCtrl=list(r=8),     # arguments passed on to 'method.args' of hessian()
-               hesspack = "numDeriv",     # package for computing the Hessian (numDeriv or pracma)
-               scaleZ = TRUE)
+               evtol = 1e-07,                  # lower bound for eigenvalues to determine if model matrix is positive definite (also for checking if vimaxmin >= 1/con$evtol)
+               REMLf = TRUE)                   # should |X'X| term be included in the REML log likelihood?
 
-   ### for some applications, tau2.max = 100 may not be enough; use an adaptive max instead
-   con$tau2.max <- max(con$tau2.max, 10*mad(yi)^2)
+   if (model == "rma.uni") {
+
+      con <- c(con,
+          list(tau2.init = NULL,               # initial value for iterative estimators (ML, REML, EB, SJ, SJIT, DLIT)
+               tau2.min = 0,                   # lower bound for tau^2 value (and passed down to confint.rma.uni())
+               tau2.max = 100,                 # upper bound for tau^2 value (for PM/PMM/GENQM estimators) but see [c]
+               threshold = 10^-5,              # convergence threshold (for ML, REML, EB, SJIT, DLIT)
+               tol = .Machine$double.eps^0.25, # convergence tolerance for uniroot() as used for PM, PMM, and GENQM (also used in 'll0 - ll > con$tol' check for ML/REML)
+               ll0check = TRUE,                # should the 'll0 - ll > con$tol' check be conducted for ML/REML?
+               maxiter = 100,                  # maximum number of iterations (for ML, REML, EB, SJIT, DLIT)
+               stepadj = 1))                   # step size adjustment for Fisher scoring algorithm (for ML, REML, EB)
+
+      ### [c] for some applications, tau2.max = 100 may not be enough; use an adaptive max instead
+
+      con$tau2.max <- max(con$tau2.max, 10*mad(yi)^2)
+
+   }
+
+   if (model == "rma.ls") {
+
+      con <- c(con,
+          list(beta.init = NULL,               # initial values for model coefficients / location parameters (only relevant when optbeta=TRUE)
+               hesspack = "numDeriv",          # package for computing the Hessian (numDeriv or pracma)
+               htransf = FALSE,                # FALSE/TRUE: Hessian is computed for the untransformed/transformed parameter estimates
+               optimizer = "nlminb",           # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","solnp") for location-scale models
+               optmethod = "BFGS",             # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
+               parallel = list(),              # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
+               cl = NULL,                      # arguments for optimParallel()
+               ncpus = 1L,                     # arguments for optimParallel()
+               tau2.min = 0,                   # lower bound for tau^2 value (can be used to constrain tau^2 values but see [d])
+               tau2.max = Inf,                 # upper bound for tau^2 value (can be used to constrain tau^2 values but see [d])
+               alpha.init = NULL,              # initial values for scale parameters
+               alpha.min = -Inf,               # min possible value(s) for scale parameter(s)
+               alpha.max = Inf,                # max possible value(s) for scale parameter(s)
+               hessianCtrl=list(r=8),          # arguments passed on to 'method.args' of hessian()
+               scaleZ = TRUE))                 # rescale Z matrix (only if Z.int.incl, is.na(alpha[1]), all(is.infinite(con$alpha.min)), all(is.infinite(con$alpha.max)), !optbeta)
+
+      ### [d] can constrain the tau^2 values in location-scale models, but this is done in a very crude way
+      ### in the optimization (by returning Inf when any tau^2 value falls outside the bounds) and this is
+      ### not recommended/documented (instead, one can constrain the alpha values via alpha.min/alpha.max);
+      ### note: the tau^2 bounds are only in effect when tau2.min or tau2.max are actually used in 'control'
+      ### (if not, tau2.min and tau2.max are set to 0 and Inf, respectively)
+
+   }
 
    ### replace defaults with any user-defined values
 
@@ -1036,44 +1039,30 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    verbose <- con$verbose
 
-   con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma"))
+   if (model == "rma.ls") {
 
-   if (!isTRUE(ddd$skiphes) && !requireNamespace(con$hesspack, quietly=TRUE))
-      stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to compute the Hessian.")))
+      con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma"))
+
+      if (!isTRUE(ddd$skiphes) && !requireNamespace(con$hesspack, quietly=TRUE))
+         stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to compute the Hessian.")))
+
+   }
 
    if (model == "rma.uni") {
 
-      if (mtype == "normal") {
+      ### constrain a negative tau2.min value to -min(vi) (to ensure that the marginal variance is always >= 0)
 
-         ### constrain negative tau2.min values to -min(vi) (to ensure that the marginal variance is always >= 0)
-
-         if (con$tau2.min < 0 && (-con$tau2.min > min(vi))) {
-            con$tau2.min <- -min(vi)
-            warning(mstyle$warning(paste0("Value of 'tau2.min' constrained to -min(vi) = ", .fcf(-min(vi), digits[["est"]]), ".")), call.=FALSE)
-         }
-
-      } else {
-
-         if (!is.null(con$tau2.init))
-            warning(mstyle$warning("Value of 'tau2.init' ignored for non-normal models."), call.=FALSE)
-         if (con$tau2.min != 0)
-            warning(mstyle$warning("Value of 'tau2.min' ignored for non-normal models."), call.=FALSE)
-
+      if (con$tau2.min < 0 && (-con$tau2.min > min(vi))) {
+         con$tau2.min <- -min(vi)
+         warning(mstyle$warning(paste0("Value of 'tau2.min' constrained to -min(vi) = ", .fcf(-min(vi), digits[["est"]]), ".")), call.=FALSE)
       }
 
    } else {
 
-      ### [c] can constrain the tau^2 values in location-scale models, but this is done in a very crude way
-      ### in the optimization (by returning Inf when any tau^2 value falls outside the bounds) and this is
-      ### not recommended/documented (instead, one can constrain the alpha values via alpha.min/alpha.max);
-      ### note: the tau^2 bounds are only in effect when tau2.min or tau2.max are actually used in 'control'
-      ### (if not, tau2.min and tau2.max are set to 0 and Inf, respectively)
+      ### constrain a negative tau2.min value to 0 for ls models
 
       if (is.element("tau2.min", names(control)))
          con$tau2.min[con$tau2.min < 0] <- 0
-
-      if (!is.element("tau2.max", names(control)))
-         con$tau2.max <- Inf
 
    }
 
@@ -1106,9 +1095,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    #########################################################################
 
-   ###### heterogeneity estimation for standard normal-normal model (rma.uni)
+   ###### heterogeneity estimation for the standard normal-normal model (rma.uni)
 
-   if (model == "rma.uni" && mtype == "normal") {
+   if (model == "rma.uni") {
 
       if (is.numeric(tau2) && !is.element(method[1], c("FE","EE","CE"))) { # if user has fixed the tau2 value
          tau2.fix <- TRUE
@@ -1636,243 +1625,6 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    #########################################################################
 
-   ###### parameter estimation for non-normal models (rma.ls)
-
-   if (model == "rma.uni" && mtype != "normal") {
-
-      if (method[1] != "ML")
-         stop(mstyle$stop("Non-normal models can only be fitted with ML estimation."))
-
-      tau2.fix <- FALSE
-
-      if (is.numeric(tau2))
-         warning(mstyle$warning("Argument 'tau2' ignored for non-normal models."), call.=FALSE)
-
-      ### get optimizer arguments from control argument
-
-      optimizer <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
-      optmethod <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
-      if (optimizer %in% c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent")) {
-         optmethod <- optimizer
-         optimizer <- "optim"
-      }
-      parallel   <- con$parallel
-      cl         <- con$cl
-      ncpus      <- con$ncpus
-      optcontrol <- control[is.na(con.pos)] ### get arguments that are control arguments for optimizer
-
-      if (length(optcontrol) == 0L)
-         optcontrol <- list()
-
-      ### if control argument 'ncpus' is larger than 1, automatically switch to optimParallel optimizer
-
-      if (ncpus > 1L)
-         optimizer <- "optimParallel"
-
-      optcontrol <- .chkopt1(optimizer, optcontrol)
-
-      ### number of parameters (aside from those in beta) for the model type
-
-      if (mtype == "gaussian")
-         q <- 1
-      if (mtype == "laplace")
-         q <- 1
-
-      ### checks on pars argument
-
-      if (missing(pars) || is.null(pars) || all(is.na(pars))) {
-         pars <- rep(NA, q)
-      } else {
-         if (length(pars) != q)
-            stop(mstyle$stop(paste0("Length of 'pars' argument (", length(pars), ") does not match actual number of parameters (", q, ").")))
-      }
-
-      ### checks on beta argument
-
-      if (missing(beta) || is.null(beta) || all(is.na(beta))) {
-         beta <- rep(NA, p)
-      } else {
-         if (length(beta) == 1L)
-            beta <- rep(beta, p)
-         if (length(beta) != p)
-            stop(mstyle$stop(paste0("Length of 'beta' argument (", length(beta), ") does not match actual number of parameters (", p, ").")))
-      }
-
-      ### set/check pars.init
-
-      if (verbose > 1)
-         message(mstyle$message("Extracting/computing initial values ..."))
-
-      fit <- suppressWarnings(rma.uni(yi, vi, mods=X, intercept=FALSE, method="HE", skipr2=TRUE))
-
-      if (is.null(con$pars.init)) {
-
-         if (mtype == "gaussian")
-            pars.init <- fit$tau2 + 0.001
-         if (mtype == "lapalce")
-            pars.init <- fit$tau2 + 0.001 # FIXME
-
-      } else {
-
-         pars.init <- con$pars.init
-
-         if (length(pars.init) != q)
-            stop(mstyle$stop(paste0("Length of 'pars.init' argument (", length(pars.init), ") does not match actual number of parameters (", q, ").")))
-
-         if (anyNA(pars.init))
-            stop(mstyle$stop("No missing values allowed in 'pars.init'."))
-
-         if (mtype == "gaussian" && pars.init <= 0)
-            stop(mstyle$stop("Starting value for 'pars' must be > 0."))
-         if (mtype == "lapalce" && pars.init <= 0)
-            stop(mstyle$stop("Starting value for 'pars' must be > 0.")) # FIXME
-
-      }
-
-      if (is.null(con$beta.init)) {
-
-         beta.init <- c(fit$beta)
-
-      } else {
-
-         beta.init <- con$beta.init
-
-         if (length(beta.init) != p)
-            stop(mstyle$stop(paste0("Length of 'beta.init' argument (", length(beta.init), ") does not match actual number of parameters (", p, ").")))
-
-         if (anyNA(beta.init))
-            stop(mstyle$stop("No missing values allowed in 'beta.init'."))
-
-      }
-
-      if (verbose > 1)
-         message(mstyle$message("Estimating scale parameters ...\n"))
-
-      tmp <- .chkopt2(optimizer, optcontrol)
-      optimizer <- tmp$optimizer
-      par.arg   <- tmp$par.arg
-      ctrl.arg  <- tmp$ctrl.arg
-
-      if (optimizer == "optimParallel::optimParallel") {
-
-         parallel$cl <- NULL
-
-         if (is.null(cl)) {
-
-            ncpus <- as.integer(ncpus)
-
-            if (ncpus < 1L)
-               stop(mstyle$stop("Control argument 'ncpus' must be >= 1."))
-
-            cl <- parallel::makePSOCKcluster(ncpus)
-            on.exit(parallel::stopCluster(cl), add=TRUE)
-
-         } else {
-
-            if (!inherits(cl, "SOCKcluster"))
-               stop(mstyle$stop("Specified cluster is not of class 'SOCKcluster'."))
-
-         }
-
-         parallel$cl <- cl
-
-         if (is.null(parallel$forward))
-            parallel$forward <- FALSE
-
-         if (is.null(parallel$loginfo)) {
-            if (verbose) {
-               parallel$loginfo <- TRUE
-            } else {
-               parallel$loginfo <- FALSE
-            }
-         }
-
-      }
-
-      optcall <- paste(optimizer, "(", par.arg, "=c(beta.init, pars.init), .ll.rma.nn, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
-                       "yi=yi, vi=vi, X=X, k=k, pX=p, beta.val=beta, pars.val=pars, mtype=mtype, verbose=verbose, digits=digits", ctrl.arg, ")\n", sep="")
-
-      #return(optcall)
-
-      if (verbose) {
-         opt.res <- try(eval(str2lang(optcall)), silent=!verbose)
-      } else {
-         opt.res <- try(suppressWarnings(eval(str2lang(optcall))), silent=!verbose)
-      }
-
-      #return(opt.res)
-
-      ### convergence checks (if verbose print optimParallel log, if verbose > 2 print opt.res, and unify opt.res$par)
-
-      opt.res$par <- .chkconv(optimizer=optimizer, opt.res=opt.res, optcontrol=optcontrol, fun="rma", verbose=verbose)
-
-      ### replace fixed beta and pars values in opt.res$par
-
-      opt.res$par[seq_len(p)]  <- ifelse(is.na(beta), opt.res$par[seq_len(p)],  beta)
-      opt.res$par[-seq_len(p)] <- ifelse(is.na(pars), opt.res$par[-seq_len(p)], pars)
-
-      ### try to compute vcov matrix for parameter estimates
-
-      H <- NA
-
-      vab <- matrix(NA_real_, nrow=p+q, ncol=p+q)
-      hest <- c(is.na(beta), is.na(pars))
-
-      if (any(hest) && !isTRUE(ddd$skiphes)) {
-
-         if (verbose > 1)
-            message(mstyle$message("\nComputing Hessian ..."))
-
-         if (con$hesspack == "numDeriv")
-            H <- try(numDeriv::hessian(func=.ll.rma.nn, x=opt.res$par, method.args=con$hessianCtrl, yi=yi, vi=vi, X=X,
-                                       k=k, pX=p, beta.val=beta, pars.val=pars, mtype=mtype, verbose=FALSE, digits=digits), silent=TRUE)
-         if (con$hesspack == "pracma")
-            H <- try(pracma::hessian(f=.ll.rma.nn, x0=opt.res$par, yi=yi, vi=vi, X=X,
-                                     k=k, pX=p, beta.val=beta, pars.val=pars, mtype=mtype, verbose=FALSE, digits=digits), silent=TRUE)
-
-         if (inherits(H, "try-error")) {
-
-            warning(mstyle$warning("Error when trying to compute the Hessian."), call.=FALSE)
-
-         } else {
-
-            H.hest <- H[hest, hest, drop=FALSE]
-            iH.hest <- try(suppressWarnings(chol2inv(chol(H.hest))), silent=TRUE)
-
-            if (inherits(iH.hest, "try-error") || anyNA(iH.hest) || any(is.infinite(iH.hest))) {
-
-               warning(mstyle$warning("Error when trying to invert the Hessian."), call.=FALSE)
-
-            } else {
-
-               vab[hest, hest] <- iH.hest
-
-            }
-
-         }
-
-      }
-
-      vb <- vab[seq_len(p),   seq_len(p), drop=FALSE]
-      va <- vab[-seq_len(p), -seq_len(p), drop=FALSE]
-
-      ### get parameter estimates
-
-      beta.val <- beta
-      pars.val <- pars
-
-      beta <- cbind(opt.res$par[seq_len(p)])
-      pars <- cbind(opt.res$par[-seq_len(p)])
-
-      # compute tau^2? need this for calculation of wi, W, and M! also for I2 and H2
-      # tau2 <-
-
-      ### !!!
-
-   }
-
-   #########################################################################
-
    ###### parameter estimation for location-scale model (rma.ls)
 
    if (model == "rma.ls") {
@@ -1896,7 +1648,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       parallel   <- con$parallel
       cl         <- con$cl
       ncpus      <- con$ncpus
-      optcontrol <- control[is.na(con.pos)] ### get arguments that are control arguments for optimizer
+      optcontrol <- control[is.na(con.pos)] # get arguments that are control arguments for optimizer
 
       if (length(optcontrol) == 0L)
          optcontrol <- list()
@@ -1922,8 +1674,6 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          stop(mstyle$stop("Cannot use 'constrOptim' optimizer when using a log link.")) # but can use solnp
 
       reml <- ifelse(method[1] == "REML", TRUE, FALSE)
-
-      optcontrol <- .chkopt1(optimizer, optcontrol)
 
       ### drop redundant predictors
 
@@ -1962,7 +1712,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       ### check whether this is an intercept-only model
 
       is.int <- apply(Z, 2, .is.intercept)
-      if ((q == 1L) && is.int) {
+      if (q == 1L && is.int) {
          Z.int.only <- TRUE
       } else {
          Z.int.only <- FALSE
@@ -2129,13 +1879,16 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       alpha.init <- mapply(.mapinvfun.alpha, alpha.init, alpha.min, alpha.max)
 
+      ### estimate alpha (and beta) values
+
       if (verbose > 1)
          message(mstyle$message("Estimating scale parameters ...\n"))
 
-      tmp <- .chkopt2(optimizer, optcontrol)
-      optimizer <- tmp$optimizer
-      par.arg   <- tmp$par.arg
-      ctrl.arg  <- tmp$ctrl.arg
+      tmp <- .chkopt(optimizer, optcontrol)
+      optimizer  <- tmp$optimizer
+      optcontrol <- tmp$optcontrol
+      par.arg    <- tmp$par.arg
+      ctrl.arg   <- tmp$ctrl.arg
 
       if (optimizer == "optimParallel::optimParallel") {
 
@@ -2230,8 +1983,6 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       } else {
          opt.res$par <- ifelse(is.na(alpha), opt.res$par, alpha)
       }
-
-      ### !!!
 
       ### try to compute vcov matrix for scale parameter estimates
 
@@ -2381,7 +2132,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    wi <- 1/(vi + tau2)
    W  <- diag(wi, nrow=k, ncol=k)
-   M  <- diag(vi + tau2, nrow=k, ncol=k) ### FIXME: how to compute this for nn models?
+   M  <- diag(vi + tau2, nrow=k, ncol=k)
 
    if (weighted) {
 
@@ -2401,7 +2152,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          if (any(is.infinite(wi)))
             stop(mstyle$stop("Division by zero when computing the inverse variance weights."))
 
-         ### don't recompute beta and vb when optbeta=TRUE (also for non-normal models), since these are already estimated
+         ### don't recompute beta and vb when optbeta=TRUE, since these are already estimated
 
          if (!optbeta) {
             stXWX <- .invcalc(X=X, W=W, k=k)
@@ -2633,34 +2384,22 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    if (verbose > 1)
       message(mstyle$message("Computing fit statistics and log likelihood ..."))
 
-   if (mtype == "normal") {
+   ### note: tau2 is not counted as a parameter when it was fixed by the user (same for fixed alpha values)
+   q.est <- ifelse(model == "rma.uni", 0, sum(is.na(alpha.val)))
+   parms <- ifelse(optbeta, sum(is.na(beta.val)), p) + ifelse(model == "rma.uni", ifelse(is.element(method[1], c("FE","EE","CE")) || tau2.fix, 0, 1), q.est)
 
-      ### note: tau2 is not counted as a parameter when it was fixed by the user (same for fixed alpha values)
-      q.est <- ifelse(model == "rma.uni", 0, sum(is.na(alpha.val)))
-      parms <- ifelse(optbeta, sum(is.na(beta.val)), p) + ifelse(model == "rma.uni", ifelse(is.element(method[1], c("FE","EE","CE")) || tau2.fix, 0, 1), q.est)
+   ll.ML    <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS.f
+   ll.REML  <- -1/2 * (k-p) * log(2*base::pi) + ifelse(con$REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
+               -1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS.f
 
-      ll.ML    <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS.f
-      ll.REML  <- -1/2 * (k-p) * log(2*base::pi) + ifelse(con$REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
-                  -1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS.f
-
-      if (k > p) {
-         if (allvipos) {
-            dev.ML <- -2 * (ll.ML - sum(dnorm(yi, mean=yi, sd=sqrt(vi), log=TRUE)))
-         } else {
-            dev.ML <- -2 * ll.ML
-         }
+   if (k > p) {
+      if (allvipos) {
+         dev.ML <- -2 * (ll.ML - sum(dnorm(yi, mean=yi, sd=sqrt(vi), log=TRUE)))
       } else {
-         dev.ML <- 0
+         dev.ML <- -2 * ll.ML
       }
-
    } else {
-
-      ### note: pars fixed by the user are not counted as parameters
-      parms <- sum(is.na(beta.val)) + sum(is.na(pars.val))
-
-      #ll.ML <-
-
-
+      dev.ML <- 0
    }
 
    AIC.ML    <- -2 * ll.ML   + 2*parms
@@ -2679,7 +2418,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    ### compute pseudo R^2 statistic for mixed-effects models with an intercept (only for rma.uni normal models)
 
-   if (!int.only && int.incl && model == "rma.uni" && mtype == "normal" && !isTRUE(ddd$skipr2)) {
+   if (!int.only && int.incl && model == "rma.uni" && !isTRUE(ddd$skipr2)) {
 
       if (verbose > 1)
          message(mstyle$message("Computing R^2 ..."))
@@ -2904,11 +2643,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    if (model == "rma.ls") {
       class(res) <- c("rma.ls", "rma.uni", "rma")
    } else {
-      if (mtype == "normal") {
-         class(res) <- c("rma.uni", "rma")
-      } else {
-         class(res) <- c("rma.nn", "rma.uni", "rma")
-      }
+      class(res) <- c("rma.uni", "rma")
    }
 
    return(res)

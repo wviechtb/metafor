@@ -5,7 +5,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma.uni", notav=c("rma.ls", "rma.nn", "robust.rma"))
+   .chkclass(class(x), must="rma.uni", notav=c("rma.ls", "rma.gen", "robust.rma"))
 
    alternative <- match.arg(alternative, c("two.sided", "greater", "less"))
 
@@ -292,8 +292,6 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
          stop(mstyle$stop("Value of 'tau2.init' must be < 'tau2.max'."))
       tau2.init <- log(con$tau2.init)
    }
-
-   optcontrol <- .chkopt1(optimizer, optcontrol)
 
    con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma"))
 
@@ -646,10 +644,14 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ### model fitting
 
-   tmp <- .chkopt2(optimizer, optcontrol)
-   optimizer <- tmp$optimizer
-   par.arg   <- tmp$par.arg
-   ctrl.arg  <- tmp$ctrl.arg
+   if (verbose > 1)
+      message(mstyle$message("\nModel fitting ...\n"))
+
+   tmp <- .chkopt(optimizer, optcontrol)
+   optimizer  <- tmp$optimizer
+   optcontrol <- tmp$optcontrol
+   par.arg    <- tmp$par.arg
+   ctrl.arg   <- tmp$ctrl.arg
 
    if (optimizer == "optimParallel::optimParallel") {
 
@@ -687,8 +689,6 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    }
 
-   # note: pX due to nlm()
-
    optcall <- paste(optimizer, "(", par.arg, "=c(beta.init, tau2.init, delta.init), ",
       .selmodel.ll, ", ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
       "yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
@@ -696,9 +696,6 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       tau2.val=tau2, tau2.transf=TRUE, tau2.max=tau2.max, beta.val=beta,
       wi.fun=wi.fun, steps=steps, pgrp=pgrp,
       alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=verbose, digits=digits", ctrl.arg, ")\n", sep="")
-
-   if (verbose > 1)
-      message(mstyle$message("\nModel fitting ...\n"))
 
    #return(optcall)
 

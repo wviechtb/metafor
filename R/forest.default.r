@@ -271,14 +271,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### adjust subset if specified
 
-   if (!is.null(subset)) {
-
-      subset <- .setnafalse(subset, k=k)
-
-      if (length(subset) != k)
-         stop(mstyle$stop(paste0("Length of the 'subset' argument (", length(subset), ") does not correspond to the number of outcomes (", k, ").")))
-
-   }
+   subset <- .chksubset(subset, k)
 
    ### sort the data if requested
 
@@ -322,15 +315,15 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    ### if a subset of studies is specified
 
    if (!is.null(subset)) {
-      yi    <- yi[subset]
-      vi    <- vi[subset]
-      ci.lb <- ci.lb[subset]
-      ci.ub <- ci.ub[subset]
-      slab  <- slab[subset]
-      ilab  <- ilab[subset,,drop=FALSE]         # if NULL, remains NULL
-      pch   <- pch[subset]
-      psize <- psize[subset]                    # if NULL, remains NULL
-      col   <- col[subset]
+      yi    <- .getsubset(yi,    subset)
+      vi    <- .getsubset(vi,    subset)
+      ci.lb <- .getsubset(ci.lb, subset)
+      ci.ub <- .getsubset(ci.ub, subset)
+      slab  <- .getsubset(slab,  subset)
+      ilab  <- .getsubset(ilab,  subset, col=TRUE) # if NULL, remains NULL
+      pch   <- .getsubset(pch,   subset)
+      psize <- .getsubset(psize, subset)           # if NULL, remains NULL
+      col   <- .getsubset(col,   subset)
    }
 
    k <- length(yi)                              # in case length of k has changed

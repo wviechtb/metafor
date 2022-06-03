@@ -80,10 +80,8 @@
    ll <- sum(log(wi.fun(pvals, delta, yi, vi, preci, alternative, steps)) + dnorm(yi, yhat, sqrt(vi+tau2), log=TRUE) - log(Ai))
 
    if (dofit) {
-
       res <- list(ll=ll, beta=beta, tau2=tau2, delta=delta)
       return(res)
-
    }
 
    if (verbose)

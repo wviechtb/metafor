@@ -99,9 +99,9 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       ### subsetting
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         yi <- yi[subset]
-         vi <- vi[subset]
+         subset <- .chksubset(subset, k)
+         yi <- .getsubset(yi, subset)
+         vi <- .getsubset(vi, subset)
       }
 
    }
@@ -168,11 +168,11 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       ### subsetting
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         ai <- ai[subset]
-         bi <- bi[subset]
-         ci <- ci[subset]
-         di <- di[subset]
+         subset <- .chksubset(subset, k)
+         ai <- .getsubset(ai, subset)
+         bi <- .getsubset(bi, subset)
+         ci <- .getsubset(ci, subset)
+         di <- .getsubset(di, subset)
       }
 
       dat <- .do.call(escalc, measure="OR", ai=ai, bi=bi, ci=ci, di=di, drop00=drop00, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
@@ -221,12 +221,12 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    ### if a subset of studies is specified
 
    if (!is.null(subset)) {
-      ids  <- ids[subset]
-      lty  <- lty[subset]
-      lwd  <- lwd[subset]
-      col  <- col[subset]
-      id0  <- id0[subset]
-      id00 <- id00[subset]
+      ids  <- .getsubset(ids,  subset)
+      lty  <- .getsubset(lty,  subset)
+      lwd  <- .getsubset(lwd,  subset)
+      col  <- .getsubset(col,  subset)
+      id0  <- .getsubset(id0,  subset)
+      id00 <- .getsubset(id00, subset)
    }
 
    ### number of outcomes after subsetting

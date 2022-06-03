@@ -102,9 +102,9 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
    ### if a subset of studies is specified
 
    if (!is.null(subset)) {
-      subset <- .setnafalse(subset, k=length(yi))
-      yi <- yi[subset]
-      vi <- vi[subset]
+      subset <- .chksubset(subset, length(yi))
+      yi <- .getsubset(yi, subset)
+      vi <- .getsubset(vi, subset)
    }
 
    ### check for NAs in yi/vi and act accordingly

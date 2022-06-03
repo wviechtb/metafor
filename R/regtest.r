@@ -38,7 +38,7 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
 
    if (inherits(x, "rma")) {
 
-      .chkclass(class(x), must="rma", notav=c("robust.rma", "rma.glmm", "rma.mv", "rma.ls", "rma.nn", "rma.uni.selmodel"))
+      .chkclass(class(x), must="rma", notav=c("robust.rma", "rma.glmm", "rma.mv", "rma.ls", "rma.gen", "rma.uni.selmodel"))
 
       if (!missing(vi) || !missing(sei) || !missing(subset))
          warning(mstyle$warning("Arguments 'vi', 'sei', and 'subset' ignored when 'x' is a model object."), call.=FALSE)
@@ -59,8 +59,7 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
             if (length(ni) != x$k.all)
                stop(mstyle$stop(paste0("Length of variable specified via 'ni' (", length(ni), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-            if (!is.null(x$subset))
-               ni <- ni[x$subset]
+            ni <- .getsubset(ni, x$subset)
 
             if (inherits(x, "rma.mh") || inherits(x, "rma.peto")) {
                ni <- ni[x$not.na.yivi]
@@ -176,10 +175,10 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
       ### if a subset of studies is specified
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k)
-         yi <- yi[subset]
-         vi <- vi[subset]
-         ni <- ni[subset]
+         subset <- .chksubset(subset, k)
+         yi <- .getsubset(yi, subset)
+         vi <- .getsubset(vi, subset)
+         ni <- .getsubset(ni, subset)
       }
 
       ### check for NAs and act accordingly

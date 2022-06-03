@@ -54,8 +54,7 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    ###       original dataset passed to the model fitting function and so we apply
    ###       the same subsetting (if necessary) as was done during model fitting
 
-   if (!is.null(x$subset))
-      order <- order[x$subset]
+   order <- .getsubset(order, x$subset)
 
    order <- order(order, decreasing=decreasing)
 

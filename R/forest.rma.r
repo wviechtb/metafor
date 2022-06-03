@@ -10,7 +10,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma", notav=c("rma.ls", "rma.nn"))
+   .chkclass(class(x), must="rma", notav=c("rma.ls", "rma.gen"))
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act), add=TRUE)
@@ -287,8 +287,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       if (length(slab) != x$k.all)
          stop(mstyle$stop(paste0("Length of the 'slab' argument (", length(slab), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-      if (!is.null(x$subset))
-         slab <- slab[x$subset]
+      slab <- .getsubset(slab, x$subset)
 
    }
 
@@ -300,8 +299,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       if (nrow(ilab) != x$k.all)
          stop(mstyle$stop(paste0("Length of the 'ilab' argument (", nrow(ilab), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-      if (!is.null(x$subset))
-         ilab <- ilab[x$subset,,drop=FALSE]
+      ilab <- .getsubset(ilab, x$subset)
 
    }
 
@@ -311,8 +309,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (length(pch) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'pch' argument (", length(pch), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-   if (!is.null(x$subset))
-      pch <- pch[x$subset]
+   pch <- .getsubset(pch, x$subset)
 
    if (!is.null(psize)) {
 
@@ -322,8 +319,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       if (length(psize) != x$k.all)
          stop(mstyle$stop(paste0("Length of the 'psize' argument (", length(psize), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-      if (!is.null(x$subset))
-         psize <- psize[x$subset]
+      psize <- .getsubset(psize, x$subset)
 
    }
 
@@ -333,8 +329,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (length(colout) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'colout' argument (", length(colout), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-   if (!is.null(x$subset))
-      colout <- colout[x$subset]
+   colout <- .getsubset(colout, x$subset)
 
    ### extract fitted values
 
@@ -396,7 +391,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          }
 
          if (!is.null(x$subset))
-            sort.vec <- sort.vec[x$subset] - sum(!x$subset)
+            sort.vec <- .getsubset(sort.vec, x$subset) - sum(!x$subset)
 
       }
 

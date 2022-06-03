@@ -41,7 +41,7 @@ tes <- function(x, vi, sei, subset, data,
 
       on.exit(options(na.action=na.act), add=TRUE)
 
-      .chkclass(class(x), must="rma", notav=c("rma.glmm", "rma.mv", "robust.rma", "rma.ls", "rma.nn", "rma.uni.selmodel"))
+      .chkclass(class(x), must="rma", notav=c("rma.glmm", "rma.mv", "robust.rma", "rma.ls", "rma.gen", "rma.uni.selmodel"))
 
       ### set defaults for digits
 
@@ -205,10 +205,10 @@ tes <- function(x, vi, sei, subset, data,
       ### if a subset of studies is specified
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k.f)
-         yi <- yi[subset]
-         vi <- vi[subset]
-         theta <- theta[subset]
+         subset <- .chksubset(subset, k.f)
+         yi    <- .getsubset(yi,    subset)
+         vi    <- .getsubset(vi,    subset)
+         theta <- .getsubset(theta, subset)
       }
 
       ### check for NAs and act accordingly

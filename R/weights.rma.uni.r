@@ -2,7 +2,7 @@ weights.rma.uni <- function(object, type="diagonal", ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(object), must="rma.uni", notav=c("rma.nn", "rma.uni.selmodel"))
+   .chkclass(class(object), must="rma.uni", notav=c("rma.gen", "rma.uni.selmodel"))
 
    na.act <- getOption("na.action")
 

@@ -472,25 +472,24 @@
 .equal.length <- function(...) {
 
    ddd <- list(...)
-   #ddd <- ddd[!sapply(ddd, is.null)] # length(NULL) is 0 anyway
-   ddd <- ddd[sapply(ddd, function(x) length(x) > 0)]
-   if (length(ddd) == 0L) { # if nothing left, return TRUE
+   ks <- lengths(ddd)    # get the length of each element in ddd
+   if (all(ks == 0L)) { # if all elements have length 0 (are NULL), return TRUE
       return(TRUE)
    } else {
-      ks <- lengths(ddd)
-      return(length(unique(ks)) == 1L)
+      ks <- ks[ks > 0L]  # keep the non-zero lengths
+      return(length(unique(ks)) == 1L) # check that they are all identical
    }
 
 }
 
-### check that all elements are not of length 0 (NULL)
+### check that all elements given via ... are not of length 0 (are not NULL)
 
 .all.specified <- function(...) {
 
-   ddd  <- list(...)
-   not0  <- lengths(ddd) != 0L
-   all(not0)
+   ddd <- list(...)
    #all(!sapply(ddd, is.null))
+   not0 <- lengths(ddd) != 0L
+   all(not0)
 
 }
 
@@ -1304,39 +1303,76 @@ tidy.rma <- function (x, ...) {
 
 ############################################################################
 
-.setnafalse <- function(x, arg="subset", k, stoponk0=TRUE) {
+### check subset argument (if logical, make sure it's of the right length and set NAs to FALSE; if
+### numeric, remove NAs and 0's and check that values are not beyond k)
+
+.chksubset <- function(x, k, stoponk0=TRUE) {
+
+   if (is.null(x)) # if x is NULL, return x (i.e., NULL)
+      return(x)
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (is.logical(x)) {
-      x <- x[seq_len(k)]
-      if (anyNA(x))
-         x[is.na(x)] <- FALSE
+      if (length(x) != k)
+         stop(mstyle$stop(paste0("Length of the specified 'subset' (", length(x), ") is not of length k = ", k, ".")), call.=FALSE)
+      #x <- x[seq_len(k)]     # keep only elements 1:k from x
+      if (anyNA(x))           # if x includes any NA elements
+         x[is.na(x)] <- FALSE # set NA elements to FALSE
    }
 
    if (is.numeric(x)) {
-      if (anyNA(x))
-         x <- x[!is.na(x)]
+      if (anyNA(x))             # if x includes any NA elements
+         x <- x[!is.na(x)]      # remove them
       x <- as.integer(round(x))
-      x <- x[x != 0L]
+      x <- x[x != 0L]           # also remove any 0's
       if (any(x > 0L) && any(x < 0L))
-         stop(mstyle$stop(paste0("Cannot mix positive and negative values for subsetting.")), call.=FALSE)
-      if (all(x > 0L))
+         stop(mstyle$stop("Cannot mix positive and negative values in 'subset'."), call.=FALSE)
+      if (all(x > 0L)) {
+         if (any(x > k))
+            stop(mstyle$stop(paste0("Specified 'subset' includes values larger than k = ", k, ".")), call.=FALSE)
          x <- is.element(seq_len(k), x)
-      if (all(x < 0L))
+      } else {
+         if (any(x < -k))
+            stop(mstyle$stop(paste0("Specified 'subset' includes values larger than k = ", k, ".")), call.=FALSE)
          x <- !is.element(seq_len(k), abs(x))
+      }
    }
 
    if (stoponk0 && !any(x))
       stop(mstyle$stop(paste0("Stopped because k = 0 after subsetting.")), call.=FALSE)
 
-   #if (anyNA(x)) {
-   #   if (is.logical(x))
-   #      x[is.na(x)] <- FALSE
-   #   if (is.numeric(x))
-   #      x <- x[!is.na(x)]
-   #   #warning(mstyle$warning(paste0("Missing values in '", arg, "' argument treated as non-selected.")), call.=FALSE)
-   #}
+   return(x)
+
+}
+
+### get subset function that works for matrices and data frames (selecting rows by default but rows
+### and columns when col=TRUE) and vectors and also checks that x is of the same length as subset
+
+.getsubset <- function(x, subset, col=FALSE, drop=FALSE) {
+
+   if (is.null(x) || is.null(subset)) # if x or subset is NULL, return x (i.e., NULL)
+      return(x)
+
+   mstyle <- .get.mstyle("crayon" %in% .packages())
+
+   xname <- deparse(substitute(x))
+
+   k <- length(subset)
+
+   if (is.matrix(x) || is.data.frame(x)) {
+      if (nrow(x) != k)
+         stop(mstyle$stop(paste0("Element '", xname, "' is not of length ", k, ".")), call.=FALSE)
+      if (col) {
+         x <- x[subset,subset,drop=drop]
+      } else {
+         x <- x[subset,,drop=drop]
+      }
+   } else {
+      if (length(x) != k)
+         stop(mstyle$stop(paste0("Element '", xname, "' is not of length ", k, ".")), call.=FALSE)
+      x <- x[subset]
+   }
 
    return(x)
 
@@ -1436,7 +1472,7 @@ tidy.rma <- function (x, ...) {
 
 ############################################################################
 
-.chkopt1 <- function(optimizer, optcontrol) {
+.chkopt <- function(optimizer, optcontrol) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -1499,11 +1535,7 @@ tidy.rma <- function (x, ...) {
          stop(mstyle$stop("Please install the 'Rsolnp' package to use this optimizer."), call.=FALSE)
    }
 
-   return(optcontrol)
-
-}
-
-.chkopt2 <- function(optimizer, optcontrol) {
+   #########################################################################
 
    if (is.element(optimizer, c("optim","constrOptim"))) {
       par.arg <- "par"
@@ -1517,18 +1549,18 @@ tidy.rma <- function (x, ...) {
 
    if (is.element(optimizer, c("uobyqa","newuoa","bobyqa"))) {
       par.arg <- "par"
-      optimizer <- paste0("minqa::", optimizer) ### need to use this since loading nloptr masks bobyqa() and newuoa() functions
+      optimizer <- paste0("minqa::", optimizer) # need to use this since loading nloptr masks bobyqa() and newuoa() functions
       ctrl.arg <- ", control=optcontrol"
    }
 
    if (optimizer == "nloptr") {
       par.arg <- "x0"
-      optimizer <- paste0("nloptr::nloptr") ### need to use this due to requireNamespace()
+      optimizer <- paste0("nloptr::nloptr") # need to use this due to requireNamespace()
       ctrl.arg <- ", opts=optcontrol"
    }
 
    if (optimizer == "nlm") {
-      par.arg <- "p" ### because of this, must use argument name pX for p (number of columns in X matrix)
+      par.arg <- "p" # because of this, must use argument name pX for p (number of columns in X matrix)
       ctrl.arg <- paste(names(optcontrol), unlist(optcontrol), sep="=", collapse=", ")
       if (nchar(ctrl.arg) != 0L)
          ctrl.arg <- paste0(", ", ctrl.arg)
@@ -1536,13 +1568,13 @@ tidy.rma <- function (x, ...) {
 
    if (is.element(optimizer, c("hjk","nmk","mads"))) {
       par.arg <- "par"
-      optimizer <- paste0("dfoptim::", optimizer) ### need to use this so that the optimizers can be found
+      optimizer <- paste0("dfoptim::", optimizer) # need to use this so that the optimizers can be found
       ctrl.arg <- ", control=optcontrol"
    }
 
    if (is.element(optimizer, c("ucminf","lbfgsb3c","subplex"))) {
       par.arg <- "par"
-      optimizer <- paste0(optimizer, "::", optimizer) ### need to use this due to requireNamespace()
+      optimizer <- paste0(optimizer, "::", optimizer) # need to use this due to requireNamespace()
       ctrl.arg <- ", control=optcontrol"
    }
 
@@ -1564,7 +1596,7 @@ tidy.rma <- function (x, ...) {
       ctrl.arg <- ", control=optcontrol, parallel=parallel"
    }
 
-   return(list(optimizer=optimizer, par.arg=par.arg, ctrl.arg=ctrl.arg))
+   return(list(optimizer=optimizer, optcontrol=optcontrol, par.arg=par.arg, ctrl.arg=ctrl.arg))
 
 }
 

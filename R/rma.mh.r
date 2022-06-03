@@ -157,16 +157,17 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
          if (verbose)
             message(mstyle$message("Subsetting ..."))
 
-         subset <- .setnafalse(subset, k=k)
+         subset <- .chksubset(subset, k)
 
-         ai   <- ai[subset]
-         bi   <- bi[subset]
-         ci   <- ci[subset]
-         di   <- di[subset]
-         ni   <- ni[subset]
-         slab <- slab[subset]
-         ids  <- ids[subset]
-         k    <- length(ai)
+         ai   <- .getsubset(ai,   subset)
+         bi   <- .getsubset(bi,   subset)
+         ci   <- .getsubset(ci,   subset)
+         di   <- .getsubset(di,   subset)
+         ni   <- .getsubset(ni,   subset)
+         slab <- .getsubset(slab, subset)
+         ids  <- .getsubset(ids,  subset)
+
+         k <- length(ai)
 
       }
 
@@ -364,16 +365,17 @@ correct=TRUE, level=95, digits, verbose=FALSE, ...) {
          if (verbose)
             message(mstyle$message("Subsetting ..."))
 
-         subset <- .setnafalse(subset, k=k)
+         subset <- .chksubset(subset, k)
 
-         x1i  <- x1i[subset]
-         x2i  <- x2i[subset]
-         t1i  <- t1i[subset]
-         t2i  <- t2i[subset]
-         ni   <- ni[subset]
-         slab <- slab[subset]
-         ids  <- ids[subset]
-         k    <- length(x1i)
+         x1i  <- .getsubset(x1i,  subset)
+         x2i  <- .getsubset(x2i,  subset)
+         t1i  <- .getsubset(t1i,  subset)
+         t2i  <- .getsubset(t2i,  subset)
+         ni   <- .getsubset(ni,   subset)
+         slab <- .getsubset(slab, subset)
+         ids  <- .getsubset(ids,  subset)
+
+         k <- length(x1i)
 
       }
 

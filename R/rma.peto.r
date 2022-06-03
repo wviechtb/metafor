@@ -144,16 +144,17 @@ level=95, digits, verbose=FALSE, ...) {
       if (verbose)
          message(mstyle$message("Subsetting ..."))
 
-      subset <- .setnafalse(subset, k=k)
+      subset <- .chksubset(subset, k)
 
-      ai   <- ai[subset]
-      bi   <- bi[subset]
-      ci   <- ci[subset]
-      di   <- di[subset]
-      ni   <- ni[subset]
-      slab <- slab[subset]
-      ids  <- ids[subset]
-      k    <- length(ai)
+      ai   <- .getsubset(ai,   subset)
+      bi   <- .getsubset(bi,   subset)
+      ci   <- .getsubset(ci,   subset)
+      di   <- .getsubset(di,   subset)
+      ni   <- .getsubset(ni,   subset)
+      slab <- .getsubset(slab, subset)
+      ids  <- .getsubset(ids,  subset)
+
+      k <- length(ai)
 
    }
 

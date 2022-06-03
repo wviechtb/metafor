@@ -2,7 +2,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, 
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma", notav=c("rma.glmm", "rma.mv", "robust.rma", "rma.ls", "rma.nn", "rma.uni.selmodel"))
+   .chkclass(class(x), must="rma", notav=c("rma.glmm", "rma.mv", "robust.rma", "rma.ls", "rma.gen", "rma.uni.selmodel"))
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act), add=TRUE)
@@ -136,8 +136,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, 
       if (length(symbol) != x$k.all)
          stop(mstyle$stop(paste0("Length of the 'symbol' argument (", length(symbol), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-      if (!is.null(x$subset))
-         symbol <- symbol[x$subset]
+      symbol <- .getsubset(symbol, x$subset)
 
       points(x=xhati, y=yhati, cex=cex, pch=symbol, ...)
 

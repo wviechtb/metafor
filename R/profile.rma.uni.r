@@ -3,7 +3,7 @@ profile.rma.uni <- function(fitted,
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(fitted), must="rma.uni", notav=c("rma.nn", "rma.uni.selmodel"))
+   .chkclass(class(fitted), must="rma.uni", notav=c("rma.gen", "rma.uni.selmodel"))
 
    if (is.element(fitted$method, c("FE","EE","CE")))
       stop(mstyle$stop("Cannot profile tau2 parameter for equal/fixed-effects models."))

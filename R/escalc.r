@@ -172,11 +172,11 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          k.all <- length(ai)
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k.all)
-            ai <- ai[subset]
-            bi <- bi[subset]
-            ci <- ci[subset]
-            di <- di[subset]
+            subset <- .chksubset(subset, k.all)
+            ai <- .getsubset(ai, subset)
+            bi <- .getsubset(bi, subset)
+            ci <- .getsubset(ci, subset)
+            di <- .getsubset(di, subset)
          }
 
          n1i <- ai + bi
@@ -594,11 +594,11 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          k.all <- length(x1i)
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k.all)
-            x1i <- x1i[subset]
-            x2i <- x2i[subset]
-            t1i <- t1i[subset]
-            t2i <- t2i[subset]
+            subset <- .chksubset(subset, k.all)
+            x1i <- .getsubset(x1i, subset)
+            x2i <- .getsubset(x2i, subset)
+            t1i <- .getsubset(t1i, subset)
+            t2i <- .getsubset(t2i, subset)
          }
 
          if (any(c(x1i, x2i) < 0, na.rm=TRUE))
@@ -725,10 +725,35 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          sd2i <- .getx("sd2i", mf=mf, data=data, checknumeric=TRUE)
          n1i  <- .getx("n1i",  mf=mf, data=data, checknumeric=TRUE)
          n2i  <- .getx("n2i",  mf=mf, data=data, checknumeric=TRUE)
+         di   <- .getx("di",   mf=mf, data=data, checknumeric=TRUE)
+         ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
+
+         ### for SMD, need m1i, m2i, sd1i, sd2i, n1i, and n2i (and can also specify di and/or ti)
+
+         if (measure == "SMD") {
+
+            if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti))
+               stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+            ### convert ti to di values
+
+            di <- replmiss(di, ti * sqrt(1/n1i + 1/n2i))
+
+            ### when di is available, set m1i, m2i, sd1i, and sd2i values accordingly
+
+            m1i[!is.na(di)]  <- di[!is.na(di)]
+            m2i[!is.na(di)]  <- 0
+            sd1i[!is.na(di)] <- 1
+            sd2i[!is.na(di)] <- 1
+
+            if (!.all.specified(m1i, m2i, sd1i, sd2i, n1i, n2i))
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+
+         }
 
          ### for these measures, need m1i, m2i, sd1i, sd2i, n1i, and n2i
 
-         if (is.element(measure, c("MD","SMD","SMDH","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR"))) {
+         if (is.element(measure, c("MD","SMDH","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR"))) {
 
             if (!.all.specified(m1i, m2i, sd1i, sd2i, n1i, n2i))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
@@ -750,7 +775,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          }
 
-         ### for this measure, need m1i, m2i, sdi, n1i, and n2i
+         ### for this measure, need m1i, m2i, sd2i, n1i, and n2i
 
          if (measure == "SMD1") {
 
@@ -765,13 +790,13 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          k.all <- length(n1i)
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k.all)
-            m1i  <- m1i[subset]
-            m2i  <- m2i[subset]
-            sd1i <- sd1i[subset]
-            sd2i <- sd2i[subset]
-            n1i  <- n1i[subset]
-            n2i  <- n2i[subset]
+            subset <- .chksubset(subset, k.all)
+            m1i  <- .getsubset(m1i,  subset)
+            m2i  <- .getsubset(m2i,  subset)
+            sd1i <- .getsubset(sd1i, subset)
+            sd2i <- .getsubset(sd2i, subset)
+            n1i  <- .getsubset(n1i,  subset)
+            n2i  <- .getsubset(n2i,  subset)
          }
 
          if (any(c(sd1i, sd2i) < 0, na.rm=TRUE))
@@ -785,15 +810,17 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          k <- length(n1i)
 
          ni <- ni.u
+
          if (measure == "SMD1") {
-            mi <- n2i - 1
+            mi   <- n2i - 1
             sdpi <- sd2i
-            npi <- n2i
+            npi  <- n2i
          } else {
-            mi <- ni - 2
+            mi   <- ni - 2
             sdpi <- sqrt(((n1i-1)*sd1i^2 + (n2i-1)*sd2i^2)/mi)
-            npi <- ni
+            npi  <- ni
          }
+
          di <- (m1i - m2i) / sdpi
 
          ### (raw) mean difference (with heteroscedastic variances)
@@ -1019,9 +1046,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          k.all <- length(ri)
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k.all)
-            ri <- ri[subset]
-            ni <- ni[subset]
+            subset <- .chksubset(subset, k.all)
+            ri <- .getsubset(ri, subset)
+            ni <- .getsubset(ni, subset)
          }
 
          if (any(abs(ri) > 1, na.rm=TRUE))
@@ -1127,11 +1154,11 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          k.all <- length(ti)
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k.all)
-            ti  <- ti[subset]
-            r2i <- r2i[subset]
-            mi  <- mi[subset]
-            ni  <- ni[subset]
+            subset <- .chksubset(subset, k.all)
+            ti  <- .getsubset(ti,  subset)
+            r2i <- .getsubset(r2i, subset)
+            mi  <- .getsubset(mi,  subset)
+            ni  <- .getsubset(ni,  subset)
          }
 
          if (measure=="SPCOR" && any(r2i > 1 | r2i < 0, na.rm=TRUE))
@@ -1244,9 +1271,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          k.all <- length(xi)
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k.all)
-            xi <- xi[subset]
-            mi <- mi[subset]
+            subset <- .chksubset(subset, k.all)
+            xi <- .getsubset(xi, subset)
+            mi <- .getsubset(mi, subset)
          }
 
          ni <- xi + mi
@@ -1507,9 +1534,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          k.all <- length(xi)
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k.all)
-            xi <- xi[subset]
-            ti <- ti[subset]
+            subset <- .chksubset(subset, k.all)
+            xi <- .getsubset(xi, subset)
+            ti <- .getsubset(ti, subset)
          }
 
          if (any(xi < 0, na.rm=TRUE))
@@ -1653,10 +1680,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          k.all <- length(ni)
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k.all)
-            mi  <- mi[subset]
-            sdi <- sdi[subset]
-            ni  <- ni[subset]
+            subset <- .chksubset(subset, k.all)
+            mi  <- .getsubset(mi,  subset)
+            sdi <- .getsubset(sdi, subset)
+            ni  <- .getsubset(ni,  subset)
          }
 
          if (any(sdi < 0, na.rm=TRUE))
@@ -1762,13 +1789,13 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          k.all <- length(ni)
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k.all)
-            m1i  <- m1i[subset]
-            m2i  <- m2i[subset]
-            sd1i <- sd1i[subset]
-            sd2i <- sd2i[subset]
-            ni   <- ni[subset]
-            ri   <- ri[subset]
+            subset <- .chksubset(subset, k.all)
+            m1i  <- .getsubset(m1i,  subset)
+            m2i  <- .getsubset(m2i,  subset)
+            sd1i <- .getsubset(sd1i, subset)
+            sd2i <- .getsubset(sd2i, subset)
+            ni   <- .getsubset(ni,   subset)
+            ri   <- .getsubset(ri,   subset)
          }
 
          if (is.element(measure, c("MC","SMCC","SMCRH","ROMC","CVRC","VRC"))) {
@@ -1919,10 +1946,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          k.all <- length(ai)
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k.all)
-            ai <- ai[subset]
-            mi <- mi[subset]
-            ni <- ni[subset]
+            subset <- .chksubset(subset, k.all)
+            ai <- .getsubset(ai, subset)
+            mi <- .getsubset(mi, subset)
+            ni <- .getsubset(ni, subset)
          }
 
          if (any(ai > 1, na.rm=TRUE))
@@ -1981,10 +2008,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          k.all <- length(ai)
 
          if (!is.null(subset)) {
-            subset <- .setnafalse(subset, k=k.all)
-            ai <- ai[subset]
-            bi <- bi[subset]
-            ci <- ci[subset]
+            subset <- .chksubset(subset, k.all)
+            ai <- .getsubset(ai, subset)
+            bi <- .getsubset(bi, subset)
+            ci <- .getsubset(ci, subset)
          }
 
          if (any(ai < 0, na.rm=TRUE) || any(bi < 0, na.rm=TRUE) || any(ci < 0, na.rm=TRUE))
@@ -2040,10 +2067,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
       k.all <- length(yi)
 
       if (!is.null(subset)) {
-         subset <- .setnafalse(subset, k=k.all)
-         yi <- yi[subset]
-         vi <- vi[subset]
-         ni <- ni[subset]
+         subset <- .chksubset(subset, k.all)
+         yi <- .getsubset(yi, subset)
+         vi <- .getsubset(vi, subset)
+         ni <- .getsubset(ni, subset)
       }
 
       ni.u <- ni ### unadjusted total sample sizes
@@ -2095,7 +2122,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          slab <- as.character(slab)
 
       if (!is.null(subset))
-         slab <- slab[subset]
+         slab <- .getsubset(slab, subset)
 
       if (anyNA(slab))
          stop(mstyle$stop("NAs in study labels."))
@@ -2117,16 +2144,16 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
    ### turn numeric include vector into logical vector (already done for subset)
 
    if (!is.null(include))
-      include <- .setnafalse(include, arg="include", k=k.all)
+      include <- .chksubset(include, k.all)
 
    ### apply subset to include
 
-   include <- include[subset]
+   include <- .getsubset(include, subset)
 
    ### subset data frame (note: subsetting of other parts already done above, so yi/vi/ni.u/slab are already subsetted)
 
    if (has.data && any(!subset))
-      data <- data[subset,,drop=FALSE]
+      data <- .getsubset(data, subset)
 
    ### put together dataset
 

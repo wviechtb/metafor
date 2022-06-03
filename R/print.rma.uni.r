@@ -145,6 +145,17 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    }
 
+   if (inherits(x, "rma.gen")) {
+      cat(mstyle$section("Parameter Estimates:"))
+      cat("\n\n")
+      res.table <- data.frame(as.list(.fcf(x$pars, digits[["var"]])))
+      colnames(res.table) <- names(x$pars)
+      res.table <- res.table[1,,drop=FALSE]
+      tmp <- capture.output(.print.vector(res.table))
+      .print.table(tmp, mstyle)
+      cat("\n")
+   }
+
    if (!is.na(x$QE)) {
       if (x$int.only) {
          cat(mstyle$section("Test for Heterogeneity:"))

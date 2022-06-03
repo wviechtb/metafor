@@ -231,15 +231,15 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    ### if a subset of studies is specified
 
    if (!is.null(subset)) {
-      subset <- .setnafalse(subset, k=length(yi))
-      yi   <- yi[subset]
-      vi   <- vi[subset]
-      sei  <- sei[subset]
-      ni   <- ni[subset]
-      slab <- slab[subset]
-      pch  <- pch[subset]
-      col  <- col[subset]
-      bg   <- bg[subset]
+      subset <- .chksubset(subset, length(yi))
+      yi   <- .getsubset(yi,   subset)
+      vi   <- .getsubset(vi,   subset)
+      sei  <- .getsubset(sei,  subset)
+      ni   <- .getsubset(ni,   subset)
+      slab <- .getsubset(slab, subset)
+      pch  <- .getsubset(pch,  subset)
+      col  <- .getsubset(col,  subset)
+      bg   <- .getsubset(bg,   subset)
    }
 
    ### check for NAs and act accordingly

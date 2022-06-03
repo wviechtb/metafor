@@ -2,7 +2,7 @@ blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma.uni", notav=c("rma.uni.selmodel", "rma.nn"))
+   .chkclass(class(x), must="rma.uni", notav=c("rma.uni.selmodel", "rma.gen"))
 
    na.act <- getOption("na.action")
 

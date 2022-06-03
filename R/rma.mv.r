@@ -771,20 +771,21 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
       if (verbose > 1)
          message(mstyle$message("Subsetting ..."))
 
-      subset <- .setnafalse(subset, k=k)
+      subset <- .chksubset(subset, k)
 
-      yi   <- yi[subset]
-      V    <- V[subset,subset,drop=FALSE]
-      A    <- A[subset,subset,drop=FALSE]
-      ni   <- ni[subset]
-      mods <- mods[subset,,drop=FALSE]
-      slab <- slab[subset]
-      mf.r <- lapply(mf.r, function(x) x[subset,,drop=FALSE])
-      mf.s <- lapply(mf.s, function(x) x[subset,,drop=FALSE])
-      mf.g <- mf.g[subset,,drop=FALSE]
-      mf.h <- mf.h[subset,,drop=FALSE]
-      ids  <- ids[subset]
-      k    <- length(yi)
+      yi   <- .getsubset(yi,   subset)
+      V    <- .getsubset(V,    subset, col=TRUE)
+      A    <- .getsubset(A,    subset, col=TRUE)
+      ni   <- .getsubset(ni,   subset)
+      mods <- .getsubset(mods, subset)
+      slab <- .getsubset(slab, subset)
+      mf.r <- lapply(mf.r, .getsubset, subset)
+      mf.s <- lapply(mf.s, .getsubset, subset)
+      mf.g <- .getsubset(mf.g, subset)
+      mf.h <- .getsubset(mf.h, subset)
+      ids  <- .getsubset(ids,  subset)
+
+      k <- length(yi)
 
       attr(yi, "measure") <- measure ### add measure attribute back
       attr(yi, "ni")      <- ni      ### add ni attribute back
@@ -1759,8 +1760,6 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    reml <- ifelse(method == "REML", TRUE, FALSE)
 
-   optcontrol <- .chkopt1(optimizer, optcontrol)
-
    con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma"))
 
    if ((.isTRUE(cvvc) || cvvc %in% c("varcor","varcov","transf")) && !requireNamespace(con$hesspack, quietly=TRUE))
@@ -1879,10 +1878,11 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    ### estimate sigma2, tau2, rho, gamma2, and phi as needed
 
-   tmp <- .chkopt2(optimizer, optcontrol)
-   optimizer <- tmp$optimizer
-   par.arg   <- tmp$par.arg
-   ctrl.arg  <- tmp$ctrl.arg
+   tmp <- .chkopt(optimizer, optcontrol)
+   optimizer  <- tmp$optimizer
+   optcontrol <- tmp$optcontrol
+   par.arg    <- tmp$par.arg
+   ctrl.arg   <- tmp$ctrl.arg
 
    if (optimizer == "optimParallel::optimParallel") {
 

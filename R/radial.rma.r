@@ -6,7 +6,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma", notav=c("robust.rma", "rma.ls", "rma.nn", "rma.uni.selmodel"))
+   .chkclass(class(x), must="rma", notav=c("robust.rma", "rma.ls", "rma.gen", "rma.uni.selmodel"))
 
    if (missing(transf))
       transf <- FALSE

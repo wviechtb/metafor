@@ -2,7 +2,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(model), must="rma.uni", notav=c("rma.ls", "rma.nn", "rma.uni.selmodel"))
+   .chkclass(class(model), must="rma.uni", notav=c("rma.ls", "rma.gen", "rma.uni.selmodel"))
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act), add=TRUE)

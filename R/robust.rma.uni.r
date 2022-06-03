@@ -2,7 +2,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma.uni", notav=c("rma.ls", "rma.nn", "rma.uni.selmodel"))
+   .chkclass(class(x), must="rma.uni", notav=c("rma.ls", "rma.gen", "rma.uni.selmodel"))
 
    if (missing(cluster))
       stop(mstyle$stop("Must specify 'cluster' variable."))
@@ -31,8 +31,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
    if (length(cluster) != x$k.all)
       stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-   if (!is.null(x$subset))
-      cluster <- cluster[x$subset]
+   cluster <- .getsubset(cluster, x$subset)
 
    cluster <- cluster[x$not.na]
 

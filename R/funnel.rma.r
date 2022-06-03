@@ -119,8 +119,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    if (length(pch) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'pch' argument (", length(pch), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-   if (!is.null(x$subset))
-      pch <- pch[x$subset]
+   pch <- .getsubset(pch, x$subset)
 
    if (!inherits(x, "rma.uni.trimfill")) {
 
@@ -139,8 +138,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       if (length(col) != x$k.all)
          stop(mstyle$stop(paste0("Length of the 'col' argument (", length(col), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-      if (!is.null(x$subset))
-         col <- col[x$subset]
+      col <- .getsubset(col, x$subset)
 
       if (missing(bg)) {
          bg <- "white"
@@ -157,8 +155,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       if (length(bg) != x$k.all)
          stop(mstyle$stop(paste0("Length of the 'bg' argument (", length(bg), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-      if (!is.null(x$subset))
-         bg <- bg[x$subset]
+      bg <- .getsubset(bg, x$subset)
 
    } else {
 

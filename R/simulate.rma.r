@@ -2,7 +2,7 @@ simulate.rma <- function(object, nsim = 1, seed = NULL, olim, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(object), must="rma", notav=c("rma.nn", "rma.glmm", "rma.mh", "rma.peto", "rma.uni.selmodel"))
+   .chkclass(class(object), must="rma", notav=c("rma.gen", "rma.glmm", "rma.mh", "rma.peto", "rma.uni.selmodel"))
 
    na.act <- getOption("na.action")
 

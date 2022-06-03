@@ -72,8 +72,7 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
    if (length(cluster) != x$k.all)
       stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not match length of data (", x$k.all, ").")))
 
-   if (!is.null(x$subset))
-      cluster <- cluster[x$subset]
+   cluster <- .getsubset(cluster, x$subset)
 
    cluster.f <- cluster
 
