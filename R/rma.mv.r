@@ -507,6 +507,13 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
       if (any(has.dollar))
          stop(mstyle$stop("Cannot use '$' notation in formulas in the 'random' argument (use the 'data' argument instead)."))
 
+      ### check if any formula have a :
+
+      has.colon <- sapply(random, function(f) grepl(":", paste0(f, collapse=""), fixed=TRUE))
+
+      if (any(has.colon))
+         stop(mstyle$stop("Cannot use ':' notation in formulas in the 'random' argument (use 'interaction()' instead)."))
+
       ### check which formulas have a ||
 
       has.dblvbar <- sapply(random, function(f) grepl("||", paste0(f, collapse=""), fixed=TRUE))
@@ -2360,6 +2367,22 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    fit.stats <- data.frame(fit.stats)
 
    #########################################################################
+
+   ### replace interaction() notation with : notation in s.names and g.names for nicer output
+
+   replfun <- function(x) {
+      if (grepl("interaction(", x, fixed=TRUE)) {
+         x <- gsub("^interaction\\(", "", x)
+         x <- gsub(", ", ":", x, fixed=TRUE)
+         x <- gsub("\\)$", "", x, fixed=FALSE)
+      }
+      return(x)
+   }
+
+   s.names <- sapply(s.names, replfun)
+   g.names <- sapply(g.names, replfun)
+
+   ############################################################################
 
    ###### prepare output
 
