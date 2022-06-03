@@ -1,5 +1,7 @@
 # metafor 3.5-8 (2022-06-03)
 
+- added measure `SMD1H` to `escalc()`
+
 - for `measure="SMD"`, `escalc()` now also allows the user to specify d-values and t-test statistics via arguments `di` and `ti`, respectively
 
 - improved the stability of the calculations in `rma.uni()` with some internal rescaling of the `yi` values

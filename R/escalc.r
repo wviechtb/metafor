@@ -18,7 +18,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                               "PBIT","OR2D","OR2DN","OR2DL",                       # - transformations to SMD
                               "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",       # - measures for matched pairs / pre-post data
                               "IRR","IRD","IRSD",                                  # two-group person-time data measures
-                              "MD","SMD","SMDH","SMD1","ROM",                      # two-group mean/SD measures
+                              "MD","SMD","SMDH","SMD1","SMD1H","ROM",              # two-group mean/SD measures
                               "CVR","VR",                                          # coefficient of variation ratio, variability ratio
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 # - transformations to r_PB, r_BIS, and log(OR)
                               "COR","UCOR","ZCOR",                                 # correlations (raw and r-to-z transformed)
@@ -717,7 +717,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       ######################################################################
 
-      if (is.element(measure, c("MD","SMD","SMDH","SMD1","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
+      if (is.element(measure, c("MD","SMD","SMDH","SMD1","SMD1H","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
 
          m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE) ### for VR, do not need to supply this
          m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE) ### for VR, do not need to supply this
@@ -753,7 +753,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ### for these measures, need m1i, m2i, sd1i, sd2i, n1i, and n2i
 
-         if (is.element(measure, c("MD","SMDH","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR"))) {
+         if (is.element(measure, c("MD","SMDH","SMD1H","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR"))) {
 
             if (!.all.specified(m1i, m2i, sd1i, sd2i, n1i, n2i))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
@@ -811,7 +811,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ni <- ni.u
 
-         if (measure == "SMD1") {
+         if (is.element(measure, c("SMD1","SMD1H"))) {
             mi   <- n2i - 1
             sdpi <- sd2i
             npi  <- n2i
@@ -903,6 +903,15 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             vi <- cmi^2 * vi
             ### note: Bonett (2009) plugs in the uncorrected yi into the
             ### equation for vi; here, the corrected value is plugged in
+         }
+
+         ### standardized mean difference standardized by SD of group 2 (with heteroscedastic SDs)
+
+         if (measure == "SMD1H") {
+            cmi <- .cmicalc(mi)
+            yi <- cmi * di
+            vi <- (sd1i^2/sd2i^2)/n1i + 1/n2i + yi^2/(2*n2i)
+            #vi <- cmi^2 * vi
          }
 
          ### ratio of means (response ratio)

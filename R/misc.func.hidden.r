@@ -605,7 +605,7 @@
             lab <- ifelse(short, lab, "Transformed Mean Difference")
          }
       }
-      if (is.element(measure, c("SMD","SMDH","SMD1","PBIT","OR2D","OR2DN","OR2DL"))) {
+      if (is.element(measure, c("SMD","SMDH","SMD1","SMD1H","PBIT","OR2D","OR2DN","OR2DL"))) {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, "SMD", "Standardized Mean Difference")
          } else {

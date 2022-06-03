@@ -153,24 +153,22 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
                  \tab mean       \tab standard deviation \tab group size \cr
          group 1 \tab \code{m1i} \tab \code{sd1i}        \tab \code{n1i} \cr
          group 2 \tab \code{m2i} \tab \code{sd2i}        \tab \code{n2i}
-         } where \code{m1i} and \code{m2i} are the observed means of the two groups, \code{sd1i} and \code{sd2i} are the observed standard deviations, and \code{n1i} and \code{n2i} denote the number of individuals in each group. Again, the two groups may be experimentally created (e.g., a treatment and control group based on random assignment) or naturally occurring (e.g., men and women). In either case, the raw mean difference, the standardized mean difference, and the (log transformed) ratio of means (also called log response ratio) are useful outcome measures when meta-analyzing studies of this type.
+         } where \code{m1i} and \code{m2i} are the observed means of the two groups, \code{sd1i} and \code{sd2i} are the observed standard deviations, and \code{n1i} and \code{n2i} denote the number of individuals in each group. Again, the two groups may be experimentally created (e.g., a treatment and control group based on random assignment) or naturally occurring (e.g., men and women). In either case, the raw mean difference, the standardized mean difference, and the (log transformed) ratio of means (also called the log \sQuote{response ratio}) are useful outcome measures when meta-analyzing studies of this type.
 
          The options for the \code{measure} argument are then:
          \itemize{
          \item \code{"MD"} for the \emph{raw mean difference} (e.g., Borenstein, 2009),
          \item \code{"SMD"} for the \emph{standardized mean difference} (Hedges, 1981),
          \item \code{"SMDH"} for the \emph{standardized mean difference} with heteroscedastic population variances in the two groups (Bonett, 2008, 2009),
-         \item \code{"SMD1"} for the \emph{standardized mean difference} where the mean difference is divided by the standard deviation of a single group,
+         \item \code{"SMD1"} for the \emph{standardized mean difference} where the mean difference is divided by the standard deviation of the second group (and \code{"SMD1H"} for the same but with heteroscedastic population variances),
          \item \code{"ROM"} for the \emph{log transformed ratio of means} (Hedges et al., 1999; Lajeunesse, 2011).
          }
 
-         For \code{measure="SMD"}, the standardized mean difference is computed with \code{(m1i - m2i) / sdpi}, where \code{sdpi = sqrt(((n1i-1)*sd1i^2 + (n2i-1)*sd2i^2) / (n1i+n2i-2))} is the pooled standard deviation of the two groups. For \code{measure="SMDH"}, \code{sdpi = sqrt((sd1i^2 + sd2i^2) / 2)} is the square root of the average variance, and for \code{measure="SMD1"}, we simply use \code{sdpi = sd2i} (hence, for this measure, only \code{sd2i} needs to be specified and \code{sd1i} is ignored).
+         The standardized mean difference is computed with \code{(m1i - m2i) / sdpi}. For \code{measure="SMD"}, \code{sdpi = sqrt(((n1i-1)*sd1i^2 + (n2i-1)*sd2i^2) / (n1i+n2i-2))} is the pooled standard deviation of the two groups. For \code{measure="SMDH"}, \code{sdpi = sqrt((sd1i^2 + sd2i^2) / 2)} is the square root of the average variance. Finally, for \code{measure="SMD1"} and \code{measure="SMD1H"}, we simply use \code{sdpi = sd2i} (note: for \code{measure="SMD1"}, only \code{sd2i} needs to be specified and \code{sd1i} is ignored).
 
-         (hence, for this measure, argument \code{sdi} needs to be specified and arguments \code{sd1i} and \code{sd2i} are ignored).
+         For \code{measure="SMD"}, the positive bias in the standardized mean difference (i.e., in a Cohen's d value) is automatically corrected for within the function, yielding Hedges' g (Hedges, 1981). Similarly, the same bias correction is applied for \code{measure="SMDH"} (Bonett, 2009), \code{measure="SMD1"} (Hedges, 1981), and \code{measure="SMD1H"}.
 
-         For \code{measure="SMD"}, the positive bias in the standardized mean difference (i.e., in a Cohen's d value) is automatically corrected for within the function, yielding Hedges' g (Hedges, 1981). Similarly, the same bias correction is applied for \code{measure="SMDH"} (Bonett, 2009) and \code{measure="SMD1"} (Hedges, 1981).
-
-         For \code{measure="ROM"}, the log is taken of the ratio of means, which makes this outcome measure symmetric around 0 and yields a corresponding sampling distribution that is closer to normality. Hence, this measure cannot be computed when \code{m1i} and \code{m2i} have opposite signs (i.e., it is meant to be used for ratio scale measurements, where both means should be positive anyway).
+         For \code{measure="ROM"}, the log is taken of the ratio of means, which makes this outcome measure symmetric around 0 and yields a corresponding sampling distribution that is closer to normality. Hence, this measure cannot be computed when \code{m1i} and \code{m2i} have opposite signs (in fact, this measure is only meant to be used for ratio scale measurements, where both means should be positive anyway).
 
          For \code{measure="SMD"}, if the means and standard deviations are unknown for some studies, but the standardized mean differences (Cohen's d values) are directly available (e.g., if they are reported in those studies), then these can be specified via argument \code{di}. Also, if the t-statistics from an independent samples t-test is available for some studies (or the corresponding p-values, which can be easily transformed into the t-statistics), one can specify those values via argument \code{ti}, which are then transformed into the corresponding standardized mean differences within the function. See \href{https://www.metafor-project.org/doku.php/tips:assembling_data_smd}{here} for an illustration/discussion of this.
 

@@ -18,7 +18,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                               "PBIT","OR2D","OR2DN","OR2DL",                       # - transformations to SMD
                               "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",       # - measures for matched pairs data
                               "IRR","IRD","IRSD",                                  # two-group person-time data measures
-                              "MD","SMD","SMDH","SMD1","ROM",                      # two-group mean/SD measures
+                              "MD","SMD","SMDH","SMD1","SMD1H","ROM",              # two-group mean/SD measures
                               "CVR","VR",                                          # coefficient of variation ratio, variability ratio
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 # - transformations to r_PB, r_BIS, and log(OR)
                               "COR","UCOR","ZCOR",                                 # correlations (raw and r-to-z transformed)
@@ -438,7 +438,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       }
 
-      if (is.element(measure, c("MD","SMD","SMDH","SMD1","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
+      if (is.element(measure, c("MD","SMD","SMDH","SMD1","SMD1H","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
 
          m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE)
          m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE)
