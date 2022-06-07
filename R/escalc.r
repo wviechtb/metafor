@@ -899,10 +899,15 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             cmi <- .cmicalc(mi)
             si <- sqrt((sd1i^2 + sd2i^2)/2)
             yi <- cmi * (m1i - m2i) / si
-            vi <- yi^2 * (sd1i^4 / (n1i-1) + sd2i^4 / (n2i-1)) / (2*(sd1i^2 + sd2i^2)^2) + (sd1i^2 / (n1i-1) + sd2i^2 / (n2i-1)) / ((sd1i^2 + sd2i^2)/2)
-            vi <- cmi^2 * vi
-            ### note: Bonett (2009) plugs in the uncorrected yi into the
-            ### equation for vi; here, the corrected value is plugged in
+            if (vtype == "LS") {
+               ### note: Bonett (2009) plugs in the uncorrected yi into the
+               ### equation for vi; here, the corrected value is plugged in
+               vi <- yi^2 * (sd1i^4 / (n1i-1) + sd2i^4 / (n2i-1)) / (2*(sd1i^2 + sd2i^2)^2) + (sd1i^2 / (n1i-1) + sd2i^2 / (n2i-1)) / ((sd1i^2 + sd2i^2)/2)
+               vi <- cmi^2 * vi
+            }
+            if (vtype == "LS2")
+               ### based on standard application of delta method
+               vi <- yi^2 * sd1i^2 / (2*n1i*(sd1i^2+sd2i^2)^2) + yi^2 * sd2i^2 / (2*n2i*(sd1i^2+sd2i^2)^2) + 2*sd1i^2 / (n1i*(sd1i^2+sd2i^2)) + 2*sd2i^2 / (n2i*(sd1i^2+sd2i^2))
          }
 
          ### standardized mean difference standardized by SD of group 2 (with heteroscedastic SDs)
