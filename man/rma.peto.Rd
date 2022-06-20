@@ -8,7 +8,7 @@
 rma.peto(ai, bi, ci, di, n1i, n2i,
          data, slab, subset,
          add=1/2, to="only0", drop00=TRUE,
-         level=95, digits, verbose=FALSE, \dots)
+         level=95, verbose=FALSE, digits, \dots)
 }
 \arguments{
    \item{ai}{vector to specify the \mjeqn{2 \times 2}{2x2} table frequencies (upper left cell). See below and the documentation of the \code{\link{escalc}} function for more details.}
@@ -24,8 +24,8 @@ rma.peto(ai, bi, ci, di, n1i, n2i,
    \item{to}{character string to specify when the values under \code{add} should be added (either \code{"only0"}, \code{"all"}, \code{"if0all"}, or \code{"none"}). Can also be a character vector, where the first string again applies when calculating the observed effect sizes or outcomes and the second string when applying Peto's method. See below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{drop00}{logical to specify whether studies with no cases (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes (the outcomes for such studies are set to \code{NA}). Can also be a vector of two logicals, where the first applies to the calculation of the observed effect sizes or outcomes and the second when applying Peto's method. See below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
-   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. See also \link[=misc-options]{here} for further details on how to control the number of digits in the output.}
    \item{verbose}{logical to specify whether output should be generated on the progress of the model fitting (the default is \code{FALSE}).}
+   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. See also \link[=misc-options]{here} for further details on how to control the number of digits in the output.}
    \item{\dots}{additional arguments.}
 }
 \details{
@@ -33,11 +33,11 @@ rma.peto(ai, bi, ci, di, n1i, n2i,
    \subsection{Specifying the Data}{
 
       The studies are assumed to provide data in terms of \mjeqn{2 \times 2}{2x2} tables of the form:
-      \tabular{lccc}{
-              \tab outcome 1 \tab outcome 2 \tab total      \cr
-      group 1 \tab \code{ai} \tab \code{bi} \tab \code{n1i} \cr
-      group 2 \tab \code{ci} \tab \code{di} \tab \code{n2i}
-      } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies and \code{n1i} and \code{n2i} the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure.
+      \tabular{lcccccc}{
+              \tab \ics \tab outcome 1 \tab \ics \tab outcome 2 \tab \ics \tab total      \cr
+      group 1 \tab \ics \tab \code{ai} \tab \ics \tab \code{bi} \tab \ics \tab \code{n1i} \cr
+      group 2 \tab \ics \tab \code{ci} \tab \ics \tab \code{di} \tab \ics \tab \code{n2i}}
+      where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies and \code{n1i} and \code{n2i} the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure.
 
    }
 

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -113,16 +113,22 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an object of class <code>"rma.uni"</code> or <code>"rma.mv"</code>.</p></dd>
-<dt>cluster</dt>
+
+   <dt>cluster</dt>
 <dd><p>vector to specify the clustering variable to use for constructing the sandwich estimator of the variance-covariance matrix.</p></dd>
-<dt>adjust</dt>
+
+   <dt>adjust</dt>
 <dd><p>logical to specify whether a small-sample correction should be applied to the variance-covariance matrix.</p></dd>
-<dt>clubSandwich</dt>
+
+   <dt>clubSandwich</dt>
 <dd><p>logical to specify whether the <a href="https://cran.r-project.org/package=clubSandwich" class="external-link">clubSandwich</a> package should be used to obtain the cluster-robust tests and confidence intervals.</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -133,29 +139,44 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>"robust.rma"</code>. The object is a list containing the following components:</p>
+    
+
+<p>An object of class <code>"robust.rma"</code>. The object is a list containing the following components:</p>
 <dl><dt>beta</dt>
 <dd><p>estimated coefficients of the model.</p></dd>
-<dt>se</dt>
+
+   <dt>se</dt>
 <dd><p>robust standard errors of the coefficients.</p></dd>
-<dt>zval</dt>
+
+   <dt>zval</dt>
 <dd><p>test statistics of the coefficients.</p></dd>
-<dt>pval</dt>
+
+   <dt>pval</dt>
 <dd><p>corresponding p-values.</p></dd>
-<dt>ci.lb</dt>
+
+   <dt>ci.lb</dt>
 <dd><p>lower bound of the confidence intervals for the coefficients.</p></dd>
-<dt>ci.ub</dt>
+
+   <dt>ci.ub</dt>
 <dd><p>upper bound of the confidence intervals for the coefficients.</p></dd>
-<dt>vb</dt>
+
+   <dt>vb</dt>
 <dd><p>robust variance-covariance matrix of the estimated coefficients.</p></dd>
-<dt>QM</dt>
+
+   <dt>QM</dt>
 <dd><p>test statistic of the omnibus test of moderators.</p></dd>
-<dt>QMp</dt>
+
+   <dt>QMp</dt>
 <dd><p>corresponding p-value.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
-</dl><p>The results are formatted and printed with the <code><a href="print.rma.html">print.rma.uni</a></code> and <code><a href="print.rma.html">print.rma.mv</a></code> functions (depending on the type of model).
-   Predicted/fitted values based on <code>"robust.rma"</code> objects can be obtained with the <code><a href="predict.rma.html">predict</a></code> function. Tests for sets of model coefficients or linear combinations thereof can be obtained with the <code><a href="anova.rma.html">anova</a></code> function.</p>
+
+
+</dl><p>The results are formatted and printed with the <code><a href="print.rma.html">print.rma.uni</a></code> and <code><a href="print.rma.html">print.rma.mv</a></code> functions (depending on the type of model).</p>
+
+
+<p>Predicted/fitted values based on <code>"robust.rma"</code> objects can be obtained with the <code><a href="predict.rma.html">predict</a></code> function. Tests for sets of model coefficients or linear combinations thereof can be obtained with the <code><a href="anova.rma.html">anova</a></code> function.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -608,7 +629,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

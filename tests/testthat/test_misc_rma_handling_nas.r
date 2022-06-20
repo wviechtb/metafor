@@ -25,8 +25,8 @@ test_that("rma.glmm() handles NAs correctly.", {
 
    ### k, length of xi/mi, and number of rows in X must be equal to 8 (studies 1 and 2 removed due to NAs in table data)
    expect_equivalent(res$k, 8)
-   expect_equivalent(length(res$xi), 8)
-   expect_equivalent(length(res$mi), 8)
+   expect_equivalent(length(res$outdat$xi), 8)
+   expect_equivalent(length(res$outdat$mi), 8)
    expect_equivalent(nrow(res$X), 8)
 
    ### k.yi and length of yi/vi must be equal to 8 (studies 1 and 2 removed due to NAs in table data)
@@ -36,8 +36,8 @@ test_that("rma.glmm() handles NAs correctly.", {
 
    ### full data saved in .f elements
    expect_equivalent(res$k.f, 10)
-   expect_equivalent(length(res$xi.f), 10)
-   expect_equivalent(length(res$mi.f), 10)
+   expect_equivalent(length(res$outdat.f$xi), 10)
+   expect_equivalent(length(res$outdat.f$mi), 10)
    expect_equivalent(nrow(res$X.f), 10)
    expect_equivalent(length(res$yi.f), 10)
    expect_equivalent(length(res$vi.f), 10)
@@ -48,8 +48,8 @@ test_that("rma.glmm() handles NAs correctly.", {
 
    ### k, length of xi/mi, and number of rows in X must be equal to 8 (studies 1 and 2 removed due to NAs in table data, but studies 3 and 4 included in the model fitting)
    expect_equivalent(res$k, 8)
-   expect_equivalent(length(res$xi), 8)
-   expect_equivalent(length(res$mi), 8)
+   expect_equivalent(length(res$outdat$xi), 8)
+   expect_equivalent(length(res$outdat$mi), 8)
    expect_equivalent(nrow(res$X), 8)
 
    ### k.yi and length of yi/vi must be equal to 6 (studies 1 and 2 removed due to NAs in table data and studies 3 and 4 have NA/NA for yi/vi)
@@ -59,8 +59,8 @@ test_that("rma.glmm() handles NAs correctly.", {
 
    ### full data saved in .f elements
    expect_equivalent(res$k.f, 10)
-   expect_equivalent(length(res$xi.f), 10)
-   expect_equivalent(length(res$mi.f), 10)
+   expect_equivalent(length(res$outdat.f$xi), 10)
+   expect_equivalent(length(res$outdat.f$mi), 10)
    expect_equivalent(nrow(res$X.f), 10)
    expect_equivalent(length(res$yi.f), 10)
    expect_equivalent(length(res$vi.f), 10)
@@ -74,8 +74,8 @@ test_that("rma.glmm() handles NAs correctly.", {
 
    ### k, length of xi/mi, and number of rows in X must be equal to 8 (studies 1 and 2 removed due to NAs in table data, but studies 3 and 4 included in the model fitting)
    expect_equivalent(res$k, 8)
-   expect_equivalent(length(res$xi), 8)
-   expect_equivalent(length(res$mi), 8)
+   expect_equivalent(length(res$outdat$xi), 8)
+   expect_equivalent(length(res$outdat$mi), 8)
    expect_equivalent(nrow(res$X), 8)
 
    ### k.yi and length of yi/vi must be equal to 6 (studies 1 and 2 removed due to NAs in table data and studies 3 and 4 have NA/NA for yi/vi)
@@ -85,8 +85,8 @@ test_that("rma.glmm() handles NAs correctly.", {
 
    ### full data saved in .f elements
    expect_equivalent(res$k.f, 10)
-   expect_equivalent(length(res$xi.f), 10)
-   expect_equivalent(length(res$mi.f), 10)
+   expect_equivalent(length(res$outdat.f$xi), 10)
+   expect_equivalent(length(res$outdat.f$mi), 10)
    expect_equivalent(nrow(res$X.f), 10)
    expect_equivalent(length(res$yi.f), 10)
    expect_equivalent(length(res$vi.f), 10)

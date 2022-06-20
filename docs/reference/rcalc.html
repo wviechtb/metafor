@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -108,18 +108,25 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>a formula of the form <code>ri ~ var1 + var2 | study</code>. See ‘Details’.</p></dd>
-<dt>ni</dt>
+
+   <dt>ni</dt>
 <dd><p>vector to specify the sample sizes based on which the correlations were computed.</p></dd>
-<dt>data</dt>
+
+   <dt>data</dt>
 <dd><p>data frame containing the variables specified via the formula (and the sample sizes).</p></dd>
-<dt>rtoz</dt>
+
+   <dt>rtoz</dt>
 <dd><p>logical to specify whether to transform the correlations via Fisher's r-to-z transformation (the default is <code>FALSE</code>).</p></dd>
-<dt>nfun</dt>
+
+   <dt>nfun</dt>
 <dd><p>a character string to specify how the ‘common’ sample size within each study should be computed. Possible options are <code>"min"</code> (for the minimum), <code>"harmonic"</code> (for the harmonic mean), or <code>"mean"</code> (for the arithmetic mean). Can also be a function. See ‘Details’.</p></dd>
-<dt>sparse</dt>
+
+   <dt>sparse</dt>
 <dd><p>logical to specify whether the variance-covariance matrix should be returned as a sparse matrix (the default is <code>FALSE</code>).</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -133,11 +140,16 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list containing the following components:</p>
+    
+
+<p>A list containing the following components:</p>
 <dl><dt>dat</dt>
 <dd><p>a data frame with the study identifier, the two variable identifiers, a variable pair identifier, the correlation coefficients (possibly transformed with Fisher's r-to-z transformation), and the (common) sample sizes.</p></dd>
-<dt>V</dt>
+
+   <dt>V</dt>
 <dd><p>corresponding variance-covariance matrix (given as a sparse matrix when <code>sparse=TRUE</code>).</p></dd>
+
+
 </dl><p>Note that a particular covariance can only be computed when all of the correlation coefficients involved in the covariance equation are included in the dataset. If one or more coefficients needed for the computation are missing, then the resulting covariance will also be missing (i.e., <code>NA</code>).</p>
     </div>
     <div id="note">
@@ -238,7 +250,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

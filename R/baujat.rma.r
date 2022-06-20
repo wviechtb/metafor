@@ -55,14 +55,14 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, 
          res <- try(suppressWarnings(.do.call(rma.uni, yi=x$yi.f, vi=x$vi.f, weights=x$weights.f, mods=x$X.f, intercept=FALSE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i, skipr2=TRUE, outlist=outlist)), silent=TRUE)
       if (inherits(x, "rma.mh")) {
          if (is.element(x$measure, c("RR","OR","RD"))) {
-            res <- try(suppressWarnings(.do.call(rma.mh, ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=-i, outlist=outlist)), silent=TRUE)
+            res <- try(suppressWarnings(.do.call(rma.mh, ai=x$outdat.f$ai, bi=x$outdat.f$bi, ci=x$outdat.f$ci, di=x$outdat.f$di, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=-i, outlist=outlist)), silent=TRUE)
          } else {
-            res <- try(suppressWarnings(.do.call(rma.mh, x1i=x$x1i.f, x2i=x$x2i.f, t1i=x$t1i.f, t2i=x$t2i.f, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=-i, outlist=outlist)), silent=TRUE)
+            res <- try(suppressWarnings(.do.call(rma.mh, x1i=x$outdat.f$x1i, x2i=x$outdat.f$x2i, t1i=x$outdat.f$t1i, t2i=x$outdat.f$t2i, measure=x$measure, add=x$add, to=x$to, drop00=x$drop00, correct=x$correct, level=x$level, subset=-i, outlist=outlist)), silent=TRUE)
          }
       }
 
       if (inherits(x, "rma.peto"))
-         res <- try(suppressWarnings(.do.call(rma.peto, ai=x$ai.f, bi=x$bi.f, ci=x$ci.f, di=x$di.f, add=x$add, to=x$to, drop00=x$drop00, level=x$level, subset=-i)), silent=TRUE)
+         res <- try(suppressWarnings(.do.call(rma.peto, ai=x$outdat.f$ai, bi=x$outdat.f$bi, ci=x$outdat.f$ci, di=x$outdat.f$di, add=x$add, to=x$to, drop00=x$drop00, level=x$level, subset=-i)), silent=TRUE)
 
       if (inherits(res, "try-error"))
          next

@@ -21,7 +21,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (missing(x))
-      stop(mstyle$stop("Must specify the 'x' argument."))
+      stop(mstyle$stop("Must specify 'x' argument."))
 
    k <- length(x)
 

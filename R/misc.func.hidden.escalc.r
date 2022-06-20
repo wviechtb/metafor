@@ -202,16 +202,18 @@
 
 ### pdf of SMD (with or without bias correction)
 
-.dsmd <- function(x, n1, n2, theta, correct=TRUE, warn=FALSE) {
+.dsmd <- function(x, n1, n2, theta, correct=TRUE, xisg=FALSE, warn=FALSE) {
 
    nt <- n1 * n2 / (n1 + n2)
    m  <- n1 + n2 - 2
 
-   if (correct) {
-      cm <- .cmicalc(m)
-   } else {
+   cm <- .cmicalc(m)
+
+   if (xisg)
+      x <- x / cm
+
+   if (!correct)
       cm <- 1
-   }
 
    if (warn) {
       res <- dt(x * sqrt(nt) / cm, df = m, ncp = sqrt(nt) * theta) * sqrt(nt) / cm
@@ -282,5 +284,17 @@
 
 #integrate(function(x) .dzcor(x, n=5, rho=.8), lower=-100, upper=100)
 #integrate(function(x) x*.dzcor(x, n=5, rho=.8), lower=-100, upper=100)
+
+### pdf of ARAW
+
+.daraw <- function(x, n, m, alpha) {
+   res <- df((1-x)/(1-alpha), (n-1)*(m-1), (n-1)) / (1-alpha)
+   res[alpha >=  1] <- 0
+   res[alpha <= -1] <- 0
+   return(res)
+}
+
+#integrate(function(x) .daraw(x, n=10, m=2, alpha=.8), lower=-Inf, upper=Inf)
+#integrate(function(x) x*.daraw(x, n=10, m=2, alpha=.8), lower=-Inf, upper=Inf)
 
 ############################################################################

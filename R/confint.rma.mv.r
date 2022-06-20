@@ -203,19 +203,19 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       ### check if user specified a logical
 
       if (!missing(sigma2) && is.logical(sigma2))
-         stop(mstyle$stop("Must specify the number for the 'sigma2' component."))
+         stop(mstyle$stop("Must specify a number for the 'sigma2' component."))
 
       if (!missing(tau2) && is.logical(tau2))
-         stop(mstyle$stop("Must specify the number for the 'tau2' component."))
+         stop(mstyle$stop("Must specify a number for the 'tau2' component."))
 
       if (!missing(rho) && is.logical(rho))
-         stop(mstyle$stop("Must specify the number for the 'rho' component."))
+         stop(mstyle$stop("Must specify a number for the 'rho' component."))
 
       if (!missing(gamma2) && is.logical(gamma2))
-         stop(mstyle$stop("Must specify the number for the 'gamma2' component."))
+         stop(mstyle$stop("Must specify a number for the 'gamma2' component."))
 
       if (!missing(phi) && is.logical(phi))
-         stop(mstyle$stop("Must specify the number for the 'phi' component."))
+         stop(mstyle$stop("Must specify a number for the 'phi' component."))
 
       ### check if user specified a component that does not exist
 

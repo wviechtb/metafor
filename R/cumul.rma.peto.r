@@ -58,10 +58,10 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, progbar=FALSE, ...) 
 
    order <- order(order, decreasing=decreasing)
 
-   ai.f   <- x$ai.f[order]
-   bi.f   <- x$bi.f[order]
-   ci.f   <- x$ci.f[order]
-   di.f   <- x$di.f[order]
+   ai.f   <- x$outdat.f$ai[order]
+   bi.f   <- x$outdat.f$bi[order]
+   ci.f   <- x$outdat.f$ci[order]
+   di.f   <- x$outdat.f$di[order]
    yi.f   <- x$yi.f[order]
    vi.f   <- x$vi.f[order]
    not.na <- x$not.na[order]

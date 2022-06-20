@@ -9,7 +9,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
          mods, measure, intercept=TRUE, data, slab, subset,
          add=1/2, to="only0", drop00=TRUE, vtype="LS",
          model="UM.FS", method="ML", coding=1/2, cor=FALSE, test="z",
-         level=95, digits, btt, nAGQ=7, verbose=FALSE, control, \dots)
+         level=95, btt, nAGQ=7, verbose=FALSE, digits, control, \dots)
 }
 \arguments{
    \item{ai}{see below and the documentation of the \code{\link{escalc}} function for more details.}
@@ -42,10 +42,10 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \item{cor}{logical to indicate whether the random study effects should be allowed to be correlated with the random group effects for random/mixed-effects models when \code{model="UM.RS"} (the default is \code{FALSE}). See \sQuote{Note}.}
    \item{test}{character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (\code{test="z"}), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When \code{test="t"}, a t-distribution is used instead. See \sQuote{Details} and also \link[=misc-recs]{here}.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
-   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. See also \link[=misc-options]{here} for further details on how to control the number of digits in the output.}
    \item{btt}{optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to \code{\link{grep}} for. See \sQuote{Details}.}
    \item{nAGQ}{positive integer to specify the number of points per axis for evaluating the adaptive Gauss-Hermite approximation to the log-likelihood. The default is 7. Setting this to 1 corresponds to the Laplacian approximation. See \sQuote{Note}.}
    \item{verbose}{logical to specify whether output should be generated on the progress of the model fitting (the default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
+   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. See also \link[=misc-options]{here} for further details on how to control the number of digits in the output.}
    \item{control}{optional list of control values for the estimation algorithms. If unspecified, default values are defined inside the function. See \sQuote{Note}.}
    \item{\dots}{additional arguments.}
 }

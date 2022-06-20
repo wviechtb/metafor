@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -109,14 +109,19 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an object of class <code>"rma"</code>.</p></dd>
-<dt>type</dt>
+
+   <dt>type</dt>
 <dd><p>the formula which should be returned; either <code>"mods"</code> (default), <code>"yi"</code> (in case argument <code>yi</code> was used to specify a formula), or <code>"scale"</code> (only for location-scale models).</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The requested formula.</p>
+    
+
+<p>The requested formula.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -144,13 +149,13 @@
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">alloc</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">formula</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"mods"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ~ablat + alloc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55ea2bd3e3d0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x558746763ff0&gt;</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### specify moderators via 'yi' argument</span></span>
 <span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">alloc</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">formula</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"yi"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> yi ~ ablat + alloc</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x55ea2dde5ca8&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x5587461617a0&gt;</span>
 </code></pre></div>
     </div>
   </div>
@@ -165,7 +170,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

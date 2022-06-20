@@ -112,14 +112,14 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    ### these vectors may contain NAs
 
-   ai  <- x$ai.f
-   bi  <- x$bi.f
-   ci  <- x$ci.f
-   di  <- x$di.f
-   x1i <- x$x1i.f
-   x2i <- x$x2i.f
-   t1i <- x$t1i.f
-   t2i <- x$t2i.f
+   ai  <- x$outdat.f$ai
+   bi  <- x$outdat.f$bi
+   ci  <- x$outdat.f$ci
+   di  <- x$outdat.f$di
+   x1i <- x$outdat.f$x1i
+   x2i <- x$outdat.f$x2i
+   t1i <- x$outdat.f$t1i
+   t2i <- x$outdat.f$t2i
 
    ### drop00=TRUE may induce that the contrast-based yi value is NA; so
    ### make sure that the corresponding arm-based yi values are also NA

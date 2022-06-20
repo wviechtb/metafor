@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -110,54 +110,79 @@
     <h2>Arguments</h2>
     <dl><dt>measure</dt>
 <dd><p>a character string to specify for which effect size or outcome measure the likelihoods should be calculated. See ‘Details’ for possible options and how the data should then be specified.</p></dd>
-<dt>yi</dt>
+
+   <dt>yi</dt>
 <dd><p>vector with the observed effect sizes or outcomes.</p></dd>
-<dt>vi</dt>
+
+   <dt>vi</dt>
 <dd><p>vector with the corresponding sampling variances.</p></dd>
-<dt>sei</dt>
+
+   <dt>sei</dt>
 <dd><p>vector to specify the corresponding standard.</p></dd>
-<dt>ai</dt>
+
+   <dt>ai</dt>
 <dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (upper left cell).</p></dd>
-<dt>bi</dt>
+
+   <dt>bi</dt>
 <dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (upper right cell).</p></dd>
-<dt>ci</dt>
+
+   <dt>ci</dt>
 <dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (lower left cell).</p></dd>
-<dt>di</dt>
+
+   <dt>di</dt>
 <dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (lower right cell).</p></dd>
-<dt>n1i</dt>
+
+   <dt>n1i</dt>
 <dd><p>vector to specify the group sizes or row totals (first group/row).</p></dd>
-<dt>n2i</dt>
+
+   <dt>n2i</dt>
 <dd><p>vector to specify the group sizes or row totals (second group/row).</p></dd>
-<dt>data</dt>
+
+   <dt>data</dt>
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
-<dt>subset</dt>
+
+   <dt>subset</dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the plot.</p></dd>
-<dt>drop00</dt>
+
+   <dt>drop00</dt>
 <dd><p>logical to specify whether studies with no cases (or only cases) in both groups should be dropped. See ‘Details’.</p></dd>
-<dt>xvals</dt>
+
+   <dt>xvals</dt>
 <dd><p>integer to specify for how many distinct values the likelihood should be evaluated.</p></dd>
-<dt>xlim</dt>
+
+   <dt>xlim</dt>
 <dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
-<dt>ylim</dt>
+
+   <dt>ylim</dt>
 <dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
-<dt>xlab</dt>
+
+   <dt>xlab</dt>
 <dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-<dt>ylab</dt>
+
+   <dt>ylab</dt>
 <dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-<dt>scale</dt>
+
+   <dt>scale</dt>
 <dd><p>logical to specify whether the likelihood values should be scaled, so that the total area under each curve is (approximately) equal to 1.</p></dd>
-<dt>lty</dt>
+
+   <dt>lty</dt>
 <dd><p>the line types (either a single value or a vector of length <em></em>\(k\)). If unspecified, the function sets the line types according to some characteristics of the likelihood function. See ‘Details’.</p></dd>
-<dt>lwd</dt>
+
+   <dt>lwd</dt>
 <dd><p>the line widths (either a single value or a vector of length <em></em>\(k\)). If unspecified, the function sets the widths according to the sampling variances (so that the line is thicker for more precise studies and vice-versa).</p></dd>
-<dt>col</dt>
+
+   <dt>col</dt>
 <dd><p>the line colors (either a single value or a vector of length <em></em>\(k\)). If unspecified, the function uses various shades of gray according to the sampling variances (so that darker shades are used for more precise studies and vice-versa).</p></dd>
-<dt>level</dt>
+
+   <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the plotting limits for each likelihood line in terms of the confidence interval (the default is 99.99).</p></dd>
-<dt>refline</dt>
+
+   <dt>refline</dt>
 <dd><p>numeric value to specify the location of the vertical ‘reference’ line (the default is 0). The line can be suppressed by setting this argument to <code>NA</code>.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -207,7 +232,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

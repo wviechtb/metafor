@@ -2,8 +2,8 @@ rma.glmm <- function(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, n
 measure, intercept=TRUE,
 data, slab, subset,
 add=1/2, to="only0", drop00=TRUE, vtype="LS",
-model="UM.FS", method="ML", coding=1/2, cor=FALSE, test="z", #tdist=FALSE, #weighted=TRUE,
-level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
+model="UM.FS", method="ML", coding=1/2, cor=FALSE,
+test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    #########################################################################
 
@@ -144,7 +144,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
    subset <- .getx("subset", mf=mf, data=data)
    mods   <- .getx("mods",   mf=mf, data=data)
 
-   ai <- bi <- ci <- di <- x1i <- x2i <- t1i <- t2i <- xi <- mi <- ti <- ni <- NA
+   ai <- bi <- ci <- di <- x1i <- x2i <- t1i <- t2i <- xi <- mi <- ti <- NA
 
    ### calculate yi and vi values
 
@@ -360,20 +360,11 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    ### save full data (including potential NAs in table data, yi/vi/ni/mods) (after subsetting)
 
-   ai.f   <- ai
-   bi.f   <- bi
-   ci.f   <- ci
-   di.f   <- di
-   x1i.f  <- x1i
-   x2i.f  <- x2i
-   t1i.f  <- t1i
-   t2i.f  <- t2i
-   xi.f   <- xi
-   mi.f   <- mi
-   ti.f   <- ti
-   yi.f   <- yi
-   vi.f   <- vi
-   ni.f   <- ni
+   outdat.f <- list(ai=ai, bi=bi, ci=ci, di=di, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, xi=xi, mi=mi, ni=ni, ti=ti)
+
+   yi.f <- yi
+   vi.f <- vi
+   ni.f <- ni
    mods.f <- mods
 
    k.f <- k # total number of tables/outcomes and rows in the model matrix (including all NAs)
@@ -407,7 +398,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    }
 
-   if (is.element(measure, c("IRR"))) {
+   if (is.element(measure, "IRR")) {
 
       has.na <- is.na(x1i) | is.na(x2i) | is.na(t1i) | is.na(t2i) | (if (is.null(mods)) FALSE else apply(is.na(mods), 1, any))
       not.na <- !has.na
@@ -459,7 +450,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    }
 
-   if (is.element(measure, c("IRLN"))) {
+   if (is.element(measure, "IRLN")) {
 
       has.na <- is.na(xi) | is.na(ti) | (if (is.null(mods)) FALSE else apply(is.na(mods), 1, any))
       not.na <- !has.na
@@ -2546,6 +2537,8 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
 
    if (is.null(ddd$outlist) || ddd$outlist == "nodata") {
 
+      outdat <- list(ai=ai, bi=bi, ci=ci, di=di, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, xi=xi, mi=mi, ti=ti)
+
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                   tau2=tau2, se.tau2=se.tau2, sigma2=sigma2, rho=rho,
                   I2=I2, H2=H2, vt=vt,
@@ -2553,9 +2546,7 @@ level=95, digits, btt, nAGQ=7, verbose=FALSE, control, ...) { # tau2,
                   k=k, k.f=k.f, k.yi=k.yi, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,
                   int.only=int.only, int.incl=int.incl, intercept=intercept,
                   yi=yi, vi=vi, X=X, yi.f=yi.f, vi.f=vi.f, X.f=X.f,
-                  ai=ai, bi=bi, ci=ci, di=di, ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,
-                  x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f,
-                  xi=xi, mi=mi, ti=ti, xi.f=xi.f, mi.f=mi.f, ti.f=ti.f, ni=ni, ni.f=ni.f,
+                  outdat.f=outdat.f, outdat=outdat, ni=ni, ni.f=ni.f,
                   ids=ids, not.na=not.na, subset=subset, not.na.yivi=not.na.yivi, slab=slab, slab.null=slab.null,
                   measure=measure, method=method, model=model, weighted=weighted,
                   test=test, dfs=ddf, ddf=ddf, btt=btt, m=m,

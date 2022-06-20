@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -112,36 +112,52 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an object of class <code>"permutest.rma.uni"</code> obtained with <code><a href="permutest.html">permutest</a></code>.</p></dd>
-<dt>beta</dt>
+
+   <dt>beta</dt>
 <dd><p>optional vector of indices to specify which (location) coefficients should be plotted.</p></dd>
-<dt>alpha</dt>
+
+   <dt>alpha</dt>
 <dd><p>optional vector of indices to specify which scale coefficients should be plotted. Only relevant for location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code>).</p></dd>
-<dt>QM</dt>
+
+   <dt>QM</dt>
 <dd><p>logical to specify whether the permutation distribution of the omnibus test of the (location) coefficients should be plotted (the default is <code>FALSE</code>).</p></dd>
-<dt>QS</dt>
+
+   <dt>QS</dt>
 <dd><p>logical to specify whether the permutation distribution of the omnibus test of the scale coefficients should be plotted (the default is <code>FALSE</code>). Only relevant for location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code>).</p></dd>
-<dt>breaks</dt>
+
+   <dt>breaks</dt>
 <dd><p>argument to be passed on to the corresponding argument of <code><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></code> to set (the method for determining) the (number of) breakpoints.</p></dd>
-<dt>freq</dt>
+
+   <dt>freq</dt>
 <dd><p>logical to indicate whether frequencies or probability densities should be plotted (the default is <code>FALSE</code> to plot densities).</p></dd>
-<dt>col</dt>
+
+   <dt>col</dt>
 <dd><p>character string to specify the color for the bars (the default is a light gray).</p></dd>
-<dt>border</dt>
+
+   <dt>border</dt>
 <dd><p>character string to specify the color for the border around the bars (the default is <code>NULL</code> to use the standard foreground color).</p></dd>
-<dt>col.out</dt>
+
+   <dt>col.out</dt>
 <dd><p>character string to specify the color for the bars that are more extreme than the observed test statistic (the default is a semi-transparent shade of red).</p></dd>
-<dt>col.ref</dt>
+
+   <dt>col.ref</dt>
 <dd><p>character string to specify the color of the theoretical reference/null distribution that is superimposed on top of the histogram (the default is black).</p></dd>
-<dt>col.density</dt>
+
+   <dt>col.density</dt>
 <dd><p>character string to specify the color of the kernel density estimate of the permutation distribution that is superimposed on top of the histogram (the default is blue).</p></dd>
-<dt>adjust</dt>
+
+   <dt>adjust</dt>
 <dd><p>numeric value to be passed on to the corresponding argument of <code><a href="https://rdrr.io/r/stats/density.html" class="external-link">density</a></code> (for adjusting the bandwidth of the kernel density estimate).</p></dd>
-<dt>lwd</dt>
+
+   <dt>lwd</dt>
 <dd><p>numeric vector to specify the width of the vertical lines corresponding to the value of the observed test statistic, of the reference/null distribution, of the density estimate, and of the vertical line at 0. Note: by default, the reference/null distribution and the density estimate have a line width of 0 and are therefore not plotted.</p></dd>
-<dt>layout</dt>
+
+   <dt>layout</dt>
 <dd><p>optional vector of two numbers to specify the number of rows and columns for the layout of the figure.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -291,7 +307,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

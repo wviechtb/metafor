@@ -144,7 +144,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
       tau2 <- 1
 
    if (!missing(delta) && is.logical(delta))
-      stop(mstyle$stop("Must specify the number for the 'delta' component."))
+      stop(mstyle$stop("Must specify a number for the 'delta' component."))
 
    ### check if user specified a component that does not exist
 

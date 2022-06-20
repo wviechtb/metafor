@@ -48,8 +48,7 @@ selmodel(x, \dots)
       half-normal          \tab \ics \tab \code{"halfnorm"}  \tab \ics \tab \mjseqn{w(p_i) = \exp(-\delta \times p_i^2)} \cr
       negative-exponential \tab \ics \tab \code{"negexp"}    \tab \ics \tab \mjseqn{w(p_i) = \exp(-\delta \times p_i)} \cr
       logistic             \tab \ics \tab \code{"logistic"}  \tab \ics \tab \mjseqn{w(p_i) = 2 \times \exp(-\delta \times p_i) / (1 + \exp(-\delta \times p_i))} \cr
-      power                \tab \ics \tab \code{"power"}     \tab \ics \tab \mjseqn{w(p_i) = (1-p_i)^\delta}
-      }
+      power                \tab \ics \tab \code{"power"}     \tab \ics \tab \mjseqn{w(p_i) = (1-p_i)^\delta}}
 
       The power selection model is added here as it has similar properties as the models suggested by Preston et al. (2004). For all models, assume \mjseqn{\delta \ge 0}, so that all functions imply a monotonically decreasing relationship between the p-value and the selection probability. For all functions, \mjeqn{\mbox{H}_0{:}\; \delta = 0}{H_0: \delta = 0} implies no selection. \ifelse{text}{}{The figure below shows the relative likelihood of selection as a function of the p-value for \mjseqn{\delta = 0} and for the various selection functions when \mjseqn{\delta = 6}.}
 
@@ -68,8 +67,7 @@ selmodel(x, \dots)
       half-normal          \tab \ics \tab \code{"halfnorm"}  \tab \ics \tab \mjseqn{w(p_i) = \exp(-\delta \times \mathrm{prec}_i \times p_i^2)} \cr
       negative-exponential \tab \ics \tab \code{"negexp"}    \tab \ics \tab \mjseqn{w(p_i) = \exp(-\delta \times \mathrm{prec}_i \times p_i)} \cr
       logistic             \tab \ics \tab \code{"logistic"}  \tab \ics \tab \mjseqn{w(p_i) = 2 \times \exp(-\delta \times \mathrm{prec}_i \times p_i) / (1 + \exp(-\delta \times \mathrm{prec}_i \times p_i))} \cr
-      power                \tab \ics \tab \code{"power"}     \tab \ics \tab \mjseqn{w(p_i) = (1-p_i)^{\delta \times \mathrm{prec}_i}}
-      }
+      power                \tab \ics \tab \code{"power"}     \tab \ics \tab \mjseqn{w(p_i) = (1-p_i)^{\delta \times \mathrm{prec}_i}}}
 
       where \mjseqn{\mathrm{prec}_i = \sqrt{v_i}} (i.e., the standard error of the \mjeqn{i\textrm{th}}{ith} study) according to Preston et al. (2004). Here, this idea is generalized to allow the user to specify the specific measure of precision to use (via the \code{prec} argument). Possible options are:
       \itemize{

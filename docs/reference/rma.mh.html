@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -104,55 +104,77 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rma.mh</span><span class="op">(</span><span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">x1i</span>, <span class="va">x2i</span>, <span class="va">t1i</span>, <span class="va">t2i</span>,
        measure<span class="op">=</span><span class="st">"OR"</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,
        add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"only0"</span>, drop00<span class="op">=</span><span class="cn">TRUE</span>,
-       correct<span class="op">=</span><span class="cn">TRUE</span>, level<span class="op">=</span><span class="fl">95</span>, <span class="va">digits</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+       correct<span class="op">=</span><span class="cn">TRUE</span>, level<span class="op">=</span><span class="fl">95</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>ai</dt>
 <dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (upper left cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>bi</dt>
+
+   <dt>bi</dt>
 <dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (upper right cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>ci</dt>
+
+   <dt>ci</dt>
 <dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (lower left cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>di</dt>
+
+   <dt>di</dt>
 <dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (lower right cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>n1i</dt>
+
+   <dt>n1i</dt>
 <dd><p>vector to specify the group sizes or row totals (first group). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>n2i</dt>
+
+   <dt>n2i</dt>
 <dd><p>vector to specify the group sizes or row totals (second group). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>x1i</dt>
+
+   <dt>x1i</dt>
 <dd><p>vector to specify the number of events (first group). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>x2i</dt>
+
+   <dt>x2i</dt>
 <dd><p>vector to specify the number of events (second group). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>t1i</dt>
+
+   <dt>t1i</dt>
 <dd><p>vector to specify the total person-times (first group). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>t2i</dt>
+
+   <dt>t2i</dt>
 <dd><p>vector to specify the total person-times (second group). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>measure</dt>
+
+   <dt>measure</dt>
 <dd><p>character string to specify the outcome measure to use for the meta-analysis. Possible options are <code>"RR"</code> for the (log transformed) risk ratio, <code>"OR"</code> for the (log transformed) odds ratio, <code>"RD"</code> for the risk difference, <code>"IRR"</code> for the (log transformed) incidence rate ratio, or <code>"IRD"</code> for the incidence rate difference.</p></dd>
-<dt>data</dt>
+
+   <dt>data</dt>
 <dd><p>optional data frame containing the data supplied to the function.</p></dd>
-<dt>slab</dt>
+
+   <dt>slab</dt>
 <dd><p>optional vector with labels for the <em></em>\(k\) studies.</p></dd>
-<dt>subset</dt>
+
+   <dt>subset</dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.</p></dd>
-<dt>add</dt>
+
+   <dt>add</dt>
 <dd><p>non-negative number to specify the amount to add to zero cells, counts, or frequencies when calculating the observed effect sizes or outcomes of the individual studies. Can also be a vector of two numbers, where the first number is used in the calculation of the observed effect sizes or outcomes and the second number is used when applying the Mantel-Haenszel method. See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>to</dt>
+
+   <dt>to</dt>
 <dd><p>character string to specify when the values under <code>add</code> should be added (either <code>"only0"</code>, <code>"all"</code>, <code>"if0all"</code>, or <code>"none"</code>). Can also be a character vector, where the first string again applies when calculating the observed effect sizes or outcomes and the second string when applying the Mantel-Haenszel method. See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>drop00</dt>
+
+   <dt>drop00</dt>
 <dd><p>logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes (the outcomes for such studies are set to <code>NA</code>). Can also be a vector of two logicals, where the first applies to the calculation of the observed effect sizes or outcomes and the second when applying the Mantel-Haenszel method. See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>correct</dt>
+
+   <dt>correct</dt>
 <dd><p>logical to specify whether to apply a continuity correction when computing the Cochran-Mantel-Haenszel test statistic.</p></dd>
-<dt>level</dt>
+
+   <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
-<dt>digits</dt>
-<dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. See also <a href="misc-options.html">here</a> for further details on how to control the number of digits in the output.</p></dd>
-<dt>verbose</dt>
+
+   <dt>verbose</dt>
 <dd><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>).</p></dd>
-<dt>...</dt>
+
+   <dt>digits</dt>
+<dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. See also <a href="misc-options.html">here</a> for further details on how to control the number of digits in the output.</p></dd>
+
+   <dt>...</dt>
 <dd><p>additional arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -162,8 +184,8 @@
 <h3 id="specifying-the-data">Specifying the Data<a class="anchor" aria-label="anchor" href="#specifying-the-data"></a></h3>
 
 
-<p>When the outcome measure is either the risk ratio (measure=<code>"RR"</code>), odds ratio (<code>measure="OR"</code>), or risk difference (<code>measure="RD"</code>), the studies are assumed to provide data in terms of <em></em>\(2 \times 2\) tables of the form:</p><table class="table table"><tr><td></td><td>outcome 1</td><td>outcome 2</td><td>total</td></tr><tr><td>group 1</td><td><code>ai</code></td><td><code>bi</code></td><td><code>n1i</code></td></tr><tr><td>group 2</td><td><code>ci</code></td><td><code>di</code></td><td><code>n2i</code></td></tr></table><p>where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies and <code>n1i</code> and <code>n2i</code> the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure. For these outcome measures, one needs to specify either <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> or alternatively <code>ai</code>, <code>ci</code>, <code>n1i</code>, and <code>n2i</code>.</p>
-<p>Alternatively, when the outcome measure is the incidence rate ratio (<code>measure="IRR"</code>) or the incidence rate difference (<code>measure="IRD"</code>), the studies are assumed to provide data in terms of tables of the form:</p><table class="table table"><tr><td></td><td>events</td><td>person-time</td></tr><tr><td>group 1</td><td><code>x1i</code></td><td><code>t1i</code></td></tr><tr><td>group 2</td><td><code>x2i</code></td><td><code>t2i</code></td></tr></table><p>where <code>x1i</code> and <code>x2i</code> denote the number of events in the first and the second group, respectively, and <code>t1i</code> and <code>t2i</code> the corresponding total person-times at risk.</p>
+<p>When the outcome measure is either the risk ratio (measure=<code>"RR"</code>), odds ratio (<code>measure="OR"</code>), or risk difference (<code>measure="RD"</code>), the studies are assumed to provide data in terms of <em></em>\(2 \times 2\) tables of the form:</p><table class="table table"><tr><td></td><td> </td><td>outcome 1</td><td> </td><td>outcome 2</td><td> </td><td>total</td></tr><tr><td>group 1</td><td> </td><td><code>ai</code></td><td> </td><td><code>bi</code></td><td> </td><td><code>n1i</code></td></tr><tr><td>group 2</td><td> </td><td><code>ci</code></td><td> </td><td><code>di</code></td><td> </td><td><code>n2i</code></td></tr></table><p>where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies and <code>n1i</code> and <code>n2i</code> the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure. For these outcome measures, one needs to specify either <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> or alternatively <code>ai</code>, <code>ci</code>, <code>n1i</code>, and <code>n2i</code>.</p>
+<p>Alternatively, when the outcome measure is the incidence rate ratio (<code>measure="IRR"</code>) or the incidence rate difference (<code>measure="IRD"</code>), the studies are assumed to provide data in terms of tables of the form:</p><table class="table table"><tr><td></td><td> </td><td>events</td><td> </td><td>person-time</td></tr><tr><td>group 1</td><td> </td><td><code>x1i</code></td><td> </td><td><code>t1i</code></td></tr><tr><td>group 2</td><td> </td><td><code>x2i</code></td><td> </td><td><code>t2i</code></td></tr></table><p>where <code>x1i</code> and <code>x2i</code> denote the number of events in the first and the second group, respectively, and <code>t1i</code> and <code>t2i</code> the corresponding total person-times at risk.</p>
 <p></p>
 </div>
 
@@ -190,39 +212,57 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>c("rma.mh","rma")</code>. The object is a list containing the following components:</p>
+    
+
+<p>An object of class <code>c("rma.mh","rma")</code>. The object is a list containing the following components:</p>
 <dl><dt>beta</dt>
 <dd><p>aggregated log risk ratio, log odds ratio, risk difference, log rate ratio, or rate difference.</p></dd>
-<dt>se</dt>
+
+   <dt>se</dt>
 <dd><p>standard error of the aggregated value.</p></dd>
-<dt>zval</dt>
+
+   <dt>zval</dt>
 <dd><p>test statistics of the aggregated value.</p></dd>
-<dt>pval</dt>
+
+   <dt>pval</dt>
 <dd><p>corresponding p-value.</p></dd>
-<dt>ci.lb</dt>
+
+   <dt>ci.lb</dt>
 <dd><p>lower bound of the confidence interval.</p></dd>
-<dt>ci.ub</dt>
+
+   <dt>ci.ub</dt>
 <dd><p>upper bound of the confidence interval.</p></dd>
-<dt>QE</dt>
+
+   <dt>QE</dt>
 <dd><p>test statistic of the test for heterogeneity.</p></dd>
-<dt>QEp</dt>
+
+   <dt>QEp</dt>
 <dd><p>correspinding p-value.</p></dd>
-<dt>MH</dt>
+
+   <dt>MH</dt>
 <dd><p>Cochran-Mantel-Haenszel test statistic (<code>measure="OR"</code>) or Mantel-Haenszel test statistic (<code>measure="IRR"</code>).</p></dd>
-<dt>MHp</dt>
+
+   <dt>MHp</dt>
 <dd><p>corresponding p-value.</p></dd>
-<dt>TA</dt>
+
+   <dt>TA</dt>
 <dd><p>test statistic of Tarone's test for heterogeneity (only when <code>measure="OR"</code>).</p></dd>
-<dt>TAp</dt>
+
+   <dt>TAp</dt>
 <dd><p>corresponding p-value (only when <code>measure="OR"</code>).</p></dd>
-<dt>k</dt>
+
+   <dt>k</dt>
 <dd><p>number of studies included in the analysis.</p></dd>
-<dt>yi, vi</dt>
+
+   <dt>yi, vi</dt>
 <dd><p>the vector of outcomes and corresponding sampling variances.</p></dd>
-<dt>fit.stats</dt>
+
+   <dt>fit.stats</dt>
 <dd><p>a list with the log-likelihood, deviance, AIC, BIC, and AICc values under the unrestricted and restricted likelihood.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
+
 </dl></div>
     <div id="methods">
     <h2>Methods</h2>
@@ -316,7 +356,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

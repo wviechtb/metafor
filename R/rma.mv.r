@@ -24,8 +24,13 @@
 # - GEN (general positive-definite matrix for an arbitrary number of predictors)
 # - PHYBM/PHYPL/PHYPD (phylogenetic structures: Brownian motion, Pagel's lambda, Pagel's delta)
 
-rma.mv <- function(yi, V, W, mods, random, struct="CS", intercept=TRUE, data, slab, subset, ### add ni as argument in the future
-method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor", sigma2, tau2, rho, gamma2, phi, cvvc=FALSE, sparse=FALSE, verbose=FALSE, control, ...) {
+rma.mv <- function(yi, V, W, mods, random, struct="CS", intercept=TRUE,
+data, slab, subset, method="REML",
+test="z", dfs="residual", level=95, btt,
+R, Rscale="cor", sigma2, tau2, rho, gamma2, phi,
+cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
+
+# add ni as argument in the future
 
    #########################################################################
 
@@ -230,7 +235,7 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
       intercept <- FALSE                               ### set to FALSE since formula now controls whether the intercept is included or not
    }                                                   ### note: code further below ([b]) actually checks whether intercept is included or not
 
-   ### check if yi is a (multicolumn) data frame
+   ### in case user passed a data frame to yi, convert it to a vector (if possible)
 
    if (is.data.frame(yi)) {
       if (ncol(yi) == 1L) {
@@ -240,10 +245,15 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
       }
    }
 
-   ### in case user passed a matrix to yi, convert it to a vector
+   ### in case user passed a matrix to yi, convert it to a vector (if possible)
 
-   if (is.matrix(yi))
-      yi <- as.vector(yi)
+   if (is.matrix(yi)) {
+      if (nrow(yi) == 1L || ncol(yi) == 1L) {
+         yi <- as.vector(yi)
+      } else {
+         stop(mstyle$stop("The object/variable specified for the 'yi' argument is a matrix with multiple rows/columns."))
+      }
+   }
 
    ### check if yi is numeric
 
@@ -814,12 +824,12 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
 
    ### save full data (including potential NAs in yi/vi/V/W/ni/mods)
 
-   yi.f    <- yi
-   vi.f    <- vi
-   V.f     <- V
-   W.f     <- A
-   ni.f    <- ni
-   mods.f  <- mods
+   yi.f   <- yi
+   vi.f   <- vi
+   V.f    <- V
+   W.f    <- A
+   ni.f   <- ni
+   mods.f <- mods
    #mf.g.f <- mf.g ### copied further below
    #mf.h.f <- mf.h ### copied further below
    #mf.s.f <- mf.s ### copied further below
@@ -1600,11 +1610,11 @@ method="REML", test="z", dfs="residual", level=95, digits, btt, R, Rscale="cor",
    ### when restart=TRUE, restart at current estimates
 
    if (isTRUE(ddd$restart)) {
-      con$sigma2.init <- .getfromenv("rma.mv", "sigma2", default=sigma2.init)
-      con$tau2.init   <- .getfromenv("rma.mv", "tau2",   default=tau2.init)
-      con$rho.init    <- .getfromenv("rma.mv", "rho",    default=rho.init)
-      con$gamma2.init <- .getfromenv("rma.mv", "gamma2", default=gamma2.init)
-      con$phi.init    <- .getfromenv("rma.mv", "phi",    default=phi.init)
+      con$sigma2.init <- .getfromenv("rma.mv", "sigma2", default=con$sigma2.init)
+      con$tau2.init   <- .getfromenv("rma.mv", "tau2",   default=con$tau2.init)
+      con$rho.init    <- .getfromenv("rma.mv", "rho",    default=con$rho.init)
+      con$gamma2.init <- .getfromenv("rma.mv", "gamma2", default=con$gamma2.init)
+      con$phi.init    <- .getfromenv("rma.mv", "phi",    default=con$phi.init)
    }
 
    ### check for missings in initial values

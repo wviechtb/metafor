@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -109,14 +109,19 @@
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>an object of class <code>"rma"</code>.</p></dd>
-<dt>nsim</dt>
+
+   <dt>nsim</dt>
 <dd><p>number of response vectors to simulate (defaults to 1).</p></dd>
-<dt>seed</dt>
+
+   <dt>seed</dt>
 <dd><p>an object to specify if and how the random number generator should be initialized (‘seeded’). Either <code>NULL</code> or an integer that will be used in a call to <code>set.seed</code> before simulating the response vectors. If set, the value is saved as the <code>"seed"</code> attribute of the returned value. The default, <code>NULL</code> will not change the random generator state, and return <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">.Random.seed</a></code> as the <code>"seed"</code> attribute; see ‘Value’.</p></dd>
-<dt>olim</dt>
+
+   <dt>olim</dt>
 <dd><p>optional argument to specify observation/outcome limits for the simulated values. If unspecified, no limits are used.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -124,8 +129,12 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame with <code>nsim</code> columns with the simulated effect sizes or outcomes.
-   The data frame comes with an attribute <code>"seed"</code>. If argument <code>seed</code> is <code>NULL</code>, the attribute is the value of <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">.Random.seed</a></code> before the simulation was started; otherwise it is the value of the <code>seed</code> argument with a <code>"kind"</code> attribute with value <code>as.list(RNGkind())</code>.</p>
+    
+
+<p>A data frame with <code>nsim</code> columns with the simulated effect sizes or outcomes.</p>
+
+
+<p>The data frame comes with an attribute <code>"seed"</code>. If argument <code>seed</code> is <code>NULL</code>, the attribute is the value of <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">.Random.seed</a></code> before the simulation was started; otherwise it is the value of the <code>seed</code> argument with a <code>"kind"</code> attribute with value <code>as.list(RNGkind())</code>.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -223,7 +232,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

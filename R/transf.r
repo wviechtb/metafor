@@ -185,7 +185,7 @@ transf.ipft <- function(xi, ni, ...) {             ### inverse of Freeman-Tukey 
 
 transf.ipft.hm <- function(xi, targs, ...) {       ### inverse of Freeman-Tukey transformation for a collection of proportions
    if (is.null(targs) || (is.list(targs) && is.null(targs$ni)))
-      stop("Need to specify the sample sizes via the 'targs' argument.", call.=FALSE)
+      stop("Must specify the sample sizes via the 'targs' argument.", call.=FALSE)
    if (is.list(targs)) {
       ni <- targs$ni
    } else {
@@ -295,7 +295,7 @@ transf.dtobesd <- function(xi, ...) {
 
 transf.dtomd <- function(xi, targs=NULL, ...) {
    if (is.null(targs) || (is.list(targs) && is.null(targs$sd)))
-      stop("Need to specify a standard deviation value via the 'targs' argument.", call.=FALSE)
+      stop("Must specify a standard deviation value via the 'targs' argument.", call.=FALSE)
    if (is.list(targs)) {
       sd <- targs$sd
    } else {

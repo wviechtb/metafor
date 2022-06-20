@@ -2,8 +2,8 @@ rma <- rma.uni <- function(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, 
 measure="GEN", intercept=TRUE,
 data, slab, subset,
 add=1/2, to="only0", drop00=FALSE, vtype="LS",
-method="REML", weighted=TRUE, test="z", #knha=FALSE,
-level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
+method="REML", weighted=TRUE,
+test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    #########################################################################
 
@@ -239,9 +239,9 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          ### could still be NULL if attributes do not match up with actual contents of the escalc object
 
          if (is.null(yi))
-            stop(mstyle$stop("Cannot find the 'yi' variable in the object."))
+            stop(mstyle$stop(paste0("Cannot find variable '", yi.name, "' in the object.")))
          if (is.null(vi))
-            stop(mstyle$stop("Cannot find the 'vi' variable in the object."))
+            stop(mstyle$stop(paste0("Cannot find variable '", vi.name, "' in the object.")))
 
          yi.escalc <- TRUE
 
@@ -251,7 +251,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       }
 
-      ### check if yi is a (multicolumn) data frame
+      ### in case user passed a data frame to yi, convert it to a vector (if possible)
 
       if (is.data.frame(yi)) {
          if (ncol(yi) == 1L) {
@@ -261,10 +261,15 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          }
       }
 
-      ### in case user passed a matrix to yi, convert it to a vector
+      ### in case user passed a matrix to yi, convert it to a vector (if possible)
 
-      if (is.matrix(yi))
-         yi <- as.vector(yi)
+      if (is.matrix(yi)) {
+         if (nrow(yi) == 1L || ncol(yi) == 1L) {
+            yi <- as.vector(yi)
+         } else {
+            stop(mstyle$stop("The object/variable specified for the 'yi' argument is a matrix with multiple rows/columns."))
+         }
+      }
 
       ### check if yi is numeric
 
@@ -314,10 +319,15 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
       .chkviarg(mf$vi)
 
       ### in case user passes a matrix to vi, convert it to a vector
-      ### note: only a row or column matrix with the right dimensions will end with the right length
+      ### note: only a row or column matrix with the right dimensions will have the right length
 
-      if (is.matrix(vi))
-         vi <- as.vector(vi)
+      if (is.matrix(vi)) {
+         if (nrow(vi) == 1L || ncol(vi) == 1L) {
+            yi <- as.vector(vi)
+         } else {
+            stop(mstyle$stop("The object/variable specified for the 'vi' argument is a matrix with multiple rows/columns."))
+         }
+      }
 
       ### check if user constrained vi to 0
 
@@ -802,7 +812,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    k <- length(yi)
 
-   ### check for (and correct?) negative/infinite weights
+   ### check for negative/infinite weights
 
    if (any(weights < 0, na.rm=TRUE))
       stop(mstyle$stop("Negative weights not allowed."))
@@ -812,14 +822,8 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    ### save full data (including potential NAs in yi/vi/weights/ni/mods/Z.f)
 
-   ai.f      <- ai
-   bi.f      <- bi
-   ci.f      <- ci
-   di.f      <- di
-   x1i.f     <- x1i
-   x2i.f     <- x2i
-   t1i.f     <- t1i
-   t2i.f     <- t2i
+   outdat.f <- list(ai=ai, bi=bi, ci=ci, di=di, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i)
+
    yi.f      <- yi
    vi.f      <- vi
    weights.f <- weights
@@ -988,10 +992,10 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
       con <- c(con,
           list(tau2.init = NULL,               # initial value for iterative estimators (ML, REML, EB, SJ, SJIT, DLIT)
-               tau2.min = 0,                   # lower bound for tau^2 value (and passed down to confint.rma.uni())
+               tau2.min = 0,                   # lower bound for tau^2 value (passed down to confint.rma.uni())
                tau2.max = 100,                 # upper bound for tau^2 value (for PM/PMM/GENQM estimators) but see [c]
                threshold = 10^-5,              # convergence threshold (for ML, REML, EB, SJIT, DLIT)
-               tol = .Machine$double.eps^0.25, # convergence tolerance for uniroot() as used for PM, PMM, and GENQM (also used in 'll0 - ll > con$tol' check for ML/REML)
+               tol = .Machine$double.eps^0.25, # convergence tolerance for uniroot() as used for PM, PMM, GENQM (also used in 'll0 - ll > con$tol' check for ML/REML)
                ll0check = TRUE,                # should the 'll0 - ll > con$tol' check be conducted for ML/REML?
                maxiter = 100,                  # maximum number of iterations (for ML, REML, EB, SJIT, DLIT)
                stepadj = 1))                   # step size adjustment for Fisher scoring algorithm (for ML, REML, EB)
@@ -1005,16 +1009,16 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
    if (model == "rma.ls") {
 
       con <- c(con,
-          list(beta.init = NULL,               # initial values for model coefficients / location parameters (only relevant when optbeta=TRUE)
+          list(beta.init = NULL,               # initial values for location parameters (only relevant when optbeta=TRUE)
                hesspack = "numDeriv",          # package for computing the Hessian (numDeriv or pracma)
                htransf = FALSE,                # FALSE/TRUE: Hessian is computed for the untransformed/transformed parameter estimates
-               optimizer = "nlminb",           # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","solnp","constrOptim.nl") for location-scale models
+               optimizer = "nlminb",           # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","solnp","constrOptim.nl")
                optmethod = "BFGS",             # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),              # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,                      # arguments for optimParallel()
                ncpus = 1L,                     # arguments for optimParallel()
-               tau2.min = 0,                   # lower bound for tau^2 value (can be used to constrain tau^2 values but see [d])
-               tau2.max = Inf,                 # upper bound for tau^2 value (can be used to constrain tau^2 values but see [d])
+               tau2.min = 0,                   # lower bound for tau^2 values (can be used to constrain tau^2 values but see [d])
+               tau2.max = Inf,                 # upper bound for tau^2 values (can be used to constrain tau^2 values but see [d])
                alpha.init = NULL,              # initial values for scale parameters
                alpha.min = -Inf,               # min possible value(s) for scale parameter(s)
                alpha.max = Inf,                # max possible value(s) for scale parameter(s)
@@ -1625,7 +1629,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
 
    #########################################################################
 
-   ###### parameter estimation for location-scale model (rma.ls)
+   ###### parameter estimation for the location-scale model (rma.ls)
 
    if (model == "rma.ls") {
 
@@ -2364,7 +2368,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
          if (i2def == "1")
             vt <- (k-p) / .tr(P)
          if (i2def == "2")
-            vt <- 1/mean(wi) # harmonic mean of the vi values (see Takkouche et al., 1999)
+            vt <- 1 / mean(wi) # harmonic mean of the vi values (see Takkouche et al., 1999)
 
          ### calculation of I^2 and H^2
 
@@ -2578,8 +2582,7 @@ level=95, digits, btt, att, tau2, verbose=FALSE, control, ...) {
                   k=k, k.f=k.f, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,
                   int.only=int.only, int.incl=int.incl, intercept=intercept, allvipos=allvipos, coef.na=coef.na,
                   yi=yi, vi=vi, X=X, weights=weights, yi.f=yi.f, vi.f=vi.f, X.f=X.f, weights.f=weights.f, M=M,
-                  ai.f=ai.f, bi.f=bi.f, ci.f=ci.f, di.f=di.f,
-                  x1i.f=x1i.f, x2i.f=x2i.f, t1i.f=t1i.f, t2i.f=t2i.f, ni=ni, ni.f=ni.f,
+                  outdat.f=outdat.f, ni=ni, ni.f=ni.f,
                   ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
                   measure=measure, method=method[1], model=model, weighted=weighted,
                   test=test, dfs=ddf, ddf=ddf, s2w=s2w, btt=btt, m=m,

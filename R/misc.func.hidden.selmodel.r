@@ -77,15 +77,15 @@
       Ai[i] <- tmp
    }
 
-   ll <- sum(log(wi.fun(pvals, delta, yi, vi, preci, alternative, steps)) + dnorm(yi, yhat, sqrt(vi+tau2), log=TRUE) - log(Ai))
+   llval <- sum(log(wi.fun(pvals, delta, yi, vi, preci, alternative, steps)) + dnorm(yi, yhat, sqrt(vi+tau2), log=TRUE) - log(Ai))
 
    if (dofit) {
-      res <- list(ll=ll, beta=beta, tau2=tau2, delta=delta)
+      res <- list(ll=llval, beta=beta, tau2=tau2, delta=delta)
       return(res)
    }
 
    if (verbose)
-      .selmodel.verbose(ll=ll, beta=beta, tau2=tau2, delta=delta, mstyle=mstyle, digits=digits)
+      .selmodel.verbose(ll=llval, beta=beta, tau2=tau2, delta=delta, mstyle=mstyle, digits=digits)
 
    if (verbose > 2) {
       xs <- seq(pval.min, 1-pval.min, length=101)
@@ -93,7 +93,7 @@
       plot(xs, ys, type="l", lwd=2, xlab="p-value", ylab="Relative Likelihood of Selection")
    }
 
-   return(-1*ll)
+   return(-1*llval)
 
 }
 
@@ -167,17 +167,17 @@
       }
    }
 
-   ll <- sum(log(delta[pgrp] / preci) + dnorm(yi, yhat, sqrt(vi+tau2), log=TRUE) - log(Ai))
+   llval <- sum(log(delta[pgrp] / preci) + dnorm(yi, yhat, sqrt(vi+tau2), log=TRUE) - log(Ai))
 
    if (dofit) {
 
-      res <- list(ll=ll, beta=beta, tau2=tau2, delta=delta)
+      res <- list(ll=llval, beta=beta, tau2=tau2, delta=delta)
       return(res)
 
    }
 
    if (verbose)
-      .selmodel.verbose(ll=ll, beta=beta, tau2=tau2, delta=delta, mstyle=mstyle, digits=digits)
+      .selmodel.verbose(ll=llval, beta=beta, tau2=tau2, delta=delta, mstyle=mstyle, digits=digits)
 
    if (verbose > 2) {
       xs <- seq(0, 1, length=101)
@@ -185,7 +185,7 @@
       plot(xs, ys, type="l", lwd=2, xlab="p-value", ylab="Relative Likelihood of Selection")
    }
 
-   return(-1*ll)
+   return(-1*llval)
 
 }
 

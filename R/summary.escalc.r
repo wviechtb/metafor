@@ -61,8 +61,10 @@ H0=0, append=TRUE, replace=TRUE, level=95, olim, digits, transf, ...) {
    yi <- x[[yi.name]]
    vi <- x[[vi.name]]
 
-   if (is.null(yi) || is.null(vi))
-      stop(mstyle$stop(paste0("Cannot find variables '", yi.name, "' and/or '", vi.name, "' in the data frame.")))
+   if (is.null(yi))
+      stop(mstyle$stop(paste0("Cannot find variable '", yi.name, "' in the data frame.")))
+   if (is.null(vi))
+      stop(mstyle$stop(paste0("Cannot find variable '", vi.name, "' in the data frame.")))
 
    #########################################################################
 

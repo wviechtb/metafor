@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -111,16 +111,22 @@
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-<dt>transf</dt>
+
+   <dt>transf</dt>
 <dd><p>optional argument to specify a function to transform the estimate and the corresponding interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-<dt>targs</dt>
+
+   <dt>targs</dt>
 <dd><p>optional arguments needed by the function specified under <code>transf</code>.</p></dd>
-<dt>control</dt>
+
+   <dt>control</dt>
 <dd><p>list of control values for the iterative algorithm. If unspecified, default values are defined inside the function. See ‘Note’.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -130,17 +136,25 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>"hc.rma.uni"</code>. The object is a list containing the following components:</p>
+    
+
+<p>An object of class <code>"hc.rma.uni"</code>. The object is a list containing the following components:</p>
 <dl><dt>beta</dt>
 <dd><p>estimated average true outcome.</p></dd>
-<dt>se</dt>
+
+   <dt>se</dt>
 <dd><p>corresponding standard error.</p></dd>
-<dt>ci.lb</dt>
+
+   <dt>ci.lb</dt>
 <dd><p>lower bound of the confidence intervals for the average true outcome.</p></dd>
-<dt>ci.ub</dt>
+
+   <dt>ci.ub</dt>
 <dd><p>upper bound of the confidence intervals for the average true outcome.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
+
+
 </dl><p>The results are formatted and printed with the <code><a href="print.hc.rma.uni.html">print</a></code> function.</p>
     </div>
     <div id="note">
@@ -242,7 +256,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

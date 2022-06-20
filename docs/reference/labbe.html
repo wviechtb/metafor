@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -114,38 +114,55 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an object of class <code>"rma"</code>. See ‘Details’.</p></dd>
-<dt>xlim</dt>
+
+   <dt>xlim</dt>
 <dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
-<dt>ylim</dt>
+
+   <dt>ylim</dt>
 <dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
-<dt>xlab</dt>
+
+   <dt>xlab</dt>
 <dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-<dt>ylab</dt>
+
+   <dt>ylab</dt>
 <dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-<dt>add</dt>
+
+   <dt>add</dt>
 <dd><p>See ‘Details’ and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>to</dt>
+
+   <dt>to</dt>
 <dd><p>See ‘Details’ and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>transf</dt>
+
+   <dt>transf</dt>
 <dd><p>optional argument to specify a function to transform the outcomes (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-<dt>targs</dt>
+
+   <dt>targs</dt>
 <dd><p>optional arguments needed by the function specified under <code>transf</code>.</p></dd>
-<dt>pch</dt>
+
+   <dt>pch</dt>
 <dd><p>plotting symbol to use for the outcomes. By default, a filled circle is used. Can also be a vector of values. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
-<dt>psize</dt>
+
+   <dt>psize</dt>
 <dd><p>optional numeric vector to specify the point sizes for the outcomes. If unspecified, the point sizes are a function of the precision of the outcomes. Can also be a vector of values.</p></dd>
-<dt>plim</dt>
+
+   <dt>plim</dt>
 <dd><p>numeric vector of length 2 to scale the point sizes (ignored when <code>psize</code> is specified). See ‘Details’.</p></dd>
-<dt>col</dt>
+
+   <dt>col</dt>
 <dd><p>optional character string to specify the color to use for the points (<code>"black"</code> is used by default if not specified). Can also be a vector.</p></dd>
-<dt>bg</dt>
+
+   <dt>bg</dt>
 <dd><p>optional character string to specify the background color for open plot symbols (<code>"gray"</code> is used by default if not specified). Can also be a vector. Set to <code>NA</code> to make the plotting symbols transparent.</p></dd>
-<dt>grid</dt>
+
+   <dt>grid</dt>
 <dd><p>logical to specify whether a grid should be added to the plot. Can also be a color name.</p></dd>
-<dt>lty</dt>
+
+   <dt>lty</dt>
 <dd><p>optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model. If unspecified, the function sets this to <code>c("solid","dashed")</code> by default (use <code>"blank"</code> to suppress a line).</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -157,23 +174,33 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame with components:</p>
+    
+
+<p>A data frame with components:</p>
 <dl><dt>x</dt>
 <dd><p>the x-axis coordinates of the points that were plotted.</p></dd>
-<dt>y</dt>
+
+   <dt>y</dt>
 <dd><p>the y-axis coordinates of the points that were plotted.</p></dd>
-<dt>cex</dt>
+
+   <dt>cex</dt>
 <dd><p>the point sizes.</p></dd>
-<dt>pch</dt>
+
+   <dt>pch</dt>
 <dd><p>the plotting symbols.</p></dd>
-<dt>col</dt>
+
+   <dt>col</dt>
 <dd><p>the point colors.</p></dd>
-<dt>bg</dt>
+
+   <dt>bg</dt>
 <dd><p>the background colors.</p></dd>
-<dt>ids</dt>
+
+   <dt>ids</dt>
 <dd><p>the study id numbers.</p></dd>
-<dt>slab</dt>
+
+   <dt>slab</dt>
 <dd><p>the study labels.</p></dd>
+
 </dl><p>Note that the data frame is returned invisibly.</p>
     </div>
     <div id="author">
@@ -216,7 +243,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

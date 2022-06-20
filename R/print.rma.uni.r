@@ -64,10 +64,14 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
             cat(mstyle$section("Mixed-Effects Model"))
          }
          cat(mstyle$section(paste0(" (k = ", x$k, "; ")))
-         if (x$tau2.fix) {
-            cat(mstyle$section("user-specified tau^2 value)"))
+         if (inherits(x, "rma.gen")) {
+            cat(mstyle$section(paste0("estimation method: ", x$method, ")")))
          } else {
-            cat(mstyle$section(paste0("tau^2 estimator: ", x$method, ")")))
+            if (!is.null(x$tau2.fix) && x$tau2.fix) {
+               cat(mstyle$section("user-specified tau^2 value)"))
+            } else {
+               cat(mstyle$section(paste0("tau^2 estimator: ", x$method, ")")))
+            }
          }
       }
 
@@ -90,7 +94,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    cat("\n")
 
-   if (x$model == "rma.uni" || x$model == "rma.uni.selmodel") {
+   if (x$model == "rma.uni" || x$model == "rma.uni.selmodel" || inherits(x, "rma.gen")) {
 
       if (!is.element(x$method, c("FE","EE","CE"))) {
          if (x$int.only) {

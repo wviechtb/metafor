@@ -8,7 +8,7 @@
 rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
        measure="OR", data, slab, subset,
        add=1/2, to="only0", drop00=TRUE,
-       correct=TRUE, level=95, digits, verbose=FALSE, \dots)
+       correct=TRUE, level=95, verbose=FALSE, digits, \dots)
 }
 \arguments{
    \item{ai}{vector to specify the \mjeqn{2 \times 2}{2x2} table frequencies (upper left cell). See below and the documentation of the \code{\link{escalc}} function for more details.}
@@ -30,8 +30,8 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{drop00}{logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes (the outcomes for such studies are set to \code{NA}). Can also be a vector of two logicals, where the first applies to the calculation of the observed effect sizes or outcomes and the second when applying the Mantel-Haenszel method. See below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{correct}{logical to specify whether to apply a continuity correction when computing the Cochran-Mantel-Haenszel test statistic.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
-   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. See also \link[=misc-options]{here} for further details on how to control the number of digits in the output.}
    \item{verbose}{logical to specify whether output should be generated on the progress of the model fitting (the default is \code{FALSE}).}
+   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. See also \link[=misc-options]{here} for further details on how to control the number of digits in the output.}
    \item{\dots}{additional arguments.}
 }
 \details{
@@ -39,18 +39,18 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \subsection{Specifying the Data}{
 
       When the outcome measure is either the risk ratio (measure=\code{"RR"}), odds ratio (\code{measure="OR"}), or risk difference (\code{measure="RD"}), the studies are assumed to provide data in terms of \mjeqn{2 \times 2}{2x2} tables of the form:
-      \tabular{lccc}{
-              \tab outcome 1 \tab outcome 2 \tab total      \cr
-      group 1 \tab \code{ai} \tab \code{bi} \tab \code{n1i} \cr
-      group 2 \tab \code{ci} \tab \code{di} \tab \code{n2i}
-      } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies and \code{n1i} and \code{n2i} the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure. For these outcome measures, one needs to specify either \code{ai}, \code{bi}, \code{ci}, and \code{di} or alternatively \code{ai}, \code{ci}, \code{n1i}, and \code{n2i}.
+      \tabular{lcccccc}{
+              \tab \ics \tab outcome 1 \tab \ics \tab outcome 2 \tab \ics \tab total      \cr
+      group 1 \tab \ics \tab \code{ai} \tab \ics \tab \code{bi} \tab \ics \tab \code{n1i} \cr
+      group 2 \tab \ics \tab \code{ci} \tab \ics \tab \code{di} \tab \ics \tab \code{n2i}}
+      where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies and \code{n1i} and \code{n2i} the row totals. For example, in a set of randomized clinical trials (RCTs) or cohort studies, group 1 and group 2 may refer to the treatment (exposed) and placebo/control (not exposed) group, with outcome 1 denoting some event of interest (e.g., death) and outcome 2 its complement. In a set of case-control studies, group 1 and group 2 may refer to the group of cases and the group of controls, with outcome 1 denoting, for example, exposure to some risk factor and outcome 2 non-exposure. For these outcome measures, one needs to specify either \code{ai}, \code{bi}, \code{ci}, and \code{di} or alternatively \code{ai}, \code{ci}, \code{n1i}, and \code{n2i}.
 
       Alternatively, when the outcome measure is the incidence rate ratio (\code{measure="IRR"}) or the incidence rate difference (\code{measure="IRD"}), the studies are assumed to provide data in terms of tables of the form:
-      \tabular{lcc}{
-              \tab events     \tab person-time \cr
-      group 1 \tab \code{x1i} \tab \code{t1i}  \cr
-      group 2 \tab \code{x2i} \tab \code{t2i}
-      } where \code{x1i} and \code{x2i} denote the number of events in the first and the second group, respectively, and \code{t1i} and \code{t2i} the corresponding total person-times at risk.
+      \tabular{lcccc}{
+              \tab \ics \tab events     \tab \ics \tab person-time \cr
+      group 1 \tab \ics \tab \code{x1i} \tab \ics \tab \code{t1i}  \cr
+      group 2 \tab \ics \tab \code{x2i} \tab \ics \tab \code{t2i}}
+      where \code{x1i} and \code{x2i} denote the number of events in the first and the second group, respectively, and \code{t1i} and \code{t2i} the corresponding total person-times at risk.
 
    }
 

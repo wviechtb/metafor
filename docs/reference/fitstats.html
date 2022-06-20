@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -121,21 +121,34 @@
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>an object of class <code>"rma"</code>.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>optionally more fitted model objects.</p></dd>
-<dt>REML</dt>
+
+   <dt>REML</dt>
 <dd><p>logical to specify whether the regular or restricted likelihood function should be used to obtain the fit statistics and information criteria. Defaults to the method of estimation used, that is <code>TRUE</code> if <code>object</code> was fitted with <code>method="REML"</code> and <code>FALSE</code> otherwise.</p></dd>
-<dt>k</dt>
+
+   <dt>k</dt>
 <dd><p>numeric value to specify the penalty per parameter to use. The default (<code>k=2</code>) is the classical AIC. See <code><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></code> for more details.</p></dd>
-<dt>correct</dt>
+
+   <dt>correct</dt>
 <dd><p>logical to specify whether the regular (default) or corrected (i.e., AICc) should be extracted.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>For <code>fitstats</code>, a data frame with the (restricted) log-likelihood, deviance, AIC, BIC, and AICc values for each model passed to the function.
-   For <code>logLik</code>, an object of class <code>"logLik"</code>, providing the (restricted) log-likelihood of the model evaluated at the estimated coefficient(s).
-   For <code>deviance</code>, a numeric value with the corresponding deviance.
-   For <code>AIC</code> and <code>BIC</code>, either a numeric value with the corresponding AIC, AICc, or BIC or a data frame with rows corresponding to the models and columns representing the number of parameters in the model (<code>df</code>) and the AIC, AICc, or BIC.</p>
+    
+
+<p>For <code>fitstats</code>, a data frame with the (restricted) log-likelihood, deviance, AIC, BIC, and AICc values for each model passed to the function.</p>
+
+
+<p>For <code>logLik</code>, an object of class <code>"logLik"</code>, providing the (restricted) log-likelihood of the model evaluated at the estimated coefficient(s).</p>
+
+
+<p>For <code>deviance</code>, a numeric value with the corresponding deviance.</p>
+
+
+<p>For <code>AIC</code> and <code>BIC</code>, either a numeric value with the corresponding AIC, AICc, or BIC or a data frame with rows corresponding to the models and columns representing the number of parameters in the model (<code>df</code>) and the AIC, AICc, or BIC.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -214,7 +227,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

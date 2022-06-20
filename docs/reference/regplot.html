@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -119,72 +119,106 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an object of class <code>"rma.uni"</code>, <code>"rma.mv"</code>, or <code>"rma.glmm"</code> including one or multiple moderators (or an object of class <code>"regplot"</code> for <code>points</code>).</p></dd>
-<dt>mod</dt>
+
+   <dt>mod</dt>
 <dd><p>either a scalar to specify the position of the moderator variable in the model or a character string to specify the name of the moderator variable.</p></dd>
-<dt>pred</dt>
+
+   <dt>pred</dt>
 <dd><p>logical to indicate whether the (marginal) regression line based on the moderator should be added to the plot (the default is <code>TRUE</code>). Can also be an object from <code><a href="predict.rma.html">predict</a></code>. See ‘Details’.</p></dd>
-<dt>ci</dt>
+
+   <dt>ci</dt>
 <dd><p>logical to indicate whether the corresponding confidence interval bounds should be added to the plot (the default is <code>TRUE</code>).</p></dd>
-<dt>pi</dt>
+
+   <dt>pi</dt>
 <dd><p>logical to indicate whether the corresponding prediction interval bounds should be added to the plot (the default is <code>FALSE</code>).</p></dd>
-<dt>shade</dt>
+
+   <dt>shade</dt>
 <dd><p>logical to indicate whether the confidence/prediction interval regions should be shaded (the default is <code>TRUE</code>). Can also be a two-element character vector to specify the colors for shading the confidence and prediction interval regions (if shading only the former, a single color can also be specified).</p></dd>
-<dt>xlim</dt>
+
+   <dt>xlim</dt>
 <dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
-<dt>ylim</dt>
+
+   <dt>ylim</dt>
 <dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
-<dt>predlim</dt>
+
+   <dt>predlim</dt>
 <dd><p>optional argument to specify the limits of the (marginal) regression line. If unspecified, the limits are based on the range of the moderator variable.</p></dd>
-<dt>olim</dt>
+
+   <dt>olim</dt>
 <dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
-<dt>xlab</dt>
+
+   <dt>xlab</dt>
 <dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-<dt>ylab</dt>
+
+   <dt>ylab</dt>
 <dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-<dt>at</dt>
+
+   <dt>at</dt>
 <dd><p>position of the y-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>integer to specify the number of decimal places to which the tick mark labels of the y-axis should be rounded. When specifying an integer (e.g., <code>2L</code>), trailing zeros after the decimal mark are dropped for the y-axis labels. When specifying a numeric value (e.g., <code>2</code>), trailing zeros are retained.</p></dd>
-<dt>transf</dt>
+
+   <dt>transf</dt>
 <dd><p>optional argument to specify a function to transform the observed outcomes, predicted values, and confidence/prediction interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-<dt>atransf</dt>
+
+   <dt>atransf</dt>
 <dd><p>optional argument to specify a function to transform the y-axis labels (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-<dt>targs</dt>
+
+   <dt>targs</dt>
 <dd><p>optional arguments needed by the function specified via <code>transf</code> or <code>atransf</code>.</p></dd>
-<dt>level</dt>
+
+   <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence/prediction interval level (the default is to take the value from the object).</p></dd>
-<dt>pch</dt>
+
+   <dt>pch</dt>
 <dd><p>plotting symbol to use for the observed outcomes. By default, a filled circle is used. Can also be a vector of values. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
-<dt>psize</dt>
+
+   <dt>psize</dt>
 <dd><p>optional numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values. Can also be a character string (either <code>"seinv"</code> or <code>"vinv"</code>) to make the point sizes proportional to the inverse standard errors or inverse sampling variances.</p></dd>
-<dt>plim</dt>
+
+   <dt>plim</dt>
 <dd><p>numeric vector of length 2 to scale the point sizes (ignored when a numeric value or vector is specified for <code>psize</code>). See ‘Details’.</p></dd>
-<dt>col</dt>
+
+   <dt>col</dt>
 <dd><p>character string to specify the color to use for plotting the observed outcomes (the default is <code>"black"</code>). Can also be a vector.</p></dd>
-<dt>bg</dt>
+
+   <dt>bg</dt>
 <dd><p>character string to specify the background color for open plot symbols (the default is <code>"darkgray"</code>). Can also be a vector.</p></dd>
-<dt>grid</dt>
+
+   <dt>grid</dt>
 <dd><p>logical to specify whether a grid should be added to the plot. Can also be a color name for the grid.</p></dd>
-<dt>refline</dt>
+
+   <dt>refline</dt>
 <dd><p>optional numeric value to specify the location of a horizontal reference line that should be added to the plot.</p></dd>
-<dt>label</dt>
+
+   <dt>label</dt>
 <dd><p>argument to control the labeling of the points (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
-<dt>offset</dt>
+
+   <dt>offset</dt>
 <dd><p>argument to control the distance between the points and the corresponding labels. See ‘Details’.</p></dd>
-<dt>labsize</dt>
+
+   <dt>labsize</dt>
 <dd><p>numeric value to control the size of the labels.</p></dd>
-<dt>lcol</dt>
+
+   <dt>lcol</dt>
 <dd><p>optional vector of (up to) four elements to specify the color of the regression line, of the confidence interval bounds, of the prediction interval bounds, and of the horizontal reference line.</p></dd>
-<dt>lty</dt>
+
+   <dt>lty</dt>
 <dd><p>optional vector of (up to) four elements to specify the line type of the regression line, of the confidence interval bounds, of the prediction interval bounds, and of the horizontal reference line.</p></dd>
-<dt>lwd</dt>
+
+   <dt>lwd</dt>
 <dd><p>optional vector of (up to) four elements to specify the line width of the regression line, of the confidence interval bounds, of the prediction interval bounds, and of the horizontal reference line.</p></dd>
-<dt>legend</dt>
+
+   <dt>legend</dt>
 <dd><p>logical to indicate whether a legend should be added to the plot (the default is <code>FALSE</code>). Can also be a keyword to indicate the position of the legend (see <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code>).</p></dd>
-<dt>xvals</dt>
+
+   <dt>xvals</dt>
 <dd><p>optional numeric vector to specify the values of the moderator for which predicted values should be computed. Needs to be specified when passing an object from <code><a href="predict.rma.html">predict</a></code> to the <code>pred</code> argument. See ‘Details’.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -203,25 +237,37 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>"regplot"</code> with components:</p>
+    
+
+<p>An object of class <code>"regplot"</code> with components:</p>
 <dl><dt>slab</dt>
 <dd><p>the study labels</p></dd>
-<dt>ids</dt>
+
+   <dt>ids</dt>
 <dd><p>the study ids</p></dd>
-<dt>xi</dt>
+
+   <dt>xi</dt>
 <dd><p>the x-axis coordinates of the points that were plotted.</p></dd>
-<dt>yi</dt>
+
+   <dt>yi</dt>
 <dd><p>the y-axis coordinates of the points that were plotted.</p></dd>
-<dt>pch</dt>
+
+   <dt>pch</dt>
 <dd><p>the plotting symbols of the points that were plotted.</p></dd>
-<dt>psize</dt>
+
+   <dt>psize</dt>
 <dd><p>the point sizes of the points that were plotted.</p></dd>
-<dt>col</dt>
+
+   <dt>col</dt>
 <dd><p>the colors of the points that were plotted.</p></dd>
-<dt>bg</dt>
+
+   <dt>bg</dt>
 <dd><p>the background colors of the points that were plotted.</p></dd>
-<dt>label</dt>
+
+   <dt>label</dt>
 <dd><p>logical vector indicating whether a point was labeled.</p></dd>
+
+
 </dl><p>Note that the object is returned invisibly. Using <code>points.regplot</code>, one can redraw the points (and labels) in case one wants to superimpose the points on top of any elements that were added manually to the plot (see ‘Examples’).</p>
     </div>
     <div id="author">
@@ -444,7 +490,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

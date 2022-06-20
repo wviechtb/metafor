@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -114,32 +114,46 @@
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>an object of class <code>"rma"</code> or <code>"rma.ls"</code>.</p></dd>
-<dt>newmods</dt>
+
+   <dt>newmods</dt>
 <dd><p>optional vector or matrix to specify the values of the moderator values for which the predicted values should be calculated. See ‘Details’.</p></dd>
-<dt>intercept</dt>
+
+   <dt>intercept</dt>
 <dd><p>logical to specify whether the intercept should be included when calculating the predicted values for <code>newmods</code>. If unspecified, the intercept is automatically added when the original model also included an intercept.</p></dd>
-<dt>tau2.levels</dt>
+
+   <dt>tau2.levels</dt>
 <dd><p>vector to specify the levels of the inner factor when computing prediction intervals. Only relevant for models of class <code>"rma.mv"</code> (see <code><a href="rma.mv.html">rma.mv</a></code>) and when the model includes more than a single <em></em>\(\tau^2\) value. See ‘Details’.</p></dd>
-<dt>gamma2.levels</dt>
+
+   <dt>gamma2.levels</dt>
 <dd><p>vector to specify the levels of the inner factor when computing prediction intervals. Only relevant for models of class <code>"rma.mv"</code> (see <code><a href="rma.mv.html">rma.mv</a></code>) and when the model includes more than a single <em></em>\(\gamma^2\) value. See ‘Details’.</p></dd>
-<dt>addx</dt>
+
+   <dt>addx</dt>
 <dd><p>logical to specify whether the values of the moderator variables should be added to the returned object. See ‘Examples’.</p></dd>
-<dt>newscale</dt>
+
+   <dt>newscale</dt>
 <dd><p>optional vector or matrix to specify the values of the scale variables for which the predicted values should be calculated. Only relevant for location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code>). See ‘Details’.</p></dd>
-<dt>addz</dt>
+
+   <dt>addz</dt>
 <dd><p>logical to specify whether the values of the scale variables should be added to the returned object.</p></dd>
-<dt>level</dt>
+
+   <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence and prediction interval level. If unspecified, the default is to take the value from the object.</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-<dt>transf</dt>
+
+   <dt>transf</dt>
 <dd><p>optional argument to specify a function to transform the predicted values and interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-<dt>targs</dt>
+
+   <dt>targs</dt>
 <dd><p>optional arguments needed by the function specified under <code>transf</code>.</p></dd>
-<dt>vcov</dt>
+
+   <dt>vcov</dt>
 <dd><p>logical to specify whether the variance-covariance matrix of the predicted values should also be returned (the default is <code>FALSE</code>).</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -154,31 +168,47 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>c("predict.rma","list.rma")</code>. The object is a list containing the following components:</p>
+    
+
+<p>An object of class <code>c("predict.rma","list.rma")</code>. The object is a list containing the following components:</p>
 <dl><dt>pred</dt>
 <dd><p>predicted value(s).</p></dd>
-<dt>se</dt>
+
+   <dt>se</dt>
 <dd><p>corresponding standard error(s).</p></dd>
-<dt>ci.lb</dt>
+
+   <dt>ci.lb</dt>
 <dd><p>lower bound of the confidence interval(s).</p></dd>
-<dt>ci.ub</dt>
+
+   <dt>ci.ub</dt>
 <dd><p>upper bound of the confidence interval(s).</p></dd>
-<dt>pi.lb</dt>
+
+   <dt>pi.lb</dt>
 <dd><p>lower bound of the prediction interval(s) (only for random/mixed-effects models).</p></dd>
-<dt>pi.ub</dt>
+
+   <dt>pi.ub</dt>
 <dd><p>upper bound of the prediction interval(s) (only for random/mixed-effects models).</p></dd>
-<dt>tau2.level</dt>
+
+   <dt>tau2.level</dt>
 <dd><p>the level(s) of the inner factor (only for models of class <code>"rma.mv"</code> with multiple <em></em>\(\tau^2\) values).</p></dd>
-<dt>gamma2.level</dt>
+
+   <dt>gamma2.level</dt>
 <dd><p>the level(s) of the inner factor (only for models of class <code>"rma.mv"</code> with multiple <em></em>\(\gamma^2\) values).</p></dd>
-<dt>X</dt>
+
+   <dt>X</dt>
 <dd><p>the moderator value(s) used to calculate the predicted values (only when <code>addx=TRUE</code>).</p></dd>
-<dt>Z</dt>
+
+   <dt>Z</dt>
 <dd><p>the scale value(s) used to calculate the predicted values (only when <code>addz=TRUE</code> and only for location-scale models).</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
-</dl><p>If <code>vcov=TRUE</code>, then the returned object is a list with the first element equal to the one as described above and the second element equal to the variance-covariance matrix of the predicted values.
-   The object is formatted and printed with the <code><a href="print.list.rma.html">print</a></code> function.</p>
+
+
+</dl><p>If <code>vcov=TRUE</code>, then the returned object is a list with the first element equal to the one as described above and the second element equal to the variance-covariance matrix of the predicted values.</p>
+
+
+<p>The object is formatted and printed with the <code><a href="print.list.rma.html">print</a></code> function.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -354,7 +384,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

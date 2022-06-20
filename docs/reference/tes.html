@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -110,43 +110,64 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <p><em>These arguments pertain to data input:</em></p>
+    <p></p>
+<p><em>These arguments pertain to data input:</em></p>
 <dl><dt>x</dt>
 <dd><p>a vector with the observed effect sizes or outcomes or an object of class <code>"rma"</code>.</p></dd>
-<dt>vi</dt>
+
+   <dt>vi</dt>
 <dd><p>vector with the corresponding sampling variances (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
-<dt>sei</dt>
+
+   <dt>sei</dt>
 <dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
-<dt>subset</dt>
+
+   <dt>subset</dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
-<dt>data</dt>
+
+   <dt>data</dt>
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
-</dl><p><em>These arguments pertain to the tests of the observed effect sizes or outcomes:</em></p>
+
+
+   </dl><p><em>These arguments pertain to the tests of the observed effect sizes or outcomes:</em></p>
 <dl><dt>H0</dt>
 <dd><p>numeric value to specify the value of the effect size or outcome under the null hypothesis (the default is 0).</p></dd>
-<dt>alternative</dt>
+
+   <dt>alternative</dt>
 <dd><p>character string to specify the sidedness of the hypothesis when testing the observed effect sizes or outcomes. Possible options are <code>"two.sided"</code> (the default), <code>"greater"</code>, or <code>"less"</code>. Can be abbreviated.</p></dd>
-<dt>alpha</dt>
+
+   <dt>alpha</dt>
 <dd><p>alpha level for testing the observed effect sizes or outcomes (the default is .05).</p></dd>
-</dl><p><em>These arguments pertain to the power of the tests:</em></p>
+
+
+   </dl><p><em>These arguments pertain to the power of the tests:</em></p>
 <dl><dt>theta</dt>
 <dd><p>optional numeric value to specify the value of the true effect size or outcome under the alternative hypothesis. If unspecified, it will be estimated based on the data or the value is taken from the <code>"rma"</code> object.</p></dd>
-<dt>tau2</dt>
+
+   <dt>tau2</dt>
 <dd><p>optional numeric value to specify the amount of heterogeneity in the true effect sizes or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the <code>"rma"</code> object.</p></dd>
-</dl><p><em>These arguments pertain to the test of excess significance:</em></p>
+
+
+   </dl><p><em>These arguments pertain to the test of excess significance:</em></p>
 <dl><dt>test</dt>
 <dd><p>optional character string to specify the type of test to use for conducting the test of excess significance. Possible options are <code>"chi2"</code>, <code>"binom"</code>, or <code>"exact"</code>. Can be abbreviated. If unspecified, the function chooses the type of test based on the data.</p></dd>
-<dt>tes.alternative</dt>
+
+   <dt>tes.alternative</dt>
 <dd><p>character string to specify the sidedness of the hypothesis for the test of excess significance. Possible options are <code>"greater"</code> (the default), <code>"two.sided"</code>, or <code>"less"</code>. Can be abbreviated.</p></dd>
-<dt>progbar</dt>
+
+   <dt>progbar</dt>
 <dd><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>). Only relevant when conducting an exact test.</p></dd>
-<dt>tes.alpha</dt>
+
+   <dt>tes.alpha</dt>
 <dd><p>alpha level for the test of excess significance (the default is .10). Only relevant for finding the ‘limit estimate’.</p></dd>
-</dl><p><em>Miscellaneous arguments:</em></p>
+
+
+   </dl><p><em>Miscellaneous arguments:</em></p>
 <dl><dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -159,29 +180,43 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>"tes"</code>. The object is a list containing the following components:</p>
+    
+
+<p>An object of class <code>"tes"</code>. The object is a list containing the following components:</p>
 <dl><dt>k</dt>
 <dd><p>the number of studies included in the analysis.</p></dd>
-<dt>O</dt>
+
+   <dt>O</dt>
 <dd><p>the observed number of significant tests.</p></dd>
-<dt>E</dt>
+
+   <dt>E</dt>
 <dd><p>the expected number of significant tests.</p></dd>
-<dt>OEratio</dt>
+
+   <dt>OEratio</dt>
 <dd><p>the ratio of O over E.</p></dd>
-<dt>test</dt>
+
+   <dt>test</dt>
 <dd><p>the type of test conducted.</p></dd>
-<dt>pval</dt>
+
+   <dt>pval</dt>
 <dd><p>the p-value of the test of excess significance.</p></dd>
-<dt>power</dt>
+
+   <dt>power</dt>
 <dd><p>the (estimated) power of the tests.</p></dd>
-<dt>sig</dt>
+
+   <dt>sig</dt>
 <dd><p>logical vector indicating which tests were significant.</p></dd>
-<dt>theta</dt>
+
+   <dt>theta</dt>
 <dd><p>the value of <em></em>\(\theta\) used for computing the power of the tests.</p></dd>
-<dt>theta.lim</dt>
+
+   <dt>theta.lim</dt>
 <dd><p>the ‘limit estimate’ (i.e., <em></em>\(\theta_{lim}\)).</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
+
+
 </dl><p>The results are formatted and printed with the <code>print</code> function.</p>
     </div>
     <div id="note">
@@ -278,7 +313,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -114,40 +114,58 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an object of class <code>"rma"</code>.</p></dd>
-<dt>center</dt>
+
+   <dt>center</dt>
 <dd><p>logical to indicate whether the plot should be centered horizontally at the model estimate (the default is <code>FALSE</code>).</p></dd>
-<dt>xlim</dt>
+
+   <dt>xlim</dt>
 <dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
-<dt>zlim</dt>
+
+   <dt>zlim</dt>
 <dd><p>z-axis limits. If unspecified, the function tries to set the z-axis limits to some sensible values (note that the z-axis limits are the actual vertical limit of the plotting region).</p></dd>
-<dt>xlab</dt>
+
+   <dt>xlab</dt>
 <dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-<dt>zlab</dt>
+
+   <dt>zlab</dt>
 <dd><p>title for the z-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-<dt>atz</dt>
+
+   <dt>atz</dt>
 <dd><p>position for the z-axis tick marks and labels. If unspecified, these values are set by the function.</p></dd>
-<dt>aty</dt>
+
+   <dt>aty</dt>
 <dd><p>position for the y-axis tick marks and labels. If unspecified, these values are set by the function.</p></dd>
-<dt>steps</dt>
+
+   <dt>steps</dt>
 <dd><p>the number of tick marks for the y-axis (the default is 7). Ignored when argument <code>aty</code> is used.</p></dd>
-<dt>level</dt>
+
+   <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the level of the z-axis error region (the default is to take the value from the object).</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>integer to specify the number of decimal places to which the tick mark labels of the y-axis should be rounded (the default is 2).</p></dd>
-<dt>back</dt>
+
+   <dt>back</dt>
 <dd><p>color of the z-axis error region. Set to <code>NA</code> to suppress shading of the region.</p></dd>
-<dt>transf</dt>
+
+   <dt>transf</dt>
 <dd><p>optional argument to specify a function to transform the y-axis labels (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-<dt>targs</dt>
+
+   <dt>targs</dt>
 <dd><p>optional arguments needed by the function specified via <code>transf</code>.</p></dd>
-<dt>pch</dt>
+
+   <dt>pch</dt>
 <dd><p>plotting symbol. By default, a filled circle is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
-<dt>arc.res</dt>
+
+   <dt>arc.res</dt>
 <dd><p>integer to specify the number of line segments to use when drawing the y-axis and confidence interval arcs (the default is 100).</p></dd>
-<dt>cex</dt>
+
+   <dt>cex</dt>
 <dd><p>optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -157,15 +175,21 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame with components:</p>
+    
+
+<p>A data frame with components:</p>
 <dl><dt>x</dt>
 <dd><p>the x-axis coordinates of the points that were plotted.</p></dd>
-<dt>y</dt>
+
+   <dt>y</dt>
 <dd><p>the y-axis coordinates of the points that were plotted.</p></dd>
-<dt>ids</dt>
+
+   <dt>ids</dt>
 <dd><p>the study id numbers.</p></dd>
-<dt>slab</dt>
+
+   <dt>slab</dt>
 <dd><p>the study labels.</p></dd>
+
 </dl><p>Note that the data frame is returned invisibly.</p>
     </div>
     <div id="author">
@@ -236,7 +260,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

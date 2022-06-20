@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -113,82 +113,121 @@
     <h2>Arguments</h2>
     <dl><dt>measure</dt>
 <dd><p>a character string to specify which effect size or outcome measure should be calculated. See ‘Details’ for possible options and how the data needed to compute the selected effect size or outcome measure should then be specified.</p></dd>
-<dt>ai</dt>
+
+   <dt>ai</dt>
 <dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (upper left cell).</p></dd>
-<dt>bi</dt>
+
+   <dt>bi</dt>
 <dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (upper right cell).</p></dd>
-<dt>ci</dt>
+
+   <dt>ci</dt>
 <dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (lower left cell).</p></dd>
-<dt>di</dt>
+
+   <dt>di</dt>
 <dd><p>vector to specify the <em></em>\(2 \times 2\) table frequencies (lower right cell).</p></dd>
-<dt>n1i</dt>
+
+   <dt>n1i</dt>
 <dd><p>vector to specify the group sizes or row totals (first group/row).</p></dd>
-<dt>n2i</dt>
+
+   <dt>n2i</dt>
 <dd><p>vector to specify the group sizes or row totals (second group/row).</p></dd>
-<dt>x1i</dt>
+
+   <dt>x1i</dt>
 <dd><p>vector to specify the number of events (first group).</p></dd>
-<dt>x2i</dt>
+
+   <dt>x2i</dt>
 <dd><p>vector to specify the number of events (second group).</p></dd>
-<dt>t1i</dt>
+
+   <dt>t1i</dt>
 <dd><p>vector to specify the total person-times (first group).</p></dd>
-<dt>t2i</dt>
+
+   <dt>t2i</dt>
 <dd><p>vector to specify the total person-times (second group).</p></dd>
-<dt>m1i</dt>
+
+   <dt>m1i</dt>
 <dd><p>vector to specify the means (first group or time point).</p></dd>
-<dt>m2i</dt>
+
+   <dt>m2i</dt>
 <dd><p>vector to specify the means (second group or time point).</p></dd>
-<dt>sd1i</dt>
+
+   <dt>sd1i</dt>
 <dd><p>vector to specify the standard deviations (first group or time point).</p></dd>
-<dt>sd2i</dt>
+
+   <dt>sd2i</dt>
 <dd><p>vector to specify the standard deviations (second group or time point).</p></dd>
-<dt>xi</dt>
+
+   <dt>xi</dt>
 <dd><p>vector to specify the frequencies of the event of interest.</p></dd>
-<dt>mi</dt>
+
+   <dt>mi</dt>
 <dd><p>vector to specify the frequencies of the complement of the event of interest or the group means.</p></dd>
-<dt>ri</dt>
+
+   <dt>ri</dt>
 <dd><p>vector to specify the raw correlation coefficients.</p></dd>
-<dt>ti</dt>
+
+   <dt>ti</dt>
 <dd><p>vector to specify the total person-times.</p></dd>
-<dt>sdi</dt>
+
+   <dt>sdi</dt>
 <dd><p>vector to specify the standard deviations.</p></dd>
-<dt>r2i</dt>
+
+   <dt>r2i</dt>
 <dd><p>vector to specify the <em></em>\(R^2\) values.</p></dd>
-<dt>ni</dt>
+
+   <dt>ni</dt>
 <dd><p>vector to specify the sample/group sizes.</p></dd>
-<dt>yi</dt>
+
+   <dt>yi</dt>
 <dd><p>vector to specify the observed effect sizes or outcomes.</p></dd>
-<dt>vi</dt>
+
+   <dt>vi</dt>
 <dd><p>vector to specify the corresponding sampling variances.</p></dd>
-<dt>sei</dt>
+
+   <dt>sei</dt>
 <dd><p>vector to specify the corresponding standard errors.</p></dd>
-<dt>data</dt>
+
+   <dt>data</dt>
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
-<dt>slab</dt>
+
+   <dt>slab</dt>
 <dd><p>optional vector with labels for the studies.</p></dd>
-<dt>subset</dt>
+
+   <dt>subset</dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that will be included in the data frame returned by the function.</p></dd>
-<dt>include</dt>
+
+   <dt>include</dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies for which the measure should be calculated. See the ‘Value’ section for more details.</p></dd>
-<dt>add</dt>
+
+   <dt>add</dt>
 <dd><p>a non-negative number to specify the amount to add to zero cells, counts, or frequencies. See ‘Details’.</p></dd>
-<dt>to</dt>
+
+   <dt>to</dt>
 <dd><p>a character string to specify when the values under <code>add</code> should be added (either <code>"all"</code>, <code>"only0"</code>, <code>"if0all"</code>, or <code>"none"</code>). See ‘Details’.</p></dd>
-<dt>drop00</dt>
+
+   <dt>drop00</dt>
 <dd><p>logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes. See ‘Details’.</p></dd>
-<dt>vtype</dt>
+
+   <dt>vtype</dt>
 <dd><p>a character string to specify the type of sampling variances to calculate. See ‘Details’.</p></dd>
-<dt>var.names</dt>
+
+   <dt>var.names</dt>
 <dd><p>character string with two elements to specify the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (the defaults are <code>"yi"</code> and <code>"vi"</code>).</p></dd>
-<dt>add.measure</dt>
+
+   <dt>add.measure</dt>
 <dd><p>logical to specify whether a variable should be added to the data frame (with default name <code>"measure"</code>) that indicates the type of outcome measure computed. When using this option, <code>var.names</code> can have a third element to change this variable name.</p></dd>
-<dt>append</dt>
+
+   <dt>append</dt>
 <dd><p>logical to specify whether the data frame provided via the <code>data</code> argument should be returned together with the observed effect sizes or outcomes and corresponding sampling variances (the default is <code>TRUE</code>).</p></dd>
-<dt>replace</dt>
+
+   <dt>replace</dt>
 <dd><p>logical to specify whether existing values for <code>yi</code> and <code>vi</code> in the data frame should be replaced. Only relevant when <code>append=TRUE</code> and the data frame already contains the <code>yi</code> and <code>vi</code> variables. If <code>replace=TRUE</code> (the default), all of the existing values will be overwritten. If <code>replace=FALSE</code>, only <code>NA</code> values will be replaced. See the ‘Value’ section for more details.</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. Note that the values are stored without rounding in the returned object. See also <a href="misc-options.html">here</a> for further details on how to control the number of digits in the output.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -210,7 +249,7 @@
 <h4 id="measures-for-dichotomous-variables">Measures for Dichotomous Variables<a class="anchor" aria-label="anchor" href="#measures-for-dichotomous-variables"></a></h4>
 
 
-<p>In various fields (such as the health and medical sciences), the response variable measured is often dichotomous (binary), so that the data from a study comparing two different groups can be expressed in terms of a <em></em>\(2 \times 2\) table, such as:</p><table class="table table"><tr><td></td><td>outcome 1</td><td>outcome 2</td><td>total</td></tr><tr><td>group 1</td><td><code>ai</code></td><td><code>bi</code></td><td><code>n1i</code></td></tr><tr><td>group 2</td><td><code>ci</code></td><td><code>di</code></td><td><code>n2i</code></td></tr></table><p>where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies (i.e., the number of people falling into a particular category) and <code>n1i</code> and <code>n2i</code> are the row totals (i.e., the group sizes).</p>
+<p>In various fields (such as the health and medical sciences), the response variable measured is often dichotomous (binary), so that the data from a study comparing two different groups can be expressed in terms of a <em></em>\(2 \times 2\) table, such as:</p><table class="table table"><tr><td></td><td> </td><td>outcome 1</td><td> </td><td>outcome 2</td><td> </td><td>total</td></tr><tr><td>group 1</td><td> </td><td><code>ai</code></td><td> </td><td><code>bi</code></td><td> </td><td><code>n1i</code></td></tr><tr><td>group 2</td><td> </td><td><code>ci</code></td><td> </td><td><code>di</code></td><td> </td><td><code>n2i</code></td></tr></table><p>where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies (i.e., the number of people falling into a particular category) and <code>n1i</code> and <code>n2i</code> are the row totals (i.e., the group sizes).</p>
 <p>For example, in a set of randomized clinical trials, group 1 and group 2 may refer to the treatment and placebo/control group, respectively, with outcome 1 denoting some event of interest (e.g., death, complications, failure to improve under the treatment) and outcome 2 its complement. Similarly, in a set of cohort studies, group 1 and group 2 may denote those who engage in and those who do not engage in a potentially harmful behavior (e.g., smoking), with outcome 1 denoting the development of a particular disease (e.g., lung cancer) during the follow-up period. Finally, in a set of case-control studies, group 1 and group 2 may refer to those with the disease (i.e., cases) and those free of the disease (i.e., controls), with outcome 1 denoting, for example, exposure to some environmental risk factor in the past and outcome 2 non-exposure. Note that in all of these examples, the stratified sampling scheme fixes the row totals (i.e., the group sizes) by design.</p>
 <p>A meta-analysis of studies reporting results in terms of <em></em>\(2 \times 2\) tables can be based on one of several different outcome measures, including the risk ratio (also called the relative risk), the odds ratio, the risk difference, and the arcsine square root transformed risk difference (e.g., Fleiss &amp; Berlin, 2009, Rücker et al., 2009). For any of these outcome measures, one needs to specify the cell frequencies via the <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> arguments (or alternatively, one can use the <code>ai</code>, <code>ci</code>, <code>n1i</code>, and <code>n2i</code> arguments).</p>
 <p>The options for the <code>measure</code> argument are then:</p><ul><li><p><code>"RR"</code> for the <em>log risk ratio</em>,</p></li>
@@ -234,7 +273,7 @@
 <h4 id="measures-for-event-counts">Measures for Event Counts<a class="anchor" aria-label="anchor" href="#measures-for-event-counts"></a></h4>
 
 
-<p>In medical and epidemiological studies comparing two different groups (e.g., treated versus untreated patients, exposed versus unexposed individuals), results are sometimes reported in terms of event counts (i.e., the number of events, such as strokes or myocardial infarctions) over a certain period of time. Data of this type are also referred to as ‘person-time data’. Assume that the studies report data in the form:</p><table class="table table"><tr><td></td><td>number of events</td><td>total person-time</td></tr><tr><td>group 1</td><td><code>x1i</code></td><td><code>t1i</code></td></tr><tr><td>group 2</td><td><code>x2i</code></td><td><code>t2i</code></td></tr></table><p>where <code>x1i</code> and <code>x2i</code> denote the number of events in the first and the second group, respectively, and <code>t1i</code> and <code>t2i</code> the corresponding total person-times at risk. Often, the person-time is measured in years, so that <code>t1i</code> and <code>t2i</code> denote the total number of follow-up years in the two groups.</p>
+<p>In medical and epidemiological studies comparing two different groups (e.g., treated versus untreated patients, exposed versus unexposed individuals), results are sometimes reported in terms of event counts (i.e., the number of events, such as strokes or myocardial infarctions) over a certain period of time. Data of this type are also referred to as ‘person-time data’. Assume that the studies report data in the form:</p><table class="table table"><tr><td></td><td> </td><td>number of events</td><td> </td><td>total person-time</td></tr><tr><td>group 1</td><td> </td><td><code>x1i</code></td><td> </td><td><code>t1i</code></td></tr><tr><td>group 2</td><td> </td><td><code>x2i</code></td><td> </td><td><code>t2i</code></td></tr></table><p>where <code>x1i</code> and <code>x2i</code> denote the number of events in the first and the second group, respectively, and <code>t1i</code> and <code>t2i</code> the corresponding total person-times at risk. Often, the person-time is measured in years, so that <code>t1i</code> and <code>t2i</code> denote the total number of follow-up years in the two groups.</p>
 <p>This form of data is fundamentally different from what was described in the previous section, since the total follow-up time may differ even for groups of the same size and the individuals studied may experience the event of interest multiple times. Hence, different outcome measures than the ones described in the previous section need to be considered when data are reported in this format. These include the incidence rate ratio, the incidence rate difference, and the square root transformed incidence rate difference (Bagos &amp; Nikolopoulos, 2009; Rothman et al., 2008). For any of these outcome measures, one needs to specify the total number of events via the <code>x1i</code> and <code>x2i</code> arguments and the corresponding total person-time values via the <code>t1i</code> and <code>t2i</code> arguments.</p>
 <p>The options for the <code>measure</code> argument are then:</p><ul><li><p><code>"IRR"</code> for the <em>log incidence rate ratio</em>,</p></li>
 <li><p><code>"IRD"</code> for the <em>incidence rate difference</em>,</p></li>
@@ -249,7 +288,7 @@
 <h4 id="measures-for-quantitative-variables">Measures for Quantitative Variables<a class="anchor" aria-label="anchor" href="#measures-for-quantitative-variables"></a></h4>
 
 
-<p>When the response or dependent variable assessed in the individual studies is measured on some quantitative scale, it is customary to report certain summary statistics, such as the mean and standard deviation of the observations. The data layout for a study comparing two groups with respect to such a variable is then of the form:</p><table class="table table"><tr><td></td><td>mean</td><td>standard deviation</td><td>group size</td></tr><tr><td>group 1</td><td><code>m1i</code></td><td><code>sd1i</code></td><td><code>n1i</code></td></tr><tr><td>group 2</td><td><code>m2i</code></td><td><code>sd2i</code></td><td><code>n2i</code></td></tr></table><p>where <code>m1i</code> and <code>m2i</code> are the observed means of the two groups, <code>sd1i</code> and <code>sd2i</code> are the observed standard deviations, and <code>n1i</code> and <code>n2i</code> denote the number of individuals in each group. Again, the two groups may be experimentally created (e.g., a treatment and control group based on random assignment) or naturally occurring (e.g., men and women). In either case, the raw mean difference, the standardized mean difference, and the (log transformed) ratio of means (also called the log ‘response ratio’) are useful outcome measures when meta-analyzing studies of this type.</p>
+<p>When the response or dependent variable assessed in the individual studies is measured on some quantitative scale, it is customary to report certain summary statistics, such as the mean and standard deviation of the observations. The data layout for a study comparing two groups with respect to such a variable is then of the form:</p><table class="table table"><tr><td></td><td> </td><td>mean</td><td> </td><td>standard deviation</td><td> </td><td>group size</td></tr><tr><td>group 1</td><td> </td><td><code>m1i</code></td><td> </td><td><code>sd1i</code></td><td> </td><td><code>n1i</code></td></tr><tr><td>group 2</td><td> </td><td><code>m2i</code></td><td> </td><td><code>sd2i</code></td><td> </td><td><code>n2i</code></td></tr></table><p>where <code>m1i</code> and <code>m2i</code> are the observed means of the two groups, <code>sd1i</code> and <code>sd2i</code> are the observed standard deviations, and <code>n1i</code> and <code>n2i</code> denote the number of individuals in each group. Again, the two groups may be experimentally created (e.g., a treatment and control group based on random assignment) or naturally occurring (e.g., men and women). In either case, the raw mean difference, the standardized mean difference, and the (log transformed) ratio of means (also called the log ‘response ratio’) are useful outcome measures when meta-analyzing studies of this type.</p>
 <p>The options for the <code>measure</code> argument are then:</p><ul><li><p><code>"MD"</code> for the <em>raw mean difference</em> (e.g., Borenstein, 2009),</p></li>
 <li><p><code>"SMD"</code> for the <em>standardized mean difference</em> (Hedges, 1981),</p></li>
 <li><p><code>"SMDH"</code> for the <em>standardized mean difference</em> with heteroscedastic population variances in the two groups (Bonett, 2008, 2009),</p></li>
@@ -380,7 +419,7 @@
 <h4 id="measures-for-dichotomous-variables-2">Measures for Dichotomous Variables<a class="anchor" aria-label="anchor" href="#measures-for-dichotomous-variables-2"></a></h4>
 
 
-<p>For dichotomous variables, the data for a study of this type gives rise to a paired <em></em>\(2 \times 2\) table, which is of the form:</p><table class="table table"><tr><td></td><td>trt 2 outcome 1</td><td>trt 2 outcome 2</td></tr><tr><td>trt 1 outcome 1</td><td><code>ai</code></td><td><code>bi</code></td></tr><tr><td>trt 1 outcome 2</td><td><code>ci</code></td><td><code>di</code></td></tr></table><p>where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies. Note that ‘trt1’ and ‘trt2’ may be applied to a single group of subjects or to matched pairs of subjects. Also, ‘trt1’ and ‘trt2’ might refer to two different time points (e.g., before and after a treatment). In any case, the data from such a study can be rearranged into a marginal table of the form:</p><table class="table table"><tr><td></td><td>outcome 1</td><td>outcome 2</td></tr><tr><td>trt 1</td><td><code>ai+bi</code></td><td><code>ci+di</code></td></tr><tr><td>trt 2</td><td><code>ai+ci</code></td><td><code>bi+di</code></td></tr></table><p>which is of the same form as a <em></em>\(2 \times 2\) table that would arise in a study comparing/contrasting two independent groups.</p>
+<p>For dichotomous variables, the data for a study of this type gives rise to a paired <em></em>\(2 \times 2\) table, which is of the form:</p><table class="table table"><tr><td> </td><td></td><td>trt 2 outcome 1</td><td> </td><td>trt 2 outcome 2</td></tr><tr><td>trt 1 outcome 1  </td><td></td><td><code>ai</code></td><td> </td><td><code>bi</code></td></tr><tr><td>trt 1 outcome 2  </td><td></td><td><code>ci</code></td><td> </td><td><code>di</code></td></tr></table><p>where <code>ai</code>, <code>bi</code>, <code>ci</code>, and <code>di</code> denote the cell frequencies. Note that ‘trt1’ and ‘trt2’ may be applied to a single group of subjects or to matched pairs of subjects. Also, ‘trt1’ and ‘trt2’ might refer to two different time points (e.g., before and after a treatment). In any case, the data from such a study can be rearranged into a marginal table of the form:</p><table class="table table"><tr><td></td><td> </td><td>outcome 1</td><td> </td><td>outcome 2</td></tr><tr><td>trt 1</td><td> </td><td><code>ai+bi</code></td><td> </td><td><code>ci+di</code></td></tr><tr><td>trt 2</td><td> </td><td><code>ai+ci</code></td><td> </td><td><code>bi+di</code></td></tr></table><p>which is of the same form as a <em></em>\(2 \times 2\) table that would arise in a study comparing/contrasting two independent groups.</p>
 <p>The options for the <code>measure</code> argument that will compute outcome measures based on the marginal table are:</p><ul><li><p><code>"MPRR"</code> for the matched pairs <em>marginal log risk ratio</em>,</p></li>
 <li><p><code>"MPOR"</code> for the matched pairs <em>marginal log odds ratio</em>,</p></li>
 <li><p><code>"MPRD"</code> for the matched pairs <em>marginal risk difference</em>.</p></li>
@@ -466,16 +505,29 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>c("escalc","data.frame")</code>. The object is a data frame containing the following components:</p>
+    
+
+<p>An object of class <code>c("escalc","data.frame")</code>. The object is a data frame containing the following components:</p>
 <dl><dt>yi</dt>
 <dd><p>observed effect sizes or outcomes.</p></dd>
-<dt>vi</dt>
+
+   <dt>vi</dt>
 <dd><p>corresponding sampling variances.</p></dd>
-</dl><p>If <code>append=TRUE</code> and a data frame was specified via the <code>data</code> argument, then <code>yi</code> and <code>vi</code> are appended to this data frame. Note that the <code>var.names</code> argument actually specifies the names of these two variables (<code>yi</code> and <code>vi</code> are the defaults).
-   If the data frame already contains two variables with names as specified by the <code>var.names</code> argument, the values for these two variables will be overwritten when <code>replace=TRUE</code> (which is the default). By setting <code>replace=FALSE</code>, only values that are <code>NA</code> will be replaced.
-   The <code>subset</code> argument can be used to select the studies that will be included in the data frame returned by the function. On the other hand, the <code>include</code> argument simply selects for which studies the measure will be computed (if it shouldn't be computed for all of them).
-   The object is formatted and printed with the <code><a href="print.escalc.html">print</a></code> function. The <code><a href="print.escalc.html">summary</a></code> function can be used to obtain confidence intervals for the individual outcomes. See <code><a href="methods.escalc.html">methods.escalc</a></code> for some additional method functions for <code>"escalc"</code> objects.
-   With the <code><a href="aggregate.escalc.html">aggregate</a></code> function, one can aggregate multiple effect sizes or outcomes belonging to the same study (or some other clustering variable) into a single combined effect size or outcome.</p>
+
+
+</dl><p>If <code>append=TRUE</code> and a data frame was specified via the <code>data</code> argument, then <code>yi</code> and <code>vi</code> are appended to this data frame. Note that the <code>var.names</code> argument actually specifies the names of these two variables (<code>yi</code> and <code>vi</code> are the defaults).</p>
+
+
+<p>If the data frame already contains two variables with names as specified by the <code>var.names</code> argument, the values for these two variables will be overwritten when <code>replace=TRUE</code> (which is the default). By setting <code>replace=FALSE</code>, only values that are <code>NA</code> will be replaced.</p>
+
+
+<p>The <code>subset</code> argument can be used to select the studies that will be included in the data frame returned by the function. On the other hand, the <code>include</code> argument simply selects for which studies the measure will be computed (if it shouldn't be computed for all of them).</p>
+
+
+<p>The object is formatted and printed with the <code><a href="print.escalc.html">print</a></code> function. The <code><a href="print.escalc.html">summary</a></code> function can be used to obtain confidence intervals for the individual outcomes. See <code><a href="methods.escalc.html">methods.escalc</a></code> for some additional method functions for <code>"escalc"</code> objects.</p>
+
+
+<p>With the <code><a href="aggregate.escalc.html">aggregate</a></code> function, one can aggregate multiple effect sizes or outcomes belonging to the same study (or some other clustering variable) into a single combined effect size or outcome.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -677,7 +729,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

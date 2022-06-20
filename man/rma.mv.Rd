@@ -6,10 +6,10 @@
 }
 \usage{
 rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
-       data, slab, subset, method="REML", test="z", dfs="residual",
-       level=95, digits, btt, R, Rscale="cor",
-       sigma2, tau2, rho, gamma2, phi,
-       cvvc=FALSE, sparse=FALSE, verbose=FALSE, control, \dots)
+       data, slab, subset, method="REML",
+       test="z", dfs="residual", level=95, btt,
+       R, Rscale="cor", sigma2, tau2, rho, gamma2, phi,
+       cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, \dots)
 }
 \arguments{
    \item{yi}{vector of length \mjseqn{k} with the observed effect sizes or outcomes. See \sQuote{Details}.}
@@ -26,7 +26,6 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    \item{test}{character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (\code{test="z"}), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When \code{test="t"}, a t-distribution is used instead. See \sQuote{Details} and also \link[=misc-recs]{here}.}
    \item{dfs}{character string to specify how the (denominator) degrees of freedom should be calculated when \code{test="t"}. Either \code{dfs="residual"} or \code{dfs="contain"}. Can also be a numeric vector with the degrees of freedom for each model coefficient. See \sQuote{Details}.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
-   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. See also \link[=misc-options]{here} for further details on how to control the number of digits in the output.}
    \item{btt}{optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to \code{\link{grep}} for. See \sQuote{Details}.}
    \item{R}{an optional named list of known correlation matrices corresponding to (some of) the components specified via the \code{random} argument. See \sQuote{Details}.}
    \item{Rscale}{character string, integer, or logical to specify how matrices specified via the \code{R} argument should be scaled. See \sQuote{Details}.}
@@ -38,6 +37,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    \item{cvvc}{logical to specify whether to calculate the variance-covariance matrix of the variance/correlation component estimates (can also be set to \code{"varcov"} or \code{"varcor"}). See \sQuote{Details}.}
    \item{sparse}{logical to specify whether the function should use sparse matrix objects to the extent possible (can speed up model fitting substantially for certain models). See \sQuote{Note}.}
    \item{verbose}{logical to specify whether output should be generated on the progress of the model fitting (the default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
+   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. See also \link[=misc-options]{here} for further details on how to control the number of digits in the output.}
    \item{control}{optional list of control values for the estimation algorithms. If unspecified, default values are defined inside the function. See \sQuote{Note}.}
    \item{\dots}{additional arguments.}
 }
@@ -95,8 +95,8 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
       Gaussian           \tab \ics \tab \code{"SPGAU"} \tab \ics \tab \mjeqn{\exp(-d^2/\rho^2)}{exp(-d^2/rho^2)} \cr
       linear             \tab \ics \tab \code{"SPLIN"} \tab \ics \tab \mjeqn{(1 - d/\rho) I(d < \rho)}{(1 - d/rho) I(d < rho)} \cr
       rational quadratic \tab \ics \tab \code{"SPRAT"} \tab \ics \tab \mjeqn{1 - (d/\rho)^2 / (1 + (d/\rho)^2)}{1 - (d/rho)^2 / (1 + (d/rho)^2)} \cr
-      spherical          \tab \ics \tab \code{"SPSPH"} \tab \ics \tab \mjeqn{(1 - 1.5(d/\rho) + 0.5(d/\rho)^3) I(d < \rho)}{(1 - 1.5(d/rho) + 0.5(d/rho)^3) I(d < rho)}
-      } Note that \mjseqn{I(d < \rho)} is equal to \mjseqn{1} if \mjseqn{d < \rho} and \mjseqn{0} otherwise. The parameterization of the various structures is based on Pinheiro and Bates (2000). Instead of Euclidean distances, one can also use other distance measures by setting (the undocumented) argument \code{dist} to either \code{"maximum"} for the maximum distance between two points (supremum norm), to \code{"manhattan"} for the absolute distance between the coordinate vectors (L1 norm), or to \code{"gcd"} for the great-circle distance (WGS84 ellipsoid method). In the latter case, only two variables, namely the longitude and latitude (in decimal degrees, with minus signs for West and South), must be specified.
+      spherical          \tab \ics \tab \code{"SPSPH"} \tab \ics \tab \mjeqn{(1 - 1.5(d/\rho) + 0.5(d/\rho)^3) I(d < \rho)}{(1 - 1.5(d/rho) + 0.5(d/rho)^3) I(d < rho)}}
+      Note that \mjseqn{I(d < \rho)} is equal to \mjseqn{1} if \mjseqn{d < \rho} and \mjseqn{0} otherwise. The parameterization of the various structures is based on Pinheiro and Bates (2000). Instead of Euclidean distances, one can also use other distance measures by setting (the undocumented) argument \code{dist} to either \code{"maximum"} for the maximum distance between two points (supremum norm), to \code{"manhattan"} for the absolute distance between the coordinate vectors (L1 norm), or to \code{"gcd"} for the great-circle distance (WGS84 ellipsoid method). In the latter case, only two variables, namely the longitude and latitude (in decimal degrees, with minus signs for West and South), must be specified.
 
       If a distance matrix has already been computed, one can also pass this matrix as a list element to the \code{dist} argument. In this case, one should use a formula of the form \code{random = ~ id | outer}, where \code{id} are location identifiers, with corresponding row/column names in the distance matrix specified via the \code{dist} argument.
 

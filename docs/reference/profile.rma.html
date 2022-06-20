@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -134,54 +134,79 @@
     <h2>Arguments</h2>
     <dl><dt>fitted</dt>
 <dd><p>an object of class <code>"rma.uni"</code>, <code>"rma.mv"</code>, <code>"rma.uni.selmodel"</code>, or <code>"rma.ls"</code>.</p></dd>
-<dt>x</dt>
+
+   <dt>x</dt>
 <dd><p>an object of class <code>"profile.rma"</code> (for <code>plot</code> and <code>print</code>).</p></dd>
-<dt>sigma2</dt>
+
+   <dt>sigma2</dt>
 <dd><p>optional integer to specify for which <em></em>\(\sigma^2\) value the likelihood should be profiled.</p></dd>
-<dt>tau2</dt>
+
+   <dt>tau2</dt>
 <dd><p>optional integer to specify for which <em></em>\(\tau^2\) value the likelihood should be profiled.</p></dd>
-<dt>rho</dt>
+
+   <dt>rho</dt>
 <dd><p>optional integer to specify for which <em></em>\(\rho\) value the likelihood should be profiled.</p></dd>
-<dt>gamma2</dt>
+
+   <dt>gamma2</dt>
 <dd><p>optional integer to specify for which <em></em>\(\gamma^2\) value the likelihood should be profiled.</p></dd>
-<dt>phi</dt>
+
+   <dt>phi</dt>
 <dd><p>optional integer to specify for which <em></em>\(\phi\) value the likelihood should be profiled.</p></dd>
-<dt>delta</dt>
+
+   <dt>delta</dt>
 <dd><p>optional integer to specify for which <em></em>\(\delta\) value the likelihood should be profiled.</p></dd>
-<dt>alpha</dt>
+
+   <dt>alpha</dt>
 <dd><p>optional integer to specify for which <em></em>\(\alpha\) value the likelihood should be profiled.</p></dd>
-<dt>xlim</dt>
+
+   <dt>xlim</dt>
 <dd><p>optional vector to specify the lower and upper limit of the parameter over which the profiling should be done. If unspecified, the function tries to set these limits automatically.</p></dd>
-<dt>ylim</dt>
+
+   <dt>ylim</dt>
 <dd><p>optional vector to specify the y-axis limits when plotting the profiled likelihood. If unspecified, the function tries to set these limits automatically.</p></dd>
-<dt>steps</dt>
+
+   <dt>steps</dt>
 <dd><p>number of points between <code>xlim[1]</code> and <code>xlim[2]</code> (inclusive) for which the likelihood should be evaluated (the default is 20).</p></dd>
-<dt>lltol</dt>
+
+   <dt>lltol</dt>
 <dd><p>numerical tolerance used when comparing values of the profiled log-likelihood with the log-likelihood of the fitted model (the default is 1e-03).</p></dd>
-<dt>progbar</dt>
+
+   <dt>progbar</dt>
 <dd><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>).</p></dd>
-<dt>parallel</dt>
+
+   <dt>parallel</dt>
 <dd><p>character string to specify whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See ‘Details’.</p></dd>
-<dt>ncpus</dt>
+
+   <dt>ncpus</dt>
 <dd><p>integer to specify the number of processes to use in the parallel processing.</p></dd>
-<dt>cl</dt>
+
+   <dt>cl</dt>
 <dd><p>optional cluster to use if <code>parallel="snow"</code>. If unspecified, a cluster on the local machine is created for the duration of the call.</p></dd>
-<dt>plot</dt>
+
+   <dt>plot</dt>
 <dd><p>logical to specify whether the profile plot should be drawn after profiling is finished (the default is <code>TRUE</code>).</p></dd>
-<dt>pch</dt>
+
+   <dt>pch</dt>
 <dd><p>plotting symbol to use. By default, a filled circle is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
-<dt>refline</dt>
+
+   <dt>refline</dt>
 <dd><p>logical to specify whether the value of the parameter estimate should be indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line (the default is <code>TRUE</code>).</p></dd>
-<dt>cline</dt>
+
+   <dt>cline</dt>
 <dd><p>logical to specify whether a horizontal reference line should be added to the plot that indicates the log-likelihood value corresponding to the 95% profile confidence interval (the default is <code>FALSE</code>).</p></dd>
-<dt>xlab</dt>
+
+   <dt>xlab</dt>
 <dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-<dt>ylab</dt>
+
+   <dt>ylab</dt>
 <dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-<dt>main</dt>
+
+   <dt>main</dt>
 <dd><p>title for the plot. If unspecified, the function tries to set an appropriate title.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -221,33 +246,50 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>"profile.rma"</code>. The object is a list (or list of such lists) containing the following components:
-   One of the following (depending on the parameter that was actually profiled):</p>
+    
+
+<p>An object of class <code>"profile.rma"</code>. The object is a list (or list of such lists) containing the following components:</p>
+
+
+<p>One of the following (depending on the parameter that was actually profiled):</p>
 <dl><dt>sigma2</dt>
 <dd><p>values of <em></em>\(\sigma^2\) over which the likelihood was profiled.</p></dd>
-<dt>tau2</dt>
+
+   <dt>tau2</dt>
 <dd><p>values of <em></em>\(\tau^2\) over which the likelihood was profiled.</p></dd>
-<dt>rho</dt>
+
+   <dt>rho</dt>
 <dd><p>values of <em></em>\(\rho\) over which the likelihood was profiled.</p></dd>
-<dt>gamma2</dt>
+
+   <dt>gamma2</dt>
 <dd><p>values of <em></em>\(\gamma^2\) over which the likelihood was profiled.</p></dd>
-<dt>phi</dt>
+
+   <dt>phi</dt>
 <dd><p>values of <em></em>\(\phi\) over which the likelihood was profiled.</p></dd>
-<dt>delta</dt>
+
+   <dt>delta</dt>
 <dd><p>values of <em></em>\(\delta\) over which the likelihood was profiled.</p></dd>
-<dt>alpha</dt>
+
+   <dt>alpha</dt>
 <dd><p>values of <em></em>\(\alpha\) over which the likelihood was profiled.</p></dd>
+
+
 </dl><p>In addition, the following components are included:</p>
 <dl><dt>ll</dt>
 <dd><p>(restricted) log-likelihood values at the corresponding parameter values.</p></dd>
-<dt>beta</dt>
+
+   <dt>beta</dt>
 <dd><p>a matrix with the estimated model coefficients at the corresponding parameter values.</p></dd>
-<dt>ci.lb</dt>
+
+   <dt>ci.lb</dt>
 <dd><p>a matrix with the lower confidence interval bounds of the model coefficients at the corresponding parameter values.</p></dd>
-<dt>ci.ub</dt>
+
+   <dt>ci.ub</dt>
 <dd><p>a matrix with the upper confidence interval bounds of the model coefficients at the corresponding parameter values.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
+
 </dl><p>Note that the list is returned invisibly.</p>
     </div>
     <div id="author">
@@ -354,7 +396,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

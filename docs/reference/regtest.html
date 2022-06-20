@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -109,26 +109,37 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>a vector with the observed effect sizes or outcomes or an object of class <code>"rma"</code>.</p></dd>
-<dt>vi</dt>
+
+   <dt>vi</dt>
 <dd><p>vector with the corresponding sampling variances (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
-<dt>sei</dt>
+
+   <dt>sei</dt>
 <dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
-<dt>ni</dt>
+
+   <dt>ni</dt>
 <dd><p>optional vector with the corresponding sample sizes (only relevant when using the sample sizes (or a transformation thereof) as predictor).</p></dd>
-<dt>subset</dt>
+
+   <dt>subset</dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the test (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
-<dt>data</dt>
+
+   <dt>data</dt>
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
-<dt>model</dt>
+
+   <dt>model</dt>
 <dd><p>either <code>"rma"</code> or <code>"lm"</code> to indicate the type of model to use for the regression test. See ‘Details’.</p></dd>
-<dt>predictor</dt>
+
+   <dt>predictor</dt>
 <dd><p>either <code>"sei"</code> <code>"vi"</code>, <code>"ni"</code>, <code>"ninv"</code>, <code>"sqrtni"</code>, or <code>"sqrtninv"</code> to indicate the predictor to use for the regression test. See ‘Details’.</p></dd>
-<dt>ret.fit</dt>
+
+   <dt>ret.fit</dt>
 <dd><p>logical to specify whether the full results from the fitted model should also be returned.</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -148,25 +159,37 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>"regtest"</code>. The object is a list containing the following components:</p>
+    
+
+<p>An object of class <code>"regtest"</code>. The object is a list containing the following components:</p>
 <dl><dt>model</dt>
 <dd><p>the model used for the regression test.</p></dd>
-<dt>predictor</dt>
+
+   <dt>predictor</dt>
 <dd><p>the predictor used for the regression test.</p></dd>
-<dt>zval</dt>
+
+   <dt>zval</dt>
 <dd><p>the value of the test statistic.</p></dd>
-<dt>pval</dt>
+
+   <dt>pval</dt>
 <dd><p>the corresponding p-value</p></dd>
-<dt>dfs</dt>
+
+   <dt>dfs</dt>
 <dd><p>the degrees of freedom of the test statistic (if the test is based on a t-distribution).</p></dd>
-<dt>fit</dt>
+
+   <dt>fit</dt>
 <dd><p>the full results from the fitted model.</p></dd>
-<dt>est</dt>
+
+   <dt>est</dt>
 <dd><p>the limit estimate (only for predictors <code>"sei"</code> <code>"vi"</code>, <code>"ninv"</code>, or <code>"sqrtninv"</code> and when the model does not contain any additional moderators; <code>NULL</code> otherwise).</p></dd>
-<dt>ci.lb</dt>
+
+   <dt>ci.lb</dt>
 <dd><p>lower bound of the confidence interval for the limit estimate.</p></dd>
-<dt>ci.ub</dt>
+
+   <dt>ci.ub</dt>
 <dd><p>upper bound of the confidence intervals for the limit estimate.</p></dd>
+
+
 </dl><p>The results are formatted and printed with the <code><a href="print.regtest.rma.html">print</a></code> function.</p>
     </div>
     <div id="note">
@@ -423,7 +446,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

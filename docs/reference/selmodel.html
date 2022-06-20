@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -112,24 +112,34 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
-<dt>type</dt>
+
+   <dt>type</dt>
 <dd><p>character string to specify the type of selection model. Possible options are <code>"beta"</code>, <code>"halfnorm"</code>, <code>"negexp"</code>, <code>"logistic"</code>, <code>"power"</code>, <code>"negexppow"</code>, or <code>"stepfun"</code>. Can be abbreviated. See ‘Details’.</p></dd>
-<dt>alternative</dt>
+
+   <dt>alternative</dt>
 <dd><p>character string to specify the sidedness of the hypothesis when testing the observed outcomes. Possible options are <code>"greater"</code> (the default), <code>"less"</code>, or <code>"two.sided"</code>. Can be abbreviated.</p></dd>
-<dt>prec</dt>
+
+   <dt>prec</dt>
 <dd><p>optional character string to specify the measure of precision (only relevant for selection models that can incorporate this into the selection function). Possible options are <code>"sei"</code>, <code>"vi"</code>, <code>"ninv"</code>, or <code>"sqrtninv"</code>. See ‘Details’.</p></dd>
-<dt>delta</dt>
+
+   <dt>delta</dt>
 <dd><p>optional numeric vector (of the same length as the number of selection model parameters) to fix the corresponding <em></em>\(\delta\) value(s). A specific <em></em>\(\delta\) value can be fixed by setting the corresponding element of this argument to the desired value. A specific <em></em>\(\delta\) value will be estimated if the corresponding element is set equal to <code>NA</code>. See ‘Details’.</p></dd>
-<dt>steps</dt>
+
+   <dt>steps</dt>
 <dd><p>numeric vector of one or more values between 0 and 1 that can or must be specified for certain selection functions. See ‘Details’.</p></dd>
-<dt>verbose</dt>
+
+   <dt>verbose</dt>
 <dd><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>). Can also be an integer. Values &gt; 1 generate more verbose output. See ‘Note’.</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-<dt>control</dt>
+
+   <dt>control</dt>
 <dd><p>optional list of control values for the estimation algorithm. If unspecified, default values are defined inside the function. See ‘Note’.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -205,50 +215,74 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>c("rma.uni","rma")</code>. The object is a list containing the same components as a regular <code>c("rma.uni","rma")</code> object, but the parameter estimates are based on the selection model. Most importantly, the following elements are modified based on the selection model:</p>
+    
+
+<p>An object of class <code>c("rma.uni","rma")</code>. The object is a list containing the same components as a regular <code>c("rma.uni","rma")</code> object, but the parameter estimates are based on the selection model. Most importantly, the following elements are modified based on the selection model:</p>
 <dl><dt>beta</dt>
 <dd><p>estimated coefficients of the model.</p></dd>
-<dt>se</dt>
+
+   <dt>se</dt>
 <dd><p>standard errors of the coefficients.</p></dd>
-<dt>zval</dt>
+
+   <dt>zval</dt>
 <dd><p>test statistics of the coefficients.</p></dd>
-<dt>pval</dt>
+
+   <dt>pval</dt>
 <dd><p>corresponding p-values.</p></dd>
-<dt>ci.lb</dt>
+
+   <dt>ci.lb</dt>
 <dd><p>lower bound of the confidence intervals for the coefficients.</p></dd>
-<dt>ci.ub</dt>
+
+   <dt>ci.ub</dt>
 <dd><p>upper bound of the confidence intervals for the coefficients.</p></dd>
-<dt>vb</dt>
+
+   <dt>vb</dt>
 <dd><p>variance-covariance matrix of the estimated coefficients.</p></dd>
-<dt>tau2</dt>
+
+   <dt>tau2</dt>
 <dd><p>estimated amount of (residual) heterogeneity. Always <code>0</code> when <code>method="EE"</code>.</p></dd>
-<dt>se.tau2</dt>
+
+   <dt>se.tau2</dt>
 <dd><p>standard error of the estimated amount of (residual) heterogeneity.</p></dd>
+
+
 </dl><p>In addition, the object contains the following additional elements:</p>
 <dl><dt>delta</dt>
 <dd><p>estimated selection model parameter(s).</p></dd>
-<dt>se.delta</dt>
+
+   <dt>se.delta</dt>
 <dd><p>corresponding standard error(s).</p></dd>
-<dt>zval.delta</dt>
+
+   <dt>zval.delta</dt>
 <dd><p>corresponding test statistic(s).</p></dd>
-<dt>pval.delta</dt>
+
+   <dt>pval.delta</dt>
 <dd><p>corresponding p-value(s).</p></dd>
-<dt>ci.lb.delta</dt>
+
+   <dt>ci.lb.delta</dt>
 <dd><p>lower bound of the confidence intervals for the parameter(s).</p></dd>
-<dt>ci.ub.delta</dt>
+
+   <dt>ci.ub.delta</dt>
 <dd><p>upper bound of the confidence intervals for the parameter(s).</p></dd>
-<dt>LRT</dt>
+
+   <dt>LRT</dt>
 <dd><p>test statistic of the likelihood ratio test for the selection model parameter(s).</p></dd>
-<dt>LRTdf</dt>
+
+   <dt>LRTdf</dt>
 <dd><p>degrees of freedom for the likelihood ratio test.</p></dd>
-<dt>LRTp</dt>
+
+   <dt>LRTp</dt>
 <dd><p>p-value for the likelihood ratio test.</p></dd>
-<dt>LRT.tau2</dt>
+
+   <dt>LRT.tau2</dt>
 <dd><p>test statistic of the likelihood ratio test for testing <em></em>\(\mbox{H}_0{:}\; \tau^2 = 0\) (<code>NA</code> when fitting an equal-effects model).</p></dd>
-<dt>LRTp.tau2</dt>
+
+   <dt>LRTp.tau2</dt>
 <dd><p>p-value for the likelihood ratio test.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
+
 </dl></div>
     <div id="methods">
     <h2>Methods</h2>
@@ -917,7 +951,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

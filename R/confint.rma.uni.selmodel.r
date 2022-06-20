@@ -145,7 +145,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
          tau2 <- 1
 
       if (!missing(delta) && is.logical(delta))
-         stop(mstyle$stop("Must specify the number for the 'delta' component."))
+         stop(mstyle$stop("Must specify a number for the 'delta' component."))
 
       ### check if user specified a component that does not exist
 

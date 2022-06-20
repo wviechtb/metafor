@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -112,26 +112,37 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
-<dt>dir</dt>
+
+   <dt>dir</dt>
 <dd><p>optional character string to specify the directory for creating the report. If unspecified, <code><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></code> will be used.</p></dd>
-<dt>filename</dt>
+
+   <dt>filename</dt>
 <dd><p>optional character string to specify the filename (without file extension) for the report. If unspecified, the function sets a filename automatically.</p></dd>
-<dt>format</dt>
+
+   <dt>format</dt>
 <dd><p>output format for the report (either <code>html_document</code>, <code>pdf_document</code>, or <code>word_document</code>). Can be abbreviated. See ‘Note’.</p></dd>
-<dt>open</dt>
+
+   <dt>open</dt>
 <dd><p>logical to specify whether the report should be opened after it has been generated (the default is <code>TRUE</code>). See ‘Note’.</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-<dt>forest</dt>
+
+   <dt>forest</dt>
 <dd><p>either a logical which will suppress the drawing of the forest plot when set to <code>FALSE</code> or a character string with arguments to be added to the call to <code><a href="forest.rma.html">forest</a></code> for generating the forest plot.</p></dd>
-<dt>funnel</dt>
+
+   <dt>funnel</dt>
 <dd><p>either a logical which will suppress the drawing of the funnel plot when set to <code>FALSE</code> or a character string with arguments to be added to the call to <code><a href="funnel.html">funnel</a></code> for generating the funnel plot.</p></dd>
-<dt>footnotes</dt>
+
+   <dt>footnotes</dt>
 <dd><p>logical to specify whether additional explanatory footnotes should be added to the report (the default is <code>FALSE</code>).</p></dd>
-<dt>verbose</dt>
+
+   <dt>verbose</dt>
 <dd><p>logical to specify whether information on the progress of the report generation should be provided (the default is <code>TRUE</code>).</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -139,7 +150,9 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>The function generates either a html, pdf, or docx file and returns (invisibly) the path to the generated document.</p>
+    
+
+<p>The function generates either a html, pdf, or docx file and returns (invisibly) the path to the generated document.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -179,12 +192,12 @@
 <span class="r-in"><span class="co">### generate report</span></span>
 <span class="r-in"><span class="fu">reporter</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Directory for generating the report is: /tmp/RtmpabRLAZ</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Directory for generating the report is: /tmp/RtmpG7vE9H</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Copying references.bib and apa.csl to report directory ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Saving model object to report_res.rdata ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Creating report_res.rmd file ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Rendering report_res.rmd file ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Generated /tmp/RtmpabRLAZ/report_res.html ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Generated /tmp/RtmpG7vE9H/report_res.html ...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Opening report ...</span>
 <span class="r-in"><span class="co"># }</span></span>
 </code></pre></div>
@@ -201,7 +214,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

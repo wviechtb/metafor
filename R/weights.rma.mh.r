@@ -16,25 +16,25 @@ weights.rma.mh <- function(object, type="diagonal", ...) {
    #########################################################################
 
    if (is.element(x$measure, c("RR","OR","RD"))) {
-      Ni <- x$ai + x$bi + x$ci + x$di
+      Ni <- with(x$outdat, ai + bi + ci + di)
    } else {
-      Ti <- x$t1i + x$t2i
+      Ti <- with(x$outdat, t1i + t2i)
    }
 
    if (x$measure == "OR")
-      wi <- (x$bi / Ni) * x$ci
+      wi <- with(x$outdat, (bi / Ni) * ci)
 
    if (x$measure == "RR")
-      wi <- (x$ci / Ni) * (x$ai+x$bi)
+      wi <- with(x$outdat, (ci / Ni) * (ai+bi))
 
    if (x$measure == "RD")
-      wi <- ((x$ai+x$bi) / Ni) * (x$ci+x$di)
+      wi <- with(x$outdat, ((ai+bi) / Ni) * (ci+di))
 
    if (x$measure == "IRR")
-      wi <- (x$x2i / Ti) * x$t1i
+      wi <- with(x$outdat, (x2i / Ti) * t1i)
 
    if (x$measure == "IRD")
-      wi <- (x$t1i / Ti) * x$t2i
+      wi <- with(x$outdat, (t1i / Ti) * t2i)
 
    #########################################################################
 

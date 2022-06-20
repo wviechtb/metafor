@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -109,40 +109,58 @@
     <h2>Arguments</h2>
     <dl><dt>vi</dt>
 <dd><p>numeric vector to specify the sampling variances of the observed effect sizes or outcomes.</p></dd>
-<dt>cluster</dt>
+
+   <dt>cluster</dt>
 <dd><p>vector to specify the clustering variable (e.g., study).</p></dd>
-<dt>subgroup</dt>
+
+   <dt>subgroup</dt>
 <dd><p>optional vector to specify different (independent) subgroups within clusters.</p></dd>
-<dt>obs</dt>
+
+   <dt>obs</dt>
 <dd><p>optional vector to distinguish different observed effect sizes or outcomes corresponding to the same construct or response/dependent variable.</p></dd>
-<dt>type</dt>
+
+   <dt>type</dt>
 <dd><p>optional vector to distinguish different types of constructs or response/dependent variables underlying the observed effect sizes or outcomes.</p></dd>
-<dt>time1</dt>
+
+   <dt>time1</dt>
 <dd><p>optional numeric vector to specify the time points when the observed effect sizes or outcomes were obtained (in the first condition if the observed effect sizes or outcomes represent contrasts between two conditions).</p></dd>
-<dt>time2</dt>
+
+   <dt>time2</dt>
 <dd><p>optional numeric vector to specify the time points when the observed effect sizes or outcomes were obtained in the second condition (only relevant when the observed effect sizes or outcomes represent contrasts between two conditions).</p></dd>
-<dt>grp1</dt>
+
+   <dt>grp1</dt>
 <dd><p>optional vector to specify the group of the first condition when the observed effect sizes or outcomes represent contrasts between two conditions.</p></dd>
-<dt>grp2</dt>
+
+   <dt>grp2</dt>
 <dd><p>optional vector to specify the group of the second condition when the observed effect sizes or outcomes represent contrasts between two conditions.</p></dd>
-<dt>w1</dt>
+
+   <dt>w1</dt>
 <dd><p>optional numeric vector to specify the size of the group (or more generally, the inverse-sampling variance weight) of the first condition when the observed effect sizes or outcomes represent contrasts between two conditions.</p></dd>
-<dt>w2</dt>
+
+   <dt>w2</dt>
 <dd><p>optional numeric vector to specify the size of the group (or more generally, the inverse-sampling variance weight) of the second condition when the observed effect sizes or outcomes represent contrasts between two conditions.</p></dd>
-<dt>data</dt>
+
+   <dt>data</dt>
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
-<dt>rho</dt>
+
+   <dt>rho</dt>
 <dd><p>argument to specify the correlation(s) of observed effect sizes or outcomes measured concurrently. See ‘Details’.</p></dd>
-<dt>phi</dt>
+
+   <dt>phi</dt>
 <dd><p>argument to specify the autocorrelation of observed effect sizes or outcomes measured at different time points. See ‘Details’.</p></dd>
-<dt>rvars</dt>
+
+   <dt>rvars</dt>
 <dd><p>optional argument for specifying the variables that correspond to the correlation matrices of the studies (if this is specified, all arguments above except for <code>cluster</code> and <code>subgroup</code> are ignored). See ‘Details’.</p></dd>
-<dt>checkpd</dt>
+
+   <dt>checkpd</dt>
 <dd><p>logical to specify whether to check that the variance-covariance matrices within clusters are positive definite (the default is <code>TRUE</code>). See ‘Note’.</p></dd>
-<dt>nearpd</dt>
+
+   <dt>nearpd</dt>
 <dd><p>logical to specify whether the <code><a href="https://rdrr.io/pkg/Matrix/man/nearPD.html" class="external-link">nearPD</a></code> function from the <a href="https://cran.r-project.org/package=Matrix" class="external-link">Matrix</a> package should be used on variance-covariance matrices that are not positive definite. See ‘Note’.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -194,7 +212,9 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <em></em>\(k \times k\) variance-covariance matrix, where <em></em>\(k\) denotes the length of the <code>vi</code> variable (i.e., the number of rows in the dataset).</p>
+    
+
+<p>A <em></em>\(k \times k\) variance-covariance matrix, where <em></em>\(k\) denotes the length of the <code>vi</code> variable (i.e., the number of rows in the dataset).</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -710,7 +730,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

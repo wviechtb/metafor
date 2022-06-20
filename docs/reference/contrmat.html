@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -108,20 +108,28 @@
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>a data frame in wide format.</p></dd>
-<dt>grp1</dt>
+
+   <dt>grp1</dt>
 <dd><p>either the name (given as a character string) or the position (given as a single number) of the first group variable in the data frame.</p></dd>
-<dt>grp2</dt>
+
+   <dt>grp2</dt>
 <dd><p>either the name (given as a character string) or the position (given as a single number) of the second group variable in the data frame.</p></dd>
-<dt>last</dt>
+
+   <dt>last</dt>
 <dd><p>optional character string to specify which group will be placed in the last column of the matrix (must be one of the groups in the group variables). If not given, the most frequently occurring second group is placed last.</p></dd>
-<dt>shorten</dt>
+
+   <dt>shorten</dt>
 <dd><p>logical to specify whether the variable names corresponding to the group names should be shortened (the default is <code>FALSE</code>).</p></dd>
-<dt>minlen</dt>
+
+   <dt>minlen</dt>
 <dd><p>integer to specify the minimum length of the shortened variable names (the default is 2).</p></dd>
-<dt>check</dt>
+
+   <dt>check</dt>
 <dd><p>logical to specify whether the variables names should be checked to ensure that they are syntactically valid variable names and if not, they are adjusted (by <code><a href="https://rdrr.io/r/base/make.names.html" class="external-link">make.names</a></code>) so that they are (the default is <code>TRUE</code>).</p></dd>
-<dt>append</dt>
+
+   <dt>append</dt>
 <dd><p>logical to specify whether the contrast matrix should be appended to the data frame specified via the <code>data</code> argument (the default is <code>TRUE</code>). If <code>append=FALSE</code>, only the contrast matrix is returned.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -132,7 +140,9 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>A matrix with as many variables as there are groups.</p>
+    
+
+<p>A matrix with as many variables as there are groups.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -457,7 +467,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

@@ -446,7 +446,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (type == "stepfun") {
 
       if (!stepsspec)
-         stop(mstyle$stop("Must specify the 'steps' argument for this type of selection model."))
+         stop(mstyle$stop("Must specify 'steps' argument for this type of selection model."))
 
       if (precspec)
          warning(mstyle$warning("Adding a precision measure to this selection model is undocumented and experimental."), call.=FALSE)

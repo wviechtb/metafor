@@ -1,4 +1,4 @@
-# metafor 3.5-8 (2022-06-03)
+# metafor 3.5-9 (2022-06-20)
 
 - optimizers `nloptr` and `constrOptim.nl` (the latter from the `alabama` package) are now available in `rma.uni()` for location-scale models when using an identity link
 

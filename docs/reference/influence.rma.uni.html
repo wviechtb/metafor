@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -119,18 +119,25 @@
     <h2>Arguments</h2>
     <dl><dt>model</dt>
 <dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
-<dt>x</dt>
+
+   <dt>x</dt>
 <dd><p>an object of class <code>"infl.rma.uni"</code> (for <code>print</code>).</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-<dt>progbar</dt>
+
+   <dt>progbar</dt>
 <dd><p>logical to specify whether a progress bar should be shown (the default is <code>FALSE</code>).</p></dd>
-<dt>infonly</dt>
+
+   <dt>infonly</dt>
 <dd><p>logical to specify whether only the influential cases should be printed (the default is <code>FALSE</code>).</p></dd>
-<dt>type</dt>
+
+   <dt>type</dt>
 <dd><p>character string to specify whether only the diagonal of the hat matrix (<code>"diagonal"</code>) or the entire hat matrix (<code>"matrix"</code>) should be returned.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -158,13 +165,19 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>"infl.rma.uni"</code>, which is a list containing the following components:</p>
+    
+
+<p>An object of class <code>"infl.rma.uni"</code>, which is a list containing the following components:</p>
 <dl><dt>inf</dt>
 <dd><p>an element of class <code>"list.rma"</code> with the externally standardized residuals, DFFITS values, Cook's distances, covariance ratios, leave-one-out <em></em>\(\tau^2\) estimates, leave-one-out (residual) heterogeneity test statistics, hat values, weights, and an indicator whether a case is influential.</p></dd>
-<dt>dfbs</dt>
+
+   <dt>dfbs</dt>
 <dd><p>an element of class <code>"list.rma"</code> with the DFBETAS values.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
+
+
 </dl><p>The results are printed with <code>print.infl.rma.uni</code> and plotted with <code><a href="plot.infl.rma.uni.html">plot.infl.rma.uni</a></code>.</p>
     </div>
     <div id="note">
@@ -284,7 +297,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -115,66 +115,97 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an object of class <code>"cumul.rma"</code> obtained with <code><a href="cumul.html">cumul</a></code>.</p></dd>
-<dt>annotate</dt>
+
+   <dt>annotate</dt>
 <dd><p>logical to specify whether annotations should be added to the plot (the default is <code>TRUE</code>).</p></dd>
-<dt>header</dt>
+
+   <dt>header</dt>
 <dd><p>logical to specify whether column headings should be added to the plot (the default is <code>FALSE</code>). Can also be a character vector to specify the left and right headings (or only the left one).</p></dd>
-<dt>xlim</dt>
+
+   <dt>xlim</dt>
 <dd><p>horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.</p></dd>
-<dt>alim</dt>
+
+   <dt>alim</dt>
 <dd><p>the x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
-<dt>olim</dt>
+
+   <dt>olim</dt>
 <dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
-<dt>ylim</dt>
+
+   <dt>ylim</dt>
 <dd><p>the y-axis limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
-<dt>at</dt>
+
+   <dt>at</dt>
 <dd><p>position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.</p></dd>
-<dt>steps</dt>
+
+   <dt>steps</dt>
 <dd><p>the number of tick marks for the x-axis (the default is 5). Ignored when the positions are specified via the <code>at</code> argument.</p></dd>
-<dt>level</dt>
+
+   <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is to take the value from the object).</p></dd>
-<dt>refline</dt>
+
+   <dt>refline</dt>
 <dd><p>numeric value to specify the location of the vertical ‘reference’ line (the default is 0). The line can be suppressed by setting this argument to <code>NA</code>.</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>integer to specify the number of decimal places to which the tick mark labels of the x-axis and the annotations should be rounded (the default is <code>2L</code>). Can also be a vector of two integers, the first to specify the number of decimal places for the annotations, the second for the x-axis labels. When specifying an integer (e.g., <code>2L</code>), trailing zeros after the decimal mark are dropped for the x-axis labels. When specifying a numeric value (e.g., <code>2</code>), trailing zeros are retained.</p></dd>
-<dt>width</dt>
+
+   <dt>width</dt>
 <dd><p>optional integer to manually adjust the width of the columns for the annotations (either a single integer or a vector of the same length as the number of annotation columns).</p></dd>
-<dt>xlab</dt>
+
+   <dt>xlab</dt>
 <dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-<dt>ilab</dt>
+
+   <dt>ilab</dt>
 <dd><p>optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.</p></dd>
-<dt>ilab.xpos</dt>
+
+   <dt>ilab.xpos</dt>
 <dd><p>numeric vector to specify the horizontal position(s) of the variable(s) given via <code>ilab</code> (must be specified if <code>ilab</code> is specified).</p></dd>
-<dt>ilab.pos</dt>
+
+   <dt>ilab.pos</dt>
 <dd><p>integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via <code>ilab</code> (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.</p></dd>
-<dt>transf</dt>
+
+   <dt>transf</dt>
 <dd><p>optional argument to specify a function to transform the estimates and confidence interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-<dt>atransf</dt>
+
+   <dt>atransf</dt>
 <dd><p>optional argument to specify a function to transform the x-axis labels and annotations (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-<dt>targs</dt>
+
+   <dt>targs</dt>
 <dd><p>optional arguments needed by the function specified via <code>transf</code> or <code>atransf</code>.</p></dd>
-<dt>rows</dt>
+
+   <dt>rows</dt>
 <dd><p>optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row). If unspecified, the function sets this value automatically.</p></dd>
-<dt>efac</dt>
+
+   <dt>efac</dt>
 <dd><p>vertical expansion factor for confidence interval limits and arrows. The default value of 1 should usually work okay. Can also be a vector of two numbers, the first for CI limits, the second for arrows.</p></dd>
-<dt>pch</dt>
+
+   <dt>pch</dt>
 <dd><p>plotting symbol to use for the estimates. By default, a filled square is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options. Can also be a vector of values.</p></dd>
-<dt>psize</dt>
+
+   <dt>psize</dt>
 <dd><p>numeric value to specify the point sizes for the estimates (the default is 1). Can also be a vector of values.</p></dd>
-<dt>col</dt>
+
+   <dt>col</dt>
 <dd><p>optional character string to specify the color to use for plotting (<code>"black"</code> is used by default if not specified). Can also be a vector.</p></dd>
-<dt>lty</dt>
+
+   <dt>lty</dt>
 <dd><p>optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to <code>"solid"</code> by default.</p></dd>
-<dt>fonts</dt>
+
+   <dt>fonts</dt>
 <dd><p>optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via <code>ilab</code>). If unspecified, the default font is used.</p></dd>
-<dt>cex</dt>
+
+   <dt>cex</dt>
 <dd><p>optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.</p></dd>
-<dt>cex.lab</dt>
+
+   <dt>cex.lab</dt>
 <dd><p>optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.</p></dd>
-<dt>cex.axis</dt>
+
+   <dt>cex.axis</dt>
 <dd><p>optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -243,7 +274,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

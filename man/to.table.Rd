@@ -44,10 +44,10 @@ to.table(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    The \code{\link{escalc}} function describes a wide variety of effect sizes or outcome measures that can be computed for a meta-analysis. The summary data used to compute those measures are typically contained in vectors, each element corresponding to a study. The \code{to.table} function takes this information and constructs an array of \mjseqn{k} tables from these data.
 
    For example, in various fields (such as the health and medical sciences), the response variable measured is often dichotomous (binary), so that the data from a study comparing two different groups can be expressed in terms of a \mjeqn{2 \times 2}{2x2} table, such as:
-   \tabular{lccc}{
-           \tab outcome 1 \tab outcome 2 \tab total      \cr
-   group 1 \tab \code{ai} \tab \code{bi} \tab \code{n1i} \cr
-   group 2 \tab \code{ci} \tab \code{di} \tab \code{n2i}
+   \tabular{lcccccc}{
+           \tab \ics \tab outcome 1 \tab \ics \tab outcome 2 \tab \ics \tab total      \cr
+   group 1 \tab \ics \tab \code{ai} \tab \ics \tab \code{bi} \tab \ics \tab \code{n1i} \cr
+   group 2 \tab \ics \tab \code{ci} \tab \ics \tab \code{di} \tab \ics \tab \code{n2i}
    } where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies (i.e., the number of people falling into a particular category) and \code{n1i} and \code{n2i} the row totals (i.e., the group sizes).
 
    The cell frequencies in \mjseqn{k} such \mjeqn{2 \times 2}{2x2} tables can be specified via the \code{ai}, \code{bi}, \code{ci}, and \code{di} arguments (or alternatively, via the \code{ai}, \code{ci}, \code{n1i}, and \code{n2i} arguments). The function then creates the corresponding \mjeqn{2 \times 2 \times k}{2*2*k} array of tables. The \code{measure} argument should then be set equal to one of the outcome measures that can be computed based on this type of data, such as \code{"RR"}, \code{"OR"}, \code{"RD"} (it is not relevant which specific measure is chosen, as long as it corresponds to the specified summary data). See the documentation of the \code{\link{escalc}} function for more details on the types of data formats available.

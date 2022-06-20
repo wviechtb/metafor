@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -105,83 +105,119 @@
          <span class="va">mods</span>, <span class="va">measure</span>, intercept<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,
          add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"only0"</span>, drop00<span class="op">=</span><span class="cn">TRUE</span>, vtype<span class="op">=</span><span class="st">"LS"</span>,
          model<span class="op">=</span><span class="st">"UM.FS"</span>, method<span class="op">=</span><span class="st">"ML"</span>, coding<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, cor<span class="op">=</span><span class="cn">FALSE</span>, test<span class="op">=</span><span class="st">"z"</span>,
-         level<span class="op">=</span><span class="fl">95</span>, <span class="va">digits</span>, <span class="va">btt</span>, nAGQ<span class="op">=</span><span class="fl">7</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+         level<span class="op">=</span><span class="fl">95</span>, <span class="va">btt</span>, nAGQ<span class="op">=</span><span class="fl">7</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>ai</dt>
 <dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>bi</dt>
+
+   <dt>bi</dt>
 <dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>ci</dt>
+
+   <dt>ci</dt>
 <dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>di</dt>
+
+   <dt>di</dt>
 <dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>n1i</dt>
+
+   <dt>n1i</dt>
 <dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>n2i</dt>
+
+   <dt>n2i</dt>
 <dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>x1i</dt>
+
+   <dt>x1i</dt>
 <dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>x2i</dt>
+
+   <dt>x2i</dt>
 <dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>t1i</dt>
+
+   <dt>t1i</dt>
 <dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>t2i</dt>
+
+   <dt>t2i</dt>
 <dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>xi</dt>
+
+   <dt>xi</dt>
 <dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>mi</dt>
+
+   <dt>mi</dt>
 <dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>ti</dt>
+
+   <dt>ti</dt>
 <dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>ni</dt>
+
+   <dt>ni</dt>
 <dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>mods</dt>
+
+   <dt>mods</dt>
 <dd><p>optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length <em></em>\(k\) specifying the values of the moderator. Multiple moderators are specified by giving a matrix with <em></em>\(k\) rows and as many columns as there are moderator variables. Alternatively, a model <code><a href="formula.rma.html">formula</a></code> can be used to specify the model. See ‘Details’.</p></dd>
-<dt>measure</dt>
+
+   <dt>measure</dt>
 <dd><p>character string to specify the outcome measure to use for the meta-analysis. Possible options are <code>"OR"</code> for the (log transformed) odds ratio, <code>"IRR"</code> for the (log transformed) incidence rate ratio, <code>"PLO"</code> for the (logit transformed) proportion, or <code>"IRLN"</code> for the (log transformed) incidence rate.</p></dd>
-<dt>intercept</dt>
+
+   <dt>intercept</dt>
 <dd><p>logical to specify whether an intercept should be added to the model (the default is <code>TRUE</code>).</p></dd>
-<dt>data</dt>
+
+   <dt>data</dt>
 <dd><p>optional data frame containing the data supplied to the function.</p></dd>
-<dt>slab</dt>
+
+   <dt>slab</dt>
 <dd><p>optional vector with labels for the <em></em>\(k\) studies.</p></dd>
-<dt>subset</dt>
+
+   <dt>subset</dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.</p></dd>
-<dt>add</dt>
+
+   <dt>add</dt>
 <dd><p>non-negative number to specify the amount to add to zero cells, counts, or frequencies when calculating the observed effect sizes or outcomes of the individual studies. See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>to</dt>
+
+   <dt>to</dt>
 <dd><p>character string to specify when the values under <code>add</code> should be added (either <code>"only0"</code>, <code>"all"</code>, <code>"if0all"</code>, or <code>"none"</code>). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>drop00</dt>
+
+   <dt>drop00</dt>
 <dd><p>logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped. See the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>vtype</dt>
+
+   <dt>vtype</dt>
 <dd><p>character string to specify the type of sampling variances to calculate when calculating the observed effect sizes or outcomes. See the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
-<dt>model</dt>
+
+   <dt>model</dt>
 <dd><p>character string to specify the general model type to use for the analysis. Either <code>"UM.FS"</code> (the default), <code>"UM.RS"</code>, <code>"CM.EL"</code>, or <code>"CM.AL"</code>. See ‘Details’.</p></dd>
-<dt>method</dt>
+
+   <dt>method</dt>
 <dd><p>character string to specify whether an equal- or a random-effects model should be fitted. An equal-effects model is fitted when using <code>method="EE"</code>. A random-effects model is fitted by setting <code>method="ML"</code> (the default). See ‘Details’.</p></dd>
-<dt>coding</dt>
+
+   <dt>coding</dt>
 <dd><p>numeric scalar to indicate how the group variable should be coded in the random effects structure for random/mixed-effects models (the default is <code>1/2</code>). See ‘Note’.</p></dd>
-<dt>cor</dt>
+
+   <dt>cor</dt>
 <dd><p>logical to indicate whether the random study effects should be allowed to be correlated with the random group effects for random/mixed-effects models when <code>model="UM.RS"</code> (the default is <code>FALSE</code>). See ‘Note’.</p></dd>
-<dt>test</dt>
+
+   <dt>test</dt>
 <dd><p>character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (<code>test="z"</code>), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When <code>test="t"</code>, a t-distribution is used instead. See ‘Details’ and also <a href="misc-recs.html">here</a>.</p></dd>
-<dt>level</dt>
+
+   <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
-<dt>digits</dt>
-<dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. See also <a href="misc-options.html">here</a> for further details on how to control the number of digits in the output.</p></dd>
-<dt>btt</dt>
+
+   <dt>btt</dt>
 <dd><p>optional vector of indices to specify which coefficients to include in the omnibus test of moderators. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for. See ‘Details’.</p></dd>
-<dt>nAGQ</dt>
+
+   <dt>nAGQ</dt>
 <dd><p>positive integer to specify the number of points per axis for evaluating the adaptive Gauss-Hermite approximation to the log-likelihood. The default is 7. Setting this to 1 corresponds to the Laplacian approximation. See ‘Note’.</p></dd>
-<dt>verbose</dt>
+
+   <dt>verbose</dt>
 <dd><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>). Can also be an integer. Values &gt; 1 generate more verbose output. See ‘Note’.</p></dd>
-<dt>control</dt>
+
+   <dt>digits</dt>
+<dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. See also <a href="misc-options.html">here</a> for further details on how to control the number of digits in the output.</p></dd>
+
+   <dt>control</dt>
 <dd><p>optional list of control values for the estimation algorithms. If unspecified, default values are defined inside the function. See ‘Note’.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>additional arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -272,55 +308,81 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>c("rma.glmm","rma")</code>. The object is a list containing the following components:</p>
+    
+
+<p>An object of class <code>c("rma.glmm","rma")</code>. The object is a list containing the following components:</p>
 <dl><dt>beta</dt>
 <dd><p>estimated coefficients of the model.</p></dd>
-<dt>se</dt>
+
+   <dt>se</dt>
 <dd><p>standard errors of the coefficients.</p></dd>
-<dt>zval</dt>
+
+   <dt>zval</dt>
 <dd><p>test statistics of the coefficients.</p></dd>
-<dt>pval</dt>
+
+   <dt>pval</dt>
 <dd><p>corresponding p-values.</p></dd>
-<dt>ci.lb</dt>
+
+   <dt>ci.lb</dt>
 <dd><p>lower bound of the confidence intervals for the coefficients.</p></dd>
-<dt>ci.ub</dt>
+
+   <dt>ci.ub</dt>
 <dd><p>upper bound of the confidence intervals for the coefficients.</p></dd>
-<dt>vb</dt>
+
+   <dt>vb</dt>
 <dd><p>variance-covariance matrix of the estimated coefficients.</p></dd>
-<dt>tau2</dt>
+
+   <dt>tau2</dt>
 <dd><p>estimated amount of (residual) heterogeneity. Always <code>0</code> when <code>method="EE"</code>.</p></dd>
-<dt>sigma2</dt>
+
+   <dt>sigma2</dt>
 <dd><p>estimated amount of study level variability (only for <code>model="UM.RS"</code>).</p></dd>
-<dt>k</dt>
+
+   <dt>k</dt>
 <dd><p>number of studies included in the analysis.</p></dd>
-<dt>p</dt>
+
+   <dt>p</dt>
 <dd><p>number of coefficients in the model (including the intercept).</p></dd>
-<dt>m</dt>
+
+   <dt>m</dt>
 <dd><p>number of coefficients included in the omnibus test of moderators.</p></dd>
-<dt>QE.Wld</dt>
+
+   <dt>QE.Wld</dt>
 <dd><p>Wald-type test statistic of the test for (residual) heterogeneity.</p></dd>
-<dt>QEp.Wld</dt>
+
+   <dt>QEp.Wld</dt>
 <dd><p>corresponding p-value.</p></dd>
-<dt>QE.LRT</dt>
+
+   <dt>QE.LRT</dt>
 <dd><p>likelihood ratio test statistic of the test for (residual) heterogeneity.</p></dd>
-<dt>QEp.LRT</dt>
+
+   <dt>QEp.LRT</dt>
 <dd><p>corresponding p-value.</p></dd>
-<dt>QM</dt>
+
+   <dt>QM</dt>
 <dd><p>test statistic of the omnibus test of moderators.</p></dd>
-<dt>QMp</dt>
+
+   <dt>QMp</dt>
 <dd><p>corresponding p-value.</p></dd>
-<dt>I2</dt>
+
+   <dt>I2</dt>
 <dd><p>value of <em></em>\(I^2\).</p></dd>
-<dt>H2</dt>
+
+   <dt>H2</dt>
 <dd><p>value of <em></em>\(H^2\).</p></dd>
-<dt>int.only</dt>
+
+   <dt>int.only</dt>
 <dd><p>logical that indicates whether the model is an intercept-only model.</p></dd>
-<dt>yi, vi, X</dt>
+
+   <dt>yi, vi, X</dt>
 <dd><p>the vector of outcomes, the corresponding sampling variances, and the model matrix.</p></dd>
-<dt>fit.stats</dt>
+
+   <dt>fit.stats</dt>
 <dd><p>a list with the log-likelihood, deviance, AIC, BIC, and AICc values.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
+
 </dl></div>
     <div id="methods">
     <h2>Methods</h2>
@@ -522,7 +584,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

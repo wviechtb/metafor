@@ -15,13 +15,13 @@ weights.rma.peto <- function(object, type="diagonal", ...) {
 
    #########################################################################
 
-   n1i <- x$ai + x$bi
-   n2i <- x$ci + x$di
-   Ni  <- x$ai + x$bi + x$ci + x$di
-   xt  <- x$ai + x$ci
-   yt  <- x$bi + x$di
+   n1i <- with(x$outdat, ai + bi)
+   n2i <- with(x$outdat, ci + di)
+   Ni  <- with(x$outdat, ai + bi + ci + di)
+   xt  <- with(x$outdat, ai + ci)
+   yt  <- with(x$outdat, bi + di)
 
-   wi  <- xt * yt * (n1i/Ni) * (n2i/Ni) / (Ni - 1)
+   wi <- xt * yt * (n1i/Ni) * (n2i/Ni) / (Ni - 1)
 
    #########################################################################
 

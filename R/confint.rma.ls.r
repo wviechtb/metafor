@@ -120,7 +120,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
       ### check if user specified a logical
 
       if (!missing(alpha) && is.logical(alpha))
-         stop(mstyle$stop("Must specify the number for the 'alpha' component."))
+         stop(mstyle$stop("Must specify a number for the 'alpha' component."))
 
       ### check if user specified a component that does not exist
 

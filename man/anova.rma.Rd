@@ -33,13 +33,17 @@
 
    For location-scale models fitted with the \code{\link{rma.uni}} function, one can use the \code{att} argument in an analogous manner to specify the indices of the scale coefficients to test.
 
-   \item When a single model is specified (via argument \code{object}), one can use the \code{X} argument to specify a linear combination of the coefficients in the model that should be tested (i.e., \mjseqn{\mbox{H}_0{:}\; X \beta = 0}) using a Wald-type test (i.e., by default whether the linear combination is significantly different from zero, but one can specify a different value under the null hypothesis via argument \code{rhs}). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested (if \code{rhs} is used, then it should either be a scalar or of the same length as the number of combinations to be tested). If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the \code{\link[=predict.rma]{predict}} function, which provides corresponding confidence intervals.
+   \item When a single model is specified (via argument \code{object}), one can use the \code{X} argument\mjseqn{^1} to specify a linear combination of the coefficients in the model that should be tested (i.e., \mjseqn{\mbox{H}_0{:}\; X \beta = 0}) using a Wald-type test (i.e., by default whether the linear combination is significantly different from zero, but one can specify a different value under the null hypothesis via argument \code{rhs}). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested (if \code{rhs} is used, then it should either be a scalar or of the same length as the number of combinations to be tested). If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the \code{\link[=predict.rma]{predict}} function, which provides corresponding confidence intervals.
 
    For location-scale models fitted with the \code{\link{rma.uni}} function, one can use the \code{Z} argument in an analogous manner to specify one or multiple linear combinations of the scale coefficients in the model that should be tested.
 
    \item When specifying two models for comparison (via arguments \code{object} and \code{object2}), the function provides a likelihood ratio test (LRT) comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the LRT to make sense. Also, LRTs are not meaningful when using REML estimation and the two models differ in terms of their fixed effects (setting \code{refit=TRUE} automatically refits the two models using ML estimation). Also, the theory underlying LRTs is only really applicable when comparing models that were fitted with ML/REML estimation, so if some other estimation was used to fit the two models, the results should be treated with caution.
 
    }
+
+   ---------
+
+   \mjseqn{^1} This argument used to be called \code{L}, but was renamed to \code{X} (using \code{L} in place of \code{X} still works).
 
 }
 \value{

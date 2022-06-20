@@ -58,14 +58,14 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
 
    order <- order(order, decreasing=decreasing)
 
-   ai.f   <- x$ai.f[order]
-   bi.f   <- x$bi.f[order]
-   ci.f   <- x$ci.f[order]
-   di.f   <- x$di.f[order]
-   x1i.f  <- x$x1i.f[order]
-   x2i.f  <- x$x2i.f[order]
-   t1i.f  <- x$t1i.f[order]
-   t2i.f  <- x$t2i.f[order]
+   ai.f   <- x$outdat.f$ai[order]
+   bi.f   <- x$outdat.f$bi[order]
+   ci.f   <- x$outdat.f$ci[order]
+   di.f   <- x$outdat.f$di[order]
+   x1i.f  <- x$outdat.f$x1i[order]
+   x2i.f  <- x$outdat.f$x2i[order]
+   t1i.f  <- x$outdat.f$t1i[order]
+   t2i.f  <- x$outdat.f$t2i[order]
    yi.f   <- x$yi.f[order]
    vi.f   <- x$vi.f[order]
    not.na <- x$not.na[order]

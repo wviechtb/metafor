@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -125,66 +125,97 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an object of class <code>"rma"</code> or a vector with the observed effect sizes or outcomes.</p></dd>
-<dt>vi</dt>
+
+   <dt>vi</dt>
 <dd><p>vector with the corresponding sampling variances (needed if <code>x</code> is a vector with the observed effect sizes or outcomes).</p></dd>
-<dt>sei</dt>
+
+   <dt>sei</dt>
 <dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
-<dt>ni</dt>
+
+   <dt>ni</dt>
 <dd><p>vector with the corresponding sample sizes. Only relevant when passing a vector via <code>x</code>.</p></dd>
-<dt>subset</dt>
+
+   <dt>subset</dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the plot. Only relevant when passing a vector via <code>x</code>.</p></dd>
-<dt>yaxis</dt>
+
+   <dt>yaxis</dt>
 <dd><p>either <code>"sei"</code>, <code>"vi"</code>, <code>"seinv"</code>, <code>"vinv"</code>, <code>"ni"</code>, <code>"ninv"</code>, <code>"sqrtni"</code>, <code>"sqrtninv"</code>, <code>"lni"</code>, or <code>"wi"</code> to indicate what values should be placed on the y-axis. See ‘Details’.</p></dd>
-<dt>xlim</dt>
+
+   <dt>xlim</dt>
 <dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
-<dt>ylim</dt>
+
+   <dt>ylim</dt>
 <dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
-<dt>xlab</dt>
+
+   <dt>xlab</dt>
 <dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-<dt>ylab</dt>
+
+   <dt>ylab</dt>
 <dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
-<dt>steps</dt>
+
+   <dt>steps</dt>
 <dd><p>the number of tick marks for the y-axis (the default is 5).</p></dd>
-<dt>at</dt>
+
+   <dt>at</dt>
 <dd><p>position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.</p></dd>
-<dt>atransf</dt>
+
+   <dt>atransf</dt>
 <dd><p>optional argument to specify a function to transform the x-axis labels (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-<dt>targs</dt>
+
+   <dt>targs</dt>
 <dd><p>optional arguments needed by the function specified via <code>atransf</code>.</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first to specify the number of decimal places for the x-axis, the second for the y-axis labels (e.g., <code>digits=c(2,3)</code>). If unspecified, the function tries to set the argument to some sensible values.</p></dd>
-<dt>level</dt>
+
+   <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the level of the pseudo confidence interval region (for <code>"rma"</code> objects, the default is to take the value from the object). May also be a vector of values to obtain multiple regions. See ‘Examples’.</p></dd>
-<dt>addtau2</dt>
+
+   <dt>addtau2</dt>
 <dd><p>logical to indicate whether the amount of heterogeneity should be accounted for when drawing the pseudo confidence interval region (the default is <code>FALSE</code>). Ignored when <code>x</code> is a meta-regression model and residuals are plotted. See ‘Details’.</p></dd>
-<dt>type</dt>
+
+   <dt>type</dt>
 <dd><p>either <code>"rstandard"</code> (default) or <code>"rstudent"</code> to specify whether the usual or deleted residuals should be used in creating the funnel plot when <code>x</code> is a meta-regression model. See ‘Details’.</p></dd>
-<dt>back</dt>
+
+   <dt>back</dt>
 <dd><p>color to use for the background of the plotting region (default is <code>"lightgray"</code>).</p></dd>
-<dt>shade</dt>
+
+   <dt>shade</dt>
 <dd><p>color to use for shading the pseudo confidence interval region (default is <code>"white"</code>). When <code>level</code> is a vector of values, different shading colors can be specified for each region.</p></dd>
-<dt>hlines</dt>
+
+   <dt>hlines</dt>
 <dd><p>color of the horizontal reference lines (default is <code>"white"</code>).</p></dd>
-<dt>refline</dt>
+
+   <dt>refline</dt>
 <dd><p>numeric value to specify the location of the vertical ‘reference’ line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the equal- or random-effects model estimate and at zero for meta-regression models (in which case the residuals are plotted) or when directly plotting observed outcomes.</p></dd>
-<dt>lty</dt>
+
+   <dt>lty</dt>
 <dd><p>line type for the pseudo confidence interval region and the reference line. The default is to draw dotted lines (see <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></code> for other options). Can also be a vector to specify the two line types separately.</p></dd>
-<dt>pch</dt>
+
+   <dt>pch</dt>
 <dd><p>plotting symbol to use for the observed outcomes. By default, a filled circle is used. Can also be a vector of values. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
-<dt>pch.fill</dt>
+
+   <dt>pch.fill</dt>
 <dd><p>plotting symbol to use for the outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the <code><a href="trimfill.html">trimfill</a></code> function.</p></dd>
-<dt>col</dt>
+
+   <dt>col</dt>
 <dd><p>optional character string to specify the color to use for the points (<code>"black"</code> is used by default if not specified). Can also be a vector.</p></dd>
-<dt>bg</dt>
+
+   <dt>bg</dt>
 <dd><p>optional character string to specify the background color for open plot symbols (<code>"white"</code> is used by default if not specified). Can also be a vector.</p></dd>
-<dt>label</dt>
+
+   <dt>label</dt>
 <dd><p>argument to control the labeling of the points (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
-<dt>offset</dt>
+
+   <dt>offset</dt>
 <dd><p>argument to control the distance between the points and the corresponding labels.</p></dd>
-<dt>legend</dt>
+
+   <dt>legend</dt>
 <dd><p>logical to indicate whether a legend should be added to the plot (the default is <code>FALSE</code>). Can also be a keyword to indicate the position of the legend (see <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code>).</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -214,13 +245,18 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame with components:</p>
+    
+
+<p>A data frame with components:</p>
 <dl><dt>x</dt>
 <dd><p>the x-axis coordinates of the points that were plotted.</p></dd>
-<dt>y</dt>
+
+   <dt>y</dt>
 <dd><p>the y-axis coordinates of the points that were plotted.</p></dd>
-<dt>slab</dt>
+
+   <dt>slab</dt>
 <dd><p>the study labels.</p></dd>
+
 </dl><p>Note that the data frame is returned invisibly.</p>
     </div>
     <div id="author">
@@ -354,7 +390,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

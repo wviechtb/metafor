@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -128,26 +128,37 @@
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>an object of class <code>"rma"</code> (for <code>residuals</code>).</p></dd>
-<dt>type</dt>
+
+   <dt>type</dt>
 <dd><p>the type of residuals which should be returned. For <code>residuals</code>, the alternatives are: <code>"response"</code> (default), <code>"rstandard"</code>, <code>"rstudent"</code>, and <code>"pearson"</code>. For <code>rstandard.rma.uni</code>, the alternatives are: <code>"marginal"</code> (default) and <code>"conditional"</code>. See ‘Details’.</p></dd>
-<dt>model</dt>
+
+   <dt>model</dt>
 <dd><p>an object of class <code>"rma"</code> (for <code>residuals</code>) or an object of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, <code>"rma.peto"</code>, or <code>"rma.mv"</code> (for <code>rstandard</code> and <code>rstudent</code>).</p></dd>
-<dt>cluster</dt>
+
+   <dt>cluster</dt>
 <dd><p>optional vector to specify a clustering variable to use for computing cluster-level multivariate standardized residuals (only for <code>"rma.mv"</code> objects).</p></dd>
-<dt>reestimate</dt>
+
+   <dt>reestimate</dt>
 <dd><p>logical to specify whether variance/correlation components should be re-estimated after deletion of the <em></em>\(i\textrm{th}\) case when computing externally standardized residuals for <code>"rma.mv"</code> objects (the default is <code>TRUE</code>).</p></dd>
-<dt>parallel</dt>
+
+   <dt>parallel</dt>
 <dd><p>character string to specify whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See ‘Details’.</p></dd>
-<dt>ncpus</dt>
+
+   <dt>ncpus</dt>
 <dd><p>integer to specify the number of processes to use in the parallel processing.</p></dd>
-<dt>cl</dt>
+
+   <dt>cl</dt>
 <dd><p>optional cluster to use if <code>parallel="snow"</code>. If unspecified, a cluster on the local machine is created for the duration of the call.</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-<dt>progbar</dt>
+
+   <dt>progbar</dt>
 <dd><p>logical to specify whether a progress bar should be shown (only for <code>rstudent</code>) (the default is <code>FALSE</code>).</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -162,18 +173,27 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>Either a vector with the residuals of the requested type (for <code>residuals</code>) or an object of class <code>"list.rma"</code>, which is a list containing the following components:</p>
+    
+
+<p>Either a vector with the residuals of the requested type (for <code>residuals</code>) or an object of class <code>"list.rma"</code>, which is a list containing the following components:</p>
 <dl><dt>resid</dt>
 <dd><p>observed residuals (for <code>rstandard</code>) or deleted residuals (for <code>rstudent</code>).</p></dd>
-<dt>se</dt>
+
+   <dt>se</dt>
 <dd><p>corresponding standard errors.</p></dd>
-<dt>z</dt>
+
+   <dt>z</dt>
 <dd><p>standardized residuals (internally standardized for <code>rstandard</code> or externally standardized for <code>rstudent</code>).</p></dd>
+
+
 </dl><p>When a clustering variable is specified for <code>"rma.mv"</code> objects, the returned object is a list with the first element (named <code>obs</code>) as described above and a second element (named <code>cluster</code> of class <code>"list.rma"</code> with:</p>
 <dl><dt>X2</dt>
 <dd><p>cluster-level multivariate standardized residuals.</p></dd>
-<dt>k</dt>
+
+   <dt>k</dt>
 <dd><p>number of observed effect sizes or outcomes within the clusters.</p></dd>
+
+
 </dl><p>The object is formatted and printed with <code><a href="print.list.rma.html">print.list.rma</a></code>.</p>
     </div>
     <div id="note">
@@ -265,7 +285,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

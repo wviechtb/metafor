@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -111,18 +111,25 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
-<dt>side</dt>
+
+   <dt>side</dt>
 <dd><p>optional character string (either <code>"left"</code> or <code>"right"</code>) to specify on which side of the funnel plot the missing studies should be imputed. If left unspecified, the side is chosen within the function depending on the results of Egger's regression test (see <code><a href="regtest.html">regtest</a></code> for details on this test).</p></dd>
-<dt>estimator</dt>
+
+   <dt>estimator</dt>
 <dd><p>character string (either <code>"L0"</code>, <code>"R0"</code>, or <code>"Q0"</code>) to specify the estimator to use for estimating the number of missing studies (the default is <code>"L0"</code>).</p></dd>
-<dt>maxiter</dt>
+
+   <dt>maxiter</dt>
 <dd><p>integer to specify the maximum number of iterations to use for the trim and fill method (the default is <code>100</code>).</p></dd>
-<dt>verbose</dt>
+
+   <dt>verbose</dt>
 <dd><p>logical to specify whether output should be generated on the progress of the iterative algorithm used as part of the trim and fill method (the default is <code>FALSE</code>).</p></dd>
-<dt>ilim</dt>
+
+   <dt>ilim</dt>
 <dd><p>limits for the imputed values. If unspecified, no limits are used.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -130,21 +137,31 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>c("rma.uni.trimfill","rma.uni","rma")</code>. The object is a list containing the same components as objects created by <code><a href="rma.uni.html">rma.uni</a></code>, except that the data are augmented by the trim and fill method. The following components are also added:</p>
+    
+
+<p>An object of class <code>c("rma.uni.trimfill","rma.uni","rma")</code>. The object is a list containing the same components as objects created by <code><a href="rma.uni.html">rma.uni</a></code>, except that the data are augmented by the trim and fill method. The following components are also added:</p>
 <dl><dt>k0</dt>
 <dd><p>estimated number of missing studies.</p></dd>
-<dt>side</dt>
+
+   <dt>side</dt>
 <dd><p>either <code>"left"</code> or <code>"right"</code>, indicating on which side of the funnel plot the missing studies (if any) were imputed.</p></dd>
-<dt>se.k0</dt>
+
+   <dt>se.k0</dt>
 <dd><p>standard error of k0.</p></dd>
-<dt>p.k0</dt>
+
+   <dt>p.k0</dt>
 <dd><p>p-value for the test of <em></em>\(\mbox{H}_0\): no missing studies on the chosen side (only when <code>estimator="R0"</code>; <code>NA</code> otherwise).</p></dd>
-<dt>yi</dt>
+
+   <dt>yi</dt>
 <dd><p>the observed effect sizes or outcomes plus the augmented values (if there are any).</p></dd>
-<dt>vi</dt>
+
+   <dt>vi</dt>
 <dd><p>the corresponding sampling variances</p></dd>
-<dt>fill</dt>
+
+   <dt>fill</dt>
 <dd><p>a logical vector indicating which of the values in <code>yi</code> are the observed (<code>FALSE</code>) and the augmented (<code>TRUE</code>) data.</p></dd>
+
+
 </dl><p>The results of the fitted model after the data augmentation are printed with the <code><a href="print.rma.html">print</a></code> function. Calling <code><a href="funnel.html">funnel</a></code> on the object provides a funnel plot of the observed and augmented data.</p>
     </div>
     <div id="note">
@@ -312,7 +329,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -109,28 +109,40 @@
     <h2>Arguments</h2>
     <dl><dt>y</dt>
 <dd><p>index (or name given as a character string) of the outcome variable.</p></dd>
-<dt>x</dt>
+
+   <dt>x</dt>
 <dd><p>indices (or names given as a character vector) of the predictor variables.</p></dd>
-<dt>R</dt>
+
+   <dt>R</dt>
 <dd><p>correlation or covariance matrix (or only the lower triangular part including the diagonal).</p></dd>
-<dt>n</dt>
+
+   <dt>n</dt>
 <dd><p>sample size based on which the elements in the correlation/covariance matrix were computed.</p></dd>
-<dt>V</dt>
+
+   <dt>V</dt>
 <dd><p>variance-covariance matrix of the lower triangular elements of the correlation/covariance matrix. Either <code>V</code> or <code>n</code> should be specified, not both. See ‘Details’.</p></dd>
-<dt>cov</dt>
+
+   <dt>cov</dt>
 <dd><p>logical to specify whether <code>R</code> is a covariance matrix (the default is <code>FALSE</code>).</p></dd>
-<dt>means</dt>
+
+   <dt>means</dt>
 <dd><p>optional vector to specify the means of the variables (only relevant when <code>cov=TRUE</code>).</p></dd>
-<dt>ztor</dt>
+
+   <dt>ztor</dt>
 <dd><p>logical to specify whether <code>R</code> is a matrix of r-to-z transformed correlations and hence should be back-transformed to raw correlations (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
-<dt>nearpd</dt>
+
+   <dt>nearpd</dt>
 <dd><p>logical to specify whether the <code><a href="https://rdrr.io/pkg/Matrix/man/nearPD.html" class="external-link">nearPD</a></code> function from the <a href="https://cran.r-project.org/package=Matrix" class="external-link">Matrix</a> package should be used when the <em></em>\(R_{x,x}\) matrix cannot be inverted. See ‘Note’.</p></dd>
-<dt>level</dt>
+
+   <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -142,13 +154,19 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>"matreg"</code>. The object is a list containing the following components:</p>
+    
+
+<p>An object of class <code>"matreg"</code>. The object is a list containing the following components:</p>
 <dl><dt>tab</dt>
 <dd><p>a data frame with the estimated model coefficients, standard errors, test statistics, degrees of freedom (only for t-tests), p-values, and lower/upper confidence interval bounds.</p></dd>
-<dt>vb</dt>
+
+   <dt>vb</dt>
 <dd><p>the variance-covariance matrix of the estimated model coefficients.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
+
+
 </dl><p>The results are formatted and printed with the <code><a href="print.matreg.html">print</a></code> function.</p>
     </div>
     <div id="note">
@@ -405,7 +423,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

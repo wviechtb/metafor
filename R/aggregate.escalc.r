@@ -55,7 +55,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
    }
 
    if (is.null(x[[vi.name]]))
-      stop(mstyle$stop("Cannot find 'vi' variable in data frame."))
+      stop(mstyle$stop(paste0("Cannot find variable '", vi.name, "' in the data frame.")))
 
    #########################################################################
 
@@ -212,7 +212,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
    }
 
    if (is.null(x[[yi.name]]))
-      stop(mstyle$stop("Cannot find 'yi' variable in data frame."))
+      stop(mstyle$stop(paste0("Cannot find variable '", yi.name, "' in the data frame.")))
 
    ### note: there may be multiple yi/vi pairs; only first will be used
 

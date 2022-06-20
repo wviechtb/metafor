@@ -73,6 +73,11 @@ navbar:
      href: https://github.com/wviechtb/metafor
 
 reference:
+  - title: "Package Introduction"
+    desc: >
+      Introduction to the package
+    contents:
+    - metafor-package
   - title: "Outcome Measures"
     desc: >
       Functions to compute various types of effect sizes and outcome measures.
@@ -115,7 +120,7 @@ reference:
       - plot.infl.rma.uni
       - plot.profile.rma
       - plot.rma.uni.selmodel
-      - starts_with("qqnorm")
+      - qqnorm.rma
   - title: "Publication Bias"
     desc: >
       Functions related to publication bias.
@@ -151,7 +156,7 @@ reference:
       - residuals.rma
       - influence.rma.uni
       - influence.rma.mv
-      - starts_with("weights")
+      - weights.rma
       - leave1out
   - title: "Print Methods"
     desc: >

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -131,42 +131,61 @@
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>an object of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, <code>"rma.peto"</code>, <code>"rma.mv"</code>, <code>"rma.uni.selmodel"</code>, or <code>"rma.ls"</code>. The method is not yet implemented for objects of class <code>"rma.glmm"</code>.</p></dd>
-<dt>parm</dt>
+
+   <dt>parm</dt>
 <dd><p>this argument is here for compatibility with the generic function <code>confint</code>, but is (currently) ignored.</p></dd>
-<dt>fixed</dt>
+
+   <dt>fixed</dt>
 <dd><p>logical to specify whether confidence intervals for the model coefficients should be returned.</p></dd>
-<dt>random</dt>
+
+   <dt>random</dt>
 <dd><p>logical to specify whether a confidence interval for the amount of (residual) heterogeneity should be returned.</p></dd>
-<dt>type</dt>
+
+   <dt>type</dt>
 <dd><p>optional character string to specify the method to use for computing the confidence interval for the amount of (residual) heterogeneity (either <code>"QP"</code>, <code>"GENQ"</code>, or <code>"PL"</code>).</p></dd>
-<dt>sigma2</dt>
+
+   <dt>sigma2</dt>
 <dd><p>integer to specify for which <em></em>\(\sigma^2\) parameter a confidence interval should be obtained.</p></dd>
-<dt>tau2</dt>
+
+   <dt>tau2</dt>
 <dd><p>integer to specify for which <em></em>\(\tau^2\) parameter a confidence interval should be obtained.</p></dd>
-<dt>rho</dt>
+
+   <dt>rho</dt>
 <dd><p>integer to specify for which <em></em>\(\rho\) parameter the confidence interval should be obtained.</p></dd>
-<dt>gamma2</dt>
+
+   <dt>gamma2</dt>
 <dd><p>integer to specify for which <em></em>\(\gamma^2\) parameter a confidence interval should be obtained.</p></dd>
-<dt>phi</dt>
+
+   <dt>phi</dt>
 <dd><p>integer to specify for which <em></em>\(\phi\) parameter a confidence interval should be obtained.</p></dd>
-<dt>delta</dt>
+
+   <dt>delta</dt>
 <dd><p>integer to specify for which <em></em>\(\delta\) parameter a confidence interval should be obtained.</p></dd>
-<dt>alpha</dt>
+
+   <dt>alpha</dt>
 <dd><p>integer to specify for which <em></em>\(\alpha\) parameter a confidence interval should be obtained.</p></dd>
-<dt>level</dt>
+
+   <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence interval level. If unspecified, the default is to take the value from the object.</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-<dt>transf</dt>
+
+   <dt>transf</dt>
 <dd><p>optional argument to specify a function to transform the model coefficients and interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
-<dt>targs</dt>
+
+   <dt>targs</dt>
 <dd><p>optional arguments needed by the function specified under <code>transf</code>.</p></dd>
-<dt>verbose</dt>
+
+   <dt>verbose</dt>
 <dd><p>logical to specify whether output should be generated on the progress of the iterative algorithms used to obtain the confidence intervals (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
-<dt>control</dt>
+
+   <dt>control</dt>
 <dd><p>list of control values for the iterative algorithms. If unspecified, default values are defined inside the function. See ‘Note’.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -182,15 +201,23 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>"confint.rma"</code>. The object is a list with either one or two elements (named <code>fixed</code> and <code>random</code>) with the following elements:</p>
+    
+
+<p>An object of class <code>"confint.rma"</code>. The object is a list with either one or two elements (named <code>fixed</code> and <code>random</code>) with the following elements:</p>
 <dl><dt>estimate</dt>
 <dd><p>estimate of the model coefficient, variance/correlation component, or selection model parameter.</p></dd>
-<dt>ci.lb</dt>
+
+   <dt>ci.lb</dt>
 <dd><p>lower bound of the confidence interval.</p></dd>
-<dt>ci.ub</dt>
+
+   <dt>ci.ub</dt>
 <dd><p>upper bound of the confidence interval.</p></dd>
-</dl><p>When obtaining confidence intervals for multiple components, the object is a list of class <code>"list.confint.rma"</code>, where each element is a <code>"confint.rma"</code> object as described above.
-   The results are formatted and printed with the <code><a href="print.confint.rma.html">print</a></code> function.</p>
+
+
+</dl><p>When obtaining confidence intervals for multiple components, the object is a list of class <code>"list.confint.rma"</code>, where each element is a <code>"confint.rma"</code> object as described above.</p>
+
+
+<p>The results are formatted and printed with the <code><a href="print.confint.rma.html">print</a></code> function.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -317,7 +344,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

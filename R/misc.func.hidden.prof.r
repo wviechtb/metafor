@@ -174,10 +174,12 @@
 
       ### for subset, fit model to subset as specified by 'val'
 
-      if (is.element(obj$measure, c("RR","OR","RD"))) {
-         args <- list(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, measure=obj$measure, add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct, level=obj$level, subset=val, outlist=outlist)
+      if (is.element(obj$measure, c("RR","OR","RD"))) { # obj$outdat.f$ai[obj$not.na] since obj$outlist$ai values may be modified
+         args <- list(ai=obj$outdat.f$ai[obj$not.na], bi=obj$outdat.f$bi[obj$not.na], ci=obj$outdat.f$ci[obj$not.na], di=obj$outdat.f$di[obj$not.na],
+                      measure=obj$measure, add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct, level=obj$level, subset=val, outlist=outlist)
       } else {
-         args <- list(x1i=obj$x1i, x2i=obj$x2i, t1i=obj$t1i, t2i=obj$t2i, measure=obj$measure, add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct, level=obj$level, subset=val, outlist=outlist)
+         args <- list(x1i=obj$outdat.f$x1i[obj$not.na], x2i=obj$outdat.f$x2i[obj$not.na], t1i=obj$outdat.f$t1i[obj$not.na], t2i=obj$outdat.f$t2i[obj$not.na],
+                      measure=obj$measure, add=obj$add, to=obj$to, drop00=obj$drop00, correct=obj$correct, level=obj$level, subset=val, outlist=outlist)
       }
       sav <- try(suppressWarnings(.do.call(rma.mh, args)), silent=TRUE)
 
@@ -196,7 +198,8 @@
 
       ### for subset, fit model to subset as specified by 'val'
 
-      args <- list(ai=obj$ai, bi=obj$bi, ci=obj$ci, di=obj$di, add=obj$add, to=obj$to, drop00=obj$drop00, level=obj$level, subset=val, outlist=outlist)
+      args <- list(ai=obj$outdat.f$ai[obj$not.na], bi=obj$outdat.f$bi[obj$not.na], ci=obj$outdat.f$ci[obj$not.na], di=obj$outdat.f$di[obj$not.na],
+                   add=obj$add, to=obj$to, drop00=obj$drop00, level=obj$level, subset=val, outlist=outlist)
       sav <- try(suppressWarnings(.do.call(rma.peto, args)), silent=TRUE)
 
    }

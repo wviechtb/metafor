@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -108,18 +108,25 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>a vector with the observed effect sizes or outcomes or an object of class <code>"rma"</code>.</p></dd>
-<dt>vi</dt>
+
+   <dt>vi</dt>
 <dd><p>vector with the corresponding sampling variances (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
-<dt>sei</dt>
+
+   <dt>sei</dt>
 <dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
-<dt>subset</dt>
+
+   <dt>subset</dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the test (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
-<dt>data</dt>
+
+   <dt>data</dt>
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -128,11 +135,16 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>"ranktest"</code>. The object is a list containing the following components:</p>
+    
+
+<p>An object of class <code>"ranktest"</code>. The object is a list containing the following components:</p>
 <dl><dt>tau</dt>
 <dd><p>the estimated value of Kendall's tau rank correlation coefficient.</p></dd>
-<dt>pval</dt>
+
+   <dt>pval</dt>
 <dd><p>the corresponding p-value for the test that the true tau value is equal to zero.</p></dd>
+
+
 </dl><p>The results are formatted and printed with the <code><a href="print.ranktest.rma.html">print</a></code> function.</p>
     </div>
     <div id="note">
@@ -191,7 +203,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -111,38 +111,55 @@
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p>an object of class <code>"escalc"</code>.</p></dd>
-<dt>cluster</dt>
+
+   <dt>cluster</dt>
 <dd><p>vector to specify the clustering variable (e.g., study).</p></dd>
-<dt>time</dt>
+
+   <dt>time</dt>
 <dd><p>optional vector to specify the time points (only relevant when <code>struct="CAR"</code>, <code>"CS+CAR"</code>, or <code>"CS*CAR"</code>).</p></dd>
-<dt>obs</dt>
+
+   <dt>obs</dt>
 <dd><p>optional vector to distinguish different observed effect sizes or outcomes measured at the same time point (only relevant when <code>struct="CS*CAR"</code>).</p></dd>
-<dt>V</dt>
+
+   <dt>V</dt>
 <dd><p>optional argument to specify the variance-covariance matrix of the sampling errors. If not specified, argument <code>struct</code> is used to specify the variance-covariance structure.</p></dd>
-<dt>struct</dt>
+
+   <dt>struct</dt>
 <dd><p>character string to specify the variance-covariance structure of the sampling errors within the same cluster (either <code>"ID"</code>, <code>"CS"</code>, <code>"CAR"</code>, <code>"CS+CAR"</code>, or <code>"CS*CAR"</code>). See ‘Details’.</p></dd>
-<dt>rho</dt>
+
+   <dt>rho</dt>
 <dd><p>value of the correlation of the sampling errors within clusters (when <code>struct="CS"</code>, <code>"CS+CAR"</code>, or <code>"CS*CAR"</code>). Can also be a vector with the value of the correlation for each cluster.</p></dd>
-<dt>phi</dt>
+
+   <dt>phi</dt>
 <dd><p>value of the autocorrelation of the sampling errors within clusters (when <code>struct="CAR"</code>, <code>"CS+CAR"</code>, or <code>"CS*CAR"</code>). Can also be a vector with the value of the autocorrelation for each cluster.</p></dd>
-<dt>weighted</dt>
+
+   <dt>weighted</dt>
 <dd><p>logical to specify whether estimates within clusters should be aggregated using inverse-variance weighting (the default is <code>TRUE</code>). If set to <code>FALSE</code>, unweighted averages are computed.</p></dd>
-<dt>checkpd</dt>
+
+   <dt>checkpd</dt>
 <dd><p>logical to specify whether to check that the variance-covariance matrices of the sampling errors within clusters are positive definite (the default is <code>TRUE</code>).</p></dd>
-<dt>fun</dt>
+
+   <dt>fun</dt>
 <dd><p>optional list with three functions for aggregating other variables besides the effect sizes or outcomes within clusters (for numeric/integer variables, for logicals, and for all other types, respectively).</p></dd>
-<dt>na.rm</dt>
+
+   <dt>na.rm</dt>
 <dd><p>logical to specify whether <code>NA</code> values should be removed before aggregating values within clusters. Can also be a vector with two logicals (the first pertaining to the effect sizes or outcomes, the second to all other variables).</p></dd>
-<dt>addk</dt>
+
+   <dt>addk</dt>
 <dd><p>logical to specify whether to add the cluster size as a new variable (called <code>ki</code>) to the dataset (the default is <code>FALSE</code>).</p></dd>
-<dt>subset</dt>
+
+   <dt>subset</dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of rows to include when aggregating the effect sizes or outcomes.</p></dd>
-<dt>select</dt>
+
+   <dt>select</dt>
 <dd><p>optional vector to specify the names of the variables to include in the aggregated dataset.</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -161,8 +178,12 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>c("escalc","data.frame")</code> that contains the (selected) variables aggregated to the cluster level.
-   The object is formatted and printed with the <code><a href="print.escalc.html">print</a></code> function.</p>
+    
+
+<p>An object of class <code>c("escalc","data.frame")</code> that contains the (selected) variables aggregated to the cluster level.</p>
+
+
+<p>The object is formatted and printed with the <code><a href="print.escalc.html">print</a></code> function.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -372,7 +393,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

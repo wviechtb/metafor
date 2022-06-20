@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -110,26 +110,37 @@
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>a data frame in long format.</p></dd>
-<dt>study</dt>
+
+   <dt>study</dt>
 <dd><p>either the name (given as a character string) or the position (given as a single number) of the study variable in the data frame.</p></dd>
-<dt>grp</dt>
+
+   <dt>grp</dt>
 <dd><p>either the name (given as a character string) or the position (given as a single number) of the group variable in the data frame.</p></dd>
-<dt>ref</dt>
+
+   <dt>ref</dt>
 <dd><p>optional character string to specify the reference group (must be one of the groups in the group variable). If not given, the most frequently occurring group is used as the reference group.</p></dd>
-<dt>grpvars</dt>
+
+   <dt>grpvars</dt>
 <dd><p>either the names (given as a character vector) or the positions (given as a numeric vector) of the group-level variables.</p></dd>
-<dt>postfix</dt>
+
+   <dt>postfix</dt>
 <dd><p>a character string of length 2 giving the affix that is placed after the names of the group-level variables for the first and second group.</p></dd>
-<dt>addid</dt>
+
+   <dt>addid</dt>
 <dd><p>logical to specify whether a row id variable should be added to the data frame (the default is <code>TRUE</code>).</p></dd>
-<dt>addcomp</dt>
+
+   <dt>addcomp</dt>
 <dd><p>logical to specify whether a comparison id variable should be added to the data frame (the default is <code>TRUE</code>).</p></dd>
-<dt>adddesign</dt>
+
+   <dt>adddesign</dt>
 <dd><p>logical to specify whether a design id variable should be added to the data frame (the default is <code>TRUE</code>).</p></dd>
-<dt>minlen</dt>
+
+   <dt>minlen</dt>
 <dd><p>integer to specify the minimum length of the shortened group names for the comparison and design id variables (the default is 2).</p></dd>
-<dt>var.names</dt>
+
+   <dt>var.names</dt>
 <dd><p>a character string with three elements to specify the name of the id, comparison, and design variables (the defaults are <code>"id"</code>, <code>"comp"</code>, and <code>"design"</code>, respectively).</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -143,7 +154,9 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame with rows contrasting groups against a reference group and an appropriate number of columns (depending on the number of group-level outcome variables).</p>
+    
+
+<p>A data frame with rows contrasting groups against a reference group and an appropriate number of columns (depending on the number of group-level outcome variables).</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -379,7 +392,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

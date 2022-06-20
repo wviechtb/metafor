@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
       </span>
     </div>
 
@@ -109,24 +109,34 @@
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>an object of class <code>"rma.uni"</code> or <code>"rma.mv"</code>.</p></dd>
-<dt>object2</dt>
+
+   <dt>object2</dt>
 <dd><p>an (optional) object of class <code>"rma.uni"</code> or <code>"rma.mv"</code>. See ‘Details’.</p></dd>
-<dt>btt</dt>
+
+   <dt>btt</dt>
 <dd><p>optional vector of indices to specify which coefficients should be included in the Wald-type test. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for. See ‘Details’.</p></dd>
-<dt>X</dt>
+
+   <dt>X</dt>
 <dd><p>optional numeric vector or matrix to specify one or more linear combinations of the coefficients in the model that should be tested. See ‘Details’.</p></dd>
-<dt>att</dt>
+
+   <dt>att</dt>
 <dd><p>optional vector of indices to specify which scale coefficients should be included in the Wald-type test. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for. See ‘Details’. Only relevant for location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code>).</p></dd>
-<dt>Z</dt>
+
+   <dt>Z</dt>
 <dd><p>optional numeric vector or matrix to specify one or more linear combinations of the scale coefficients in the model that should be tested. See ‘Details’. Only relevant for location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code>).</p></dd>
-<dt>rhs</dt>
+
+   <dt>rhs</dt>
 <dd><p>optional vector of values for the right-hand side when testing linear combinations of coefficients via <code>X</code> or <code>Z</code>. If unspecified, this defaults to a vector of zeros of the appropriate length. See ‘Details’.</p></dd>
-<dt>digits</dt>
+
+   <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-<dt>refit</dt>
+
+   <dt>refit</dt>
 <dd><p>logical to indicate whether models fitted with REML estimation and differing in their fixed effects should be refitted with ML estimation when conducting a likelihood ratio test (the default is <code>FALSE</code>).</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -135,71 +145,104 @@
 <p>In particular, for equal- or random-effects models (i.e., models without moderators), this is just the test of the single coefficient of the model (i.e., <em></em>\(\mbox{H}_0{:}\; \theta = 0\) or <em></em>\(\mbox{H}_0{:}\; \mu = 0\)). For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all coefficients in the model including the first.</p>
 <p>Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> (‘betas to test’) argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> will be used to search for all coefficient names that match the string. Using the <code>btt</code> argument, one can for example select all coefficients corresponding to a particular factor to test if the factor as a whole is significant. See ‘Examples’.</p>
 <p>For location-scale models fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function, one can use the <code>att</code> argument in an analogous manner to specify the indices of the scale coefficients to test.</p></li>
-<li><p>When a single model is specified (via argument <code>object</code>), one can use the <code>X</code> argument to specify a linear combination of the coefficients in the model that should be tested (i.e., <em></em>\(\mbox{H}_0{:}\; X \beta = 0\)) using a Wald-type test (i.e., by default whether the linear combination is significantly different from zero, but one can specify a different value under the null hypothesis via argument <code>rhs</code>). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested (if <code>rhs</code> is used, then it should either be a scalar or of the same length as the number of combinations to be tested). If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the <code><a href="predict.rma.html">predict</a></code> function, which provides corresponding confidence intervals.</p>
+<li><p>When a single model is specified (via argument <code>object</code>), one can use the <code>X</code> argument<em></em><a id="footnote1link" style="color:#375f84" href="#footnote1">\(^1\)</a> to specify a linear combination of the coefficients in the model that should be tested (i.e., <em></em>\(\mbox{H}_0{:}\; X \beta = 0\)) using a Wald-type test (i.e., by default whether the linear combination is significantly different from zero, but one can specify a different value under the null hypothesis via argument <code>rhs</code>). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested (if <code>rhs</code> is used, then it should either be a scalar or of the same length as the number of combinations to be tested). If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the <code><a href="predict.rma.html">predict</a></code> function, which provides corresponding confidence intervals.</p>
 <p>For location-scale models fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function, one can use the <code>Z</code> argument in an analogous manner to specify one or multiple linear combinations of the scale coefficients in the model that should be tested.</p></li>
 <li><p>When specifying two models for comparison (via arguments <code>object</code> and <code>object2</code>), the function provides a likelihood ratio test (LRT) comparing the two models. The two models must be based on the same set of data, must be of the same class, and should be nested for the LRT to make sense. Also, LRTs are not meaningful when using REML estimation and the two models differ in terms of their fixed effects (setting <code>refit=TRUE</code> automatically refits the two models using ML estimation). Also, the theory underlying LRTs is only really applicable when comparing models that were fitted with ML/REML estimation, so if some other estimation was used to fit the two models, the results should be treated with caution.</p></li>
-</ol></div>
+</ol><hr style="width:25%;text-align:left;margin-left:0">
+<p id="footnote1"><em></em><a style="color:#375f84" href="#footnote1link">\(^1\)</a> This argument used to be called <code>L</code>, but was renamed to <code>X</code> (using <code>L</code> in place of <code>X</code> still works).</p>
+    </div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>"anova.rma"</code>. When a single model is specified (without any further arguments or together with the <code>btt</code> or <code>att</code> argument), the object is a list containing the following components:</p>
+    
+
+<p>An object of class <code>"anova.rma"</code>. When a single model is specified (without any further arguments or together with the <code>btt</code> or <code>att</code> argument), the object is a list containing the following components:</p>
 <dl><dt>QM</dt>
 <dd><p>test statistic of the Wald-type test of the model coefficients.</p></dd>
-<dt>QMdf</dt>
+
+   <dt>QMdf</dt>
 <dd><p>corresponding degrees of freedom.</p></dd>
-<dt>QMp</dt>
+
+   <dt>QMp</dt>
 <dd><p>corresponding p-value.</p></dd>
-<dt>btt</dt>
+
+   <dt>btt</dt>
 <dd><p>indices of the coefficients tested by the Wald-type test.</p></dd>
-<dt>k</dt>
+
+   <dt>k</dt>
 <dd><p>number of outcomes included in the analysis.</p></dd>
-<dt>p</dt>
+
+   <dt>p</dt>
 <dd><p>number of coefficients in the model (including the intercept).</p></dd>
-<dt>m</dt>
+
+   <dt>m</dt>
 <dd><p>number of coefficients included in the Wald-type test.</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
+
 </dl><p>When argument <code>X</code> is used, the object is a list containing the following components:</p>
 <dl><dt>QM</dt>
 <dd><p>test statistic of the omnibus Wald-type test of all linear combinations.</p></dd>
-<dt>QMdf</dt>
+
+   <dt>QMdf</dt>
 <dd><p>corresponding degrees of freedom.</p></dd>
-<dt>QMp</dt>
+
+   <dt>QMp</dt>
 <dd><p>corresponding p-value.</p></dd>
-<dt>hyp</dt>
+
+   <dt>hyp</dt>
 <dd><p>description of the linear combinations tested.</p></dd>
-<dt>Xb</dt>
+
+   <dt>Xb</dt>
 <dd><p>values of the linear combinations.</p></dd>
-<dt>se</dt>
+
+   <dt>se</dt>
 <dd><p>standard errors of the linear combinations.</p></dd>
-<dt>zval</dt>
+
+   <dt>zval</dt>
 <dd><p>test statistics of the linear combinations.</p></dd>
-<dt>pval</dt>
+
+   <dt>pval</dt>
 <dd><p>corresponding p-values.</p></dd>
+
 </dl><p>When two models are specified, the object is a list containing the following components:</p>
 <dl><dt>fit.stats.f</dt>
 <dd><p>log-likelihood, deviance, AIC, BIC, and AICc for the full model.</p></dd>
-<dt>fit.stats.r</dt>
+
+   <dt>fit.stats.r</dt>
 <dd><p>log-likelihood, deviance, AIC, BIC, and AICc for the reduced model.</p></dd>
-<dt>parms.f</dt>
+
+   <dt>parms.f</dt>
 <dd><p>number of parameters in the full model.</p></dd>
-<dt>parms.r</dt>
+
+   <dt>parms.r</dt>
 <dd><p>number of parameters in the reduced model.</p></dd>
-<dt>LRT</dt>
+
+   <dt>LRT</dt>
 <dd><p>likelihood ratio test statistic.</p></dd>
-<dt>pval</dt>
+
+   <dt>pval</dt>
 <dd><p>corresponding p-value.</p></dd>
-<dt>QE.f</dt>
+
+   <dt>QE.f</dt>
 <dd><p>test statistic of the test for (residual) heterogeneity from the full model.</p></dd>
-<dt>QE.r</dt>
+
+   <dt>QE.r</dt>
 <dd><p>test statistic of the test for (residual) heterogeneity from the reduced model.</p></dd>
-<dt>tau2.f</dt>
+
+   <dt>tau2.f</dt>
 <dd><p>estimated <em></em>\(\tau^2\) value from the full model. <code>NA</code> for <code>"rma.mv"</code> objects.</p></dd>
-<dt>tau2.r</dt>
+
+   <dt>tau2.r</dt>
 <dd><p>estimated <em></em>\(\tau^2\) value from the reduced model. <code>NA</code> for <code>"rma.mv"</code> objects.</p></dd>
-<dt>R2</dt>
+
+   <dt>R2</dt>
 <dd><p>amount (in percent) of the heterogeneity in the reduced model that is accounted for in the full model (<code>NA</code> for <code>"rma.mv"</code> objects). This can be regarded as a pseudo <em></em>\(R^2\) statistic (Raudenbush, 2009). Note that the value may not be very accurate unless <em></em>\(k\) is large (Lopez-Lopez et al., 2014).</p></dd>
-<dt>...</dt>
+
+   <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
+
+
 </dl><p>The results are formatted and printed with the <code><a href="print.anova.rma.html">print</a></code> function.</p>
     </div>
     <div id="note">
@@ -505,7 +548,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
