@@ -45,6 +45,12 @@ test_that("anova() works correctly when using the 'btt' argument.", {
    expect_equivalent(sav$QM, 0.6007, tolerance=.tol[["test"]])
    expect_equivalent(sav$QMp, 0.5690, tolerance=.tol[["pval"]])
 
+   sav <- anova(res, btt=list(2,3:4))
+   out <- capture.output(print(sav))
+
+   expect_equivalent(sapply(sav, function(x) x$QM), c(8.2194, 0.6007), tolerance=.tol[["test"]])
+   expect_equivalent(sapply(sav, function(x) x$QMp), c(0.0186, 0.5690), tolerance=.tol[["pval"]])
+
 })
 
 test_that("anova() works correctly when using the 'X' argument.", {

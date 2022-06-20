@@ -173,14 +173,14 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          mod.pos <- grep(mod, colnames(x$X), fixed=fixed)
 
          if (length(mod.pos) != 1L)
-            stop(mstyle$stop("Could not find or uniquely identify moderator variable specified via the 'mod' argument."))
+            stop(mstyle$stop("Could not find or uniquely identify the moderator variable specified via the 'mod' argument."))
 
       } else {
 
          mod.pos <- charmatch(mod, colnames(x$X))
 
          if (is.na(mod.pos) || mod.pos == 0L)
-            stop(mstyle$stop("Could not find or uniquely identify moderator variable specified via the 'mod' argument."))
+            stop(mstyle$stop("Could not find or uniquely identify the moderator variable specified via the 'mod' argument."))
 
       }
 

@@ -12,10 +12,16 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("test", "L", "verbose"))
+   .chkdots(ddd, c("test", "L", "verbose", "fixed"))
 
    if (!is.null(ddd$L))
       X <- ddd$L
+
+   if (is.null(ddd$fixed)) {
+      fixed <- TRUE
+   } else {
+      fixed <- .isTRUE(ddd$fixed)
+   }
 
    if (!missing(att) && !inherits(object, "rma.ls"))
       stop(mstyle$stop("Can only specify 'att' for location-scale models."))
@@ -45,7 +51,13 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
             if (missing(att) || is.null(att)) {
                att <- x$att
             } else {
-               att <- .set.btt(att, x$q, x$Z.int.incl, colnames(x$Z))
+               if (is.list(att)) {
+                  sav <- lapply(att, function(attj) anova(x, att=attj, digits=digits))
+                  names(sav) <- sapply(att, .format.btt)
+                  class(sav) <- "list.anova.rma"
+                  return(sav)
+               }
+               att <- .set.btt(att, x$q, x$Z.int.incl, colnames(x$Z), fixed=fixed)
             }
 
             m <- length(att)
@@ -73,7 +85,13 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
             if (missing(btt) || is.null(btt)) {
                btt <- x$btt
             } else {
-               btt <- .set.btt(btt, x$p, x$int.incl, colnames(x$X))
+               if (is.list(btt)) {
+                  sav <- lapply(btt, function(bttj) anova(x, btt=bttj, digits=digits))
+                  names(sav) <- sapply(btt, .format.btt)
+                  class(sav) <- "list.anova.rma"
+                  return(sav)
+               }
+               btt <- .set.btt(btt, x$p, x$int.incl, colnames(x$X), fixed=fixed)
             }
 
             m <- length(btt)

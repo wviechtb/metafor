@@ -11,9 +11,9 @@
 \arguments{
    \item{object}{an object of class \code{"rma.uni"} or \code{"rma.mv"}.}
    \item{object2}{an (optional) object of class \code{"rma.uni"} or \code{"rma.mv"}. See \sQuote{Details}.}
-   \item{btt}{optional vector of indices to specify which coefficients should be included in the Wald-type test. Can also be a string to \code{\link{grep}} for. See \sQuote{Details}.}
+   \item{btt}{optional vector of indices (or list thereof) to specify which coefficients should be included in the Wald-type test. Can also be a string to \code{\link{grep}} for. See \sQuote{Details}.}
    \item{X}{optional numeric vector or matrix to specify one or more linear combinations of the coefficients in the model that should be tested. See \sQuote{Details}.}
-   \item{att}{optional vector of indices to specify which scale coefficients should be included in the Wald-type test. Can also be a string to \code{\link{grep}} for. See \sQuote{Details}. Only relevant for location-scale models (see \code{\link{rma.uni}}).}
+   \item{att}{optional vector of indices (or list thereof) to specify which scale coefficients should be included in the Wald-type test. Can also be a string to \code{\link{grep}} for. See \sQuote{Details}. Only relevant for location-scale models (see \code{\link{rma.uni}}).}
    \item{Z}{optional numeric vector or matrix to specify one or more linear combinations of the scale coefficients in the model that should be tested. See \sQuote{Details}. Only relevant for location-scale models (see \code{\link{rma.uni}}).}
    \item{rhs}{optional vector of values for the right-hand side when testing linear combinations of coefficients via \code{X} or \code{Z}. If unspecified, this defaults to a vector of zeros of the appropriate length. See \sQuote{Details}.}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
@@ -29,7 +29,7 @@
 
    In particular, for equal- or random-effects models (i.e., models without moderators), this is just the test of the single coefficient of the model (i.e., \mjseqn{\mbox{H}_0{:}\; \theta = 0} or \mjseqn{\mbox{H}_0{:}\; \mu = 0}). For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all coefficients in the model including the first.
 
-   Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} (\sQuote{betas to test}) argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string. Using the \code{btt} argument, one can for example select all coefficients corresponding to a particular factor to test if the factor as a whole is significant. See \sQuote{Examples}.
+   Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} (\sQuote{betas to test}) argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string. Using the \code{btt} argument, one can for example select all coefficients corresponding to a particular factor to test if the factor as a whole is significant. One can also specify a list of indices/strings, in which case tests of all list elements will be conducted. See \sQuote{Examples}.
 
    For location-scale models fitted with the \code{\link{rma.uni}} function, one can use the \code{att} argument in an analogous manner to specify the indices of the scale coefficients to test.
 
@@ -56,6 +56,8 @@
    \item{p}{number of coefficients in the model (including the intercept).}
    \item{m}{number of coefficients included in the Wald-type test.}
    \item{\dots}{some additional elements/values.}
+   When \code{btt} or \code{att} was a list, then the object is a list of class \code{"list.anova.rma"}, where each element is an \code{"anova.rma"} object as described above.
+
    When argument \code{X} is used, the object is a list containing the following components:
    \item{QM}{test statistic of the omnibus Wald-type test of all linear combinations.}
    \item{QMdf}{corresponding degrees of freedom.}
@@ -65,6 +67,7 @@
    \item{se}{standard errors of the linear combinations.}
    \item{zval}{test statistics of the linear combinations.}
    \item{pval}{corresponding p-values.}
+
    When two models are specified, the object is a list containing the following components:
    \item{fit.stats.f}{log-likelihood, deviance, AIC, BIC, and AICc for the full model.}
    \item{fit.stats.r}{log-likelihood, deviance, AIC, BIC, and AICc for the reduced model.}
@@ -141,6 +144,9 @@ anova(res3, btt=4:5)
 
 ### instead of specifying the coefficient numbers, grep for "alloc"
 anova(res3, btt="alloc")
+
+### specify a list for the 'btt' argument
+anova(res3, btt=list(2,3,4:5))
 
 ############################################################################
 

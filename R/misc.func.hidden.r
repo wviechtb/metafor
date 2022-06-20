@@ -2,7 +2,7 @@
 
 ### function to set default 'btt' value(s) or check specified 'btt' values
 
-.set.btt <- function(btt, p, int.incl, Xnames) {
+.set.btt <- function(btt, p, int.incl, Xnames, fixed=TRUE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -22,7 +22,7 @@
 
       if (is.character(btt)) {
 
-         btt <- grep(btt, Xnames)
+         btt <- grep(btt, Xnames, fixed=fixed)
 
          if (length(btt) == 0L)
             stop(mstyle$stop("Cannot identify coefficient(s) corresponding to the specified 'btt' string."), call.=FALSE)

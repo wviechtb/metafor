@@ -1,4 +1,6 @@
-# metafor 3.5-9 (2022-06-20)
+# metafor 3.5-10 (2022-06-20)
+
+- added possibility to specify a list for `btt` in `anova.rma()`; added `print.list.anova.rma()` to print the resulting object
 
 - optimizers `nloptr` and `constrOptim.nl` (the latter from the `alabama` package) are now available in `rma.uni()` for location-scale models when using an identity link
 

@@ -1,19 +1,25 @@
 \name{print.anova.rma}
 \alias{print.anova.rma}
-\title{Print Method for 'anova.rma' Objects}
+\alias{print.list.anova.rma}
+\title{Print Method for 'anova.rma' and 'list.anova.rma' Objects}
 \description{
    Print method for objects of class \code{"anova.rma"}. \loadmathjax
 }
 \usage{
 \method{print}{anova.rma}(x, digits=x$digits, \dots)
+\method{print}{list.anova.rma}(x, digits=x[[1]]$digits, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"anova.rma"} obtained with \code{\link[=anova.rma]{anova}}.}
+   \item{x}{an object of class \code{"anova.rma"} or \code{"list.anova.rma"} obtained with \code{\link[=anova.rma]{anova}}.}
    \item{digits}{integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
    \item{\dots}{other arguments.}
 }
 \details{
-   The output includes:
+   For a Wald-type test of one or multiple model coefficients, the output includes the test statistic (either a chi-square or F-value) and the corresponding p-value.
+
+   When testing one or multiple contrasts, the output includes the estimated value of the contrast, its standard error, test statistic (either a z- or a t-value), and the corresponding p-value.
+
+   When comparing two model objects, the output includes:
    \itemize{
    \item the number of parameters in the full and the reduced model.
    \item the AIC, BIC, AICc, and log-likelihood of the full and the reduced model.

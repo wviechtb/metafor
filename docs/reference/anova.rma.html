@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-10</span>
       </span>
     </div>
 
@@ -114,13 +114,13 @@
 <dd><p>an (optional) object of class <code>"rma.uni"</code> or <code>"rma.mv"</code>. See ‘Details’.</p></dd>
 
    <dt>btt</dt>
-<dd><p>optional vector of indices to specify which coefficients should be included in the Wald-type test. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for. See ‘Details’.</p></dd>
+<dd><p>optional vector of indices (or list thereof) to specify which coefficients should be included in the Wald-type test. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for. See ‘Details’.</p></dd>
 
    <dt>X</dt>
 <dd><p>optional numeric vector or matrix to specify one or more linear combinations of the coefficients in the model that should be tested. See ‘Details’.</p></dd>
 
    <dt>att</dt>
-<dd><p>optional vector of indices to specify which scale coefficients should be included in the Wald-type test. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for. See ‘Details’. Only relevant for location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code>).</p></dd>
+<dd><p>optional vector of indices (or list thereof) to specify which scale coefficients should be included in the Wald-type test. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for. See ‘Details’. Only relevant for location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code>).</p></dd>
 
    <dt>Z</dt>
 <dd><p>optional numeric vector or matrix to specify one or more linear combinations of the scale coefficients in the model that should be tested. See ‘Details’. Only relevant for location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code>).</p></dd>
@@ -143,7 +143,7 @@
     <p>The function can be used in three different ways:</p>
 <p></p><ol><li><p>When a single model is specified (via argument <code>object</code>), the function provides Wald-type tests of one or more model coefficients (i.e., <em></em>\(\mbox{H}_0{:}\; \beta_{j \in H_0} = 0\), where <em></em>\(\beta_{j \in H_0}\) is the set of coefficients to be tested).</p>
 <p>In particular, for equal- or random-effects models (i.e., models without moderators), this is just the test of the single coefficient of the model (i.e., <em></em>\(\mbox{H}_0{:}\; \theta = 0\) or <em></em>\(\mbox{H}_0{:}\; \mu = 0\)). For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all coefficients in the model including the first.</p>
-<p>Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> (‘betas to test’) argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> will be used to search for all coefficient names that match the string. Using the <code>btt</code> argument, one can for example select all coefficients corresponding to a particular factor to test if the factor as a whole is significant. See ‘Examples’.</p>
+<p>Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> (‘betas to test’) argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> will be used to search for all coefficient names that match the string. Using the <code>btt</code> argument, one can for example select all coefficients corresponding to a particular factor to test if the factor as a whole is significant. One can also specify a list of indices/strings, in which case tests of all list elements will be conducted. See ‘Examples’.</p>
 <p>For location-scale models fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function, one can use the <code>att</code> argument in an analogous manner to specify the indices of the scale coefficients to test.</p></li>
 <li><p>When a single model is specified (via argument <code>object</code>), one can use the <code>X</code> argument<em></em><a id="footnote1link" style="color:#375f84" href="#footnote1">\(^1\)</a> to specify a linear combination of the coefficients in the model that should be tested (i.e., <em></em>\(\mbox{H}_0{:}\; X \beta = 0\)) using a Wald-type test (i.e., by default whether the linear combination is significantly different from zero, but one can specify a different value under the null hypothesis via argument <code>rhs</code>). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested (if <code>rhs</code> is used, then it should either be a scalar or of the same length as the number of combinations to be tested). If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the <code><a href="predict.rma.html">predict</a></code> function, which provides corresponding confidence intervals.</p>
 <p>For location-scale models fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function, one can use the <code>Z</code> argument in an analogous manner to specify one or multiple linear combinations of the scale coefficients in the model that should be tested.</p></li>
@@ -180,7 +180,10 @@
    <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
 
-</dl><p>When argument <code>X</code> is used, the object is a list containing the following components:</p>
+</dl><p>When <code>btt</code> or <code>att</code> was a list, then the object is a list of class <code>"list.anova.rma"</code>, where each element is an <code>"anova.rma"</code> object as described above.</p>
+
+
+<p>When argument <code>X</code> is used, the object is a list containing the following components:</p>
 <dl><dt>QM</dt>
 <dd><p>test statistic of the omnibus Wald-type test of all linear combinations.</p></dd>
 
@@ -204,6 +207,7 @@
 
    <dt>pval</dt>
 <dd><p>corresponding p-values.</p></dd>
+
 
 </dl><p>When two models are specified, the object is a list containing the following components:</p>
 <dl><dt>fit.stats.f</dt>
@@ -375,6 +379,15 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 4:5):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 2) = 1.4674, p-val = 0.4801</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"></span>
+<span class="r-in"><span class="co">### specify a list for the 'btt' argument</span></span>
+<span class="r-in"><span class="fu">anova</span><span class="op">(</span><span class="va">res3</span>, btt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          QM df   pval </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   15.4434  1 &lt;.0001 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    0.1911  1 0.6620 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:5  1.4674  2 0.4801 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">############################################################################</span></span>
