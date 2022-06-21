@@ -62,6 +62,8 @@
 
    if (length(btt) > 1L) {
 
+      btt <- sort(btt)
+
       while (length(btt) > 0L) {
 
          x <- rle(diff(btt))

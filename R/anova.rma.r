@@ -52,7 +52,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                att <- x$att
             } else {
                if (is.list(att)) {
-                  sav <- lapply(att, function(attj) anova(x, att=attj, digits=digits))
+                  sav <- lapply(att, function(attj) anova(x, att=attj, digits=digits, fixed=fixed))
                   names(sav) <- sapply(att, .format.btt)
                   class(sav) <- "list.anova.rma"
                   return(sav)
@@ -86,7 +86,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                btt <- x$btt
             } else {
                if (is.list(btt)) {
-                  sav <- lapply(btt, function(bttj) anova(x, btt=bttj, digits=digits))
+                  sav <- lapply(btt, function(bttj) anova(x, btt=bttj, digits=digits, fixed=fixed))
                   names(sav) <- sapply(btt, .format.btt)
                   class(sav) <- "list.anova.rma"
                   return(sav)
