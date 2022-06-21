@@ -2,7 +2,7 @@
 
 ### function to set default 'btt' value(s) or check specified 'btt' values
 
-.set.btt <- function(btt, p, int.incl, Xnames, fixed=TRUE) {
+.set.btt <- function(btt, p, int.incl, Xnames, fixed=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 

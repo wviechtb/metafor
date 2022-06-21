@@ -1,4 +1,6 @@
-# metafor 3.5-10 (2022-06-20)
+# metafor 3.5-11 (2022-06-21)
+
+- added `as.data.frame.anova.rma()` and `as.data.frame.list.anova.rma()` methods
 
 - added possibility to specify a list for `btt` in `anova.rma()`; added `print.list.anova.rma()` to print the resulting object
 

@@ -18,7 +18,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
       X <- ddd$L
 
    if (is.null(ddd$fixed)) {
-      fixed <- TRUE
+      fixed <- FALSE
    } else {
       fixed <- .isTRUE(ddd$fixed)
    }
@@ -218,7 +218,11 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
             if (identical(rhs, rep(0,m))) {
                hyp <- paste0(hyp, " = 0") ### add '= 0' at the right
             } else {
-               hyp <- paste0(hyp, " = ", .fcf(rhs, digits=digits[["est"]])) ### add '= rhs' at the right
+               if (length(unique(rhs)) == 1L) {
+                  hyp <- paste0(hyp, " = ", round(rhs, digits=digits[["est"]])) ### add '= rhs' at the right
+               } else {
+                  hyp <- paste0(hyp, " = ", .fcf(rhs, digits=digits[["est"]])) ### add '= rhs' at the right
+               }
             }
             hyp <- data.frame(hyp, stringsAsFactors=FALSE)
             colnames(hyp) <- ""
@@ -374,7 +378,11 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
             if (identical(rhs, rep(0,m))) {
                hyp <- paste0(hyp, " = 0") ### add '= 0' at the right
             } else {
-               hyp <- paste0(hyp, " = ", .fcf(rhs, digits=digits[["est"]])) ### add '= rhs' at the right
+               if (length(unique(rhs)) == 1L) {
+                  hyp <- paste0(hyp, " = ", round(rhs, digits=digits[["est"]])) ### add '= rhs' at the right
+               } else {
+                  hyp <- paste0(hyp, " = ", .fcf(rhs, digits=digits[["est"]])) ### add '= rhs' at the right
+               }
             }
             hyp <- data.frame(hyp, stringsAsFactors=FALSE)
             colnames(hyp) <- ""

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-11</span>
       </span>
     </div>
 
@@ -384,10 +384,10 @@
 <span class="r-in"><span class="co">### specify a list for the 'btt' argument</span></span>
 <span class="r-in"><span class="fu">anova</span><span class="op">(</span><span class="va">res3</span>, btt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          QM df   pval </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   15.4434  1 &lt;.0001 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    0.1911  1 0.6620 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:5  1.4674  2 0.4801 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   coefs      QM df   pval </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     2 15.4434  1 &lt;.0001 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     3  0.1911  1 0.6620 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   4:5  1.4674  2 0.4801 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">############################################################################</span></span>
@@ -400,27 +400,27 @@
 <span class="r-in"><span class="va">res0</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">district</span><span class="op">/</span><span class="va">school</span>, data<span class="op">=</span><span class="va">dat</span>, sigma2<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">anova</span><span class="op">(</span><span class="va">res</span>, <span class="va">res0</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         df     AIC     BIC    AICc   logLik     LRT   pval       QE tau^2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Full     3 21.9174 27.9394 22.3880  -7.9587                578.8640    NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reduced  2 37.6910 41.7057 37.9218 -16.8455 17.7736 &lt;.0001 578.8640    NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         df     AIC     BIC    AICc   logLik     LRT   pval       QE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Full     3 21.9174 27.9394 22.3880  -7.9587                578.8640 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Reduced  2 37.6910 41.7057 37.9218 -16.8455 17.7736 &lt;.0001 578.8640 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### likelihood ratio test of the school-level variance component</span></span>
 <span class="r-in"><span class="va">res0</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">district</span><span class="op">/</span><span class="va">school</span>, data<span class="op">=</span><span class="va">dat</span>, sigma2<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">anova</span><span class="op">(</span><span class="va">res</span>, <span class="va">res0</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         df     AIC     BIC    AICc   logLik     LRT   pval       QE tau^2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Full     3 21.9174 27.9394 22.3880  -7.9587                578.8640    NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reduced  2 68.4330 72.4476 68.6637 -32.2165 48.5155 &lt;.0001 578.8640    NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         df     AIC     BIC    AICc   logLik     LRT   pval       QE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Full     3 21.9174 27.9394 22.3880  -7.9587                578.8640 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Reduced  2 68.4330 72.4476 68.6637 -32.2165 48.5155 &lt;.0001 578.8640 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### likelihood ratio test of both variance components simultaneously</span></span>
 <span class="r-in"><span class="va">res0</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">anova</span><span class="op">(</span><span class="va">res</span>, <span class="va">res0</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         df      AIC      BIC     AICc    logLik      LRT   pval       QE tau^2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Full     3  21.9174  27.9394  22.3880   -7.9587                 578.8640    NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reduced  1 439.7236 441.7310 439.7991 -218.8618 421.8062 &lt;.0001 578.8640    NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         df      AIC      BIC     AICc    logLik      LRT   pval       QE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Full     3  21.9174  27.9394  22.3880   -7.9587                 578.8640 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Reduced  1 439.7236 441.7310 439.7991 -218.8618 421.8062 &lt;.0001 578.8640 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">############################################################################</span></span>
@@ -459,16 +459,16 @@
 <span class="r-in"><span class="va">res0</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">V</span>, random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">study</span><span class="op">/</span><span class="va">esid</span>, data<span class="op">=</span><span class="va">dat</span>, sigma2<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">anova</span><span class="op">(</span><span class="va">res</span>, <span class="va">res0</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         df      AIC      BIC     AICc   logLik    LRT   pval       QE tau^2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Full     3 151.5334 159.3188 151.7861 -72.7667               745.4385    NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reduced  2 157.3625 162.5528 157.4875 -76.6813 7.8291 0.0051 745.4385    NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         df      AIC      BIC     AICc   logLik    LRT   pval       QE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Full     3 151.5334 159.3188 151.7861 -72.7667               745.4385 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Reduced  2 157.3625 162.5528 157.4875 -76.6813 7.8291 0.0051 745.4385 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span class="va">res0</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">V</span>, random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">study</span><span class="op">/</span><span class="va">esid</span>, data<span class="op">=</span><span class="va">dat</span>, sigma2<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">anova</span><span class="op">(</span><span class="va">res</span>, <span class="va">res0</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         df      AIC      BIC     AICc    logLik      LRT   pval       QE tau^2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Full     3 151.5334 159.3188 151.7861  -72.7667                 745.4385    NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Reduced  2 528.5630 533.7532 528.6880 -262.2815 379.0295 &lt;.0001 745.4385    NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         df      AIC      BIC     AICc    logLik      LRT   pval       QE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Full     3 151.5334 159.3188 151.7861  -72.7667                 745.4385 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Reduced  2 528.5630 533.7532 528.6880 -262.2815 379.0295 &lt;.0001 745.4385 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">### use cluster-robust methods for inferences about the fixed effects</span></span>

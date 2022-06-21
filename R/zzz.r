@@ -1,6 +1,6 @@
 .onAttach <- function(libname, pkgname) {
 
-   ver <- "3.5-10"
+   ver <- "3.5-11"
 
    loadmsg <- paste0("\nLoading the 'metafor' package (version ", ver, "). For an\nintroduction to the package please type: help(metafor)\n")
 

@@ -142,9 +142,9 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       res.table["Full","R^2"] <- ""
       res.table["Reduced","R^2"] <- paste0(.fcf(x$R2, digits[["het"]]), "%")
 
-      ### remove tau^2 column if full model is a FE/EE/CE model
+      ### remove tau^2 column if full model is a FE/EE/CE model or tau2.f/tau2.r is NA
 
-      if (is.element(x$method, c("FE","EE","CE")))
+      if (is.element(x$method, c("FE","EE","CE")) || (is.na(x$tau2.f) || is.na(x$tau2.r)))
          res.table <- res.table[-which(names(res.table) == "tau^2")]
 
       ### remove R^2 column if full model is a rma.mv or rma.ls model
