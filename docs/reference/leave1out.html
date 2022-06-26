@@ -101,14 +101,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">leave1out</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma.uni</span>
-<span class="fu">leave1out</span><span class="op">(</span><span class="va">x</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for rma.mh</span>
-<span class="fu">leave1out</span><span class="op">(</span><span class="va">x</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for rma.peto</span>
-<span class="fu">leave1out</span><span class="op">(</span><span class="va">x</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">leave1out</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for rma.uni</span></span>
+<span><span class="fu">leave1out</span><span class="op">(</span><span class="va">x</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for rma.mh</span></span>
+<span><span class="fu">leave1out</span><span class="op">(</span><span class="va">x</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for rma.peto</span></span>
+<span><span class="fu">leave1out</span><span class="op">(</span><span class="va">x</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -201,14 +201,14 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### random-effects model</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### leave-one-out analysis</span></span>
-<span class="r-in"><span class="fu">leave1out</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### random-effects model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### leave-one-out analysis</span></span></span>
+<span class="r-in"><span><span class="fu">leave1out</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval   ci.lb   ci.ub        Q     Qp   tau2      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   -0.7071 0.1900 -3.7223 0.0002 -1.0794 -0.3348 151.5826 0.0000 0.3362 93.2259 14.7622 </span>
@@ -225,7 +225,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12  -0.7598 0.1821 -4.1727 0.0000 -1.1167 -0.4029 150.7868 0.0000 0.3082 92.6782 13.6579 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13  -0.7775 0.1855 -4.1908 0.0000 -1.1412 -0.4139 149.7884 0.0000 0.3037 92.3444 13.0623 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">leave1out</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">leave1out</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate    zval   pval  ci.lb  ci.ub        Q     Qp   tau2      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    0.4931 -3.7223 0.0002 0.3398 0.7155 151.5826 0.0000 0.3362 93.2259 14.7622 </span>
@@ -242,12 +242,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12   0.4678 -4.1727 0.0000 0.3274 0.6684 150.7868 0.0000 0.3082 92.6782 13.6579 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13   0.4595 -4.1908 0.0000 0.3194 0.6611 149.7884 0.0000 0.3037 92.3444 13.0623 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mh.html">rma.mh</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### leave-one-out analysis</span></span>
-<span class="r-in"><span class="fu">leave1out</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mh.html">rma.mh</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### leave-one-out analysis</span></span></span>
+<span class="r-in"><span><span class="fu">leave1out</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   -0.4514 0.0394 -11.4462 0.0000 -0.5287 -0.3741 151.9153 0.0000 92.7591 13.8105 </span>
@@ -264,7 +264,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12  -0.4566 0.0394 -11.5865 0.0000 -0.5338 -0.3794 151.1253 0.0000 92.7213 13.7387 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13  -0.4637 0.0398 -11.6542 0.0000 -0.5417 -0.3858 150.1246 0.0000 92.6728 13.6477 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">leave1out</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">leave1out</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    0.6367 -11.4462 0.0000 0.5894 0.6879 151.9153 0.0000 92.7591 13.8105 </span>
@@ -281,12 +281,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12   0.6334 -11.5865 0.0000 0.5864 0.6843 151.1253 0.0000 92.7213 13.7387 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13   0.6289 -11.6542 0.0000 0.5817 0.6799 150.1246 0.0000 92.6728 13.6477 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### meta-analysis of the (log) odds ratios using Peto's method</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.peto.html">rma.peto</a></span><span class="op">(</span>ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### leave-one-out analysis</span></span>
-<span class="r-in"><span class="fu">leave1out</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### meta-analysis of the (log) odds ratios using Peto's method</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.peto.html">rma.peto</a></span><span class="op">(</span>ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### leave-one-out analysis</span></span></span>
+<span class="r-in"><span><span class="fu">leave1out</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   -0.4722 0.0408 -11.5791 0.0000 -0.5521 -0.3923 167.2005 0.0000 93.4211 15.2000 </span>
@@ -303,7 +303,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12  -0.4775 0.0407 -11.7236 0.0000 -0.5573 -0.3976 166.0703 0.0000 93.3763 15.0973 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13  -0.4853 0.0411 -11.7960 0.0000 -0.5659 -0.4046 164.7427 0.0000 93.3229 14.9766 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">leave1out</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">leave1out</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    0.6236 -11.5791 0.0000 0.5757 0.6755 167.2005 0.0000 93.4211 15.2000 </span>
@@ -334,7 +334,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

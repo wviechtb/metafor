@@ -101,7 +101,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bldiag</span><span class="op">(</span><span class="va">...</span>, <span class="va">order</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bldiag</span><span class="op">(</span><span class="va">...</span>, <span class="va">order</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -125,9 +125,9 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### copy data into 'dat'</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.berkey1998.html" class="external-link">dat.berkey1998</a></span></span>
-<span class="r-in"><span class="va">dat</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### copy data into 'dat'</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.berkey1998.html" class="external-link">dat.berkey1998</a></span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    trial           author year ni outcome      yi     vi    v1i    v2i </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1 Pihlstrom et al. 1983 14      PD  0.4700 0.0075 0.0075 0.0030 </span>
@@ -141,10 +141,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9      5    Becker et al. 1988 16      PD  0.5600 0.0148 0.0148 0.0072 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10     5    Becker et al. 1988 16      AL -0.3900 0.0304 0.0072 0.0304 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### construct list with the variance-covariance matrices of the observed outcomes for the studies</span></span>
-<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"v1i"</span>,<span class="st">"v2i"</span><span class="op">)</span><span class="op">]</span>, <span class="va">dat</span><span class="op">$</span><span class="va">trial</span><span class="op">)</span>, <span class="va">as.matrix</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">V</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### construct list with the variance-covariance matrices of the observed outcomes for the studies</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"v1i"</span>,<span class="st">"v2i"</span><span class="op">)</span><span class="op">]</span>, <span class="va">dat</span><span class="op">$</span><span class="va">trial</span><span class="op">)</span>, <span class="va">as.matrix</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">V</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`1`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      v1i    v2i</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.0075 0.0030</span>
@@ -170,10 +170,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9  0.0148 0.0072</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 0.0072 0.0304</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### construct block diagonal matrix</span></span>
-<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">bldiag</span><span class="op">(</span><span class="va">V</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">V</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### construct block diagonal matrix</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">bldiag</span><span class="op">(</span><span class="va">V</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">V</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         [,1]   [,2]   [,3]  [,4]   [,5]   [,6]   [,7]   [,8]   [,9]  [,10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.0075 0.0030 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.0030 0.0077 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000</span>
@@ -185,10 +185,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0009 0.0015 0.0000 0.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0148 0.0072</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0072 0.0304</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### if we split based on 'author', the list elements in V are in a different order than tha data</span></span>
-<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"v1i"</span>,<span class="st">"v2i"</span><span class="op">)</span><span class="op">]</span>, <span class="va">dat</span><span class="op">$</span><span class="va">author</span><span class="op">)</span>, <span class="va">as.matrix</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">V</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### if we split based on 'author', the list elements in V are in a different order than tha data</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"v1i"</span>,<span class="st">"v2i"</span><span class="op">)</span><span class="op">]</span>, <span class="va">dat</span><span class="op">$</span><span class="va">author</span><span class="op">)</span>, <span class="va">as.matrix</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">V</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Becker et al.`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       v1i    v2i</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9  0.0148 0.0072</span>
@@ -214,10 +214,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7 0.0029 0.0009</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8 0.0009 0.0015</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### can use 'order' argument to reorder the block-diagonal matrix into the correct order</span></span>
-<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">bldiag</span><span class="op">(</span><span class="va">V</span>, order<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">author</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">V</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### can use 'order' argument to reorder the block-diagonal matrix into the correct order</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">bldiag</span><span class="op">(</span><span class="va">V</span>, order<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">author</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">V</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         [,1]   [,2]   [,3]  [,4]   [,5]   [,6]   [,7]   [,8]   [,9]  [,10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.0075 0.0030 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.0030 0.0077 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000</span>
@@ -243,7 +243,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

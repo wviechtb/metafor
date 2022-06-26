@@ -131,22 +131,22 @@
 
 <p>Many meta-analyses involve observed outcomes / effect size estimates that cannot be assumed to be independent, because some estimates were computed based on the same sample of subjects (or at least a partially overlapping set). In this case, one should compute the covariances for any pair of estimates that involve (fully or partially) overlapping subjects. Doing so is difficult, but we can often construct an approximate variance-covariance matrix (say <em></em>\(V\)) of such dependent estimates. This can be done with the <code><a href="vcalc.html">vcalc</a></code> function. We can then fit a multivariate/multilevel model to the estimates with the <code><a href="rma.mv.html">rma.mv</a></code> function, using <em></em>\(V\) as the approximate var-cov matrix of the estimates and adding fixed and random effects to the model as deemed necessary. However, since <em></em>\(V\) is often just a rough approximation (and since the random effects structure may not fully capture all dependencies in the underlying true outcomes/effects), we can then apply cluster-robust inference methods (also known as robust variance estimation) to the model. This can be done with the <code><a href="robust.html">robust</a></code> function, which also interfaces with the improved inference methods implemented in the <a href="https://cran.r-project.org/package=clubSandwich" class="external-link">clubSandwich</a> package to obtain the cluster-robust tests and confidence intervals.<em></em><a id="footnote1link" style="color:#375f84" href="#footnote1">\(^1\)</a> Finally, we can compute predicted outcomes (with corresponding confidence intervals) and test sets of coefficients or linear combinations thereof using the <code><a href="predict.rma.html">predict</a></code> and <code><a href="anova.rma.html">anova</a></code> functions. See Pustejovsky and Tipton (2022) for a paper describing such a workflow for various cases.</p>
 <p>To summarize, the general workflow therefore will often consist of these steps:</p>
-<div class="sourceCode"><pre><code><span class="co"># construct/approximate the var-cov matrix of dependent estimates</span>
-<span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vcalc.html">vcalc</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
-
-<span class="co"># fit multivariate/multilevel model with appropriate fixed/random effects</span>
-<span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">V</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">...</span>, random <span class="op">=</span> <span class="op">~</span> <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># apply cluster-robust inference methods (robust variance estimation)</span>
-<span class="co"># note: use the improved methods from the clubSandwich package</span>
-<span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/robust.html">robust</a></span><span class="op">(</span><span class="va">res</span>, cluster <span class="op">=</span> <span class="va">...</span>, clubSandwich <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">sav</span>
-
-<span class="co"># compute predicted outcomes (with corresponding CIs) as needed</span>
-<span class="fu"><a href="../reference/predict.rma.html">predict</a></span><span class="op">(</span><span class="va">sav</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># test sets of coefficients / linear combinations as needed</span>
-<span class="fu"><a href="../reference/anova.rma.html">anova</a></span><span class="op">(</span><span class="va">sav</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode"><pre><code><span><span class="co"># construct/approximate the var-cov matrix of dependent estimates</span></span>
+<span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vcalc.html">vcalc</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># fit multivariate/multilevel model with appropriate fixed/random effects</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">V</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">...</span>, random <span class="op">=</span> <span class="op">~</span> <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># apply cluster-robust inference methods (robust variance estimation)</span></span>
+<span><span class="co"># note: use the improved methods from the clubSandwich package</span></span>
+<span><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/robust.html">robust</a></span><span class="op">(</span><span class="va">res</span>, cluster <span class="op">=</span> <span class="va">...</span>, clubSandwich <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">sav</span></span>
+<span></span>
+<span><span class="co"># compute predicted outcomes (with corresponding CIs) as needed</span></span>
+<span><span class="fu"><a href="../reference/predict.rma.html">predict</a></span><span class="op">(</span><span class="va">sav</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># test sets of coefficients / linear combinations as needed</span></span>
+<span><span class="fu"><a href="../reference/anova.rma.html">anova</a></span><span class="op">(</span><span class="va">sav</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
 
 <p>The details of how <code><a href="vcalc.html">vcalc</a></code> and <code><a href="rma.mv.html">rma.mv</a></code> are used (and the clustering variable specified for <code><a href="robust.html">robust</a></code>) will depend on the specifics of the application.</p>
 <p>See <code><a href="https://wviechtb.github.io/metadat/reference/dat.knapp2017.html" class="external-link">dat.knapp2017</a></code> and <code><a href="https://wviechtb.github.io/metadat/reference/dat.tannersmith2016.html" class="external-link">dat.tannersmith2016</a></code> for some examples illustrating this workflow.</p>
@@ -198,7 +198,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

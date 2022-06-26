@@ -101,18 +101,18 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rma.uni</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">weights</span>, <span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">x1i</span>, <span class="va">x2i</span>, <span class="va">t1i</span>, <span class="va">t2i</span>,
-        <span class="va">m1i</span>, <span class="va">m2i</span>, <span class="va">sd1i</span>, <span class="va">sd2i</span>, <span class="va">xi</span>, <span class="va">mi</span>, <span class="va">ri</span>, <span class="va">ti</span>, <span class="va">sdi</span>, <span class="va">r2i</span>, <span class="va">ni</span>, <span class="va">mods</span>, <span class="va">scale</span>,
-        measure<span class="op">=</span><span class="st">"GEN"</span>, intercept<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,
-        add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"only0"</span>, drop00<span class="op">=</span><span class="cn">FALSE</span>, vtype<span class="op">=</span><span class="st">"LS"</span>,
-        method<span class="op">=</span><span class="st">"REML"</span>, weighted<span class="op">=</span><span class="cn">TRUE</span>, test<span class="op">=</span><span class="st">"z"</span>,
-        level<span class="op">=</span><span class="fl">95</span>, <span class="va">btt</span>, <span class="va">att</span>, <span class="va">tau2</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span>
-<span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">weights</span>, <span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">x1i</span>, <span class="va">x2i</span>, <span class="va">t1i</span>, <span class="va">t2i</span>,
-        <span class="va">m1i</span>, <span class="va">m2i</span>, <span class="va">sd1i</span>, <span class="va">sd2i</span>, <span class="va">xi</span>, <span class="va">mi</span>, <span class="va">ri</span>, <span class="va">ti</span>, <span class="va">sdi</span>, <span class="va">r2i</span>, <span class="va">ni</span>, <span class="va">mods</span>, <span class="va">scale</span>,
-        measure<span class="op">=</span><span class="st">"GEN"</span>, intercept<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,
-        add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"only0"</span>, drop00<span class="op">=</span><span class="cn">FALSE</span>, vtype<span class="op">=</span><span class="st">"LS"</span>,
-        method<span class="op">=</span><span class="st">"REML"</span>, weighted<span class="op">=</span><span class="cn">TRUE</span>, test<span class="op">=</span><span class="st">"z"</span>,
-        level<span class="op">=</span><span class="fl">95</span>, <span class="va">btt</span>, <span class="va">att</span>, <span class="va">tau2</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rma.uni</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">weights</span>, <span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">x1i</span>, <span class="va">x2i</span>, <span class="va">t1i</span>, <span class="va">t2i</span>,</span>
+<span>        <span class="va">m1i</span>, <span class="va">m2i</span>, <span class="va">sd1i</span>, <span class="va">sd2i</span>, <span class="va">xi</span>, <span class="va">mi</span>, <span class="va">ri</span>, <span class="va">ti</span>, <span class="va">sdi</span>, <span class="va">r2i</span>, <span class="va">ni</span>, <span class="va">mods</span>, <span class="va">scale</span>,</span>
+<span>        measure<span class="op">=</span><span class="st">"GEN"</span>, intercept<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,</span>
+<span>        add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"only0"</span>, drop00<span class="op">=</span><span class="cn">FALSE</span>, vtype<span class="op">=</span><span class="st">"LS"</span>,</span>
+<span>        method<span class="op">=</span><span class="st">"REML"</span>, weighted<span class="op">=</span><span class="cn">TRUE</span>, test<span class="op">=</span><span class="st">"z"</span>,</span>
+<span>        level<span class="op">=</span><span class="fl">95</span>, <span class="va">btt</span>, <span class="va">att</span>, <span class="va">tau2</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">weights</span>, <span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">x1i</span>, <span class="va">x2i</span>, <span class="va">t1i</span>, <span class="va">t2i</span>,</span>
+<span>        <span class="va">m1i</span>, <span class="va">m2i</span>, <span class="va">sd1i</span>, <span class="va">sd2i</span>, <span class="va">xi</span>, <span class="va">mi</span>, <span class="va">ri</span>, <span class="va">ti</span>, <span class="va">sdi</span>, <span class="va">r2i</span>, <span class="va">ni</span>, <span class="va">mods</span>, <span class="va">scale</span>,</span>
+<span>        measure<span class="op">=</span><span class="st">"GEN"</span>, intercept<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,</span>
+<span>        add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"only0"</span>, drop00<span class="op">=</span><span class="cn">FALSE</span>, vtype<span class="op">=</span><span class="st">"LS"</span>,</span>
+<span>        method<span class="op">=</span><span class="st">"REML"</span>, weighted<span class="op">=</span><span class="cn">TRUE</span>, test<span class="op">=</span><span class="st">"z"</span>,</span>
+<span>        level<span class="op">=</span><span class="fl">95</span>, <span class="va">btt</span>, <span class="va">att</span>, <span class="va">tau2</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -526,12 +526,12 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit a random-effects model using the log risk ratios and sampling variances as input</span></span>
-<span class="r-in"><span class="co">### note: method="REML" is the default, so one could leave this out</span></span>
-<span class="r-in"><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"REML"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit a random-effects model using the log risk ratios and sampling variances as input</span></span></span>
+<span class="r-in"><span><span class="co">### note: method="REML" is the default, so one could leave this out</span></span></span>
+<span class="r-in"><span><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"REML"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -551,12 +551,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit a random-effects model using the log risk ratios and standard errors as input</span></span>
-<span class="r-in"><span class="co">### note: the second argument of rma() is for the *sampling variances*, so we use the</span></span>
-<span class="r-in"><span class="co">### named argument 'sei' to supply the standard errors to the function</span></span>
-<span class="r-in"><span class="va">dat</span><span class="op">$</span><span class="va">sei</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">vi</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, sei<span class="op">=</span><span class="va">sei</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit a random-effects model using the log risk ratios and standard errors as input</span></span></span>
+<span class="r-in"><span><span class="co">### note: the second argument of rma() is for the *sampling variances*, so we use the</span></span></span>
+<span class="r-in"><span><span class="co">### named argument 'sei' to supply the standard errors to the function</span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">sei</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">vi</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, sei<span class="op">=</span><span class="va">sei</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -576,9 +576,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit a random-effects model supplying the 2x2 table cell frequencies to the function</span></span>
-<span class="r-in"><span class="fu">rma</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit a random-effects model supplying the 2x2 table cell frequencies to the function</span></span></span>
+<span class="r-in"><span><span class="fu">rma</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -598,9 +598,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit a mixed-effects model with two moderators (absolute latitude and publication year)</span></span>
-<span class="r-in"><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">ablat</span>, <span class="va">year</span><span class="op">)</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit a mixed-effects model with two moderators (absolute latitude and publication year)</span></span></span>
+<span class="r-in"><span><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">ablat</span>, <span class="va">year</span><span class="op">)</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -626,9 +626,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### using a model formula to specify the same model</span></span>
-<span class="r-in"><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">year</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### using a model formula to specify the same model</span></span></span>
+<span class="r-in"><span><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">year</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -654,9 +654,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### using a model formula as part of the yi argument</span></span>
-<span class="r-in"><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">year</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### using a model formula as part of the yi argument</span></span></span>
+<span class="r-in"><span><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">year</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -682,19 +682,19 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### manual dummy coding of the allocation factor</span></span>
-<span class="r-in"><span class="va">alloc.random</span>     <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">alloc</span> <span class="op">==</span> <span class="st">"random"</span>,     <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">alloc.alternate</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">alloc</span> <span class="op">==</span> <span class="st">"alternate"</span>,  <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">alloc.systematic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">alloc</span> <span class="op">==</span> <span class="st">"systematic"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### test the allocation factor (in the presence of the other moderators)</span></span>
-<span class="r-in"><span class="co">### note: 'alternate' is the reference level of the allocation factor,</span></span>
-<span class="r-in"><span class="co">###       since this is the dummy/level we leave out of the model</span></span>
-<span class="r-in"><span class="co">### note: the intercept is the first coefficient, so with btt=2:3 we test</span></span>
-<span class="r-in"><span class="co">###       coefficients 2 and 3, corresponding to the coefficients for the</span></span>
-<span class="r-in"><span class="co">###       allocation factor</span></span>
-<span class="r-in"><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">alloc.random</span> <span class="op">+</span> <span class="va">alloc.systematic</span> <span class="op">+</span> <span class="va">year</span> <span class="op">+</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span>, btt<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### manual dummy coding of the allocation factor</span></span></span>
+<span class="r-in"><span><span class="va">alloc.random</span>     <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">alloc</span> <span class="op">==</span> <span class="st">"random"</span>,     <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">alloc.alternate</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">alloc</span> <span class="op">==</span> <span class="st">"alternate"</span>,  <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">alloc.systematic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">alloc</span> <span class="op">==</span> <span class="st">"systematic"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### test the allocation factor (in the presence of the other moderators)</span></span></span>
+<span class="r-in"><span><span class="co">### note: 'alternate' is the reference level of the allocation factor,</span></span></span>
+<span class="r-in"><span><span class="co">###       since this is the dummy/level we leave out of the model</span></span></span>
+<span class="r-in"><span><span class="co">### note: the intercept is the first coefficient, so with btt=2:3 we test</span></span></span>
+<span class="r-in"><span><span class="co">###       coefficients 2 and 3, corresponding to the coefficients for the</span></span></span>
+<span class="r-in"><span><span class="co">###       allocation factor</span></span></span>
+<span class="r-in"><span><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">alloc.random</span> <span class="op">+</span> <span class="va">alloc.systematic</span> <span class="op">+</span> <span class="va">year</span> <span class="op">+</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span>, btt<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -722,9 +722,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### using a model formula to specify the same model</span></span>
-<span class="r-in"><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">alloc</span><span class="op">)</span> <span class="op">+</span> <span class="va">year</span> <span class="op">+</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span>, btt<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### using a model formula to specify the same model</span></span></span>
+<span class="r-in"><span><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">alloc</span><span class="op">)</span> <span class="op">+</span> <span class="va">year</span> <span class="op">+</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span>, btt<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -752,9 +752,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### factor() is not needed as character variables are automatically converted to factors</span></span>
-<span class="r-in"><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">alloc</span> <span class="op">+</span> <span class="va">year</span> <span class="op">+</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span>, btt<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### factor() is not needed as character variables are automatically converted to factors</span></span></span>
+<span class="r-in"><span><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">alloc</span> <span class="op">+</span> <span class="va">year</span> <span class="op">+</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span>, btt<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -782,10 +782,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### test all pairwise differences with Holm's method (using the 'multcomp' package if installed)</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">alloc</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### test all pairwise differences with Holm's method (using the 'multcomp' package if installed)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">alloc</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -810,9 +810,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="http://multcomp.R-forge.R-project.org" class="external-link">multcomp</a></span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">   <span class="fu"><a href="print.rma.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">glht</a></span><span class="op">(</span><span class="va">res</span>, linfct<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/contrMat.html" class="external-link">contrMat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"alternate"</span><span class="op">=</span><span class="fl">1</span>,<span class="st">"random"</span><span class="op">=</span><span class="fl">1</span>,<span class="st">"systematic"</span><span class="op">=</span><span class="fl">1</span><span class="op">)</span>,</span>
-<span class="r-in">           type<span class="op">=</span><span class="st">"Tukey"</span><span class="op">)</span><span class="op">)</span>, test<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/methods.html" class="external-link">adjusted</a></span><span class="op">(</span><span class="st">"holm"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="http://multcomp.R-forge.R-project.org" class="external-link">multcomp</a></span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="print.rma.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/glht.html" class="external-link">glht</a></span><span class="op">(</span><span class="va">res</span>, linfct<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/contrMat.html" class="external-link">contrMat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"alternate"</span><span class="op">=</span><span class="fl">1</span>,<span class="st">"random"</span><span class="op">=</span><span class="fl">1</span>,<span class="st">"systematic"</span><span class="op">=</span><span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>           type<span class="op">=</span><span class="st">"Tukey"</span><span class="op">)</span><span class="op">)</span>, test<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/multcomp/man/methods.html" class="external-link">adjusted</a></span><span class="op">(</span><span class="st">"holm"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: multcomp</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: mvtnorm</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: survival</span>
@@ -838,16 +838,16 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> systematic - random == 0     0.53686    0.43636   1.230    0.656</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> (Adjusted p values reported -- holm method)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### subgrouping versus using a single model with a factor (subgrouping provides</span></span>
-<span class="r-in"><span class="co">### an estimate of tau^2 within each subgroup, but the number of studies in each</span></span>
-<span class="r-in"><span class="co">### subgroup is quite small; the model with the allocation factor provides a</span></span>
-<span class="r-in"><span class="co">### single estimate of tau^2 based on a larger number of studies, but assumes</span></span>
-<span class="r-in"><span class="co">### that tau^2 is the same within each subgroup)</span></span>
-<span class="r-in"><span class="va">res.a</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">(</span><span class="va">alloc</span><span class="op">==</span><span class="st">"alternate"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res.r</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">(</span><span class="va">alloc</span><span class="op">==</span><span class="st">"random"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res.s</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">(</span><span class="va">alloc</span><span class="op">==</span><span class="st">"systematic"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res.a</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### subgrouping versus using a single model with a factor (subgrouping provides</span></span></span>
+<span class="r-in"><span><span class="co">### an estimate of tau^2 within each subgroup, but the number of studies in each</span></span></span>
+<span class="r-in"><span><span class="co">### subgroup is quite small; the model with the allocation factor provides a</span></span></span>
+<span class="r-in"><span><span class="co">### single estimate of tau^2 based on a larger number of studies, but assumes</span></span></span>
+<span class="r-in"><span><span class="co">### that tau^2 is the same within each subgroup)</span></span></span>
+<span class="r-in"><span><span class="va">res.a</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">(</span><span class="va">alloc</span><span class="op">==</span><span class="st">"alternate"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res.r</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">(</span><span class="va">alloc</span><span class="op">==</span><span class="st">"random"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res.s</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">(</span><span class="va">alloc</span><span class="op">==</span><span class="st">"systematic"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res.a</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 2; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -867,7 +867,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="va">res.r</span></span>
+<span class="r-in"><span><span class="va">res.r</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 7; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -887,7 +887,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="va">res.s</span></span>
+<span class="r-in"><span><span class="va">res.s</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 4; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -907,8 +907,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">alloc</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">alloc</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -933,15 +933,15 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">############################################################################</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### demonstrating that Q_E + Q_M = Q_Total for fixed-effects models</span></span>
-<span class="r-in"><span class="co">### note: this does not work for random/mixed-effects models, since Q_E and</span></span>
-<span class="r-in"><span class="co">### Q_Total are calculated under the assumption that tau^2 = 0, while the</span></span>
-<span class="r-in"><span class="co">### calculation of Q_M incorporates the estimate of tau^2</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"FE"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span> <span class="co">### this gives Q_Total</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### demonstrating that Q_E + Q_M = Q_Total for fixed-effects models</span></span></span>
+<span class="r-in"><span><span class="co">### note: this does not work for random/mixed-effects models, since Q_E and</span></span></span>
+<span class="r-in"><span><span class="co">### Q_Total are calculated under the assumption that tau^2 = 0, while the</span></span></span>
+<span class="r-in"><span><span class="co">### calculation of Q_M incorporates the estimate of tau^2</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"FE"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="co">### this gives Q_Total</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed-Effects Model (k = 13)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -959,8 +959,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">year</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"FE"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span> <span class="co">### this gives Q_E and Q_M</span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">year</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"FE"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="co">### this gives Q_E and Q_M</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed-Effects with Moderators Model (k = 13)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -984,12 +984,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="va">res</span><span class="op">$</span><span class="va">QE</span> <span class="op">+</span> <span class="va">res</span><span class="op">$</span><span class="va">QM</span></span>
+<span class="r-in"><span><span class="va">res</span><span class="op">$</span><span class="va">QE</span> <span class="op">+</span> <span class="va">res</span><span class="op">$</span><span class="va">QM</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 152.233</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### decomposition of Q_E into subgroup Q-values</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">alloc</span><span class="op">)</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### decomposition of Q_E into subgroup Q-values</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">alloc</span><span class="op">)</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -1015,31 +1015,31 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">res.a</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">(</span><span class="va">alloc</span><span class="op">==</span><span class="st">"alternate"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res.r</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">(</span><span class="va">alloc</span><span class="op">==</span><span class="st">"random"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res.s</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">(</span><span class="va">alloc</span><span class="op">==</span><span class="st">"systematic"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">res.a</span><span class="op">$</span><span class="va">QE</span> <span class="co">### Q-value within subgroup "alternate"</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">res.a</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">(</span><span class="va">alloc</span><span class="op">==</span><span class="st">"alternate"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res.r</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">(</span><span class="va">alloc</span><span class="op">==</span><span class="st">"random"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res.s</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">(</span><span class="va">alloc</span><span class="op">==</span><span class="st">"systematic"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">res.a</span><span class="op">$</span><span class="va">QE</span> <span class="co">### Q-value within subgroup "alternate"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5.562514</span>
-<span class="r-in"><span class="va">res.r</span><span class="op">$</span><span class="va">QE</span> <span class="co">### Q-value within subgroup "random"</span></span>
+<span class="r-in"><span><span class="va">res.r</span><span class="op">$</span><span class="va">QE</span> <span class="co">### Q-value within subgroup "random"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 110.2133</span>
-<span class="r-in"><span class="va">res.s</span><span class="op">$</span><span class="va">QE</span> <span class="co">### Q-value within subgroup "systematic"</span></span>
+<span class="r-in"><span><span class="va">res.s</span><span class="op">$</span><span class="va">QE</span> <span class="co">### Q-value within subgroup "systematic"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 16.59186</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">res</span><span class="op">$</span><span class="va">QE</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">res</span><span class="op">$</span><span class="va">QE</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 132.3676</span>
-<span class="r-in"><span class="va">res.a</span><span class="op">$</span><span class="va">QE</span> <span class="op">+</span> <span class="va">res.r</span><span class="op">$</span><span class="va">QE</span> <span class="op">+</span> <span class="va">res.s</span><span class="op">$</span><span class="va">QE</span></span>
+<span class="r-in"><span><span class="va">res.a</span><span class="op">$</span><span class="va">QE</span> <span class="op">+</span> <span class="va">res.r</span><span class="op">$</span><span class="va">QE</span> <span class="op">+</span> <span class="va">res.s</span><span class="op">$</span><span class="va">QE</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 132.3676</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">############################################################################</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### an example of a location-scale model</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bangertdrowns2004.html" class="external-link">dat.bangertdrowns2004</a></span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit a standard random-effects model</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### an example of a location-scale model</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bangertdrowns2004.html" class="external-link">dat.bangertdrowns2004</a></span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit a standard random-effects model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 48; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -1059,10 +1059,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit the same model as a location-scale model</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, scale <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit the same model as a location-scale model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, scale <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Location-Scale Model (k = 48; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -1082,18 +1082,18 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### check that we obtain the same estimate for tau^2</span></span>
-<span class="r-in"><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newscale<span class="op">=</span><span class="fl">1</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### check that we obtain the same estimate for tau^2</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newscale<span class="op">=</span><span class="fl">1</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    pred  ci.lb  ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.0499 0.0203 0.1231 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### add the total sample size (per 100) as a location and scale predictor</span></span>
-<span class="r-in"><span class="va">dat</span><span class="op">$</span><span class="va">ni100</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">ni</span><span class="op">/</span><span class="fl">100</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ni100</span>, scale <span class="op">=</span> <span class="op">~</span> <span class="va">ni100</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### add the total sample size (per 100) as a location and scale predictor</span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">ni100</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">$</span><span class="va">ni</span><span class="op">/</span><span class="fl">100</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ni100</span>, scale <span class="op">=</span> <span class="op">~</span> <span class="va">ni100</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Location-Scale Model (k = 48; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -1121,11 +1121,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### variables in the location and scale parts can differ</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ni100</span> <span class="op">+</span> <span class="va">meta</span>, scale <span class="op">=</span> <span class="op">~</span> <span class="va">ni100</span> <span class="op">+</span> <span class="va">imag</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### variables in the location and scale parts can differ</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ni100</span> <span class="op">+</span> <span class="va">meta</span>, scale <span class="op">=</span> <span class="op">~</span> <span class="va">ni100</span> <span class="op">+</span> <span class="va">imag</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Studies with NAs omitted from model fitting.</span>
-<span class="r-in"><span class="va">res</span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Location-Scale Model (k = 46; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -1169,7 +1169,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

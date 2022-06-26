@@ -101,9 +101,9 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">to.wide</span><span class="op">(</span><span class="va">data</span>, <span class="va">study</span>, <span class="va">grp</span>, <span class="va">ref</span>, <span class="va">grpvars</span>, postfix<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">".1"</span>,<span class="st">".2"</span><span class="op">)</span>,
-        addid<span class="op">=</span><span class="cn">TRUE</span>, addcomp<span class="op">=</span><span class="cn">TRUE</span>, adddesign<span class="op">=</span><span class="cn">TRUE</span>, minlen<span class="op">=</span><span class="fl">2</span>,
-        var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"comp"</span>,<span class="st">"design"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">to.wide</span><span class="op">(</span><span class="va">data</span>, <span class="va">study</span>, <span class="va">grp</span>, <span class="va">ref</span>, <span class="va">grpvars</span>, postfix<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">".1"</span>,<span class="st">".2"</span><span class="op">)</span>,</span>
+<span>        addid<span class="op">=</span><span class="cn">TRUE</span>, addcomp<span class="op">=</span><span class="cn">TRUE</span>, adddesign<span class="op">=</span><span class="cn">TRUE</span>, minlen<span class="op">=</span><span class="fl">2</span>,</span>
+<span>        var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"comp"</span>,<span class="st">"design"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -174,10 +174,10 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### data in long format</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.senn2013.html" class="external-link">dat.senn2013</a></span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">4</span>,<span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">5</span>,<span class="fl">6</span><span class="op">)</span><span class="op">]</span></span>
-<span class="r-in"><span class="va">dat</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### data in long format</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.senn2013.html" class="external-link">dat.senn2013</a></span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">4</span>,<span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">5</span>,<span class="fl">6</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    study comment     treatment  ni    mi   sdi</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       De Fronzo (1995)  change     metformin 213 -1.70 1.459</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       De Fronzo (1995)  change       placebo 209  0.20 1.446</span>
@@ -232,10 +232,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 51         Stucci (1996)     raw       placebo  30  8.26 1.350</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 52         Moulin (2006)  change    benfluorex 161 -0.82 1.028</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 53         Moulin (2006)  change       placebo 156  0.19 1.374</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### restructure to wide format</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.wide</span><span class="op">(</span><span class="va">dat</span>, study<span class="op">=</span><span class="st">"study"</span>, grp<span class="op">=</span><span class="st">"treatment"</span>, ref<span class="op">=</span><span class="st">"placebo"</span>, grpvars<span class="op">=</span><span class="fl">4</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### restructure to wide format</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.wide</span><span class="op">(</span><span class="va">dat</span>, study<span class="op">=</span><span class="st">"study"</span>, grp<span class="op">=</span><span class="st">"treatment"</span>, ref<span class="op">=</span><span class="st">"placebo"</span>, grpvars<span class="op">=</span><span class="fl">4</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    study comment   treatment.1 ni.1  mi.1 sdi.1   treatment.2 ni.2  mi.2 sdi.2 id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1            Alex (1998)  change     metformin  291  0.13 1.428  sulfonylurea  300  0.50 1.450  1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2           Baksi (2004)  change rosiglitazone  218 -1.20 1.112       placebo  233  0.10 1.036  2</span>
@@ -292,10 +292,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 25 ro-pl    ro-pl</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 26 me-ro    me-ro</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 27 ro-pl    ro-pl</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### data in long format</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.hasselblad1998.html" class="external-link">dat.hasselblad1998</a></span></span>
-<span class="r-in"><span class="va">dat</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### data in long format</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.hasselblad1998.html" class="external-link">dat.hasselblad1998</a></span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    id study            authors year            trt  xi   ni</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   1     1        Reid et al. 1974     no_contact  75  731</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   2     1        Reid et al. 1974 ind_counseling 363  714</span>
@@ -347,10 +347,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 48 48    23     Russell et al. 1979 ind_counseling  73  675</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 49 49    24    Kendrick et al. 1995     no_contact  69 1177</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 50 50    24    Kendrick et al. 1995 ind_counseling  54  888</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### restructure to wide format</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.wide</span><span class="op">(</span><span class="va">dat</span>, study<span class="op">=</span><span class="st">"study"</span>, grp<span class="op">=</span><span class="st">"trt"</span>, ref<span class="op">=</span><span class="st">"no_contact"</span>, grpvars<span class="op">=</span><span class="fl">6</span><span class="op">:</span><span class="fl">7</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### restructure to wide format</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.wide</span><span class="op">(</span><span class="va">dat</span>, study<span class="op">=</span><span class="st">"study"</span>, grp<span class="op">=</span><span class="st">"trt"</span>, ref<span class="op">=</span><span class="st">"no_contact"</span>, grpvars<span class="op">=</span><span class="fl">6</span><span class="op">:</span><span class="fl">7</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    id study            authors year          trt.1 xi.1 ni.1          trt.2 xi.2 ni.2  comp   design</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   1     1        Reid et al. 1974 ind_counseling  363  714     no_contact   75  731 in-no    in-no</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   2     2    Cottraux et al. 1983 grp_counseling   10  138     no_contact    9  140 gr-no gr-in-no</span>
@@ -392,7 +392,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

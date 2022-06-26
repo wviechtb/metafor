@@ -101,30 +101,30 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for rma.uni</span>
-<span class="fu">confint</span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, <span class="va">level</span>, fixed<span class="op">=</span><span class="cn">FALSE</span>, random<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">type</span>,
-        <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma.mh</span>
-<span class="fu">confint</span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, <span class="va">level</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma.peto</span>
-<span class="fu">confint</span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, <span class="va">level</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma.glmm</span>
-<span class="fu">confint</span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, <span class="va">level</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma.mv</span>
-<span class="fu">confint</span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, <span class="va">level</span>, fixed<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">sigma2</span>, <span class="va">tau2</span>, <span class="va">rho</span>, <span class="va">gamma2</span>, <span class="va">phi</span>,
-        <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma.uni.selmodel</span>
-<span class="fu">confint</span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, <span class="va">level</span>, fixed<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">tau2</span>, <span class="va">delta</span>,
-        <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma.ls</span>
-<span class="fu">confint</span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, <span class="va">level</span>, fixed<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">alpha</span>,
-        <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for rma.uni</span></span>
+<span><span class="fu">confint</span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, <span class="va">level</span>, fixed<span class="op">=</span><span class="cn">FALSE</span>, random<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">type</span>,</span>
+<span>        <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for rma.mh</span></span>
+<span><span class="fu">confint</span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, <span class="va">level</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for rma.peto</span></span>
+<span><span class="fu">confint</span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, <span class="va">level</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for rma.glmm</span></span>
+<span><span class="fu">confint</span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, <span class="va">level</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for rma.mv</span></span>
+<span><span class="fu">confint</span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, <span class="va">level</span>, fixed<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">sigma2</span>, <span class="va">tau2</span>, <span class="va">rho</span>, <span class="va">gamma2</span>, <span class="va">phi</span>,</span>
+<span>        <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for rma.uni.selmodel</span></span>
+<span><span class="fu">confint</span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, <span class="va">level</span>, fixed<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">tau2</span>, <span class="va">delta</span>,</span>
+<span>        <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for rma.ls</span></span>
+<span><span class="fu">confint</span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, <span class="va">level</span>, fixed<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">alpha</span>,</span>
+<span>        <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -249,14 +249,14 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### meta-analysis of the log risk ratios using a random-effects model</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"REML"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### confidence interval for the total amount of heterogeneity</span></span>
-<span class="r-in"><span class="fu">confint</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### meta-analysis of the log risk ratios using a random-effects model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"REML"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### confidence interval for the total amount of heterogeneity</span></span></span>
+<span class="r-in"><span><span class="fu">confint</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        estimate   ci.lb   ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> tau^2    0.3132  0.1197  1.1115 </span>
@@ -264,12 +264,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> I^2(%)  92.2214 81.9177 97.6781 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> H^2     12.8558  5.5303 43.0680 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### mixed-effects model with absolute latitude in the model</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### confidence interval for the residual amount of heterogeneity</span></span>
-<span class="r-in"><span class="fu">confint</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### mixed-effects model with absolute latitude in the model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### confidence interval for the residual amount of heterogeneity</span></span></span>
+<span class="r-in"><span><span class="fu">confint</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        estimate   ci.lb   ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> tau^2    0.0764  0.0167  0.7849 </span>
@@ -277,59 +277,59 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> I^2(%)  68.3931 32.1080 95.6976 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> H^2      3.1639  1.4729 23.2428 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### multilevel random-effects model</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">district</span><span class="op">/</span><span class="va">school</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.konstantopoulos2011.html" class="external-link">dat.konstantopoulos2011</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### profile plots and confidence intervals for the variance components</span></span>
-<span class="r-in"><span class="co"># \dontrun{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="profile.rma.html">profile</a></span><span class="op">(</span><span class="va">res</span>, sigma2<span class="op">=</span><span class="fl">1</span>, steps<span class="op">=</span><span class="fl">40</span>, cline<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">confint</span><span class="op">(</span><span class="va">res</span>, sigma2<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sav</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### multilevel random-effects model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">district</span><span class="op">/</span><span class="va">school</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.konstantopoulos2011.html" class="external-link">dat.konstantopoulos2011</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### profile plots and confidence intervals for the variance components</span></span></span>
+<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="profile.rma.html">profile</a></span><span class="op">(</span><span class="va">res</span>, sigma2<span class="op">=</span><span class="fl">1</span>, steps<span class="op">=</span><span class="fl">40</span>, cline<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">confint</span><span class="op">(</span><span class="va">res</span>, sigma2<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sav</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           estimate  ci.lb  ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sigma^2.1   0.0651 0.0222 0.2072 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sigma.1     0.2551 0.1491 0.4552 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">sav</span><span class="op">$</span><span class="va">random</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="profile.rma.html">profile</a></span><span class="op">(</span><span class="va">res</span>, sigma2<span class="op">=</span><span class="fl">2</span>, steps<span class="op">=</span><span class="fl">40</span>, cline<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">confint</span><span class="op">(</span><span class="va">res</span>, sigma2<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sav</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">sav</span><span class="op">$</span><span class="va">random</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="profile.rma.html">profile</a></span><span class="op">(</span><span class="va">res</span>, sigma2<span class="op">=</span><span class="fl">2</span>, steps<span class="op">=</span><span class="fl">40</span>, cline<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">confint</span><span class="op">(</span><span class="va">res</span>, sigma2<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sav</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           estimate  ci.lb  ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sigma^2.2   0.0327 0.0163 0.0628 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> sigma.2     0.1809 0.1276 0.2507 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">sav</span><span class="op">$</span><span class="va">random</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">sav</span><span class="op">$</span><span class="va">random</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="confint.rma-1.png" alt="" width="864" height="768"></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### multivariate parameterization of the model</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, random <span class="op">=</span> <span class="op">~</span> <span class="va">school</span> <span class="op">|</span> <span class="va">district</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.konstantopoulos2011.html" class="external-link">dat.konstantopoulos2011</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### profile plots and confidence intervals for the variance component and correlation</span></span>
-<span class="r-in"><span class="co"># \dontrun{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="profile.rma.html">profile</a></span><span class="op">(</span><span class="va">res</span>, tau2<span class="op">=</span><span class="fl">1</span>, steps<span class="op">=</span><span class="fl">40</span>, cline<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">confint</span><span class="op">(</span><span class="va">res</span>, tau2<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sav</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### multivariate parameterization of the model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, random <span class="op">=</span> <span class="op">~</span> <span class="va">school</span> <span class="op">|</span> <span class="va">district</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.konstantopoulos2011.html" class="external-link">dat.konstantopoulos2011</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### profile plots and confidence intervals for the variance component and correlation</span></span></span>
+<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="profile.rma.html">profile</a></span><span class="op">(</span><span class="va">res</span>, tau2<span class="op">=</span><span class="fl">1</span>, steps<span class="op">=</span><span class="fl">40</span>, cline<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">confint</span><span class="op">(</span><span class="va">res</span>, tau2<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sav</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       estimate  ci.lb  ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> tau^2   0.0978 0.0528 0.2398 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> tau     0.3127 0.2298 0.4897 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">sav</span><span class="op">$</span><span class="va">random</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="profile.rma.html">profile</a></span><span class="op">(</span><span class="va">res</span>, rho<span class="op">=</span><span class="fl">1</span>, steps<span class="op">=</span><span class="fl">40</span>, cline<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">confint</span><span class="op">(</span><span class="va">res</span>, rho<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sav</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">sav</span><span class="op">$</span><span class="va">random</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="profile.rma.html">profile</a></span><span class="op">(</span><span class="va">res</span>, rho<span class="op">=</span><span class="fl">1</span>, steps<span class="op">=</span><span class="fl">40</span>, cline<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">confint</span><span class="op">(</span><span class="va">res</span>, rho<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sav</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     estimate  ci.lb  ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> rho   0.6653 0.3282 0.8855 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">sav</span><span class="op">$</span><span class="va">random</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v<span class="op">=</span><span class="va">sav</span><span class="op">$</span><span class="va">random</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="confint.rma-2.png" alt="" width="864" height="768"></span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -344,7 +344,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

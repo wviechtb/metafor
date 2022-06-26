@@ -101,9 +101,9 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">llplot</span><span class="op">(</span><span class="va">measure</span>, <span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">data</span>, <span class="va">subset</span>, drop00<span class="op">=</span><span class="cn">TRUE</span>,
-       xvals<span class="op">=</span><span class="fl">1000</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>, scale<span class="op">=</span><span class="cn">TRUE</span>,
-       <span class="va">lty</span>, <span class="va">lwd</span>, <span class="va">col</span>, level<span class="op">=</span><span class="fl">99.99</span>, refline<span class="op">=</span><span class="fl">0</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">llplot</span><span class="op">(</span><span class="va">measure</span>, <span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">data</span>, <span class="va">subset</span>, drop00<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>       xvals<span class="op">=</span><span class="fl">1000</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>, scale<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>       <span class="va">lty</span>, <span class="va">lwd</span>, <span class="va">col</span>, level<span class="op">=</span><span class="fl">99.99</span>, refline<span class="op">=</span><span class="fl">0</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -206,16 +206,16 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### draw likelihoods</span></span>
-<span class="r-in"><span class="fu">llplot</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"GEN"</span>, yi<span class="op">=</span><span class="va">yi</span>, vi<span class="op">=</span><span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, lwd<span class="op">=</span><span class="fl">1</span>, refline<span class="op">=</span><span class="cn">NA</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### draw likelihoods</span></span></span>
+<span class="r-in"><span><span class="fu">llplot</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"GEN"</span>, yi<span class="op">=</span><span class="va">yi</span>, vi<span class="op">=</span><span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, lwd<span class="op">=</span><span class="fl">1</span>, refline<span class="op">=</span><span class="cn">NA</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">3</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="llplot-1.png" alt="" width="864" height="768"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### create plot (Figure 2 in van Houwelingen, Zwinderman, &amp; Stijnen, 1993)</span></span>
-<span class="r-in"><span class="fu">llplot</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">b.xci</span>, n1i<span class="op">=</span><span class="va">nci</span>, ci<span class="op">=</span><span class="va">b.xti</span>, n2i<span class="op">=</span><span class="va">nti</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.collins1985a.html" class="external-link">dat.collins1985a</a></span>,</span>
-<span class="r-in">       lwd<span class="op">=</span><span class="fl">1</span>, refline<span class="op">=</span><span class="cn">NA</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, drop00<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### create plot (Figure 2 in van Houwelingen, Zwinderman, &amp; Stijnen, 1993)</span></span></span>
+<span class="r-in"><span><span class="fu">llplot</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">b.xci</span>, n1i<span class="op">=</span><span class="va">nci</span>, ci<span class="op">=</span><span class="va">b.xti</span>, n2i<span class="op">=</span><span class="va">nti</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.collins1985a.html" class="external-link">dat.collins1985a</a></span>,</span></span>
+<span class="r-in"><span>       lwd<span class="op">=</span><span class="fl">1</span>, refline<span class="op">=</span><span class="cn">NA</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">4</span>,<span class="fl">4</span><span class="op">)</span>, drop00<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Studies with NAs omitted from plotting.</span>
 <span class="r-plt img"><img src="llplot-2.png" alt="" width="864" height="768"></span>
 </code></pre></div>
@@ -232,7 +232,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

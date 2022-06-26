@@ -101,8 +101,8 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for rma</span>
-<span class="fu">vcov</span><span class="op">(</span><span class="va">object</span>, type<span class="op">=</span><span class="st">"fixed"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for rma</span></span>
+<span><span class="fu">vcov</span><span class="op">(</span><span class="va">object</span>, type<span class="op">=</span><span class="st">"fixed"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -144,21 +144,21 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit mixed-effects model with absolute latitude and publication year as moderators</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">year</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### var-cov matrix of the fixed effects (i.e., the model coefficients)</span></span>
-<span class="r-in"><span class="fu">vcov</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit mixed-effects model with absolute latitude and publication year as moderators</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">year</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### var-cov matrix of the fixed effects (i.e., the model coefficients)</span></span></span>
+<span class="r-in"><span><span class="fu">vcov</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             intrcpt         ablat          year</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt 846.5702229 -0.1783751581 -0.4272176864</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ablat    -0.1783752  0.0001047356  0.0000889397</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> year     -0.4272177  0.0000889397  0.0002156144</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### marginal var-cov matrix of the observed log risk ratios</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu">vcov</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"obs"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### marginal var-cov matrix of the observed log risk ratios</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu">vcov</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"obs"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        1     2     3     4     5     6     7     8     9    10    11    12    13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  0.436 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  0.000 0.305 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000</span>
@@ -173,9 +173,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.123 0.000 0.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.643 0.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.182</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### var-cov matrix of the fitted values</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu">vcov</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"fitted"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### var-cov matrix of the fitted values</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu">vcov</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"fitted"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         1      2      3      4      5      6      7      8     9     10     11    12     13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.075  0.066  0.037 -0.024  0.009  0.059  0.006 -0.014 0.018  0.034  0.003 0.012 -0.011</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   0.066  0.072  0.040  0.011 -0.009  0.056 -0.004 -0.023 0.012  0.038 -0.007 0.014  0.000</span>
@@ -190,9 +190,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11  0.003 -0.007  0.005 -0.004  0.032  0.003  0.026  0.032 0.019  0.005  0.027 0.013  0.013</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12  0.012  0.014  0.015  0.021  0.012  0.013  0.013  0.014 0.014  0.015  0.013 0.015  0.017</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13 -0.011  0.000  0.008  0.047  0.008 -0.002  0.012  0.020 0.010  0.010  0.013 0.017  0.029</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### var-cov matrix of the residuals</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu">vcov</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"resid"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### var-cov matrix of the residuals</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu">vcov</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"resid"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         1      2      3      4      5      6      7      8      9     10     11     12     13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.361 -0.066 -0.037  0.024 -0.009 -0.059 -0.006  0.014 -0.018 -0.034 -0.003 -0.012  0.011</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  -0.066  0.233 -0.040 -0.011  0.009 -0.056  0.004  0.023 -0.012 -0.038  0.007 -0.014  0.000</span>
@@ -221,7 +221,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

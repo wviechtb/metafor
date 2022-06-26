@@ -139,18 +139,18 @@ $(x, name) &lt;- value</code></pre></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### copy data into 'dat' and examine data</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.viechtbauer2021.html" class="external-link">dat.viechtbauer2021</a></span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### calculate log odds ratios and corresponding sampling variances</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">xTi</span>, n1i<span class="op">=</span><span class="va">nTi</span>, ci<span class="op">=</span><span class="va">xCi</span>, n2i<span class="op">=</span><span class="va">nCi</span>, add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"all"</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit mixed-effects meta-regression model</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">dose</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### get studentized residuals</span></span>
-<span class="r-in"><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu"><a href="residuals.rma.html">rstudent</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sav</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### copy data into 'dat' and examine data</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.viechtbauer2021.html" class="external-link">dat.viechtbauer2021</a></span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### calculate log odds ratios and corresponding sampling variances</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">xTi</span>, n1i<span class="op">=</span><span class="va">nTi</span>, ci<span class="op">=</span><span class="va">xCi</span>, n2i<span class="op">=</span><span class="va">nCi</span>, add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"all"</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit mixed-effects meta-regression model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">dose</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### get studentized residuals</span></span></span>
+<span class="r-in"><span><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu"><a href="residuals.rma.html">rstudent</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sav</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      resid     se       z </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.5344 0.4849  1.1021 </span>
@@ -174,24 +174,24 @@ $(x, name) &lt;- value</code></pre></div>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 19  0.3425 0.3941  0.8690 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 20 -0.3079 0.4618 -0.6667 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### studies with studentized residuals larger than +-1.96</span></span>
-<span class="r-in"><span class="va">sav</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">sav</span><span class="op">$</span><span class="va">z</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1.96</span>,<span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### studies with studentized residuals larger than +-1.96</span></span></span>
+<span class="r-in"><span><span class="va">sav</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">sav</span><span class="op">$</span><span class="va">z</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1.96</span>,<span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     resid     se       z </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 -0.9963 0.3195 -3.1187 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9  0.7779 0.3678  2.1149 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### variables specified are automatically searched for within the object itself</span></span>
-<span class="r-in"><span class="va">sav</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1.96</span>,<span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### variables specified are automatically searched for within the object itself</span></span></span>
+<span class="r-in"><span><span class="va">sav</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1.96</span>,<span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     resid     se       z </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 -0.9963 0.3195 -3.1187 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9  0.7779 0.3678  2.1149 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### note: this behavior is specific to 'rma.list' objects; this doesn't work for regular data frames</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### note: this behavior is specific to 'rma.list' objects; this doesn't work for regular data frames</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -206,7 +206,7 @@ $(x, name) &lt;- value</code></pre></div>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

@@ -101,16 +101,16 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for rma.mv</span>
-<span class="fu"><a href="influence.rma.uni.html">cooks.distance</a></span><span class="op">(</span><span class="va">model</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">cluster</span>,
-               reestimate<span class="op">=</span><span class="cn">TRUE</span>, parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma.mv</span>
-<span class="fu"><a href="influence.rma.uni.html">dfbetas</a></span><span class="op">(</span><span class="va">model</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">cluster</span>,
-        reestimate<span class="op">=</span><span class="cn">TRUE</span>, parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma.mv</span>
-<span class="fu"><a href="influence.rma.uni.html">hatvalues</a></span><span class="op">(</span><span class="va">model</span>, type<span class="op">=</span><span class="st">"diagonal"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for rma.mv</span></span>
+<span><span class="fu"><a href="influence.rma.uni.html">cooks.distance</a></span><span class="op">(</span><span class="va">model</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">cluster</span>,</span>
+<span>               reestimate<span class="op">=</span><span class="cn">TRUE</span>, parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for rma.mv</span></span>
+<span><span class="fu"><a href="influence.rma.uni.html">dfbetas</a></span><span class="op">(</span><span class="va">model</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">cluster</span>,</span>
+<span>        reestimate<span class="op">=</span><span class="cn">TRUE</span>, parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for rma.mv</span></span>
+<span><span class="fu"><a href="influence.rma.uni.html">hatvalues</a></span><span class="op">(</span><span class="va">model</span>, type<span class="op">=</span><span class="st">"diagonal"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -182,12 +182,12 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### copy data from Konstantopoulos (2011) into 'dat'</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.konstantopoulos2011.html" class="external-link">dat.konstantopoulos2011</a></span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### multilevel random-effects model</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">district</span><span class="op">/</span><span class="va">school</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### copy data from Konstantopoulos (2011) into 'dat'</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.konstantopoulos2011.html" class="external-link">dat.konstantopoulos2011</a></span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### multilevel random-effects model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, random <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">district</span><span class="op">/</span><span class="va">school</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">res</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 56; method: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -208,10 +208,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### Cook's distance for each observed outcome</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="influence.rma.uni.html">cooks.distance</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">x</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### Cook's distance for each observed outcome</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="influence.rma.uni.html">cooks.distance</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            1            2            3            4            5            6            7 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1.965212e-03 2.989768e-03 2.638140e-03 3.873368e-03 1.954562e-04 2.049672e-02 1.172821e-03 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            8            9           10           11           12           13           14 </span>
@@ -228,22 +228,22 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6.412251e-03 3.831098e-05 3.937144e-03 1.780433e-03 1.374408e-03 2.479767e-02 2.281846e-02 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           50           51           52           53           54           55           56 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2.803636e-04 3.453698e-03 1.101867e-02 1.405349e-04 1.257869e-02 1.606173e-03 4.733739e-03 </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, type<span class="op">=</span><span class="st">"o"</span>, pch<span class="op">=</span><span class="fl">19</span>, xlab<span class="op">=</span><span class="st">"Observed Outcome"</span>, ylab<span class="op">=</span><span class="st">"Cook's Distance"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, type<span class="op">=</span><span class="st">"o"</span>, pch<span class="op">=</span><span class="fl">19</span>, xlab<span class="op">=</span><span class="st">"Observed Outcome"</span>, ylab<span class="op">=</span><span class="st">"Cook's Distance"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="influence.rma.mv-1.png" alt="" width="864" height="768"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### Cook's distance for each district</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="influence.rma.uni.html">cooks.distance</a></span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">district</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">x</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### Cook's distance for each district</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="influence.rma.uni.html">cooks.distance</a></span><span class="op">(</span><span class="va">res</span>, cluster<span class="op">=</span><span class="va">district</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           11           12           18           27           56           58           71 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.0693784140 0.0161880606 0.0419849759 0.1192089452 0.0213566370 0.1014506985 0.5585174853 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           86           91          108          644 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.0656500671 0.0037438517 0.0548839759 0.0003441647 </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, type<span class="op">=</span><span class="st">"o"</span>, pch<span class="op">=</span><span class="fl">19</span>, xlab<span class="op">=</span><span class="st">"District"</span>, ylab<span class="op">=</span><span class="st">"Cook's Distance"</span>, xaxt<span class="op">=</span><span class="st">"n"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span>side<span class="op">=</span><span class="fl">1</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, type<span class="op">=</span><span class="st">"o"</span>, pch<span class="op">=</span><span class="fl">19</span>, xlab<span class="op">=</span><span class="st">"District"</span>, ylab<span class="op">=</span><span class="st">"Cook's Distance"</span>, xaxt<span class="op">=</span><span class="st">"n"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span>side<span class="op">=</span><span class="fl">1</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="influence.rma.mv-2.png" alt="" width="864" height="768"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### hat values</span></span>
-<span class="r-in"><span class="fu"><a href="influence.rma.uni.html">hatvalues</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### hat values</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="influence.rma.uni.html">hatvalues</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           1           2           3           4           5           6           7           8 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.018246414 0.018246414 0.015562154 0.015562154 0.024305990 0.024305990 0.023796820 0.020021978 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           9          10          11          12          13          14          15          16 </span>
@@ -272,7 +272,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

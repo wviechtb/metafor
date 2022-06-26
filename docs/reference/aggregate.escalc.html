@@ -101,10 +101,10 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for escalc</span>
-<span class="fu">aggregate</span><span class="op">(</span><span class="va">x</span>, <span class="va">cluster</span>, <span class="va">time</span>, <span class="va">obs</span>, <span class="va">V</span>, struct<span class="op">=</span><span class="st">"CS"</span>, <span class="va">rho</span>, <span class="va">phi</span>,
-          weighted<span class="op">=</span><span class="cn">TRUE</span>, checkpd<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">fun</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span>,
-          addk<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">subset</span>, <span class="va">select</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for escalc</span></span>
+<span><span class="fu">aggregate</span><span class="op">(</span><span class="va">x</span>, <span class="va">cluster</span>, <span class="va">time</span>, <span class="va">obs</span>, <span class="va">V</span>, struct<span class="op">=</span><span class="st">"CS"</span>, <span class="va">rho</span>, <span class="va">phi</span>,</span>
+<span>          weighted<span class="op">=</span><span class="cn">TRUE</span>, checkpd<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">fun</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>          addk<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">subset</span>, <span class="va">select</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -200,9 +200,9 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### copy data into 'dat' and examine data</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.konstantopoulos2011.html" class="external-link">dat.konstantopoulos2011</a></span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">11</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### copy data into 'dat' and examine data</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.konstantopoulos2011.html" class="external-link">dat.konstantopoulos2011</a></span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">11</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    district school study year     yi    vi </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1        11      1     1 1976 -0.180 0.118 </span>
@@ -217,11 +217,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10       18      2    10 1994  0.380 0.043 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11       18      3    11 1994  0.290 0.012 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### aggregate estimates to the district level, assuming independent sampling</span></span>
-<span class="r-in"><span class="co">### errors for multiples studies/schools within the same district</span></span>
-<span class="r-in"><span class="va">agg</span> <span class="op">&lt;-</span> <span class="fu">aggregate</span><span class="op">(</span><span class="va">dat</span>, cluster<span class="op">=</span><span class="va">district</span>, struct<span class="op">=</span><span class="st">"ID"</span>, addk<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">agg</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### aggregate estimates to the district level, assuming independent sampling</span></span></span>
+<span class="r-in"><span><span class="co">### errors for multiples studies/schools within the same district</span></span></span>
+<span class="r-in"><span><span class="va">agg</span> <span class="op">&lt;-</span> <span class="fu">aggregate</span><span class="op">(</span><span class="va">dat</span>, cluster<span class="op">=</span><span class="va">district</span>, struct<span class="op">=</span><span class="st">"ID"</span>, addk<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">agg</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    district school study   year     yi    vi ki </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1        11    2.5   2.5 1976.0 -0.126 0.032  4 </span>
@@ -236,10 +236,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10      108    3.0  50.0 2000.0  0.015 0.006  5 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11      644    2.5  54.5 1994.5  0.162 0.019  4 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### copy data into 'dat' and examine data</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.assink2016.html" class="external-link">dat.assink2016</a></span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">19</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### copy data into 'dat' and examine data</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.assink2016.html" class="external-link">dat.assink2016</a></span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">19</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    study esid id      yi     vi pubstatus year deltype</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1    1  1  0.9066 0.0740         1  4.5 general</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      1    2  2  0.4295 0.0398         1  4.5 general</span>
@@ -260,20 +260,20 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 17     3    8 17  1.0311 0.3132         1 -8.5 general</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 18     3    9 18  0.9409 0.1487         1 -6.5 general</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 19     3   10 19  0.6263 0.2139         1 -6.5 general</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### note: 'dat' is a regular data frame</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### note: 'dat' is a regular data frame</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "data.frame"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### turn data frame into an 'escalc' object</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>yi<span class="op">=</span><span class="va">yi</span>, vi<span class="op">=</span><span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### turn data frame into an 'escalc' object</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>yi<span class="op">=</span><span class="va">yi</span>, vi<span class="op">=</span><span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "escalc"     "data.frame"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### aggregate the estimates to the study level, assuming a CS structure for</span></span>
-<span class="r-in"><span class="co">### the sampling errors within studies with a correlation of 0.6</span></span>
-<span class="r-in"><span class="va">agg</span> <span class="op">&lt;-</span> <span class="fu">aggregate</span><span class="op">(</span><span class="va">dat</span>, cluster<span class="op">=</span><span class="va">study</span>, rho<span class="op">=</span><span class="fl">0.6</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">agg</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### aggregate the estimates to the study level, assuming a CS structure for</span></span></span>
+<span class="r-in"><span><span class="co">### the sampling errors within studies with a correlation of 0.6</span></span></span>
+<span class="r-in"><span><span class="va">agg</span> <span class="op">&lt;-</span> <span class="fu">aggregate</span><span class="op">(</span><span class="va">dat</span>, cluster<span class="op">=</span><span class="va">study</span>, rho<span class="op">=</span><span class="fl">0.6</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">agg</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    study esid   id      yi     vi pubstatus  year deltype </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1  3.5  3.5  0.1629 0.0197         1   4.5 general </span>
@@ -294,11 +294,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 16    16  8.5 86.5  0.0181 0.0169         1   2.5  covert </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 17    17  3.5 97.5 -0.0552 0.0072         1   5.5 general </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### use vcalc() and then the V argument</span></span>
-<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="vcalc.html">vcalc</a></span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, obs<span class="op">=</span><span class="va">esid</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fl">0.6</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">agg</span> <span class="op">&lt;-</span> <span class="fu">aggregate</span><span class="op">(</span><span class="va">dat</span>, cluster<span class="op">=</span><span class="va">study</span>, V<span class="op">=</span><span class="va">V</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">agg</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### use vcalc() and then the V argument</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="vcalc.html">vcalc</a></span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, obs<span class="op">=</span><span class="va">esid</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fl">0.6</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">agg</span> <span class="op">&lt;-</span> <span class="fu">aggregate</span><span class="op">(</span><span class="va">dat</span>, cluster<span class="op">=</span><span class="va">study</span>, V<span class="op">=</span><span class="va">V</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">agg</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    study esid   id      yi     vi pubstatus  year deltype </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1  3.5  3.5  0.1629 0.0197         1   4.5 general </span>
@@ -319,13 +319,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 16    16  8.5 86.5  0.0181 0.0169         1   2.5  covert </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 17    17  3.5 97.5 -0.0552 0.0072         1   5.5 general </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### use a correlation of 0.7 for effect sizes corresponding to the same type of</span></span>
-<span class="r-in"><span class="co">### delinquent behavior and a correlation of 0.5 for effect sizes corresponding</span></span>
-<span class="r-in"><span class="co">### to different types of delinquent behavior</span></span>
-<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="vcalc.html">vcalc</a></span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, type<span class="op">=</span><span class="va">deltype</span>, obs<span class="op">=</span><span class="va">esid</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">agg</span> <span class="op">&lt;-</span> <span class="fu">aggregate</span><span class="op">(</span><span class="va">dat</span>, cluster<span class="op">=</span><span class="va">study</span>, V<span class="op">=</span><span class="va">V</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">agg</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### use a correlation of 0.7 for effect sizes corresponding to the same type of</span></span></span>
+<span class="r-in"><span><span class="co">### delinquent behavior and a correlation of 0.5 for effect sizes corresponding</span></span></span>
+<span class="r-in"><span><span class="co">### to different types of delinquent behavior</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="vcalc.html">vcalc</a></span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, type<span class="op">=</span><span class="va">deltype</span>, obs<span class="op">=</span><span class="va">esid</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">agg</span> <span class="op">&lt;-</span> <span class="fu">aggregate</span><span class="op">(</span><span class="va">dat</span>, cluster<span class="op">=</span><span class="va">study</span>, V<span class="op">=</span><span class="va">V</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">agg</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    study esid   id      yi     vi pubstatus  year deltype </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1  3.5  3.5  0.1275 0.0190         1   4.5 general </span>
@@ -346,15 +346,15 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 16    16  8.5 86.5 -0.2268 0.0176         1   2.5  covert </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 17    17  3.5 97.5 -0.0914 0.0071         1   5.5 general </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### reshape 'dat.ishak2007' into long format</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.ishak2007.html" class="external-link">dat.ishak2007</a></span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/reshape.html" class="external-link">reshape</a></span><span class="op">(</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.ishak2007.html" class="external-link">dat.ishak2007</a></span>, direction<span class="op">=</span><span class="st">"long"</span>, idvar<span class="op">=</span><span class="st">"study"</span>, v.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"yi"</span>,<span class="st">"vi"</span><span class="op">)</span>,</span>
-<span class="r-in">               varying<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">6</span>,<span class="fl">8</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">5</span>,<span class="fl">7</span>,<span class="fl">9</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">study</span>, <span class="va">time</span><span class="op">)</span>,<span class="op">]</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">yi</span><span class="op">)</span>,<span class="op">]</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">8</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### reshape 'dat.ishak2007' into long format</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.ishak2007.html" class="external-link">dat.ishak2007</a></span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/reshape.html" class="external-link">reshape</a></span><span class="op">(</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.ishak2007.html" class="external-link">dat.ishak2007</a></span>, direction<span class="op">=</span><span class="st">"long"</span>, idvar<span class="op">=</span><span class="st">"study"</span>, v.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"yi"</span>,<span class="st">"vi"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>               varying<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">6</span>,<span class="fl">8</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">5</span>,<span class="fl">7</span>,<span class="fl">9</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">study</span>, <span class="va">time</span><span class="op">)</span>,<span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">yi</span><span class="op">)</span>,<span class="op">]</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">8</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               study mdur mbase time    yi    vi </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    Alegret (2001) 16.1  53.6    1 -33.4  14.3 </span>
@@ -366,11 +366,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7   Burchiel (1999) 13.6  48.0    3 -18.0   5.0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8       Chen (2003) 12.1  65.7    2 -32.9 125.0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### aggregate the estimates to the study level, assuming a CAR structure for</span></span>
-<span class="r-in"><span class="co">### the sampling errors within studies with an autocorrelation of 0.9</span></span>
-<span class="r-in"><span class="va">agg</span> <span class="op">&lt;-</span> <span class="fu">aggregate</span><span class="op">(</span><span class="va">dat</span>, cluster<span class="op">=</span><span class="va">study</span>, struct<span class="op">=</span><span class="st">"CAR"</span>, time<span class="op">=</span><span class="va">time</span>, phi<span class="op">=</span><span class="fl">0.9</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">agg</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### aggregate the estimates to the study level, assuming a CAR structure for</span></span></span>
+<span class="r-in"><span><span class="co">### the sampling errors within studies with an autocorrelation of 0.9</span></span></span>
+<span class="r-in"><span><span class="va">agg</span> <span class="op">&lt;-</span> <span class="fu">aggregate</span><span class="op">(</span><span class="va">dat</span>, cluster<span class="op">=</span><span class="va">study</span>, struct<span class="op">=</span><span class="st">"CAR"</span>, time<span class="op">=</span><span class="va">time</span>, phi<span class="op">=</span><span class="fl">0.9</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">agg</span>, <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               study mdur mbase time    yi    vi </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    Alegret (2001) 16.1  53.6    1 -33.4  14.3 </span>
@@ -393,7 +393,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

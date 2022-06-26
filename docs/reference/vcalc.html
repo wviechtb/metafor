@@ -101,8 +101,8 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, <span class="va">cluster</span>, <span class="va">subgroup</span>, <span class="va">obs</span>, <span class="va">type</span>, <span class="va">time1</span>, <span class="va">time2</span>, <span class="va">grp1</span>, <span class="va">grp2</span>, <span class="va">w1</span>, <span class="va">w2</span>,
-      <span class="va">data</span>, <span class="va">rho</span>, <span class="va">phi</span>, <span class="va">rvars</span>, checkpd<span class="op">=</span><span class="cn">TRUE</span>, nearpd<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, <span class="va">cluster</span>, <span class="va">subgroup</span>, <span class="va">obs</span>, <span class="va">type</span>, <span class="va">time1</span>, <span class="va">time2</span>, <span class="va">grp1</span>, <span class="va">grp2</span>, <span class="va">w1</span>, <span class="va">w2</span>,</span>
+<span>      <span class="va">data</span>, <span class="va">rho</span>, <span class="va">phi</span>, <span class="va">rvars</span>, checkpd<span class="op">=</span><span class="cn">TRUE</span>, nearpd<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -238,12 +238,12 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">############################################################################</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### see help(dat.assink2016) for further details on this dataset</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.assink2016.html" class="external-link">dat.assink2016</a></span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">9</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### see help(dat.assink2016) for further details on this dataset</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.assink2016.html" class="external-link">dat.assink2016</a></span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">9</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   study esid id      yi     vi pubstatus year deltype</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1     1    1  1  0.9066 0.0740         1  4.5 general</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2     1    2  2  0.4295 0.0398         1  4.5 general</span>
@@ -254,12 +254,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7     2    1  7  0.5117 0.0115         1  1.5 general</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8     2    2  8  0.4738 0.0076         1  1.5 general</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9     2    3  9  0.3544 0.0065         1  1.5 general</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### assume that the effect sizes within studies are correlated with rho=0.6</span></span>
-<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, obs<span class="op">=</span><span class="va">esid</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fl">0.6</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### show part of V matrix for studies 1 and 2</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span>, <span class="fl">4</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### assume that the effect sizes within studies are correlated with rho=0.6</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, obs<span class="op">=</span><span class="va">esid</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fl">0.6</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### show part of V matrix for studies 1 and 2</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span>, <span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         [,1]   [,2]   [,3]   [,4]   [,5]   [,6]   [,7]   [,8]   [,9]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.0740 0.0326 0.0358 0.0252 0.0297 0.0486 0.0000 0.0000 0.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.0326 0.0398 0.0263 0.0185 0.0218 0.0356 0.0000 0.0000 0.0000</span>
@@ -270,9 +270,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0115 0.0056 0.0052</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0056 0.0076 0.0042</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0052 0.0042 0.0065</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### or show as list of matrices</span></span>
-<span class="r-in"><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">round</span>, <span class="fl">4</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### or show as list of matrices</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">round</span>, <span class="fl">4</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`1`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        [,1]   [,2]   [,3]   [,4]   [,5]   [,6]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.0740 0.0326 0.0358 0.0252 0.0297 0.0486</span>
@@ -288,12 +288,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.0056 0.0076 0.0042</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.0052 0.0042 0.0065</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### use a correlation of 0.7 for effect sizes corresponding to the same type of</span></span>
-<span class="r-in"><span class="co">### delinquent behavior and a correlation of 0.5 for effect sizes corresponding</span></span>
-<span class="r-in"><span class="co">### to different types of delinquent behavior</span></span>
-<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, type<span class="op">=</span><span class="va">deltype</span>, obs<span class="op">=</span><span class="va">esid</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">round</span>, <span class="fl">3</span><span class="op">)</span><span class="op">[</span><span class="fl">16</span><span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### use a correlation of 0.7 for effect sizes corresponding to the same type of</span></span></span>
+<span class="r-in"><span><span class="co">### delinquent behavior and a correlation of 0.5 for effect sizes corresponding</span></span></span>
+<span class="r-in"><span><span class="co">### to different types of delinquent behavior</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, type<span class="op">=</span><span class="va">deltype</span>, obs<span class="op">=</span><span class="va">esid</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">round</span>, <span class="fl">3</span><span class="op">)</span><span class="op">[</span><span class="fl">16</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`16`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.091 0.045 0.027 0.044 0.030 0.039 0.076 0.028 0.034 0.030 0.039 0.043 0.039 0.067 0.028 0.032</span>
@@ -313,9 +313,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [15,] 0.028 0.038 0.017 0.038 0.018 0.024 0.033 0.017 0.029 0.025 0.033 0.037 0.033 0.029 0.034 0.027</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [16,] 0.032 0.043 0.019 0.043 0.021 0.027 0.037 0.019 0.033 0.029 0.038 0.042 0.038 0.033 0.027 0.044</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### examine the correlation matrix for study 16</span></span>
-<span class="r-in"><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">cov2cor</span><span class="op">)</span><span class="op">[</span><span class="fl">16</span><span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### examine the correlation matrix for study 16</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">cov2cor</span><span class="op">)</span><span class="op">[</span><span class="fl">16</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`16`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]  1.0  0.5  0.5  0.5  0.5  0.5  0.7  0.5  0.5   0.5   0.5   0.5   0.5   0.7   0.5   0.5</span>
@@ -335,13 +335,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [15,]  0.5  0.7  0.5  0.7  0.5  0.5  0.5  0.5  0.7   0.7   0.7   0.7   0.7   0.5   1.0   0.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [16,]  0.5  0.7  0.5  0.7  0.5  0.5  0.5  0.5  0.7   0.7   0.7   0.7   0.7   0.5   0.7   1.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">############################################################################</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### see help(dat.ishak2007) for further details on this dataset</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.ishak2007.html" class="external-link">dat.ishak2007</a></span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">5</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### see help(dat.ishak2007) for further details on this dataset</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.ishak2007.html" class="external-link">dat.ishak2007</a></span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               study   y1i  v1i   y2i   v2i   y3i v3i  y4i  v4i mdur mbase </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    Alegret (2001) -33.4 14.3    NA    NA    NA  NA &lt;NA&gt; &lt;NA&gt; 16.1  53.6 </span>
@@ -350,18 +350,18 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4   Burchiel (1999) -20.0  8.0 -20.0   8.0 -18.0 5.0 &lt;NA&gt; &lt;NA&gt; 13.6  48.0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5       Chen (2003)    NA   NA -32.9 125.0    NA  NA &lt;NA&gt; &lt;NA&gt; 12.1  65.7 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### create long format dataset</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/reshape.html" class="external-link">reshape</a></span><span class="op">(</span><span class="va">dat</span>, direction<span class="op">=</span><span class="st">"long"</span>, idvar<span class="op">=</span><span class="st">"study"</span>, v.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"yi"</span>,<span class="st">"vi"</span><span class="op">)</span>,</span>
-<span class="r-in">               varying<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">6</span>,<span class="fl">8</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">5</span>,<span class="fl">7</span>,<span class="fl">9</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">study</span>, <span class="va">time</span><span class="op">)</span>,<span class="op">]</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### remove missing measurement occasions from dat</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">yi</span><span class="op">)</span>,<span class="op">]</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### show the data for the first 5 studies</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">8</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### create long format dataset</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/reshape.html" class="external-link">reshape</a></span><span class="op">(</span><span class="va">dat</span>, direction<span class="op">=</span><span class="st">"long"</span>, idvar<span class="op">=</span><span class="st">"study"</span>, v.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"yi"</span>,<span class="st">"vi"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>               varying<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">6</span>,<span class="fl">8</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">5</span>,<span class="fl">7</span>,<span class="fl">9</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">study</span>, <span class="va">time</span><span class="op">)</span>,<span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### remove missing measurement occasions from dat</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">yi</span><span class="op">)</span>,<span class="op">]</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### show the data for the first 5 studies</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">8</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               study mdur mbase time    yi    vi </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    Alegret (2001) 16.1  53.6    1 -33.4  14.3 </span>
@@ -373,11 +373,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7   Burchiel (1999) 13.6  48.0    3 -18.0   5.0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8       Chen (2003) 12.1  65.7    2 -32.9 125.0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### construct the full (block diagonal) V matrix with an AR(1) structure</span></span>
-<span class="r-in"><span class="co">### assuming an autocorrelation of 0.97 as estimated by Ishak et al. (2007)</span></span>
-<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, time1<span class="op">=</span><span class="va">time</span>, phi<span class="op">=</span><span class="fl">0.97</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">V</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### construct the full (block diagonal) V matrix with an AR(1) structure</span></span></span>
+<span class="r-in"><span><span class="co">### assuming an autocorrelation of 0.97 as estimated by Ishak et al. (2007)</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, time1<span class="op">=</span><span class="va">time</span>, phi<span class="op">=</span><span class="fl">0.97</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">V</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]     [,2]     [,3] [,4]     [,5]     [,6]     [,7] [,8]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 14.3 0.000000 0.000000  0.0 0.000000 0.000000 0.000000    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.0 7.300000 6.069352  0.0 0.000000 0.000000 0.000000    0</span>
@@ -387,7 +387,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [6,]  0.0 0.000000 0.000000  0.0 7.760000 8.000000 6.134819    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [7,]  0.0 0.000000 0.000000  0.0 5.950774 6.134819 5.000000    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [8,]  0.0 0.000000 0.000000  0.0 0.000000 0.000000 0.000000  125</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]   [,2]   [,3] [,4]   [,5] [,6]   [,7] [,8]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1 0.0000 0.0000    0 0.0000 0.00 0.0000    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0 1.0000 0.9409    0 0.0000 0.00 0.0000    0</span>
@@ -397,9 +397,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [6,]    0 0.0000 0.0000    0 0.9700 1.00 0.9700    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [7,]    0 0.0000 0.0000    0 0.9409 0.97 1.0000    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [8,]    0 0.0000 0.0000    0 0.0000 0.00 0.0000    1</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### or show as a list of matrices</span></span>
-<span class="r-in"><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### or show as a list of matrices</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Alegret (2001)`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 14.3</span>
@@ -423,7 +423,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  125</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">cov2cor</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span class="r-in"><span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">cov2cor</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Alegret (2001)`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1</span>
@@ -447,13 +447,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">############################################################################</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### see help(dat.kalaian1996) for further details on this dataset</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.kalaian1996.html" class="external-link">dat.kalaian1996</a></span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">12</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### see help(dat.kalaian1996) for further details on this dataset</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.kalaian1996.html" class="external-link">dat.kalaian1996</a></span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fl">12</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    id                 study year n1i n2i outcome    yi     vi  hrs ets homework type</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   1 Alderman &amp; Powers (A) 1980  28  22  verbal  0.22 0.0817  7.0   1        1    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   2 Alderman &amp; Powers (B) 1980  39  40  verbal  0.09 0.0507 10.0   1        1    1</span>
@@ -467,11 +467,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 10      Evans &amp; Pike (A) 1973 145 129    math  0.12 0.0147 21.0   1        1    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11 11      Evans &amp; Pike (B) 1973  72 129  verbal  0.25 0.0218 21.0   1        1    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12 12      Evans &amp; Pike (B) 1973  72 129    math  0.06 0.0216 21.0   1        1    1</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### construct the variance-covariance matrix assuming rho = 0.66 for effect sizes</span></span>
-<span class="r-in"><span class="co">### corresponding to the 'verbal' and 'math' outcome types</span></span>
-<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, type<span class="op">=</span><span class="va">outcome</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fl">0.66</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span>, <span class="fl">4</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### construct the variance-covariance matrix assuming rho = 0.66 for effect sizes</span></span></span>
+<span class="r-in"><span><span class="co">### corresponding to the 'verbal' and 'math' outcome types</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, type<span class="op">=</span><span class="va">outcome</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fl">0.66</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">V</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">12</span><span class="op">]</span>, <span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         [,1]   [,2]   [,3]   [,4]   [,5]   [,6]   [,7]   [,8]   [,9]  [,10]  [,11]  [,12]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.0817 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.0000 0.0507 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000</span>
@@ -485,18 +485,18 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0097 0.0147 0.0000 0.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [11,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0218 0.0143</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [12,] 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000 0.0143 0.0216</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">############################################################################</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### see help(dat.berkey1998) for further details on this dataset</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.berkey1998.html" class="external-link">dat.berkey1998</a></span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### variables v1i and v2i correspond to the 2x2 var-cov matrices of the studies;</span></span>
-<span class="r-in"><span class="co">### so use these variables to construct the V matrix (note: since v1i and v2i are</span></span>
-<span class="r-in"><span class="co">### var-cov matrices and not correlation matrices, set vi=1 for all rows)</span></span>
-<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span>vi<span class="op">=</span><span class="fl">1</span>, cluster<span class="op">=</span><span class="va">author</span>, rvars<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">v1i</span>, <span class="va">v2i</span><span class="op">)</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">V</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### see help(dat.berkey1998) for further details on this dataset</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.berkey1998.html" class="external-link">dat.berkey1998</a></span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### variables v1i and v2i correspond to the 2x2 var-cov matrices of the studies;</span></span></span>
+<span class="r-in"><span><span class="co">### so use these variables to construct the V matrix (note: since v1i and v2i are</span></span></span>
+<span class="r-in"><span><span class="co">### var-cov matrices and not correlation matrices, set vi=1 for all rows)</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span>vi<span class="op">=</span><span class="fl">1</span>, cluster<span class="op">=</span><span class="va">author</span>, rvars<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">v1i</span>, <span class="va">v2i</span><span class="op">)</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">V</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         [,1]   [,2]   [,3]  [,4]   [,5]   [,6]   [,7]   [,8]   [,9]  [,10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.0075 0.0030 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.0030 0.0077 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000</span>
@@ -508,7 +508,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0009 0.0015 0.0000 0.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0148 0.0072</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0072 0.0304</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 1.00 0.39 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.39 1.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00</span>
@@ -520,9 +520,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.00 0.00 0.00 0.00 0.00 0.00 0.43 1.00 0.00  0.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 1.00  0.34</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.34  1.00</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### or show as a list of matrices</span></span>
-<span class="r-in"><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">author</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### or show as a list of matrices</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">author</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Pihlstrom et al.`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.00 0.39</span>
@@ -548,11 +548,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.00 0.34</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.34 1.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### construct the variance-covariance matrix assuming rho = 0.4 for effect sizes</span></span>
-<span class="r-in"><span class="co">### corresponding to the 'PD' and 'AL' outcome types</span></span>
-<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span>vi<span class="op">=</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">trial</span>, type<span class="op">=</span><span class="va">outcome</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fl">0.4</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">V</span>,<span class="fl">4</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### construct the variance-covariance matrix assuming rho = 0.4 for effect sizes</span></span></span>
+<span class="r-in"><span><span class="co">### corresponding to the 'PD' and 'AL' outcome types</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span>vi<span class="op">=</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">trial</span>, type<span class="op">=</span><span class="va">outcome</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fl">0.4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">V</span>,<span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         [,1]   [,2]   [,3]  [,4]   [,5]   [,6]   [,7]   [,8]   [,9]  [,10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,] 0.0075 0.0030 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [2,] 0.0030 0.0077 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0000 0.0000</span>
@@ -564,7 +564,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0008 0.0015 0.0000 0.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0148 0.0085</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10,] 0.0000 0.0000 0.0000 0e+00 0.0000 0.0000 0.0000 0.0000 0.0085 0.0304</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1,]  1.0  0.4  0.0  0.0  0.0  0.0  0.0  0.0  0.0   0.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [2,]  0.4  1.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0   0.0</span>
@@ -576,13 +576,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8,]  0.0  0.0  0.0  0.0  0.0  0.0  0.4  1.0  0.0   0.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9,]  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  1.0   0.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [10,]  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.4   1.0</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">############################################################################</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### see help(dat.knapp2017) for further details on this dataset</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.knapp2017.html" class="external-link">dat.knapp2017</a></span></span>
-<span class="r-in"><span class="va">dat</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### see help(dat.knapp2017) for further details on this dataset</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.knapp2017.html" class="external-link">dat.knapp2017</a></span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    study            task difficulty group1 group2 comp    yi    vi n_sz n_hc yi_iq vi_iq</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1    SOC (CANTAB)       3.83     SZ     HC    1  0.62 0.075   24   33  0.72 0.076</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      2    SOC (CANTAB)       3.83    SZ1     HC    1  0.46 0.047   44   44    NA    NA</span>
@@ -650,24 +650,24 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 64    29          BACS-J         NA    SZ3    HC3    3  0.31 0.121   15   19  1.00 0.134</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 65    30             TOL       3.83     SZ     HC    1  0.11 0.070   30   27    NA    NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 66    31 TOL (four-disk)       5.60     SZ     HC    1  0.87 0.036   60   60    NA    NA</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### create variable that indicates the task and difficulty combination as increasing integers</span></span>
-<span class="r-in"><span class="va">dat</span><span class="op">$</span><span class="va">task.diff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">   <span class="va">task.int</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">task</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">   <span class="va">diff.int</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">difficulty</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">   <span class="va">diff.int</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">diff.int</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
-<span class="r-in">   <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">task.int</span>, <span class="st">"."</span>, <span class="va">diff.int</span><span class="op">)</span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### construct correlation matrix for two tasks with four different difficulties where the</span></span>
-<span class="r-in"><span class="co">### correlation is 0.4 for different difficulties of the same task, 0.7 for the same</span></span>
-<span class="r-in"><span class="co">### difficulty of different tasks, and 0.28 for different difficulties of different tasks</span></span>
-<span class="r-in"><span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">0.4</span>, nrow<span class="op">=</span><span class="fl">8</span>, ncol<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">R</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">8</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">R</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.28</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">R</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0.7</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">R</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">8</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0.7</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, each<span class="op">=</span><span class="fl">4</span><span class="op">)</span>, <span class="st">"."</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">R</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### create variable that indicates the task and difficulty combination as increasing integers</span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">task.diff</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>   <span class="va">task.int</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">task</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="va">diff.int</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">difficulty</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="va">diff.int</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">diff.int</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">task.int</span>, <span class="st">"."</span>, <span class="va">diff.int</span><span class="op">)</span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### construct correlation matrix for two tasks with four different difficulties where the</span></span></span>
+<span class="r-in"><span><span class="co">### correlation is 0.4 for different difficulties of the same task, 0.7 for the same</span></span></span>
+<span class="r-in"><span><span class="co">### difficulty of different tasks, and 0.28 for different difficulties of different tasks</span></span></span>
+<span class="r-in"><span><span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">0.4</span>, nrow<span class="op">=</span><span class="fl">8</span>, ncol<span class="op">=</span><span class="fl">8</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">R</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">8</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">R</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0.28</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">R</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">:</span><span class="fl">8</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0.7</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">R</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">8</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">0.7</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, each<span class="op">=</span><span class="fl">4</span><span class="op">)</span>, <span class="st">"."</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">R</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1.1  1.2  1.3  1.4  2.1  2.2  2.3  2.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1.1 1.00 0.40 0.40 0.40 0.70 0.28 0.28 0.28</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1.2 0.40 1.00 0.40 0.40 0.28 0.70 0.28 0.28</span>
@@ -677,19 +677,19 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2.2 0.28 0.70 0.28 0.28 0.40 1.00 0.40 0.40</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2.3 0.28 0.28 0.70 0.28 0.40 0.40 1.00 0.40</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2.4 0.28 0.28 0.28 0.70 0.40 0.40 0.40 1.00</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### construct an approximate V matrix accounting for the use of shared groups and</span></span>
-<span class="r-in"><span class="co">### for correlations among tasks/difficulties as specified in the R matrix above</span></span>
-<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, grp1<span class="op">=</span><span class="va">group1</span>, grp2<span class="op">=</span><span class="va">group2</span>, w1<span class="op">=</span><span class="va">n_sz</span>, w2<span class="op">=</span><span class="va">n_hc</span>,</span>
-<span class="r-in">           obs<span class="op">=</span><span class="va">task.diff</span>, rho<span class="op">=</span><span class="va">R</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">Vs</span> <span class="op">&lt;-</span> <span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>  <span class="co"># study with multiple SZ groups and a single HC group</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### construct an approximate V matrix accounting for the use of shared groups and</span></span></span>
+<span class="r-in"><span><span class="co">### for correlations among tasks/difficulties as specified in the R matrix above</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, grp1<span class="op">=</span><span class="va">group1</span>, grp2<span class="op">=</span><span class="va">group2</span>, w1<span class="op">=</span><span class="va">n_sz</span>, w2<span class="op">=</span><span class="va">n_hc</span>,</span></span>
+<span class="r-in"><span>           obs<span class="op">=</span><span class="va">task.diff</span>, rho<span class="op">=</span><span class="va">R</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Vs</span> <span class="op">&lt;-</span> <span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>  <span class="co"># study with multiple SZ groups and a single HC group</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]      [,2]      [,3]      [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.0000000 0.4652832 0.3847419 0.4243294</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.4652832 1.0000000 0.3488477 0.3847419</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.3847419 0.3488477 1.0000000 0.3181424</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 0.4243294 0.3847419 0.3181424 1.0000000</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[[</span><span class="fl">6</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>  <span class="co"># study with two task types and multiple difficulties</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[[</span><span class="fl">6</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>  <span class="co"># study with two task types and multiple difficulties</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 1.00 0.40 0.40 0.40 0.70 0.28 0.28 0.28</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.40 1.00 0.40 0.40 0.28 0.70 0.28 0.28</span>
@@ -699,23 +699,23 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [6,] 0.28 0.70 0.28 0.28 0.40 1.00 0.40 0.40</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [7,] 0.28 0.28 0.70 0.28 0.40 0.40 1.00 0.40</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [8,] 0.28 0.28 0.28 0.70 0.40 0.40 0.40 1.00</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[[</span><span class="fl">12</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># study with multiple difficulties for the same task</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[[</span><span class="fl">12</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># study with multiple difficulties for the same task</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0  0.4  0.4  0.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.4  1.0  0.4  0.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.4  0.4  1.0  0.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [4,]  0.4  0.4  0.4  1.0</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[[</span><span class="fl">24</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># study with separate rows for males and females</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[[</span><span class="fl">24</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># study with separate rows for males and females</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0    1</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[[</span><span class="fl">29</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># study with separate rows for three genotypes</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov2cor</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[[</span><span class="fl">29</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># study with separate rows for three genotypes</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]    1    0    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    0    1    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]    0    0    1</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">############################################################################</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -730,7 +730,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

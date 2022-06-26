@@ -101,8 +101,8 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">regtest</span><span class="op">(</span><span class="va">x</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">ni</span>, <span class="va">subset</span>, <span class="va">data</span>,
-        model<span class="op">=</span><span class="st">"rma"</span>, predictor<span class="op">=</span><span class="st">"sei"</span>, ret.fit<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">regtest</span><span class="op">(</span><span class="va">x</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">ni</span>, <span class="va">subset</span>, <span class="va">data</span>,</span>
+<span>        model<span class="op">=</span><span class="st">"rma"</span>, predictor<span class="op">=</span><span class="st">"sei"</span>, ret.fit<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -222,15 +222,15 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### copy data into 'dat' and examine data</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.egger2001.html" class="external-link">dat.egger2001</a></span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### calculate log odds ratios and corresponding sampling variances (but remove ISIS-4 trial)</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">ai</span>, n1i<span class="op">=</span><span class="va">n1i</span>, ci<span class="op">=</span><span class="va">ci</span>, n2i<span class="op">=</span><span class="va">n2i</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">-</span><span class="fl">16</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit random-effects model</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### copy data into 'dat' and examine data</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.egger2001.html" class="external-link">dat.egger2001</a></span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### calculate log odds ratios and corresponding sampling variances (but remove ISIS-4 trial)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">ai</span>, n1i<span class="op">=</span><span class="va">n1i</span>, ci<span class="op">=</span><span class="va">ci</span>, n2i<span class="op">=</span><span class="va">n2i</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">-</span><span class="fl">16</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit random-effects model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 15; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -250,9 +250,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### classical Egger test</span></span>
-<span class="r-in"><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, model<span class="op">=</span><span class="st">"lm"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### classical Egger test</span></span></span>
+<span class="r-in"><span><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, model<span class="op">=</span><span class="st">"lm"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression Test for Funnel Plot Asymmetry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -262,9 +262,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for Funnel Plot Asymmetry: t = -3.1783, df = 13, p = 0.0073</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Limit Estimate (as sei -&gt; 0):   b = -0.1512 (CI: -0.5130, 0.2106)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### mixed-effects meta-regression version of the Egger test</span></span>
-<span class="r-in"><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### mixed-effects meta-regression version of the Egger test</span></span></span>
+<span class="r-in"><span><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression Test for Funnel Plot Asymmetry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -274,9 +274,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for Funnel Plot Asymmetry: z = -2.8062, p = 0.0050</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Limit Estimate (as sei -&gt; 0):   b = -0.1639 (CI: -0.5681, 0.2402)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### same tests, but passing outcomes directly</span></span>
-<span class="r-in"><span class="fu">regtest</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, model<span class="op">=</span><span class="st">"lm"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### same tests, but passing outcomes directly</span></span></span>
+<span class="r-in"><span><span class="fu">regtest</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, model<span class="op">=</span><span class="st">"lm"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression Test for Funnel Plot Asymmetry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -286,7 +286,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for Funnel Plot Asymmetry: t = -3.1783, df = 13, p = 0.0073</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Limit Estimate (as sei -&gt; 0):   b = -0.1512 (CI: -0.5130, 0.2106)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">regtest</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">regtest</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression Test for Funnel Plot Asymmetry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -296,18 +296,18 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for Funnel Plot Asymmetry: z = -2.8062, p = 0.0050</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Limit Estimate (as sei -&gt; 0):   b = -0.1639 (CI: -0.5681, 0.2402)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### if dat$yi is computed with escalc(), sample size information is stored in attributes</span></span>
-<span class="r-in"><span class="va">dat</span><span class="op">$</span><span class="va">yi</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### if dat$yi is computed with escalc(), sample size information is stored in attributes</span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.83034830 -1.05605267 -1.27833981 -0.04348511  0.22314355 -2.40751999 -1.28093385 -1.19170271</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] -0.69574796 -2.20827441 -2.03815988 -0.85015093 -0.79323064 -0.29933987 -1.57078846</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"ni")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]   76  270  400   94  298  115   48   43  151   54  169   56  252 2316  215</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"measure")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "OR"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### then this will also work</span></span>
-<span class="r-in"><span class="fu">regtest</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, predictor<span class="op">=</span><span class="st">"ni"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### then this will also work</span></span></span>
+<span class="r-in"><span><span class="fu">regtest</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, predictor<span class="op">=</span><span class="st">"ni"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression Test for Funnel Plot Asymmetry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -316,9 +316,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for Funnel Plot Asymmetry: z = 1.7938, p = 0.0728</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### similarly when passing a model object to the function</span></span>
-<span class="r-in"><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, model<span class="op">=</span><span class="st">"lm"</span>, predictor<span class="op">=</span><span class="st">"ni"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### similarly when passing a model object to the function</span></span></span>
+<span class="r-in"><span><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, model<span class="op">=</span><span class="st">"lm"</span>, predictor<span class="op">=</span><span class="st">"ni"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression Test for Funnel Plot Asymmetry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -327,7 +327,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for Funnel Plot Asymmetry: t = 2.8955, df = 13, p = 0.0125</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, model<span class="op">=</span><span class="st">"lm"</span>, predictor<span class="op">=</span><span class="st">"ninv"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, model<span class="op">=</span><span class="st">"lm"</span>, predictor<span class="op">=</span><span class="st">"ninv"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression Test for Funnel Plot Asymmetry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -337,7 +337,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for Funnel Plot Asymmetry: t = -2.3230, df = 13, p = 0.0370</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Limit Estimate (as ni -&gt; inf):  b = -0.3731 (CI: -0.6872, -0.0591)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, predictor<span class="op">=</span><span class="st">"ni"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, predictor<span class="op">=</span><span class="st">"ni"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression Test for Funnel Plot Asymmetry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -346,7 +346,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for Funnel Plot Asymmetry: z = 1.7938, p = 0.0728</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, predictor<span class="op">=</span><span class="st">"ninv"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, predictor<span class="op">=</span><span class="st">"ninv"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression Test for Funnel Plot Asymmetry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -356,11 +356,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for Funnel Plot Asymmetry: z = -1.4313, p = 0.1524</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Limit Estimate (as ni -&gt; inf):  b = -0.5636 (CI: -1.0712, -0.0559)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### otherwise have to supply sample sizes manually</span></span>
-<span class="r-in"><span class="va">dat</span><span class="op">$</span><span class="va">yi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span><span class="op">)</span> <span class="co"># this removes the 'ni' attribute from 'yi'</span></span>
-<span class="r-in"><span class="va">dat</span><span class="op">$</span><span class="va">nitotal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">n1i</span> <span class="op">+</span> <span class="va">n2i</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">regtest</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, ni<span class="op">=</span><span class="va">nitotal</span>, data<span class="op">=</span><span class="va">dat</span>, predictor<span class="op">=</span><span class="st">"ni"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### otherwise have to supply sample sizes manually</span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span><span class="op">)</span> <span class="co"># this removes the 'ni' attribute from 'yi'</span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">nitotal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dat</span>, <span class="va">n1i</span> <span class="op">+</span> <span class="va">n2i</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">regtest</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, ni<span class="op">=</span><span class="va">nitotal</span>, data<span class="op">=</span><span class="va">dat</span>, predictor<span class="op">=</span><span class="st">"ni"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression Test for Funnel Plot Asymmetry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -369,8 +369,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for Funnel Plot Asymmetry: z = 1.7938, p = 0.0728</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, predictor<span class="op">=</span><span class="st">"ni"</span>, ni<span class="op">=</span><span class="va">nitotal</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, predictor<span class="op">=</span><span class="st">"ni"</span>, ni<span class="op">=</span><span class="va">nitotal</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression Test for Funnel Plot Asymmetry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -379,13 +379,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for Funnel Plot Asymmetry: z = 1.7938, p = 0.0728</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### standard funnel plot (with standard errors on the y-axis)</span></span>
-<span class="r-in"><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res</span>, refline<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### regression test (by default the standard errors are used as predictor)</span></span>
-<span class="r-in"><span class="va">reg</span> <span class="op">&lt;-</span> <span class="fu">regtest</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">reg</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### standard funnel plot (with standard errors on the y-axis)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res</span>, refline<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### regression test (by default the standard errors are used as predictor)</span></span></span>
+<span class="r-in"><span><span class="va">reg</span> <span class="op">&lt;-</span> <span class="fu">regtest</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">reg</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression Test for Funnel Plot Asymmetry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -395,26 +395,26 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for Funnel Plot Asymmetry: z = -2.8062, p = 0.0050</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Limit Estimate (as sei -&gt; 0):   b = -0.1639 (CI: -0.5681, 0.2402)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### add regression line to funnel plot</span></span>
-<span class="r-in"><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1.8</span>,length<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">reg</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">reg</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">*</span><span class="va">se</span>, <span class="va">se</span>, lwd<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### regression test (using the sampling variances as predictor)</span></span>
-<span class="r-in"><span class="va">reg</span> <span class="op">&lt;-</span> <span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, predictor<span class="op">=</span><span class="st">"vi"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### add regression line to funnel plot (using the sampling variances as predictor)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">reg</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">reg</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">*</span><span class="va">se</span><span class="op">^</span><span class="fl">2</span>, <span class="va">se</span>, lwd<span class="op">=</span><span class="fl">3</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### add legend</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"bottomright"</span>, inset<span class="op">=</span><span class="fl">.02</span>, lty<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"solid"</span>,<span class="st">"dotted"</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">3</span>, cex<span class="op">=</span><span class="fl">0.9</span>, bg<span class="op">=</span><span class="st">"white"</span>,</span>
-<span class="r-in">       legend<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Standard Errors as Predictor"</span>,</span>
-<span class="r-in">                <span class="st">"Sampling Variances as Predictor"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### add regression line to funnel plot</span></span></span>
+<span class="r-in"><span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1.8</span>,length<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">reg</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">reg</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">*</span><span class="va">se</span>, <span class="va">se</span>, lwd<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### regression test (using the sampling variances as predictor)</span></span></span>
+<span class="r-in"><span><span class="va">reg</span> <span class="op">&lt;-</span> <span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, predictor<span class="op">=</span><span class="st">"vi"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### add regression line to funnel plot (using the sampling variances as predictor)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">reg</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">reg</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">*</span><span class="va">se</span><span class="op">^</span><span class="fl">2</span>, <span class="va">se</span>, lwd<span class="op">=</span><span class="fl">3</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### add legend</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"bottomright"</span>, inset<span class="op">=</span><span class="fl">.02</span>, lty<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"solid"</span>,<span class="st">"dotted"</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fl">3</span>, cex<span class="op">=</span><span class="fl">0.9</span>, bg<span class="op">=</span><span class="st">"white"</span>,</span></span>
+<span class="r-in"><span>       legend<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Standard Errors as Predictor"</span>,</span></span>
+<span class="r-in"><span>                <span class="st">"Sampling Variances as Predictor"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="regtest-1.png" alt="" width="864" height="768"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### testing for asymmetry after accounting for the influence of a moderator</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">year</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, model<span class="op">=</span><span class="st">"lm"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### testing for asymmetry after accounting for the influence of a moderator</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">year</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span>, model<span class="op">=</span><span class="st">"lm"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression Test for Funnel Plot Asymmetry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -423,7 +423,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for Funnel Plot Asymmetry: t = -3.1057, df = 12, p = 0.0091</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">regtest</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Regression Test for Funnel Plot Asymmetry</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -446,7 +446,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

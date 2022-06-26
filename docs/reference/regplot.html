@@ -101,18 +101,18 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">regplot</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma</span>
-<span class="fu">regplot</span><span class="op">(</span><span class="va">x</span>, <span class="va">mod</span>, pred<span class="op">=</span><span class="cn">TRUE</span>, ci<span class="op">=</span><span class="cn">TRUE</span>, pi<span class="op">=</span><span class="cn">FALSE</span>, shade<span class="op">=</span><span class="cn">TRUE</span>,
-        <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">predlim</span>, <span class="va">olim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>, <span class="va">at</span>, digits<span class="op">=</span><span class="fl">2L</span>,
-        <span class="va">transf</span>, <span class="va">atransf</span>, <span class="va">targs</span>, level<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">level</span>,
-        pch<span class="op">=</span><span class="fl">21</span>, <span class="va">psize</span>, plim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>,<span class="fl">3</span><span class="op">)</span>, col<span class="op">=</span><span class="st">"black"</span>, bg<span class="op">=</span><span class="st">"darkgray"</span>,
-        grid<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">refline</span>, label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, labsize<span class="op">=</span><span class="fl">1</span>,
-        <span class="va">lcol</span>, <span class="va">lwd</span>, <span class="va">lty</span>, legend<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">xvals</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for regplot</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">regplot</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for rma</span></span>
+<span><span class="fu">regplot</span><span class="op">(</span><span class="va">x</span>, <span class="va">mod</span>, pred<span class="op">=</span><span class="cn">TRUE</span>, ci<span class="op">=</span><span class="cn">TRUE</span>, pi<span class="op">=</span><span class="cn">FALSE</span>, shade<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>        <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">predlim</span>, <span class="va">olim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>, <span class="va">at</span>, digits<span class="op">=</span><span class="fl">2L</span>,</span>
+<span>        <span class="va">transf</span>, <span class="va">atransf</span>, <span class="va">targs</span>, level<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">level</span>,</span>
+<span>        pch<span class="op">=</span><span class="fl">21</span>, <span class="va">psize</span>, plim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>,<span class="fl">3</span><span class="op">)</span>, col<span class="op">=</span><span class="st">"black"</span>, bg<span class="op">=</span><span class="st">"darkgray"</span>,</span>
+<span>        grid<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">refline</span>, label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, labsize<span class="op">=</span><span class="fl">1</span>,</span>
+<span>        <span class="va">lcol</span>, <span class="va">lwd</span>, <span class="va">lty</span>, legend<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">xvals</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for regplot</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -286,17 +286,17 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### copy BCG vaccine data into 'dat'</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">############################################################################</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit mixed-effects model with absolute latitude as a moderator</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### copy BCG vaccine data into 'dat'</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit mixed-effects model with absolute latitude as a moderator</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -321,35 +321,35 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### draw plot</span></span>
-<span class="r-in"><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### draw plot</span></span></span>
+<span class="r-in"><span><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="regplot-1.png" alt="" width="864" height="768"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### adjust x-axis limits and back-transform to risk ratios</span></span>
-<span class="r-in"><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### adjust x-axis limits and back-transform to risk ratios</span></span></span>
+<span class="r-in"><span><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="regplot-2.png" alt="" width="864" height="768"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### also extend the prediction limits for the regression line</span></span>
-<span class="r-in"><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, predlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### also extend the prediction limits for the regression line</span></span></span>
+<span class="r-in"><span><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, predlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="regplot-3.png" alt="" width="864" height="768"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### add the prediction interval to the plot, add a reference line at 1, and add a legend</span></span>
-<span class="r-in"><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, pi<span class="op">=</span><span class="cn">TRUE</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>,</span>
-<span class="r-in">        xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, predlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, transf<span class="op">=</span><span class="va">exp</span>, refline<span class="op">=</span><span class="fl">1</span>, legend<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### add the prediction interval to the plot, add a reference line at 1, and add a legend</span></span></span>
+<span class="r-in"><span><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, pi<span class="op">=</span><span class="cn">TRUE</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>,</span></span>
+<span class="r-in"><span>        xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, predlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, transf<span class="op">=</span><span class="va">exp</span>, refline<span class="op">=</span><span class="fl">1</span>, legend<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="regplot-4.png" alt="" width="864" height="768"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### label points outside of the prediction interval</span></span>
-<span class="r-in"><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, pi<span class="op">=</span><span class="cn">TRUE</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>,</span>
-<span class="r-in">        xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, predlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, transf<span class="op">=</span><span class="va">exp</span>, refline<span class="op">=</span><span class="fl">1</span>, legend<span class="op">=</span><span class="cn">TRUE</span>,</span>
-<span class="r-in">        label<span class="op">=</span><span class="st">"piout"</span>, labsize<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### label points outside of the prediction interval</span></span></span>
+<span class="r-in"><span><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, pi<span class="op">=</span><span class="cn">TRUE</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>,</span></span>
+<span class="r-in"><span>        xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, predlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, transf<span class="op">=</span><span class="va">exp</span>, refline<span class="op">=</span><span class="fl">1</span>, legend<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>        label<span class="op">=</span><span class="st">"piout"</span>, labsize<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="regplot-5.png" alt="" width="864" height="768"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">############################################################################</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit mixed-effects model with absolute latitude and publication year as moderators</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">year</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit mixed-effects model with absolute latitude and publication year as moderators</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">year</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -375,18 +375,18 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### plot the marginal relationships</span></span>
-<span class="r-in"><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### plot the marginal relationships</span></span></span>
+<span class="r-in"><span><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="regplot-6.png" alt="" width="864" height="768"></span>
-<span class="r-in"><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"year"</span>,  xlab<span class="op">=</span><span class="st">"Publication Year"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"year"</span>,  xlab<span class="op">=</span><span class="st">"Publication Year"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="regplot-7.png" alt="" width="864" height="768"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">############################################################################</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit a quadratic polynomial meta-regression model</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">ablat</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit a quadratic polynomial meta-regression model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">ablat</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -412,26 +412,26 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### compute predicted values using predict()</span></span>
-<span class="r-in"><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span>,length<span class="op">=</span><span class="fl">601</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">xs</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### can now pass these results to the 'pred' argument (and have to specify xvals accordingly)</span></span>
-<span class="r-in"><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, pred<span class="op">=</span><span class="va">tmp</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, xvals<span class="op">=</span><span class="va">xs</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### compute predicted values using predict()</span></span></span>
+<span class="r-in"><span><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span>,length<span class="op">=</span><span class="fl">601</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">xs</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### can now pass these results to the 'pred' argument (and have to specify xvals accordingly)</span></span></span>
+<span class="r-in"><span><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, pred<span class="op">=</span><span class="va">tmp</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, xvals<span class="op">=</span><span class="va">xs</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="regplot-8.png" alt="" width="864" height="768"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### back-transform to risk ratios and add reference line</span></span>
-<span class="r-in"><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, pred<span class="op">=</span><span class="va">tmp</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, xvals<span class="op">=</span><span class="va">xs</span>,</span>
-<span class="r-in">        transf<span class="op">=</span><span class="va">exp</span>, refline<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### back-transform to risk ratios and add reference line</span></span></span>
+<span class="r-in"><span><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, pred<span class="op">=</span><span class="va">tmp</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, xvals<span class="op">=</span><span class="va">xs</span>,</span></span>
+<span class="r-in"><span>        transf<span class="op">=</span><span class="va">exp</span>, refline<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="regplot-9.png" alt="" width="864" height="768"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">############################################################################</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit a model with an interaction between a quantitative and a categorical predictor</span></span>
-<span class="r-in"><span class="co">### (note: just for illustration purposes; this model is too complex for this dataset)</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">*</span> <span class="va">alloc</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit a model with an interaction between a quantitative and a categorical predictor</span></span></span>
+<span class="r-in"><span><span class="co">### (note: just for illustration purposes; this model is too complex for this dataset)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">*</span> <span class="va">alloc</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -460,21 +460,21 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### draw bubble plot but do not add regression line or CI</span></span>
-<span class="r-in"><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, pred<span class="op">=</span><span class="cn">FALSE</span>, ci<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### add regression lines for the three alloc levels</span></span>
-<span class="r-in"><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">60</span>, length<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">preds</span> <span class="op">&lt;-</span> <span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">xs</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">preds</span><span class="op">$</span><span class="va">pred</span>, lwd<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">preds</span> <span class="op">&lt;-</span> <span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">xs</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="va">xs</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">preds</span><span class="op">$</span><span class="va">pred</span>, lwd<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">preds</span> <span class="op">&lt;-</span> <span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">xs</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="va">xs</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">preds</span><span class="op">$</span><span class="va">pred</span>, lwd<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### add points back to the plot (so they are on top of the lines)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### draw bubble plot but do not add regression line or CI</span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"ablat"</span>, xlab<span class="op">=</span><span class="st">"Absolute Latitude"</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span><span class="op">)</span>, pred<span class="op">=</span><span class="cn">FALSE</span>, ci<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### add regression lines for the three alloc levels</span></span></span>
+<span class="r-in"><span><span class="va">xs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">60</span>, length<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">preds</span> <span class="op">&lt;-</span> <span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">xs</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">preds</span><span class="op">$</span><span class="va">pred</span>, lwd<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">preds</span> <span class="op">&lt;-</span> <span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">xs</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="va">xs</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">preds</span><span class="op">$</span><span class="va">pred</span>, lwd<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">preds</span> <span class="op">&lt;-</span> <span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">xs</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>, <span class="va">xs</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html" class="external-link">lines</a></span><span class="op">(</span><span class="va">xs</span>, <span class="va">preds</span><span class="op">$</span><span class="va">pred</span>, lwd<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### add points back to the plot (so they are on top of the lines)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="regplot-10.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
@@ -490,7 +490,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

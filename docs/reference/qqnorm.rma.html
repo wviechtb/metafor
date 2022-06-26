@@ -101,18 +101,18 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for rma.uni</span>
-<span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">19</span>, envelope<span class="op">=</span><span class="cn">TRUE</span>,
-       level<span class="op">=</span><span class="va">y</span><span class="op">$</span><span class="va">level</span>, bonferroni<span class="op">=</span><span class="cn">FALSE</span>, reps<span class="op">=</span><span class="fl">1000</span>, smooth<span class="op">=</span><span class="cn">TRUE</span>, bass<span class="op">=</span><span class="fl">0</span>,
-       label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">lty</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for rma.mh</span>
-<span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">19</span>, label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for rma.peto</span>
-<span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">19</span>, label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for rma.glmm</span>
-<span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for rma.mv</span>
-<span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for rma.uni</span></span>
+<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">19</span>, envelope<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>       level<span class="op">=</span><span class="va">y</span><span class="op">$</span><span class="va">level</span>, bonferroni<span class="op">=</span><span class="cn">FALSE</span>, reps<span class="op">=</span><span class="fl">1000</span>, smooth<span class="op">=</span><span class="cn">TRUE</span>, bass<span class="op">=</span><span class="fl">0</span>,</span>
+<span>       label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">lty</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for rma.mh</span></span>
+<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">19</span>, label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for rma.peto</span></span>
+<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">19</span>, label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for rma.glmm</span></span>
+<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for rma.mv</span></span>
+<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -198,21 +198,21 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit random-effects model</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### draw QQ plot</span></span>
-<span class="r-in"><span class="fu">qqnorm</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit random-effects model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### draw QQ plot</span></span></span>
+<span class="r-in"><span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="qqnorm.rma-1.png" alt="" width="864" height="768"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit mixed-effects model with absolute latitude as moderator</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### draw QQ plot</span></span>
-<span class="r-in"><span class="fu">qqnorm</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit mixed-effects model with absolute latitude as moderator</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### draw QQ plot</span></span></span>
+<span class="r-in"><span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="qqnorm.rma-2.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
@@ -228,7 +228,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

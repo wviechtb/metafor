@@ -101,33 +101,33 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for rma.uni</span>
-<span class="fu">profile</span><span class="op">(</span><span class="va">fitted</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, steps<span class="op">=</span><span class="fl">20</span>,
-        lltol<span class="op">=</span><span class="fl">1e-03</span>, progbar<span class="op">=</span><span class="cn">TRUE</span>, parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>,
-        plot<span class="op">=</span><span class="cn">TRUE</span>, pch<span class="op">=</span><span class="fl">19</span>, refline<span class="op">=</span><span class="cn">TRUE</span>, cline<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma.mv</span>
-<span class="fu">profile</span><span class="op">(</span><span class="va">fitted</span>, <span class="va">sigma2</span>, <span class="va">tau2</span>, <span class="va">rho</span>, <span class="va">gamma2</span>, <span class="va">phi</span>,
-        <span class="va">xlim</span>, <span class="va">ylim</span>, steps<span class="op">=</span><span class="fl">20</span>, lltol<span class="op">=</span><span class="fl">1e-03</span>, progbar<span class="op">=</span><span class="cn">TRUE</span>,
-        parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>,
-        plot<span class="op">=</span><span class="cn">TRUE</span>, pch<span class="op">=</span><span class="fl">19</span>, refline<span class="op">=</span><span class="cn">TRUE</span>, cline<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma.uni.selmodel</span>
-<span class="fu">profile</span><span class="op">(</span><span class="va">fitted</span>, <span class="va">tau2</span>, <span class="va">delta</span>,
-        <span class="va">xlim</span>, <span class="va">ylim</span>, steps<span class="op">=</span><span class="fl">20</span>, lltol<span class="op">=</span><span class="fl">1e-03</span>, progbar<span class="op">=</span><span class="cn">TRUE</span>,
-        parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>,
-        plot<span class="op">=</span><span class="cn">TRUE</span>, pch<span class="op">=</span><span class="fl">19</span>, refline<span class="op">=</span><span class="cn">TRUE</span>, cline<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma.ls</span>
-<span class="fu">profile</span><span class="op">(</span><span class="va">fitted</span>, <span class="va">alpha</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, steps<span class="op">=</span><span class="fl">20</span>,
-        lltol<span class="op">=</span><span class="fl">1e-03</span>, progbar<span class="op">=</span><span class="cn">TRUE</span>, parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>,
-        plot<span class="op">=</span><span class="cn">TRUE</span>, pch<span class="op">=</span><span class="fl">19</span>, refline<span class="op">=</span><span class="cn">TRUE</span>, cline<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for profile.rma</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for profile.rma</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, pch<span class="op">=</span><span class="fl">19</span>,
-     <span class="va">xlab</span>, <span class="va">ylab</span>, <span class="va">main</span>, refline<span class="op">=</span><span class="cn">TRUE</span>, cline<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for rma.uni</span></span>
+<span><span class="fu">profile</span><span class="op">(</span><span class="va">fitted</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, steps<span class="op">=</span><span class="fl">20</span>,</span>
+<span>        lltol<span class="op">=</span><span class="fl">1e-03</span>, progbar<span class="op">=</span><span class="cn">TRUE</span>, parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>,</span>
+<span>        plot<span class="op">=</span><span class="cn">TRUE</span>, pch<span class="op">=</span><span class="fl">19</span>, refline<span class="op">=</span><span class="cn">TRUE</span>, cline<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for rma.mv</span></span>
+<span><span class="fu">profile</span><span class="op">(</span><span class="va">fitted</span>, <span class="va">sigma2</span>, <span class="va">tau2</span>, <span class="va">rho</span>, <span class="va">gamma2</span>, <span class="va">phi</span>,</span>
+<span>        <span class="va">xlim</span>, <span class="va">ylim</span>, steps<span class="op">=</span><span class="fl">20</span>, lltol<span class="op">=</span><span class="fl">1e-03</span>, progbar<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>        parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>,</span>
+<span>        plot<span class="op">=</span><span class="cn">TRUE</span>, pch<span class="op">=</span><span class="fl">19</span>, refline<span class="op">=</span><span class="cn">TRUE</span>, cline<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for rma.uni.selmodel</span></span>
+<span><span class="fu">profile</span><span class="op">(</span><span class="va">fitted</span>, <span class="va">tau2</span>, <span class="va">delta</span>,</span>
+<span>        <span class="va">xlim</span>, <span class="va">ylim</span>, steps<span class="op">=</span><span class="fl">20</span>, lltol<span class="op">=</span><span class="fl">1e-03</span>, progbar<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>        parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>,</span>
+<span>        plot<span class="op">=</span><span class="cn">TRUE</span>, pch<span class="op">=</span><span class="fl">19</span>, refline<span class="op">=</span><span class="cn">TRUE</span>, cline<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for rma.ls</span></span>
+<span><span class="fu">profile</span><span class="op">(</span><span class="va">fitted</span>, <span class="va">alpha</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, steps<span class="op">=</span><span class="fl">20</span>,</span>
+<span>        lltol<span class="op">=</span><span class="fl">1e-03</span>, progbar<span class="op">=</span><span class="cn">TRUE</span>, parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>,</span>
+<span>        plot<span class="op">=</span><span class="cn">TRUE</span>, pch<span class="op">=</span><span class="fl">19</span>, refline<span class="op">=</span><span class="cn">TRUE</span>, cline<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for profile.rma</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for profile.rma</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, pch<span class="op">=</span><span class="fl">19</span>,</span>
+<span>     <span class="va">xlab</span>, <span class="va">ylab</span>, <span class="va">main</span>, refline<span class="op">=</span><span class="cn">TRUE</span>, cline<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -309,31 +309,31 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### calculate log odds ratios and corresponding sampling variances</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit random-effects model using rma.uni()</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### profile over tau^2</span></span>
-<span class="r-in"><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, progbar<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### calculate log odds ratios and corresponding sampling variances</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit random-effects model using rma.uni()</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### profile over tau^2</span></span></span>
+<span class="r-in"><span><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, progbar<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="profile.rma-1.png" alt="" width="864" height="768"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### change data into long format</span></span>
-<span class="r-in"><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="to.long.html">to.long</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### set levels of group variable ("exp" = experimental/vaccinated; "con" = control/non-vaccinated)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">dat.long</span><span class="op">$</span><span class="va">group</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"exp"</span>, <span class="st">"con"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### set "con" to reference level</span></span>
-<span class="r-in"><span class="va">dat.long</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/relevel.html" class="external-link">relevel</a></span><span class="op">(</span><span class="va">dat.long</span><span class="op">$</span><span class="va">group</span>, ref<span class="op">=</span><span class="st">"con"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### calculate log odds and corresponding sampling variances</span></span>
-<span class="r-in"><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"PLO"</span>, xi<span class="op">=</span><span class="va">out1</span>, mi<span class="op">=</span><span class="va">out2</span>, data<span class="op">=</span><span class="va">dat.long</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit bivariate random-effects model using rma.mv()</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">group</span>, random <span class="op">=</span> <span class="op">~</span> <span class="va">group</span> <span class="op">|</span> <span class="va">study</span>, struct<span class="op">=</span><span class="st">"UN"</span>, data<span class="op">=</span><span class="va">dat.long</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### change data into long format</span></span></span>
+<span class="r-in"><span><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="to.long.html">to.long</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### set levels of group variable ("exp" = experimental/vaccinated; "con" = control/non-vaccinated)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">dat.long</span><span class="op">$</span><span class="va">group</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"exp"</span>, <span class="st">"con"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### set "con" to reference level</span></span></span>
+<span class="r-in"><span><span class="va">dat.long</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/relevel.html" class="external-link">relevel</a></span><span class="op">(</span><span class="va">dat.long</span><span class="op">$</span><span class="va">group</span>, ref<span class="op">=</span><span class="st">"con"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### calculate log odds and corresponding sampling variances</span></span></span>
+<span class="r-in"><span><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"PLO"</span>, xi<span class="op">=</span><span class="va">out1</span>, mi<span class="op">=</span><span class="va">out2</span>, data<span class="op">=</span><span class="va">dat.long</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit bivariate random-effects model using rma.mv()</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">group</span>, random <span class="op">=</span> <span class="op">~</span> <span class="va">group</span> <span class="op">|</span> <span class="va">study</span>, struct<span class="op">=</span><span class="st">"UN"</span>, data<span class="op">=</span><span class="va">dat.long</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 26; method: REML)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -365,22 +365,22 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### profile over tau^2_1, tau^2_2, and rho</span></span>
-<span class="r-in"><span class="co">### note: for rho, adjust region over which profiling is done ('zoom in' on area around estimate)</span></span>
-<span class="r-in"><span class="co"># \dontrun{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, tau2<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, tau2<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, rho<span class="op">=</span><span class="fl">1</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.90</span>, <span class="fl">.98</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### an example where the peak is at 0</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RD"</span>, n1i<span class="op">=</span><span class="va">n1i</span>, n2i<span class="op">=</span><span class="va">n2i</span>, ai<span class="op">=</span><span class="va">ai</span>, ci<span class="op">=</span><span class="va">ci</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.hine1989.html" class="external-link">dat.hine1989</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### profile over tau^2_1, tau^2_2, and rho</span></span></span>
+<span class="r-in"><span><span class="co">### note: for rho, adjust region over which profiling is done ('zoom in' on area around estimate)</span></span></span>
+<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, tau2<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, tau2<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, rho<span class="op">=</span><span class="fl">1</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.90</span>, <span class="fl">.98</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### an example where the peak is at 0</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RD"</span>, n1i<span class="op">=</span><span class="va">n1i</span>, n2i<span class="op">=</span><span class="va">n2i</span>, ai<span class="op">=</span><span class="va">ai</span>, ci<span class="op">=</span><span class="va">ci</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.hine1989.html" class="external-link">dat.hine1989</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="profile.rma-2.png" alt="" width="864" height="768"></span>
-<span class="r-in"><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, progbar<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, progbar<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="profile.rma-3.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
@@ -396,7 +396,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

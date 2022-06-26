@@ -101,18 +101,18 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for rma.uni</span>
-<span class="fu">influence</span><span class="op">(</span><span class="va">model</span>, <span class="va">digits</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for infl.rma.uni</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">digits</span>, infonly<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma.uni</span>
-<span class="fu">cooks.distance</span><span class="op">(</span><span class="va">model</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for rma.uni</span>
-<span class="fu">dfbetas</span><span class="op">(</span><span class="va">model</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for rma.uni</span>
-<span class="fu">hatvalues</span><span class="op">(</span><span class="va">model</span>, type<span class="op">=</span><span class="st">"diagonal"</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for rma.uni</span></span>
+<span><span class="fu">influence</span><span class="op">(</span><span class="va">model</span>, <span class="va">digits</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for infl.rma.uni</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">digits</span>, infonly<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for rma.uni</span></span>
+<span><span class="fu">cooks.distance</span><span class="op">(</span><span class="va">model</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for rma.uni</span></span>
+<span><span class="fu">dfbetas</span><span class="op">(</span><span class="va">model</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for rma.uni</span></span>
+<span><span class="fu">hatvalues</span><span class="op">(</span><span class="va">model</span>, type<span class="op">=</span><span class="st">"diagonal"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -207,15 +207,15 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit mixed-effects model with absolute latitude and publication year as moderators</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">year</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### compute the diagnostics</span></span>
-<span class="r-in"><span class="va">inf</span> <span class="op">&lt;-</span> <span class="fu">influence</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">inf</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit mixed-effects model with absolute latitude and publication year as moderators</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">year</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### compute the diagnostics</span></span></span>
+<span class="r-in"><span><span class="va">inf</span> <span class="op">&lt;-</span> <span class="fu">influence</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">inf</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $inf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    rstudent  dffits cook.d  cov.r tau2.del  QE.del    hat  weight inf </span>
@@ -250,18 +250,18 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12 -0.0413  0.0465  0.0419 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13 -0.8276  0.6269  0.8279 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### plot the values</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">inf</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### plot the values</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">inf</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="influence.rma.uni-1.png" alt="" width="864" height="768"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### compute Cook's distances, DFBETAS values, and hat values</span></span>
-<span class="r-in"><span class="fu">cooks.distance</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### compute Cook's distances, DFBETAS values, and hat values</span></span></span>
+<span class="r-in"><span><span class="fu">cooks.distance</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           1           2           3           4           5           6           7           8 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.034763870 0.061956371 0.012503192 7.317914073 0.003236974 0.720524896 0.417263935 0.189852980 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           9          10          11          12          13 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.023722929 0.146959602 0.005232795 0.046915399 0.499370065 </span>
-<span class="r-in"><span class="fu">dfbetas</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">dfbetas</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    intrcpt   ablat    year </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.1492 -0.0622 -0.1491 </span>
@@ -278,7 +278,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12 -0.0413  0.0465  0.0419 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13 -0.8276  0.6269  0.8279 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">hatvalues</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">hatvalues</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          1          2          3          4          5          6          7          8          9 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.17250070 0.23668273 0.04870101 0.80821407 0.24826116 0.40606407 0.07657599 0.36274386 0.10304034 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         10         11         12         13 </span>
@@ -297,7 +297,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

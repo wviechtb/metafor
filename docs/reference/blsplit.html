@@ -101,7 +101,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">blsplit</span><span class="op">(</span><span class="va">x</span>, <span class="va">cluster</span>, <span class="va">fun</span>, <span class="va">args</span>, sort<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">blsplit</span><span class="op">(</span><span class="va">x</span>, <span class="va">cluster</span>, <span class="va">fun</span>, <span class="va">args</span>, sort<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -140,15 +140,15 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### copy data into 'dat'</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.assink2016.html" class="external-link">dat.assink2016</a></span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### assume that the effect sizes within studies are correlated with rho=0.6</span></span>
-<span class="r-in"><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="vcalc.html">vcalc</a></span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, obs<span class="op">=</span><span class="va">esid</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fl">0.6</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### split V matrix into list of sub-matrices</span></span>
-<span class="r-in"><span class="va">Vs</span> <span class="op">&lt;-</span> <span class="fu">blsplit</span><span class="op">(</span><span class="va">V</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">Vs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### copy data into 'dat'</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.assink2016.html" class="external-link">dat.assink2016</a></span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### assume that the effect sizes within studies are correlated with rho=0.6</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="vcalc.html">vcalc</a></span><span class="op">(</span><span class="va">vi</span>, cluster<span class="op">=</span><span class="va">study</span>, obs<span class="op">=</span><span class="va">esid</span>, data<span class="op">=</span><span class="va">dat</span>, rho<span class="op">=</span><span class="fl">0.6</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### split V matrix into list of sub-matrices</span></span></span>
+<span class="r-in"><span><span class="va">Vs</span> <span class="op">&lt;-</span> <span class="fu">blsplit</span><span class="op">(</span><span class="va">V</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Vs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`1`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]       [,2]       [,3]       [,4]       [,5]       [,6]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.07400000 0.03256182 0.03579642 0.02523284 0.02969485 0.04858296</span>
@@ -164,7 +164,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.005609278 0.007600000 0.004217108</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.005187485 0.004217108 0.006500000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="va">cov2cor</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="va">cov2cor</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`1`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4] [,5] [,6]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0  0.6  0.6  0.6  0.6  0.6</span>
@@ -180,9 +180,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.6  1.0  0.6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.6  0.6  1.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### illustrate the use of the fun and args arguments</span></span>
-<span class="r-in"><span class="fu">blsplit</span><span class="op">(</span><span class="va">V</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">cov2cor</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### illustrate the use of the fun and args arguments</span></span></span>
+<span class="r-in"><span><span class="fu">blsplit</span><span class="op">(</span><span class="va">V</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">cov2cor</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`1`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4] [,5] [,6]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0  0.6  0.6  0.6  0.6  0.6</span>
@@ -198,7 +198,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.6  1.0  0.6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.6  0.6  1.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">blsplit</span><span class="op">(</span><span class="va">V</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">round</span>, <span class="fl">3</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+<span class="r-in"><span><span class="fu">blsplit</span><span class="op">(</span><span class="va">V</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">round</span>, <span class="fl">3</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`1`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       [,1]  [,2]  [,3]  [,4]  [,5]  [,6]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.074 0.033 0.036 0.025 0.030 0.049</span>
@@ -228,7 +228,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

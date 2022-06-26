@@ -84,6 +84,17 @@ dat.bcg
 # tneg  - number of TB negative cases in the treated (vaccinated) group
 # cpos  - number of TB positive cases in the control (non-vaccinated) group
 # cneg  - number of TB negative cases in the control (non-vaccinated) group
+#
+# these variables denote the values in 2x2 tables of the form:
+#
+#           TB+    TB-
+#         +------+------+
+# treated | tpos | tneg |
+#         +------+------+
+# control | cpos | cneg |
+#         +------+------+
+#
+# year  - publication year of the study
 # ablat - absolute latitude of the study location (in degrees)
 # alloc - method of treatment allocation (random, alternate, or systematic assignment)
 
@@ -137,7 +148,7 @@ res
 ```
 
 ```r
-# predicted pooled risk ratio (with 95% CI/PI)
+# predicted pooled risk ratio (with 95% confidence/prediction intervals)
 predict(res, transf=exp, digits=2)
 ```
 
@@ -180,7 +191,7 @@ regtest(res)
 ```
 
 ```r
-# mixed-effects model with absolute latitude as moderators
+# mixed-effects meta-regression model with absolute latitude as moderator
 res <- rma(yi, vi, mods = ~ ablat, data=dat, test="knha")
 res
 ```

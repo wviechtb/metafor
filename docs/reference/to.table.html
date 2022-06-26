@@ -101,9 +101,9 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">to.table</span><span class="op">(</span><span class="va">measure</span>, <span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">x1i</span>, <span class="va">x2i</span>, <span class="va">t1i</span>, <span class="va">t2i</span>,
-         <span class="va">m1i</span>, <span class="va">m2i</span>, <span class="va">sd1i</span>, <span class="va">sd2i</span>, <span class="va">xi</span>, <span class="va">mi</span>, <span class="va">ri</span>, <span class="va">ti</span>, <span class="va">sdi</span>, <span class="va">ni</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,
-         add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"none"</span>, drop00<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">rows</span>, <span class="va">cols</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">to.table</span><span class="op">(</span><span class="va">measure</span>, <span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">x1i</span>, <span class="va">x2i</span>, <span class="va">t1i</span>, <span class="va">t2i</span>,</span>
+<span>         <span class="va">m1i</span>, <span class="va">m2i</span>, <span class="va">sd1i</span>, <span class="va">sd2i</span>, <span class="va">xi</span>, <span class="va">mi</span>, <span class="va">ri</span>, <span class="va">ti</span>, <span class="va">sdi</span>, <span class="va">ni</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,</span>
+<span>         add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"none"</span>, drop00<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">rows</span>, <span class="va">cols</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -225,11 +225,11 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### create tables</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.table</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>,</span>
-<span class="r-in">                data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, slab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">author</span>, <span class="va">year</span>, sep<span class="op">=</span><span class="st">", "</span><span class="op">)</span>,</span>
-<span class="r-in">                rows<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vaccinated"</span>, <span class="st">"Not Vaccinated"</span><span class="op">)</span>, cols<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TB+"</span>, <span class="st">"TB-"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### create tables</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.table</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>,</span></span>
+<span class="r-in"><span>                data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, slab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">author</span>, <span class="va">year</span>, sep<span class="op">=</span><span class="st">", "</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                rows<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vaccinated"</span>, <span class="st">"Not Vaccinated"</span><span class="op">)</span>, cols<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TB+"</span>, <span class="st">"TB-"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , Aronson, 1948</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                TB+ TB-</span>
@@ -308,12 +308,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Vaccinated      27 16886</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Not Vaccinated  29 17825</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### create tables</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.table</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"IRR"</span>, x1i<span class="op">=</span><span class="va">x1i</span>, x2i<span class="op">=</span><span class="va">x2i</span>, t1i<span class="op">=</span><span class="va">t1i</span>, t2i<span class="op">=</span><span class="va">t2i</span>,</span>
-<span class="r-in">                data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.hart1999.html" class="external-link">dat.hart1999</a></span>, slab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">study</span>, <span class="va">year</span>, sep<span class="op">=</span><span class="st">", "</span><span class="op">)</span>,</span>
-<span class="r-in">                rows<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Warfarin Group"</span>, <span class="st">"Placebo/Control Group"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### create tables</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.table</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"IRR"</span>, x1i<span class="op">=</span><span class="va">x1i</span>, x2i<span class="op">=</span><span class="va">x2i</span>, t1i<span class="op">=</span><span class="va">t1i</span>, t2i<span class="op">=</span><span class="va">t2i</span>,</span></span>
+<span class="r-in"><span>                data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.hart1999.html" class="external-link">dat.hart1999</a></span>, slab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">study</span>, <span class="va">year</span>, sep<span class="op">=</span><span class="st">", "</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                rows<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Warfarin Group"</span>, <span class="st">"Placebo/Control Group"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , AFASAK, 1989</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       Events Person-Time</span>
@@ -350,12 +350,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Warfarin Group            20         507</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Placebo/Control Group     50         405</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### create tables</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.table</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"MD"</span>, m1i<span class="op">=</span><span class="va">m1i</span>, sd1i<span class="op">=</span><span class="va">sd1i</span>, n1i<span class="op">=</span><span class="va">n1i</span>,</span>
-<span class="r-in">                m2i<span class="op">=</span><span class="va">m2i</span>, sd2i<span class="op">=</span><span class="va">sd2i</span>, n2i<span class="op">=</span><span class="va">n2i</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.normand1999.html" class="external-link">dat.normand1999</a></span>,</span>
-<span class="r-in">                slab<span class="op">=</span><span class="va">source</span>, rows<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Specialized Care"</span>, <span class="st">"Routine Care"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### create tables</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.table</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"MD"</span>, m1i<span class="op">=</span><span class="va">m1i</span>, sd1i<span class="op">=</span><span class="va">sd1i</span>, n1i<span class="op">=</span><span class="va">n1i</span>,</span></span>
+<span class="r-in"><span>                m2i<span class="op">=</span><span class="va">m2i</span>, sd2i<span class="op">=</span><span class="va">sd2i</span>, n2i<span class="op">=</span><span class="va">n2i</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.normand1999.html" class="external-link">dat.normand1999</a></span>,</span></span>
+<span class="r-in"><span>                slab<span class="op">=</span><span class="va">source</span>, rows<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Specialized Care"</span>, <span class="st">"Routine Care"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> , , Edinburgh</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  Mean SD   n</span>
@@ -424,7 +424,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

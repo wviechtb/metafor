@@ -101,14 +101,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cumul</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for rma.uni</span>
-<span class="fu">cumul</span><span class="op">(</span><span class="va">x</span>, <span class="va">order</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for rma.mh</span>
-<span class="fu">cumul</span><span class="op">(</span><span class="va">x</span>, <span class="va">order</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for rma.peto</span>
-<span class="fu">cumul</span><span class="op">(</span><span class="va">x</span>, <span class="va">order</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cumul</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for rma.uni</span></span>
+<span><span class="fu">cumul</span><span class="op">(</span><span class="va">x</span>, <span class="va">order</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for rma.mh</span></span>
+<span><span class="fu">cumul</span><span class="op">(</span><span class="va">x</span>, <span class="va">order</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for rma.peto</span></span>
+<span><span class="fu">cumul</span><span class="op">(</span><span class="va">x</span>, <span class="va">order</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -209,14 +209,14 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### fit random-effects model</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### cumulative meta-analysis (in the order of publication year)</span></span>
-<span class="r-in"><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit random-effects model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### cumulative meta-analysis (in the order of publication year)</span></span></span>
+<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate    zval  pvals  ci.lb  ci.ub        Q     Qp   tau2      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    0.4109 -1.5586 0.1191 0.1343 1.2574   0.0000 1.0000 0.0000  0.0000  1.0000 </span>
@@ -233,12 +233,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4    0.4517 -4.4184 0.0000 0.3175 0.6426  67.9858 0.0000 0.2732 87.0314  7.7109 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8    0.4894 -3.9744 0.0001 0.3441 0.6962 152.2330 0.0000 0.3132 92.2214 12.8558 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mh.html">rma.mh</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### cumulative meta-analysis</span></span>
-<span class="r-in"><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mh.html">rma.mh</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### cumulative meta-analysis</span></span></span>
+<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   -0.8893 0.5706  -1.5586 0.1191 -2.0077  0.2290   0.0000 1.0000  0.0000  1.0000 </span>
@@ -255,7 +255,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4   -0.7758 0.0520 -14.9267 0.0000 -0.8777 -0.6739  68.3763 0.0000 83.9126  6.2160 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8   -0.4537 0.0393 -11.5338 0.0000 -0.5308 -0.3766 152.5676 0.0000 92.1346 12.7140 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span>, transf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span>, transf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    0.4109  -1.5586 0.1191 0.1343 1.2574   0.0000 1.0000  0.0000  1.0000 </span>
@@ -272,12 +272,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4    0.4603 -14.9267 0.0000 0.4158 0.5097  68.3763 0.0000 83.9126  6.2160 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8    0.6353 -11.5338 0.0000 0.5881 0.6862 152.5676 0.0000 92.1346 12.7140 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### meta-analysis of the (log) odds ratios using Peto's method</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.peto.html">rma.peto</a></span><span class="op">(</span>ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### cumulative meta-analysis</span></span>
-<span class="r-in"><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### meta-analysis of the (log) odds ratios using Peto's method</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.peto.html">rma.peto</a></span><span class="op">(</span>ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### cumulative meta-analysis</span></span></span>
+<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   -0.8604 0.5318  -1.6178 0.1057 -1.9027  0.1820   0.0000 1.0000  0.0000  1.0000 </span>
@@ -294,7 +294,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4   -0.8161 0.0531 -15.3842 0.0000 -0.9201 -0.7122  67.1837 0.0000 83.6270  6.1076 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8   -0.4744 0.0407 -11.6689 0.0000 -0.5541 -0.3948 167.7302 0.0000 92.8457 13.9775 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span>, transf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span>, transf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    0.4230  -1.6178 0.1057 0.1492 1.1996   0.0000 1.0000  0.0000  1.0000 </span>
@@ -311,15 +311,15 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4    0.4421 -15.3842 0.0000 0.3985 0.4906  67.1837 0.0000 83.6270  6.1076 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8    0.6222 -11.6689 0.0000 0.5746 0.6738 167.7302 0.0000 92.8457 13.9775 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### make first log risk ratio missing and fit model without study 2; then the</span></span>
-<span class="r-in"><span class="co">### variable specified via 'order' should still be of the same length as the</span></span>
-<span class="r-in"><span class="co">### original dataset; subsetting and removal of studies with missing values is</span></span>
-<span class="r-in"><span class="co">### automatically done by the cumul() function</span></span>
-<span class="r-in"><span class="va">dat</span><span class="op">$</span><span class="va">yi</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
-<span class="r-in"><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### make first log risk ratio missing and fit model without study 2; then the</span></span></span>
+<span class="r-in"><span><span class="co">### variable specified via 'order' should still be of the same length as the</span></span></span>
+<span class="r-in"><span><span class="co">### original dataset; subsetting and removal of studies with missing values is</span></span></span>
+<span class="r-in"><span><span class="co">### automatically done by the cumul() function</span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Studies with NAs omitted from model fitting.</span>
-<span class="r-in"><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    estimate    zval  pvals  ci.lb  ci.ub        Q     Qp   tau2      I2      H2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6    0.4556 -9.4599 0.0000 0.3871 0.5362   0.0000 1.0000 0.0000  0.0000  1.0000 </span>
@@ -348,7 +348,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

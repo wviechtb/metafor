@@ -101,9 +101,9 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">to.long</span><span class="op">(</span><span class="va">measure</span>, <span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">x1i</span>, <span class="va">x2i</span>, <span class="va">t1i</span>, <span class="va">t2i</span>,
-        <span class="va">m1i</span>, <span class="va">m2i</span>, <span class="va">sd1i</span>, <span class="va">sd2i</span>, <span class="va">xi</span>, <span class="va">mi</span>, <span class="va">ri</span>, <span class="va">ti</span>, <span class="va">sdi</span>, <span class="va">ni</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,
-        add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"none"</span>, drop00<span class="op">=</span><span class="cn">FALSE</span>, vlong<span class="op">=</span><span class="cn">FALSE</span>, append<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">var.names</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">to.long</span><span class="op">(</span><span class="va">measure</span>, <span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">x1i</span>, <span class="va">x2i</span>, <span class="va">t1i</span>, <span class="va">t2i</span>,</span>
+<span>        <span class="va">m1i</span>, <span class="va">m2i</span>, <span class="va">sd1i</span>, <span class="va">sd2i</span>, <span class="va">xi</span>, <span class="va">mi</span>, <span class="va">ri</span>, <span class="va">ti</span>, <span class="va">sdi</span>, <span class="va">ni</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,</span>
+<span>        add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"none"</span>, drop00<span class="op">=</span><span class="cn">FALSE</span>, vlong<span class="op">=</span><span class="cn">FALSE</span>, append<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">var.names</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -230,9 +230,9 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">### convert data to long format</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### convert data to long format</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    trial               author year tpos  tneg cpos  cneg ablat      alloc study group out1  out2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1              Aronson 1948    4   119   11   128    44     random     1     1    4   119</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      1              Aronson 1948    4   119   11   128    44     random     1     2   11   128</span>
@@ -260,10 +260,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 24    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic    12     2    3  2338</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 25    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13     1   27 16886</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 26    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13     2   29 17825</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### extra long format</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, vlong<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### extra long format</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, vlong<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    trial               author year tpos  tneg cpos  cneg ablat      alloc study group outcome  freq</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1              Aronson 1948    4   119   11   128    44     random     1     1       1     4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      1              Aronson 1948    4   119   11   128    44     random     1     1       2   119</span>
@@ -317,11 +317,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 50    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13     1       2 16886</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 51    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13     2       1    29</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 52    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13     2       2 17825</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### convert data to long format</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"IRR"</span>, x1i<span class="op">=</span><span class="va">x1i</span>, x2i<span class="op">=</span><span class="va">x2i</span>, t1i<span class="op">=</span><span class="va">t1i</span>, t2i<span class="op">=</span><span class="va">t2i</span>,</span>
-<span class="r-in">               data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.hart1999.html" class="external-link">dat.hart1999</a></span>, var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"group"</span>, <span class="st">"events"</span>, <span class="st">"ptime"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### convert data to long format</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"IRR"</span>, x1i<span class="op">=</span><span class="va">x1i</span>, x2i<span class="op">=</span><span class="va">x2i</span>, t1i<span class="op">=</span><span class="va">t1i</span>, t2i<span class="op">=</span><span class="va">t2i</span>,</span></span>
+<span class="r-in"><span>               data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.hart1999.html" class="external-link">dat.hart1999</a></span>, var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"group"</span>, <span class="st">"events"</span>, <span class="st">"ptime"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    trial  study year x1i n1i t1i x2i n2i t2i compgrp  prevtype   trinr id group events ptime</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1 AFASAK 1989   9 335 413  19 336 398 placebo   primary 2.8-4.2  1     1      9   413</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      1 AFASAK 1989   9 335 413  19 336 398 placebo   primary 2.8-4.2  1     2     19   398</span>
@@ -335,12 +335,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10     5 SPINAF 1992   7 281 489  23 290 483 placebo   primary 1.4-2.8  5     2     23   483</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11     6   EAFT 1993  20 225 507  50 214 405 placebo secondary 2.5-4.0  6     1     20   507</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12     6   EAFT 1993  20 225 507  50 214 405 placebo secondary 2.5-4.0  6     2     50   405</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">### convert data to long format</span></span>
-<span class="r-in"><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"MD"</span>, m1i<span class="op">=</span><span class="va">m1i</span>, sd1i<span class="op">=</span><span class="va">sd1i</span>, n1i<span class="op">=</span><span class="va">n1i</span>,</span>
-<span class="r-in">               m2i<span class="op">=</span><span class="va">m2i</span>, sd2i<span class="op">=</span><span class="va">sd2i</span>, n2i<span class="op">=</span><span class="va">n2i</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.normand1999.html" class="external-link">dat.normand1999</a></span>,</span>
-<span class="r-in">               var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"group"</span>, <span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"n"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">dat</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### convert data to long format</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"MD"</span>, m1i<span class="op">=</span><span class="va">m1i</span>, sd1i<span class="op">=</span><span class="va">sd1i</span>, n1i<span class="op">=</span><span class="va">n1i</span>,</span></span>
+<span class="r-in"><span>               m2i<span class="op">=</span><span class="va">m2i</span>, sd2i<span class="op">=</span><span class="va">sd2i</span>, n2i<span class="op">=</span><span class="va">n2i</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.normand1999.html" class="external-link">dat.normand1999</a></span>,</span></span>
+<span class="r-in"><span>               var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"group"</span>, <span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"n"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    study             source n1i m1i sd1i n2i m2i sd2i id group mean sd   n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1          Edinburgh 155  55   47 156  75   64  1     1   55 47 155</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      1          Edinburgh 155  55   47 156  75   64  1     2   75 64 156</span>
@@ -374,7 +374,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
