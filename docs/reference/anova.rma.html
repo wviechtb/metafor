@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-12</span>
       </span>
     </div>
 
@@ -492,14 +492,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> estimate     se¹   tval¹    df¹   pval¹  ci.lb¹  ci.ub¹     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0.3678  0.0970  3.7924  14.53  0.0019  0.1605  0.5750  ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se¹    tval¹     df¹    pval¹   ci.lb¹   ci.ub¹     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.3678  0.0970   3.7924   14.53   0.0019   0.1605   0.5750   ** </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR2,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t-test and confidence interval, dfs = Satterthwaite method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx t-test and confidence interval, dfs: Satterthwaite approx)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### examine if 'deltype' is a potential moderator</span></span></span>
@@ -527,16 +527,16 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 estimate     se¹    tval¹   df¹   pval¹   ci.lb¹   ci.ub¹     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt          -0.2902  0.0823  -3.5240  4.20  0.0225  -0.5146  -0.0658   * </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> deltypegeneral    0.7062  0.0418  16.8854  2.32  0.0018   0.5479   0.8645  ** </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> deltypeovert      0.4500  0.0665   6.7665  2.10  0.0186   0.1766   0.7235   * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 estimate      se¹     tval¹    df¹    pval¹    ci.lb¹    ci.ub¹     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt          -0.2902  0.0823   -3.5240    4.2   0.0225   -0.5146   -0.0658    * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> deltypegeneral    0.7062  0.0418   16.8854   2.32   0.0018    0.5479    0.8645   ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> deltypeovert      0.4500  0.0665    6.7665    2.1   0.0186    0.1766    0.7235    * </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR2,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t/F-tests and confidence intervals, dfs = Satterthwaite method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx t/F-tests and confidence intervals, dfs: Satterthwaite approx)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### note: the (denominator) dfs for the omnibus F-test are very low, so the results</span></span></span>
@@ -545,7 +545,7 @@
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://meghapsimatrix.github.io/wildmeta/index.html" class="external-link">wildmeta</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/wildmeta/man/Wald_test_cwb.html" class="external-link">Wald_test_cwb</a></span><span class="op">(</span><span class="va">res</span>, constraints<span class="op">=</span><span class="fu"><a href="http://jepusto.github.io/clubSandwich/reference/constraint_matrices.html" class="external-link">constrain_zero</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>, R<span class="op">=</span><span class="fl">1000</span>, seed<span class="op">=</span><span class="fl">1234</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Test Adjustment CR_type Statistic    R p_val</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  CWB        CR0     CR0   Naive-F 1000 0.357</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  CWB        CR0     CR0   Naive-F 1000 0.347</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
@@ -561,7 +561,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

@@ -223,7 +223,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
    if (is.element(x$test, c("knha","adhoc","t"))) {
       res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf,2), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
       if (inherits(x, "robust.rma"))
-         colnames(res.table)[c(2:7)] <- paste0(colnames(res.table)[c(2:7)], footsym[1])
+         res.table <- .addfootsym(res.table, 2:7, footsym[1])
    } else {
       res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
    }
@@ -370,12 +370,12 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       if (x$robumethod == "default") {
          cat(mstyle$legend(","))
          cat("\n")
-         cat(mstyle$legend(paste0("   approx. ", ifelse(x$int.only, "t-test and confidence interval", "t/F-tests and confidence intervals"), ", dfs = residual method)")))
+         cat(mstyle$legend(paste0("   approx ", ifelse(x$int.only, "t-test and confidence interval", "t/F-tests and confidence intervals"), ", dfs: residual method)")))
       } else {
          if (x$coef_test == "Satterthwaite" && x$conf_test == "Satterthwaite" && x$wald_test == "HTZ") {
             cat(mstyle$legend(","))
             cat("\n")
-            cat(mstyle$legend(paste0("   approx. ", ifelse(x$int.only, "t-test and confidence interval", "t/F-tests and confidence intervals"), ", dfs = Satterthwaite method)")))
+            cat(mstyle$legend(paste0("   approx ", ifelse(x$int.only, "t-test and confidence interval", "t/F-tests and confidence intervals"), ", dfs: Satterthwaite approx)")))
          } else {
             cat(mstyle$legend(")"))
          }

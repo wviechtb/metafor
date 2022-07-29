@@ -1,4 +1,4 @@
-# metafor 3.5-11 (2022-06-21)
+# metafor 3.5-12 (2022-07-29)
 
 - added `as.data.frame.anova.rma()` and `as.data.frame.list.anova.rma()` methods
 

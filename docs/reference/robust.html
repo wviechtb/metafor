@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-12</span>
       </span>
     </div>
 
@@ -262,14 +262,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> estimate     se¹   tval¹  df¹   pval¹  ci.lb¹  ci.ub¹      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0.2219  0.0460  4.8283   47  &lt;.0001  0.1295  0.3144  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se¹    tval¹  df¹    pval¹   ci.lb¹   ci.ub¹      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.2219  0.0460   4.8283   47   &lt;.0001   0.1295   0.3144   *** </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR1,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t-test and confidence interval, dfs = residual method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx t-test and confidence interval, dfs: residual method)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### use methods from the clubSandwich package</span></span></span>
@@ -291,14 +291,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> estimate     se¹   tval¹    df¹   pval¹  ci.lb¹  ci.ub¹      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0.2219  0.0460  4.8280  41.04  &lt;.0001  0.1291  0.3148  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se¹    tval¹     df¹    pval¹   ci.lb¹   ci.ub¹      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.2219  0.0460   4.8280   41.04   &lt;.0001   0.1291   0.3148   *** </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR2,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t-test and confidence interval, dfs = Satterthwaite method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx t-test and confidence interval, dfs: Satterthwaite approx)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit meta-regression model</span></span></span>
@@ -353,15 +353,15 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate     se¹   tval¹  df¹   pval¹   ci.lb¹  ci.ub¹    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt    0.0692  0.0651  1.0628   44  0.2937  -0.0620  0.2004    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> length     0.0149  0.0059  2.5464   44  0.0145   0.0031  0.0268  * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate      se¹    tval¹  df¹    pval¹    ci.lb¹   ci.ub¹    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt    0.0692  0.0651   1.0628   44   0.2937   -0.0620   0.2004     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> length     0.0149  0.0059   2.5464   44   0.0145    0.0031   0.0268   * </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR1,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t/F-tests and confidence intervals, dfs = residual method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx t/F-tests and confidence intervals, dfs: residual method)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### use methods from the clubSandwich package</span></span></span>
@@ -387,15 +387,15 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate     se¹   tval¹    df¹   pval¹   ci.lb¹  ci.ub¹    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt    0.0692  0.0655  1.0560  16.51  0.3062  -0.0694  0.2077    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> length     0.0149  0.0059  2.5290  19.16  0.0204   0.0026  0.0273  * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate      se¹    tval¹     df¹    pval¹    ci.lb¹   ci.ub¹    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt    0.0692  0.0655   1.0560   16.51   0.3062   -0.0694   0.2077     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> length     0.0149  0.0059   2.5290   19.16   0.0204    0.0026   0.0273   * </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR2,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t/F-tests and confidence intervals, dfs = Satterthwaite method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx t/F-tests and confidence intervals, dfs: Satterthwaite approx)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">############################################################################</span></span></span>
@@ -447,14 +447,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> estimate     se¹   tval¹  df¹   pval¹   ci.lb¹  ci.ub¹    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0.1847  0.0845  2.1859   10  0.0537  -0.0036  0.3730  . </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se¹    tval¹  df¹    pval¹    ci.lb¹   ci.ub¹    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.1847  0.0845   2.1859   10   0.0537   -0.0036   0.3730   . </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR1,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t-test and confidence interval, dfs = residual method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx t-test and confidence interval, dfs: residual method)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### use methods from the clubSandwich package</span></span></span>
@@ -477,14 +477,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> estimate     se¹   tval¹   df¹   pval¹   ci.lb¹  ci.ub¹    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0.1847  0.0845  2.1870  9.86  0.0540  -0.0038  0.3733  . </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se¹    tval¹    df¹    pval¹    ci.lb¹   ci.ub¹    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.1847  0.0845   2.1870   9.86   0.0540   -0.0038   0.3733   . </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR2,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t-test and confidence interval, dfs = Satterthwaite method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx t-test and confidence interval, dfs: Satterthwaite approx)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">############################################################################</span></span></span>
@@ -562,15 +562,15 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            estimate     se¹    tval¹  df¹   pval¹   ci.lb¹   ci.ub¹    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> outcomeAL   -0.3392  0.1010  -3.3597    3  0.0437  -0.6605  -0.0179  * </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> outcomePD    0.3534  0.0675   5.2338    3  0.0136   0.1385   0.5683  * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            estimate      se¹     tval¹  df¹    pval¹    ci.lb¹    ci.ub¹    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> outcomeAL   -0.3392  0.1010   -3.3597    3   0.0437   -0.6605   -0.0179   * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> outcomePD    0.3534  0.0675    5.2338    3   0.0136    0.1385    0.5683   * </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR1,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t/F-tests and confidence intervals, dfs = residual method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx t/F-tests and confidence intervals, dfs: residual method)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### use methods from the clubSandwich package</span></span></span>
@@ -603,15 +603,15 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            estimate     se¹    tval¹   df¹   pval¹   ci.lb¹   ci.ub¹     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> outcomeAL   -0.3392  0.0892  -3.8031  3.81  0.0208  -0.5919  -0.0866   * </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> outcomePD    0.3534  0.0582   6.0776  3.79  0.0044   0.1884   0.5185  ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            estimate      se¹     tval¹    df¹    pval¹    ci.lb¹    ci.ub¹     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> outcomeAL   -0.3392  0.0892   -3.8031   3.81   0.0208   -0.5919   -0.0866    * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> outcomePD    0.3534  0.0582    6.0776   3.79   0.0044    0.1884    0.5185   ** </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1) results based on cluster-robust inference (var-cov estimator: CR2,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    approx. t/F-tests and confidence intervals, dfs = Satterthwaite method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    approx t/F-tests and confidence intervals, dfs: Satterthwaite approx)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">############################################################################</span></span></span>
@@ -629,7 +629,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

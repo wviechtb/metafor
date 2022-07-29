@@ -198,7 +198,8 @@
 .fcf <- function(x, digits) {
 
    if (all(is.na(x))) { # since formatC(NA, format="f", digits=2) fails
-      x
+      #x
+      rep("NA", length(x))
    } else {
       trimws(formatC(x, format="f", digits=digits))
    }
@@ -228,29 +229,59 @@
 ### function to print a named (character) vector right aligned with
 ### a gap of two spaces between adjacent values and no padding
 
-.print.vector <- function(x) {
+.print.vector <- function(x, minfoot=NA, print.gap=2) {
+
+   empty.last.colname <- colnames(x)[length(colnames(x))] == ""
 
    if (is.null(names(x)))
       names(x) <- seq_along(x)
+
+   gap <- paste0(rep(" ", print.gap), collapse="")
 
    len.n   <- nchar(names(x))
    len.x   <- nchar(x, keepNA=FALSE)
    len.max <- pmax(len.n, len.x)
    #format  <- sapply(len.max, function(x) paste("%", x, "s", sep=""))
 
-   #row.n <- paste(sprintf(format, names(x)), collapse="  ") # sprintf("%3s", "\u00b9") isn't right
-   #row.x <- paste(sprintf(format, x), collapse="  ")
+   #row.n <- paste(sprintf(format, names(x)), collapse=gap) # sprintf("%3s", "\u00b9") isn't right
+   #row.x <- paste(sprintf(format, x), collapse=gap)
 
    #f <- function(x, n)
    #   paste0(paste0(rep(" ", n-nchar(x)), collapse=""), x, collapse="")
-   #row.n <- paste(mapply(f, names(x), len.max), collapse="  ")
-   #row.x <- paste(mapply(f, unname(x), len.max), collapse="  ")
+   #row.n <- paste(mapply(f, names(x), len.max), collapse=gap)
+   #row.x <- paste(mapply(f, unname(x), len.max), collapse=gap)
 
-   row.n <- paste(mapply(formatC, names(x), width=len.max), collapse="  ") # formatC("\u00b9", width=3) works
-   row.x <- paste(mapply(formatC, x, width=len.max), collapse="  ")
+   if (is.na(minfoot)) {
+      row.n <- paste(mapply(formatC, names(x), width=len.max), collapse=gap) # formatC("\u00b9", width=3) works
+      row.x <- paste(mapply(formatC, x, width=len.max), collapse=gap)
+   } else {
+      row.n <- mapply(formatC, names(x), width=len.max)
+      row.n[minfoot] <- paste0(" ", row.n[minfoot])
+      row.n <- paste(row.n, collapse=gap)
+      row.x <- mapply(formatC, x, width=len.max)
+      if (empty.last.colname) {
+         row.x[length(row.x)] <- paste0(" ", row.x[length(row.x)])
+      } else {
+         row.x[length(row.x)] <- paste0(row.x[length(row.x)], " ")
+      }
+      row.x <- paste(row.x, collapse=gap)
+   }
 
    cat(row.n, "\n", row.x, "\n", sep="")
 
+}
+
+.addfootsym <- function(x, cols, footsym) {
+   nc <- length(cols)
+   if (length(footsym) == 1L)
+      footsym <- rep(footsym, nc)
+   if (length(footsym) != nc)
+      stop(paste0("Length of 'cols' not the same as length of 'footsym' in .addfootsym()."), call.=FALSE)
+   for (i in seq_along(cols)) {
+      colnames(x)[cols[i]] <- paste0(colnames(x)[cols[i]], footsym[i])
+      x[[cols[i]]] <- paste0(x[[cols[i]]], " ")
+   }
+   return(x)
 }
 
 ############################################################################
