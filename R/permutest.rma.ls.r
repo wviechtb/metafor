@@ -18,7 +18,7 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
       comptol <- ddd$tol
 
    if (.isTRUE(ddd$permci))
-      warning(mstyle$warning("Permutation-based CIs for location-scale models are currently not available."), call.=FALSE)
+      warning(mstyle$warning("Permutation-based CIs for location-scale models not currently available."), call.=FALSE)
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
