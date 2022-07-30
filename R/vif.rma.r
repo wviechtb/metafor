@@ -4,7 +4,9 @@ vif.rma <- function(x, btt, intercept=FALSE, table=FALSE, digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma", notav=c("robust.rma", "rma.uni.selmodel"))
+   .chkclass(class(x), must="rma", notav=c("rma.uni.selmodel"))
+
+   # allow for 'robust.rma' based on the same principle as used for standard 'rma.uni' models
 
    vif.loc   <- TRUE
    vif.scale <- TRUE

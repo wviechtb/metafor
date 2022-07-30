@@ -16,10 +16,12 @@ print.vif.rma <- function(x, digits=x$digits, ...) {
 
       if (x$table) {
 
-         res.table <- data.frame(estimate=.fcf(x$vif$estimate, digits[["est"]]), se=.fcf(x$vif$se, digits[["se"]]), zval=.fcf(x$vif$zval, digits[["test"]]), "pval"=.pval(x$vif$pval, digits[["pval"]]), ci.lb=.fcf(x$vif$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$vif$ci.ub, digits[["ci"]]), vif=.fcf(x$vif$vif, digits[["est"]]), sif=.fcf(x$vif$sif, digits[["est"]]), stringsAsFactors=FALSE)
+         if (is.element(x$test, c("knha","adhoc","t"))) {
+            res.table <- data.frame(estimate=.fcf(x$vif$estimate, digits[["est"]]), se=.fcf(x$vif$se, digits[["se"]]), tval=.fcf(x$vif$tval, digits[["test"]]), "pval"=.pval(x$vif$pval, digits[["pval"]]), ci.lb=.fcf(x$vif$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$vif$ci.ub, digits[["ci"]]), vif=.fcf(x$vif$vif, digits[["est"]]), sif=.fcf(x$vif$sif, digits[["est"]]), stringsAsFactors=FALSE)
+         } else {
+            res.table <- data.frame(estimate=.fcf(x$vif$estimate, digits[["est"]]), se=.fcf(x$vif$se, digits[["se"]]), zval=.fcf(x$vif$zval, digits[["test"]]), "pval"=.pval(x$vif$pval, digits[["pval"]]), ci.lb=.fcf(x$vif$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$vif$ci.ub, digits[["ci"]]), vif=.fcf(x$vif$vif, digits[["est"]]), sif=.fcf(x$vif$sif, digits[["est"]]), stringsAsFactors=FALSE)
+         }
          rownames(res.table) <- rownames(x$vif)
-         if (is.element(x$test, c("knha","adhoc","t")))
-            colnames(res.table)[3] <- "tval"
 
          if (.isTRUE(ddd$num))
             rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
