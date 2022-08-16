@@ -72,7 +72,7 @@
    \item{dfbs}{an element of class \code{"list.rma"} with the DFBETAS values.}
    \item{\dots}{some additional elements/values.}
 
-   The results are printed with \code{print.infl.rma.uni} and plotted with \code{\link{plot.infl.rma.uni}}.
+   The results are printed with \code{print.infl.rma.uni} and plotted with \code{\link{plot.infl.rma.uni}}. To format the results as a data frame, one can use the \code{\link[=as.data.frame.list.rma]{as.data.frame}} function.
 }
 \note{
    Leave-one-out diagnostics are calculated by refitting the model \mjseqn{k} times. Depending on how large \mjseqn{k} is, it may take a few moments to finish the calculations. There are shortcuts for calculating at least some of these values without refitting the model each time, but these are currently not implemented (and may not exist for all of the leave-one-out diagnostics calculated by the function).

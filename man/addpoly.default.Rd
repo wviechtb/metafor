@@ -68,6 +68,6 @@ x <- predict(res, newmods=c(10, 30, 50))
 addpoly(x$pred, sei=x$se, rows=-2, mlab=c("- at 10 Degrees", "- at 30 Degrees", "- at 50 Degrees"))
 abline(h=0)
 text(-8, -1, "Model-Based Estimates:", pos=4, cex=.8)
-text(-4, 15, "Latitude", cex=.8, font=2)
+text(-4, res$k+2, "Latitude", cex=.8, font=2)
 }
 \keyword{aplot}

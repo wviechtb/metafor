@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-13</span>
       </span>
     </div>
 
@@ -128,7 +128,7 @@
 <dd><p>logical to specify whether variance/correlation components should be re-estimated after deletion of the <em></em>\(i\textrm{th}\) case (the default is <code>TRUE</code>).</p></dd>
 
    <dt>parallel</dt>
-<dd><p>character string to specify whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See ‘Details’.</p></dd>
+<dd><p>character string to specify whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See ‘Note’.</p></dd>
 
    <dt>ncpus</dt>
 <dd><p>integer to specify the number of processes to use in the parallel processing.</p></dd>
@@ -159,7 +159,7 @@
     <h2>Note</h2>
     <p>The variable specified via <code>cluster</code> is assumed to be of the same length as the data originally passed to the <code>rma.mv</code> function (and if the <code>data</code> argument was used in the original model fit, then the variable will be searched for within this data frame first). Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the <code>cluster</code> argument.</p>
 <p>Leave-one-out diagnostics are calculated by refitting the model <em></em>\(k\) times (where <em></em>\(k\) denotes the number of cases). Depending on how large <em></em>\(k\) is, it may take a few moments to finish the calculations. For complex models fitted with <code><a href="rma.mv.html">rma.mv</a></code>, this can become computationally expensive.</p>
-<p>On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href="https://rdrr.io/r/parallel/parallel-package.html" class="external-link">parallel</a></code> package, using the <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makePSOCKcluster</a></code> and <code><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes). With <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine.</p>
+<p>On machines with multiple cores, one can try to speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href="https://rdrr.io/r/parallel/parallel-package.html" class="external-link">parallel</a></code> package, using the <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makePSOCKcluster</a></code> and <code><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes). With <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine.</p>
 <p>Alternatively (or in addition to using parallel processing), one can also set <code>reestimate=FALSE</code>, in which case any variance/correlation components in the model are not re-estimated after deleting the <em></em>\(i\textrm{th}\) case from the dataset. Doing so only yields an approximation to the Cook's distances and DFBETAS values that ignores the influence of the <em></em>\(i\textrm{th}\) case on the variance/correlation components, but is considerably faster (and often yields similar results).</p>
 <p>It may not be possible to fit the model after deletion of the <em></em>\(i\textrm{th}\) case from the dataset. This will result in <code>NA</code> values for that case.</p>
     </div>

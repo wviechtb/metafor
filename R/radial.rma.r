@@ -42,7 +42,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
       }
 
    } else {
-      stop(mstyle$stop("Radial plots only applicable for models without moderators."))
+      stop(mstyle$stop("Radial plots only available for models without moderators."))
    }
 
    if (center) {

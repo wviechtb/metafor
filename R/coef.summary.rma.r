@@ -4,6 +4,8 @@ coef.summary.rma <- function(object, ...) {
 
    .chkclass(class(object), must="summary.rma")
 
+   ddd <- list(...)
+
    x <- object
 
    if (is.element(x$test, c("knha","adhoc","t"))) {
@@ -12,6 +14,9 @@ coef.summary.rma <- function(object, ...) {
       res.table <- data.frame(estimate=x$beta, se=x$se, zval=x$zval, pval=x$pval, ci.lb=x$ci.lb, ci.ub=x$ci.ub)
    }
 
+   if (isTRUE(ddd$type=="beta"))
+      return(res.table)
+
    if (inherits(x, "rma.ls")) {
       res.table <- list(beta=res.table)
       if (is.element(x$test, c("knha","adhoc","t"))) {
@@ -19,6 +24,8 @@ coef.summary.rma <- function(object, ...) {
       } else {
          res.table$alpha <- data.frame(estimate=x$alpha, se=x$se.alpha, zval=x$zval.alpha, pval=x$pval.alpha, ci.lb=x$ci.lb.alpha, ci.ub=x$ci.ub.alpha)
       }
+      if (isTRUE(ddd$type=="alpha"))
+         return(res.table$alpha)
    }
 
    if (inherits(x, "rma.uni.selmodel")) {
@@ -29,6 +36,8 @@ coef.summary.rma <- function(object, ...) {
       } else {
          rownames(res.table$delta) <- paste0("delta.", seq_along(x$delta))
       }
+      if (isTRUE(ddd$type=="delta"))
+         return(res.table$delta)
    }
 
    return(res.table)

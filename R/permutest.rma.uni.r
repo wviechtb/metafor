@@ -17,6 +17,11 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    if (!is.null(ddd$tol)) # in case user specifies comptol in the old manner
       comptol <- ddd$tol
 
+   iter <- round(iter)
+
+   if (iter <= 1)
+      stop(mstyle$stop("Argument 'iter' must be >= 2."))
+
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
 

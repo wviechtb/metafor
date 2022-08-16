@@ -7,7 +7,7 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
    x <- object
 
    if (!x$int.only)
-      stop(mstyle$stop("Method only applicable for models without moderators."))
+      stop(mstyle$stop("Method only applicable to models without moderators."))
 
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)

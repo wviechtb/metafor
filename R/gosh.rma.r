@@ -68,6 +68,9 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl, ...) 
          N.tot <- 10^6
       }
    } else {
+      subsets <- round(subsets)
+      if (subsets <= 1)
+         stop(mstyle$stop("Argument 'subsets' must be >= 2."))
       if (N.tot <= subsets) {
          exact <- TRUE
       } else {

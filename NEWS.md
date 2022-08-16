@@ -1,4 +1,6 @@
-# metafor 3.5-12 (2022-07-29)
+# metafor 3.5-13 (2022-08-16)
+
+- `vif()` was completely refactored and gains `reestimate`, `sim`, and `parallel` arguments
 
 - added `as.data.frame.anova.rma()` and `as.data.frame.list.anova.rma()` methods
 

@@ -16,7 +16,7 @@ permutest(x, \dots)
    \item{x}{an object of class \code{"rma.uni"}.}
    \item{exact}{logical to specify whether an exact permutation test should be carried out (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{iter}{integer to specify the number of iterations for the permutation test when not doing an exact test (the default is \code{1000}).}
-   \item{permci}{logical to specify whether permutation-based CIs should also be constructed (the default is \code{FALSE}). Can also be a vector of indices to specify for which coefficients a permutation-based CI should be obtained.}
+   \item{permci}{logical to specify whether permutation-based confidence intervals (CIs) should also be constructed (the default is \code{FALSE}). Can also be a vector of indices to specify for which coefficients a permutation-based CI should be obtained.}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{TRUE}).}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{control}{list of control values for numerical comparisons (\code{comptol}) and for \code{\link{uniroot}} (i.e., \code{tol} and \code{maxiter}). The latter is only relevant when \code{permci=TRUE}. See \sQuote{Note}.}
@@ -27,19 +27,32 @@ permutest(x, \dots)
 
    For models with moderators, the permutation test is carried out by permuting the rows of the model matrix (i.e., \mjseqn{X}). The (two-sided) p-value for a particular model coefficient is then equal to the proportion of times that the absolute value of the test statistic for the coefficient under the permuted data is as extreme or more extreme than under the actually observed data. Similarly, for the omnibus test, the p-value is the proportion of times that the test statistic for the omnibus test is as extreme or more extreme than the actually observed one. See Higgins and Thompson (2004) and Viechtbauer et al. (2015) for more details.
 
-   If \code{exact=TRUE}, the function will try to carry out an exact permutation test. An exact permutation test requires fitting the model to each possible permutation once. However, the number of possible permutations increases rapidly with the number of outcomes/studies (i.e., \mjseqn{k}). For models without moderators, there are \mjseqn{2^k} possible permutations of the signs. Therefore, for \mjseqn{k=5}, there are 32 possible permutations, for \mjseqn{k=10}, there are already 1024, and for \mjseqn{k=20}, there are over one million such permutations.
+   \subsection{Exact versus Approximate Permutation Tests}{
 
-   For models with moderators, the increase in the number of possible permutations may be even more severe. The total number of possible permutations of the model matrix is \mjseqn{k!}. Therefore, for \mjseqn{k=5}, there are 120 possible permutations, for \mjseqn{k=10}, there are 3,628,800, and for \mjseqn{k=20}, there are over \mjeqn{10^{18}}{10^18} permutations of the model matrix.
+      If \code{exact=TRUE}, the function will try to carry out an exact permutation test. An exact permutation test requires fitting the model to each possible permutation. However, the number of possible permutations increases rapidly with the number of outcomes/studies (i.e., \mjseqn{k}). For models without moderators, there are \mjseqn{2^k} possible permutations of the signs. Therefore, for \mjseqn{k=5}, there are 32 possible permutations, for \mjseqn{k=10}, there are already 1024, and for \mjseqn{k=20}, there are over one million such permutations.
 
-   Therefore, going through all possible permutations may become infeasible. Instead of using an exact permutation test, one can set \code{exact=FALSE} (which is also the default). In that case, the function approximates the exact permutation-based p-value(s) by going through a smaller number (as specified by the \code{iter} argument) of \emph{random} permutations. Therefore, running the function twice on the same data can yield (slightly) different p-values. Setting \code{iter} sufficiently large ensures that the results become stable. For full reproducibility, one can also set the seed of the random number generator before running the function (see \sQuote{Examples}). Note that if \code{exact=FALSE} and \code{iter} is actually larger than the number of iterations required for an exact permutation test, then an exact test will be carried out.
+      For models with moderators, the increase in the number of possible permutations may be even more severe. The total number of possible permutations of the model matrix is \mjseqn{k!}. Therefore, for \mjseqn{k=5}, there are 120 possible permutations, for \mjseqn{k=10}, there are 3,628,800, and for \mjseqn{k=20}, there are over \mjeqn{10^{18}}{10^18} permutations of the model matrix.
 
-   For models with moderators, the exact permutation test actually only requires fitting the model to each \emph{unique} permutation of the model matrix. The number of unique permutations will be smaller than \mjseqn{k!} when the model matrix contains recurring rows. This may be the case when only including categorical moderators (i.e., factors) in the model or when any quantitative moderators included in the model can only take on a small number of unique values. When \code{exact=TRUE}, the function therefore uses an algorithm to restrict the test to only the unique permutations of the model matrix, which may make the use of the exact test feasible even when \mjseqn{k} is large.
+      Therefore, going through all possible permutations may become infeasible. Instead of using an exact permutation test, one can set \code{exact=FALSE} (which is also the default). In that case, the function approximates the exact permutation-based p-value(s) by going through a smaller number (as specified by the \code{iter} argument) of \emph{random} permutations. Therefore, running the function twice on the same data can yield (slightly) different p-values. Setting \code{iter} sufficiently large ensures that the results become stable. For full reproducibility, one can also set the seed of the random number generator before running the function (see \sQuote{Examples}). Note that if \code{exact=FALSE} and \code{iter} is actually larger than the number of iterations required for an exact permutation test, then an exact test will automatically be carried out.
 
-   When using random permutations, the function ensures that the very first permutation will always correspond to the original data. This avoids p-values equal to 0.
+      For models with moderators, the exact permutation test actually only requires fitting the model to each \emph{unique} permutation of the model matrix. The number of unique permutations will be smaller than \mjseqn{k!} when the model matrix contains recurring rows. This may be the case when only including categorical moderators (i.e., factors) in the model or when any quantitative moderators included in the model can only take on a small number of unique values. When \code{exact=TRUE}, the function therefore uses an algorithm to restrict the test to only the unique permutations of the model matrix, which may make the use of the exact test feasible even when \mjseqn{k} is large.
 
-   When \code{permci=TRUE}, the function also tries to obtain permutation-based CIs of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes by some amount and finding the most extreme values for this amount for which the permutation-based test would just lead to non-rejection. This is computationally very expensive and may take a long time to complete. For models with moderators, one can also set \code{permci} to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as \code{NA} in the output.
+      When using random permutations, the function ensures that the very first permutation will always correspond to the original data. This avoids p-values equal to 0.
 
-   The function also works with location-scale models (see \code{\link{rma.uni}} for details). Permutation tests will then be carried out for both the location and scale parts of the model. However, note that permutation-based CIs are not available for location-scale models.
+   }
+
+   \subsection{Permutation-Based Confidence Intervals}{
+
+      When \code{permci=TRUE}, the function also tries to obtain permutation-based confidence intervals (CIs) of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes by some amount and finding the most extreme values for this amount for which the permutation-based test would just lead to non-rejection. This is computationally expensive and may take a long time to complete. For models with moderators, one can also set \code{permci} to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as \code{NA} in the output.
+
+   }
+
+   \subsection{Permutation Tests for Location-Scale Models}{
+
+      The function also works with location-scale models (see \code{\link{rma.uni}} for details on such models). Permutation tests will then be carried out for both the location and scale parts of the model. However, note that permutation-based CIs are not available for location-scale models.
+
+   }
+
 }
 \value{
    An object of class \code{"permutest.rma.uni"}. The object is a list containing the following components:
@@ -59,9 +72,9 @@ permutest(x, \dots)
 
    When the number of permutations required for the exact test is so large as to be essentially indistinguishable from infinity (e.g., \code{factorial(200)}), the function will terminate with an error.
 
-   Determining whether a test statistic under the permuted data is as extreme or more extreme than under the actually observed data requires making \code{>=} or \code{<=} comparisons. To avoid problems due to the finite precision with which computers generally represent numbers, the function uses a numerical tolerance (control argument \code{comptol}, which is set equal to \code{.Machine$double.eps^0.5} by default) when making such comparisons (e.g., instead of \code{sqrt(3)^2 - 3 >= 0}, which may evaluate to \code{FALSE}, we can use \code{sqrt(3)^2 - 3 >= 0 - .Machine$double.eps^0.5}, which should evaluate to \code{TRUE}).
+   Determining whether a test statistic under the permuted data is as extreme or more extreme than under the actually observed data requires making \code{>=} or \code{<=} comparisons. To avoid problems due to the finite precision with which computers generally represent numbers (see \href{https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-doesn_0027t-R-think-these-numbers-are-equal_003f}{this} FAQ for details), the function uses a numerical tolerance (\code{control} argument \code{comptol}, which is set equal to \code{.Machine$double.eps^0.5} by default) when making such comparisons (e.g., instead of \code{sqrt(3)^2 >= 3}, which may evaluate to \code{FALSE}, we use \code{sqrt(3)^2 >= 3 - .Machine$double.eps^0.5}, which should evaluate to \code{TRUE}).
 
-   When obtaining permutation-based CIs, the function makes use of \code{\link{uniroot}}. By default, the desired accuracy is set equal to \code{.Machine$double.eps^0.25} and the maximum number of iterations to \code{100}. The desired accuracy and the maximum number of iterations can be adjusted with the \code{control} argument (i.e., \code{control=list(tol=value, maxiter=value)}). Also, the interval searched for the CI bounds may be too narrow, leading to \code{NA} for a bound. In this case, one can try setting \code{control=list(distfac=value)} with a value larger than 1 to extend the interval (the value indicating a multiplicative factor by which to extend the width of the interval) or \code{control=list(extendInt="yes")} to allow \code{\link{uniroot}} to extend the interval dynamically.
+   When obtaining permutation-based CIs, the function makes use of \code{\link{uniroot}}. By default, the desired accuracy is set equal to \code{.Machine$double.eps^0.25} and the maximum number of iterations to \code{100}. The desired accuracy and the maximum number of iterations can be adjusted with the \code{control} argument (i.e., \code{control=list(tol=value, maxiter=value)}). Also, the interval searched for the CI bounds may be too narrow, leading to \code{NA} for a bound. In this case, one can try setting \code{control=list(distfac=value)} with a value larger than 1 to extend the interval (the value indicating a multiplicative factor by which to extend the width of the interval searched) or \code{control=list(extendInt="yes")} to allow \code{\link{uniroot}} to extend the interval dynamically.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
@@ -80,7 +93,7 @@ permutest(x, \dots)
 \seealso{
    \code{\link{rma.uni}} for the function to fit models for which permutation tests can be conducted.
 
-   \code{\link{print.permutest.rma.uni}} and \code{\link{plot.permutest.rma.uni}} for the print and plot methods.
+   \code{\link{print.permutest.rma.uni}} and \code{\link{plot.permutest.rma.uni}} for the print and plot methods and \code{\link{coef.permutest.rma.uni}} for a method to extract the model results table.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

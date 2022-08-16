@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-13</span>
       </span>
     </div>
 
@@ -238,7 +238,7 @@
 <h3 id="parallel-processing">Parallel Processing<a class="anchor" aria-label="anchor" href="#parallel-processing"></a></h3>
 
 
-<p>Profiling requires repeatedly refitting the model, which can be slow when <em></em>\(k\) is large and/or the model is complex (the latter especially applies to <code>"rma.mv"</code> objects and also to certain <code>"rma.uni.selmodel"</code> or <code>"rma.ls"</code> objects). On machines with multiple cores, one can usually speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href="https://rdrr.io/r/parallel/parallel-package.html" class="external-link">parallel</a></code> package, using the <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makePSOCKcluster</a></code> and <code><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes). With <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine.</p>
+<p>Profiling requires repeatedly refitting the model, which can be slow when <em></em>\(k\) is large and/or the model is complex (the latter especially applies to <code>"rma.mv"</code> objects and also to certain <code>"rma.uni.selmodel"</code> or <code>"rma.ls"</code> objects). On machines with multiple cores, one can try to speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href="https://rdrr.io/r/parallel/parallel-package.html" class="external-link">parallel</a></code> package, using the <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makePSOCKcluster</a></code> and <code><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes). With <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine.</p>
 <p></p>
 </div>
 

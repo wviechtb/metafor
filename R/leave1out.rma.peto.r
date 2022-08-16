@@ -10,7 +10,7 @@ leave1out.rma.peto <- function(x, digits, transf, targs, progbar=FALSE, ...) {
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (!x$int.only)
-      stop(mstyle$stop("Method only applicable for models without moderators."))
+      stop(mstyle$stop("Method only applicable to models without moderators."))
 
    if (x$k == 1)
       stop(mstyle$stop("Stopped because k = 1."))

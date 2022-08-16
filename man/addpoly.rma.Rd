@@ -60,13 +60,13 @@ addpoly(res)
 ### forest plot with subgrouping of studies and summaries per subgroup
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
            slab=paste(author, year, sep=", "))
-forest(res, xlim=c(-16, 4.6), at=log(c(.05, .25, 1, 4)), atransf=exp,
-       ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
-       cex=.75, ylim=c(-1, 27), order=alloc, rows=c(3:4,9:15,20:23),
-       mlab="RE Model for All Studies", header="Author(s) and Year")
+tmp <- forest(res, xlim=c(-16, 4.6), at=log(c(.05, .25, 1, 4)), atransf=exp,
+              ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
+              cex=.75, ylim=c(-1, 27), order=alloc, rows=c(3:4,9:15,20:23),
+              mlab="RE Model for All Studies", header="Author(s) and Year")
 op <- par(cex=.75, font=2)
-text(c(-9.5,-8,-6,-4.5), 26, c("TB+", "TB-", "TB+", "TB-"))
-text(c(-8.75,-5.25),     27, c("Vaccinated", "Control"))
+text(c(-9.5,-8,-6,-4.5), tmp$ylim[2]-1, c("TB+", "TB-", "TB+", "TB-"))
+text(c(-8.75,-5.25),     tmp$ylim[2],   c("Vaccinated", "Control"))
 par(font=4)
 text(-16, c(24,16,5), c("Systematic Allocation", "Random Allocation",
                         "Alternate Allocation"), pos=4)

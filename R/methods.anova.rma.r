@@ -126,7 +126,7 @@ as.data.frame.list.anova.rma <- function(x, ...) {
          tab <- cbind(tab[1:4], df2 = sapply(x, function(x) round(x$QSdf[2], 2)), tab[5])
    }
 
-   # if all btt/att specifications were numeric, remove the 'spec' column
+   # if all btt/att specifications are numeric, remove the 'spec' column
    if (all(substr(tab$spec, 1, 1) %in% as.character(1:9)))
        tab$spec <- NULL
 

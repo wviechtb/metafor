@@ -370,12 +370,12 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       if (x$robumethod == "default") {
          cat(mstyle$legend(","))
          cat("\n")
-         cat(mstyle$legend(paste0("   approx ", ifelse(x$int.only, "t-test and confidence interval", "t/F-tests and confidence intervals"), ", dfs: residual method)")))
+         cat(mstyle$legend(paste0("   approx ", ifelse(x$int.only, "t-test and confidence interval", "t/F-tests and confidence intervals"), ", df: residual method)")))
       } else {
          if (x$coef_test == "Satterthwaite" && x$conf_test == "Satterthwaite" && x$wald_test == "HTZ") {
             cat(mstyle$legend(","))
             cat("\n")
-            cat(mstyle$legend(paste0("   approx ", ifelse(x$int.only, "t-test and confidence interval", "t/F-tests and confidence intervals"), ", dfs: Satterthwaite approx)")))
+            cat(mstyle$legend(paste0("   approx ", ifelse(x$int.only, "t-test and confidence interval", "t/F-tests and confidence intervals"), ", df: Satterthwaite approx)")))
          } else {
             cat(mstyle$legend(")"))
          }

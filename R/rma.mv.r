@@ -2435,9 +2435,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       if (is.null(ddd$outlist))
          res <- append(res, list(data=data), which(names(res) == "fit.stats"))
 
-   }
-
-   if (!is.null(ddd$outlist)) {
+   } else {
 
       if (ddd$outlist == "minimal") {
          res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,

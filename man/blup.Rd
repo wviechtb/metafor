@@ -26,7 +26,7 @@ blup(x, \dots)
    \item{pi.ub}{upper bound of the prediction intervals.}
    \item{\dots}{some additional elements/values.}
 
-   The object is formatted and printed with the \code{\link[=print.list.rma]{print}} function.
+   The object is formatted and printed with the \code{\link[=print.list.rma]{print}} function. To format the results as a data frame, one can use the \code{\link[=as.data.frame.list.rma]{as.data.frame}} function.
 }
 \note{
    For best linear unbiased predictions of only the random effects, see \code{\link{ranef}}.

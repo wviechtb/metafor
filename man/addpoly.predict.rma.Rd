@@ -65,6 +65,6 @@ addpoly(x, efac=1.4, col="gray", addpred=TRUE,
         mlab=c("Alternate Allocation", "Random Allocation", "Systematic Allocation"))
 abline(h=0)
 text(-8, -1, "Model-Based Estimates:", pos=4, cex=.8)
-text(-4, 15, "Allocation", cex=.8, font=2)
+text(-4, res$k+2, "Allocation", cex=.8, font=2)
 }
 \keyword{aplot}

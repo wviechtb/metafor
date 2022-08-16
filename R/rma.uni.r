@@ -2595,9 +2595,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       if (is.null(ddd$outlist))
          res <- append(res, list(data=data), which(names(res) == "fit.stats"))
 
-   }
-
-   if (!is.null(ddd$outlist)) {
+   } else {
 
       if (ddd$outlist == "minimal") {
          res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
@@ -2648,6 +2646,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       res$Z.int.incl     <- Z.int.incl
       res$Z.intercept    <- Z.int.incl
       res$Z.int.only     <- Z.int.only
+      res$coef.na.Z      <- coef.na.Z
       res$H              <- H
 
    }

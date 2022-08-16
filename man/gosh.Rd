@@ -14,7 +14,7 @@ gosh(x, \dots)
    \item{x}{an object of class \code{"rma"}.}
    \item{subsets}{optional integer to specify the number of subsets.}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{TRUE}).}
-   \item{parallel}{character string to specify whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
+   \item{parallel}{character string to specify whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Note}.}
    \item{ncpus}{integer to specify the number of processes to use in the parallel processing.}
    \item{cl}{optional cluster to use if \code{parallel="snow"}. If unspecified, a cluster on the local machine is created for the duration of the call.}
    \item{\dots}{other arguments.}
@@ -31,8 +31,6 @@ gosh(x, \dots)
    By default, if the number of possible subsets is \mjseqn{\le 10^6}, the function will consider all possible subsets and otherwise \mjseqn{10^6} random subsets. One can use the \code{subsets} argument to specify a different number of subsets to consider. If \code{subsets} is specified and it is actually larger than the number of possible subsets, then the function automatically only considers the possible subsets and does not use random subsets.
 
    When \code{x} is an equal-effects model or a random-effects model fitted using \code{method="DL"}, provisions have been made to speed up the model fitting to the various subsets. For random-effects models using some other estimator of \mjseqn{\tau^2} (especially an iterative one like \code{method="REML"}), the computations will be considerably slower.
-
-   On machines with multiple cores, one can try to speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1. Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using \code{\link[parallel]{mclapply}} when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
 }
 \value{
    An object of class \code{"gosh.rma"}. The object is a list containing the following components:
@@ -41,6 +39,9 @@ gosh(x, \dots)
    \item{\dots}{some additional elements/values.}
 
    The results can be printed with the \code{\link[=print.gosh.rma]{print}} function and plotted with the \code{\link[=plot.gosh.rma]{plot}} function.
+}
+\note{
+   On machines with multiple cores, one can try to speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1. Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using \code{\link[parallel]{mclapply}} when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

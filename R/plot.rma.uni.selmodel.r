@@ -73,7 +73,7 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
 
    ys <- wi.fun(ps, delta=delta, yi=x$yi, vi=x$vi, preci=prec, alternative=x$alternative, steps=x$steps)
 
-   if (ci && citype == "boot" && all(is.na(x$vb.delta)))
+   if (ci && citype == "boot" && all(is.na(x$vd)))
       ci <- FALSE
 
    if (ci && citype == "wald" && all(is.na(x$ci.lb.delta)) && all(is.na(x$ci.ub.delta)))
@@ -89,12 +89,12 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
          if (!is.null(ddd$seed))
             set.seed(ddd$seed)
 
-         vb.delta <- x$vb.delta
-         vb.delta.na <- is.na(diag(vb.delta))
-         vb.delta[vb.delta.na,] <- 0
-         vb.delta[,vb.delta.na] <- 0
+         vd <- x$vd
+         vd.na <- is.na(diag(vd))
+         vd[vd.na,] <- 0
+         vd[,vd.na] <- 0
 
-         dsim <- .mvrnorm(reps, mu=delta, Sigma=vb.delta)
+         dsim <- .mvrnorm(reps, mu=delta, Sigma=vd)
 
          for (j in seq_len(ncol(dsim))) {
             dsim[,j] <- ifelse(dsim[,j] < x$delta.min[j], x$delta.min[j], dsim[,j])

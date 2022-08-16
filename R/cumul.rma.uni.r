@@ -10,7 +10,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (!x$int.only)
-      stop(mstyle$stop("Method only applicable for models without moderators."))
+      stop(mstyle$stop("Method only applicable to models without moderators."))
 
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)

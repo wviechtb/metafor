@@ -1,27 +1,13 @@
-vif.rma <- function(x, btt, intercept=FALSE, table=FALSE, digits, ...) {
+vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progbar=TRUE,
+                    seed=NULL, parallel="no", ncpus=1, cl, digits, ...) {
 
    #########################################################################
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma", notav=c("rma.uni.selmodel"))
+   .chkclass(class(x), must="rma")
 
-   # allow for 'robust.rma' based on the same principle as used for standard 'rma.uni' models
-
-   vif.loc   <- TRUE
-   vif.scale <- TRUE
-
-   if (inherits(x, "rma.ls")) {
-      if (x$int.only)
-         vif.loc <- FALSE
-      if (x$Z.int.only)
-         vif.scale <- FALSE
-      if (!vif.loc && !vif.scale)
-         stop(mstyle$stop("VIF not applicable for intercept-only models."))
-   } else {
-      if (x$int.only)
-         stop(mstyle$stop("VIF not applicable for intercept-only models."))
-   }
+   # allow vif() for 'rma.glmm', 'robust.rma', and 'rma.uni.selmodel' objects based on the same principle (but not sim/reestimate)
 
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
@@ -29,75 +15,226 @@ vif.rma <- function(x, btt, intercept=FALSE, table=FALSE, digits, ...) {
       digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
    }
 
+   ### determine for which types of coefficients (G)VIFs will be computed
+
+   vif.loc <- !x$int.only
+
+   if (inherits(x, "rma.ls") && !x$Z.int.only) {
+      vif.scale <- TRUE
+   } else {
+      vif.scale <- FALSE
+   }
+
+   if (!vif.loc && !vif.scale)
+      stop(mstyle$stop("VIFs not applicable to intercept-only models."))
+
+   if (!is.null(seed))
+      set.seed(seed)
+
    ddd <- list(...)
 
-   .chkdots(ddd, c("att"))
+   .chkdots(ddd, c("fixed", "intercept", "time", "LB"))
+
+   if (is.null(ddd$fixed)) {
+      fixed <- FALSE
+   } else {
+      fixed <- .isTRUE(ddd$fixed)
+   }
+
+   if (is.null(ddd$intercept)) {
+      intercept <- FALSE
+   } else {
+      intercept <- .isTRUE(ddd$intercept)
+   }
+
+   if (.isTRUE(ddd$time))
+      time.start <- proc.time()
+
+   ### process 'sim' argument (if TRUE, set sim to 1000, otherwise use given value)
+
+   if (is.logical(sim)) {
+      sim <- ifelse(isTRUE(sim), 1000, 0)
+   } else {
+      sim <- round(sim)
+      if (sim <= 1)
+         stop(mstyle$stop("Argument 'sim' must be >= 2."))
+   }
+
+   ### do not allow sim and reestimate for 'rma.glmm', 'robust.rma', and 'rma.uni.selmodel' objects
+
+   if (sim >= 2 && inherits(x, "rma.glmm"))
+      stop(mstyle$stop("Cannot use 'sim' with models of class 'rma.glmm'."))
+
+   if (sim >= 2 && inherits(x, "robust.rma"))
+      stop(mstyle$stop("Cannot use 'sim' with models of class 'robust.rma'."))
+
+   if (sim >= 2 && inherits(x, "rma.uni.selmodel"))
+      stop(mstyle$stop("Cannot use 'sim' with models of class 'rma.uni.selmodel'."))
+
+   if (reestimate && inherits(x, "rma.glmm"))
+      stop(mstyle$stop("Cannot use 'restimate=TRUE' with models of class 'rma.glmm'."))
+
+   if (reestimate && inherits(x, "robust.rma"))
+      stop(mstyle$stop("Cannot use 'restimate=TRUE' with models of class 'robust.rma'."))
+
+   if (reestimate && inherits(x, "rma.uni.selmodel"))
+      stop(mstyle$stop("Cannot use 'restimate=TRUE' with models of class 'rma.uni.selmodel'."))
+
+   ### check if btt/att have been specified
+
+   bttmiss <- missing(btt) || is.null(btt)
+   attmiss <- missing(att) || is.null(att)
+
+   if (!attmiss && !inherits(x, "rma.ls"))
+      stop(mstyle$stop("Argument 'att' only relevant for location-scale models."))
+
+   ### handle parallel (and related) arguments
+
+   parallel <- match.arg(parallel, c("no", "snow", "multicore"))
+
+   if (parallel == "no" && ncpus > 1)
+      parallel <- "snow"
+
+   if (missing(cl))
+      cl <- NULL
+
+   if (!is.null(cl) && inherits(cl, "SOCKcluster")) {
+      parallel <- "snow"
+      ncpus <- length(cl)
+   }
+
+   if (parallel == "snow" && ncpus < 2)
+      parallel <- "no"
+
+   if (sim <= 1)
+      parallel <- "no"
+
+   if (parallel == "snow" || parallel == "multicore") {
+
+      if (!requireNamespace("parallel", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'parallel' package for parallel processing."))
+
+      ncpus <- as.integer(ncpus)
+
+      if (ncpus < 1L)
+         stop(mstyle$stop("Argument 'ncpus' must be >= 1."))
+
+   }
+
+   if (parallel == "snow") {
+
+      if (is.null(cl)) {
+         cl <- parallel::makePSOCKcluster(ncpus)
+         on.exit(parallel::stopCluster(cl), add=TRUE)
+      }
+
+   }
+
+   if (!progbar) {
+      pbo <- pbapply::pboptions(type="none")
+      on.exit(pbapply::pboptions(pbo), add=TRUE)
+   }
+
 
    #########################################################################
 
    if (vif.loc) {
 
-      vcov <- vcov(x)
+      ### process/set btt argument
 
-      if (inherits(x, "rma.ls"))
-         vcov <- vcov$beta
-
-      if (missing(btt) || is.null(btt)) {
-
-         ### remove intercept row/colum from vcov if model includes one and intercept=FALSE
-         if (x$intercept && !intercept)
-            vcov <- vcov[-1,-1,drop=FALSE]
-
-         ### rescale vcov to correlation matrix
-         rb <- cov2cor(vcov)
-
-         ### try computing the VIFs
-         vif <- try(diag(chol2inv(chol(rb))), silent=TRUE)
-
-         if (inherits(vif, "try-error"))
-            stop(mstyle$stop("Cannot invert var-cov matrix to compute VIFs."))
-
-         ### add NA for intercept if model includes one and intercept=FALSE
-         if (x$intercept && !intercept && table)
-            vif <- c(NA, vif)
-
-         if (table) {
-            tab <- coef(summary(x))
-            if (inherits(x, "rma.ls"))
-               tab <- tab$beta
-            vif <- cbind(tab, vif=vif, sif=sqrt(vif))
-         } else {
-            names(vif) <- rownames(vcov)
-         }
-
-         res <- list(vif=vif, digits=digits, table=table, test=x$test)
-
-      } else {
-
-         btt <- .set.btt(btt, x$p, x$int.incl, colnames(x$X))
-
+      if (bttmiss) {
          if (x$intercept && !intercept) {
-            vcov <- vcov[-1,-1,drop=FALSE]
-            btt <- btt - 1
-            if (any(btt < 1))
-               warning(mstyle$warning("Intercept term not included in GVIF computation."), call.=FALSE)
-            btt <- btt[btt > 0]
+            btt <- as.list(2:x$p)
+         } else {
+            btt <- as.list(seq_len(x$p))
          }
-         m <- length(btt)
+      }
 
-         rb <- cov2cor(vcov)
-         detrv <- det(rb)
-         gvif <- det(as.matrix(rb[btt,btt])) * det(as.matrix(rb[-btt,-btt])) / detrv
-         gsif <- gvif^(1/(2*m))
+      if (is.character(btt)) # turn btt=c("foo","bar") into list("foo","bar")
+         btt <- as.list(btt)
 
-         if (x$intercept && !intercept)
-            btt <- btt + 1
+      if (!is.list(btt))
+         btt <- list(btt)
 
-         res <- list(gvif=gvif, gsif=gsif, btt=btt, m=m, digits=digits)
+      spec <- btt
+      btt <- lapply(btt, .set.btt, x$p, x$int.incl, colnames(x$X), fixed=fixed)
+
+      if (x$intercept && !intercept && any(sapply(btt, function(bttj) length(bttj) == 1L && bttj == 1L)))
+         stop(mstyle$stop("Cannot compute VIF(s) for the specified 'btt' argument."))
+
+      ### get var-cov matrix of the fixed effects (location coefficients)
+
+      vcov <- vcov(x, type="beta")
+
+      ### compute (G)VIF for each element in the btt list
+
+      obj <- if (reestimate) x else NULL
+
+      res <- list()
+      res$vif <- lapply(seq_along(btt), .compvif, btt=btt, vcov=vcov, xintercept=x$intercept, intercept=intercept, spec=spec, colnames=colnames(x$X), obj=obj, sim=FALSE)
+
+      ### add coefficient names
+
+      if (bttmiss) {
+         if (x$intercept && !intercept) {
+            names(res$vif) <- colnames(x$X)[-1]
+         } else {
+            names(res$vif) <- colnames(x$X)
+         }
+      }
+
+      ### add coefficient table if requested
+
+      if (table && bttmiss) {
+         res$table <- coef(summary(x), type="beta")
+         res$test  <- x$test
+      }
+
+      res$bttspec <- !bttmiss
+      res$digits  <- digits
+      class(res)  <- "vif.rma"
+
+      ######################################################################
+
+      ### if sim >= 2, simulate corresponding (G)VIFs under independence
+
+      sim.loc <- sim
+
+      ### but skip this if all (G)VIFs are equal to 1
+
+      if (all(sapply(res$vif, function(x) x$vif) == 1, na.rm=TRUE))
+         sim.loc <- 0
+
+      if (sim.loc >= 2) {
+
+         if (parallel == "no")
+            vif.sim <- pbapply::pblapply(seq_len(sim.loc), .compvifsim, obj=x, coef="beta", btt=btt, att=NULL, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed)
+
+         if (parallel == "multicore")
+            vif.sim <- pbapply::pblapply(seq_len(sim.loc), .compvifsim, obj=x, coef="beta", btt=btt, att=NULL, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, cl=ncpus)
+
+         if (parallel == "snow") {
+
+            if (.isTRUE(ddd$LB)) {
+               vif.sim <- parallel::parLapplyLB(cl, seq_len(sim.loc), .compvifsim, obj=x, coef="beta", btt=btt, att=NULL, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed)
+            } else {
+               vif.sim <- pbapply::pblapply(seq_len(sim.loc), .compvifsim, obj=x, coef="beta", btt=btt, att=NULL, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, cl=cl)
+            }
+
+         }
+
+         vif.sim <- do.call(rbind, vif.sim)
+         rownames(vif.sim) <- seq_len(sim.loc)
+         colnames(vif.sim) <- seq_along(btt)
+
+         res$sim <- vif.sim
+
+         vifs <- sapply(res$vif, function(x) x$vif)
+         res$prop <- apply(vifs >= t(vif.sim), 1, mean, na.rm=TRUE)
 
       }
 
-      class(res) <- "vif.rma"
+      ######################################################################
 
    } else {
 
@@ -107,73 +244,108 @@ vif.rma <- function(x, btt, intercept=FALSE, table=FALSE, digits, ...) {
 
    #########################################################################
 
-   if (inherits(x, "rma.ls") && vif.scale) {
+   if (vif.scale) {
 
       res.loc <- res
 
-      vcov <- vcov(x)$alpha
+      ### process/set att argument
 
-      if (is.null(ddd$att)) {
-
-         ### remove intercept row/colum from vcov if model includes one and intercept=FALSE
-         if (x$Z.intercept && !intercept)
-            vcov <- vcov[-1,-1,drop=FALSE]
-
-         ### rescale vcov to correlation matrix
-         rb <- cov2cor(vcov)
-
-         ### try computing the VIFs
-         vif <- try(diag(chol2inv(chol(rb))), silent=TRUE)
-
-         if (inherits(vif, "try-error"))
-            stop(mstyle$stop("Cannot invert var-cov matrix to compute VIFs for the scale model."))
-
-         ### add NA for intercept if model includes one and intercept=FALSE
-         if (x$Z.intercept && !intercept && table)
-            vif <- c(NA, vif)
-
-         if (table) {
-            tab <- coef(summary(x))$alpha
-            vif <- cbind(tab, vif=vif, sif=sqrt(vif))
-         } else {
-            names(vif) <- rownames(vcov)
-         }
-
-         res.scale <- list(vif=vif, digits=digits, table=table, test=x$test)
-
-      } else {
-
-         att <- .set.btt(ddd$att, x$q, x$Z.int.incl, colnames(x$Z))
-
+      if (attmiss) {
          if (x$Z.intercept && !intercept) {
-            vcov <- vcov[-1,-1,drop=FALSE]
-            att <- att - 1
-            if (any(att < 1))
-               warning(mstyle$warning("Intercept term not included in GVIF computation."), call.=FALSE)
-            att <- att[att > 0]
+            att <- as.list(2:x$q)
+         } else {
+            att <- as.list(seq_len(x$q))
          }
-         m <- length(att)
+      }
 
-         rb <- cov2cor(vcov)
-         detrv <- det(rb)
-         gvif <- det(as.matrix(rb[att,att])) * det(as.matrix(rb[-att,-att])) / detrv
-         gsif <- gvif^(1/(2*m))
+      if (is.character(att))
+         att <- as.list(att)
 
-         if (x$Z.intercept && !intercept)
-            att <- att + 1
+      if (!is.list(att))
+         att <- list(att)
 
-         res.scale <- list(gvif=gvif, gsif=gsif, btt=att, m=m, digits=digits)
+      spec <- att
+      att <- lapply(att, .set.btt, x$q, x$Z.int.incl, colnames(x$Z), fixed=fixed)
+
+      if (x$Z.intercept && !intercept && any(sapply(att, function(attj) length(attj) == 1L && attj == 1L)))
+         stop(mstyle$stop("Cannot compute VIF(s) for the specified 'att' argument."))
+
+      ### get var-cov matrix of the fixed effects (scale coefficients)
+
+      vcov <- vcov(x, type="alpha")
+
+      ### compute (G)VIF for each element in the att list
+
+      obj <- if (reestimate) x else NULL
+
+      res.scale <- list()
+      res.scale$vif <- lapply(seq_along(att), .compvif, btt=att, vcov=vcov, xintercept=x$Z.intercept, intercept=intercept, spec=spec, colnames=colnames(x$Z), obj=obj, coef="alpha", sim=FALSE)
+
+      ### add coefficient names
+
+      if (attmiss) {
+         if (x$Z.intercept && !intercept) {
+            names(res.scale$vif) <- colnames(x$Z)[-1]
+         } else {
+            names(res.scale$vif) <- colnames(x$Z)
+         }
+      }
+
+      ### add coefficient table if requested
+
+      if (table && attmiss) {
+         res.scale$table <- coef(summary(x), type="alpha")
+         res.scale$test  <- x$test
+      }
+
+      res.scale$attspec <- !attmiss
+      res.scale$digits  <- digits
+      class(res.scale)  <- "vif.rma"
+
+      ######################################################################
+
+      ### if sim >= 2, simulate corresponding (G)VIFs under independence
+
+      sim.scale <- sim
+
+      ### but skip this if all (G)VIFs are equal to 1
+
+      if (all(sapply(res.scale$vif, function(x) x$vif) == 1, na.rm=TRUE))
+         sim.scale <- 0
+
+      if (sim.scale >= 2) {
+
+         if (parallel == "no")
+            vif.sim <- pbapply::pblapply(seq_len(sim.scale), .compvifsim, obj=x, coef="alpha", btt=NULL, att=att, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed)
+
+         if (parallel == "multicore")
+            vif.sim <- pbapply::pblapply(seq_len(sim.scale), .compvifsim, obj=x, coef="alpha", btt=NULL, att=att, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, cl=ncpus)
+
+         if (parallel == "snow") {
+
+            if (.isTRUE(ddd$LB)) {
+               vif.sim <- parallel::parLapplyLB(cl, seq_len(sim.scale), .compvifsim, obj=x, coef="alpha", btt=NULL, att=att, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed)
+            } else {
+               vif.sim <- pbapply::pblapply(seq_len(sim.scale), .compvifsim, obj=x, coef="alpha", btt=NULL, att=att, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, cl=cl)
+            }
+
+         }
+
+         vif.sim <- do.call(rbind, vif.sim)
+         rownames(vif.sim) <- seq_len(sim.scale)
+         colnames(vif.sim) <- seq_along(att)
+
+         res.scale$sim <- vif.sim
+
+         vifs <- sapply(res.scale$vif, function(x) x$vif)
+         res.scale$prop <- apply(vifs >= t(vif.sim), 1, mean, na.rm=TRUE)
 
       }
 
-      class(res.scale) <- "vif.rma"
+      ######################################################################
 
       if (vif.loc) {
-         if (vif.scale) {
-            res <- list(beta=res.loc, alpha=res.scale)
-         } else {
-            res <- res.loc
-         }
+         res <- list(beta=res.loc, alpha=res.scale)
       } else {
          res <- res.scale
       }
@@ -181,6 +353,11 @@ vif.rma <- function(x, btt, intercept=FALSE, table=FALSE, digits, ...) {
    }
 
    #########################################################################
+
+   if (.isTRUE(ddd$time)) {
+      time.end <- proc.time()
+      .print.time(unname(time.end - time.start)[3])
+   }
 
    return(res)
 

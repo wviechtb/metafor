@@ -1,4 +1,4 @@
-simulate.rma <- function(object, nsim = 1, seed = NULL, olim, ...) {
+simulate.rma <- function(object, nsim=1, seed=NULL, olim, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -20,6 +20,11 @@ simulate.rma <- function(object, nsim = 1, seed = NULL, olim, ...) {
       RNGstate <- structure(seed, kind = as.list(RNGkind()))
       on.exit(assign(".Random.seed", R.seed, envir = .GlobalEnv), add=TRUE)
    }
+
+   nsim <- round(nsim)
+
+   if (nsim <= 0)
+      stop(mstyle$stop("Argument 'nsim' must be >= 1."))
 
    #########################################################################
 

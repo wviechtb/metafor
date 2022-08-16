@@ -797,9 +797,8 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       if (is.null(ddd$outlist))
          res <- append(res, list(data=data), which(names(res) == "fit.stats"))
 
-   }
+   } else {
 
-   if (!is.null(ddd$outlist)) {
       if (ddd$outlist == "minimal") {
          res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                      tau2=tau2,
@@ -814,6 +813,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       } else {
          res <- eval(str2lang(paste0("list(", ddd$outlist, ")")))
       }
+
    }
 
    time.end <- proc.time()

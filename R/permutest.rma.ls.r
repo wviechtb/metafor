@@ -35,6 +35,11 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
       skip.alpha <- FALSE
    }
 
+   iter <- round(iter)
+
+   if (iter <= 1)
+      stop(mstyle$stop("Argument 'iter' must be >= 2."))
+
    ### for intercept-only models, cannot run a permutation test
 
    if (x$Z.int.only) {

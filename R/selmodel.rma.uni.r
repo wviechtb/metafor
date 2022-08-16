@@ -753,7 +753,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    H        <- NA
    vb       <- matrix(NA_real_, nrow=p, ncol=p)
    se.tau2  <- NA
-   vb.delta <- matrix(NA_real_, nrow=deltas, ncol=deltas)
+   vd       <- matrix(NA_real_, nrow=deltas, ncol=deltas)
 
    if (con$beta.fix) {
       beta.hes <- c(beta)
@@ -853,7 +853,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
             if (is.na(tau2.hes))
                se.tau2 <- sqrt(iH[c(rep(FALSE,p),TRUE,rep(FALSE,deltas)), c(rep(FALSE,p),TRUE,rep(FALSE,deltas))])
             if (anyNA(delta.hes))
-               vb.delta[is.na(delta.hes), is.na(delta.hes)] <- iH[c(rep(FALSE,p),FALSE,is.na(delta.hes)), c(rep(FALSE,p),FALSE,is.na(delta.hes)), drop=FALSE]
+               vd[is.na(delta.hes), is.na(delta.hes)] <- iH[c(rep(FALSE,p),FALSE,is.na(delta.hes)), c(rep(FALSE,p),FALSE,is.na(delta.hes)), drop=FALSE]
          }
 
       }
@@ -899,7 +899,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ### inference for delta parameters
 
-   se.delta <- sqrt(diag(vb.delta))
+   se.delta <- sqrt(diag(vd))
 
    if (con$htransf) {
 
@@ -909,7 +909,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       ci.ub.delta <- c(delta.transf + crit * se.delta)
       ci.lb.delta <- mapply(.mapfun, ci.lb.delta, delta.min, delta.max, mapfun)
       ci.ub.delta <- mapply(.mapfun, ci.ub.delta, delta.min, delta.max, mapfun)
-      vb.delta <- matrix(NA_real_, nrow=deltas, ncol=deltas)
+      vd <- matrix(NA_real_, nrow=deltas, ncol=deltas)
       se.delta <- rep(NA_real_, deltas)
 
    } else {
@@ -1054,7 +1054,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    res$QMp <- QMp
 
    res$delta       <- delta
-   res$vb.delta    <- vb.delta
+   res$vd          <- vd
    res$se.delta    <- se.delta
    res$zval.delta  <- zval.delta
    res$pval.delta  <- pval.delta

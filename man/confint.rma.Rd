@@ -77,7 +77,7 @@
 
    When obtaining confidence intervals for multiple components, the object is a list of class \code{"list.confint.rma"}, where each element is a \code{"confint.rma"} object as described above.
 
-   The results are formatted and printed with the \code{\link[=print.confint.rma]{print}} function.
+   The results are formatted and printed with the \code{\link[=print.confint.rma]{print}} function. To format the results as a data frame, one can use the \code{\link[=as.data.frame.confint.rma]{as.data.frame}} function.
 }
 \note{
    When computing a CI for \mjseqn{\tau^2} for objects of class \code{"rma.uni"}, the estimate of \mjseqn{\tau^2} will usually fall within the CI bounds provided by the Q-profile method. However, this is not guaranteed. Depending on the method used to estimate \mjseqn{\tau^2} and the width of the CI, it can happen that the CI does not actually contain the estimate. Using the empirical Bayes or Paule-Mandel estimator of \mjseqn{\tau^2} when fitting the model (i.e., using \code{method="EB"} or \code{method="PM"}) usually ensures that the estimate of \mjseqn{\tau^2} falls within the CI (for \code{method="PMM"}, this is guaranteed). When \code{method="GENQ"} was used to fit the model, the corresponding CI obtained via the generalized Q-statistic method also usually contains the estimate \mjseqn{\tau^2} (for \code{method="GENQM"}, this is guaranteed). When using ML/REML estimation, the profile likelihood CI (obtained when setting \code{type="PL"}) is guaranteed to contain the estimate of \mjseqn{\tau^2}.

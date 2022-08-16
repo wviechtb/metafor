@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-13</span>
       </span>
     </div>
 
@@ -195,7 +195,7 @@
 <dd><p>logical to indicate whether the random study effects should be allowed to be correlated with the random group effects for random/mixed-effects models when <code>model="UM.RS"</code> (the default is <code>FALSE</code>). See ‘Note’.</p></dd>
 
    <dt>test</dt>
-<dd><p>character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (<code>test="z"</code>), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When <code>test="t"</code>, a t-distribution is used instead. See ‘Details’ and also <a href="misc-recs.html">here</a>.</p></dd>
+<dd><p>character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (<code>test="z"</code>), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When <code>test="t"</code>, a t-distribution is used instead. See ‘Details’ and also <a href="misc-recs.html">here</a> for some recommended practices.</p></dd>
 
    <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95).</p></dd>
@@ -267,7 +267,7 @@
 <h3 id="omnibus-test-of-moderators">Omnibus Test of Moderators<a class="anchor" aria-label="anchor" href="#omnibus-test-of-moderators"></a></h3>
 
 
-<p>For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> (‘betas to test’) argument (i.e., to test <em></em>\(\mbox{H}_0{:}\; \beta_{j \in H_0} = 0\), where <em></em>\(\beta_{j \in H_0}\) is the set of coefficients to be tested). For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficient from the model would be included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> will be used to search for all coefficient names that match the string. The omnibus test is called the <em></em>\(Q_M\)-test and follows asymptotically a chi-square distribution with <em></em>\(m\) degrees of freedom (with <em></em>\(m\) denoting the number of coefficients tested) under the null hypothesis (that the true value of all coefficients tested is equal to 0).</p>
+<p>For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all of the coefficients in the model including the first. Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> (‘betas to test’) argument (i.e., to test <em></em>\(\mbox{H}_0{:}\; \beta_{j \in \texttt{btt}} = 0\), where <em></em>\(\beta_{j \in \texttt{btt}}\) is the set of coefficients to be tested). For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficients from the model are included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> will be used to search for all coefficient names that match the string. The omnibus test is called the <em></em>\(Q_M\)-test and follows asymptotically a chi-square distribution with <em></em>\(m\) degrees of freedom (with <em></em>\(m\) denoting the number of coefficients tested) under the null hypothesis (that the true value of all coefficients tested is equal to 0).</p>
 <p></p>
 </div>
 

@@ -7,7 +7,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
    .chkclass(class(x), must="rma.uni", notav=c("robust.rma", "rma.ls", "rma.gen", "rma.uni.selmodel"))
 
    if (!x$int.only)
-      stop(mstyle$stop("Trim-and-fill method only applicable for models without moderators."))
+      stop(mstyle$stop("Trim-and-fill method only applicable to models without moderators."))
 
    if (missing(side))
       side <- NULL

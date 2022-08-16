@@ -89,8 +89,8 @@ res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
 forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1),
        ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
        cex=.75, header="Author(s) and Year")
-text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"), cex=.75, font=2)
-text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)}}
+text(c(-9.5,-8,-6,-4.5), res$k+2, c("TB+", "TB-", "TB+", "TB-"), cex=.75, font=2)
+text(c(-8.75,-5.25),     res$k+3, c("Vaccinated", "Control"),    cex=.75, font=2)}}
 
    \if{latex}{The figure below illustrates how the elements in a forest plot can be arranged and the meaning of the some of the arguments such as \code{xlim}, \code{alim} or \code{at}, \code{ilab}, and \code{ilab.xpos}.
 
@@ -101,8 +101,8 @@ res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
 forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1),
        ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
        cex=.75, header="Author(s) and Year")
-text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"), cex=.75, font=2)
-text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"),    cex=.75, font=2)}}
+text(c(-9.5,-8,-6,-4.5), res$k+2, c("TB+", "TB-", "TB+", "TB-"), cex=.75, font=2)
+text(c(-8.75,-5.25),     res$k+3, c("Vaccinated", "Control"),    cex=.75, font=2)}}
 
    Additional summary estimates can be added to the plot with the \code{\link{addpoly}} function. See the documentation for that function for examples.
 
@@ -202,8 +202,8 @@ forest(res, atransf=exp, at=log(c(.05, .25, 1, 4)), xlim=c(-16,6),
        ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
        cex=.75, header="Author(s) and Year")
 op <- par(cex=.75, font=2)
-text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"))
-text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"))
+text(c(-9.5,-8,-6,-4.5), res$k+2, c("TB+", "TB-", "TB+", "TB-"))
+text(c(-8.75,-5.25),     res$k+3, c("Vaccinated", "Control"))
 par(op)
 
 ### mixed-effects model with absolute latitude in the model
@@ -214,7 +214,7 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, mods = ~ ablat,
 forest(res, xlim=c(-9,5), order="fit", cex=.8, ilab=ablat,
        ilab.xpos=-4, atransf=exp, at=log(c(.05,.25,1,4)),
        header="Author(s) and Year")
-text(-4, 15, "Latitude", cex=.8, font=2)
+text(-4, res$k+2, "Latitude", cex=.8, font=2)
 
 ### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
@@ -228,14 +228,14 @@ forest(res, ylim=c(-1.5, 20), rows=c(17:15, 12:6, 3:1)) ### set positions
 
 ### forest plot with subgrouping of studies
 ### note: may need to widen plotting device to avoid overlapping text
-forest(res, xlim=c(-16, 4.6), at=log(c(.05, .25, 1, 4)), atransf=exp,
-       ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
-       cex=.75, ylim=c(0.5, 21),
-       order=alloc, rows=c(1:2,5:11,14:17),
-       header="Author(s) and Year")
+tmp <- forest(res, xlim=c(-16, 4.6), at=log(c(.05, .25, 1, 4)), atransf=exp,
+              ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
+              cex=.75, ylim=c(0.5, 21),
+              order=alloc, rows=c(1:2,5:11,14:17),
+              header="Author(s) and Year")
 op <- par(cex=0.75, font=2)
-text(c(-9.5,-8,-6,-4.5), 20, c("TB+", "TB-", "TB+", "TB-"))
-text(c(-8.75,-5.25),     21, c("Vaccinated", "Control"))
+text(c(-9.5,-8,-6,-4.5), tmp$ylim[2]-1, c("TB+", "TB-", "TB+", "TB-"))
+text(c(-8.75,-5.25),     tmp$ylim[2],   c("Vaccinated", "Control"))
 par(font=4)
 text(-16, c(18,12,3), c("Systematic Allocation", "Random Allocation",
                         "Alternate Allocation"), pos=4)

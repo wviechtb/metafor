@@ -12,33 +12,80 @@ print.vif.rma <- function(x, digits=x$digits, ...) {
 
    .space()
 
-   if (is.null(x$gvif)) {
+   if (isTRUE(x$bttspec) || isTRUE(x$attspec)) {
 
-      if (x$table) {
+      if (length(x$vif) == 1L) {
 
-         if (is.element(x$test, c("knha","adhoc","t"))) {
-            res.table <- data.frame(estimate=.fcf(x$vif$estimate, digits[["est"]]), se=.fcf(x$vif$se, digits[["se"]]), tval=.fcf(x$vif$tval, digits[["test"]]), "pval"=.pval(x$vif$pval, digits[["pval"]]), ci.lb=.fcf(x$vif$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$vif$ci.ub, digits[["ci"]]), vif=.fcf(x$vif$vif, digits[["est"]]), sif=.fcf(x$vif$sif, digits[["est"]]), stringsAsFactors=FALSE)
-         } else {
-            res.table <- data.frame(estimate=.fcf(x$vif$estimate, digits[["est"]]), se=.fcf(x$vif$se, digits[["se"]]), zval=.fcf(x$vif$zval, digits[["test"]]), "pval"=.pval(x$vif$pval, digits[["pval"]]), ci.lb=.fcf(x$vif$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$vif$ci.ub, digits[["ci"]]), vif=.fcf(x$vif$vif, digits[["est"]]), sif=.fcf(x$vif$sif, digits[["est"]]), stringsAsFactors=FALSE)
-         }
-         rownames(res.table) <- rownames(x$vif)
-
-         if (.isTRUE(ddd$num))
-            rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
-
-         tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
-         .print.table(tmp, mstyle)
+         cat(mstyle$section(paste0("Collinearity Diagnostics (coefficient", ifelse(x$vif[[1]]$m == 1, " ", "s "), x$vif[[1]]$coefs,"):\n")))
+         cat(mstyle$result(paste0("GVIF = ", .fcf(x$vif[[1]]$vif, digits[["est"]]), ", GSIF = ", .fcf(x$vif[[1]]$sif, digits[["est"]]))))
+         if (!is.null(x$sim))
+            cat(mstyle$result(paste0(", prop = ", .fcf(x$prop, 2))))
+         cat("\n")
 
       } else {
 
-         print(.fcf(x$vif, digits[["est"]]), quote=FALSE, right=TRUE)
+         res.table <- do.call(rbind, x$vif)
+         res.table$vif <- .fcf(res.table$vif, digits[["est"]])
+         res.table$sif <- .fcf(res.table$sif, digits[["est"]])
+
+         res.table$coefname <- NULL
+
+         if (!is.null(x$sim))
+            res.table$prop <- .fcf(x$prop, 2)
+
+         # if all btt/att specifications are numeric, remove the 'spec' column
+         if (all(substr(res.table$spec, 1, 1) %in% as.character(1:9)))
+             res.table$spec <- NULL
+
+         tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=1))
+         .print.table(tmp, mstyle)
 
       }
 
    } else {
 
-      cat(mstyle$section(paste0("Collinearity Diagnostics (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):\n")))
-      cat(mstyle$result(paste0("GVIF = ", .fcf(x$gvif, digits[["est"]]), ", GSIF = ", .fcf(x$gsif, digits[["est"]]), "\n")))
+      vifs <- sapply(x$vif, function(x) x$vif)
+      sifs <- sapply(x$vif, function(x) x$sif)
+
+      if (is.null(x$table)) {
+
+         if (is.null(x$sim)) {
+            tmp <- .fcf(vifs, digits[["est"]])
+            tmp <- capture.output(.print.vector(tmp))
+            .print.table(tmp, mstyle)
+         } else {
+            res.table <- data.frame(vif=vifs)
+            res.table$prop <- .fcf(x$prop, 2)
+            res.table$vif  <- .fcf(res.table$vif, digits[["est"]])
+            tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
+            .print.table(tmp, mstyle)
+         }
+
+      } else {
+
+         if (length(vifs) != length(x$table$estimate)) {
+            vifs <- c(NA, vifs)
+            sifs <- c(NA, sifs)
+            x$prop <- c(NA, x$prop)
+         }
+
+         if (is.element(x$test, c("knha","adhoc","t"))) {
+            res.table <- data.frame(estimate=.fcf(x$table$estimate, digits[["est"]]), se=.fcf(x$table$se, digits[["se"]]), tval=.fcf(x$table$tval, digits[["test"]]), df=round(x$table$df,2), "pval"=.pval(x$table$pval, digits[["pval"]]), ci.lb=.fcf(x$table$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$table$ci.ub, digits[["ci"]]), vif=.fcf(vifs, digits[["est"]]), sif=.fcf(sifs, digits[["est"]]), stringsAsFactors=FALSE)
+         } else {
+            res.table <- data.frame(estimate=.fcf(x$table$estimate, digits[["est"]]), se=.fcf(x$table$se, digits[["se"]]), zval=.fcf(x$table$zval, digits[["test"]]), "pval"=.pval(x$table$pval, digits[["pval"]]), ci.lb=.fcf(x$table$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$table$ci.ub, digits[["ci"]]), vif=.fcf(vifs, digits[["est"]]), sif=.fcf(sifs, digits[["est"]]), stringsAsFactors=FALSE)
+         }
+         rownames(res.table) <- rownames(x$table)
+
+         if (!is.null(x$sim))
+            res.table$prop <- .fcf(x$prop, 2)
+
+         if (.isTRUE(ddd$num))
+            rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
+
+         tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=1))
+         .print.table(tmp, mstyle)
+
+      }
 
    }
 
