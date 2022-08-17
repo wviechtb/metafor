@@ -213,6 +213,8 @@ reference:
       - methods.escalc
       - methods.list.rma
       - methods.confint.rma
+      - methods.anova.rma
+      - methods.vif.rma
   - title: "Miscellaneous Documentation"
     desc: >
       Miscellaneous documentation.

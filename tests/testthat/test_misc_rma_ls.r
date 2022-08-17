@@ -272,7 +272,7 @@ test_that("anova() works correctly for location-scale models", {
 test_that("vif() works correctly for location-scale models", {
 
    expect_warning(res <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni)))
-   sav <- round(sapply(vif(res)$vif, function(x) x$vif), 4)
+   sav <- round(vif(res)$vifs, 4)
    expect_equivalent(sav, c(grade = 1.3087, meta = 1.06, `sqrt(ni)` = 1.2847))
 
 })

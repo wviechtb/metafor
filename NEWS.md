@@ -1,4 +1,4 @@
-# metafor 3.5-13 (2022-08-16)
+# metafor 3.5-14 (2022-08-17)
 
 - `vif()` was completely refactored and gains `reestimate`, `sim`, and `parallel` arguments
 

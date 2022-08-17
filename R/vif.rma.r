@@ -176,12 +176,14 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
       ### add coefficient names
 
       if (bttmiss) {
-         if (x$intercept && !intercept) {
-            names(res$vif) <- colnames(x$X)[-1]
-         } else {
-            names(res$vif) <- colnames(x$X)
-         }
+         names(res$vif) <- sapply(res$vif, function(x) x$coefname)
+      } else {
+         names(res$vif) <- sapply(res$vif, function(x) x$coefs)
       }
+
+      ### add (G)VIFs as vector
+
+      res$vifs <- sapply(res$vif, function(x) x$vif)
 
       ### add coefficient table if requested
 
@@ -284,12 +286,14 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
       ### add coefficient names
 
       if (attmiss) {
-         if (x$Z.intercept && !intercept) {
-            names(res.scale$vif) <- colnames(x$Z)[-1]
-         } else {
-            names(res.scale$vif) <- colnames(x$Z)
-         }
+         names(res.scale$vif) <- sapply(res.scale$vif, function(x) x$coefname)
+      } else {
+         names(res.scale$vif) <- sapply(res.scale$vif, function(x) x$coefs)
       }
+
+      ### add (G)VIFs as vector
+
+      res.scale$vifs <- sapply(res.scale$vif, function(x) x$vif)
 
       ### add coefficient table if requested
 
@@ -346,6 +350,7 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
 
       if (vif.loc) {
          res <- list(beta=res.loc, alpha=res.scale)
+         class(res) <- "list.vif.rma"
       } else {
          res <- res.scale
       }

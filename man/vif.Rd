@@ -2,6 +2,7 @@
 \alias{vif}
 \alias{vif.rma}
 \alias{print.vif.rma}
+\alias{print.list.vif.rma}
 \title{Variance Inflation Factors for 'rma' Objects}
 \description{
    Compute (generalized) variance inflation factors (VIFs) for objects of class \code{"rma"}. \loadmathjax
@@ -13,16 +14,17 @@ vif(x, \dots)
     seed=NULL, parallel="no", ncpus=1, cl, digits, \dots)
 
 \method{print}{vif.rma}(x, digits=x$digits, \dots)
+\method{print}{list.vif.rma}(x, digits=x[[1]]$digits, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"rma"} (for \code{vif}) or \code{"vif.rma"} (for \code{print}).}
-   \item{btt}{optional vector of indices (or list thereof) to specify a set of coefficients for which a generalized variance inflation factor (GVIF) should be computed. Can also be a string to \code{\link{grep}} for. See \sQuote{Details}.}
-   \item{att}{optional vector of indices (or list thereof) to specify a set of scale coefficients for which a generalized variance inflation factor (GVIF) should be computed. Can also be a string to \code{\link{grep}} for. See \sQuote{Details}. Only relevant for location-scale models (see \code{\link{rma.uni}}).}
-   \item{table}{logical to specify whether the VIFs should be added to the model coefficient table (the default is \code{FALSE}).}
-   \item{reestimate}{logical to specify whether the model should be reestimated when removing coefficients for the computation of the (G)VIFs (the default is \code{FALSE}).}
-   \item{sim}{logical to specify whether the distribution of the (G)VIFs under independence should be simulated (the default is \code{FALSE}). Can also be an integer to specify how many values to simulate (when \code{sim=TRUE}, the default is \code{1000}).}
+   \item{x}{an object of class \code{"rma"} (for \code{vif}) or \code{"vif.rma"} or or \code{"list.vif.rma"} (for \code{print}).}
+   \item{btt}{optional vector of indices (or list thereof) to specify a set of coefficients for which a generalized variance inflation factor (GVIF) should be computed. Can also be a string to \code{\link{grep}} for.}
+   \item{att}{optional vector of indices (or list thereof) to specify a set of scale coefficients for which a generalized variance inflation factor (GVIF) should be computed. Can also be a string to \code{\link{grep}} for. Only relevant for location-scale models (see \code{\link{rma.uni}}).}
+   \item{table}{logical to specify whether the VIFs should be added to the model coefficient table (the default is \code{FALSE}). Only relevant when \code{btt} (or \code{att}) is not specified.}
+   \item{reestimate}{logical to specify whether the model should be reestimated when removing the other moderator variables from the model when computing a (G)VIF (the default is \code{FALSE}).}
+   \item{sim}{logical to specify whether the distribution of each (G)VIF under independence should be simulated (the default is \code{FALSE}). Can also be an integer to specify how many values to simulate (when \code{sim=TRUE}, the default is \code{1000}).}
    \item{progbar}{logical to specify whether a progress bar should be shown when \code{sim=TRUE} (the default is \code{TRUE}).}
-   \item{seed}{optional value to specify the seed of the random number generator when \code{sim=TRUE} for reproducibility.}
+   \item{seed}{optional value to specify the seed of the random number generator when \code{sim=TRUE} (for reproducibility).}
    \item{parallel}{character string to specify whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Note}.}
    \item{ncpus}{integer to specify the number of processes to use in the parallel processing.}
    \item{cl}{optional cluster to use if \code{parallel="snow"}. If unspecified, a cluster on the local machine is created for the duration of the call.}
@@ -52,7 +54,7 @@ vif(x, \dots)
 
       The way the VIF is typically computed for a particular model coefficient (or a set thereof for a GVIF) makes use of some clever linear algebra to avoid having to re-estimate the model when removing the other moderator variables from the model. This speeds up the computations considerably. However, this assumes that the other moderator variables do not impact other aspects of the model, in particular the amount of residual heterogeneity (or, more generally, any variance/correlation components in a more complex model, such as those that can be fitted with the \code{\link{rma.mv}} function).
 
-      For a more accurate (but slower) computation of the (G)VIF, one can set \code{reestimate=TRUE}, in which case the model is refitted to account for the impact that removal of the other moderator variables have on all aspects of the model. Note that refitting may fail, in which case the corresponding (G)VIF will be missing.
+      For a more accurate (but slower) computation of each (G)VIF, one can set \code{reestimate=TRUE}, in which case the model is refitted to account for the impact that removal of the other moderator variables has on all aspects of the model. Note that refitting may fail, in which case the corresponding (G)VIF will be missing.
 
    }
 
@@ -62,23 +64,28 @@ vif(x, \dots)
 
       As a more principled approach, we can simulate the distribution of a particular (G)VIF under independence and then examine how extreme the actually observed (G)VIF value is under this distribution. The distribution is simulated by repeatedly reshuffling the columns of the model matrix (to break any dependence between the moderators) and recomputing the (G)VIF. When setting \code{sim=TRUE}, this is done 1000 times (but one can also set \code{sim} to an integer to indicate how many (G)VIF values should be simulated).
 
-      Once the distribution of a (G)VIF under independence has been simulated, the proportion of simulated values that are smaller than the actually observed (G)VIF value (essentially the percentile rank) is computed. If the proportion is close to 1, then this indicates that the actually observed (G)VIF value is extreme.
+      Once the distribution of a (G)VIF under independence has been simulated, the proportion of simulated values that are smaller than the actually observed (G)VIF value is computed. If the proportion is close to 1, then this indicates that the actually observed (G)VIF value is extreme.
 
-      The principle underlying this approach is the same as that underlying Horn's parallel analysis (1965) for determining the number of components / factors to keep in a principal component / factor analysis.
+      The general principle underlying the simulation approach is the same as that underlying Horn's parallel analysis (1965) for determining the number of components / factors to keep in a principal component / factor analysis.
 
    }
 
 }
 \value{
    An object of class \code{"vif.rma"}. The object is a list containing the following components:
-   \item{vif}{a list of data frames with the (G)VIFs and (G)SIFs.}
-   \item{table}{the model coefficient table (only when \code{table=TRUE}.}
+   \item{vif}{a list of data frames with the (G)VIFs and (G)SIFs and some additional information.}
+   \item{vifs}{a vector with just the (G)VIFs.}
+   \item{table}{the model coefficient table (only when \code{table=TRUE}).}
    \item{sim}{a matrix with the simulated (G)VIF values (only when \code{sim=TRUE}).}
-   \item{prop}{proportion of simulated values that are smaller than the actually observed (G)VIF values (only when \code{sim=TRUE}).}
+   \item{prop}{vector with the proportions of simulated values that are smaller than the actually observed (G)VIF values (only when \code{sim=TRUE}).}
    \item{\dots}{some additional elements/values.}
+
+   When \code{x} was a location-scale model object and (G)VIFs can be computed for both the location and the scale coefficients, then the object is a list of class \code{"list.vif.rma"}, where each element is an \code{"vif.rma"} object as described above.
+
+   The results are formatted and printed with the \code{print} function. To format the results as a data frame, one can use the \code{\link[=as.data.frame.vif.rma]{as.data.frame}} function.
 }
 \note{
-   When using \code{sim=TRUE}, the model needs to be refitted (by default) 1000 times. When \code{sim=TRUE} is combined with \code{reestimate=TRUE}, then this value needs to be multiplied by the total number of (G)VIF values that the function will compute. Hence, the combination of \code{sim=TRUE} with \code{reestimate=TRUE} is computationally expensive, especially for more complex models where model fitting can be slow.
+   When using \code{sim=TRUE}, the model needs to be refitted (by default) 1000 times. When \code{sim=TRUE} is combined with \code{reestimate=TRUE}, then this value needs to be multiplied by the total number of (G)VIF values that will be computed. Hence, the combination of \code{sim=TRUE} with \code{reestimate=TRUE} is computationally expensive, especially for more complex models where model fitting can be slow.
 
    On machines with multiple cores, one can try to speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1. Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using \code{\link[parallel]{mclapply}} when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
 }

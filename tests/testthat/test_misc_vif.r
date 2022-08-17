@@ -14,18 +14,18 @@ test_that("vif() works correctly for 'rma.uni' objects.", {
    out <- capture.output(print(sav))
 
    vifs <- c(length = 1.53710262575577, wic = 1.38604929927746, feedback = 1.64904565071108, info = 1.83396138431786, pers = 5.67803138275492, imag = 1.1553714953831, meta = 4.53327503733189)
-   expect_equivalent(sapply(sav$vif, function(x) x$vif), vifs)
+   expect_equivalent(sav$vifs, vifs)
 
    sav <- vif(res, table=TRUE)
    out <- capture.output(print(sav))
 
-   expect_equivalent(sapply(sav$vif, function(x) x$vif), vifs)
+   expect_equivalent(sav$vifs, vifs)
 
    sav <- vif(res, btt=2:3)
    out <- capture.output(print(sav))
 
    gvif <- 2.06507966959426
-   expect_equivalent(sav$vif[[1]]$vif, gvif)
+   expect_equivalent(sav$vifs, gvif)
 
 })
 
