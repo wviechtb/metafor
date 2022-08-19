@@ -66,6 +66,9 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
       #X.exact.iter <- round(factorial(x$k) / prod(factorial(ind.table)))       # definitional formula
       #X.exact.iter <- round(exp(lfactorial(x$k) - sum(lfactorial(ind.table)))) # using log of definitional formula and then round(exp())
 
+      if (is.na(X.exact.iter))
+         X.exact.iter <- Inf
+
    }
 
    ### if 'exact=TRUE' or if the number of iterations for an exact test are smaller

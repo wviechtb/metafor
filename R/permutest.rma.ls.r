@@ -109,6 +109,9 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
          #X.exact.iter <- round(factorial(x$k) / prod(factorial(ind.table)))       # definitional formula
          #X.exact.iter <- round(exp(lfactorial(x$k) - sum(lfactorial(ind.table)))) # using log of definitional formula and then round(exp())
 
+         if (is.na(X.exact.iter))
+            X.exact.iter <- Inf
+
       }
 
       ### if 'exact=TRUE' or if the number of iterations for an exact test are smaller
@@ -451,6 +454,9 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
       Z.indices <- rep(cumsum(rle(Z.indices)$lengths) - (rle(Z.indices)$lengths - 1), rle(Z.indices)$lengths)
       ind.table <- table(Z.indices)
       Z.exact.iter <- round(prod((max(ind.table)+1):x$k) / prod(factorial(ind.table[-which.max(ind.table)])))
+
+      if (is.na(Z.exact.iter))
+         Z.exact.iter <- Inf
 
       Z.exact <- exact
       Z.iter  <- iter
