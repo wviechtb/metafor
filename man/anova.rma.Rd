@@ -108,7 +108,7 @@
 \seealso{
    \code{\link{rma.uni}} and \code{\link{rma.mv}} for functions to fit models for which likelihood ratio and Wald-type tests can be conducted.
 
-   \code{\link{print.anova.rma}} for the print method.
+   \code{\link{print.anova.rma}} for the print method and \code{\link{as.data.frame.anova.rma}} for the method to format the results as a data frame.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

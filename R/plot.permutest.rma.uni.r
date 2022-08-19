@@ -1,5 +1,5 @@
 plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
-   breaks="Scott", freq=FALSE, col="lightgray", border=NULL,
+   breaks="Scott", freq=FALSE, col="gray", border="white", trim=0,
    col.out=rgb(1,0,0,0.5), col.ref="black", col.density="blue", adjust=1,
    lwd=c(2,0,0,4), layout, ...) {
 
@@ -29,6 +29,11 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
       stat <- match.arg(ddd$stat, c("test", "coef"))
    }
 
+   ### check trim
+
+   if (trim >= 0.5)
+      stop(mstyle$stop("The value of 'trim' must be < 0.5."))
+
    # 1st: obs stat, 2nd: ref dist, 3rd: density, 4th: refline
 
    if (length(lwd) == 1L)
@@ -37,6 +42,11 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
       lwd <- c(lwd[c(1,2,2)], 4)
    if (length(lwd) == 3L)
       lwd <- c(lwd[c(1,2,2,3)])
+
+   # cannot plot ref dist and density when freq=TRUE
+
+   if (freq)
+      lwd[c(2,3)] <- 0
 
    lhist   <- function(..., alternative, p2defn, stat) hist(...)
    labline <- function(..., alternative, p2defn, stat) abline(...)
@@ -149,99 +159,113 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
    ############################################################################
 
-   coltail <- function(h, val, tail="lower", mult=1, col, border, freq, ...) {
-
-      h$counts  <- h$counts  * mult
-      h$density <- h$density * mult
-
-      if (tail == "lower") {
-
-         above <- which(h$breaks > val)
-         if (length(above) > 0L) {
-            pos <- above[1]
-            h$breaks[pos] <- val
-         }
-         sel <- h$breaks <= val
-         if (sum(sel) >= 2L) {
-            h$breaks  <- h$breaks[sel]
-            h$counts  <- h$counts[sel[-1]]
-            h$density <- h$density[sel[-1]]
-            h$mids    <- h$mids[sel[-1]]
-            lines(h, col=col, border=border, freq=freq, ...)
-         }
-
-      } else {
-
-         below <- which(h$breaks < val)
-         if (length(below) > 0L) {
-            pos <- below[length(below)]
-            h$breaks[pos] <- val
-         }
-         sel <- h$breaks >= val
-         if (sum(sel) >= 2L) {
-            len <- length(below)
-            h$breaks  <- h$breaks[sel]
-            h$counts  <- h$counts[sel[-len]]
-            h$density <- h$density[sel[-len]]
-            h$mids    <- h$mids[sel[-len]]
-            lines(h, col=col, border=border, freq=freq, ...)
-         }
-
-      }
-
-   }
-
    par.mfrow <- par("mfrow")
    par(mfrow=layout)
    on.exit(par(mfrow = par.mfrow), add=TRUE)
 
    if (!is.null(QM.perm)) {
 
-      tmp <- lhist(QM.perm, breaks=breaks, col=col, border=border,
-                   main=ifelse(inherits(x, "permutest.rma.ls"), "Omnibus Test of Location Coefficients", "Omnibus Test of Coefficients"),
-                   xlab="Value of Test Statistic",
-                   freq=freq, ...)
-
-      coltail(tmp, val=x$QM, tail="upper", col=col.out, border=border, freq=freq, ...)
-      labline(v=x$QM, lwd=lwd[1], lty="dashed", ...)
+      pdist <- QM.perm
 
       if (is.na(x$ddf)) {
-         xs <- seq(0, max(qchisq(.995, df=length(x$btt)), max(QM.perm, na.rm=TRUE)), length=1000)
-         llines(xs, dchisq(xs, df=length(x$btt)), lwd=lwd[2], col=col.ref, ...)
+         xs <- seq(0, max(qchisq(.995, df=length(x$btt)), max(pdist, na.rm=TRUE)), length=1000)
+         ys <- dchisq(xs, df=length(x$btt))
       } else {
-         xs <- seq(0, max(qf(.995, df1=length(x$btt), df2=x$ddf), max(QM.perm, na.rm=TRUE)), length=1000)
-         llines(xs, df(xs, df1=length(x$btt), df2=x$ddf), lwd=lwd[2], col=col.ref, ...)
+         xs <- seq(0, max(qf(.995, df1=length(x$btt), df2=x$ddf), max(pdist, na.rm=TRUE)), length=1000)
+         ys <- df(xs, df1=length(x$btt), df2=x$ddf)
       }
 
-      llines(density(QM.perm, adjust=adjust, na.rm=TRUE), lwd=lwd[3], col=col.density, ...)
+      den <- density(pdist, adjust=adjust, na.rm=TRUE)
+
+      if (trim > 0) {
+         bound <- quantile(pdist, probs=1-trim, na.rm=TRUE)
+         pdist <- pdist[pdist <= bound]
+      }
+
+      if (lwd[2] == 0 && lwd[3] == 0) {
+
+         tmp <- lhist(pdist, breaks=breaks, col=col, border=border,
+                      main=ifelse(inherits(x, "permutest.rma.ls"), "Omnibus Test of Location Coefficients", "Omnibus Test of Coefficients"),
+                      xlab="Value of Test Statistic",
+                      freq=freq, ...)
+
+      } else {
+
+         tmp <- lhist(pdist, breaks=breaks, plot=FALSE)
+
+         ylim <- c(0, max(ifelse(lwd[2] == 0, 0, max(ys)), ifelse(lwd[3] == 0, 0, max(den$y)), max(tmp$density)))
+
+         tmp <- lhist(pdist, breaks=breaks, col=col, border=border,
+                      main=ifelse(inherits(x, "permutest.rma.ls"), "Omnibus Test of Location Coefficients", "Omnibus Test of Coefficients"),
+                      xlab="Value of Test Statistic",
+                      freq=freq, ylim=ylim, ...)
+
+      }
+
+      .coltail(tmp, val=x$QM, tail="upper", col=col.out, border=border, freq=freq, ...)
+      labline(v=x$QM, lwd=lwd[1], lty="dashed", ...)
+      llines(xs, ys, lwd=lwd[2], col=col.ref, ...)
+      llines(den, lwd=lwd[3], col=col.density, ...)
 
    }
 
    for (i in seq_len(ncol(perm1))) {
 
-      tmp <- lhist(perm1[[i]], breaks=breaks, col=col, border=border,
-                   main=ifelse(x$int.only, "", paste0(ifelse(inherits(x, "permutest.rma.ls"), "Location Coefficient: ", "Coefficient: "), names(perm1)[i])),
-                   xlab=ifelse(stat == "test", "Value of Test Statistic", "Value of Coefficient"),
-                   freq=freq, ...)
+      pdist <- perm1[[i]]
+
+      if (is.na(x$ddf)) {
+         xs <- seq(min(-qnorm(.995), min(pdist, na.rm=TRUE)), max(qnorm(.995), max(pdist, na.rm=TRUE)), length=1000)
+         ys <- dnorm(xs)
+      } else {
+         xs <- seq(min(-qt(.995, df=x$ddf), min(pdist, na.rm=TRUE)), max(qt(.995, df=x$ddf), max(pdist, na.rm=TRUE)), length=1000)
+         ys <- dt(xs, df=x$ddf)
+      }
+
+      den <- density(pdist, adjust=adjust, na.rm=TRUE)
+
+      if (trim > 0) {
+         bounds <- quantile(pdist, probs=c(trim/2, 1-trim/2), na.rm=TRUE)
+         pdist <- pdist[pdist >= bounds[1] & pdist <= bounds[2]]
+      }
+
+      if (lwd[2] == 0 && lwd[3] == 0) {
+
+         tmp <- lhist(pdist, breaks=breaks, col=col, border=border,
+                      main=ifelse(x$int.only, "", paste0(ifelse(inherits(x, "permutest.rma.ls"), "Location Coefficient: ", "Coefficient: "), names(perm1)[i])),
+                      xlab=ifelse(stat == "test", "Value of Test Statistic", "Value of Coefficient"),
+                      freq=freq, ...)
+
+      } else {
+
+         tmp <- lhist(pdist, breaks=breaks, plot=FALSE)
+
+         ylim <- c(0, max(ifelse(lwd[2] == 0, 0, max(ys)), ifelse(lwd[3] == 0, 0, max(den$y)), max(tmp$density)))
+
+         tmp <- lhist(pdist, breaks=breaks, col=col, border=border,
+                      main=ifelse(x$int.only, "", paste0(ifelse(inherits(x, "permutest.rma.ls"), "Location Coefficient: ", "Coefficient: "), names(perm1)[i])),
+                      xlab=ifelse(stat == "test", "Value of Test Statistic", "Value of Coefficient"),
+                      freq=freq, ylim=ylim, ...)
+
+      }
 
       if (alternative == "two.sided") {
 
          if (p2defn == "abs") {
 
-            coltail(tmp, val=-abs(obs1[i]), tail="lower", col=col.out, border=border, freq=freq, ...)
-            coltail(tmp, val= abs(obs1[i]), tail="upper", col=col.out, border=border, freq=freq, ...)
+            .coltail(tmp, val=-abs(obs1[i]), tail="lower", col=col.out, border=border, freq=freq, ...)
+            .coltail(tmp, val= abs(obs1[i]), tail="upper", col=col.out, border=border, freq=freq, ...)
             labline(v=c(-obs1[i],obs1[i]), lwd=lwd[1], lty="dashed", ...)
 
          } else {
 
-            if (obs1[i] > median(perm1[[i]], na.rm=TRUE)) {
+            if (obs1[i] > median(pdist, na.rm=TRUE)) {
 
-               coltail(tmp, val= abs(obs1[i]), tail="upper", mult=2, col=col.out, border=border, freq=freq, ...)
+               .coltail(tmp, val= abs(obs1[i]), tail="upper", mult=2, col=col.out, border=border, freq=freq, ...)
                labline(v=obs1[i], lwd=lwd[1], lty="dashed", ...)
 
             } else {
 
-               coltail(tmp, val=-abs(obs1[i]), tail="lower", mult=2, col=col.out, border=border, freq=freq, ...)
+               .coltail(tmp, val=-abs(obs1[i]), tail="lower", mult=2, col=col.out, border=border, freq=freq, ...)
                labline(v=-abs(obs1[i]), lwd=lwd[1], lty="dashed", ...)
 
             }
@@ -251,27 +275,20 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
       if (alternative == "less") {
 
-         coltail(tmp, val=obs1[i], tail="lower", col=col.out, border=border, freq=freq, ...)
+         .coltail(tmp, val=obs1[i], tail="lower", col=col.out, border=border, freq=freq, ...)
          labline(v=obs1[i], lwd=lwd[1], lty="dashed", ...)
 
       }
 
       if (alternative == "greater") {
 
-         coltail(tmp, val=obs1[i], tail="upper", col=col.out, border=border, freq=freq, ...)
+         .coltail(tmp, val=obs1[i], tail="upper", col=col.out, border=border, freq=freq, ...)
          labline(v=obs1[i], lwd=lwd[1], lty="dashed", ...)
 
       }
 
-      if (is.na(x$ddf)) {
-         xs <- seq(min(-qnorm(.995), min(perm1[[i]], na.rm=TRUE)), max(qnorm(.995), max(perm1[[i]], na.rm=TRUE)), length=1000)
-         llines(xs, dnorm(xs), lwd=lwd[2], col=col.ref, ...)
-      } else {
-         xs <- seq(min(-qt(.995, df=x$ddf), min(perm1[[i]], na.rm=TRUE)), max(qt(.995, df=x$ddf), max(perm1[[i]], na.rm=TRUE)), length=1000)
-         llines(xs, dt(xs, df=x$ddf), lwd=lwd[2], col=col.ref, ...)
-      }
-
-      llines(density(perm1[[i]], adjust=adjust, na.rm=FALSE), lwd=lwd[3], col=col.density, ...)
+      llines(xs, ys, lwd=lwd[2], col=col.ref, ...)
+      llines(den, lwd=lwd[3], col=col.density, ...)
 
       labline(v=0, lwd=lwd[4], ...)
 
@@ -281,51 +298,107 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
       if (!is.null(QS.perm)) {
 
-         tmp <- lhist(QS.perm, breaks=breaks, col=col, border=border,
-                      main="Omnibus Test of Scale Coefficients",
-                      xlab="Value of Test Statistic",
-                      freq=freq, ...)
-
-         coltail(tmp, val=x$QS, tail="upper", col=col.out, border=border, freq=freq, ...)
-         labline(v=x$QS, lwd=lwd[1], lty="dashed", ...)
+         pdist <- QS.perm
 
          if (is.na(x$ddf.alpha)) {
-            xs <- seq(0, max(qchisq(.995, df=length(x$att)), max(QS.perm, na.rm=TRUE)), length=1000)
-            llines(xs, dchisq(xs, df=length(x$att)), lwd=lwd[2], col=col.ref, ...)
+            xs <- seq(0, max(qchisq(.995, df=length(x$att)), max(pdist, na.rm=TRUE)), length=1000)
+            ys <- dchisq(xs, df=length(x$att))
          } else {
-            xs <- seq(0, max(qf(.995, df1=length(x$att), df2=x$ddf.alpha), max(QS.perm, na.rm=TRUE)), length=1000)
-            llines(xs, df(xs, df1=length(x$att), df2=x$ddf.alpha), lwd=lwd[2], col=col.ref, ...)
+            xs <- seq(0, max(qf(.995, df1=length(x$att), df2=x$ddf.alpha), max(pdist, na.rm=TRUE)), length=1000)
+            ys <- df(xs, df1=length(x$att), df2=x$ddf.alpha)
          }
 
-         llines(density(QS.perm, adjust=adjust, na.rm=TRUE), lwd=lwd[3], col=col.density, ...)
+         den <- density(pdist, adjust=adjust, na.rm=TRUE)
+
+         if (trim > 0) {
+            bound <- quantile(pdist, probs=1-trim, na.rm=TRUE)
+            pdist <- pdist[pdist <= bound]
+         }
+
+         if (lwd[2] == 0 && lwd[3] == 0) {
+
+            tmp <- lhist(pdist, breaks=breaks, col=col, border=border,
+                         main="Omnibus Test of Scale Coefficients",
+                         xlab="Value of Test Statistic",
+                         freq=freq, ...)
+
+         } else {
+
+            tmp <- lhist(pdist, breaks=breaks, plot=FALSE)
+
+            ylim <- c(0, max(ifelse(lwd[2] == 0, 0, max(ys)), ifelse(lwd[3] == 0, 0, max(den$y)), max(tmp$density)))
+
+            tmp <- lhist(pdist, breaks=breaks, col=col, border=border,
+                         main="Omnibus Test of Scale Coefficients",
+                         xlab="Value of Test Statistic",
+                         freq=freq, ylim=ylim, ...)
+
+         }
+
+         .coltail(tmp, val=x$QS, tail="upper", col=col.out, border=border, freq=freq, ...)
+         labline(v=x$QS, lwd=lwd[1], lty="dashed", ...)
+         llines(xs, ys, lwd=lwd[2], col=col.ref, ...)
+         llines(den, lwd=lwd[3], col=col.density, ...)
 
       }
 
       for (i in seq_len(ncol(perm2))) {
 
-         tmp <- lhist(perm2[[i]], breaks=breaks, col=col, border=border,
-                      main=ifelse(x$Z.int.only, "", paste0("Scale Coefficient: ", names(perm2)[i])),
-                      xlab=ifelse(stat == "test", "Value of Test Statistic", "Value of Coefficient"),
-                      freq=freq, ...)
+         pdist <- perm2[[i]]
+
+         if (is.na(x$ddf.alpha)) {
+            xs <- seq(min(-qnorm(.995), min(pdist, na.rm=TRUE)), max(qnorm(.995), max(pdist, na.rm=TRUE)), length=1000)
+            ys <- dnorm(xs)
+         } else {
+            xs <- seq(min(-qt(.995, df=x$ddf.alpha), min(pdist, na.rm=TRUE)), max(qt(.995, df=x$ddf.alpha), max(pdist, na.rm=TRUE)), length=1000)
+            ys <- dt(xs, df=x$ddf.alpha)
+         }
+
+         den <- density(pdist, adjust=adjust, na.rm=TRUE)
+
+         if (trim > 0) {
+            bounds <- quantile(pdist, probs=c(trim/2, 1-trim/2), na.rm=TRUE)
+            pdist <- pdist[pdist >= bounds[1] & pdist <= bounds[2]]
+         }
+
+         if (lwd[2] == 0 && lwd[3] == 0) {
+
+            tmp <- lhist(pdist, breaks=breaks, col=col, border=border,
+                         main=ifelse(x$Z.int.only, "", paste0("Scale Coefficient: ", names(perm2)[i])),
+                         xlab=ifelse(stat == "test", "Value of Test Statistic", "Value of Coefficient"),
+                         freq=freq, ...)
+
+         } else {
+
+            tmp <- lhist(pdist, breaks=breaks, plot=FALSE)
+
+            ylim <- c(0, max(ifelse(lwd[2] == 0, 0, max(ys)), ifelse(lwd[3] == 0, 0, max(den$y)), max(tmp$density)))
+
+            tmp <- lhist(pdist, breaks=breaks, col=col, border=border,
+                         main=ifelse(x$Z.int.only, "", paste0("Scale Coefficient: ", names(perm2)[i])),
+                         xlab=ifelse(stat == "test", "Value of Test Statistic", "Value of Coefficient"),
+                         freq=freq, ylim=ylim, ...)
+
+         }
 
          if (alternative == "two.sided") {
 
             if (p2defn == "abs") {
 
-               coltail(tmp, val=-abs(obs2[i]), tail="lower", col=col.out, border=border, freq=freq, ...)
-               coltail(tmp, val= abs(obs2[i]), tail="upper", col=col.out, border=border, freq=freq, ...)
+               .coltail(tmp, val=-abs(obs2[i]), tail="lower", col=col.out, border=border, freq=freq, ...)
+               .coltail(tmp, val= abs(obs2[i]), tail="upper", col=col.out, border=border, freq=freq, ...)
                labline(v=c(-obs2[i],obs2[i]), lwd=lwd[1], lty="dashed", ...)
 
             } else {
 
-               if (obs2[i] > median(perm2[[i]], na.rm=TRUE)) {
+               if (obs2[i] > median(pdist, na.rm=TRUE)) {
 
-                  coltail(tmp, val= abs(obs2[i]), tail="upper", mult=2, col=col.out, border=border, freq=freq, ...)
+                  .coltail(tmp, val= abs(obs2[i]), tail="upper", mult=2, col=col.out, border=border, freq=freq, ...)
                   labline(v=obs2[i], lwd=lwd[1], lty="dashed", ...)
 
                } else {
 
-                  coltail(tmp, val=-abs(obs2[i]), tail="lower", mult=2, col=col.out, border=border, freq=freq, ...)
+                  .coltail(tmp, val=-abs(obs2[i]), tail="lower", mult=2, col=col.out, border=border, freq=freq, ...)
                   labline(v=-abs(obs2[i]), lwd=lwd[1], lty="dashed", ...)
 
                }
@@ -335,27 +408,20 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
          if (alternative == "less") {
 
-            coltail(tmp, val=obs2[i], tail="lower", col=col.out, border=border, freq=freq, ...)
+            .coltail(tmp, val=obs2[i], tail="lower", col=col.out, border=border, freq=freq, ...)
             labline(v=obs2[i], lwd=lwd[1], lty="dashed", ...)
 
          }
 
          if (alternative == "greater") {
 
-            coltail(tmp, val=obs2[i], tail="upper", col=col.out, border=border, freq=freq, ...)
+            .coltail(tmp, val=obs2[i], tail="upper", col=col.out, border=border, freq=freq, ...)
             labline(v=obs2[i], lwd=lwd[1], lty="dashed", ...)
 
          }
 
-         if (is.na(x$ddf.alpha)) {
-            xs <- seq(min(-qnorm(.995), min(perm2[[i]], na.rm=TRUE)), max(qnorm(.995), max(perm2[[i]], na.rm=TRUE)), length=1000)
-            llines(xs, dnorm(xs), lwd=lwd[2], col=col.ref, ...)
-         } else {
-            xs <- seq(min(-qt(.995, df=x$ddf.alpha), min(perm2[[i]], na.rm=TRUE)), max(qt(.995, df=x$ddf.alpha), max(perm2[[i]], na.rm=TRUE)), length=1000)
-            llines(xs, dt(xs, df=x$ddf.alpha), lwd=lwd[2], col=col.ref, ...)
-         }
-
-         llines(density(perm2[[i]], adjust=adjust, na.rm=TRUE), lwd=lwd[3], col=col.density, ...)
+         llines(xs, ys, lwd=lwd[2], col=col.ref, ...)
+         llines(den, lwd=lwd[3], col=col.density, ...)
 
          labline(v=0, lwd=lwd[4], ...)
 

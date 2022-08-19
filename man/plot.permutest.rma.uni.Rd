@@ -6,7 +6,7 @@
 }
 \usage{
 \method{plot}{permutest.rma.uni}(x, beta, alpha, QM=FALSE, QS=FALSE,
-     breaks="Scott", freq=FALSE, col="lightgray", border=NULL,
+     breaks="Scott", freq=FALSE, col="gray", border="white", trim=0,
      col.out=rgb(1,0,0,0.5), col.ref="black", col.density="blue",
      adjust=1, lwd=c(2,0,0,4), layout, \dots)
 }
@@ -18,24 +18,27 @@
    \item{QS}{logical to specify whether the permutation distribution of the omnibus test of the scale coefficients should be plotted (the default is \code{FALSE}). Only relevant for location-scale models (see \code{\link{rma.uni}}).}
    \item{breaks}{argument to be passed on to the corresponding argument of \code{\link{hist}} to set (the method for determining) the (number of) breakpoints.}
    \item{freq}{logical to indicate whether frequencies or probability densities should be plotted (the default is \code{FALSE} to plot densities).}
-   \item{col}{character string to specify the color for the bars (the default is a light gray).}
-   \item{border}{character string to specify the color for the border around the bars (the default is \code{NULL} to use the standard foreground color).}
+   \item{col}{character string to specify the color for the bars (the default is gray).}
+   \item{border}{character string to specify the color for the border around the bars (the default is white).}
+   \item{trim}{the fraction (up to 0.5) of observations to be trimmed from the tails of each permutation distribution before its histogram is plotted.}
    \item{col.out}{character string to specify the color for the bars that are more extreme than the observed test statistic (the default is a semi-transparent shade of red).}
    \item{col.ref}{character string to specify the color of the theoretical reference/null distribution that is superimposed on top of the histogram (the default is black).}
    \item{col.density}{character string to specify the color of the kernel density estimate of the permutation distribution that is superimposed on top of the histogram (the default is blue).}
    \item{adjust}{numeric value to be passed on to the corresponding argument of \code{\link{density}} (for adjusting the bandwidth of the kernel density estimate).}
-   \item{lwd}{numeric vector to specify the width of the vertical lines corresponding to the value of the observed test statistic, of the reference/null distribution, of the density estimate, and of the vertical line at 0. Note: by default, the reference/null distribution and the density estimate have a line width of 0 and are therefore not plotted.}
+   \item{lwd}{numeric vector to specify the width of the vertical lines corresponding to the value of the observed test statistic, of the reference/null distribution, of the density estimate, and of the vertical line at 0 (note: by default, the reference/null distribution and the density estimate both have a line width of 0 and are therefore not plotted).}
    \item{layout}{optional vector of two numbers to specify the number of rows and columns for the layout of the figure.}
    \item{\dots}{other arguments.}
 }
 \details{
-   The function plots the permutation distribution(s) of the model coefficient(s) as histograms.
+   The function plots the permutation distribution of each model coefficient as a histogram.
 
    For models with moderators, one can choose via argument \code{beta} which coefficients to plot (by default, all permutation distributions except that of the intercept are plotted). One can also choose to plot the permutation distribution of the omnibus test of the model coefficients (by setting \code{QM=TRUE}).
 
    Arguments \code{breaks}, \code{freq}, \code{col}, and \code{border} are passed on to the \code{\link{hist}} function for the plotting.
 
-   Argument \code{col.out} is used to specify the color for the bars that are more extreme than the observed test statistic. The p-value of a permutation test corresponds to the area of these bars.
+   Argument \code{trim} can be used to trim away a certain fraction of observations from the tails of each permutation distribution before its histogram is plotted. By setting this to a value above 0, one can quickly remove some of the extreme values that might lead to the bulk of the distribution getting squished together at the center (typically, a small value such as \code{trim=.01} is sufficient for this purpose).
+
+   Argument \code{col.out} is used to specify the color for the bars in the histogram that are more extreme than the observed test statistic. The p-value of a permutation test corresponds to the area of these bars.
 
    One can superimpose the theoretical reference/null distribution on top of the histogram (i.e., the distribution as assumed by the model). The p-value for the standard (i.e., non-permutation) test is the area that is more extreme than the observed test statistic under this reference/null distribution.
 
@@ -86,7 +89,7 @@ permres
 ### plot of the permutation distribution for absolute latitude
 ### note: the tail area under the permutation distribution is larger
 ### than under a standard normal density (hence, the larger p-value)
-plot(permres, beta=2, lwd=c(2,3,3,4), xlim=c(-5,5), ylim=c(0,.4))
+plot(permres, beta=2, lwd=c(2,3,3,4), xlim=c(-5,5))
 }
 }
 \keyword{hplot}

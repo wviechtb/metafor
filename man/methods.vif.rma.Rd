@@ -1,17 +1,15 @@
 \name{methods.vif.rma}
 \alias{methods.vif.rma}
 \alias{as.data.frame.vif.rma}
-\alias{as.data.frame.list.vif.rma}
 \title{Methods for 'vif.rma' Objects}
 \description{
-   Methods for objects of class \code{"vif.rma"} and \code{"list.vif.rma"}.
+   Methods for objects of class \code{"vif.rma"}.
 }
 \usage{
 \method{as.data.frame}{vif.rma}(x, \dots)
-\method{as.data.frame}{list.vif.rma}(x, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"vif.rma"} or \code{"list.vif.rma"}.}
+   \item{x}{an object of class \code{"vif.rma"}.}
    \item{\dots}{other arguments.}
 }
 \author{

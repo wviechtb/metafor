@@ -2,7 +2,6 @@
 \alias{vif}
 \alias{vif.rma}
 \alias{print.vif.rma}
-\alias{print.list.vif.rma}
 \title{Variance Inflation Factors for 'rma' Objects}
 \description{
    Compute (generalized) variance inflation factors (VIFs) for objects of class \code{"rma"}. \loadmathjax
@@ -14,10 +13,9 @@ vif(x, \dots)
     seed=NULL, parallel="no", ncpus=1, cl, digits, \dots)
 
 \method{print}{vif.rma}(x, digits=x$digits, \dots)
-\method{print}{list.vif.rma}(x, digits=x[[1]]$digits, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"rma"} (for \code{vif}) or \code{"vif.rma"} or or \code{"list.vif.rma"} (for \code{print}).}
+   \item{x}{an object of class \code{"rma"} (for \code{vif}) or \code{"vif.rma"} (for \code{print}).}
    \item{btt}{optional vector of indices (or list thereof) to specify a set of coefficients for which a generalized variance inflation factor (GVIF) should be computed. Can also be a string to \code{\link{grep}} for.}
    \item{att}{optional vector of indices (or list thereof) to specify a set of scale coefficients for which a generalized variance inflation factor (GVIF) should be computed. Can also be a string to \code{\link{grep}} for. Only relevant for location-scale models (see \code{\link{rma.uni}}).}
    \item{table}{logical to specify whether the VIFs should be added to the model coefficient table (the default is \code{FALSE}). Only relevant when \code{btt} (or \code{att}) is not specified.}
@@ -80,9 +78,9 @@ vif(x, \dots)
    \item{prop}{vector with the proportions of simulated values that are smaller than the actually observed (G)VIF values (only when \code{sim=TRUE}).}
    \item{\dots}{some additional elements/values.}
 
-   When \code{x} was a location-scale model object and (G)VIFs can be computed for both the location and the scale coefficients, then the object is a list of class \code{"list.vif.rma"}, where each element is an \code{"vif.rma"} object as described above.
+   When \code{x} was a location-scale model object and (G)VIFs can be computed for both the location and the scale coefficients, then the object is a list with elements \code{beta} and \code{alpha}, where each element is an \code{"vif.rma"} object as described above.
 
-   The results are formatted and printed with the \code{print} function. To format the results as a data frame, one can use the \code{\link[=as.data.frame.vif.rma]{as.data.frame}} function.
+   The results are formatted and printed with the \code{print} function. To format the results as a data frame, one can use the \code{\link[=as.data.frame.vif.rma]{as.data.frame}} function. When \code{sim=TRUE}, the distribution of each (G)VIF can be plotted with the \code{\link[=plot.vif.rma]{plot}} function.
 }
 \note{
    When using \code{sim=TRUE}, the model needs to be refitted (by default) 1000 times. When \code{sim=TRUE} is combined with \code{reestimate=TRUE}, then this value needs to be multiplied by the total number of (G)VIF values that will be computed. Hence, the combination of \code{sim=TRUE} with \code{reestimate=TRUE} is computationally expensive, especially for more complex models where model fitting can be slow.
@@ -107,6 +105,8 @@ vif(x, \dots)
 }
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.glmm}}, and \code{\link{rma.mv}} for functions to fit models for which variance inflation factors can be computed.
+
+   \code{\link{plot.vif.rma}} for the plot method and \code{\link{as.data.frame.vif.rma}} for the method to format the results as a data frame.
 }
 \examples{
 ### copy data from Bangert-Drowns et al. (2004) into 'dat'
@@ -130,10 +130,10 @@ vif(res, reestimate=TRUE)
 u <- scale # to standardize the predictors
 res <- rma(yi, vi, mods = ~ u(length) + u(wic) + u(feedback) + u(info) +
                             u(pers) + u(imag) + u(meta), data=dat)
-vif(res)
+vif(res, reestimate=TRUE)
 
 ### get full table
-vif(res, table=TRUE)
+vif(res, reestimate=TRUE, table=TRUE)
 
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)

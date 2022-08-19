@@ -1,6 +1,8 @@
 # metafor 3.5-14 (2022-08-17)
 
-- `vif()` was completely refactored and gains `reestimate`, `sim`, and `parallel` arguments
+- `plot.permutest.rma.uni()` function sets the y-axis limits automatically and in a smarter way when also drawing the reference/null distribution and the density estimate
+
+- `vif()` was completely refactored and gains `reestimate`, `sim`, and `parallel` arguments; added `as.data.frame.vif.rma()` and `plot.vif.rma()` methods
 
 - added `as.data.frame.anova.rma()` and `as.data.frame.list.anova.rma()` methods
 

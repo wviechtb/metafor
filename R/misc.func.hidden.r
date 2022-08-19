@@ -1705,3 +1705,67 @@ tidy.rma <- function (x, ...) {
 }
 
 ############################################################################
+
+.coltail <- function(h, val, tail="upper", mult=1, col, border, freq, ...) {
+
+   h$counts  <- h$counts  * mult
+   h$density <- h$density * mult
+
+   if (tail == "lower") {
+
+      above <- which(h$breaks > val)
+      if (length(above) > 0L) {
+         pos <- above[1]
+         h$breaks[pos] <- val
+      }
+      sel <- h$breaks <= val
+      if (sum(sel) >= 2L) {
+         h$breaks  <- h$breaks[sel]
+         h$counts  <- h$counts[sel[-1]]
+         h$density <- h$density[sel[-1]]
+         h$mids    <- h$mids[sel[-1]]
+         lines(h, col=col, border=border, freq=freq, ...)
+      }
+
+   } else {
+
+      below <- which(h$breaks < val)
+      if (length(below) > 0L) {
+         pos <- below[length(below)]
+         h$breaks[pos] <- val
+      }
+      sel <- h$breaks >= val
+      if (sum(sel) >= 2L) {
+         len <- length(below)
+         h$breaks  <- h$breaks[sel]
+         h$counts  <- h$counts[sel[-len]]
+         h$density <- h$density[sel[-len]]
+         h$mids    <- h$mids[sel[-len]]
+         lines(h, col=col, border=border, freq=freq, ...)
+      }
+
+   }
+
+}
+
+############################################################################
+
+.axis.break <- function(breakpos, brw = 0.02) {
+
+   breakwidth <- 0.02
+   figxy <- par("usr")
+   xw <- (figxy[2] - figxy[1]) * breakwidth
+   yw <- (figxy[4] - figxy[3]) * breakwidth
+   br <- c(breakpos - xw/2, figxy[3] - yw/2, breakpos + xw/2, figxy[3] + yw/2)
+   par(xpd = TRUE)
+   rect(br[1], br[2], br[3], br[4], col="white", border="white")
+   xbegin <- c(breakpos - xw, breakpos)
+   xend   <- c(breakpos, breakpos + xw)
+   ybegin <- c(br[2], br[2])
+   yend   <- c(br[4], br[4])
+   segments(xbegin, ybegin, xend, yend, col="black")
+   par(xpd = FALSE)
+
+}
+
+############################################################################

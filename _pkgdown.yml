@@ -120,6 +120,7 @@ reference:
       - plot.infl.rma.uni
       - plot.profile.rma
       - plot.rma.uni.selmodel
+      - plot.vif.rma
       - qqnorm.rma
   - title: "Publication Bias"
     desc: >

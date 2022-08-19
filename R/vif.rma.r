@@ -350,7 +350,7 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
 
       if (vif.loc) {
          res <- list(beta=res.loc, alpha=res.scale)
-         class(res) <- "list.vif.rma"
+         class(res) <- "vif.rma"
       } else {
          res <- res.scale
       }
