@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-15</span>
       </span>
     </div>
 
@@ -108,15 +108,13 @@
 <span>    seed<span class="op">=</span><span class="cn">NULL</span>, parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for vif.rma</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span>
-<span><span class="co"># S3 method for list.vif.rma</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits<span class="op">=</span><span class="va">x</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
-<dd><p>an object of class <code>"rma"</code> (for <code>vif</code>) or <code>"vif.rma"</code> or or <code>"list.vif.rma"</code> (for <code>print</code>).</p></dd>
+<dd><p>an object of class <code>"rma"</code> (for <code>vif</code>) or <code>"vif.rma"</code> (for <code>print</code>).</p></dd>
 
    <dt>btt</dt>
 <dd><p>optional vector of indices (or list thereof) to specify a set of coefficients for which a generalized variance inflation factor (GVIF) should be computed. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for.</p></dd>
@@ -222,10 +220,10 @@
 <dd><p>some additional elements/values.</p></dd>
 
 
-</dl><p>When <code>x</code> was a location-scale model object and (G)VIFs can be computed for both the location and the scale coefficients, then the object is a list of class <code>"list.vif.rma"</code>, where each element is an <code>"vif.rma"</code> object as described above.</p>
+</dl><p>When <code>x</code> was a location-scale model object and (G)VIFs can be computed for both the location and the scale coefficients, then the object is a list with elements <code>beta</code> and <code>alpha</code>, where each element is an <code>"vif.rma"</code> object as described above.</p>
 
 
-<p>The results are formatted and printed with the <code>print</code> function. To format the results as a data frame, one can use the <code><a href="methods.vif.rma.html">as.data.frame</a></code> function.</p>
+<p>The results are formatted and printed with the <code>print</code> function. To format the results as a data frame, one can use the <code><a href="methods.vif.rma.html">as.data.frame</a></code> function. When <code>sim=TRUE</code>, the distribution of each (G)VIF can be plotted with the <code><a href="plot.vif.rma.html">plot</a></code> function.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -247,7 +245,8 @@
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="rma.uni.html">rma.uni</a></code>, <code><a href="rma.glmm.html">rma.glmm</a></code>, and <code><a href="rma.mv.html">rma.mv</a></code> for functions to fit models for which variance inflation factors can be computed.</p></div>
+    <div class="dont-index"><p><code><a href="rma.uni.html">rma.uni</a></code>, <code><a href="rma.glmm.html">rma.glmm</a></code>, and <code><a href="rma.mv.html">rma.mv</a></code> for functions to fit models for which variance inflation factors can be computed.</p>
+<p><code><a href="plot.vif.rma.html">plot.vif.rma</a></code> for the plot method and <code><a href="methods.vif.rma.html">as.data.frame.vif.rma</a></code> for the method to format the results as a data frame.</p></div>
     </div>
 
     <div id="ref-examples">
@@ -271,12 +270,12 @@
 <span class="r-in"><span><span class="fu">vif</span><span class="op">(</span><span class="va">res</span>, sim<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              vif  prop </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> length    1.5371  0.97 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wic       1.3860  0.88 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> feedback  1.6490  0.98 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> length    1.5371  0.96 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wic       1.3860  0.87 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> feedback  1.6490  0.99 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> info      1.8340  0.98 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pers      5.6780  1.00 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> imag      1.1554  0.50 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> imag      1.1554  0.49 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> meta      4.5333  1.00 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
@@ -293,24 +292,24 @@
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="fu">u</span><span class="op">(</span><span class="va">length</span><span class="op">)</span> <span class="op">+</span> <span class="fu">u</span><span class="op">(</span><span class="va">wic</span><span class="op">)</span> <span class="op">+</span> <span class="fu">u</span><span class="op">(</span><span class="va">feedback</span><span class="op">)</span> <span class="op">+</span> <span class="fu">u</span><span class="op">(</span><span class="va">info</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>                            <span class="fu">u</span><span class="op">(</span><span class="va">pers</span><span class="op">)</span> <span class="op">+</span> <span class="fu">u</span><span class="op">(</span><span class="va">imag</span><span class="op">)</span> <span class="op">+</span> <span class="fu">u</span><span class="op">(</span><span class="va">meta</span><span class="op">)</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Studies with NAs omitted from model fitting.</span>
-<span class="r-in"><span><span class="fu">vif</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">vif</span><span class="op">(</span><span class="va">res</span>, reestimate<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> u(length)  u(wic)  u(feedback)  u(info)  u(pers)  u(imag)  u(meta) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    1.5371  1.3860       1.6490   1.8340   5.6780   1.1554   4.5333 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1.3877  1.2043       1.5060   1.4980   5.2195   1.4386   4.3244 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### get full table</span></span></span>
-<span class="r-in"><span><span class="fu">vif</span><span class="op">(</span><span class="va">res</span>, table<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">vif</span><span class="op">(</span><span class="va">res</span>, reestimate<span class="op">=</span><span class="cn">TRUE</span>, table<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             estimate     se    zval   pval   ci.lb  ci.ub    vif    sif </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt       0.1825 0.0406  4.4898 &lt;.0001  0.1028 0.2621     NA     NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> u(length)     0.0458 0.0496  0.9240 0.3555 -0.0514 0.1431 1.5371 1.2398 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> u(wic)       -0.0210 0.0487 -0.4308 0.6666 -0.1164 0.0744 1.3860 1.1773 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> u(feedback)   0.0329 0.0524  0.6265 0.5310 -0.0699 0.1357 1.6490 1.2842 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> u(info)      -0.0460 0.0418 -1.1006 0.2711 -0.1280 0.0360 1.8340 1.3542 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> u(pers)      -0.0573 0.0956 -0.5992 0.5490 -0.2446 0.1301 5.6780 2.3829 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> u(imag)       0.1004 0.0452  2.2233 0.0262  0.0119 0.1890 1.1554 1.0749 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> u(meta)       0.0981 0.0850  1.1537 0.2486 -0.0685 0.2647 4.5333 2.1291 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> u(length)     0.0458 0.0496  0.9240 0.3555 -0.0514 0.1431 1.3877 1.1780 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> u(wic)       -0.0210 0.0487 -0.4308 0.6666 -0.1164 0.0744 1.2043 1.0974 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> u(feedback)   0.0329 0.0524  0.6265 0.5310 -0.0699 0.1357 1.5060 1.2272 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> u(info)      -0.0460 0.0418 -1.1006 0.2711 -0.1280 0.0360 1.4980 1.2239 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> u(pers)      -0.0573 0.0956 -0.5992 0.5490 -0.2446 0.1301 5.2195 2.2846 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> u(imag)       0.1004 0.0452  2.2233 0.0262  0.0119 0.1890 1.4386 1.1994 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> u(meta)       0.0981 0.0850  1.1537 0.2486 -0.0685 0.2647 4.3244 2.0795 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span></span>
@@ -348,10 +347,10 @@
 <span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">vif</span><span class="op">(</span><span class="va">res</span>, btt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span>, sim<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     coefs m    vif    sif prop </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2       2 1 1.7697 1.3303 0.83 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:4   3:4 2 1.2339 1.0540 0.23 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       5 1 1.9148 1.3838 0.86 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   coefs m    vif    sif prop </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     2 1 1.7697 1.3303 0.81 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   3:4 2 1.2339 1.0540 0.21 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     5 1 1.9148 1.3838 0.86 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
