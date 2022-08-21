@@ -106,7 +106,7 @@
 
 ############################################################################
 
-.compvifsim <- function(l, obj, coef, btt=NULL, att=NULL, reestimate=FALSE, intercept=FALSE, parallel=FALSE, seed=NULL) {
+.compvifsim <- function(l, obj, coef, btt=NULL, att=NULL, reestimate=FALSE, intercept=FALSE, parallel=FALSE, seed=NULL, joinb=NULL, joina=NULL) {
 
    if (parallel == "snow")
       library(metafor)
@@ -124,19 +124,35 @@
          outlist <- "coef.na=coef.na, vb=vb"
       }
 
+      if (is.null(joinb)) {
+         if (is.null(x$data) || is.null(x$formula.mods)) {
+            Xperm <- apply(x$X, 2, sample)
+         } else {
+            data <- x$data
+            if (!is.null(x$subset))
+               data <- data[x$subset,,drop=FALSE]
+            data <- data[x$not.na,,drop=FALSE]
+            Xperm <- model.matrix(x$formula.mods, data=as.data.frame(lapply(data, sample)))
+            Xperm <- Xperm[,!x$coef.na,drop=FALSE]
+         }
+      } else {
+         Xperm <- .permXvif(joinb, x$X)
+      }
+
       if (inherits(x, "rma.uni")) {
          if (inherits(x, "rma.ls")) {
-            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=apply(x$X, 2, sample), intercept=FALSE, scale=x$Z, link=x$link, method=x$method, weighted=x$weighted,
+            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=Xperm, intercept=FALSE, scale=x$Z, link=x$link, method=x$method, weighted=x$weighted,
                          test=x$test, level=x$level, alpha=ifelse(x$alpha.fix, x$alpha, NA), optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA), control=x$control, skiphes=FALSE, outlist=outlist)
          } else {
-            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=apply(x$X, 2, sample), intercept=FALSE, method=x$method, weighted=x$weighted,
+            args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=Xperm, intercept=FALSE, method=x$method, weighted=x$weighted,
                          test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE, outlist=outlist)
          }
          tmp <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
+         #tmp <- try(.do.call(rma.uni, args))
       }
 
       if (inherits(x, "rma.mv")) {
-         args <- list(yi=x$yi, V=x$V, W=x$W, mods=apply(x$X, 2, sample), random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, dfs=x$dfs, level=x$level, R=x$R, Rscale=x$Rscale,
+         args <- list(yi=x$yi, V=x$V, W=x$W, mods=Xperm, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, dfs=x$dfs, level=x$level, R=x$R, Rscale=x$Rscale,
                       sigma2=ifelse(x$vc.fix$sigma2, x$sigma2, NA), tau2=ifelse(x$vc.fix$tau2, x$tau2, NA), rho=ifelse(x$vc.fix$rho, x$rho, NA), gamma2=ifelse(x$vc.fix$gamma2, x$gamma2, NA), phi=ifelse(x$vc.fix$phi, x$phi, NA),
                       sparse=x$sparse, dist=x$dist, control=x$control, outlist=outlist)
          tmp <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
@@ -159,9 +175,25 @@
          outlist <- "coef.na.Z=coef.na.Z, va=va"
       }
 
-      args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, scale=apply(x$Z, 2, sample), link=x$link, method=x$method, weighted=x$weighted,
+      if (is.null(joina)) {
+         if (is.null(x$data) || is.null(x$formula.scale)) {
+            Zperm <- apply(x$Z, 2, sample)
+         } else {
+            data <- x$data
+            if (!is.null(x$subset))
+               data <- data[x$subset,,drop=FALSE]
+            data <- data[x$not.na,,drop=FALSE]
+            Zperm <- model.matrix(x$formula.scale, data=as.data.frame(lapply(data, sample)))
+            Zperm <- Zperm[,!x$coef.na.Z,drop=FALSE]
+         }
+      } else {
+         Zperm <- .permXvif(joina, x$Z)
+      }
+
+      args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, scale=Zperm, link=x$link, method=x$method, weighted=x$weighted,
                    test=x$test, level=x$level, alpha=ifelse(x$alpha.fix, x$alpha, NA), optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA), control=x$control, skiphes=FALSE, outlist=outlist)
       tmp <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
+      #tmp <- try(.do.call(rma.uni, args))
 
       if (inherits(tmp, "try-error") || any(tmp$Z.coef.na))
          return(rep(NA_real_, length(att)))
@@ -176,6 +208,16 @@
 
    return(vifs)
 
+}
+
+.permXvif <- function(b, X) {
+   ub <- unique(b)
+   n <- nrow(X)
+   for (j in 1:length(ub)) {
+      pos <- which(ub[j] == b)
+      X[,pos] <- X[sample(n),pos]
+   }
+   return(X)
 }
 
 ############################################################################

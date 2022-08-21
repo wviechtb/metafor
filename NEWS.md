@@ -1,4 +1,4 @@
-# metafor 3.5-15 (2022-08-19)
+# metafor 3.5-16 (2022-08-21)
 
 - `plot.permutest.rma.uni()` function sets the y-axis limits automatically and in a smarter way when also drawing the reference/null distribution and the density estimate
 

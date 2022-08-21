@@ -19,7 +19,7 @@ vif(x, \dots)
    \item{btt}{optional vector of indices (or list thereof) to specify a set of coefficients for which a generalized variance inflation factor (GVIF) should be computed. Can also be a string to \code{\link{grep}} for.}
    \item{att}{optional vector of indices (or list thereof) to specify a set of scale coefficients for which a generalized variance inflation factor (GVIF) should be computed. Can also be a string to \code{\link{grep}} for. Only relevant for location-scale models (see \code{\link{rma.uni}}).}
    \item{table}{logical to specify whether the VIFs should be added to the model coefficient table (the default is \code{FALSE}). Only relevant when \code{btt} (or \code{att}) is not specified.}
-   \item{reestimate}{logical to specify whether the model should be reestimated when removing the other moderator variables from the model when computing a (G)VIF (the default is \code{FALSE}).}
+   \item{reestimate}{logical to specify whether the model should be reestimated when removing moderator variables from the model for computing a (G)VIF (the default is \code{FALSE}).}
    \item{sim}{logical to specify whether the distribution of each (G)VIF under independence should be simulated (the default is \code{FALSE}). Can also be an integer to specify how many values to simulate (when \code{sim=TRUE}, the default is \code{1000}).}
    \item{progbar}{logical to specify whether a progress bar should be shown when \code{sim=TRUE} (the default is \code{TRUE}).}
    \item{seed}{optional value to specify the seed of the random number generator when \code{sim=TRUE} (for reproducibility).}
@@ -56,11 +56,19 @@ vif(x, \dots)
 
    }
 
-   \subsection{Analyzing the Size of the (G)VIFs}{
+   \subsection{Interpreting the Size of (G)VIFs}{
 
       A large VIF value suggests that the precision with which we can estimate a particular model coefficient (or a set thereof for a GVIF) is negatively impacted by multicollinearity among the moderator variables. However, there is no specific cutoff for determining whether a particular (G)VIF is \sQuote{large}. Sometimes, values such as 5 or 10 have been suggested as rules of thumb, but such cutoffs are essentially arbitrary.
 
-      As a more principled approach, we can simulate the distribution of a particular (G)VIF under independence and then examine how extreme the actually observed (G)VIF value is under this distribution. The distribution is simulated by repeatedly reshuffling the columns of the model matrix (to break any dependence between the moderators) and recomputing the (G)VIF. When setting \code{sim=TRUE}, this is done 1000 times (but one can also set \code{sim} to an integer to indicate how many (G)VIF values should be simulated).
+   }
+
+   \subsection{Simulating the Distribution of (G)VIFs Under Independence}{
+
+      As a more principled approach, we can simulate the distribution of a particular (G)VIF under independence and then examine how extreme the actually observed (G)VIF value is under this distribution. The distribution is simulated by randomly reshuffling the columns of the model matrix (to break any dependence between the moderators) and recomputing the (G)VIF. When setting \code{sim=TRUE}, this is done 1000 times (but one can also set \code{sim} to an integer to indicate how many (G)VIF values should be simulated).
+
+      The way the model matrix is reshuffled depends on how the model was fitted. When the model was specified as a formula via the \code{mods} argument and the data was supplied via the \code{data} argument, then each column of the data frame specified via \code{data} is reshuffled and the formula is evaluated within the reshuffled data (creating the corresponding reshuffled model matrix). This way, factor/character variables are properly reshuffled and derived terms (e.g., interactions, polynomials, splines) are correct constructed. This is the recommended approach.
+
+      On the other hand, if the model matrix was directly supplied to the \code{mods} argument, then each column of the matrix is directly reshuffled. This is not recommended, since this approach cannot account for any inherent relationships between variables in the model matrix (e.g., an interaction term is the product of two variables and should not be reshuffled by itself).
 
       Once the distribution of a (G)VIF under independence has been simulated, the proportion of simulated values that are smaller than the actually observed (G)VIF value is computed. If the proportion is close to 1, then this indicates that the actually observed (G)VIF value is extreme.
 
@@ -83,7 +91,7 @@ vif(x, \dots)
    The results are formatted and printed with the \code{print} function. To format the results as a data frame, one can use the \code{\link[=as.data.frame.vif.rma]{as.data.frame}} function. When \code{sim=TRUE}, the distribution of each (G)VIF can be plotted with the \code{\link[=plot.vif.rma]{plot}} function.
 }
 \note{
-   When using \code{sim=TRUE}, the model needs to be refitted (by default) 1000 times. When \code{sim=TRUE} is combined with \code{reestimate=TRUE}, then this value needs to be multiplied by the total number of (G)VIF values that will be computed. Hence, the combination of \code{sim=TRUE} with \code{reestimate=TRUE} is computationally expensive, especially for more complex models where model fitting can be slow.
+   When using \code{sim=TRUE}, the model needs to be refitted (by default) 1000 times. When \code{sim=TRUE} is combined with \code{reestimate=TRUE}, then this value needs to be multiplied by the total number of (G)VIF values that are computed by the function. Hence, the combination of \code{sim=TRUE} with \code{reestimate=TRUE} is computationally expensive, especially for more complex models where model fitting can be slow.
 
    On machines with multiple cores, one can try to speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1. Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using \code{\link[parallel]{mclapply}} when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
 }

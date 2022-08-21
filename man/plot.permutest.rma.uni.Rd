@@ -38,13 +38,15 @@
 
    Argument \code{trim} can be used to trim away a certain fraction of observations from the tails of each permutation distribution before its histogram is plotted. By setting this to a value above 0, one can quickly remove some of the extreme values that might lead to the bulk of the distribution getting squished together at the center (typically, a small value such as \code{trim=.01} is sufficient for this purpose).
 
+   The observed test statistic is indicated as a vertical dashed line (in both tails for a two-sided test).
+
    Argument \code{col.out} is used to specify the color for the bars in the histogram that are more extreme than the observed test statistic. The p-value of a permutation test corresponds to the area of these bars.
 
    One can superimpose the theoretical reference/null distribution on top of the histogram (i.e., the distribution as assumed by the model). The p-value for the standard (i.e., non-permutation) test is the area that is more extreme than the observed test statistic under this reference/null distribution.
 
    A kernel density estimate of the permutation distribution can also be superimposed on top of the histogram (as a smoothed representation of the permutation distribution).
 
-   Note that the theoretical reference/null distribution and the kernel density estimate of the permutation distribution are only shown when setting the line width for these elements greater than 0 via the \code{lwd} argument.
+   Note that the theoretical reference/null distribution and the kernel density estimate of the permutation distribution are only shown when setting the line width for these elements greater than 0 via the \code{lwd} argument (e.g., \code{lwd=c(2,2,2,4)}).
 
    For location-scale models (see \code{\link{rma.uni}} for details), one can also use arguments \code{alpha} and \code{QS} to specify which scale coefficients to plot and whether to also plot the permutation distribution of the omnibus test of the scale coefficients (by setting \code{QS=TRUE}).
 }

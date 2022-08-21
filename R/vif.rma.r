@@ -33,7 +33,7 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("fixed", "intercept", "time", "LB"))
+   .chkdots(ddd, c("fixed", "intercept", "time", "LB", "joinb", "joina"))
 
    if (is.null(ddd$fixed)) {
       fixed <- FALSE
@@ -45,6 +45,18 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
       intercept <- FALSE
    } else {
       intercept <- .isTRUE(ddd$intercept)
+   }
+
+   if (is.null(ddd$joinb)) {
+      joinb <- NULL
+   } else {
+      joinb <- ddd$joinb
+   }
+
+   if (is.null(ddd$joina)) {
+      joina <- NULL
+   } else {
+      joina <- ddd$joina
    }
 
    if (.isTRUE(ddd$time))
@@ -210,17 +222,17 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
       if (sim.loc >= 2) {
 
          if (parallel == "no")
-            vif.sim <- pbapply::pblapply(seq_len(sim.loc), .compvifsim, obj=x, coef="beta", btt=btt, att=NULL, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed)
+            vif.sim <- pbapply::pblapply(seq_len(sim.loc), .compvifsim, obj=x, coef="beta", btt=btt, att=NULL, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, joinb=joinb)
 
          if (parallel == "multicore")
-            vif.sim <- pbapply::pblapply(seq_len(sim.loc), .compvifsim, obj=x, coef="beta", btt=btt, att=NULL, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, cl=ncpus)
+            vif.sim <- pbapply::pblapply(seq_len(sim.loc), .compvifsim, obj=x, coef="beta", btt=btt, att=NULL, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, joinb=joinb, cl=ncpus)
 
          if (parallel == "snow") {
 
             if (.isTRUE(ddd$LB)) {
-               vif.sim <- parallel::parLapplyLB(cl, seq_len(sim.loc), .compvifsim, obj=x, coef="beta", btt=btt, att=NULL, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed)
+               vif.sim <- parallel::parLapplyLB(cl, seq_len(sim.loc), .compvifsim, obj=x, coef="beta", btt=btt, att=NULL, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, joinb=joinb)
             } else {
-               vif.sim <- pbapply::pblapply(seq_len(sim.loc), .compvifsim, obj=x, coef="beta", btt=btt, att=NULL, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, cl=cl)
+               vif.sim <- pbapply::pblapply(seq_len(sim.loc), .compvifsim, obj=x, coef="beta", btt=btt, att=NULL, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, joinb=joinb, cl=cl)
             }
 
          }
@@ -228,6 +240,12 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
          vif.sim <- do.call(rbind, vif.sim)
          rownames(vif.sim) <- seq_len(sim.loc)
          colnames(vif.sim) <- seq_along(btt)
+
+         if (!is.null(joinb) || is.null(x$data) || is.null(x$formula.mods)) {
+            attr(vif.sim, "type") <- "X"
+         } else {
+            attr(vif.sim, "type") <- "data"
+         }
 
          res$sim <- vif.sim
 
@@ -320,17 +338,17 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
       if (sim.scale >= 2) {
 
          if (parallel == "no")
-            vif.sim <- pbapply::pblapply(seq_len(sim.scale), .compvifsim, obj=x, coef="alpha", btt=NULL, att=att, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed)
+            vif.sim <- pbapply::pblapply(seq_len(sim.scale), .compvifsim, obj=x, coef="alpha", btt=NULL, att=att, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, joina=joina)
 
          if (parallel == "multicore")
-            vif.sim <- pbapply::pblapply(seq_len(sim.scale), .compvifsim, obj=x, coef="alpha", btt=NULL, att=att, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, cl=ncpus)
+            vif.sim <- pbapply::pblapply(seq_len(sim.scale), .compvifsim, obj=x, coef="alpha", btt=NULL, att=att, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, joina=joina, cl=ncpus)
 
          if (parallel == "snow") {
 
             if (.isTRUE(ddd$LB)) {
-               vif.sim <- parallel::parLapplyLB(cl, seq_len(sim.scale), .compvifsim, obj=x, coef="alpha", btt=NULL, att=att, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed)
+               vif.sim <- parallel::parLapplyLB(cl, seq_len(sim.scale), .compvifsim, obj=x, coef="alpha", btt=NULL, att=att, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, joina=joina)
             } else {
-               vif.sim <- pbapply::pblapply(seq_len(sim.scale), .compvifsim, obj=x, coef="alpha", btt=NULL, att=att, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, cl=cl)
+               vif.sim <- pbapply::pblapply(seq_len(sim.scale), .compvifsim, obj=x, coef="alpha", btt=NULL, att=att, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, joina=joina, cl=cl)
             }
 
          }
@@ -338,6 +356,12 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
          vif.sim <- do.call(rbind, vif.sim)
          rownames(vif.sim) <- seq_len(sim.scale)
          colnames(vif.sim) <- seq_along(att)
+
+         if (!is.null(joina) || is.null(x$data) || is.null(x$formula.scale)) {
+            attr(vif.sim, "type") <- "X"
+         } else {
+            attr(vif.sim, "type") <- "data"
+         }
 
          res.scale$sim <- vif.sim
 

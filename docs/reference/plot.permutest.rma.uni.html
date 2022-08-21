@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-16</span>
       </span>
     </div>
 
@@ -168,10 +168,11 @@
 <p>For models with moderators, one can choose via argument <code>beta</code> which coefficients to plot (by default, all permutation distributions except that of the intercept are plotted). One can also choose to plot the permutation distribution of the omnibus test of the model coefficients (by setting <code>QM=TRUE</code>).</p>
 <p>Arguments <code>breaks</code>, <code>freq</code>, <code>col</code>, and <code>border</code> are passed on to the <code><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></code> function for the plotting.</p>
 <p>Argument <code>trim</code> can be used to trim away a certain fraction of observations from the tails of each permutation distribution before its histogram is plotted. By setting this to a value above 0, one can quickly remove some of the extreme values that might lead to the bulk of the distribution getting squished together at the center (typically, a small value such as <code>trim=.01</code> is sufficient for this purpose).</p>
+<p>The observed test statistic is indicated as a vertical dashed line (in both tails for a two-sided test).</p>
 <p>Argument <code>col.out</code> is used to specify the color for the bars in the histogram that are more extreme than the observed test statistic. The p-value of a permutation test corresponds to the area of these bars.</p>
 <p>One can superimpose the theoretical reference/null distribution on top of the histogram (i.e., the distribution as assumed by the model). The p-value for the standard (i.e., non-permutation) test is the area that is more extreme than the observed test statistic under this reference/null distribution.</p>
 <p>A kernel density estimate of the permutation distribution can also be superimposed on top of the histogram (as a smoothed representation of the permutation distribution).</p>
-<p>Note that the theoretical reference/null distribution and the kernel density estimate of the permutation distribution are only shown when setting the line width for these elements greater than 0 via the <code>lwd</code> argument.</p>
+<p>Note that the theoretical reference/null distribution and the kernel density estimate of the permutation distribution are only shown when setting the line width for these elements greater than 0 via the <code>lwd</code> argument (e.g., <code>lwd=c(2,2,2,4)</code>).</p>
 <p>For location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code> for details), one can also use arguments <code>alpha</code> and <code>QS</code> to specify which scale coefficients to plot and whether to also plot the permutation distribution of the omnibus test of the scale coefficients (by setting <code>QS=TRUE</code>).</p>
     </div>
     <div id="author">
