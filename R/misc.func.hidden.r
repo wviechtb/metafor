@@ -1749,23 +1749,3 @@ tidy.rma <- function (x, ...) {
 }
 
 ############################################################################
-
-.axis.break <- function(breakpos, brw = 0.02) {
-
-   breakwidth <- 0.02
-   figxy <- par("usr")
-   xw <- (figxy[2] - figxy[1]) * breakwidth
-   yw <- (figxy[4] - figxy[3]) * breakwidth
-   br <- c(breakpos - xw/2, figxy[3] - yw/2, breakpos + xw/2, figxy[3] + yw/2)
-   par(xpd = TRUE)
-   rect(br[1], br[2], br[3], br[4], col="white", border="white")
-   xbegin <- c(breakpos - xw, breakpos)
-   xend   <- c(breakpos, breakpos + xw)
-   ybegin <- c(br[2], br[2])
-   yend   <- c(br[4], br[4])
-   segments(xbegin, ybegin, xend, yend, col="black")
-   par(xpd = FALSE)
-
-}
-
-############################################################################

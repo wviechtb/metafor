@@ -4,7 +4,12 @@ logLik.rma <- function(object, REML, ...) {
 
    .chkclass(class(object), must="rma")
 
-   if (missing(REML)) {
+   # in case something like logLik(res1, res2) is used
+
+   if (!missing(REML) && inherits(REML, "rma"))
+      REML <- NULL
+
+   if (missing(REML) || is.null(REML)) {
       if (object$method == "REML") {
          REML <- TRUE
       } else {
