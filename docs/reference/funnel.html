@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-18</span>
       </span>
     </div>
 
@@ -105,7 +105,7 @@
 <span></span>
 <span><span class="co"># S3 method for rma</span></span>
 <span><span class="fu">funnel</span><span class="op">(</span><span class="va">x</span>, yaxis<span class="op">=</span><span class="st">"sei"</span>,</span>
-<span>       <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>,</span>
+<span>       <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>, <span class="va">slab</span>,</span>
 <span>       steps<span class="op">=</span><span class="fl">5</span>, <span class="va">at</span>, <span class="va">atransf</span>, <span class="va">targs</span>, <span class="va">digits</span>, level<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">level</span>,</span>
 <span>       addtau2<span class="op">=</span><span class="cn">FALSE</span>, type<span class="op">=</span><span class="st">"rstandard"</span>,</span>
 <span>       back<span class="op">=</span><span class="st">"lightgray"</span>, shade<span class="op">=</span><span class="st">"white"</span>, hlines<span class="op">=</span><span class="st">"white"</span>,</span>
@@ -114,7 +114,7 @@
 <span></span>
 <span><span class="co"># S3 method for default</span></span>
 <span><span class="fu">funnel</span><span class="op">(</span><span class="va">x</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">ni</span>, <span class="va">subset</span>, yaxis<span class="op">=</span><span class="st">"sei"</span>,</span>
-<span>       <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>,</span>
+<span>       <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>, <span class="va">slab</span>,</span>
 <span>       steps<span class="op">=</span><span class="fl">5</span>, <span class="va">at</span>, <span class="va">atransf</span>, <span class="va">targs</span>, <span class="va">digits</span>, level<span class="op">=</span><span class="fl">95</span>,</span>
 <span>       back<span class="op">=</span><span class="st">"lightgray"</span>, shade<span class="op">=</span><span class="st">"white"</span>, hlines<span class="op">=</span><span class="st">"white"</span>,</span>
 <span>       refline<span class="op">=</span><span class="fl">0</span>, lty<span class="op">=</span><span class="fl">3</span>, <span class="va">pch</span>, <span class="va">col</span>, <span class="va">bg</span>,</span>
@@ -152,6 +152,9 @@
 
    <dt>ylab</dt>
 <dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+
+   <dt>slab</dt>
+<dd><p>optional vector with labels for the <em></em>\(k\) studies. If unspecified, the function tries to extract study labels from <code>x</code>.</p></dd>
 
    <dt>steps</dt>
 <dd><p>the number of tick marks for the y-axis (the default is 5).</p></dd>
@@ -241,7 +244,7 @@
     <h2>Note</h2>
     <p>Placing (a function of) the sample sizes on the y-axis (i.e., using <code>yaxis="ni"</code>, <code>yaxis="ninv"</code>, <code>yaxis="sqrtni"</code>, <code>yaxis="sqrtninv"</code>, or <code>yaxis="lni"</code>) is only possible when information about the sample sizes is actually stored within the object passed to the <code>funnel</code> function. That should automatically be the case when the observed effect sizes or outcomes were computed with the <code><a href="escalc.html">escalc</a></code> function or when the observed effect sizes or outcomes were computed within the model fitting function. On the other hand, this will not be the case when <code><a href="rma.uni.html">rma.uni</a></code> was used together with the <code>yi</code> and <code>vi</code> arguments and the <code>yi</code> and <code>vi</code> values were <em>not</em> computed with <code><a href="escalc.html">escalc</a></code>. In that case, it is still possible to pass information about the sample sizes to the <code><a href="rma.uni.html">rma.uni</a></code> function (e.g., use <code>rma.uni(yi, vi, ni=ni, data=dat)</code>, where data frame <code>dat</code> includes a variable called <code>ni</code> with the sample sizes).</p>
 <p>When using unweighted estimation, using <code>yaxis="wi"</code> will place all points on a horizontal line. When directly passing a vector with the observed effect sizes or outcomes to the function, <code>yaxis="wi"</code> is equivalent to <code>yaxis="vinv"</code>, except that the weights are expressed in percent.</p>
-<p>When specifying vectors for arguments <code>pch</code>, <code>col</code>, and/or <code>bg</code> and <code>x</code> is an object of class <code>"rma"</code>, the variables specified are assumed to be of the same length as the data passed to the model fitting function (and if the <code>data</code> argument was used in the original model fit, then the variables will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.</p>
+<p>Argument <code>slab</code> and when specifying vectors for arguments <code>pch</code>, <code>col</code>, and/or <code>bg</code> and <code>x</code> is an object of class <code>"rma"</code>, the variables specified are assumed to be of the same length as the data passed to the model fitting function (and if the <code>data</code> argument was used in the original model fit, then the variables will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.</p>
     </div>
     <div id="value">
     <h2>Value</h2>

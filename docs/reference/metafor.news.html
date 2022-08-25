@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-18</span>
       </span>
     </div>
 
@@ -121,21 +121,28 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">metafor.news</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.5-16 (2022-08-21)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.5-18 (2022-08-25)                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - plot.permutest.rma.uni() function sets the y-axis limits</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     automatically and in a smarter way when also drawing the</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     reference/null distribution and the density estimate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - funnel.default(), funnel.rma(), and regplot.rma() gain slab argument</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - vif() was completely refactored and gains reestimate, sim, and</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     parallel arguments; added as.data.frame.vif.rma() and plot.vif.rma()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     methods</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - added as.data.frame.anova.rma() and as.data.frame.list.anova.rma()</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     methods</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - plot.permutest.rma.uni() function sets the y-axis limits</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     automatically and in a smarter way when also drawing the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     reference/null distribution and the density estimate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added possibility to specify a list for btt in anova.rma(); added</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     print.list.anova.rma() to print the resulting object</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - added as.data.frame.anova.rma() and as.data.frame.list.anova.rma()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     methods</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - documented the possibility to use an identity link (with</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     link="identity") in rma.uni() when fitting location-scale models</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     (although this will often lead to estimation problems); added</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     solnp() as an additional optimizer for this case</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - optimizers nloptr and constrOptim.nl (the latter from the alabama</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     package) are now available in rma.uni() for location-scale models</span>
@@ -146,19 +153,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - for measure="SMD", escalc() now also allows the user to specify</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     d-values and t-test statistics via arguments di and ti, respectively</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - improved the stability of the calculations in rma.uni() with some</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     internal rescaling of the yi values</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - documented the possibility to use an identity link (with</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     link="identity") in rma.uni() when fitting location-scale models</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     (although this will often lead to estimation problems); added</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     solnp() as an additional optimizer for this case</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - aggregate.escalc() gains addk argument</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added (experimental!) support for measures "RR", "RD", "PLN", and</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     "PR" to rma.glmm() (but using these measures will often lead to</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     estimation problems)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - aggregate.escalc() gains addk argument</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - replmiss() gains data argument</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

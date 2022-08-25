@@ -1,4 +1,4 @@
-funnel.default <- function(x, vi, sei, ni, subset, yaxis="sei", xlim, ylim, xlab, ylab,
+funnel.default <- function(x, vi, sei, ni, subset, yaxis="sei", xlim, ylim, xlab, ylab, slab,
 steps=5, at, atransf, targs, digits, level=95,
 back="lightgray", shade="white", hlines="white",
 refline=0, lty=3, pch, col, bg,
@@ -36,10 +36,10 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       ni <- NULL
 
    if (is.element(yaxis, c("ni", "ninv", "sqrtni", "sqrtninv", "lni"))) {
-      if (is.null(ni) && !is.null(attr(yi, "ni")))
+      if (is.null(ni))
          ni <- attr(yi, "ni")
       if (!is.null(ni) && length(ni) != k)
-         stop(mstyle$stop("Sample size information not of same length as data."))
+      stop(mstyle$stop(paste0("Length of the 'ni' argument (", length(ni), ") does not correspond to the number of outcomes (", k, ").")))
       if (is.null(ni))
          stop(mstyle$stop("No sample size information available."))
    }
@@ -78,12 +78,16 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    if (!is.null(sei))
       sei[sei < 0] <- 0
 
-   ### get slab from attributes of yi; if not available or it doesn't have the right length, set slab <- 1:k
+   ### if unspecified, get slab from attributes of yi; if not available or it doesn't have the right length, set slab <- 1:k
 
-   slab <- attr(yi, "slab")
+   if (missing(slab)) {
+      slab <- attr(yi, "slab")
+      if (is.null(slab) || length(slab) != k)
+         slab <- seq_along(yi)
+   }
 
-   if (is.null(slab) || length(slab) != k)
-      slab <- seq_along(yi)
+   if (length(slab) != k)
+      stop(mstyle$stop(paste0("Length of the 'slab' argument (", length(slab), ") does not correspond to the number of outcomes (", k, ").")))
 
    ### set y-axis label if not specified
 
@@ -186,7 +190,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    ddd <- list(...)
 
    if (!is.null(ddd$transf))
-      warning("Function does not have a 'transf' argument (use 'atransf' instead).", call.=FALSE)
+      warning("Function does not have a 'transf' argument (use 'atransf' instead).", call.=FALSE, immediate.=TRUE)
 
    lplot     <- function(..., refline2, level2, lty2, transf, ci.res) plot(...)
    labline   <- function(..., refline2, level2, lty2, transf, ci.res) abline(...)

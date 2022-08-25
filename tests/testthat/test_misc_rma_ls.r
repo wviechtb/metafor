@@ -188,8 +188,8 @@ test_that("permutation tests work correctly for a location-scale model", {
 
    out <- capture.output(print(sav))
 
-   expect_equivalent(sav$pval, 0.01)
-   expect_equivalent(sav$pval.alpha, c(0.81, 0.95, 0.02, 0.04))
+   expect_equivalent(sav$pval, 0.01, tolerance=.tol[["pval"]])
+   expect_equivalent(sav$pval.alpha, c(0.81, 0.95, 0.02, 0.04), tolerance=.tol[["coef"]])
 
    plot(sav)
 

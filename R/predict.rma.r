@@ -500,6 +500,8 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    ### apply transformation function if one has been specified
 
    if (is.function(transf)) {
+      #if (is.null(targs) && grepl("transf\\.[a-z]*\\.int$", deparse(substitute(transf))) && inherits(x, c("rma.uni","rma.glmm")) && length(x$tau2 == 1L))
+      #   targs <- c(tau2=x$tau2)
       if (is.null(targs)) {
          pred  <- sapply(pred, transf)
          se    <- rep(NA,k.new)

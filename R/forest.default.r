@@ -224,11 +224,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    ###       must have the same length as yi (including NAs) even when subsetting eventually
 
    if (missing(slab)) {
-      if (!is.null(attr(yi, "slab")) && length(attr(yi, "slab")) == k) {
-         slab <- attr(yi, "slab")               # use slab info if it can be found in slab attribute of yi (and it has the right length)
-      } else {
+      slab <- attr(yi, "slab")                  # use slab info if it can be found in slab attribute of yi (and it has the right length)
+      if (is.null(slab) || length(slab) != k)
          slab <- paste("Study", seq_len(k))
-      }
    } else {
       if (length(slab) == 1L && is.na(slab))    # slab=NA can be used to suppress study labels
          slab <- rep("", k)

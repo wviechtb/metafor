@@ -1,7 +1,7 @@
 regplot.rma <- function(x, mod, pred=TRUE, ci=TRUE, pi=FALSE, shade=TRUE,
 xlim, ylim, predlim, olim, xlab, ylab, at, digits=2L,
 transf, atransf, targs, level=x$level,
-pch=21, psize, plim=c(0.5,3), col="black", bg="darkgray",
+pch, psize, plim=c(0.5,3), col, bg, slab,
 grid=FALSE, refline, label=FALSE, offset=c(1,1), labsize=1,
 lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
@@ -32,6 +32,47 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    if (is.function(transf) && is.function(atransf))
       stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))
 
+   mf <- match.call()
+
+   if (missing(pch)) {
+      pch <- 21
+   } else {
+      pch <- .getx("pch", mf=mf, data=x$data)
+   }
+
+   if (missing(psize)) {
+      psize <- NULL
+   } else {
+      psize <- .getx("psize", mf=mf, data=x$data)
+   }
+
+   if (missing(col)) {
+      col <- "black"
+   } else {
+      col <- .getx("col", mf=mf, data=x$data)
+   }
+
+   if (missing(bg)) {
+      bg <- "darkgray"
+   } else {
+      bg <- .getx("bg", mf=mf, data=x$data)
+   }
+
+   if (missing(slab)) {
+      slab <- x$slab
+   } else {
+      slab <- .getx("slab", mf=mf, data=x$data)
+      if (length(slab) != x$k.all)
+         stop(mstyle$stop(paste0("Length of the 'slab' argument (", length(slab), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
+      slab <- .getsubset(slab, x$subset)
+   }
+
+   if (missing(label)) {
+      label <- NULL
+   } else {
+      label <- .getx("label", mf=mf, data=x$data)
+   }
+
    if (missing(targs))
       targs <- NULL
 
@@ -40,12 +81,6 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    if (missing(at))
       at <- NULL
-
-   if (missing(psize))
-      psize <- NULL
-
-   if (missing(label))
-      label <- NULL
 
    ### grid argument can either be a logical or a color
 
@@ -193,12 +228,11 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    }
 
-   ### extract the observed outcomes, corresponding sampling variances, model matrix, slab, and ids
+   ### extract the observed outcomes, corresponding sampling variances, model matrix, and ids
 
    yi   <- c(x$yi.f)
    vi   <- x$vi.f
    X    <- x$X.f
-   slab <- x$slab
    ids  <- x$ids
 
    ### get weights
@@ -287,8 +321,8 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
       } else if (is.logical(label)) {
 
-         if (!is.logical(label))
-            stop(mstyle$stop("Argument 'label' must be a logical vector (or a single character string)."))
+         #if (!is.logical(label))
+         #   stop(mstyle$stop("Argument 'label' must be a logical vector (or a single character string)."))
 
          if (length(label) == 1L)
             label <- rep(label, x$k.all)
@@ -302,6 +336,8 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
          label <- round(label)
          label <- seq(x$k.all) %in% label
+
+         label <- .getsubset(label, x$subset)
 
       }
 

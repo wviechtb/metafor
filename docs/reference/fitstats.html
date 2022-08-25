@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-18</span>
       </span>
     </div>
 
@@ -123,10 +123,10 @@
 <dd><p>an object of class <code>"rma"</code>.</p></dd>
 
    <dt>...</dt>
-<dd><p>optionally more fitted model objects.</p></dd>
+<dd><p>optionally more fitted model objects (only for <code>fitstats()</code>, <code><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC()</a></code>, and <code><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC()</a></code>).</p></dd>
 
    <dt>REML</dt>
-<dd><p>logical to specify whether the regular or restricted likelihood function should be used to obtain the fit statistics and information criteria. Defaults to the method of estimation used, that is <code>TRUE</code> if <code>object</code> was fitted with <code>method="REML"</code> and <code>FALSE</code> otherwise.</p></dd>
+<dd><p>logical to specify whether the regular or restricted likelihood function should be used to obtain the fit statistics and information criteria. Defaults to the method of estimation used (i.e., <code>TRUE</code> if <code>object</code> was fitted with <code>method="REML"</code> and <code>FALSE</code> otherwise).</p></dd>
 
    <dt>k</dt>
 <dd><p>numeric value to specify the penalty per parameter to use. The default (<code>k=2</code>) is the classical AIC. See <code><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></code> for more details.</p></dd>

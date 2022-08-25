@@ -156,9 +156,9 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
 
       .chkviarg(mf$vi)
 
-      ### if ni has not been specified but is an attribute of yi, get it
+      ### if ni has not been specified, try to get it from the attributes of yi
 
-      if (is.null(ni) && !is.null(attr(yi, "ni")))
+      if (is.null(ni))
          ni <- attr(yi, "ni")
 
       ### check length of yi and ni (only if ni is not NULL)

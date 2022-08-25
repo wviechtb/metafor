@@ -1,4 +1,4 @@
-funnel.rma <- function(x, yaxis="sei", xlim, ylim, xlab, ylab,
+funnel.rma <- function(x, yaxis="sei", xlim, ylim, xlab, ylab, slab,
 steps=5, at, atransf, targs, digits, level=x$level, addtau2=FALSE,
 type="rstandard", back="lightgray", shade="white", hlines="white",
 refline, lty=3, pch, pch.fill, col, bg,
@@ -105,9 +105,18 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    if (length(lty) == 1L)
       lty <- rep(lty, 2L) ### 1st value = funnel lines, 2nd value = reference line
 
-   ### note: pch, col, and bg must be of the same length as the original data passed to rma()
+   ### note: slab, pch, col, and bg must be of the same length as the original data passed to rma()
    ###       so we have to apply the same subsetting (if necessary) and removing of NAs as was
    ###       done during the model fitting (note: NAs are removed further below)
+
+   if (missing(slab)) {
+      slab <- x$slab
+   } else {
+      slab <- .getx("slab", mf=mf, data=x$data)
+      if (length(slab) != x$k.all)
+         stop(mstyle$stop(paste0("Length of the 'slab' argument (", length(slab), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
+      slab <- .getsubset(slab, x$subset)
+   }
 
    if (length(pch) == 1L) {
       pch.vec <- FALSE
@@ -181,7 +190,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    ddd <- list(...)
 
    if (!is.null(ddd$transf))
-      warning("Function does not have a 'transf' argument (use 'atransf' instead).", call.=FALSE)
+      warning("Function does not have a 'transf' argument (use 'atransf' instead).", call.=FALSE, immediate.=TRUE)
 
    lplot     <- function(..., refline2, level2, lty2, transf, ci.res) plot(...)
    labline   <- function(..., refline2, level2, lty2, transf, ci.res) abline(...)
@@ -242,7 +251,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       sei <- sqrt(vi)
       if (!is.null(x$not.na.yivi))
          x$not.na <- x$not.na.yivi
-      slab <- x$slab[x$not.na] ### slab is subsetted but NAs are not removed, so still need to do this here
+      slab <- slab[x$not.na]   ### slab is subsetted but NAs are not removed, so still need to do this here
       pch  <- pch[x$not.na]    ### same for pch
 
       if (!inherits(x, "rma.uni.trimfill")) {
@@ -282,7 +291,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       sei    <- res$se[not.na]
       ni     <- x$ni.f[not.na]    ### ni can be NULL and can still include NAs
       vi     <- sei^2
-      slab   <- x$slab[not.na]
+      slab   <- slab[not.na]
       pch    <- pch[not.na]
       col    <- col[not.na]
       bg     <- bg[not.na]

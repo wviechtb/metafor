@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.5-18</span>
       </span>
     </div>
 
@@ -96,18 +96,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.5-16" id="metafor-35-16-2022-08-21">metafor 3.5-16 (2022-08-21)<a class="anchor" aria-label="anchor" href="#metafor-35-16-2022-08-21"></a></h2>
-<ul><li><p><code><a href="../reference/plot.permutest.rma.uni.html">plot.permutest.rma.uni()</a></code> function sets the y-axis limits automatically and in a smarter way when also drawing the reference/null distribution and the density estimate</p></li>
+<h2 class="page-header" data-toc-text="3.5-18" id="metafor-35-18-2022-08-25">metafor 3.5-18 (2022-08-25)<a class="anchor" aria-label="anchor" href="#metafor-35-18-2022-08-25"></a></h2>
+<ul><li><p><code><a href="../reference/funnel.html">funnel.default()</a></code>, <code><a href="../reference/funnel.html">funnel.rma()</a></code>, and <code><a href="../reference/regplot.html">regplot.rma()</a></code> gain <code>slab</code> argument</p></li>
 <li><p><code><a href="../reference/vif.html">vif()</a></code> was completely refactored and gains <code>reestimate</code>, <code>sim</code>, and <code>parallel</code> arguments; added <code><a href="../reference/methods.vif.rma.html">as.data.frame.vif.rma()</a></code> and <code><a href="../reference/plot.vif.rma.html">plot.vif.rma()</a></code> methods</p></li>
-<li><p>added <code><a href="../reference/methods.anova.rma.html">as.data.frame.anova.rma()</a></code> and <code><a href="../reference/methods.anova.rma.html">as.data.frame.list.anova.rma()</a></code> methods</p></li>
+<li><p><code><a href="../reference/plot.permutest.rma.uni.html">plot.permutest.rma.uni()</a></code> function sets the y-axis limits automatically and in a smarter way when also drawing the reference/null distribution and the density estimate</p></li>
 <li><p>added possibility to specify a list for <code>btt</code> in <code><a href="../reference/anova.rma.html">anova.rma()</a></code>; added <code><a href="../reference/print.anova.rma.html">print.list.anova.rma()</a></code> to print the resulting object</p></li>
+<li><p>added <code><a href="../reference/methods.anova.rma.html">as.data.frame.anova.rma()</a></code> and <code><a href="../reference/methods.anova.rma.html">as.data.frame.list.anova.rma()</a></code> methods</p></li>
+<li><p>documented the possibility to use an identity link (with <code>link="identity"</code>) in <code><a href="../reference/rma.uni.html">rma.uni()</a></code> when fitting location-scale models (although this will often lead to estimation problems); added <code>solnp()</code> as an additional optimizer for this case</p></li>
 <li><p>optimizers <code>nloptr</code> and <code>constrOptim.nl</code> (the latter from the <code>alabama</code> package) are now available in <code><a href="../reference/rma.uni.html">rma.uni()</a></code> for location-scale models when using an identity link</p></li>
 <li><p>added measure <code>SMD1H</code> to <code><a href="../reference/escalc.html">escalc()</a></code></p></li>
 <li><p>for <code>measure="SMD"</code>, <code><a href="../reference/escalc.html">escalc()</a></code> now also allows the user to specify d-values and t-test statistics via arguments <code>di</code> and <code>ti</code>, respectively</p></li>
-<li><p>improved the stability of the calculations in <code><a href="../reference/rma.uni.html">rma.uni()</a></code> with some internal rescaling of the <code>yi</code> values</p></li>
-<li><p>documented the possibility to use an identity link (with <code>link="identity"</code>) in <code><a href="../reference/rma.uni.html">rma.uni()</a></code> when fitting location-scale models (although this will often lead to estimation problems); added <code>solnp()</code> as an additional optimizer for this case</p></li>
-<li><p>added (experimental!) support for measures <code>"RR"</code>, <code>"RD"</code>, <code>"PLN"</code>, and <code>"PR"</code> to <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> (but using these measures will often lead to estimation problems)</p></li>
 <li><p><code><a href="../reference/aggregate.escalc.html">aggregate.escalc()</a></code> gains <code>addk</code> argument</p></li>
+<li><p>added (experimental!) support for measures <code>"RR"</code>, <code>"RD"</code>, <code>"PLN"</code>, and <code>"PR"</code> to <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> (but using these measures will often lead to estimation problems)</p></li>
 <li><p><code><a href="../reference/replmiss.html">replmiss()</a></code> gains <code>data</code> argument</p></li>
 <li><p><code><a href="../reference/cumul.html">cumul()</a></code> functions also store data, so that arguments <code>ilab</code>, <code>col</code>, <code>pch</code>, and <code>psize</code> in the <code><a href="../reference/forest.cumul.rma.html">forest.cumul.rma()</a></code> function can look for variables therein</p></li>
 <li><p>fixed issue with rendering Rmarkdown documents with <code>metafor</code> output due to the use of a zero-width space</p></li>

@@ -421,10 +421,10 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    }
 
-   ### if ni has not been specified (and hence is NULL) but is an attribute of yi, get it
+   ### if ni has not been specified (and hence is NULL), try to get it from the attributes of yi
    ### note: currently ni argument removed, so this is the only way to pass ni to the function
 
-   if (is.null(ni) && !is.null(attr(yi, "ni")))
+   if (is.null(ni))
       ni <- attr(yi, "ni")
 
    ### check length of yi and ni
@@ -750,8 +750,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    if (is.null(slab)) {
 
-      if (!is.null(attr(yi, "slab")))
-         slab <- attr(yi, "slab")
+      slab <- attr(yi, "slab") # will be NULL if there is no slab attribute
 
       ### check length of yi and slab (only if slab is now not NULL)
       ### if there is a mismatch, then slab cannot be trusted, so set it to NULL

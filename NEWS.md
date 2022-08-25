@@ -1,12 +1,16 @@
-# metafor 3.5-17 (2022-08-23)
+# metafor 3.5-18 (2022-08-25)
 
-- `plot.permutest.rma.uni()` function sets the y-axis limits automatically and in a smarter way when also drawing the reference/null distribution and the density estimate
+- `funnel.default()`, `funnel.rma()`, and `regplot.rma()` gain `slab` argument
 
 - `vif()` was completely refactored and gains `reestimate`, `sim`, and `parallel` arguments; added `as.data.frame.vif.rma()` and `plot.vif.rma()` methods
 
-- added `as.data.frame.anova.rma()` and `as.data.frame.list.anova.rma()` methods
+- `plot.permutest.rma.uni()` function sets the y-axis limits automatically and in a smarter way when also drawing the reference/null distribution and the density estimate
 
 - added possibility to specify a list for `btt` in `anova.rma()`; added `print.list.anova.rma()` to print the resulting object
+
+- added `as.data.frame.anova.rma()` and `as.data.frame.list.anova.rma()` methods
+
+- documented the possibility to use an identity link (with `link="identity"`) in `rma.uni()` when fitting location-scale models (although this will often lead to estimation problems); added `solnp()` as an additional optimizer for this case
 
 - optimizers `nloptr` and `constrOptim.nl` (the latter from the `alabama` package) are now available in `rma.uni()` for location-scale models when using an identity link
 
@@ -14,13 +18,9 @@
 
 - for `measure="SMD"`, `escalc()` now also allows the user to specify d-values and t-test statistics via arguments `di` and `ti`, respectively
 
-- improved the stability of the calculations in `rma.uni()` with some internal rescaling of the `yi` values
-
-- documented the possibility to use an identity link (with `link="identity"`) in `rma.uni()` when fitting location-scale models (although this will often lead to estimation problems); added `solnp()` as an additional optimizer for this case
+- `aggregate.escalc()` gains `addk` argument
 
 - added (experimental!) support for measures `"RR"`, `"RD"`, `"PLN"`, and `"PR"` to `rma.glmm()` (but using these measures will often lead to estimation problems)
-
-- `aggregate.escalc()` gains `addk` argument
 
 - `replmiss()` gains `data` argument
 
