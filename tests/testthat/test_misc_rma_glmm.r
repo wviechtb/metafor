@@ -27,6 +27,8 @@ test_that("rma.glmm() works correctly for 'UM.FS' model.", {
    expect_error(qqnorm(res))
    expect_error(weights(res))
 
+   skip_on_cran()
+
    ### check GLMMadaptive and glmmTMB results
 
    expect_warning(res <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="UM.FS", test="t", control=list(package="GLMMadaptive")))
@@ -63,6 +65,8 @@ test_that("rma.glmm() works correctly for 'UM.RS' model.", {
    expect_error(plot(res))
    expect_error(qqnorm(res))
    expect_error(weights(res))
+
+   skip_on_cran()
 
    ### check GLMMadaptive and glmmTMB results
 

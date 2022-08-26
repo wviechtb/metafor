@@ -35,6 +35,8 @@ test_that("location-scale model works correctly for two subgroups with different
    expect_warning(res5 <- rma(yi, vi, data=dat, scale = ~  0 + factor(meta), link="identity"))
    expect_equivalent(res1$tau2, res5$alpha, tolerance=.tol[["var"]])
 
+   skip_on_cran()
+
    conf1 <- confint(res1)
    conf5 <- confint(res5, control=list(vc.min=0, vc.max=.5))
    expect_equivalent(conf1[[1]]$random[1,], conf5[[1]]$random, tolerance=.tol[["var"]])
@@ -43,6 +45,8 @@ test_that("location-scale model works correctly for two subgroups with different
 })
 
 test_that("profile() and confint() work correctly for location-scale models", {
+
+   skip_on_cran()
 
    opar <- par(no.readonly=TRUE)
 
@@ -82,6 +86,8 @@ test_that("profile() and confint() work correctly for location-scale models", {
 })
 
 test_that("location-scale model works correctly for a continuous predictor", {
+
+   skip_on_cran()
 
    opar <- par(no.readonly=TRUE)
 
@@ -142,6 +148,8 @@ test_that("location-scale model works correctly for a continuous predictor", {
 
 test_that("location-scale model works correctly for multiple predictors", {
 
+   skip_on_cran()
+
    expect_warning(res1 <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni)))
    expect_equivalent(res1$beta, 0.1110317, tolerance=.tol[["coef"]])
    expect_equivalent(res1$alpha, c(-1.08826059, -0.03429344, 2.09197456, -0.28439165), tolerance=.tol[["coef"]])
@@ -181,6 +189,8 @@ test_that("location-scale model works correctly for multiple predictors", {
 
 test_that("permutation tests work correctly for a location-scale model", {
 
+   skip_on_cran()
+
    expect_warning(res <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni)))
 
    set.seed(1234)
@@ -197,11 +207,13 @@ test_that("permutation tests work correctly for a location-scale model", {
 
 test_that("predict() works correctly for location-scale models", {
 
+   skip_on_cran()
+
    expect_warning(res <- rma(yi, vi, data=dat, mods = ~ meta, scale = ~ meta))
    res0 <- rma(yi, vi, data=dat, subset=meta==0)
    res1 <- rma(yi, vi, data=dat, subset=meta==1)
 
-   pred <- predict(res, addx=TRUE, addz=TRUE)
+   pred  <- predict(res, addx=TRUE, addz=TRUE)
    pred0 <- predict(res0)
    pred1 <- predict(res1)
 
@@ -235,6 +247,8 @@ test_that("predict() works correctly for location-scale models", {
 })
 
 test_that("anova() works correctly for location-scale models", {
+
+   skip_on_cran()
 
    expect_warning(res1 <- rma(yi, vi, data=dat, mods = ~ factor(grade) + meta + sqrt(ni), scale = ~ factor(grade) + meta + sqrt(ni)))
    expect_warning(res0 <- rma(yi, vi, data=dat, mods = ~ factor(grade) + meta + sqrt(ni), scale = ~ 1))
@@ -270,6 +284,8 @@ test_that("anova() works correctly for location-scale models", {
 })
 
 test_that("vif() works correctly for location-scale models", {
+
+   skip_on_cran()
 
    expect_warning(res <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni)))
    sav <- round(vif(res)$vifs, 4)

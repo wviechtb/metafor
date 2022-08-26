@@ -29,6 +29,8 @@ test_that("confint() gives correct results for the 'expectancy data' in Becker (
 
    out <- capture.output(print(sav)) ### so that print.fsn() is run (at least once) with type="Rosenberg"
 
+   skip_on_cran()
+
    ### fsn() based on random-effects model
    sav <- fsn(yi, vi, data=dat.raudenbush1985, type="REM")
    expect_equivalent(sav$fsnum, 16)

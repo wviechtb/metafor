@@ -22,6 +22,8 @@ test_that("tes() works correctly for 'dat.dorn2007'.", {
    sav <- tes(yi, vi, data=dat, test="binom")
    expect_equivalent(sav$pval, 0.01159554, tolerance=.tol[["pval"]])
 
+   skip_on_cran()
+
    sav <- tes(yi, vi, data=dat, test="exact", progbar=FALSE)
    expect_equivalent(sav$pval, 0.007778529, tolerance=.tol[["pval"]])
 
