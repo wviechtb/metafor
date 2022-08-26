@@ -441,7 +441,7 @@
 
       ### create distance matrix
 
-      if (is.matrix(distspec)) {
+      if (.is.matrix(distspec)) {
 
          if (anyNA(distspec))
             stop(mstyle$stop("No missing values allowed in matrices specified via 'dist'."), call.=FALSE)

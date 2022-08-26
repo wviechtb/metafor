@@ -130,7 +130,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    if (!is.null(ddd$dist)) {
 
-      if (is.data.frame(ddd$dist) || is.matrix(ddd$dist))
+      if (is.data.frame(ddd$dist) || .is.matrix(ddd$dist))
          ddd$dist <- list(ddd$dist)
 
       if (!inherits(ddd$dist, "list"))
@@ -146,7 +146,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
          if (is.data.frame(ddd$dist[[j]]))
             ddd$dist[[j]] <- as.matrix(ddd$dist[[j]])
 
-         if (!is.function(ddd$dist[[j]]) && !is.matrix(ddd$dist[[j]])) {
+         if (!is.function(ddd$dist[[j]]) && !.is.matrix(ddd$dist[[j]])) {
             ddd$dist[[j]] <- charmatch(ddd$dist[[j]], dist.methods, nomatch = 0)
             if (ddd$dist[[j]] == 0) {
                stop(mstyle$stop("Argument 'dist' must be one of 'euclidean', 'maximum', 'manhattan', or 'gcd'."))
@@ -247,7 +247,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ### in case user passed a matrix to yi, convert it to a vector (if possible)
 
-   if (is.matrix(yi)) {
+   if (.is.matrix(yi)) {
       if (nrow(yi) == 1L || ncol(yi) == 1L) {
          yi <- as.vector(yi)
       } else {

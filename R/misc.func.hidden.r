@@ -174,6 +174,11 @@
    return(x)
 }
 
+### function to test if x is a matrix and that also covers Matrix objects
+
+.is.matrix <- function(x)
+   is.matrix(x) || inherits(x, "Matrix")
+
 ############################################################################
 
 ### function to format p-values
@@ -397,7 +402,7 @@
 
    }
 
-   if (checknumeric && !is.null(out) && !is.list(out) && !is.numeric(out))
+   if (checknumeric && !is.null(out) && !is.list(out) && !is.numeric(out[1])) # using [1] so is.numeric(Matrix(1:3)[1]) works
       stop(mstyle$stop(paste0("The object/variable specified for the '", x, "' argument is not numeric.")), call.=FALSE)
 
    return(out)
@@ -1396,7 +1401,7 @@ tidy.rma <- function (x, ...) {
 
    k <- length(subset)
 
-   if (is.matrix(x) || is.data.frame(x)) {
+   if (.is.matrix(x) || is.data.frame(x)) {
       if (nrow(x) != k)
          stop(mstyle$stop(paste0("Element '", xname, "' is not of length ", k, ".")), call.=FALSE)
       if (col) {

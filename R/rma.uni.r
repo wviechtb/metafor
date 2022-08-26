@@ -263,7 +263,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       ### in case user passed a matrix to yi, convert it to a vector (if possible)
 
-      if (is.matrix(yi)) {
+      if (.is.matrix(yi)) {
          if (nrow(yi) == 1L || ncol(yi) == 1L) {
             yi <- as.vector(yi)
          } else {
@@ -321,11 +321,18 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       ### in case user passes a matrix to vi, convert it to a vector
       ### note: only a row or column matrix with the right dimensions will have the right length
 
-      if (is.matrix(vi)) {
+      if (.is.matrix(vi)) {
          if (nrow(vi) == 1L || ncol(vi) == 1L) {
-            yi <- as.vector(vi)
+            vi <- as.vector(vi)
          } else {
-            stop(mstyle$stop("The object/variable specified for the 'vi' argument is a matrix with multiple rows/columns."))
+            if (.is.square(vi) && isSymmetric(unname(vi))) {
+               vi <- as.matrix(vi) # in case vi is sparse
+               if (any(vi[!diag(nrow(vi))] != 0))
+                  warning(mstyle$warning("Using only the diagonal elements from 'vi' argument as the sampling variances."), call.=FALSE)
+               vi <- diag(vi)
+            } else {
+               stop(mstyle$stop("The object/variable specified for the 'vi' argument is a matrix with multiple rows/columns."))
+            }
          }
       }
 
