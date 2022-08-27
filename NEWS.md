@@ -1,5 +1,9 @@
 # metafor 3.9-0 (2022-08-27)
 
+- stub for devel version
+
+# metafor 3.8-1 (2022-08-26)
+
 - `funnel.default()`, `funnel.rma()`, and `regplot.rma()` gain `slab` argument
 
 - `vif()` was completely refactored and gains `reestimate`, `sim`, and `parallel` arguments; added `as.data.frame.vif.rma()` and `plot.vif.rma()` methods
