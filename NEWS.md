@@ -1,4 +1,4 @@
-# metafor 3.8-1 (2022-08-26)
+# metafor 3.9-0 (2022-08-27)
 
 - `funnel.default()`, `funnel.rma()`, and `regplot.rma()` gain `slab` argument
 
