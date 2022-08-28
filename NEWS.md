@@ -1,4 +1,4 @@
-# metafor 3.9-0 (2022-08-27)
+# metafor 3.9-1 (2022-08-28)
 
 - stub for devel version
 

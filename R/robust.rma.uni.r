@@ -119,8 +119,10 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
 
          cs.wald <- try(clubSandwich::Wald_test(x, cluster=cluster, vcov=vb, test=ddd$wald_test, constraints=clubSandwich::constrain_zero(x$btt)), silent=!isTRUE(ddd$verbose))
 
-         if (inherits(cs.wald, "try-error"))
-            stop(mstyle$stop("Could not obtain the cluster-robust Wald test (use verbose=TRUE for more details)."))
+         if (inherits(cs.wald, "try-error")) {
+            warning(mstyle$warning("Could not obtain the cluster-robust omnibus Wald test (use verbose=TRUE for more details)."))
+            cs.wald <- list(Fstat=NA, df_num=NA, df_denom=NA)
+         }
 
       }
 
@@ -130,11 +132,12 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
 
       beta  <- x$beta
       se    <- cs.coef$SE
-      zval  <- cs.coef$tstat
+      zval  <- ifelse(is.infinite(cs.coef$tstat), NA, cs.coef$tstat)
       pval  <- switch(ddd$coef_test, "z" = cs.coef$p_z,  "naive-t" = cs.coef$p_t,  "naive-tp" = cs.coef$p_tp,  "Satterthwaite" = cs.coef$p_Satt, "saddlepoint" = cs.coef$p_saddle)
       dfs   <- switch(ddd$coef_test, "z" = cs.coef$df_z, "naive-t" = cs.coef$df_t, "naive-tp" = cs.coef$df_tp, "Satterthwaite" = cs.coef$df,     "saddlepoint" = NA)
-      ci.lb <- cs.conf$CI_L # note: if ddd$coef_test != ddd$conf_test, dfs for CI may be different
-      ci.ub <- cs.conf$CI_U
+      dfs   <- ifelse(is.na(dfs), NA, dfs) # ifelse() part to change NaN into just NA
+      ci.lb <- ifelse(is.na(cs.conf$CI_L), NA, cs.conf$CI_L) # note: if ddd$coef_test != ddd$conf_test, dfs for CI may be different
+      ci.ub <- ifelse(is.na(cs.conf$CI_U), NA, cs.conf$CI_U)
 
       if (x$int.only) {
          QM   <- max(0, zval^2)
@@ -233,6 +236,12 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
          vbest <- "CR1.S2"
       }
 
+      ### check for elements in vb that are essentially 0
+
+      is0 <- diag(vb) < 100 * .Machine$double.eps
+      vb[is0,] <- NA_real_
+      vb[,is0] <- NA_real_
+
       ### prepare results
 
       beta <- x$beta
@@ -246,8 +255,10 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
 
       QM <- try(as.vector(t(beta)[x$btt] %*% chol2inv(chol(vb[x$btt,x$btt])) %*% beta[x$btt]), silent=TRUE)
 
-      if (inherits(QM, "try-error"))
+      if (inherits(QM, "try-error") || is.na(QM)) {
+         warning(mstyle$warning("Could not obtain the cluster-robust omnibus Wald test."))
          QM <- NA
+      }
 
       QM   <- QM / x$m # note: m is the number of coefficients in btt, not the number of clusters
       QMdf <- c(x$m, dfs)
