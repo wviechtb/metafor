@@ -1,6 +1,8 @@
-# metafor 3.9-1 (2022-08-28)
+# metafor 3.9-2 (2022-08-29)
 
-- stub for devel version
+- `model.matrix()` gains `asdf` argument
+
+- `emmprep()` function added to create a reference grid for use with the `emmeans()` function from the package of the same name
 
 # metafor 3.8-1 (2022-08-26)
 

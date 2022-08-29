@@ -207,6 +207,7 @@ reference:
       - aggregate.escalc
       - metafor.news
       - transf
+      - emmprep
   - title: "Other Methods"
     desc: >
       Other method functions.

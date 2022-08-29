@@ -5,7 +5,7 @@ metafor: A Meta-Analysis Package for R
 [![R build status](https://github.com/wviechtb/metafor/workflows/R-CMD-check/badge.svg)](https://github.com/wviechtb/metafor/actions)
 [![Code Coverage](https://codecov.io/gh/wviechtb/metafor/branch/master/graph/badge.svg)](https://app.codecov.io/gh/wviechtb/metafor)
 [![CRAN Version](https://www.r-pkg.org/badges/version/metafor)](https://cran.r-project.org/package=metafor)
-[![devel Version](https://img.shields.io/badge/devel-3.9--1-brightgreen.svg)](https://www.metafor-project.org/doku.php/installation#development_version)
+[![devel Version](https://img.shields.io/badge/devel-3.9--2-brightgreen.svg)](https://www.metafor-project.org/doku.php/installation#development_version)
 [![Monthly Downloads](https://cranlogs.r-pkg.org/badges/metafor)](https://cranlogs.r-pkg.org/badges/metafor)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/metafor)](https://cranlogs.r-pkg.org/badges/grand-total/metafor)
 
@@ -166,14 +166,14 @@ text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"), font=2)
 text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"), font=2)
 ```
 
-![](man/figures/ex_forest_plot.png)
+![](man/figures/ex_forest_plot.png){ width=50% }
 
 ```r
 # funnel plot
 funnel(res, ylim=c(0,0.8), las=1)
 ```
 
-![](man/figures/ex_funnel_plot.png)
+![](man/figures/ex_funnel_plot.png){ width=50% }
 
 ```r
 # regression test for funnel plot asymmetry
@@ -228,7 +228,7 @@ regplot(res, mod="ablat", pi=TRUE, xlab="Absolute Latitude",
         label="piout", labsize=0.9, bty="l", las=1, digits=1)
 ```
 
-![](man/figures/ex_bubble_plot.png)
+![](man/figures/ex_bubble_plot.png){ width=50% }
 
 ## Meta
 

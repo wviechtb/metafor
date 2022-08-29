@@ -6,10 +6,11 @@
    The function extracts the model matrix from objects of class \code{"rma"}.
 }
 \usage{
-\method{model.matrix}{rma}(object, \dots)
+\method{model.matrix}{rma}(object, asdf, \dots)
 }
 \arguments{
    \item{object}{an object of class \code{"rma"}.}
+   \item{asdf}{logical to specify whether the model matrix should be turned into a data frame (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
 \value{

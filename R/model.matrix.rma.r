@@ -1,4 +1,4 @@
-model.matrix.rma <- function(object, ...) {
+model.matrix.rma <- function(object, asdf=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -21,6 +21,9 @@ model.matrix.rma <- function(object, ...) {
    if (na.act == "na.fail" && any(!object$not.na))
       stop(mstyle$stop("Missing values in results."))
 
+   if (asdf)
+      out <- as.data.frame(out)
+
    if (inherits(object, "rma.ls")) {
 
       out <- list(location = out)
@@ -33,6 +36,9 @@ model.matrix.rma <- function(object, ...) {
 
       if (na.act == "na.fail" && any(!object$not.na))
          stop(mstyle$stop("Missing values in results."))
+
+      if (asdf)
+         out$scale <- as.data.frame(out$scale)
 
    }
 
