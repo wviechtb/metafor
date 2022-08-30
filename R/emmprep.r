@@ -1,4 +1,4 @@
-emmprep <- function(x, ...) {
+emmprep <- function(x, verbose=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -16,6 +16,11 @@ emmprep <- function(x, ...) {
 
    if (is.null(formula))
       stop(mstyle$stop("Cannot use function when model was fitted without a formula specification."))
+
+   if (verbose) {
+      .space()
+      cat("Extracted formula:  ~", paste(paste(formula)[-1], collapse=""), "\n")
+   }
 
    ### get coefficients and corresponding var-cov matrix
 
@@ -57,7 +62,7 @@ emmprep <- function(x, ...) {
 
    if (is.null(ddd$df)) {
 
-      if (is.null(x$ddf)) {
+      if (is.na(x$ddf)) {
          ddf <- Inf
       } else {
          ddf <- min(x$ddf)
@@ -70,14 +75,17 @@ emmprep <- function(x, ...) {
 
    }
 
+   if (verbose && !is.infinite(ddf))
+      cat("Degrees of freedom:", round(ddf, 2), "\n")
+
    ### set sigma for bias adjustment
 
    if (is.null(ddd$sigma)) {
 
-      if (inherits(x, "rma.uni") && !inherits(x, "rma.ls")) {
+      if (!inherits(x, c("rma.ls","rma.mv"))) {
          sigma <- sqrt(x$tau2)
       } else {
-         sigma <- 0
+         sigma <- NA
       }
 
    } else {
@@ -87,6 +95,12 @@ emmprep <- function(x, ...) {
 
    }
 
+   if (verbose && !is.na(sigma) && !is.element(x$method, c("FE","EE","CE")))
+      cat("Value of tau^2:    ", round(sigma, 4), "\n")
+
+   if (is.na(sigma))
+      sigma <- 0
+
    ### create grid
 
    #out <- emmeans::qdrg(formula=formula, data=dat, coef=b, vcov=vb, df=ddf, sigma=sigma, ...)
@@ -94,33 +108,53 @@ emmprep <- function(x, ...) {
 
    ### set (back)transformation
 
-   if (is.element(x$measure, c("RR","OR","PETO","IRR","ROM","D2OR","D2ORL","D2ORN","CVR","VR","PLN","IRLN","SDLN","MNLN","CVLN","ROMC","CVRC","VRC","REH")))
-      out@misc$tran <- "log"
-      #out@misc$tran <- emmeans::make.tran("genlog", 0)
-      #out <- update(out, emmeans::make.tran("genlog", 0))
+   if (is.null(ddd$tran)) {
 
-   if (is.element(x$measure, c("PLO")))
-      out@misc$tran <- "logit"
+      if (is.element(x$measure, c("RR","OR","PETO","IRR","ROM","D2OR","D2ORL","D2ORN","CVR","VR","PLN","IRLN","SDLN","MNLN","CVLN","ROMC","CVRC","VRC","REH"))) {
+         out@misc$tran <- "log"
+         #out@misc$tran <- emmeans::make.tran("genlog", 0)
+         #out <- update(out, emmeans::make.tran("genlog", 0))
+         if (verbose) cat("Transformation:     log\n")
+      }
 
-   if (is.element(x$measure, c("PAS")))
-      out <- update(out, emmeans::make.tran("asin.sqrt", 1))
+      if (is.element(x$measure, c("PLO"))) {
+         out@misc$tran <- "logit"
+         if (verbose) cat("Transformation:     logit\n")
+      }
 
-   if (is.element(x$measure, c("IRS")))
-      out@misc$tran <- "sqrt"
+      if (is.element(x$measure, c("PAS"))) {
+         out <- update(out, emmeans::make.tran("asin.sqrt", 1))
+         if (verbose) cat("Transformation:     asin.sqrt\n")
+      }
 
-   if (is.element(x$measure, c("ZCOR","ZPCOR"))) {
-      out@misc$tran$linkfun  <- transf.rtoz
-      out@misc$tran$linkinv  <- transf.ztor
-      out@misc$tran$mu.eta   <- function(eta) 1/cosh(eta)^2
-      out@misc$tran$valideta <- function(eta) all(is.finite(eta)) && all(abs(eta) <= 1)
-      out@misc$tran$name     <- "r-to-z"
+      if (is.element(x$measure, c("IRS"))) {
+         out@misc$tran <- "sqrt"
+         if (verbose) cat("Transformation:     sqrt\n")
+      }
+
+      if (is.element(x$measure, c("ZCOR","ZPCOR"))) {
+         out@misc$tran$linkfun  <- transf.rtoz
+         out@misc$tran$linkinv  <- transf.ztor
+         out@misc$tran$mu.eta   <- function(eta) 1/cosh(eta)^2
+         out@misc$tran$valideta <- function(eta) all(is.finite(eta)) && all(abs(eta) <= 1)
+         out@misc$tran$name     <- "r-to-z"
+         if (verbose) cat("Transformation:     r-to-z\n")
+      }
+
+      #if (is.element(x$measure, c("AHW")))
+      #   out@misc$tran <- "???"
+
+      #if (is.element(x$measure, c("ABT")))
+      #   out@misc$tran <- "???"
+
+   } else {
+
+      if (verbose) cat("Transformation:    ", ddd$tran, "\n")
+
    }
 
-   #if (is.element(x$measure, c("AHW")))
-   #   out@misc$tran <- "???"
-
-   #if (is.element(x$measure, c("ABT")))
-   #   out@misc$tran <- "???"
+   if (verbose)
+      .space()
 
    return(out)
 

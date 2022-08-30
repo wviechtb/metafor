@@ -5,14 +5,15 @@
    Function to create a reference grid for use with the \code{\link[emmeans]{emmeans}} function from the package of the same name.
 }
 \usage{
-emmprep(x, \dots)
+emmprep(x, verbose=FALSE, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
+   \item{verbose}{logical to specify whether information on some (extracted) settings should be printed when creating the reference grid (the default is \code{FALSE}).}
    \item{\dots}{other arguments that will be passed on to the \code{\link[emmeans]{qdrg}} function.}
 }
 \details{
-   The function is a wrapper around the \code{\link[emmeans]{qdrg}} function from the \code{emmeans} package to make \code{"rma"} objects compatible with the latter. Unless one needs to pass additional arguments to the \code{\link[emmeans]{qdrg}} function, one simply applies this function to the \code{"rma"} object and then the \code{\link[emmeans]{emmeans}} function to the resulting object to obtain the desired estimated marginal means.
+   The function is a wrapper around the \code{\link[emmeans]{qdrg}} function from the \code{emmeans} package to make \code{"rma"} objects compatible with the latter. Unless one needs to pass additional arguments to the \code{\link[emmeans]{qdrg}} function, one simply applies this function to the \code{"rma"} object and then the \code{\link[emmeans]{emmeans}} function (or one of the other functions from the \code{emmeans} package that can be applied to \code{"emmGrid"} objects) to the resulting object to obtain the desired estimated marginal means.
 }
 \value{
    An \code{"emmGrid"} object as created by the \code{\link[emmeans]{qdrg}} function from the \code{emmeans} package.
@@ -20,7 +21,7 @@ emmprep(x, \dots)
    The resulting object will typically be used in combination with the \code{\link[emmeans]{emmeans}} function.
 }
 \note{
-   When calling \code{emmeans} on the resulting object with \code{type="response"}, the appropriate back-transformation should automatically be applied when the model object contains information about the outcome measure used.
+   When calling \code{emmeans} on the resulting object with \code{type="response"}, the appropriate back-transformation should automatically be applied when the model object contains information about the outcome measure used and an appropriate back-transformation is available.
 
    If the original model fitted involved redundant predictors that were dropped from the model (due to \sQuote{rank deficiencies}), then the function cannot be used. In this case, one should remove any redundancies in the original model fitted before using this function.
 }
@@ -39,7 +40,7 @@ res <- rma(yi, vi, mods = ~ ablat, data=dat)
 res
 
 ### create reference grid
-sav <- emmprep(res)
+sav <- emmprep(res, verbose=TRUE)
 
 ### estimated marginal mean (back-transformed to the risk ratio scale)
 if (require(emmeans))
@@ -75,7 +76,7 @@ res
 ### create reference grid
 sav <- emmprep(res)
 
-### estimated marginal mean using proportional and equal cell weighting
+### estimated marginal mean using equal cell weighting
 if (require(emmeans))
    emmeans(sav, specs="1", type="response")
 
