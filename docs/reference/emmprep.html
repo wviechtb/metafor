@@ -11,7 +11,7 @@
       "<link id=\"css\" rel=\"stylesheet\" href=\"https://bootswatch.com/3/flatly/bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
     );
   }
-</script><title>Create a Reference Grid for the 'emmeans' Function — emmprep • metafor</title><!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css"><script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet"><script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous"><link href="../docsearch.css" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Create a Reference Grid for the 'emmeans' Function — emmprep"><meta property="og:description" content="Function to create a reference grid for use with the emmeans function from the package of the same name."><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@wviechtb"><meta name="twitter:site" content="@wviechtb"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+</script><title>Create a Reference Grid for the 'emmeans' Function — emmprep • metafor</title><!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css"><script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet"><script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous"><link href="../docsearch.css" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Create a Reference Grid for the 'emmeans' Function — emmprep"><meta property="og:description" content="Function to create a reference grid for use with the emmeans function from the package of the same name. "><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@wviechtb"><meta name="twitter:site" content="@wviechtb"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
@@ -97,7 +97,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Function to create a reference grid for use with the <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></code> function from the package of the same name.</p>
+    <p>Function to create a reference grid for use with the <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></code> function from the package of the same name. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <div id="ref-usage">
@@ -118,7 +118,7 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The function is a wrapper around the <code><a href="https://rdrr.io/pkg/emmeans/man/qdrg.html" class="external-link">qdrg</a></code> function from the <code>emmeans</code> package to make <code>"rma"</code> objects compatible with the latter. Unless one needs to pass additional arguments to the <code><a href="https://rdrr.io/pkg/emmeans/man/qdrg.html" class="external-link">qdrg</a></code> function, one simply applies this function to the <code>"rma"</code> object and then the <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></code> function (or one of the other functions from the <code>emmeans</code> package that can be applied to <code>"emmGrid"</code> objects) to the resulting object to obtain the desired estimated marginal means.</p>
+    <p>The <a href="https://cran.r-project.org/package=emmeans" class="external-link">emmeans</a> package is a popular package that facilitates the computation of 'estimated marginal means'. The function is a wrapper around the <code><a href="https://rdrr.io/pkg/emmeans/man/qdrg.html" class="external-link">qdrg</a></code> function from the <code>emmeans</code> package to make <code>"rma"</code> objects compatible with the latter. Unless one needs to pass additional arguments to the <code><a href="https://rdrr.io/pkg/emmeans/man/qdrg.html" class="external-link">qdrg</a></code> function, one simply applies this function to the <code>"rma"</code> object and then the <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></code> function (or one of the other functions that can be applied to <code>"emmGrid"</code> objects) to the resulting object to obtain the desired estimated marginal means.</p>
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -131,7 +131,10 @@
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>When calling <code>emmeans</code> on the resulting object with <code>type="response"</code>, the appropriate back-transformation should automatically be applied when the model object contains information about the outcome measure used and an appropriate back-transformation is available.</p>
+    <p>When creating the reference grid, the function extracts the degrees of freedom for tests/confidence intervals from the model object (if the model was fitted with <code>test="t"</code> or <code>test="knha"</code>; otherwise the degrees of freedom are infinity). In some cases, there is not just a single value for the degrees of freedom, but an entire vector (e.g., for models fitted with <code><a href="rma.mv.html">rma.mv</a></code>). In this case, the smallest value will be used (as a conservative option). One can set a different/custom value for the degrees of freedom with <code>emmprep(..., df=value)</code>.</p>
+<p>When the model object contains information about the outcome measure used in the analysis (which should be the case if the observed outcomes were computed with <code><a href="escalc.html">escalc</a></code> or if the <code>measure</code> argument was set when fitting the model), then information about the appropriate back-transformation (if available) is stored as part of the returned object. If so, the back-transformation is automatically applied when calling <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></code> with <code>type="response"</code>.</p>
+<p>The function also tries to extract the estimated value of <em></em>\(\tau^2\) from the model object (when the model is a random/mixed-effects model). This value is only needed when computing prediction intervals (i.e., when <code>interval="predict"</code> in <code><a href="https://rdrr.io/pkg/emmeans/man/summary.emmGrid.html" class="external-link">predict.emmGrid</a></code>) or when applying the bias adjustment in the back-transformation (i.e., when <code>bias.adjust=TRUE</code> in <code><a href="https://rdrr.io/pkg/emmeans/man/summary.emmGrid.html" class="external-link">summary.emmGrid</a></code>). For some models (e.g., those fitted with <code><a href="rma.mv.html">rma.mv</a></code>), it is not possible to automatically extract the <em></em>\(\tau^2\)  estimate. In this case, one can manually set the value with <code>emmprep(..., sigma=value)</code> (note: the argument is called <code>sigma</code>, following the conventions of <code><a href="https://rdrr.io/pkg/emmeans/man/summary.emmGrid.html" class="external-link">summary.emmGrid</a></code>).</p>
+<p>By default, the reference grid is created based on the data used for fitting the original model (which is typically the sensible thing to do). One can specify a different dataset with <code>emmprep(..., data=obj)</code>, where <code>obj</code> must be a data frame that contains the same variables as used in the original model fitted.</p>
 <p>If the original model fitted involved redundant predictors that were dropped from the model (due to ‘rank deficiencies’), then the function cannot be used. In this case, one should remove any redundancies in the original model fitted before using this function.</p>
     </div>
     <div id="author">
@@ -347,6 +350,98 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.952 0.593 1.529 0.394 2.303 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.552 0.418 0.729 0.249 1.223 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.320 0.207 0.495 0.135 0.758 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### copy data into 'dat' and examine data</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.mcdaniel1994.html" class="external-link">dat.mcdaniel1994</a></span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   study   ni   ri type struct</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1  123 0.00    j      s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2   95 0.06    p      u</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     3   69 0.36    j      s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4 1832 0.15    j      s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     5   78 0.14    j      s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6     6  329 0.06    j      s</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### calculate r-to-z transformed correlations and corresponding sampling variances</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"ZCOR"</span>, ri<span class="op">=</span><span class="va">ri</span>, ni<span class="op">=</span><span class="va">ni</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### mixed-effects model with interview type as factor</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span>, data<span class="op">=</span><span class="va">dat</span>, test<span class="op">=</span><span class="st">"knha"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Studies with NAs omitted from model fitting.</span>
+<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 157; tau^2 estimator: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of residual heterogeneity):     0.0282 (SE = 0.0049)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):             0.1681</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (residual heterogeneity / unaccounted variability): 79.62%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (unaccounted variability / sampling variability):   4.91</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R^2 (amount of heterogeneity accounted for):            1.92%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Residual Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QE(df = 154) = 738.4411, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 2:3):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F(df1 = 2, df2 = 154) = 2.6775, p-val = 0.0719</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                estimate      se     tval   df    pval    ci.lb    ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt          0.2474  0.0196  12.6425  154  &lt;.0001   0.2088   0.2861  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> factor(type)p   -0.1228  0.0608  -2.0210  154  0.0450  -0.2429  -0.0028    * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> factor(type)s    0.0573  0.0625   0.9176  154  0.3603  -0.0661   0.1807      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### create reference grid</span></span></span>
+<span class="r-in"><span><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">emmprep</span><span class="op">(</span><span class="va">res</span>, verbose<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Extracted formula:  ~ factor(type) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Degrees of freedom: 154 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Value of tau^2:     0.1681 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Transformation:     r-to-z</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### estimated marginal mean (back-transformed to the correlation scale)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"1"</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  1       response     SE  df lower.CL upper.CL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  overall    0.222 0.0269 154    0.168    0.274</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Results are averaged over the levels of: type </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Confidence level used: 0.95 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intervals are back-transformed from the r-to-z scale </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### same as the predicted correlation using equal cell proportions</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>, transf<span class="op">=</span><span class="va">transf.ztor</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   pred ci.lb ci.ub  pi.lb pi.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.222 0.168 0.274 -0.111 0.510 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### estimated marginal means for the three interview types</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"type"</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  type response     SE  df lower.CL upper.CL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  j       0.243 0.0184 154   0.2058    0.279</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  p       0.124 0.0567 154   0.0109    0.234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  s       0.296 0.0541 154   0.1854    0.399</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Confidence level used: 0.95 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Intervals are back-transformed from the r-to-z scale </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### same as the predicted correlations</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>, transf<span class="op">=</span><span class="va">transf.ztor</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pred ci.lb ci.ub  pi.lb pi.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.243 0.206 0.279 -0.087 0.524 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.124 0.011 0.234 -0.223 0.443 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.296 0.185 0.399 -0.047 0.576 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

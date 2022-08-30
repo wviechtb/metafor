@@ -62,7 +62,7 @@ emmprep <- function(x, verbose=FALSE, ...) {
 
    if (is.null(ddd$df)) {
 
-      if (is.na(x$ddf)) {
+      if (is.na(x$ddf[1])) {
          ddf <- Inf
       } else {
          ddf <- min(x$ddf)
