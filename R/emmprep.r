@@ -14,6 +14,9 @@ emmprep <- function(x, verbose=FALSE, ...) {
 
    formula <- formula(x)
 
+   if (is.null(formula) && x$int.only)
+      formula <- ~ 1
+
    if (is.null(formula))
       stop(mstyle$stop("Cannot use function when model was fitted without a formula specification."))
 
