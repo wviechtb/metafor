@@ -29,7 +29,7 @@ test_that("emmprep() gives correct results for a meta-regression model.", {
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    dat$yi[1] <- NA
-   res <- rma(yi, vi, mods = ~ ablat + alloc, data=dat, subset=-2, test="knha")
+   res <- suppressWarnings(rma(yi, vi, mods = ~ ablat + alloc, data=dat, subset=-2, test="knha"))
 
    sav <- emmprep(res)
 
@@ -56,7 +56,7 @@ test_that("emmprep() gives correct results for the r-to-z transformation.", {
    dat <- dat.mcdaniel1994
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat)
 
-   res <- rma(yi, vi, mods = ~ factor(type), data=dat, test="knha")
+   res <- suppressWarnings(rma(yi, vi, mods = ~ factor(type), data=dat, test="knha"))
 
    sav <- emmprep(res)
 

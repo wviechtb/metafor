@@ -120,11 +120,12 @@ plot.vif.rma <- function(x,
    for (i in seq_len(np)) {
 
       pvif <- x$sim[,i]
+      pvif <- pvif[is.finite(pvif)]
 
-      den <- density(pvif, adjust=adjust, na.rm=TRUE)
+      den <- density(pvif, adjust=adjust)
 
       if (trim > 0) {
-         bound <- quantile(pvif, probs=1-trim, na.rm=TRUE)
+         bound <- quantile(pvif, probs=1-trim)
          pvif <- pvif[pvif <= bound]
       }
 

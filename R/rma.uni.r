@@ -1087,7 +1087,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    vimaxmin <- max(vi) / min(vi)
 
-   if (!is.nan(vimaxmin) && !is.infinite(vimaxmin) && vimaxmin >= 1/con$evtol)
+   if (is.finite(vimaxmin) && vimaxmin >= 1/con$evtol)
       warning(mstyle$warning("Ratio of largest to smallest sampling variance extremely large. May not be able to obtain stable results."), call.=FALSE)
 
    ### set some defaults
@@ -1611,7 +1611,8 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             if (method[1] == "ML")
                se.tau2 <- sqrt(2/sum(wi^2)) # note: wi = 1/(vi + tau2) for ML, REML, EB, PM, PMM, and SJIT
             if (method[1] == "REML")
-               se.tau2 <- sqrt(2/sum(P*P))
+               se.tau2 <- sqrt(2/sum(P*P)) # based on Fisher information matrix
+               #se.tau2 <- sqrt(1 / (t(Ymc) %*% P %*% P %*% P %*% Ymc - 1/2 * sum(P*P))) # based on Hessian
             if (is.element(method[1], c("EB","PM","MP","PMM","SJIT"))) {
                wi  <- 1/(vi + tau2)
                #V  <- diag(vi, nrow=k, ncol=k)

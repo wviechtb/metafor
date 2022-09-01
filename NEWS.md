@@ -1,8 +1,10 @@
-# metafor 3.9-4 (2022-08-30)
+# metafor 3.9-5 (2022-09-01)
 
 - `model.matrix()` gains `asdf` argument
 
 - `emmprep()` function added to create a reference grid for use with the `emmeans()` function from the package of the same name
+
+- improved efficiency of `vif()` when `sim=TRUE` by reshuffling only the data needed in the model matrix; due to some edge cases, the simulation approach cannot be used when some redundant predictors were dropped from the original model; and when redundancies occur after reshuffling the data, the simulated (G)VIF value(s) are now set to `Inf` instead of `NA`
 
 # metafor 3.8-1 (2022-08-26)
 

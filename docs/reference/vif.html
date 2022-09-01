@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-5</span>
       </span>
     </div>
 
@@ -236,7 +236,9 @@
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>When using <code>sim=TRUE</code>, the model needs to be refitted (by default) 1000 times. When <code>sim=TRUE</code> is combined with <code>reestimate=TRUE</code>, then this value needs to be multiplied by the total number of (G)VIF values that are computed by the function. Hence, the combination of <code>sim=TRUE</code> with <code>reestimate=TRUE</code> is computationally expensive, especially for more complex models where model fitting can be slow.</p>
+    <p>If the original model fitted involved redundant predictors that were dropped from the model, then <code>sim=TRUE</code> cannot be used. In this case, one should remove any redundancies in the original model fitted before using this method.</p>
+<p>When using <code>sim=TRUE</code>, the model needs to be refitted (by default) 1000 times. When <code>sim=TRUE</code> is combined with <code>reestimate=TRUE</code>, then this value needs to be multiplied by the total number of (G)VIF values that are computed by the function. Hence, the combination of <code>sim=TRUE</code> with <code>reestimate=TRUE</code> is computationally expensive, especially for more complex models where model fitting can be slow.</p>
+<p>When refitting the model fails, the simulated (G)VIF value(s) will be missing. It can also happen that one or multiple model coefficients become inestimable due to redundancies in the model matrix after the reshuffling. In this case, the corresponding simulated (G)VIF value(s) will be set to <code>Inf</code> (as that is the value of (G)VIFs in the limit as we approach perfect multicollinearity).</p>
 <p>On machines with multiple cores, one can try to speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href="https://rdrr.io/r/parallel/parallel-package.html" class="external-link">parallel</a></code> package, using the <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makePSOCKcluster</a></code> and <code><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes). With <code><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">parallel::detectCores()</a></code>, one can check on the number of available cores on the local machine.</p>
     </div>
     <div id="author">
@@ -279,12 +281,12 @@
 <span class="r-in"><span><span class="fu">vif</span><span class="op">(</span><span class="va">res</span>, sim<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              vif  prop </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> length    1.5371  0.96 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wic       1.3860  0.88 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> feedback  1.6490  0.98 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> length    1.5371  0.95 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wic       1.3860  0.85 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> feedback  1.6490  0.97 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> info      1.8340  0.98 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pers      5.6780  1.00 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> imag      1.1554  0.45 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> imag      1.1554  0.50 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> meta      4.5333  1.00 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
@@ -357,9 +359,9 @@
 <span class="r-in"><span><span class="fu">vif</span><span class="op">(</span><span class="va">res</span>, btt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span>, sim<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   coefs m    vif    sif prop </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     2 1 1.7697 1.3303 0.82 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   3:4 2 1.2339 1.0540 0.21 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     5 1 1.9148 1.3838 0.86 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     2 1 1.7697 1.3303 0.84 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   3:4 2 1.2339 1.0540 0.24 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     5 1 1.9148 1.3838 0.88 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>

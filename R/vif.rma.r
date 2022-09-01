@@ -219,6 +219,11 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
       if (all(sapply(res$vif, function(x) x$vif) == 1, na.rm=TRUE))
          sim.loc <- 0
 
+      if (sim >= 2 && any(x$coef.na)) {
+         warning(mstyle$warning("Cannot use 'sim' when some redundant predictors were dropped from the model."))
+         sim.loc <- 0
+      }
+
       if (sim.loc >= 2) {
 
          if (parallel == "no")
@@ -334,6 +339,11 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
 
       if (all(sapply(res.scale$vif, function(x) x$vif) == 1, na.rm=TRUE))
          sim.scale <- 0
+
+      if (sim >= 2 && any(x$coef.na.Z)) {
+         warning(mstyle$warning("Cannot use 'sim' when some redundant predictors were dropped from the model."))
+         sim.scale <- 0
+      }
 
       if (sim.scale >= 2) {
 

@@ -128,12 +128,13 @@
          if (is.null(x$data) || is.null(x$formula.mods)) {
             Xperm <- apply(x$X, 2, sample)
          } else {
-            data <- x$data
+            #data <- x$data
+            data <- get_all_vars(x$formula.mods, data=x$data) # only get variables that are actually needed
             if (!is.null(x$subset))
                data <- data[x$subset,,drop=FALSE]
             data <- data[x$not.na,,drop=FALSE]
             Xperm <- model.matrix(x$formula.mods, data=as.data.frame(lapply(data, sample)))
-            Xperm <- Xperm[,!x$coef.na,drop=FALSE]
+            #Xperm <- Xperm[,!x$coef.na,drop=FALSE]
          }
       } else {
          Xperm <- .permXvif(joinb, x$X)
@@ -158,8 +159,11 @@
          tmp <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
       }
 
-      if (inherits(tmp, "try-error") || any(tmp$coef.na))
+      if (inherits(tmp, "try-error"))
          return(rep(NA_real_, length(btt)))
+
+      if (any(tmp$coef.na))
+         return(sapply(btt, function(x) if (any(which(tmp$coef.na) %in% x)) Inf else NA))
 
       vcov <- vcov(tmp, type="beta")
 
@@ -179,12 +183,13 @@
          if (is.null(x$data) || is.null(x$formula.scale)) {
             Zperm <- apply(x$Z, 2, sample)
          } else {
-            data <- x$data
+            #data <- x$data
+            data <- get_all_vars(x$formula.scale, data=x$data) # only get variables that are actually needed
             if (!is.null(x$subset))
                data <- data[x$subset,,drop=FALSE]
             data <- data[x$not.na,,drop=FALSE]
             Zperm <- model.matrix(x$formula.scale, data=as.data.frame(lapply(data, sample)))
-            Zperm <- Zperm[,!x$coef.na.Z,drop=FALSE]
+            #Zperm <- Zperm[,!x$coef.na.Z,drop=FALSE]
          }
       } else {
          Zperm <- .permXvif(joina, x$Z)
@@ -195,8 +200,11 @@
       tmp <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
       #tmp <- try(.do.call(rma.uni, args))
 
-      if (inherits(tmp, "try-error") || any(tmp$Z.coef.na))
+      if (inherits(tmp, "try-error"))
          return(rep(NA_real_, length(att)))
+
+      if (any(tmp$coef.na.Z))
+         return(sapply(att, function(x) if (any(which(tmp$coef.na.Z) %in% x)) Inf else NA))
 
       vcov <- vcov(tmp, type="alpha")
 

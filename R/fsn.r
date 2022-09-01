@@ -229,7 +229,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
 
    }
 
-   if (!is.infinite(fsnum) && abs(fsnum - round(fsnum)) >= .Machine$double.eps^0.5) {
+   if (is.finite(fsnum) && abs(fsnum - round(fsnum)) >= .Machine$double.eps^0.5) {
       fsnum <- ceiling(fsnum)
    } else {
       fsnum <- round(fsnum)

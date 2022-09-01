@@ -78,7 +78,7 @@ emmprep <- function(x, verbose=FALSE, ...) {
 
    }
 
-   if (verbose && !is.infinite(ddf))
+   if (verbose && is.finite(ddf))
       cat("Degrees of freedom:", round(ddf, 2), "\n")
 
    ### set sigma for bias adjustment
