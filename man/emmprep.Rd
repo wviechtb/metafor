@@ -25,7 +25,7 @@ emmprep(x, verbose=FALSE, \dots)
 
    When the model object contains information about the outcome measure used in the analysis (which should be the case if the observed outcomes were computed with \code{\link{escalc}} or if the \code{measure} argument was set when fitting the model), then information about the appropriate back-transformation (if available) is stored as part of the returned object. If so, the back-transformation is automatically applied when calling \code{\link[emmeans]{emmeans}} with \code{type="response"}.
 
-   The function also tries to extract the estimated value of \mjseqn{\tau^2} from the model object (when the model is a random/mixed-effects model). This value is only needed when computing prediction intervals (i.e., when \code{interval="predict"} in \code{\link[emmeans]{predict.emmGrid}}) or when applying the bias adjustment in the back-transformation (i.e., when \code{bias.adjust=TRUE} in \code{\link[emmeans]{summary.emmGrid}}). For some models (e.g., those fitted with \code{\link{rma.mv}}), it is not possible to automatically extract the \mjseqn{\tau^2}  estimate. In this case, one can manually set the value with \code{emmprep(..., sigma=value)} (note: the argument is called \code{sigma}, following the conventions of \code{\link[emmeans]{summary.emmGrid}}).
+   The function also tries to extract the estimated value of \mjseqn{\tau^2} (or more precisely, its square root) from the model object (when the model is a random/mixed-effects model). This value is only needed when computing prediction intervals (i.e., when \code{interval="predict"} in \code{\link[emmeans]{predict.emmGrid}}) or when applying the bias adjustment in the back-transformation (i.e., when \code{bias.adjust=TRUE} in \code{\link[emmeans]{summary.emmGrid}}). For some models (e.g., those fitted with \code{\link{rma.mv}}), it is not possible to automatically extract the estimate. In this case, one can manually set the value with \code{emmprep(..., sigma=value)} (note: the argument is called \code{sigma}, following the conventions of \code{\link[emmeans]{summary.emmGrid}} and one must supply the square root of the \mjseqn{\tau^2} estimate).
 
    By default, the reference grid is created based on the data used for fitting the original model (which is typically the sensible thing to do). One can specify a different dataset with \code{emmprep(..., data=obj)}, where \code{obj} must be a data frame that contains the same variables as used in the original model fitted.
 
@@ -130,5 +130,17 @@ if (require(emmeans))
 
 ### same as the predicted correlations
 predict(res, newmods = rbind(c(0,0), c(1,0), c(0,1)), transf=transf.ztor, digits=3)
+
+### illustrate use of the 'df' and 'sigma' arguments
+res <- rma.mv(yi, vi, mods = ~ factor(type), random = ~ 1 | study,
+              data=dat, test="t", dfs="contain")
+res
+
+### create reference grid
+sav <- emmprep(res, verbose=TRUE, df=154, sigma=0.1681)
+
+### estimated marginal mean (back-transformed to the correlation scale)
+if (require(emmeans))
+   emmeans(sav, specs="1", type="response")
 }
 \keyword{manip}

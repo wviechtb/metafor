@@ -99,7 +99,7 @@ emmprep <- function(x, verbose=FALSE, ...) {
    }
 
    if (verbose && !is.na(sigma) && !is.element(x$method, c("FE","EE","CE")))
-      cat("Value of tau^2:    ", round(sigma, 4), "\n")
+      cat("Value of tau^2:    ", round(sigma^2, 4), "\n")
 
    if (is.na(sigma))
       sigma <- 0
