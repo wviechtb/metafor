@@ -264,7 +264,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
 
       panel.hist <- function(x, ...) {
          usr <- par("usr")
-         on.exit(par(usr))
+         on.exit(par(usr=usr))
          par(usr = c(usr[1:2], 0, 1.2 + hh[1]))
          h <- hist(x, plot=FALSE, breaks=breaks[[1]])
          if (missout) {
