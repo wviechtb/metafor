@@ -128,7 +128,7 @@ permres
 ### blue curve: kernel density estimate of the permutation distribution
 ### note: the tail area under the permutation distribution is larger
 ### than under a standard normal density (hence, the larger p-value)
-plot(permres, beta=2, lwd=c(2,3,3,4), xlim=c(-5,5), ylim=c(0,.4))
+plot(permres, beta=2, lwd=c(2,3,3,4), xlim=c(-5,5))
 }
 }
 \keyword{models}

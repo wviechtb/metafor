@@ -10,7 +10,7 @@ print.confint.rma <- function(x, digits=x$digits, ...) {
 
    if (names(x)[1] == "fixed") {
 
-      res.fixed <- cbind(.fcf(x$fixed[,1,drop=FALSE], digits[["est"]]), .fcf(x$fixed[,2:3,drop=FALSE], digits[["ci"]]))
+      res.fixed <- cbind(fmtx(x$fixed[,1,drop=FALSE], digits[["est"]]), fmtx(x$fixed[,2:3,drop=FALSE], digits[["ci"]]))
       tmp <- capture.output(print(res.fixed, quote=FALSE, right=TRUE))
       .print.table(tmp, mstyle)
 
@@ -21,7 +21,7 @@ print.confint.rma <- function(x, digits=x$digits, ...) {
       if (names(x)[1] == "fixed")
          cat("\n")
 
-      res.random <- .fcf(x$random, digits[["var"]])
+      res.random <- fmtx(x$random, digits[["var"]])
       res.random[,2] <- paste0(x$lb.sign, res.random[,2])
       res.random[,3] <- paste0(x$ub.sign, res.random[,3])
       tmp <- capture.output(print(res.random, quote=FALSE, right=TRUE))

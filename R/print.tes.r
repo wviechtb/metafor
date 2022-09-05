@@ -16,15 +16,15 @@ print.tes <- function(x, digits=x$digits, ...) {
    cat(mstyle$result(paste0(" (out of ", x$k, ")")))
    cat("\n")
    cat(mstyle$text("Expected Number of Significant Findings: "))
-   cat(mstyle$result(.fcf(x$E, digits[["est"]])))
+   cat(mstyle$result(fmtx(x$E, digits[["est"]])))
    cat("\n")
    cat(mstyle$text("Observed Number / Expected Number:       "))
-   cat(mstyle$result(.fcf(x$OEratio, digits[["est"]])))
+   cat(mstyle$result(fmtx(x$OEratio, digits[["est"]])))
    cat("\n\n")
 
    if (length(x$theta) == 1L) {
       cat(mstyle$text("Estimated Power of Tests (based on theta = "))
-      cat(mstyle$result(.fcf(x$theta, digits[["est"]])))
+      cat(mstyle$result(fmtx(x$theta, digits[["est"]])))
       cat(mstyle$text(")"))
    } else {
       cat(mstyle$text("Estimated Power of Tests: "))
@@ -38,14 +38,14 @@ print.tes <- function(x, digits=x$digits, ...) {
       power <- x$power
       names(power) <- seq_len(x$k)
    }
-   tmp <- capture.output(.print.vector(.fcf(power, digits[["pval"]])))
+   tmp <- capture.output(.print.vector(fmtx(power, digits[["pval"]])))
    .print.table(tmp, mstyle)
    cat("\n")
 
    cat(mstyle$text("Test of Excess Significance: "))
-   cat(mstyle$result(paste0("p ", .pval(x$pval, digits[["pval"]], showeq=TRUE, sep=" "))))
+   cat(mstyle$result(paste0("p ", fmtp(x$pval, digits[["pval"]], equal=TRUE, sep=TRUE))))
    if (x$test == "chi2") {
-      cat(mstyle$result(paste0(" (X^2 = ", .fcf(x$X2, digits[["test"]]), ", df = 1)")))
+      cat(mstyle$result(paste0(" (X^2 = ", fmtx(x$X2, digits[["test"]]), ", df = 1)")))
    }
    if (x$test == "binom") {
       cat(mstyle$result(" (binomial test)"))
@@ -60,14 +60,14 @@ print.tes <- function(x, digits=x$digits, ...) {
       if (is.na(x$theta.lim[1])) {
          cat(mstyle$result("not estimable"))
       } else {
-         cat(mstyle$result(.fcf(x$theta.lim[1], digits=digits[["est"]])))
+         cat(mstyle$result(fmtx(x$theta.lim[1], digits[["est"]])))
       }
       if (length(x$theta.lim) == 2L) {
          cat(mstyle$result(", "))
          if (is.na(x$theta.lim[2])) {
             cat(mstyle$result("not estimable"))
          } else {
-            cat(mstyle$result(.fcf(x$theta.lim[2], digits=digits[["est"]])))
+            cat(mstyle$result(fmtx(x$theta.lim[2], digits[["est"]])))
          }
       }
 

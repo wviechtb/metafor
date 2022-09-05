@@ -455,7 +455,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    ### add y-axis
 
-   laxis(side=2, at=seq(from=ylim[1], to=ylim[2], length.out=steps), labels=formatC(seq(from=ylim[1], to=ylim[2], length.out=steps), digits=digits[[2]], format="f", drop0trailing=is.integer(digits[[2]])), ...)
+   laxis(side=2, at=seq(from=ylim[1], to=ylim[2], length.out=steps), labels=fmtx(seq(from=ylim[1], to=ylim[2], length.out=steps), digits[[2]], drop0ifint=TRUE), ...)
 
    ### add horizontal lines
 
@@ -616,12 +616,12 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    if (is.function(atransf)) {
       if (is.null(targs)) {
-         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[[1]], format="f", drop0trailing=is.integer(digits[[1]]))
+         at.lab <- fmtx(sapply(at.lab, atransf), digits[[1]], drop0ifint=TRUE)
       } else {
-         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[[1]], format="f", drop0trailing=is.integer(digits[[1]]))
+         at.lab <- fmtx(sapply(at.lab, atransf, targs), digits[[1]], drop0ifint=TRUE)
       }
    } else {
-      at.lab <- formatC(at.lab, digits=digits[[1]], format="f", drop0trailing=is.integer(digits[[1]]))
+      at.lab <- fmtx(at.lab, digits[[1]], drop0ifint=TRUE)
    }
 
    ### add x-axis
@@ -694,12 +694,12 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
       ltxt <- sapply(seq_len(lvals), function(i) {
          if (i == 1)
-            return(as.expression(bquote(paste(.(pval1) < p, phantom() <= .(pval2)), list(pval1=.fcf(level[i], lchars), pval2=.fcf(1, lchars)))))
-            #return(as.expression(bquote(p > .(pval), list(pval=.fcf(level[i], lchars)))))
+            return(as.expression(bquote(paste(.(pval1) < p, phantom() <= .(pval2)), list(pval1=fmtx(level[i], lchars), pval2=fmtx(1, lchars)))))
+            #return(as.expression(bquote(p > .(pval), list(pval=fmtx(level[i], lchars)))))
          if (i > 1 && i < lvals)
-            return(as.expression(bquote(paste(.(pval1) < p, phantom() <= .(pval2)), list(pval1=.fcf(level[i], lchars), pval2=.fcf(level[i-1], lchars)))))
+            return(as.expression(bquote(paste(.(pval1) < p, phantom() <= .(pval2)), list(pval1=fmtx(level[i], lchars), pval2=fmtx(level[i-1], lchars)))))
          if (i == lvals)
-            return(as.expression(bquote(paste(.(pval1) < p, phantom() <= .(pval2)), list(pval1=.fcf(0, lchars), pval2=.fcf(level[i-1], lchars)))))
+            return(as.expression(bquote(paste(.(pval1) < p, phantom() <= .(pval2)), list(pval1=fmtx(0, lchars), pval2=fmtx(level[i-1], lchars)))))
       })
 
       pch.l  <- rep(22, lvals)

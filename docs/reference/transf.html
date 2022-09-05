@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-6</span>
       </span>
     </div>
 
@@ -233,6 +233,20 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### average risk ratio with 95% CI using the integral transformation</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">transf.exp.int</span>, targs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>tau2<span class="op">=</span><span class="va">res</span><span class="op">$</span><span class="va">tau2</span>, lower<span class="op">=</span><span class="op">-</span><span class="fl">4</span>, upper<span class="op">=</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pred  ci.lb  ci.ub  pi.lb  pi.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.5724 0.4024 0.8142 0.1809 1.8117 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### this also works</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">transf.exp.int</span>, targs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>tau2<span class="op">=</span><span class="va">res</span><span class="op">$</span><span class="va">tau2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pred  ci.lb  ci.ub  pi.lb  pi.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.5724 0.4024 0.8142 0.1809 1.8117 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### this as well</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">transf.exp.int</span>, targs<span class="op">=</span><span class="va">res</span><span class="op">$</span><span class="va">tau2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    pred  ci.lb  ci.ub  pi.lb  pi.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.5724 0.4024 0.8142 0.1809 1.8117 </span>

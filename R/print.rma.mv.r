@@ -31,9 +31,9 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
    if (showfit) {
       cat("\n")
       if (x$method == "REML") {
-         fs <- .fcf(x$fit.stats$REML, digits[["fit"]])
+         fs <- fmtx(x$fit.stats$REML, digits[["fit"]])
       } else {
-         fs <- .fcf(x$fit.stats$ML, digits[["fit"]])
+         fs <- fmtx(x$fit.stats$ML, digits[["fit"]])
       }
       names(fs) <- c("logLik", "Deviance", "AIC", "BIC", "AICc")
       cat("\n")
@@ -45,14 +45,14 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       cat("\n\n")
    }
 
-   sigma2 <- .fcf(x$sigma2, digits[["var"]])
-   tau2   <- .fcf(x$tau2,   digits[["var"]])
-   rho    <- .fcf(x$rho,    digits[["var"]])
-   gamma2 <- .fcf(x$gamma2, digits[["var"]])
-   phi    <- .fcf(x$phi,    digits[["var"]])
-   sigma  <- .fcf(sqrt(x$sigma2), digits[["var"]])
-   tau    <- .fcf(sqrt(x$tau2),   digits[["var"]])
-   gamma  <- .fcf(sqrt(x$gamma2), digits[["var"]])
+   sigma2 <- fmtx(x$sigma2, digits[["var"]])
+   tau2   <- fmtx(x$tau2,   digits[["var"]])
+   rho    <- fmtx(x$rho,    digits[["var"]])
+   gamma2 <- fmtx(x$gamma2, digits[["var"]])
+   phi    <- fmtx(x$phi,    digits[["var"]])
+   sigma  <- fmtx(sqrt(x$sigma2), digits[["var"]])
+   tau    <- fmtx(sqrt(x$tau2),   digits[["var"]])
+   gamma  <- fmtx(sqrt(x$gamma2), digits[["var"]])
 
    cat(mstyle$section("Variance Components:"))
 
@@ -188,7 +188,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             colnames(vc) <- c("estim", "sqrt", "fixed", "rho:")
             rownames(vc) <- x$g.names[-length(x$g.names)]
 
-            G.info <- .fcf(cov2cor(x$G), digits[["var"]])
+            G.info <- fmtx(cov2cor(x$G), digits[["var"]])
             diag(G.info) <- "-"
             G.info[lower.tri(G.info)] <- ifelse(x$vc.fix$rho, "yes", "no")
             colnames(G.info) <- abbreviate(x$g.names[-length(x$g.names)])
@@ -319,7 +319,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             colnames(vc) <- c("estim", "sqrt", "fixed", "phi:")
             rownames(vc) <- x$h.names[-length(x$h.names)]
 
-            H.info <- .fcf(cov2cor(x$H), digits[["var"]])
+            H.info <- fmtx(cov2cor(x$H), digits[["var"]])
             diag(H.info) <- "-"
             H.info[lower.tri(H.info)] <- ifelse(x$vc.fix$phi, "yes", "no")
             colnames(H.info) <- abbreviate(x$h.names[-length(x$h.names)])
@@ -349,11 +349,11 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       if (x$int.only) {
          cat(mstyle$section("Test for Heterogeneity:"))
          cat("\n")
-         cat(mstyle$result(paste0("Q(df = ", x$k-x$p, ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$QE, "Q", df=x$k-x$p, pval=x$QEp, digits=digits)))
       } else {
          cat(mstyle$section("Test for Residual Heterogeneity:"))
          cat("\n")
-         cat(mstyle$result(paste0("QE(df = ", x$k-x$p, ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$QE, "QE", df=x$k-x$p, pval=x$QEp, digits=digits)))
       }
       cat("\n\n")
    }
@@ -371,7 +371,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       if (all(x$tcl[1] == x$tcl)) {
          cat(mstyle$result(x$tcl[1]))
       } else {
-         cat(mstyle$result(paste0(min(x$tcl), "-", max(x$tcl), " (mean: ", .fcf(mean(x$tcl), digits=2), ", median: ", round(median(x$tcl), digits=2), ")")))
+         cat(mstyle$result(paste0(min(x$tcl), "-", max(x$tcl), " (mean: ", fmtx(mean(x$tcl), digits=2), ", median: ", round(median(x$tcl), digits=2), ")")))
       }
       cat("\n\n")
 
@@ -381,19 +381,19 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       cat(mstyle$section(paste0("Test of Moderators (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$btt),"):", ifelse(inherits(x, "robust.rma"), footsym[1], ""))))
       cat("\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         cat(mstyle$result(paste0("F(df1 = ", x$QMdf[1], ", df2 = ", round(x$QMdf[2], 2), ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$QM, "F", df1=x$QMdf[1], df2=x$QMdf[2], pval=x$QMp, digits=digits)))
       } else {
-         cat(mstyle$result(paste0("QM(df = ", x$QMdf[1], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$QM, "QM", df=x$QMdf[1], pval=x$QMp, digits=digits)))
       }
       cat("\n\n")
    }
 
    if (is.element(x$test, c("knha","adhoc","t"))) {
-      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf,2), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
+      res.table <- data.frame(estimate=fmtx(c(x$beta), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), tval=fmtx(x$zval, digits[["test"]]), df=round(x$ddf,2), pval=fmtp(x$pval, digits[["pval"]]), ci.lb=fmtx(x$ci.lb, digits[["ci"]]), ci.ub=fmtx(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
       if (inherits(x, "robust.rma"))
          res.table <- .addfootsym(res.table, 2:7, footsym[1])
    } else {
-      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
+      res.table <- data.frame(estimate=fmtx(c(x$beta), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), zval=fmtx(x$zval, digits[["test"]]), pval=fmtp(x$pval, digits[["pval"]]), ci.lb=fmtx(x$ci.lb, digits[["ci"]]), ci.ub=fmtx(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
    }
    rownames(res.table) <- rownames(x$beta)
    signif <- symnum(x$pval, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))

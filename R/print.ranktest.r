@@ -10,7 +10,7 @@ print.ranktest <- function(x, digits=x$digits, ...) {
 
    cat(mstyle$section("Rank Correlation Test for Funnel Plot Asymmetry"))
    cat("\n\n")
-   cat(mstyle$result(paste0("Kendall's tau = ", .fcf(x$tau, digits[["est"]]), ", p ", .pval(x$pval, digits[["pval"]], showeq=TRUE, sep=" "))))
+   cat(mstyle$result(paste0("Kendall's tau = ", fmtx(x$tau, digits[["est"]]), ", p ", fmtp(x$pval, digits[["pval"]], equal=TRUE, sep=TRUE))))
    cat("\n")
    #cat("H0: true tau is equal to 0\n\n")
 

@@ -33,7 +33,7 @@
       if (inherits(res, "try-error")) {
 
          if (verbose)
-            cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective = NA", "\n")))
+            cat(mstyle$verbose(paste("tau2 =", fmtx(val, obj$digits[["var"]], addwidth=4), "  LRT - objective = NA", "\n")))
 
          stop()
 
@@ -42,7 +42,7 @@
          sav <- c(-2*(logLik(res) - logLik(obj)) - objective)
 
          if (verbose)
-            cat(mstyle$verbose(paste("tau2 =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["test"]], width=obj$digits[["test"]]+4, format="f"), "\n")))
+            cat(mstyle$verbose(paste("tau2 =", fmtx(val, obj$digits[["var"]], addwidth=4), "  LRT - objective =", fmtx(sav, obj$digits[["test"]], addwidth=4), "\n")))
 
       }
 
@@ -146,7 +146,7 @@
       if (inherits(res, "try-error")) {
 
          if (verbose)
-            cat(mstyle$verbose(paste("val =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective = NA", "\n")))
+            cat(mstyle$verbose(paste("val =", fmtx(val, obj$digits[["var"]], addwidth=4), "  LRT - objective = NA", "\n")))
 
          stop()
 
@@ -155,7 +155,7 @@
          sav <- c(-2*(logLik(res) - logLik(obj)) - objective)
 
          if (verbose)
-            cat(mstyle$verbose(paste("val =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["fit"]], width=obj$digits[["fit"]]+4, format="f"), "\n")))
+            cat(mstyle$verbose(paste("val =", fmtx(val, obj$digits[["var"]], addwidth=4), "  LRT - objective =", fmtx(sav, obj$digits[["fit"]], addwidth=4), "\n")))
 
       }
 
@@ -257,7 +257,7 @@
       if (inherits(res, "try-error")) {
 
          if (verbose)
-            cat(mstyle$verbose(paste("val =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective = NA", "\n")))
+            cat(mstyle$verbose(paste("val =", fmtx(val, obj$digits[["var"]], addwidth=4), "  LRT - objective = NA", "\n")))
 
          stop()
 
@@ -266,7 +266,7 @@
          sav <- c(-2*(logLik(res) - logLik(obj)) - objective)
 
          if (verbose)
-            cat(mstyle$verbose(paste("val =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["fit"]], width=obj$digits[["fit"]]+4, format="f"), "\n")))
+            cat(mstyle$verbose(paste("val =", fmtx(val, obj$digits[["var"]], addwidth=4), "  LRT - objective =", fmtx(sav, obj$digits[["fit"]], addwidth=4), "\n")))
 
       }
 
@@ -315,7 +315,7 @@
       if (inherits(res, "try-error")) {
 
          if (verbose)
-            cat(mstyle$verbose(paste("val =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective = NA", "\n")))
+            cat(mstyle$verbose(paste("val =", fmtx(val, obj$digits[["var"]], addwidth=4), "  LRT - objective = NA", "\n")))
 
          stop()
 
@@ -324,7 +324,7 @@
          sav <- c(-2*(logLik(res) - logLik(obj)) - objective)
 
          if (verbose)
-            cat(mstyle$verbose(paste("val =", formatC(val, digits=obj$digits[["var"]], width=obj$digits[["var"]]+4, format="f"), "  LRT - objective =", formatC(sav, digits=obj$digits[["fit"]], width=obj$digits[["fit"]]+4, format="f"), "\n")))
+            cat(mstyle$verbose(paste("val =", fmtx(val, obj$digits[["var"]], addwidth=4), "  LRT - objective =", fmtx(sav, obj$digits[["fit"]], addwidth=4), "\n")))
 
       }
 

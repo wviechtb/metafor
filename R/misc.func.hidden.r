@@ -132,6 +132,11 @@
 
 ############################################################################
 
+### function to take the square root of a vector of numbers, giving NA for negative numbers (without a warning)
+
+.sqrt <- function(x)
+   sapply(x, function(x) if (x < 0) NA_real_ else sqrt(x))
+
 ### function to obtain the trace of a matrix
 
 .tr <- function(X)
@@ -181,7 +186,7 @@
 
 ############################################################################
 
-### function to format p-values
+### function to format p-values (no longer used; use fmtp() instead)
 ### if showeq=FALSE, c(.001, .00001) becomes c("0.0010", "<.0001")
 ### if showeq=TRUE,  c(.001, .00001) becomes c("=0.0010", "<.0001")
 ### if add0=FALSE, "<.0001"; if add0=TRUE, "<0.0001"
@@ -198,12 +203,11 @@
 
 }
 
-### function to format/round values in general
+### function to format/round values in general (no longer used; use fmtx() instead)
 
 .fcf <- function(x, digits) {
 
    if (all(is.na(x))) { # since formatC(NA, format="f", digits=2) fails
-      #x
       rep("NA", length(x))
    } else {
       trimws(formatC(x, format="f", digits=digits))
@@ -1115,8 +1119,8 @@
 
 .print.table <- function(x, mstyle) {
 
-   #is.header <- !grepl(" [-0-9]", x)
-   is.header <- !grepl("^\\s*[0-9]", x)
+   is.header <- !grepl(" [-0-9]", x)
+   #is.header <- !grepl("^\\s*[0-9]", x)
    has.header <- any(is.header)
 
    for (i in seq_along(x)) {
@@ -1222,7 +1226,7 @@
 
 ############################################################################
 
-### shorten a string vector so that elements remain distinguishable
+### shorten a character vector so that elements remain distinguishable
 
 .shorten <- function(x, minlen) {
 
@@ -1432,7 +1436,7 @@
    est <- tmp$mean
    diff <- est - target
    if (verbose)
-      cat("fsnum =", formatC(fsnum, width=4, format="d"), "  est =", .fcf(est, 4), "  target =", .fcf(target, 4),  "  diff =", formatC(diff, format="f", digits=4, flag=" "), "\n")
+      cat("fsnum =", formatC(fsnum, width=4, format="d"), "  est =", fmtx(est), "  target =", fmtx(target), "  diff =", fmtx(diff, flag=" "), "\n")
    return(diff)
 
 }

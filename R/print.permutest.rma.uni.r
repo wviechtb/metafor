@@ -28,21 +28,21 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
       }
       cat("\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         cat(mstyle$result(paste0("F(df1 = ", x$QMdf[1], ", df2 = ", round(x$QMdf[2], 2), ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$QM, "F", df1=x$QMdf[1], df2=x$QMdf[2], pval=x$QMp, digits=digits)))
       } else {
-         cat(mstyle$result(paste0("QM(df = ", x$QMdf[1], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$QM, "QM", df=x$QMdf[1], pval=x$QMp, digits=digits)))
       }
       cat("\n\n")
    }
 
    if (is.element(x$test, c("knha","adhoc","t"))) {
-      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf,2), "pval"=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
+      res.table <- data.frame(estimate=fmtx(c(x$beta), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), tval=fmtx(x$zval, digits[["test"]]), df=round(x$ddf,2), "pval"=fmtp(x$pval, digits[["pval"]]), ci.lb=fmtx(x$ci.lb, digits[["ci"]]), ci.ub=fmtx(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
       if (!x$skip.beta)
          res.table <- .addfootsym(res.table, 5, footsym[1])
       if (x$permci)
          res.table <- .addfootsym(res.table, 6:7, footsym[1])
    } else {
-      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), "pval"=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
+      res.table <- data.frame(estimate=fmtx(c(x$beta), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), zval=fmtx(x$zval, digits[["test"]]), "pval"=fmtp(x$pval, digits[["pval"]]), ci.lb=fmtx(x$ci.lb, digits[["ci"]]), ci.ub=fmtx(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
       if (!x$skip.beta)
          res.table <- .addfootsym(res.table, 4, footsym[1])
       if (x$permci)
@@ -83,19 +83,19 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
          cat(mstyle$section(paste0("Test of Scale Coefficients (coefficient", ifelse(x$m.alpha == 1, " ", "s "), .format.btt(x$att),"):", ifelse(x$skip.alpha, "", footsym[1]))))
          cat("\n")
          if (is.element(x$test, c("knha","adhoc","t"))) {
-            cat(mstyle$result(paste0("F(df1 = ", x$QSdf[1], ", df2 = ", round(x$QSdf[2], 2), ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits=digits[["pval"]], showeq=TRUE, sep=" "))))
+            cat(mstyle$result(fmtt(x$QS, "F", df1=x$QSdf[1], df2=x$QSdf[2], pval=x$QSp, digits=digits)))
          } else {
-            cat(mstyle$result(paste0("QS(df = ", x$QSdf[1], ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))
+            cat(mstyle$result(fmtt(x$QS, "QS", df=x$QSdf[1], pval=x$QSp, digits=digits)))
          }
          cat("\n\n")
       }
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         res.table <- data.frame(estimate=.fcf(c(x$alpha), digits[["est"]]), se=.fcf(x$se.alpha, digits[["se"]]), tval=.fcf(x$zval.alpha, digits[["test"]]), df=round(x$ddf.alpha,2), "pval"=.pval(x$pval.alpha, digits[["pval"]]), ci.lb=.fcf(x$ci.lb.alpha, digits[["ci"]]), ci.ub=.fcf(x$ci.ub.alpha, digits[["ci"]]), stringsAsFactors=FALSE)
+         res.table <- data.frame(estimate=fmtx(c(x$alpha), digits[["est"]]), se=fmtx(x$se.alpha, digits[["se"]]), tval=fmtx(x$zval.alpha, digits[["test"]]), df=round(x$ddf.alpha,2), "pval"=fmtp(x$pval.alpha, digits[["pval"]]), ci.lb=fmtx(x$ci.lb.alpha, digits[["ci"]]), ci.ub=fmtx(x$ci.ub.alpha, digits[["ci"]]), stringsAsFactors=FALSE)
          if (!x$skip.alpha)
             res.table <- .addfootsym(res.table, 5, footsym[1])
       } else {
-         res.table <- data.frame(estimate=.fcf(c(x$alpha), digits[["est"]]), se=.fcf(x$se.alpha, digits[["se"]]), zval=.fcf(x$zval.alpha, digits[["test"]]), "pval"=.pval(x$pval.alpha, digits[["pval"]]), ci.lb=.fcf(x$ci.lb.alpha, digits[["ci"]]), ci.ub=.fcf(x$ci.ub.alpha, digits[["ci"]]), stringsAsFactors=FALSE)
+         res.table <- data.frame(estimate=fmtx(c(x$alpha), digits[["est"]]), se=fmtx(x$se.alpha, digits[["se"]]), zval=fmtx(x$zval.alpha, digits[["test"]]), "pval"=fmtp(x$pval.alpha, digits[["pval"]]), ci.lb=fmtx(x$ci.lb.alpha, digits[["ci"]]), ci.ub=fmtx(x$ci.ub.alpha, digits[["ci"]]), stringsAsFactors=FALSE)
          if (!x$skip.alpha)
             res.table <- .addfootsym(res.table, 4, footsym[1])
       }

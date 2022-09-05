@@ -669,12 +669,12 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    if (is.function(atransf)) {
       if (is.null(targs)) {
-         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[[2]], format="f", drop0trailing=is.integer(digits[[2]]))
+         at.lab <- fmtx(sapply(at.lab, atransf), digits[[2]], drop0ifint=TRUE)
       } else {
-         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[[2]], format="f", drop0trailing=is.integer(digits[[2]]))
+         at.lab <- fmtx(sapply(at.lab, atransf, targs), digits[[2]], drop0ifint=TRUE)
       }
    } else {
-      at.lab <- formatC(at.lab, digits=digits[[2]], format="f", drop0trailing=is.integer(digits[[2]]))
+      at.lab <- fmtx(at.lab, digits[[2]], drop0ifint=TRUE)
    }
 
    #########################################################################
@@ -989,7 +989,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          }
       }
 
-      annotext <- .fcf(annotext, digits[[1]])
+      annotext <- fmtx(annotext, digits[[1]])
       annotext <- sub("-", annosym[4], annotext, fixed=TRUE)
 
       if (missing(width)) {

@@ -1064,7 +1064,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       if (con$tau2.min < 0 && (-con$tau2.min > min(vi))) {
          con$tau2.min <- -min(vi)
-         warning(mstyle$warning(paste0("Value of 'tau2.min' constrained to -min(vi) = ", .fcf(-min(vi), digits[["est"]]), ".")), call.=FALSE)
+         warning(mstyle$warning(paste0("Value of 'tau2.min' constrained to -min(vi) = ", fmtx(-min(vi), digits[["est"]]), ".")), call.=FALSE)
       }
 
    } else {
@@ -1205,7 +1205,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             while (change > con$threshold) {
 
                if (verbose)
-                  cat(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", .fcf(tau2, digits[["var"]]), "\n")))
+                  cat(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", fmtx(tau2, digits[["var"]]), "\n")))
 
                iter <- iter + 1
                old2 <- tau2
@@ -1364,7 +1364,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             while (change > con$threshold) {
 
                if (verbose)
-                  cat(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", .fcf(tau2, digits[["var"]]), "\n")))
+                  cat(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", fmtx(tau2, digits[["var"]]), "\n")))
 
                iter <- iter + 1
                old2 <- tau2
@@ -1472,7 +1472,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             while (change > con$threshold) {
 
                if (verbose)
-                  cat(mstyle$verbose(paste(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", .fcf(tau2, digits[["var"]]), "\n")))))
+                  cat(mstyle$verbose(paste(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", fmtx(tau2, digits[["var"]]), "\n")))))
 
                iter <- iter + 1
                old2 <- tau2
@@ -1589,7 +1589,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             ### verbose output upon convergence for ML/REML/EB estimators
 
             if (verbose && is.element(method[1], c("ML","REML","EB"))) {
-               cat(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", .fcf(tau2, digits[["var"]]), "\n")))
+               cat(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", fmtx(tau2, digits[["var"]]), "\n")))
                cat(mstyle$verbose(paste("Fisher scoring algorithm converged after", iter, "iterations.\n")))
             }
 
@@ -2552,9 +2552,9 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             if (r2def == "4w") {
                if (is.null(weights)) {
                   # identical to eta^2 = F * df1 / (F * df1 + df2) when test="knha"
-                  R2 <- cov.wt(cbind(dat$yi, c(X%*%beta)), cor=TRUE, wt=1/(vi+tau2))$cor[1,2]^2
+                  R2 <- cov.wt(cbind(yi, c(X%*%beta)), cor=TRUE, wt=1/(vi+tau2))$cor[1,2]^2
                } else {
-                  R2 <- cov.wt(cbind(dat$yi, c(X%*%beta)), cor=TRUE, wt=weights)$cor[1,2]^2
+                  R2 <- cov.wt(cbind(yi, c(X%*%beta)), cor=TRUE, wt=weights)$cor[1,2]^2
                }
             }
 

@@ -166,12 +166,12 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    if (is.function(atransf)) {
       if (is.null(targs)) {
-         at.lab <- formatC(sapply(at.lab, atransf), digits=digits[[1]], format="f", drop0trailing=is.integer(digits[[1]]))
+         at.lab <- fmtx(sapply(at.lab, atransf), digits[[1]], drop0ifint=TRUE)
       } else {
-         at.lab <- formatC(sapply(at.lab, atransf, targs), digits=digits[[1]], format="f", drop0trailing=is.integer(digits[[1]]))
+         at.lab <- fmtx(sapply(at.lab, atransf, targs), digits[[1]], drop0ifint=TRUE)
       }
    } else {
-      at.lab <- formatC(at.lab, digits=digits[[1]], format="f", drop0trailing=is.integer(digits[[1]]))
+      at.lab <- fmtx(at.lab, digits[[1]], drop0ifint=TRUE)
    }
 
    ### add x-axis
@@ -181,7 +181,7 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
    ### add y-axis
 
    aty <- axTicks(side=2)
-   laxis(side=2, at=aty, labels=formatC(aty, digits=digits[[2]], format="f", drop0trailing=is.integer(digits[[2]])), ...)
+   laxis(side=2, at=aty, labels=fmtx(aty, digits[[2]], drop0ifint=TRUE), ...)
 
    ### add grid
 

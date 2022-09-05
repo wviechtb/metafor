@@ -11,10 +11,10 @@
 }
 
 .selmodel.verbose <- function(ll, beta, tau2, delta, mstyle, digits) {
-   cat(mstyle$verbose(paste0("ll = ",         ifelse(is.na(ll),    NA, formatC(ll,    digits=digits[["fit"]], format="f", flag=" ")),                "  ")))
-   cat(mstyle$verbose(paste0("beta =",  paste(ifelse(is.na(beta),  NA, formatC(beta,  digits=digits[["est"]], format="f", flag=" ")), collapse=" "), "  ")))
-   cat(mstyle$verbose(paste0("tau2 =",        ifelse(is.na(tau2),  NA, formatC(tau2,  digits=digits[["var"]], format="f", flag=" ")),                "  ")))
-   cat(mstyle$verbose(paste0("delta =", paste(ifelse(is.na(delta), NA, formatC(delta, digits=digits[["est"]], format="f", flag=" ")), collapse=" "))))
+   cat(mstyle$verbose(paste0("ll = ",         fmtx(ll,    digits[["fit"]], flag=" "),                "  ")))
+   cat(mstyle$verbose(paste0("beta =",  paste(fmtx(beta,  digits[["est"]], flag=" "), collapse=" "), "  ")))
+   cat(mstyle$verbose(paste0("tau2 =",        fmtx(tau2,  digits[["var"]], flag=" "),                "  ")))
+   cat(mstyle$verbose(paste0("delta =", paste(fmtx(delta, digits[["est"]], flag=" "), collapse=" "))))
    cat("\n")
 }
 

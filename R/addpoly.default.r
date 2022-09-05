@@ -326,7 +326,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
 
       }
 
-      annotext <- .fcf(annotext, digits)
+      annotext <- fmtx(annotext, digits)
       annotext <- sub("-", annosym[4], annotext, fixed=TRUE)
 
       if (is.null(width)) {

@@ -13,7 +13,7 @@ print.fsn <- function(x, digits=x$digits, ...) {
 
    if (x$type == "Rosenthal") {
       cat(mstyle$text("Observed Significance Level: "))
-      cat(mstyle$result(.pval(x$pval, digits[["pval"]])))
+      cat(mstyle$result(fmtp(x$pval, digits[["pval"]])))
       cat("\n")
       cat(mstyle$text("Target Significance Level:   "))
       cat(mstyle$result(x$alpha))
@@ -21,18 +21,18 @@ print.fsn <- function(x, digits=x$digits, ...) {
 
    if (x$type == "Orwin") {
       cat(mstyle$text("Average Effect Size: "))
-      cat(mstyle$result(.fcf(x$meanes, digits[["est"]])))
+      cat(mstyle$result(fmtx(x$meanes, digits[["est"]])))
       cat("\n")
       cat(mstyle$text("Target Effect Size:  "))
-      cat(mstyle$result(.fcf(x$target, digits[["est"]])))
+      cat(mstyle$result(fmtx(x$target, digits[["est"]])))
    }
 
    if (x$type == "Rosenberg") {
       cat(mstyle$text("Average Effect Size:         "))
-      cat(mstyle$result(.fcf(x$meanes, digits[["est"]])))
+      cat(mstyle$result(fmtx(x$meanes, digits[["est"]])))
       cat("\n")
       cat(mstyle$text("Observed Significance Level: "))
-      cat(mstyle$result(.pval(x$pval, digits[["pval"]])))
+      cat(mstyle$result(fmtp(x$pval, digits[["pval"]])))
       cat("\n")
       cat(mstyle$text("Target Significance Level:   "))
       cat(mstyle$result(x$alpha))
@@ -40,13 +40,13 @@ print.fsn <- function(x, digits=x$digits, ...) {
 
    if (x$type == "REM") {
       cat(mstyle$text("Average Effect Size: "))
-      cat(mstyle$result(.fcf(x$meanes, digits[["est"]])))
+      cat(mstyle$result(fmtx(x$meanes, digits[["est"]])))
       cat("\n")
       cat(mstyle$text("Target Effect Size:  "))
-      cat(mstyle$result(.fcf(x$target, digits[["est"]])))
+      cat(mstyle$result(fmtx(x$target, digits[["est"]])))
       #cat("\n")
       #cat(mstyle$text("Rejection Rate:      "))
-      #cat(mstyle$result(.pval(x$rejrate, digits[["pval"]])))
+      #cat(mstyle$result(fmtp(x$rejrate, digits[["pval"]])))
    }
 
    cat("\n\n")

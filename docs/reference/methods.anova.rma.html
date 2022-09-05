@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-6</span>
       </span>
     </div>
 
@@ -174,24 +174,18 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### LRT comparing the two models</span></span></span>
 <span class="r-in"><span><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, <span class="va">res0</span>, refit<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in anova.rma(res, res0, refit = TRUE):</span> Refitting the full model with ML estimation failed.</span>
 <span class="r-in"><span><span class="va">sav</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Hypothesis:                                     </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: allocrandom - allocsystematic = 0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.3260 0.3104 -1.0501 0.2937 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Hypothesis:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 1) = 1.1027, p-val = 0.2937</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         df     AIC     BIC    AICc   logLik     LRT   pval       QE  tau^2      R^2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Full     5 24.0269 26.8517 32.5984  -7.0135                 26.2034 0.0294          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Reduced  2 29.3302 30.4601 30.5302 -12.6651 11.3032 0.0102 152.2330 0.2800 89.4967% </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### turn object into a regular data frame</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">sav</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                  hyp   estimate        se      zval      pval</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1: allocrandom - allocsystematic = 0 -0.3259536 0.3104031 -1.050098 0.2936731</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         df      AIC      BIC     AICc     logLik      LRT       pval        QE      tau^2      R^2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Full     5 24.02692 26.85167 32.59835  -7.013462       NA         NA  26.20344 0.02941209       NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Reduced  2 29.33015 30.46005 30.53015 -12.665076 11.30323 0.01019428 152.23301 0.28002817 89.49674</span>
 </code></pre></div>
     </div>
   </div>

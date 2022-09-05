@@ -25,12 +25,12 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
    if (inherits(x, "rma.uni.trimfill")) {
       .space()
       cat(mstyle$text(paste0("Estimated number of missing studies on the ", x$side, " side: ")))
-      cat(mstyle$result(paste0(x$k0, " (SE = ", ifelse(is.na(x$se.k0), NA, .fcf(x$se.k0, digits[["se"]])), ")")))
+      cat(mstyle$result(paste0(x$k0, " (SE = ", fmtx(x$se.k0, digits[["se"]]), ")")))
       cat("\n")
       if (x$k0.est == "R0") {
          cat(mstyle$text(paste0("Test of H0: no missing studies on the ", x$side, " side:     ")))
          cat(paste0(rep(" ", nchar(x$k0)), collapse=""))
-         cat(mstyle$result(paste0("p-val ", .pval(x$p.k0, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(paste0("p-val ", fmtp(x$p.k0, digits[["pval"]], equal=TRUE, sep=TRUE))))
          cat("\n")
       }
       .space(FALSE)
@@ -81,9 +81,9 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    if (showfit) {
       if (x$method == "REML") {
-         fs <- .fcf(x$fit.stats$REML, digits[["fit"]])
+         fs <- fmtx(x$fit.stats$REML, digits[["fit"]])
       } else {
-         fs <- .fcf(x$fit.stats$ML, digits[["fit"]])
+         fs <- fmtx(x$fit.stats$ML, digits[["fit"]])
       }
       names(fs) <- c("logLik", "deviance", "AIC", "BIC", "AICc")
       cat("\n")
@@ -99,17 +99,17 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       if (!is.element(x$method, c("FE","EE","CE"))) {
          if (x$int.only) {
             cat(mstyle$text("tau^2 (estimated amount of total heterogeneity): "))
-            cat(mstyle$result(paste0(.fcf(x$tau2, ifelse(abs(x$tau2) <= .Machine$double.eps*10,0,digits[["var"]])), ifelse(is.na(x$se.tau2), "", paste0(" (SE = " , .fcf(x$se.tau2, digits[["sevar"]]), ")")))))
+            cat(mstyle$result(paste0(fmtx(x$tau2, digits[["var"]], thresh=.Machine$double.eps*10), ifelse(is.na(x$se.tau2), "", paste0(" (SE = " , fmtx(x$se.tau2, digits[["sevar"]]), ")")))))
             cat("\n")
             cat(mstyle$text("tau (square root of estimated tau^2 value):      "))
-            cat(mstyle$result(paste0(ifelse(x$tau2>=0, .fcf(sqrt(x$tau2), ifelse(x$tau2 <= .Machine$double.eps*10,0,digits[["var"]])), NA))))
+            cat(mstyle$result(fmtx(.sqrt(x$tau2), digits[["var"]], thresh=.Machine$double.eps*10)))
             cat("\n")
          } else {
             cat(mstyle$text("tau^2 (estimated amount of residual heterogeneity):     "))
-            cat(mstyle$result(paste0(.fcf(x$tau2, ifelse(abs(x$tau2) <= .Machine$double.eps*10,0,digits[["var"]])), ifelse(is.na(x$se.tau2), "", paste0(" (SE = " , .fcf(x$se.tau2, digits[["sevar"]]), ")")))))
+            cat(mstyle$result(paste0(fmtx(x$tau2, digits[["var"]], thresh=.Machine$double.eps*10), ifelse(is.na(x$se.tau2), "", paste0(" (SE = " , fmtx(x$se.tau2, digits[["sevar"]]), ")")))))
             cat("\n")
             cat(mstyle$text("tau (square root of estimated tau^2 value):             "))
-            cat(mstyle$result(paste0(ifelse(x$tau2>=0, .fcf(sqrt(x$tau2), ifelse(x$tau2 <= .Machine$double.eps*10,0,digits[["var"]])), NA))))
+            cat(mstyle$result(fmtx(.sqrt(x$tau2), digits[["var"]], thresh=.Machine$double.eps*10)))
             cat("\n")
          }
       }
@@ -117,30 +117,30 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       if (x$int.only) {
          if (!is.na(x$I2)) {
             cat(mstyle$text("I^2 (total heterogeneity / total variability):   "))
-            cat(mstyle$result(paste0(ifelse(is.na(x$I2), NA, .fcf(x$I2, 2)), "%")))
+            cat(mstyle$result(fmtx(x$I2, 2, postfix="%")))
             cat("\n")
          }
          if (!is.na(x$H2)) {
             cat(mstyle$text("H^2 (total variability / sampling variability):  "))
-            cat(mstyle$result(paste0(ifelse(is.na(x$H2), NA, .fcf(x$H2, 2)))))
+            cat(mstyle$result(fmtx(x$H2, 2)))
             cat("\n")
          }
       } else {
          if (!is.na(x$I2)) {
             cat(mstyle$text("I^2 (residual heterogeneity / unaccounted variability): "))
-            cat(mstyle$result(paste0(ifelse(is.na(x$I2), NA, .fcf(x$I2, 2)), "%")))
+            cat(mstyle$result(fmtx(x$I2, 2, postfix="%")))
             cat("\n")
          }
          if (!is.na(x$H2)) {
             cat(mstyle$text("H^2 (unaccounted variability / sampling variability):   "))
-            cat(mstyle$result(paste0(ifelse(is.na(x$H2), NA, .fcf(x$H2, 2)))))
+            cat(mstyle$result(fmtx(x$H2, 2)))
             cat("\n")
          }
       }
 
       if (!x$int.only && !is.null(x$R2)) {
          cat(mstyle$text("R^2 (amount of heterogeneity accounted for):            "))
-         cat(mstyle$result(paste0(ifelse(is.na(x$R2), NA, .fcf(x$R2, 2)), "%")))
+         cat(mstyle$result(fmtx(x$R2, 2, postfix="%")))
          cat("\n")
       }
 
@@ -152,7 +152,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
    if (inherits(x, "rma.gen")) {
       cat(mstyle$section("Parameter Estimates:"))
       cat("\n\n")
-      res.table <- data.frame(as.list(.fcf(x$pars, digits[["var"]])))
+      res.table <- data.frame(as.list(fmtx(x$pars, digits[["var"]])))
       colnames(res.table) <- names(x$pars)
       res.table <- res.table[1,,drop=FALSE]
       tmp <- capture.output(.print.vector(res.table))
@@ -164,11 +164,11 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       if (x$int.only) {
          cat(mstyle$section("Test for Heterogeneity:"))
          cat("\n")
-         cat(mstyle$result(paste0("Q(df = ", x$k-x$p, ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$QE, "Q", df=x$k-x$p, pval=x$QEp, digits=digits)))
       } else {
          cat(mstyle$section("Test for Residual Heterogeneity:"))
          cat("\n")
-         cat(mstyle$result(paste0("QE(df = ", x$k-x$p, ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$QE, "QE", df=x$k-x$p, pval=x$QEp, digits=digits)))
       }
       cat("\n\n")
    }
@@ -177,11 +177,11 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       if (x$int.only) {
          cat(mstyle$section("Test for Heterogeneity:"))
          cat("\n")
-         cat(mstyle$result(paste0("LRT(df = 1) = ", .fcf(x$LRT.tau2, digits[["test"]]), ", p-val ", .pval(x$LRTp.tau2, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$LRT.tau2, "LRT", df=1, pval=x$LRTp.tau2, digits=digits)))
       } else {
          cat(mstyle$section("Test for Residual Heterogeneity:"))
          cat("\n")
-         cat(mstyle$result(paste0("LRT(df = 1) = ", .fcf(x$LRT.tau2, digits[["test"]]), ", p-val ", .pval(x$LRTp.tau2, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$LRT.tau2, "LRT", df=1, pval=x$LRTp.tau2, digits=digits)))
       }
       cat("\n\n")
    }
@@ -199,7 +199,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       if (all(x$tcl[1] == x$tcl)) {
          cat(mstyle$result(x$tcl[1]))
       } else {
-         cat(mstyle$result(paste0(min(x$tcl), "-", max(x$tcl), " (mean: ", .fcf(mean(x$tcl), digits=2), ", median: ", round(median(x$tcl), digits=2), ")")))
+         cat(mstyle$result(paste0(min(x$tcl), "-", max(x$tcl), " (mean: ", fmtx(mean(x$tcl), digits=2), ", median: ", round(median(x$tcl), digits=2), ")")))
       }
       cat("\n\n")
 
@@ -213,19 +213,19 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       }
       cat("\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         cat(mstyle$result(paste0("F(df1 = ", x$QMdf[1], ", df2 = ", round(x$QMdf[2], 2), ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$QM, "F", df1=x$QMdf[1], df2=x$QMdf[2], pval=x$QMp, digits=digits)))
       } else {
-         cat(mstyle$result(paste0("QM(df = ", x$QMdf[1], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$QM, "QM", df=x$QMdf[1], pval=x$QMp, digits=digits)))
       }
       cat("\n\n")
    }
 
    if (is.element(x$test, c("knha","adhoc","t"))) {
-      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf,2), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
+      res.table <- data.frame(estimate=fmtx(c(x$beta), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), tval=fmtx(x$zval, digits[["test"]]), df=round(x$ddf,2), pval=fmtp(x$pval, digits[["pval"]]), ci.lb=fmtx(x$ci.lb, digits[["ci"]]), ci.ub=fmtx(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
       if (inherits(x, "robust.rma"))
          res.table <- .addfootsym(res.table, 2:7, footsym[1])
    } else {
-      res.table <- data.frame(estimate=.fcf(c(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
+      res.table <- data.frame(estimate=fmtx(c(x$beta), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), zval=fmtx(x$zval, digits[["test"]]), pval=fmtp(x$pval, digits[["pval"]]), ci.lb=fmtx(x$ci.lb, digits[["ci"]]), ci.ub=fmtx(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
    }
    rownames(res.table) <- rownames(x$beta)
    signif <- symnum(x$pval, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
@@ -261,17 +261,17 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          cat(mstyle$section(paste0("Test of Scale Coefficients (coefficient", ifelse(x$m.alpha == 1, " ", "s "), .format.btt(x$att),"):")))
          cat("\n")
          if (is.element(x$test, c("knha","adhoc","t"))) {
-            cat(mstyle$result(paste0("F(df1 = ", x$QSdf[1], ", df2 = ", round(x$QSdf[2], 2), ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))
+            cat(mstyle$result(fmtt(x$QS, "F", df1=x$QSdf[1], df2=x$QSdf[2], pval=x$QSp, digits=digits)))
          } else {
-            cat(mstyle$result(paste0("QS(df = ", x$QSdf[1], ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))
+            cat(mstyle$result(fmtt(x$QS, "QM", df=x$QSdf[1], pval=x$QSp, digits=digits)))
          }
          cat("\n")
       }
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         res.table <- data.frame(estimate=.fcf(c(x$alpha), digits[["est"]]), se=.fcf(x$se.alpha, digits[["se"]]), tval=.fcf(x$zval.alpha, digits[["test"]]), df=round(x$ddf.alpha, 2), pval=.pval(x$pval.alpha, digits[["pval"]]), ci.lb=.fcf(x$ci.lb.alpha, digits[["ci"]]), ci.ub=.fcf(x$ci.ub.alpha, digits[["ci"]]), stringsAsFactors=FALSE)
+         res.table <- data.frame(estimate=fmtx(c(x$alpha), digits[["est"]]), se=fmtx(x$se.alpha, digits[["se"]]), tval=fmtx(x$zval.alpha, digits[["test"]]), df=round(x$ddf.alpha, 2), pval=fmtp(x$pval.alpha, digits[["pval"]]), ci.lb=fmtx(x$ci.lb.alpha, digits[["ci"]]), ci.ub=fmtx(x$ci.ub.alpha, digits[["ci"]]), stringsAsFactors=FALSE)
       } else {
-         res.table <- data.frame(estimate=.fcf(c(x$alpha), digits[["est"]]), se=.fcf(x$se.alpha, digits[["se"]]), zval=.fcf(x$zval.alpha, digits[["test"]]), pval=.pval(x$pval.alpha, digits[["pval"]]), ci.lb=.fcf(x$ci.lb.alpha, digits[["ci"]]), ci.ub=.fcf(x$ci.ub.alpha, digits[["ci"]]), stringsAsFactors=FALSE)
+         res.table <- data.frame(estimate=fmtx(c(x$alpha), digits[["est"]]), se=fmtx(x$se.alpha, digits[["se"]]), zval=fmtx(x$zval.alpha, digits[["test"]]), pval=fmtp(x$pval.alpha, digits[["pval"]]), ci.lb=fmtx(x$ci.lb.alpha, digits[["ci"]]), ci.ub=fmtx(x$ci.ub.alpha, digits[["ci"]]), stringsAsFactors=FALSE)
       }
       rownames(res.table) <- rownames(x$alpha)
       signif <- symnum(x$pval.alpha, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
@@ -311,11 +311,11 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          cat("\n")
          cat(mstyle$section("Test for Selection Model Parameters:"))
          cat("\n")
-         cat(mstyle$result(paste0("LRT(df = ", x$LRTdf, ") = ", .fcf(x$LRT, digits[["test"]]), ", p-val ", .pval(x$LRTp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$LRT, "LRT", df=x$LRTdf, pval=x$LRTp, digits=digits)))
          cat("\n")
       }
 
-      res.table <- data.frame(estimate=.fcf(c(x$delta), digits[["est"]]), se=.fcf(x$se.delta, digits[["se"]]), zval=.fcf(x$zval.delta, digits[["test"]]), pval=.pval(x$pval.delta, digits[["pval"]]), ci.lb=.fcf(x$ci.lb.delta, digits[["ci"]]), ci.ub=.fcf(x$ci.ub.delta, digits[["ci"]]), stringsAsFactors=FALSE)
+      res.table <- data.frame(estimate=fmtx(c(x$delta), digits[["est"]]), se=fmtx(x$se.delta, digits[["se"]]), zval=fmtx(x$zval.delta, digits[["test"]]), pval=fmtp(x$pval.delta, digits[["pval"]]), ci.lb=fmtx(x$ci.lb.delta, digits[["ci"]]), ci.ub=fmtx(x$ci.ub.delta, digits[["ci"]]), stringsAsFactors=FALSE)
 
       if (x$type == "stepfun") {
          rownames(res.table) <- rownames(x$ptable)

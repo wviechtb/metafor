@@ -18,7 +18,7 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
    cat("\n")
 
    if (showfit) {
-      fs <- .fcf(x$fit.stats$ML, digits[["fit"]])
+      fs <- fmtx(x$fit.stats$ML, digits[["fit"]])
       names(fs) <- c("logLik", "deviance", "AIC", "BIC", "AICc")
       cat("\n")
       tmp <- capture.output(print(fs, quote=FALSE, print.gap=2))
@@ -30,26 +30,26 @@ print.rma.peto <- function(x, digits, showfit=FALSE, ...) {
 
    if (!is.na(x$I2)) {
       cat(mstyle$text("I^2 (total heterogeneity / total variability):  "))
-      cat(mstyle$result(paste0(ifelse(is.na(x$I2), NA, .fcf(x$I2, 2)), "%")))
+      cat(mstyle$result(paste0(fmtx(x$I2, 2), "%")))
       cat("\n")
    }
    if (!is.na(x$H2)) {
       cat(mstyle$text("H^2 (total variability / sampling variability): "))
-      cat(mstyle$result(paste0(ifelse(is.na(x$H2), NA, .fcf(x$H2, 2)))))
+      cat(mstyle$result(fmtx(x$H2, 2)))
       cat("\n")
    }
 
    if (!is.na(x$QE)) {
       cat("\n")
       cat(mstyle$section("Test for Heterogeneity:"), "\n")
-      cat(mstyle$result(paste0("Q(df = ", x$k.pos-1, ") = ", .fcf(x$QE, digits[["test"]]), ", p-val ", .pval(x$QEp, digits[["pval"]], showeq=TRUE, sep=" "))))
+      cat(mstyle$result(fmtt(x$QE, "Q", df=x$k.pos-1, pval=x$QEp, digits=digits)))
    }
 
    if (any(!is.na(c(x$I2, x$H2, x$QE))))
       cat("\n\n")
 
-   res.table <- c(estimate=.fcf(unname(x$beta), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), ci.lb=.fcf(x$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$ci.ub, digits[["ci"]]))
-   res.table.exp <- c(estimate=.fcf(exp(unname(x$beta)), digits[["est"]]), ci.lb=.fcf(exp(x$ci.lb), digits[["ci"]]), ci.ub=.fcf(exp(x$ci.ub), digits[["ci"]]))
+   res.table <- c(estimate=fmtx(unname(x$beta), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), zval=fmtx(x$zval, digits[["test"]]), pval=fmtp(x$pval, digits[["pval"]]), ci.lb=fmtx(x$ci.lb, digits[["ci"]]), ci.ub=fmtx(x$ci.ub, digits[["ci"]]))
+   res.table.exp <- c(estimate=fmtx(exp(unname(x$beta)), digits[["est"]]), ci.lb=fmtx(exp(x$ci.lb), digits[["ci"]]), ci.ub=fmtx(exp(x$ci.ub), digits[["ci"]]))
 
    cat(mstyle$section("Model Results (log scale):"))
    cat("\n\n")

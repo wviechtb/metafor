@@ -3,7 +3,7 @@
 \alias{update.rma}
 \title{Model Updating for 'rma' Objects}
 \description{
-   The function can be used to update and (by default) re-fit \code{"rma"} models. It does this by extracting the call stored in the object, updating the call and (by default) evaluating that call.
+   The function can be used to update and (by default) refit \code{"rma"} models. It does this by extracting the call stored in the object, updating the call, and (by default) evaluating that call.
 }
 \usage{
 \method{update}{rma}(object, formula., \dots, evaluate=TRUE)
@@ -27,7 +27,7 @@
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, and \code{\link{rma.mv}} for functions to fit models which can be updated / re-fit.
+   \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, and \code{\link{rma.mv}} for functions to fit models which can be updated / refit.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

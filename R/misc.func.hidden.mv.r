@@ -1020,16 +1020,16 @@
 
       }
 
-      cat(mstyle$verbose(paste0("ll = ", ifelse(is.na(llval), NA, formatC(llval, digits=digits[["fit"]], format="f", flag=" ")))), "  ")
+      cat(mstyle$verbose(paste0("ll = ",             fmtx(llval,  digits[["fit"]], flag=" "))), "  ")
       if (withS)
-         cat(mstyle$verbose(paste0("sigma2 =", paste(ifelse(is.na(sigma2), NA, formatC(sigma2, digits=digits[["var"]], format="f", flag=" ")), collapse=" "), "  ")))
+         cat(mstyle$verbose(paste0("sigma2 =", paste(fmtx(sigma2, digits[["var"]], flag=" "), collapse=" "), "  ")))
       if (withG) {
-         cat(mstyle$verbose(paste0("tau2 =",   paste(ifelse(is.na(tau2),   NA, formatC(tau2,   digits=digits[["var"]], format="f", flag=" ")), collapse=" "), "  ")))
-         cat(mstyle$verbose(paste0("rho =",    paste(ifelse(is.na(rho),    NA, formatC(rho,    digits=digits[["var"]], format="f", flag=" ")), collapse=" "), "  ")))
+         cat(mstyle$verbose(paste0("tau2 =",   paste(fmtx(tau2,   digits[["var"]], flag=" "), collapse=" "), "  ")))
+         cat(mstyle$verbose(paste0("rho =",    paste(fmtx(rho,    digits[["var"]], flag=" "), collapse=" "), "  ")))
       }
       if (withH) {
-         cat(mstyle$verbose(paste0("gamma2 =", paste(ifelse(is.na(gamma2), NA, formatC(gamma2, digits=digits[["var"]], format="f", flag=" ")), collapse=" "), "  ")))
-         cat(mstyle$verbose(paste0("phi =",    paste(ifelse(is.na(phi),    NA, formatC(phi,    digits=digits[["var"]], format="f", flag=" ")), collapse=" "), "  ")))
+         cat(mstyle$verbose(paste0("gamma2 =", paste(fmtx(gamma2, digits[["var"]], flag=" "), collapse=" "), "  ")))
+         cat(mstyle$verbose(paste0("phi =",    paste(fmtx(phi,    digits[["var"]], flag=" "), collapse=" "), "  ")))
       }
       cat("\n")
 

@@ -127,7 +127,7 @@
       }
 
       if (verbose)
-         cat(mstyle$verbose(paste("ll =", .fcf(sum(lli), digits[["fit"]]), " ", .fcf(beta, digits[["est"]]), "\n")))
+         cat(mstyle$verbose(paste("ll =", fmtx(sum(lli), digits[["fit"]]), " ", fmtx(beta, digits[["est"]]), "\n")))
 
    }
 
@@ -150,7 +150,7 @@
       }
 
       if (verbose)
-         cat(mstyle$verbose(paste("ll = ", .fcf(sum(lli), digits[["fit"]]), " ", .fcf(tau2, digits[["var"]]), " ", .fcf(beta, digits[["est"]]), "\n")))
+         cat(mstyle$verbose(paste("ll = ", fmtx(sum(lli), digits[["fit"]]), " ", fmtx(tau2, digits[["var"]]), " ", fmtx(beta, digits[["est"]]), "\n")))
 
    }
 

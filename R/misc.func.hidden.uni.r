@@ -33,7 +33,7 @@
    RSS   <- crossprod(Y,P) %*% Y
 
    if (verbose)
-      cat(mstyle$verbose(paste("tau2 =", formatC(tau2val, digits=digits[["var"]], width=digits[["var"]]+4, format="f"), "  RSS - objective =", formatC(RSS - objective, format="f", digits=digits[["var"]], flag=" "), "\n")))
+      cat(mstyle$verbose(paste("tau2 =", fmtx(tau2val, digits[["var"]], addwidth=4), "  RSS - objective =", fmtx(RSS - objective, digits[["var"]], flag=" "), "\n")))
 
    return(RSS - objective)
 
@@ -64,7 +64,7 @@
    }
 
    if (verbose)
-      cat(mstyle$verbose(paste("tau2 =", formatC(tau2val, digits=digits[["var"]], width=digits[["var"]]+4, format="f"), "  objective =", formatC(res, format="f", digits=digits[["var"]], flag=" "), "\n")))
+      cat(mstyle$verbose(paste("tau2 =", fmtx(tau2val, digits[["var"]], addwidth=4), "  objective =", fmtx(res, digits[["var"]], flag=" "), "\n")))
 
    return(res)
 
@@ -140,7 +140,7 @@
 
    ### show progress
    if (progbar)
-      cat(mstyle$verbose(paste("pval =", formatC(pval, format="f", digits=digits[["pval"]]), " diff =", formatC(diff, format="f", digits=digits[["pval"]], flag=" "), " val =", formatC(val, format="f", digits=digits[["est"]], flag=" "), "\n")))
+      cat(mstyle$verbose(paste("pval =", fmtx(pval, digits[["pval"]]), " diff =", fmtx(diff, digits[["pval"]], flag=" "), " val =", fmtx(val, digits[["est"]], flag=" "), "\n")))
 
    ### penalize negative differences, which should force the CI bound to correspond to a p-value of *at least* level
    diff <- ifelse(diff < 0, diff*10, diff)
@@ -254,10 +254,10 @@
       alpha <- mZ %*% alpha
 
    if (verbose) {
-      cat(mstyle$verbose(paste0("ll = ",          ifelse(is.na(llval), NA, formatC(llval, digits=digits[["fit"]], format="f", flag=" ")), "  ")))
+      cat(mstyle$verbose(paste0("ll = ",            fmtx(llval, digits[["fit"]], flag=" "), "  ")))
       if (optbeta)
-         cat(mstyle$verbose(paste0("beta = ",  paste(ifelse(is.na(beta),  NA, formatC(beta,  digits=digits[["est"]], format="f", flag=" ")), collapse=" "), "  ")))
-      cat(mstyle$verbose(paste0("alpha = ", paste(ifelse(is.na(alpha), NA, formatC(alpha, digits=digits[["est"]], format="f", flag=" ")), collapse=" "))))
+         cat(mstyle$verbose(paste0("beta = ", paste(fmtx(beta,  digits[["est"]], flag=" "), collapse=" "), "  ")))
+      cat(mstyle$verbose(paste0("alpha = ",   paste(fmtx(alpha, digits[["est"]], flag=" "), collapse=" "))))
       cat("\n")
    }
 

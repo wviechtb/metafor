@@ -259,7 +259,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    ### formating function for p-values
 
    fpval <- function(p, pdigits=digits[["pval"]])
-      paste0("$p ", ifelse(p < 10^(-pdigits), paste0("< ", .fcf(10^(-pdigits), pdigits)), paste0("= ", .fcf(p, pdigits))), "$")
+      paste0("$p ", ifelse(p < 10^(-pdigits), paste0("< ", fmtx(10^(-pdigits), pdigits)), paste0("= ", fmtx(p, pdigits))), "$")
    # consider giving only 2 digits for p-value if p > .05 or p > .10
 
    #########################################################################
@@ -326,9 +326,9 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    methods <- paste0(methods, "Studentized residuals and Cook's distances are used to examine whether studies may be outliers and/or influential in the context of the model [@viechtbauer2010b]. ")
 
    #methods <- paste0(methods, "Studies with a studentized residual larger than $\\pm 1.96$ are considered potential outliers. ")
-   methods <- paste0(methods, "Studies with a studentized residual larger than the $100 \\times (1 - ", x$level, "/(2 \\times k))$th percentile of a standard normal distribution are considered potential outliers (i.e., using a Bonferroni correction with two-sided $\\alpha = ", x$level, "$ for $k$ studies included in the meta-analysis). ") # $\\pm ", .fcf(crit, digits[["test"]]), "$ (
+   methods <- paste0(methods, "Studies with a studentized residual larger than the $100 \\times (1 - ", x$level, "/(2 \\times k))$th percentile of a standard normal distribution are considered potential outliers (i.e., using a Bonferroni correction with two-sided $\\alpha = ", x$level, "$ for $k$ studies included in the meta-analysis). ") # $\\pm ", fmtx(crit, digits[["test"]]), "$ (
 
-   #methods <- paste0(methods, "Studies with a Cook's distance larger than ", .fcf(qchisq(0.5, df=infres$m), digits[["test"]]), " (the 50th percentile of a $\\chi^2$-distribution with ", infres$m, " degree", ifelse(infres$m > 1, "s", ""), " of freedom) are considered to be influential. ")
+   #methods <- paste0(methods, "Studies with a Cook's distance larger than ", fmtx(qchisq(0.5, df=infres$m), digits[["test"]]), " (the 50th percentile of a $\\chi^2$-distribution with ", infres$m, " degree", ifelse(infres$m > 1, "s", ""), " of freedom) are considered to be influential. ")
    methods <- paste0(methods, "Studies with a Cook's distance larger than the median plus six times the interquartile range of the Cook's distances are considered to be influential.")
 
    methods <- if (footnotes) paste0(methods, "[^cook] ") else paste0(methods, " ")
@@ -351,7 +351,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    results <- paste0(results, "A total of $k=", x$k, "$ studies were included in the analysis. ")
 
    ### range of observed outcomes
-   results <- paste0(results, "The observed ", measure, "s ranged from $", .fcf(min(x$yi), digits[["est"]]), "$ to $", .fcf(max(x$yi), digits[["est"]]), "$, ")
+   results <- paste0(results, "The observed ", measure, "s ranged from $", fmtx(min(x$yi), digits[["est"]]), "$ to $", fmtx(max(x$yi), digits[["est"]]), "$, ")
 
    ### percent positive/negative
    results <- paste0(results, "with the majority of estimates being ", ifelse(mean(x$yi > 0) > .50, "positive", "negative"), " (", ifelse(mean(x$yi > 0) > .50, round(100*mean(x$yi > 0)), round(100*mean(x$yi < 0))), "%). ")
@@ -359,11 +359,11 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (is.element(model, c("FE","EE","CE","RE"))) {
 
       ### estimated average outcome with CI
-      results <- paste0(results, "The estimated average ", measure, " based on the ", model.name, " model was ", ifelse(is.element(model, c("FE","EE","CE")), "$\\hat{\\theta} = ", "$\\hat{\\mu} = "), .fcf(c(x$beta), digits[["est"]]), "$ ")
-      results <- paste0(results, "(", level, "% CI: $", .fcf(x$ci.lb, digits[["ci"]]), "$ to $", .fcf(x$ci.ub, digits[["ci"]]), "$). ")
+      results <- paste0(results, "The estimated average ", measure, " based on the ", model.name, " model was ", ifelse(is.element(model, c("FE","EE","CE")), "$\\hat{\\theta} = ", "$\\hat{\\mu} = "), fmtx(c(x$beta), digits[["est"]]), "$ ")
+      results <- paste0(results, "(", level, "% CI: $", fmtx(x$ci.lb, digits[["ci"]]), "$ to $", fmtx(x$ci.ub, digits[["ci"]]), "$). ")
 
       ### note: for some outcome measures (e.g., proportions), the test H0: mu/theta = 0 is not really relevant; maybe check for this
-      results <- paste0(results, "Therefore, the average outcome ", ifelse(x$pval > 0.05, "did not differ", "differed"), " significantly from zero ($", ifelse(x$test == "z", "z", paste0("t(", x$k-1, ")")), " = ", .fcf(x$zval, digits[["test"]]), "$, ", fpval(x$pval), "). ")
+      results <- paste0(results, "Therefore, the average outcome ", ifelse(x$pval > 0.05, "did not differ", "differed"), " significantly from zero ($", ifelse(x$test == "z", "z", paste0("t(", x$k-1, ")")), " = ", fmtx(x$zval, digits[["test"]]), "$, ", fpval(x$pval), "). ")
 
       ### forest plot
       if (plot.forest) {
@@ -387,19 +387,19 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
          results <- paste0(results, "The $Q$-test for heterogeneity was not significant, but some heterogeneity may still be present in the true outcomes ")
       if (x$QEp <= 0.05)
          results <- paste0(results, "According to the $Q$-test, the true outcomes appear to be heterogeneous ")
-      results <- paste0(results, "($Q(", x$k-1, ") = ", .fcf(x$QE, digits[["test"]]), "$, ", fpval(x$QEp))
+      results <- paste0(results, "($Q(", x$k-1, ") = ", fmtx(x$QE, digits[["test"]]), "$, ", fpval(x$QEp))
 
       ### tau^2 estimate (only for RE models)
       if (model == "RE")
-         results <- paste0(results, ", $\\hat{\\tau}^2 = ", .fcf(x$tau2, digits[["var"]]), "$")
+         results <- paste0(results, ", $\\hat{\\tau}^2 = ", fmtx(x$tau2, digits[["var"]]), "$")
 
       ### I^2 statistic
-      results <- paste0(results, ", $I^2 = ", .fcf(x$I2, digits[["het"]]), "$%). ")
+      results <- paste0(results, ", $I^2 = ", fmtx(x$I2, digits[["het"]]), "$%). ")
 
       ### for the RE model, when any amount of heterogeneity is detected, provide prediction interval and note whether the directionality of effects is consistent or not
       if (model == "RE" && x$tau2 > 0) {
          pred <- predict(x)
-         results <- paste0(results, "A ", level, "% prediction interval for the true outcomes is given by $", .fcf(pred$pi.lb, digits[["ci"]]), "$ to $", .fcf(pred$pi.ub, digits[["ci"]]), "$. ")
+         results <- paste0(results, "A ", level, "% prediction interval for the true outcomes is given by $", fmtx(pred$pi.lb, digits[["ci"]]), "$ to $", fmtx(pred$pi.ub, digits[["ci"]]), "$. ")
          if (c(x$beta) > 0 && pred$pi.lb < 0)
             results <- paste0(results, "Hence, although the average outcome is estimated to be positive, in some studies the true outcome may in fact be negative.")
          if (c(x$beta) < 0 && pred$pi.ub > 0)
@@ -427,13 +427,13 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
       abszi <- abs(zi)
       results <- paste0(results, "An examination of the studentized residuals revealed that ")
       if (all(abszi < crit, na.rm=TRUE))
-         results <- paste0(results, "none of the studies had a value larger than $\\pm ", .fcf(crit, digits[["test"]]), "$ and hence there was no indication of outliers ")
+         results <- paste0(results, "none of the studies had a value larger than $\\pm ", fmtx(crit, digits[["test"]]), "$ and hence there was no indication of outliers ")
       if (sum(abszi >= crit, na.rm=TRUE) == 1)
-         results <- paste0(results, "one study (", infres$inf$slab[abszi >= crit & !is.na(abszi)], ") had a value larger than $\\pm ", .fcf(crit, digits[["test"]]), "$ and may be a potential outlier ")
+         results <- paste0(results, "one study (", infres$inf$slab[abszi >= crit & !is.na(abszi)], ") had a value larger than $\\pm ", fmtx(crit, digits[["test"]]), "$ and may be a potential outlier ")
       if (sum(abszi >= crit, na.rm=TRUE) == 2)
-         results <- paste0(results, "two studies (", paste(infres$inf$slab[abszi >= crit & !is.na(abszi)], collapse="; "), ") had values larger than $\\pm ", .fcf(crit, digits[["test"]]), "$ and may be potential outliers ")
+         results <- paste0(results, "two studies (", paste(infres$inf$slab[abszi >= crit & !is.na(abszi)], collapse="; "), ") had values larger than $\\pm ", fmtx(crit, digits[["test"]]), "$ and may be potential outliers ")
       if (sum(abszi >= crit, na.rm=TRUE) >= 3)
-         results <- paste0(results, "several studies (", paste(infres$inf$slab[abszi >= crit & !is.na(abszi)], collapse="; "), ") had values larger than $\\pm ", .fcf(crit, digits[["test"]]), "$ and may be potential outliers ")
+         results <- paste0(results, "several studies (", paste(infres$inf$slab[abszi >= crit & !is.na(abszi)], collapse="; "), ") had values larger than $\\pm ", fmtx(crit, digits[["test"]]), "$ and may be potential outliers ")
       results <- paste0(results, "in the context of this model. ")
 
       ### check for influential cases

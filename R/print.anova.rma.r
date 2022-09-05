@@ -17,9 +17,9 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       }
       cat("\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         cat(mstyle$result(paste0("F(df1 = ", x$QMdf[1], ", df2 = ", round(x$QMdf[2], 2), ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$QM, "F", df1=x$QMdf[1], df2=x$QMdf[2], pval=x$QMp, digits=digits)))
       } else {
-         cat(mstyle$result(paste0("QM(df = ", x$QMdf[1], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$QM, "QM", df=x$QMdf[1], pval=x$QMp, digits=digits)))
       }
       cat("\n")
 
@@ -30,9 +30,9 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       cat(mstyle$section(paste0("Test of Scale Coefficients (coefficient", ifelse(x$m == 1, " ", "s "), .format.btt(x$att),"):")))
       cat("\n")
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         cat(mstyle$result(paste0("F(df1 = ", x$QSdf[1], ", df2 = ", round(x$QSdf[2], 2), ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$QS, "F", df1=x$QSdf[1], df2=x$QSdf[2], pval=x$QSp, digits=digits)))
       } else {
-         cat(mstyle$result(paste0("QS(df = ", x$QSdf[1], ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))
+         cat(mstyle$result(fmtt(x$QS, "QS", df=x$QSdf[1], pval=x$QSp, digits=digits)))
       }
       cat("\n")
 
@@ -54,9 +54,9 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       cat("\n")
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         res.table <- data.frame(estimate=.fcf(c(x$Xb), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf,2), pval=.pval(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
+         res.table <- data.frame(estimate=fmtx(c(x$Xb), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), tval=fmtx(x$zval, digits[["test"]]), df=round(x$ddf,2), pval=fmtp(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
       } else {
-         res.table <- data.frame(estimate=.fcf(c(x$Xb), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
+         res.table <- data.frame(estimate=fmtx(c(x$Xb), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), zval=fmtx(x$zval, digits[["test"]]), pval=fmtp(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
       }
       rownames(res.table) <- paste0(seq_len(x$m), ":")
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
@@ -71,9 +71,9 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
          }
          cat("\n")
          if (is.element(x$test, c("knha","adhoc","t"))) {
-            cat(mstyle$result(paste0("F(df1 = ", x$QMdf[1], ", df2 = ", round(x$QMdf[2], 2), ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
+            cat(mstyle$result(fmtt(x$QM, "F", df1=x$QMdf[1], df2=x$QMdf[2], pval=x$QMp, digits=digits)))
          } else {
-            cat(mstyle$result(paste0("QM(df = ", x$QMdf[1], ") = ", .fcf(x$QM, digits[["test"]]), ", p-val ", .pval(x$QMp, digits[["pval"]], showeq=TRUE, sep=" "))))
+            cat(mstyle$result(fmtt(x$QM, "QM", df=x$QMdf[1], pval=x$QMp, digits=digits)))
          }
          cat("\n")
       }
@@ -96,9 +96,9 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       cat("\n")
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         res.table <- data.frame(estimate=.fcf(c(x$Za), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), tval=.fcf(x$zval, digits[["test"]]), df=round(x$ddf,2), pval=.pval(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
+         res.table <- data.frame(estimate=fmtx(c(x$Za), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), tval=fmtx(x$zval, digits[["test"]]), df=round(x$ddf,2), pval=fmtp(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
       } else {
-         res.table <- data.frame(estimate=.fcf(c(x$Za), digits[["est"]]), se=.fcf(x$se, digits[["se"]]), zval=.fcf(x$zval, digits[["test"]]), pval=.pval(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
+         res.table <- data.frame(estimate=fmtx(c(x$Za), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), zval=fmtx(x$zval, digits[["test"]]), pval=fmtp(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
       }
       rownames(res.table) <- paste0(seq_len(x$m), ":")
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
@@ -113,9 +113,9 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
          }
          cat("\n")
          if (is.element(x$test, c("knha","adhoc","t"))) {
-            cat(mstyle$result(paste0("F(df1 = ", x$QSdf[1], ", df2 = ", round(x$QSdf[2], 2), ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))
+            cat(mstyle$result(fmtt(x$QS, "F", df1=x$QSdf[1], df2=x$QSdf[2], pval=x$QSp, digits=digits)))
          } else {
-            cat(mstyle$result(paste0("QS(df = ", x$QSdf[1], ") = ", .fcf(x$QS, digits[["test"]]), ", p-val ", .pval(x$QSp, digits[["pval"]], showeq=TRUE, sep=" "))))
+            cat(mstyle$result(fmtt(x$QS, "QS", df=x$QSdf[1], pval=x$QSp, digits=digits)))
          }
          cat("\n")
       }
@@ -125,14 +125,14 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
    if (x$type == "LRT") {
 
       res.table <- data.frame(c(x$parms.f, x$parms.r),
-                              c(.fcf(x$fit.stats.f["AIC"],  digits[["fit"]]), .fcf(x$fit.stats.r["AIC"],  digits[["fit"]])),
-                              c(.fcf(x$fit.stats.f["BIC"],  digits[["fit"]]), .fcf(x$fit.stats.r["BIC"],  digits[["fit"]])),
-                              c(.fcf(x$fit.stats.f["AICc"], digits[["fit"]]), .fcf(x$fit.stats.r["AICc"], digits[["fit"]])),
-                              c(.fcf(x$fit.stats.f["ll"],   digits[["fit"]]), .fcf(x$fit.stats.r["ll"],   digits[["fit"]])),
-                              c(NA, .fcf(x$LRT, digits[["test"]])),
-                              c(NA, .pval(x$pval, digits[["pval"]])),
-                              c(.fcf(x$QE.f, digits[["test"]]),  .fcf(x$QE.r, digits[["test"]])),
-                              c(.fcf(x$tau2.f, digits[["var"]]), .fcf(x$tau2.r, digits[["var"]])),
+                              c(fmtx(x$fit.stats.f["AIC"],  digits[["fit"]]), fmtx(x$fit.stats.r["AIC"],  digits[["fit"]])),
+                              c(fmtx(x$fit.stats.f["BIC"],  digits[["fit"]]), fmtx(x$fit.stats.r["BIC"],  digits[["fit"]])),
+                              c(fmtx(x$fit.stats.f["AICc"], digits[["fit"]]), fmtx(x$fit.stats.r["AICc"], digits[["fit"]])),
+                              c(fmtx(x$fit.stats.f["ll"],   digits[["fit"]]), fmtx(x$fit.stats.r["ll"],   digits[["fit"]])),
+                              c(NA, fmtx(x$LRT, digits[["test"]])),
+                              c(NA, fmtp(x$pval, digits[["pval"]])),
+                              c(fmtx(x$QE.f, digits[["test"]]),  fmtx(x$QE.r, digits[["test"]])),
+                              c(fmtx(x$tau2.f, digits[["var"]]), fmtx(x$tau2.r, digits[["var"]])),
                               c(NA, NA), stringsAsFactors=FALSE)
 
       colnames(res.table) <- c("df", "AIC", "BIC", "AICc", "logLik", "LRT", "pval", "QE", "tau^2", "R^2")
@@ -140,7 +140,7 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
 
       res.table["Full",c("LRT","pval")] <- ""
       res.table["Full","R^2"] <- ""
-      res.table["Reduced","R^2"] <- paste0(.fcf(x$R2, digits[["het"]]), "%")
+      res.table["Reduced","R^2"] <- fmtx(x$R2, digits[["het"]], postfix="%")
 
       ### remove tau^2 column if full model is a FE/EE/CE model or tau2.f/tau2.r is NA
 

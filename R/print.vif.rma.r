@@ -32,25 +32,25 @@ print.vif.rma <- function(x, digits=x$digits, ...) {
 
             if (x$vif[[1]]$m == 1) {
                cat(mstyle$section(paste0("Collinearity Diagnostics (coefficient ", x$vif[[1]]$coefs,"):\n")))
-               cat(mstyle$result(paste0("VIF = ", .fcf(x$vif[[1]]$vif, digits[["est"]]), ", SIF = ", .fcf(x$vif[[1]]$sif, digits[["est"]]))))
+               cat(mstyle$result(paste0("VIF = ", fmtx(x$vif[[1]]$vif, digits[["est"]]), ", SIF = ", fmtx(x$vif[[1]]$sif, digits[["est"]]))))
             } else {
                cat(mstyle$section(paste0("Collinearity Diagnostics (coefficients ", x$vif[[1]]$coefs,"):\n")))
-               cat(mstyle$result(paste0("GVIF = ", .fcf(x$vif[[1]]$vif, digits[["est"]]), ", GSIF = ", .fcf(x$vif[[1]]$sif, digits[["est"]]))))
+               cat(mstyle$result(paste0("GVIF = ", fmtx(x$vif[[1]]$vif, digits[["est"]]), ", GSIF = ", fmtx(x$vif[[1]]$sif, digits[["est"]]))))
             }
             if (!is.null(x$sim))
-               cat(mstyle$result(paste0(", prop = ", .fcf(x$prop, 2))))
+               cat(mstyle$result(paste0(", prop = ", fmtx(x$prop, 2))))
             cat("\n")
 
          } else {
 
             res.table <- do.call(rbind, x$vif)
-            res.table$vif <- .fcf(res.table$vif, digits[["est"]])
-            res.table$sif <- .fcf(res.table$sif, digits[["est"]])
+            res.table$vif <- fmtx(res.table$vif, digits[["est"]])
+            res.table$sif <- fmtx(res.table$sif, digits[["est"]])
 
             res.table$coefname <- NULL
 
             if (!is.null(x$sim))
-               res.table$prop <- .fcf(x$prop, 2)
+               res.table$prop <- fmtx(x$prop, 2)
 
             # if all btt/att specifications are numeric, remove the 'spec' column
             if (all(substr(res.table$spec, 1, 1) %in% as.character(1:9)))
@@ -72,13 +72,13 @@ print.vif.rma <- function(x, digits=x$digits, ...) {
          if (is.null(x$table)) {
 
             if (is.null(x$sim)) {
-               tmp <- .fcf(vifs, digits[["est"]])
+               tmp <- fmtx(vifs, digits[["est"]])
                tmp <- capture.output(.print.vector(tmp))
                .print.table(tmp, mstyle)
             } else {
                res.table <- data.frame(vif=vifs)
-               res.table$prop <- .fcf(x$prop, 2)
-               res.table$vif  <- .fcf(res.table$vif, digits[["est"]])
+               res.table$prop <- fmtx(x$prop, 2)
+               res.table$vif  <- fmtx(res.table$vif, digits[["est"]])
                tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))
                .print.table(tmp, mstyle)
             }
@@ -92,14 +92,14 @@ print.vif.rma <- function(x, digits=x$digits, ...) {
             }
 
             if (is.element(x$test, c("knha","adhoc","t"))) {
-               res.table <- data.frame(estimate=.fcf(x$table$estimate, digits[["est"]]), se=.fcf(x$table$se, digits[["se"]]), tval=.fcf(x$table$tval, digits[["test"]]), df=round(x$table$df,2), "pval"=.pval(x$table$pval, digits[["pval"]]), ci.lb=.fcf(x$table$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$table$ci.ub, digits[["ci"]]), vif=.fcf(vifs, digits[["est"]]), sif=.fcf(sifs, digits[["est"]]), stringsAsFactors=FALSE)
+               res.table <- data.frame(estimate=fmtx(x$table$estimate, digits[["est"]]), se=fmtx(x$table$se, digits[["se"]]), tval=fmtx(x$table$tval, digits[["test"]]), df=round(x$table$df,2), "pval"=fmtp(x$table$pval, digits[["pval"]]), ci.lb=fmtx(x$table$ci.lb, digits[["ci"]]), ci.ub=fmtx(x$table$ci.ub, digits[["ci"]]), vif=fmtx(vifs, digits[["est"]]), sif=fmtx(sifs, digits[["est"]]), stringsAsFactors=FALSE)
             } else {
-               res.table <- data.frame(estimate=.fcf(x$table$estimate, digits[["est"]]), se=.fcf(x$table$se, digits[["se"]]), zval=.fcf(x$table$zval, digits[["test"]]), "pval"=.pval(x$table$pval, digits[["pval"]]), ci.lb=.fcf(x$table$ci.lb, digits[["ci"]]), ci.ub=.fcf(x$table$ci.ub, digits[["ci"]]), vif=.fcf(vifs, digits[["est"]]), sif=.fcf(sifs, digits[["est"]]), stringsAsFactors=FALSE)
+               res.table <- data.frame(estimate=fmtx(x$table$estimate, digits[["est"]]), se=fmtx(x$table$se, digits[["se"]]), zval=fmtx(x$table$zval, digits[["test"]]), "pval"=fmtp(x$table$pval, digits[["pval"]]), ci.lb=fmtx(x$table$ci.lb, digits[["ci"]]), ci.ub=fmtx(x$table$ci.ub, digits[["ci"]]), vif=fmtx(vifs, digits[["est"]]), sif=fmtx(sifs, digits[["est"]]), stringsAsFactors=FALSE)
             }
             rownames(res.table) <- rownames(x$table)
 
             if (!is.null(x$sim))
-               res.table$prop <- .fcf(x$prop, 2)
+               res.table$prop <- fmtx(x$prop, 2)
 
             if (.isTRUE(ddd$num))
                rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))

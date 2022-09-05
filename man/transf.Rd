@@ -145,5 +145,11 @@ predict(res, transf=exp)
 
 ### average risk ratio with 95\% CI using the integral transformation
 predict(res, transf=transf.exp.int, targs=list(tau2=res$tau2, lower=-4, upper=4))
+
+### this also works
+predict(res, transf=transf.exp.int, targs=list(tau2=res$tau2))
+
+### this as well
+predict(res, transf=transf.exp.int, targs=res$tau2)
 }
 \keyword{manip}

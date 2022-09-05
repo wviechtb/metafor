@@ -7,13 +7,13 @@ print.hc.rma.uni <- function(x, digits=x$digits, ...) {
    digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
 
    res.table <- data.frame(method   = c(x$method.rma, x$method),
-                           tau2     = .fcf(c(x$tau2.rma, x$tau2), digits[["var"]]),
-                           estimate = .fcf(c(x$beta.rma, x$beta), digits[["est"]]),
-                           se       = .fcf(c(x$se.rma, x$se), digits[["se"]]),
-                           ci.lb    = .fcf(c(x$ci.lb.rma, x$ci.lb), digits[["ci"]]),
-                           ci.ub    = .fcf(c(x$ci.ub.rma, x$ci.ub), digits[["ci"]]), stringsAsFactors=FALSE)
+                           tau2     = fmtx(c(x$tau2.rma, x$tau2), digits[["var"]]),
+                           estimate = fmtx(c(x$beta.rma, x$beta), digits[["est"]]),
+                           se       = fmtx(c(x$se.rma, x$se), digits[["se"]]),
+                           ci.lb    = fmtx(c(x$ci.lb.rma, x$ci.lb), digits[["ci"]]),
+                           ci.ub    = fmtx(c(x$ci.ub.rma, x$ci.ub), digits[["ci"]]), stringsAsFactors=FALSE)
 
-   if (is.na(res.table$se[1]))
+   if (is.na(x$se[1]))
       res.table$se <- NULL
 
    rownames(res.table) <- c("rma", "hc")
