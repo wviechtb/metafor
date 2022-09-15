@@ -46,13 +46,13 @@ emmprep <- function(x, verbose=FALSE, ...) {
 
       dat <- x$data
 
+      if (is.null(dat))
+         stop(mstyle$stop("Cannot use function when the model object does not contain the original data."))
+
       if (!is.null(x$subset))
          dat <- dat[x$subset,,drop=FALSE]
 
       dat <- dat[x$not.na,,drop=FALSE]
-
-      if (is.null(dat))
-         stop(mstyle$stop("Cannot use function when the model object does not contain the original data."))
 
    } else {
 
@@ -162,3 +162,5 @@ emmprep <- function(x, verbose=FALSE, ...) {
    return(out)
 
 }
+
+############################################################################

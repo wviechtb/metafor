@@ -1,4 +1,4 @@
-# metafor 3.9-6 (2022-09-05)
+# metafor 3.9-7 (2022-09-15)
 
 - `model.matrix()` gains `asdf` argument
 
@@ -7,6 +7,8 @@
 - improved efficiency of `vif()` when `sim=TRUE` by reshuffling only the data needed in the model matrix; due to some edge cases, the simulation approach cannot be used when some redundant predictors were dropped from the original model; and when redundancies occur after reshuffling the data, the simulated (G)VIF value(s) are now set to `Inf` instead of `NA`
 
 - exposed formatter functions `fmtp()`, `fmtx()`, and `fmtt()`
+
+- `selmodel()` gains `type='trunc'` and `type='truncest'` models
 
 # metafor 3.8-1 (2022-08-26)
 

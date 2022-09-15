@@ -1284,6 +1284,9 @@
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
+   if (length(x) == 0L)
+      stop(mstyle$stop("Specified 'subset' is of length 0."), call.=FALSE)
+
    if (is.logical(x)) {
       if (length(x) != k)
          stop(mstyle$stop(paste0("Length of the specified 'subset' (", length(x), ") is not of length k = ", k, ".")), call.=FALSE)

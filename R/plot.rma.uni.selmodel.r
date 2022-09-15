@@ -8,6 +8,9 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
 
    .chkclass(class(x), must="rma.uni.selmodel")
 
+   if (is.element(x$type, c("trunc","truncest")))
+      stop(mstyle$stop("Cannot draw selection function for this type of selection model at the moment."))
+
    ddd <- list(...)
 
    lplot  <- function(..., seed) plot(...)
@@ -18,7 +21,7 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
       citype <- "boot"
 
    if (is.character(ci)) {
-      citype <- ci
+      citype <- tolower(ci)
       ci <- TRUE
    }
 

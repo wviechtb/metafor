@@ -280,17 +280,16 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
 
    if (missing(ylim)) {
 
-      if (any(!is.na(lls))) {
+      if (any(is.finite(lls))) {
          if (xlim[1] <= vc && xlim[2] >= vc) {
-            ylim <- range(c(logLik(x),lls), na.rm=TRUE)
+            ylim <- range(c(logLik(x),lls[is.finite(lls)]), na.rm=TRUE)
          } else {
-            ylim <- range(lls, na.rm=TRUE)
+            ylim <- range(lls[is.finite(lls)])
          }
       } else {
          ylim <- rep(logLik(x), 2L)
       }
-      ylim[1] <- ylim[1] - .1
-      ylim[2] <- ylim[2] + .1
+      ylim <- ylim + c(-0.1, 0.1)
 
    } else {
 

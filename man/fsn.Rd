@@ -30,7 +30,7 @@ fsn(yi, vi, sei, data, type="Rosenthal", alpha=.05,
 
    The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the significance level (i.e., p-value) of the weighted average outcome (based on an equal-effects model) to a particular alpha level (e.g., .05). The method is described in Rosenberg (2005).
 
-   If the combined/observed significance level is above the specified alpha level (for \code{type = "Rosenthal"} or \code{type = "Rosenberg"}) or if the observed average outcome is below the target average outcome (for \code{type = "Orwin"}), then the fail-sage N value will be 0.
+   If the combined/observed significance level is above the specified alpha level (for \code{type = "Rosenthal"} or \code{type = "Rosenberg"}) or if the observed average outcome is below the target average outcome (for \code{type = "Orwin"}), then the fail-safe N value will be 0.
 }
 \value{
    An object of class \code{"fsn"}. The object is a list containing the following components:

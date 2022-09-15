@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-7</span>
       </span>
     </div>
 
@@ -147,7 +147,7 @@
 <p>The Rosenthal method (sometimes called a ‘file drawer analysis’) calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the combined significance level (p-value) to a particular alpha level (e.g., .05). The calculation is based on Stouffer's method to combine p-values and is described in Rosenthal (1979).</p>
 <p>The Orwin method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the (unweighted or weighted) average outcome to a target value (as specified via the <code>target</code> argument). The method is described in Orwin (1983). If <code>weighted=FALSE</code> (the default), the method does not require (or makes use) of <code>vi</code> (or <code>sei</code>), so these arguments are then not relevant for this method. If the <code>target</code> argument is not specified, then the target average outcome will be equal to the observed average outcome divided by 2 (which is quite arbitrary). One should really set <code>target</code> to a value that reflects an outcome one would consider practically irrelevant. Note that if <code>target</code> has the opposite sign as the actually observed average outcome, then its sign is automatically flipped.</p>
 <p>The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the significance level (i.e., p-value) of the weighted average outcome (based on an equal-effects model) to a particular alpha level (e.g., .05). The method is described in Rosenberg (2005).</p>
-<p>If the combined/observed significance level is above the specified alpha level (for <code>type = "Rosenthal"</code> or <code>type = "Rosenberg"</code>) or if the observed average outcome is below the target average outcome (for <code>type = "Orwin"</code>), then the fail-sage N value will be 0.</p>
+<p>If the combined/observed significance level is above the specified alpha level (for <code>type = "Rosenthal"</code> or <code>type = "Rosenberg"</code>) or if the observed average outcome is below the target average outcome (for <code>type = "Orwin"</code>), then the fail-safe N value will be 0.</p>
     </div>
     <div id="value">
     <h2>Value</h2>
