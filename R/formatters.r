@@ -31,13 +31,16 @@ fmtx <- function(x, digits=4, flag="", ...) {
 
    if (length(dim(x)) == 2L) {
 
+      if (length(digits) == 1L)
+         digits <- rep(digits, ncol(x))
+
       out <- matrix("", nrow=nrow(x), ncol=ncol(x))
 
       rownames(out) <- rownames(x)
       colnames(out) <- colnames(x)
 
       for (j in seq_len(ncol(x)))
-         out[,j] <- fmtx(x[,j], digits=digits, flag=flag, ...)
+         out[,j] <- fmtx(x[,j], digits=digits[[j]], flag=flag, ...)
 
       return(out)
 

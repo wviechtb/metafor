@@ -81,7 +81,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    level <- .level(level)
 
    ### digits[1] for annotations, digits[2] for x-axis labels
-   ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for intergers
+   ### note: digits can also be a list (e.g., digits=list(2,3L)); trailing 0's on the x-axis labels
+   ### are dropped if the value is an integer
 
    if (length(digits) == 1L)
       digits <- c(digits,digits)
@@ -647,7 +648,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### add some additional stuff to be put into .metafor environment, so that it can be used by addpoly()
 
-   sav <- c(res, list(level=level, annotate=annotate, digits=digits[1], width=width, transf=transf, atransf=atransf, targs=targs, fonts=fonts[1:2], annosym=annosym))
+   sav <- c(res, list(level=level, annotate=annotate, digits=digits[[1]], width=width, transf=transf, atransf=atransf, targs=targs, fonts=fonts[1:2], annosym=annosym))
    try(assign("forest", sav, envir=.metafor), silent=TRUE)
 
    invisible(res)

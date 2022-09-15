@@ -100,7 +100,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
          digits <- c(digits,digits) ### digits[2] for y-axis labels
    }
 
-   ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for intergers
+   ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for integers
 
    if (length(lty) == 1L)
       lty <- rep(lty, 2L) ### 1st value = funnel lines, 2nd value = reference line

@@ -85,11 +85,15 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    level <- .level(level)
 
-   ### digits[1] for annotations, digits[2] for x-axis labels
-   ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for intergers
+   ### digits[1] for annotations, digits[2] for x-axis labels, digits[3] (if specified) for weights
+   ### note: digits can also be a list (e.g., digits=list(2,3L)); trailing 0's on the x-axis labels
+   ### are dropped if the value is an integer
 
    if (length(digits) == 1L)
-      digits <- c(digits,digits)
+      digits <- c(digits,digits,digits)
+
+   if (length(digits) == 2L)
+      digits <- c(digits,digits[[1]])
 
    ddd <- list(...)
 
@@ -984,12 +988,16 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       if (showweights) {
          if (addfit && x$int.only) {
             annotext <- cbind(c(unname(weights),100), annotext)
+            annotext <- fmtx(annotext, c(digits[[3]], digits[[1]], digits[[1]], digits[[1]]))
+            annotext[nrow(annotext),1] <- "100"
          } else {
             annotext <- cbind(unname(weights), annotext)
+            annotext <- fmtx(annotext, c(digits[[3]], digits[[1]], digits[[1]], digits[[1]]))
          }
+      } else {
+         annotext <- fmtx(annotext, digits[[1]])
       }
 
-      annotext <- fmtx(annotext, digits[[1]])
       annotext <- sub("-", annosym[4], annotext, fixed=TRUE)
 
       if (missing(width)) {
@@ -1062,7 +1070,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### put stuff into the .metafor environment, so that it can be used by addpoly()
 
-   sav <- c(res, list(level=level, annotate=annotate, digits=digits[1], width=width, transf=transf, atransf=atransf, targs=targs, efac=efac[3], fonts=fonts[1:2], annosym=annosym))
+   sav <- c(res, list(level=level, annotate=annotate, digits=digits[[1]], width=width, transf=transf, atransf=atransf, targs=targs, efac=efac[3], fonts=fonts[1:2], annosym=annosym))
    try(assign("forest", sav, envir=.metafor), silent=TRUE)
 
    invisible(res)

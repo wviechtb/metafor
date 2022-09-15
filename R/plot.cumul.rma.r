@@ -74,7 +74,7 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
          digits <- c(digits,digits) ### digits[2] for y-axis labels
    }
 
-   ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for intergers
+   ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for integers
 
    ddd <- list(...)
 
