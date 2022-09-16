@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-9</span>
       </span>
     </div>
 
@@ -216,7 +216,7 @@
 
 
 <p>When <code>type="trunc"</code>, the model assumes that the relative likelihood of selection depends not on the p-value but on the value of the observed effect size or outcome of a study. Let <em></em>\(y_c\) denote a single cutpoint (which can be specified via argument <code>steps</code> and which is assumed to be 0 when unspecified). Let \[w(y_i) = \left\{ \begin{matrix} \; 1 &amp; \textrm{if} \; y_i &gt; y_c \\ \; \delta_1 &amp; \textrm{if} \; y_i \le y_c \\ \end{matrix} \right.\] denote the selection function when <code>alternative="greater"</code> and \[w(y_i) = \left\{ \begin{matrix} \; 1 &amp; \textrm{if} \; y_i &lt; y_c \\ \; \delta_1 &amp; \textrm{if} \; y_i \ge y_c \\ \end{matrix} \right.\] when <code>alternative="less"</code> (note that <code>alternative="two.sided"</code> is not an option for this type of selection model). Therefore, when <code>alternative="greater"</code>, <em></em>\(\delta_1\) denotes the likelihood of selection for observed effect sizes or outcomes that fall below the chosen cutpoint relative to those that fall above it (and vice-versa when <code>alternative="less"</code>). Hence, the null hypothesis <em></em>\(\mbox{H}_0{:}\; \delta_1 = 1\) implies no selection.</p>
-<p>In principle, it is also possible to obtain a maximum likelihood estimate of the cutpoint. For this, one can set <code>type="truncest"</code>, in which case the selection function is given by \[w(y_i) = \left\{ \begin{matrix} \; 1 &amp; \textrm{if} \; y_i &gt; \delta_2 \\ \; \delta_1 &amp; \textrm{if} \; y_i \le \delta_2 \\ \end{matrix} \right.\] when <code>alternative="greater"</code> and analogously when <code>alternative="less"</code>. Therefore, instead of specifying the cutpoint via the <code>steps</code> argument, it is estimated via <em></em>\(\delta_2\). Note that estimating both <em></em>\(\delta_1\) and <em></em>\(\delta_2\) simultaneously is often difficult and will typically require a large number of studies.</p>
+<p>In principle, it is also possible to obtain a maximum likelihood estimate of the cutpoint. For this, one can set <code>type="truncest"</code>, in which case the selection function is given by \[w(y_i) = \left\{ \begin{matrix} \; 1 &amp; \textrm{if} \; y_i &gt; \delta_2 \\ \; \delta_1 &amp; \textrm{if} \; y_i \le \delta_2 \\ \end{matrix} \right.\] when <code>alternative="greater"</code> and analogously when <code>alternative="less"</code>. Therefore, instead of specifying the cutpoint via the <code>steps</code> argument, it is estimated via <em></em>\(\delta_2\). Note that estimating both <em></em>\(\delta_1\) and <em></em>\(\delta_2\) simultaneously is typically very difficult (the likelihood surface is often quite rugged with multiple local optima) and will require a large number of studies. The implementation of this selection function should be considered experimental.</p>
 <p>Models similar to those described above were proposed by Rust et al. (1990) and Formann (2008), but made various simplifying assumptions (e.g., Formann assumed <em></em>\(\delta_1 = 0\)) and did not account for the heteroscedastic nature of the sampling variances of the observed effect sizes or outcomes, nor did they allow for heterogeneity in the true effects or the influence of moderators.</p>
 <p></p>
 </div>
@@ -832,6 +832,35 @@
 <span class="r-in"><span><span class="co"># plot selection function</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="selmodel-6.png" alt="" width="864" height="768"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># truncated distribution selection model (with steps=0 by default)</span></span></span>
+<span class="r-in"><span><span class="va">sel</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"trunc"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sel</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 37; tau^2 estimator: ML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of total heterogeneity): 0.0268 (SE = 0.0206)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):      0.1636</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LRT(df = 1) = 4.8734, p-val = 0.0273</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se    zval    pval    ci.lb   ci.ub    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.1427  0.0741  1.9267  0.0540  -0.0025  0.2879  . </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Selection Model Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LRT(df = 1) = 3.0545, p-val = 0.0805</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selection Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se     zval    pval   ci.lb   ci.ub     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.3818  0.2236  -2.7652  0.0057  0.0000  0.8200  ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">############################################################################</span></span></span>

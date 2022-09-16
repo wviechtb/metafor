@@ -510,7 +510,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       delta.ub.excl <- FALSE
       delta.init <- 1
       delta.min <- 0
-      delta.max <- 1000
+      delta.max <- 100
       H0.delta <- 1
       delta.LRT <- TRUE
       pval.min <- 0
@@ -547,8 +547,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       delta.lb.excl <- c(FALSE, FALSE)
       delta.ub.excl <- c(FALSE, FALSE)
       delta.init <- c(1, mean(yi))
-      delta.min <- c(0,    ifelse(alternative=="greater", min(yi)-sd(yi), min(yi)))
-      delta.max <- c(1000, ifelse(alternative=="greater", max(yi), max(yi)+sd(yi)))
+      delta.min <- c(0,   ifelse(alternative=="greater", min(yi)-sd(yi), min(yi)))
+      delta.max <- c(100, ifelse(alternative=="greater", max(yi), max(yi)+sd(yi)))
       H0.delta <- c(1, 0)
       delta.LRT <- c(TRUE, FALSE)
       pval.min <- 0
@@ -795,7 +795,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       deltas=deltas, delta.val=delta, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
       tau2.val=tau2, tau2.transf=TRUE, tau2.max=tau2.max, beta.val=beta,
       wi.fun=wi.fun, steps=steps, pgrp=pgrp,
-      alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=verbose, digits=digits", ctrl.arg, ")\n", sep="")
+      alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=verbose, digits=digits, dofit=FALSE", ctrl.arg, ")\n", sep="")
 
    #return(optcall)
 

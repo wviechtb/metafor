@@ -1608,6 +1608,9 @@
    if (inherits(opt.res, "try-error"))
       stop(mstyle$stop(paste0("Error during the optimization. Use verbose=TRUE and see help(", fun, ") for more details on the optimization routines.")), call.=FALSE)
 
+   if (optimizer == "lbfgsb3c::lbfgsb3c" && is.null(opt.res$convergence)) # special provision for lbfgsb3c in case 'convergence' is missing
+      opt.res$convergence <- -99
+
    if (is.element(optimizer, c("optim","constrOptim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rsolnp::solnp","alabama::constrOptim.nl","optimParallel::optimParallel")) && opt.res$convergence != 0)
       stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")), call.=FALSE)
 

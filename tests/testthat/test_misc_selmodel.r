@@ -161,4 +161,38 @@ test_that("results are correct for a pirori chosen step function models.", {
 
 })
 
+test_that("results are correct for a truncated distribution model.", {
+
+   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
+
+   skip_on_cran()
+
+   dat <- dat.hackshaw1998
+   res <- rma(yi, vi, data=dat, method="ML")
+
+   sav <- selmodel(res, type="trunc")
+   out <- capture.output(print(sav))
+
+   expect_equivalent(coef(sav)$delta, 0.3818424, tolerance=.tol[["coef"]])
+   expect_equivalent(sav$se.delta, 0.2235527, tolerance=.tol[["se"]])
+   expect_equivalent(sav$LRT, 3.054457, tolerance=.tol[["test"]])
+   expect_identical(sav$LRTdf, 1L)
+   expect_equivalent(sav$tau2, 0.02677134, tolerance=.tol[["var"]])
+
+   tmp <- confint(sav)
+   expect_equivalent(tmp[[1]]$random[1,], c(0.026771, 0.001693, 0.099835), tolerance=.tol[["var"]])
+   expect_equivalent(tmp[[2]]$random[1,], c(0.381842, 0.108796, 1.116679), tolerance=.tol[["coef"]])
+
+   tmp <- profile(sav, cline=TRUE, progbar=FALSE)
+
+   res <- rma(yi, vi, data=dat, method="EE")
+
+   sav <- selmodel(res, type="truncest")
+   expect_equivalent(coef(sav)$delta, c(0.2336542, 0.4690409), tolerance=.tol[["coef"]])
+
+   sav <- selmodel(res, type="truncest", control=list(optimizer="mads"))
+   expect_equivalent(coef(sav)$delta, c(0.1802357, 0.4187099), tolerance=.tol[["coef"]])
+
+})
+
 rm(list=ls())
