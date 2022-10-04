@@ -485,6 +485,11 @@
          ok <- FALSE
       if (any(grepl("^std", xl)))
          ok <- FALSE
+      # ends with 'se' or 'std'
+      if (any(grepl("se$", xl)))
+         ok <- FALSE
+      if (any(grepl("std$", xl)))
+         ok <- FALSE
       # catch cases where vi=<data frame>$se and vi=<data frame>$std
       if (any(grepl("^[[:alpha:]][[:alnum:]_.]*\\$se", xl)))
          ok <- FALSE

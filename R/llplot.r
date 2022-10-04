@@ -89,7 +89,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       }
 
       if (!.all.specified(yi, vi))
-         stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+         stop(mstyle$stop("Cannot construct plot. Check that all of the required information is specified\n  via the appropriate arguments (i.e., yi, vi)."))
 
       if (!.equal.length(yi, vi))
          stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -130,7 +130,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       di <- replmiss(di, n2i-ci)
 
       if (!.all.specified(ai, bi, ci, di))
-         stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+         stop(mstyle$stop("Cannot construct plot. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ai, bi, ci, di or ai, n1i, ci, n2i)."))
 
       n1i <- ai + bi
       n2i <- ci + di

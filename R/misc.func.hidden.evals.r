@@ -39,7 +39,7 @@ setMethod(\"getfit\", \"rma.glmm\", function(object, ...) {
 
 ")
 
-### helper functions to make MuMIn work together with metafor
+### helper functions to make MuMIn work together with metafor: eval(metafor:::.MuMIn)
 
 .MuMIn <- str2expression("
 

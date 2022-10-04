@@ -1014,7 +1014,8 @@
          iteration <- .getfromenv("iteration", default=NULL)
 
          if (!is.null(iteration)) {
-            cat(mstyle$verbose(paste0("Iteration ", iteration, "\t")))
+            #cat(mstyle$verbose(paste0("Iteration ", iteration, "\t")))
+            cat(mstyle$verbose(paste0("Iteration ", formatC(iteration, width=5, flag="-", format="f", digits=0), " ")))
             try(assign("iteration", iteration+1, envir=.metafor), silent=TRUE)
          }
 

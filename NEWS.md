@@ -1,4 +1,4 @@
-# metafor 3.9-9 (2022-09-16)
+# metafor 3.9-10 (2022-10-04)
 
 - `model.matrix()` gains `asdf` argument
 
@@ -8,7 +8,13 @@
 
 - exposed formatter functions `fmtp()`, `fmtx()`, and `fmtt()`
 
-- `selmodel()` gains `type='trunc'` and `type='truncest'` models
+- `selmodel()` gains `type='trunc'` and `type='truncest'` models (the latter should be considered experimental)
+
+- package `numDeriv` moved from `Suggests` to `Depends`
+
+- the variance of measure `ZPCOR` is now calculated with `1/(ni-mi-3)` (instead of `1/(ni-mi-1)`), which provides a better approximation in small samples (and analogous to how the variance of `ZCOR` is calculated with `1/(ni-3)`)
+
+- `escalc()` provides more informative error messages when not specifying all required arguments to compute a particular measure
 
 # metafor 3.8-1 (2022-08-26)
 

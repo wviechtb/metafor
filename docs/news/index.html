@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-10</span>
       </span>
     </div>
 
@@ -96,12 +96,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.9-9" id="metafor-39-9-2022-09-16">metafor 3.9-9 (2022-09-16)<a class="anchor" aria-label="anchor" href="#metafor-39-9-2022-09-16"></a></h2>
+<h2 class="page-header" data-toc-text="3.9-10" id="metafor-39-10-2022-10-04">metafor 3.9-10 (2022-10-04)<a class="anchor" aria-label="anchor" href="#metafor-39-10-2022-10-04"></a></h2>
 <ul><li><p><code><a href="../reference/model.matrix.rma.html">model.matrix()</a></code> gains <code>asdf</code> argument</p></li>
 <li><p><code><a href="../reference/emmprep.html">emmprep()</a></code> function added to create a reference grid for use with the <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans()</a></code> function from the package of the same name</p></li>
 <li><p>improved efficiency of <code><a href="../reference/vif.html">vif()</a></code> when <code>sim=TRUE</code> by reshuffling only the data needed in the model matrix; due to some edge cases, the simulation approach cannot be used when some redundant predictors were dropped from the original model; and when redundancies occur after reshuffling the data, the simulated (G)VIF value(s) are now set to <code>Inf</code> instead of <code>NA</code></p></li>
 <li><p>exposed formatter functions <code><a href="../reference/formatters.html">fmtp()</a></code>, <code><a href="../reference/formatters.html">fmtx()</a></code>, and <code><a href="../reference/formatters.html">fmtt()</a></code></p></li>
-<li><p><code><a href="../reference/selmodel.html">selmodel()</a></code> gains <code>type='trunc'</code> and <code>type='truncest'</code> models</p></li>
+<li><p><code><a href="../reference/selmodel.html">selmodel()</a></code> gains <code>type='trunc'</code> and <code>type='truncest'</code> models (the latter should be considered experimental)</p></li>
+<li><p>package <code>numDeriv</code> moved from <code>Suggests</code> to <code>Depends</code></p></li>
+<li><p>the variance of measure <code>ZPCOR</code> is now calculated with <code>1/(ni-mi-3)</code> (instead of <code>1/(ni-mi-1)</code>), which provides a better approximation in small samples (and analogous to how the variance of <code>ZCOR</code> is calculated with <code>1/(ni-3)</code>)</p></li>
+<li><p><code><a href="../reference/escalc.html">escalc()</a></code> provides more informative error messages when not specifying all required arguments to compute a particular measure</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.8-1" id="metafor-38-1-2022-08-26">metafor 3.8-1 (2022-08-26)<small>2022-08-26</small><a class="anchor" aria-label="anchor" href="#metafor-38-1-2022-08-26"></a></h2>
@@ -325,8 +328,8 @@
 <li><p>reverted back to the pre-1.1-0 way of computing p-values for individual coefficients in <code><a href="../reference/permutest.html">permutest.rma.uni()</a></code>, that is, the p-value is computed with <code>mean(abs(z_perm) &gt;= abs(z_obs) - tol)</code> (where <code>tol</code> is a numerical tolerance)</p></li>
 <li><p><code><a href="../reference/permutest.html">permutest.rma.uni()</a></code> gains <code>permci</code> argument, which can be used to obtain permutation-based CIs of the model coefficients (note that this is computationally very demanding and may take a long time to complete)</p></li>
 <li><p><code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> continues to work even when the saturated model cannot be fitted (although the tests for heterogeneity are not available then)</p></li>
-<li><p><code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> now allows control over the arguments used for <code>method.args</code> (via <code>control=list(hessianCtrl=list(...))</code>) passed to <code>hessian()</code> (from the <code>numDeriv</code> package) when using <code>model="CM.EL"</code> and <code>measure="OR"</code></p></li>
-<li><p>in <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code>, default <code>method.args</code> value for <code>r</code> passed to <code>hessian()</code> has been increased to 16 (while this slows things down a bit, this appears to improve the accuracy of the numerical approximation to the Hessian, especially when tau^2 is close to 0)</p></li>
+<li><p><code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> now allows control over the arguments used for <code>method.args</code> (via <code>control=list(hessianCtrl=list(...))</code>) passed to <code><a href="https://rdrr.io/pkg/numDeriv/man/hessian.html" class="external-link">hessian()</a></code> (from the <code>numDeriv</code> package) when using <code>model="CM.EL"</code> and <code>measure="OR"</code></p></li>
+<li><p>in <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code>, default <code>method.args</code> value for <code>r</code> passed to <code><a href="https://rdrr.io/pkg/numDeriv/man/hessian.html" class="external-link">hessian()</a></code> has been increased to 16 (while this slows things down a bit, this appears to improve the accuracy of the numerical approximation to the Hessian, especially when tau^2 is close to 0)</p></li>
 <li><p>the various <code><a href="../reference/forest.html">forest()</a></code> and <code><a href="../reference/addpoly.html">addpoly()</a></code> functions now have a new argument called <code>width</code>, which provides manual control over the width of the annotation columns; this is useful when creating complex forest plots with a monospaced font and we want to ensure that all annotations are properly lined up at the decimal point</p></li>
 <li><p>the annotations created by the various <code><a href="../reference/forest.html">forest()</a></code> and <code><a href="../reference/addpoly.html">addpoly()</a></code> functions are now a bit more compact by default</p></li>
 <li><p>more flexible <code>efac</code> argument in the various <code><a href="../reference/forest.html">forest()</a></code> functions</p></li>

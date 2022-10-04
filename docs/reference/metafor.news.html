@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-10</span>
       </span>
     </div>
 
@@ -121,7 +121,7 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">metafor.news</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.9-9 (2022-09-16)                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.9-10 (2022-10-04)                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - model.matrix() gains asdf argument</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -137,7 +137,18 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - exposed formatter functions fmtp(), fmtx(), and fmtt()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - selmodel() gains type='trunc' and type='truncest' models</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - selmodel() gains type='trunc' and type='truncest' models (the latter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     should be considered experimental)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - package numDeriv moved from Suggests to Depends</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - the variance of measure ZPCOR is now calculated with 1/(ni-mi-3)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     (instead of 1/(ni-mi-1)), which provides a better approximation in</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     small samples (and analogous to how the variance of ZCOR is</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     calculated with 1/(ni-3))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - escalc() provides more informative error messages when not</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     specifying all required arguments to compute a particular measure</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.8-1 (2022-08-26)                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

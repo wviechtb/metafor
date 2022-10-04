@@ -164,10 +164,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          di <- replmiss(di, n2i-ci)
 
          if (!.all.specified(ai, bi, ci, di))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ai, bi, ci, di or ai, n1i, ci, n2i)."))
 
          if (measure == "MPORM" && !.all.specified(ri))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+            stop(mstyle$stop("Need to specify also argument 'ri' for this measure."))
 
          k.all <- length(ai)
 
@@ -586,7 +586,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          t2i <- .getx("t2i", mf=mf, data=data, checknumeric=TRUE)
 
          if (!.all.specified(x1i, x2i, t1i, t2i))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., x1i, x2i, t1i, t2i)."))
 
          if (!.equal.length(x1i, x2i, t1i, t2i))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -747,7 +747,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             sd2i[!is.na(di)] <- 1
 
             if (!.all.specified(m1i, m2i, sd1i, sd2i, n1i, n2i))
-               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd1i, sd2i, n1i, n2i)."))
 
          }
 
@@ -756,7 +756,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (is.element(measure, c("MD","SMDH","SMD1H","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR"))) {
 
             if (!.all.specified(m1i, m2i, sd1i, sd2i, n1i, n2i))
-               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd1i, sd2i, n1i, n2i)."))
 
             if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -768,7 +768,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (measure == "VR") {
 
             if (!.all.specified(sd1i, sd2i, n1i, n2i))
-               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., sd1i, sd2i, n1i, n2i)."))
 
             if (!.equal.length(sd1i, sd2i, n1i, n2i))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -780,7 +780,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (measure == "SMD1") {
 
             if (!.all.specified(m1i, m2i, sd2i, n1i, n2i))
-               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd2i, n1i, n2i)."))
 
             if (!.equal.length(m1i, m2i, sd2i, n1i, n2i))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -1052,7 +1052,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
 
          if (!.all.specified(ri, ni))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ri, ni)."))
 
          if (!.equal.length(ri, ni))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -1154,10 +1154,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ni  <- .getx("ni",  mf=mf, data=data, checknumeric=TRUE)
 
          if (measure=="PCOR" && !.all.specified(ti, ni, mi))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ti, ni, mi)."))
 
          if (measure=="SPCOR" && !.all.specified(ti, ni, mi, r2i))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ti, ni, mi, r2i)."))
 
          if (measure=="PCOR" && !.equal.length(ti, ni, mi))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -1226,7 +1226,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (measure == "ZPCOR") {
             yi <- ti / sqrt(ti^2 + (ni - mi - 1))
             yi <- 1/2 * log((1+yi)/(1-yi))
-            vi <- 1/(ni-mi-1)
+            vi <- 1/(ni-mi-3)
          }
 
          ### semi-partial correlation coefficient
@@ -1280,7 +1280,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          mi <- replmiss(mi, ni-xi)
 
          if (!.all.specified(xi, mi))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., xi, mi or xi, ni)."))
 
          k.all <- length(xi)
 
@@ -1540,7 +1540,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ti <- .getx("ti", mf=mf, data=data, checknumeric=TRUE)
 
          if (!.all.specified(xi, ti))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., xi, ti)."))
 
          if (!.equal.length(xi, ti))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -1672,7 +1672,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (is.element(measure, c("MN","MNLN","CVLN","SMN"))) {
 
             if (!.all.specified(mi, sdi, ni))
-               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., mi, sdi, ni)."))
 
             if (!.equal.length(mi, sdi, ni))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -1684,7 +1684,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (measure == "SDLN") {
 
             if (!.all.specified(sdi, ni))
-               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., sdi, ni)."))
 
             if (!.equal.length(sdi, ni))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -1769,7 +1769,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             ### for these measures, need m1i, m2i, sd1i, sd2i, ni, and ri
 
             if (!.all.specified(m1i, m2i, sd1i, sd2i, ni, ri))
-               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd1i, sd2i, ni, ri)."))
 
             if (!.equal.length(m1i, m2i, sd1i, sd2i, ni, ri))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -1781,7 +1781,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             ### for this measure, need m1i, m2i, sd1i, ni, and ri (do not need sd2i)
 
             if (!.all.specified(m1i, m2i, sd1i, ni, ri))
-               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd1i, ni, ri)."))
 
             if (!.equal.length(m1i, m2i, sd1i, ni, ri))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -1793,7 +1793,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             ### for this measure, need sd1i, sd2i, ni, and ri
 
             if (!.all.specified(sd1i, sd2i, ni, ri))
-               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., sd1i, sd2i, ni, ri)."))
 
             if (!.equal.length(sd1i, sd2i, ni, ri))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -1952,7 +1952,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
 
          if (!.all.specified(ai, mi, ni))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ai, mi, ni)."))
 
          if (!.equal.length(ai, mi, ni))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -2014,7 +2014,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ci <- .getx("ci", mf=mf, data=data, checknumeric=TRUE)
 
          if (!.all.specified(ai, bi, ci))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required\n  information is specified via the appropriate arguments."))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ai, bi, ci)."))
 
          if (!.equal.length(ai, bi, ci))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
