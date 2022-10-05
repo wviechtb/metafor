@@ -465,7 +465,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          di   <- .getx("di",   mf=mf, data=data, checknumeric=TRUE)
          ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
 
-         if (measure == "SMD") {
+         if (is.element(measure, c("SMD","RPB","RBIS","D2OR","D2ORN","D2ORL"))) {
 
             if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))

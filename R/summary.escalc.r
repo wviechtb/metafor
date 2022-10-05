@@ -26,18 +26,18 @@ H0=0, append=TRUE, replace=TRUE, level=95, olim, digits, transf, ...) {
 
    ### figure out names of yi and vi variables (if possible) and extract the values (if possible)
 
-   if (missing(var.names)) {               ### if var.names not specified, take from object if possible
+   if (missing(var.names)) {               # if var.names not specified, take from object if possible
 
-      if (!is.null(attr(x, "yi.names"))) { ### if yi.names attributes is available
-         yi.name <- attr(x, "yi.names")[1] ### take the first entry to be the yi variable
-      } else {                             ### if not, see if 'yi' is in the object and assume that is the yi variable
+      if (!is.null(attr(x, "yi.names"))) { # if yi.names attributes is available
+         yi.name <- attr(x, "yi.names")[1] # take the first entry to be the yi variable
+      } else {                             # if not, see if 'yi' is in the object and assume that is the yi variable
          if (!is.element("yi", names(x)))
             stop(mstyle$stop("Cannot determine name of the 'yi' variable."))
          yi.name <- "yi"
       }
-      if (!is.null(attr(x, "vi.names"))) { ### if vi.names attributes is available
-         vi.name <- attr(x, "vi.names")[1] ### take the first entry to be the vi variable
-      } else {                             ### if not, see if 'vi' is in the object and assume that is the vi variable
+      if (!is.null(attr(x, "vi.names"))) { # if vi.names attributes is available
+         vi.name <- attr(x, "vi.names")[1] # take the first entry to be the vi variable
+      } else {                             # if not, see if 'vi' is in the object and assume that is the vi variable
          if (!is.element("vi", names(x)))
             stop(mstyle$stop("Cannot determine name of the 'vi' variable."))
          vi.name <- "vi"
@@ -128,49 +128,49 @@ H0=0, append=TRUE, replace=TRUE, level=95, olim, digits, transf, ...) {
 
          ### and wants to replace all values
 
-         dat[[out.names[1]]] <- sei   ### if variable does not exists in dat, it will be added
-         dat[[out.names[2]]] <- zi    ### if variable does not exists in dat, it will be added
-         dat[[out.names[3]]] <- pval  ### if variable does not exists in dat, it will be added
-         dat[[out.names[4]]] <- ci.lb ### if variable does not exists in dat, it will be added
-         dat[[out.names[5]]] <- ci.ub ### if variable does not exists in dat, it will be added
+         dat[[out.names[1]]] <- sei   # if variable does not exists in dat, it will be added
+         dat[[out.names[2]]] <- zi    # if variable does not exists in dat, it will be added
+         dat[[out.names[3]]] <- pval  # if variable does not exists in dat, it will be added
+         dat[[out.names[4]]] <- ci.lb # if variable does not exists in dat, it will be added
+         dat[[out.names[5]]] <- ci.ub # if variable does not exists in dat, it will be added
 
       } else {
 
          ### and only wants to replace any NA values
 
-         if (is.element(out.names[1], names(dat))) { ### if sei variable is in data frame, replace NA values with newly calculated values
+         if (is.element(out.names[1], names(dat))) { # if sei variable is in data frame, replace NA values with newly calculated values
             is.na.sei <- is.na(dat[[out.names[1]]])
             dat[[out.names[1]]][is.na.sei] <- sei[is.na.sei]
          } else {
-            dat[[out.names[1]]] <- sei               ### if sei variable does not exist in dat, just add as new variable
+            dat[[out.names[1]]] <- sei               # if sei variable does not exist in dat, just add as new variable
          }
 
-         if (is.element(out.names[2], names(dat))) { ### if zi variable is in data frame, replace NA values with newly calculated values
+         if (is.element(out.names[2], names(dat))) { # if zi variable is in data frame, replace NA values with newly calculated values
             is.na.zi <- is.na(dat[[out.names[2]]])
             dat[[out.names[2]]][is.na.zi] <- zi[is.na.zi]
          } else {
-            dat[[out.names[2]]] <- zi                ### if zi variable does not exist in dat, just add as new variable
+            dat[[out.names[2]]] <- zi                # if zi variable does not exist in dat, just add as new variable
          }
 
-         if (is.element(out.names[3], names(dat))) { ### if pval variable is in data frame, replace NA values with newly calculated values
+         if (is.element(out.names[3], names(dat))) { # if pval variable is in data frame, replace NA values with newly calculated values
             is.na.pval <- is.na(dat[[out.names[3]]])
             dat[[out.names[3]]][is.na.pval] <- pval[is.na.pval]
          } else {
-            dat[[out.names[3]]] <- pval             ### if pval variable does not exist in dat, just add as new variable
+            dat[[out.names[3]]] <- pval              # if pval variable does not exist in dat, just add as new variable
          }
 
-         if (is.element(out.names[4], names(dat))) { ### if ci.lb variable is in data frame, replace NA values with newly calculated values
+         if (is.element(out.names[4], names(dat))) { # if ci.lb variable is in data frame, replace NA values with newly calculated values
             is.na.ci.lb <- is.na(dat[[out.names[4]]])
             dat[[out.names[4]]][is.na.ci.lb] <- ci.lb[is.na.ci.lb]
          } else {
-            dat[[out.names[4]]] <- ci.lb             ### if ci.lb variable does not exist in dat, just add as new variable
+            dat[[out.names[4]]] <- ci.lb             # if ci.lb variable does not exist in dat, just add as new variable
          }
 
-         if (is.element(out.names[5], names(dat))) { ### if ci.ub variable is in data frame, replace NA values with newly calculated values
+         if (is.element(out.names[5], names(dat))) { # if ci.ub variable is in data frame, replace NA values with newly calculated values
             is.na.ci.ub <- is.na(dat[[out.names[5]]])
             dat[[out.names[5]]][is.na.ci.ub] <- ci.ub[is.na.ci.ub]
          } else {
-            dat[[out.names[5]]] <- ci.ub             ### if ci.ub variable does not exist in dat, just add as new variable
+            dat[[out.names[5]]] <- ci.ub             # if ci.ub variable does not exist in dat, just add as new variable
          }
 
       }
@@ -196,7 +196,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, olim, digits, transf, ...) {
       attr(dat, "digits") <- attr(x, "digits")
    }
 
-   if (is.null(attr(dat, "digits"))) ### in case x no longer has a 'digits' attribute
+   if (is.null(attr(dat, "digits"))) # in case x no longer has a 'digits' attribute
       attr(dat, "digits") <- 4
 
    ### update existing var.names attribute if var.names is specified

@@ -85,6 +85,7 @@ reference:
       - escalc
       - rcalc
       - vcalc
+      - conv.wald
   - title: "Model Fitting"
     desc: >
       Main model fitting functions.

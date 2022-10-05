@@ -170,7 +170,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          For \code{measure="ROM"}, the log is taken of the ratio of means, which makes this outcome measure symmetric around 0 and yields a corresponding sampling distribution that is closer to normality. Hence, this measure cannot be computed when \code{m1i} and \code{m2i} have opposite signs (in fact, this measure is only meant to be used for ratio scale measurements, where both means should be positive anyway).
 
-         For \code{measure="SMD"}, if the means and standard deviations are unknown for some studies, but the standardized mean differences (Cohen's d values) are directly available (e.g., if they are reported in those studies), then these can be specified via argument \code{di}. Also, if the t-statistics from an independent samples t-test is available for some studies (or the corresponding p-values, which can be easily transformed into the t-statistics), one can specify those values via argument \code{ti}, which are then transformed into the corresponding standardized mean differences within the function. See \href{https://www.metafor-project.org/doku.php/tips:assembling_data_smd}{here} for an illustration/discussion of this.
+         For \code{measure="SMD"}, if the means and standard deviations are unknown for some studies, but the standardized mean differences (Cohen's d values) are directly available (e.g., if they are reported in those studies), then these can be specified via argument \code{di}. Also, if the t-statistics from an independent samples t-test is available for some studies, one can specify those values via argument \code{ti}, which are then transformed into the corresponding standardized mean differences within the function. See \href{https://www.metafor-project.org/doku.php/tips:assembling_data_smd}{here} for an illustration/discussion of this.
 
          For \code{measure="MD"}, one can choose between \code{vtype="LS"} (the default) and \code{vtype="HO"}. The former computes the sampling variances without assuming homoscedasticity (i.e., that the true variances of the measurements are the same in group 1 and group 2 within each study), while the latter assumes homoscedasticity (equations 12.5 and 12.3 in Borenstein, 2009, respectively). For \code{measure="SMD"}, one can choose between \code{vtype="LS"} (the default) for the usual large-sample approximation to compute the sampling variances (equation 8 in Hedges, 1982), \code{vtype="UB"} to compute unbiased estimates of the sampling variances (equation 9 in Hedges, 1983), \code{vtype="LS2"} to compute the sampling variances as described in Borenstein (2009) (i.e., equation 12.17), and \code{vtype="AV"} to compute the sampling variances with the usual large-sample approximation but plugging the sample-size weighted average of the Hedges' g values into the equation. The same choices also apply to \code{measure="SMD1"}. For \code{measure="ROM"}, one can choose between \code{vtype="LS"} (the default) for the usual large-sample approximation to compute the sampling variances (equation 1 in Hedges et al., 1999), \code{vtype="HO"} to compute the sampling variances assuming homoscedasticity (the unnumbered equation after equation 1 in Hedges et al., 1999), \code{vtype="AV"} to compute the sampling variances assuming homoscedasticity of the coefficient of variation within each group across studies, and \code{vtype="AVHO"} to compute the sampling variances assuming homoscedasticity of the coefficient of variation for both groups across studies.
 
@@ -251,6 +251,8 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \item \code{"RPB"} for the \emph{point-biserial correlation coefficient},
          \item \code{"RBIS"} for the \emph{biserial correlation coefficient}.
          }
+
+         If the means and standard deviations are unknown for some studies, one can also use argument \code{di} and \code{ti} to specify standardized mean differences (Cohen's d values) or the t-statistics from an independent samples t-test, respectively (together with the group sizes, these are sufficient statistics for computing the (point-)biserial correlation coefficients).
 
          For \code{measure="RPB"}, one must indicate via \code{vtype="ST"} or \code{vtype="CS"} whether the data for the studies were obtained using stratified or cross-sectional (i.e., multinomial) sampling, respectively (it is also possible to specify an entire vector for the \code{vtype} argument in case the sampling scheme differed for the various studies).
 
@@ -564,6 +566,8 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 }
 \seealso{
    \code{\link{print.escalc}} and \code{\link{summary.escalc}} for the print and summary methods.
+
+   \code{\link{conv.wald}} for a function to convert Wald-type confidence intervals and test statistics to sampling variances. \code{\link{vcalc}} for a function to construct or approximate the variance-covariance matrix of dependent effect sizes or outcomes.
 
    \code{\link{rma.uni}} and \code{\link{rma.mv}} for model fitting functions that can take the calculated effect sizes or outcomes (and the corresponding sampling variances) as input.
 

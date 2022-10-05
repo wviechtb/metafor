@@ -1,4 +1,4 @@
-# metafor 3.9-10 (2022-10-04)
+# metafor 3.9-11 (2022-10-05)
 
 - `model.matrix()` gains `asdf` argument
 
@@ -15,6 +15,10 @@
 - the variance of measure `ZPCOR` is now calculated with `1/(ni-mi-3)` (instead of `1/(ni-mi-1)`), which provides a better approximation in small samples (and analogous to how the variance of `ZCOR` is calculated with `1/(ni-3)`)
 
 - `escalc()` provides more informative error messages when not specifying all required arguments to compute a particular measure
+
+- as with `measure="SMD"`, one can now also use arguments `di` and `ti` to specify d-values and t-test statistics for measures `RPB`, `RBIS`, `D2ORN`, and `D2ORL` in `escalc()`
+
+- added `conv.wald()` function for converting Wald-type confidence intervals and test statistics to sampling variances
 
 # metafor 3.8-1 (2022-08-26)
 

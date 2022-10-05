@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-11</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.9-10" id="metafor-39-10-2022-10-04">metafor 3.9-10 (2022-10-04)<a class="anchor" aria-label="anchor" href="#metafor-39-10-2022-10-04"></a></h2>
+<h2 class="page-header" data-toc-text="3.9-11" id="metafor-39-11-2022-10-05">metafor 3.9-11 (2022-10-05)<a class="anchor" aria-label="anchor" href="#metafor-39-11-2022-10-05"></a></h2>
 <ul><li><p><code><a href="../reference/model.matrix.rma.html">model.matrix()</a></code> gains <code>asdf</code> argument</p></li>
 <li><p><code><a href="../reference/emmprep.html">emmprep()</a></code> function added to create a reference grid for use with the <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans()</a></code> function from the package of the same name</p></li>
 <li><p>improved efficiency of <code><a href="../reference/vif.html">vif()</a></code> when <code>sim=TRUE</code> by reshuffling only the data needed in the model matrix; due to some edge cases, the simulation approach cannot be used when some redundant predictors were dropped from the original model; and when redundancies occur after reshuffling the data, the simulated (G)VIF value(s) are now set to <code>Inf</code> instead of <code>NA</code></p></li>
@@ -105,6 +105,8 @@
 <li><p>package <code>numDeriv</code> moved from <code>Suggests</code> to <code>Depends</code></p></li>
 <li><p>the variance of measure <code>ZPCOR</code> is now calculated with <code>1/(ni-mi-3)</code> (instead of <code>1/(ni-mi-1)</code>), which provides a better approximation in small samples (and analogous to how the variance of <code>ZCOR</code> is calculated with <code>1/(ni-3)</code>)</p></li>
 <li><p><code><a href="../reference/escalc.html">escalc()</a></code> provides more informative error messages when not specifying all required arguments to compute a particular measure</p></li>
+<li><p>as with <code>measure="SMD"</code>, one can now also use arguments <code>di</code> and <code>ti</code> to specify d-values and t-test statistics for measures <code>RPB</code>, <code>RBIS</code>, <code>D2ORN</code>, and <code>D2ORL</code> in <code><a href="../reference/escalc.html">escalc()</a></code></p></li>
+<li><p>added <code><a href="../reference/conv.wald.html">conv.wald()</a></code> function for converting Wald-type confidence intervals and test statistics to sampling variances</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="3.8-1" id="metafor-38-1-2022-08-26">metafor 3.8-1 (2022-08-26)<small>2022-08-26</small><a class="anchor" aria-label="anchor" href="#metafor-38-1-2022-08-26"></a></h2>

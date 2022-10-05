@@ -728,9 +728,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          di   <- .getx("di",   mf=mf, data=data, checknumeric=TRUE)
          ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
 
-         ### for SMD, need m1i, m2i, sd1i, sd2i, n1i, and n2i (and can also specify di and/or ti)
+         ### for these measures, need m1i, m2i, sd1i, sd2i, n1i, and n2i (and can also specify di and/or ti)
 
-         if (measure == "SMD") {
+         if (is.element(measure, c("SMD","RPB","RBIS","D2OR","D2ORN","D2ORL"))) {
 
             if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -747,13 +747,13 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             sd2i[!is.na(di)] <- 1
 
             if (!.all.specified(m1i, m2i, sd1i, sd2i, n1i, n2i))
-               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd1i, sd2i, n1i, n2i)."))
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd1i, sd2i, n1i, n2i (and di, ti))."))
 
          }
 
          ### for these measures, need m1i, m2i, sd1i, sd2i, n1i, and n2i
 
-         if (is.element(measure, c("MD","SMDH","SMD1H","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR"))) {
+         if (is.element(measure, c("MD","SMDH","SMD1H","ROM","CVR"))) {
 
             if (!.all.specified(m1i, m2i, sd1i, sd2i, n1i, n2i))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd1i, sd2i, n1i, n2i)."))
@@ -2238,7 +2238,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
    ### add digits attribute
    attr(dat, "digits") <- digits
 
-   ### add 'yi.names' and 'vi.names' to the first position of the corresponding attributes
+   ### add 'yi.names' and 'vi.names' to the first position of the corresponding attributes (so the first is always the last one calculated/added)
    attr(dat, "yi.names") <- unique(c(var.names[1], attr(data, "yi.names"))) ### if 'yi.names' is not an attribute, attr() returns NULL, so this works fine
    attr(dat, "vi.names") <- unique(c(var.names[2], attr(data, "vi.names"))) ### if 'vi.names' is not an attribute, attr() returns NULL, so this works fine
 

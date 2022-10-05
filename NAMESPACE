@@ -10,6 +10,7 @@ importFrom(nlme, ranef)
 export(ranef)
 import(mathjaxr)
 import(metadat)
+import(numDeriv)
 
 S3method("[", list.rma)
 S3method("$<-", list.rma)
