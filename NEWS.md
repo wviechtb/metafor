@@ -18,6 +18,8 @@
 
 - as with `measure="SMD"`, one can now also use arguments `di` and `ti` to specify d-values and t-test statistics for measures `RPB`, `RBIS`, `D2ORN`, and `D2ORL` in `escalc()`
 
+- for measures `COR`, `UCOR`, and `ZCOR`, can now use argument `ti` to specify t-test statistics in `escalc()`
+
 - added `conv.wald()` function for converting Wald-type confidence intervals and test statistics to sampling variances
 
 # metafor 3.8-1 (2022-08-26)

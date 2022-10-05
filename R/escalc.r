@@ -1050,12 +1050,17 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ri <- .getx("ri", mf=mf, data=data, checknumeric=TRUE)
          ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
+         ti <- .getx("ti", mf=mf, data=data, checknumeric=TRUE)
+
+         if (!.equal.length(ri, ni, ti))
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+         ### convert ti to ri values
+
+         ri <- replmiss(ri, ti / sqrt(ni - 2 + ti^2))
 
          if (!.all.specified(ri, ni))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ri, ni)."))
-
-         if (!.equal.length(ri, ni))
-            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ri, ni (and ti))."))
 
          k.all <- length(ri)
 

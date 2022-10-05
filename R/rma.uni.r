@@ -500,6 +500,12 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
          ri <- .getx("ri", mf=mf, data=data, checknumeric=TRUE)
          ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
+         ti <- .getx("ti", mf=mf, data=data, checknumeric=TRUE)
+
+         if (!.equal.length(ri, ni, ti))
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+         ri <- replmiss(ri, ti / sqrt(ni - 2 + ti^2))
 
          k <- length(ri) ### number of outcomes before subsetting
          k.all <- k
