@@ -294,6 +294,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, .
    x$tcl   <- tcl
    x$test  <- "t"
    x$vbest <- vbest
+   x$s2w   <- 1
    x$robumethod <- ifelse(clubSandwich, "clubSandwich", "default")
    x$cluster <- cluster
    x$meat <- meat

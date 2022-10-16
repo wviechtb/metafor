@@ -102,13 +102,13 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (.isTRUE(ddd$tdist))
       test <- "t"
 
-   if (!is.element(test, c("z", "t")))
+   if (!is.element(test, c("z", "t", "knha", "adhoc")))
       stop(mstyle$stop("Invalid option selected for 'test' argument."))
 
    if (is.character(dfs))
       dfs <- match.arg(dfs, c("residual", "contain"))
 
-   if (dfs == "contain")
+   if (dfs == "contain" && test == "z")
       test <- "t"
 
    ### handle Rscale argument (either character, logical, or integer)
@@ -2107,6 +2107,31 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       ddf <- rep(NA, p)
    }
 
+   ### the Knapp & Hartung method (this is experimental)
+
+   s2w <- 1
+
+   if (is.element(test, c("knha","adhoc"))) {
+      knha.rma.mv.warn <- .getfromenv("knha.rma.mv.warn", default=TRUE)
+      if (knha.rma.mv.warn) {
+         warning(mstyle$warning("Use of Knapp and Hartung method for 'rma.mv()' models is experimental.\nNote: This warning is only issued once per session (ignore at your peril)."), call.=FALSE)
+         try(assign("knha.rma.mv.warn", FALSE, envir=.metafor), silent=TRUE)
+      }
+      RSS <- try(as.vector(t(Y - X %*% beta) %*% chol2inv(chol(M)) %*% (Y - X %*% beta)), silent=TRUE)
+      if (inherits(RSS, "try-error"))
+         stop(mstyle$stop(paste0("Failure when trying to compute adjustment factor for Knapp and Hartung method.")))
+      if (RSS <= .Machine$double.eps) {
+         s2w <- 0
+      } else {
+         s2w <- as.vector(RSS / (k - p))
+      }
+   }
+
+   if (test == "adhoc")
+      s2w[s2w < 1] <- 1
+
+   vb <- s2w * vb
+
    ### QM calculation
 
    QM <- try(as.vector(t(beta)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% beta[btt]), silent=TRUE)
@@ -2442,7 +2467,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
                   yi=yi, vi=vi, V=V, W=A, X=X, yi.f=yi.f, vi.f=vi.f, V.f=V.f, X.f=X.f, W.f=W.f, ni=ni, ni.f=ni.f, M=M, G=G, H=H, hessian=hessian, vvc=vvc,
                   ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
                   measure=measure, method=method, weighted=weighted,
-                  test=test, dfs=dfs, ddf=ddf, btt=btt, m=m,
+                  test=test, dfs=dfs, ddf=ddf, s2w=s2w, btt=btt, m=m,
                   digits=digits, level=level, sparse=sparse, dist=ddd$dist, control=control, verbose=verbose,
                   fit.stats=fit.stats,
                   vc.fix=vc.fix,
