@@ -349,11 +349,11 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       if (x$int.only) {
          cat(mstyle$section("Test for Heterogeneity:"))
          cat("\n")
-         cat(mstyle$result(fmtt(x$QE, "Q", df=x$k-x$p, pval=x$QEp, digits=digits)))
+         cat(mstyle$result(fmtt(x$QE, "Q", df=x$QEdf, pval=x$QEp, digits=digits)))
       } else {
          cat(mstyle$section("Test for Residual Heterogeneity:"))
          cat("\n")
-         cat(mstyle$result(fmtt(x$QE, "QE", df=x$k-x$p, pval=x$QEp, digits=digits)))
+         cat(mstyle$result(fmtt(x$QE, "QE", df=x$QEdf, pval=x$QEp, digits=digits)))
       }
       cat("\n\n")
    }

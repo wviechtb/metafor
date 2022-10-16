@@ -4,16 +4,19 @@
 \alias{permutest.rma.ls}
 \title{Permutation Tests for 'rma.uni' Objects}
 \description{
-   The function carries out permutation tests for objects of class \code{"rma.uni"}. \loadmathjax
+   The function carries out permutation tests for objects of class \code{"rma.uni"} and \code{"rma.ls"}. \loadmathjax
 }
 \usage{
 permutest(x, \dots)
 
 \method{permutest}{rma.uni}(x, exact=FALSE, iter=1000, permci=FALSE,
           progbar=TRUE, digits, control, \dots)
+
+\method{permutest}{rma.ls}(x, exact=FALSE, iter=1000,
+          progbar=TRUE, digits, control, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"rma.uni"}.}
+   \item{x}{an object of class \code{"rma.uni"} or \code{"rma.ls"}.}
    \item{exact}{logical to specify whether an exact permutation test should be carried out (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{iter}{integer to specify the number of iterations for the permutation test when not doing an exact test (the default is \code{1000}).}
    \item{permci}{logical to specify whether permutation-based confidence intervals (CIs) should also be constructed (the default is \code{FALSE}). Can also be a vector of indices to specify for which coefficients a permutation-based CI should be obtained.}

@@ -524,6 +524,11 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
       intercept <- TRUE
    }
 
+   if (!is.null(mods) && ncol(mods) == 0L) {
+      warning(mstyle$warning("Cannot fit model with an empty model matrix. Coerced intercept into the model."), call.=FALSE)
+      intercept <- TRUE
+   }
+
    ### add vector of 1s to the X matrix for the intercept (if intercept=TRUE)
 
    if (intercept) {

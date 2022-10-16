@@ -916,6 +916,11 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       intercept <- TRUE
    }
 
+   if (!is.null(mods) && ncol(mods) == 0L) {
+      warning(mstyle$warning("Cannot fit model with an empty model matrix. Coerced intercept into the model."), call.=FALSE)
+      intercept <- TRUE
+   }
+
    ### add vector of 1s to the X matrix for the intercept (if intercept=TRUE)
 
    if (intercept) {
@@ -1211,7 +1216,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             while (change > con$threshold) {
 
                if (verbose)
-                  cat(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", fmtx(tau2, digits[["var"]]), "\n")))
+                  cat(mstyle$verbose(paste("Iteration", formatC(iter, width=5, flag="-", format="f", digits=0), "tau^2 =", fmtx(tau2, digits[["var"]]), "\n")))
 
                iter <- iter + 1
                old2 <- tau2
@@ -1370,7 +1375,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             while (change > con$threshold) {
 
                if (verbose)
-                  cat(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", fmtx(tau2, digits[["var"]]), "\n")))
+                  cat(mstyle$verbose(paste("Iteration", formatC(iter, width=5, flag="-", format="f", digits=0), "tau^2 =", fmtx(tau2, digits[["var"]]), "\n")))
 
                iter <- iter + 1
                old2 <- tau2
@@ -1478,7 +1483,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             while (change > con$threshold) {
 
                if (verbose)
-                  cat(mstyle$verbose(paste(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", fmtx(tau2, digits[["var"]]), "\n")))))
+                  cat(mstyle$verbose(paste(mstyle$verbose(paste("Iteration", formatC(iter, width=5, flag="-", format="f", digits=0), "tau^2 =", fmtx(tau2, digits[["var"]]), "\n")))))
 
                iter <- iter + 1
                old2 <- tau2
@@ -1595,7 +1600,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             ### verbose output upon convergence for ML/REML/EB estimators
 
             if (verbose && is.element(method[1], c("ML","REML","EB"))) {
-               cat(mstyle$verbose(paste("Iteration", iter, "\ttau^2 =", fmtx(tau2, digits[["var"]]), "\n")))
+               cat(mstyle$verbose(paste("Iteration", formatC(iter, width=5, flag="-", format="f", digits=0), "tau^2 =", fmtx(tau2, digits[["var"]]), "\n")))
                cat(mstyle$verbose(paste("Fisher scoring algorithm converged after", iter, "iterations.\n")))
             }
 

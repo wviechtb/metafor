@@ -47,7 +47,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
    }
 
    if (x$optbeta)
-      stop(mstyle$stop("CI calculation not yet implemented for 'optbeta=TRUE'."))
+      stop(mstyle$stop("CI calculation not yet implemented when model was fit with 'optbeta=TRUE'."))
 
    ### check if user has specified alpha argument
 

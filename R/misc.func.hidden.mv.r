@@ -827,7 +827,7 @@
 
 .ll.rma.mv <- function(par, reml, Y, M, A, X, k, pX, # note: pX due to nlm(); M=V to begin with
                        D.S, Z.G1, Z.G2, Z.H1, Z.H2, g.Dmat, h.Dmat,
-                       sigma2.val, tau2.val, rho.val, gamma2.val, phi.val,
+                       sigma2.val, tau2.val, rho.val, gamma2.val, phi.val, beta.val,
                        sigma2s, tau2s, rhos, gamma2s, phis,
                        withS, withG, withH,
                        struct, g.levels.r, h.levels.r, g.values, h.values,
@@ -953,6 +953,7 @@
             sX   <- U %*% X
             sY   <- U %*% Y
             beta <- solve(crossprod(sX), crossprod(sX, sY))
+            beta <- ifelse(is.na(beta.val), beta, beta.val)
             RSS  <- sum(as.vector(sY - sX %*% beta)^2)
             if (dofit)
                vb <- matrix(solve(crossprod(sX)), nrow=pX, ncol=pX)
@@ -962,6 +963,7 @@
             stXAX <- chol2inv(chol(as.matrix(t(X) %*% A %*% X)))
             #stXAX <- tcrossprod(qr.solve(sX, diag(k)))
             beta  <- matrix(stXAX %*% crossprod(X,A) %*% Y, ncol=1)
+            beta  <- ifelse(is.na(beta.val), beta, beta.val)
             RSS   <- as.vector(t(Y - X %*% beta) %*% W %*% (Y - X %*% beta))
             vb    <- matrix(stXAX %*% t(X) %*% A %*% M %*% A %*% X %*% stXAX, nrow=pX, ncol=pX)
 
