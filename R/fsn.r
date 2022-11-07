@@ -9,7 +9,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
-   type <- match.arg(type, c("Rosenthal", "Orwin", "Rosenberg", "REM"))
+   type <- match.arg(type, c("Rosenthal", "Orwin", "Rosenberg", "Binomial", "REM"))
 
    if (missing(target))
       target <- NULL
@@ -188,6 +188,25 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
       w.p    <- (sum(wi*yi) / qnorm(alpha/2, lower.tail=FALSE))^2 - sum(wi)
       pval   <- 2*pnorm(abs(zval), lower.tail=FALSE)
       fsnum  <- max(0, k*w.p/sum(wi))
+      target <- NA
+
+   }
+
+   if (type == "Binomial") {
+
+      k    <- length(yi)
+      kpos <- sum(yi > 0)
+      pval <- binom.test(kpos, k)$p.value
+      if (pval >= alpha) {
+         fsnum <- 0
+      } else {
+         pvalnew <- pval
+         fsnum <- 0
+         while (pvalnew < alpha) {
+            fsnum <- fsnum + 2
+            pvalnew <- binom.test(kpos + fsnum/2, k + fsnum)$p.value
+         }
+      }
       target <- NA
 
    }

@@ -1,4 +1,4 @@
-# metafor 3.9-11 (2022-10-05)
+# metafor 3.9-12 (2022-11-07)
 
 - `model.matrix()` gains `asdf` argument
 
@@ -21,6 +21,8 @@
 - for measures `COR`, `UCOR`, and `ZCOR`, can now use argument `ti` to specify t-test statistics in `escalc()`
 
 - added `conv.wald()` function for converting Wald-type confidence intervals and test statistics to sampling variances
+
+- added `exact="i"` option in `permutest()` (to just return the number of iterations required for an exact permutation test)
 
 # metafor 3.8-1 (2022-08-26)
 

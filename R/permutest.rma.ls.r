@@ -12,7 +12,7 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tol", "time", "seed", "verbose", "retpermdist", "permci", "skip.beta", "skip.alpha"))
+   .chkdots(ddd, c("tol", "time", "seed", "verbose", "permci", "skip.beta", "skip.alpha"))
 
    if (!is.null(ddd$tol)) # in case user specifies comptol in the old manner
       comptol <- ddd$tol
@@ -66,53 +66,60 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
    if (exists("comptol", inherits=FALSE))
       con$comptol <- comptol
 
+   if (is.character(exact) && exact == "i") {
+      skip.beta  <- TRUE
+      skip.alpha <- TRUE
+   }
+
    #########################################################################
    #########################################################################
    #########################################################################
+
+   ### calculate number of permutations for an exact permutation test
+
+   if (x$int.only) {
+
+      ### for intercept-only models, there are 2^k possible permutations of the signs
+
+      X.exact.iter <- 2^x$k
+
+   } else {
+
+      ### for meta-regression models, there are k! possible permutations of the rows of the model matrix
+
+      #X.exact.iter <- round(exp(lfactorial(x$k))) # note: without round(), not exactly an integer!
+
+      ### however, when there are duplicated rows in the model matrix, the number of *unique* permutations
+      ### is lower; the code below below determines the number of unique permutations
+
+      ### order the X matrix
+
+      X <- as.data.frame(x$X)[do.call(order, as.data.frame(x$X)),]
+
+      ### determine groupings
+
+      X.indices <- cumsum(c(TRUE, !duplicated(X)[-1]))
+
+      ### this turns 1,1,1,2,2,3,4,4,4 into 1,1,1,4,4,6,7,7,7 so that the actual row numbers can be permuted
+
+      X.indices <- rep(cumsum(rle(X.indices)$lengths) - (rle(X.indices)$lengths - 1), rle(X.indices)$lengths)
+
+      ### determine exact number of unique permutations
+
+      ind.table <- table(X.indices)
+
+      X.exact.iter <- round(prod((max(ind.table)+1):x$k) / prod(factorial(ind.table[-which.max(ind.table)]))) # cancel largest value in numerator and denominator to reduce overflow problems
+      #X.exact.iter <- round(factorial(x$k) / prod(factorial(ind.table)))       # definitional formula
+      #X.exact.iter <- round(exp(lfactorial(x$k) - sum(lfactorial(ind.table)))) # using log of definitional formula and then round(exp())
+
+      if (is.na(X.exact.iter))
+         X.exact.iter <- Inf
+
+   }
+
+   i.exact.iter <- X.exact.iter
 
    if (!skip.beta) {
-
-      ### calculate number of permutations for an exact permutation test
-
-      if (x$int.only) {
-
-         ### for intercept-only models, there are 2^k possible permutations of the signs
-
-         X.exact.iter <- 2^x$k
-
-      } else {
-
-         ### for meta-regression models, there are k! possible permutations of the rows of the model matrix
-
-         #X.exact.iter <- round(exp(lfactorial(x$k))) # note: without round(), not exactly an integer!
-
-         ### however, when there are duplicated rows in the model matrix, the number of *unique* permutations
-         ### is lower; the code below below determines the number of unique permutations
-
-         ### order the X matrix
-
-         X <- as.data.frame(x$X)[do.call(order, as.data.frame(x$X)),]
-
-         ### determine groupings
-
-         X.indices <- cumsum(c(TRUE, !duplicated(X)[-1]))
-
-         ### this turns 1,1,1,2,2,3,4,4,4 into 1,1,1,4,4,6,7,7,7 so that the actual row numbers can be permuted
-
-         X.indices <- rep(cumsum(rle(X.indices)$lengths) - (rle(X.indices)$lengths - 1), rle(X.indices)$lengths)
-
-         ### determine exact number of unique permutations
-
-         ind.table <- table(X.indices)
-
-         X.exact.iter <- round(prod((max(ind.table)+1):x$k) / prod(factorial(ind.table[-which.max(ind.table)]))) # cancel largest value in numerator and denominator to reduce overflow problems
-         #X.exact.iter <- round(factorial(x$k) / prod(factorial(ind.table)))       # definitional formula
-         #X.exact.iter <- round(exp(lfactorial(x$k) - sum(lfactorial(ind.table)))) # using log of definitional formula and then round(exp())
-
-         if (is.na(X.exact.iter))
-            X.exact.iter <- Inf
-
-      }
 
       ### if 'exact=TRUE' or if the number of iterations for an exact test are smaller
       ### than what is specified under 'iter', then carry out the exact test
@@ -445,18 +452,23 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
    #########################################################################
    #########################################################################
 
+   ### calculate number of permutations for an exact permutation test
+
+   Z <- as.data.frame(x$Z)[do.call(order, as.data.frame(x$Z)),]
+   Z.indices <- cumsum(c(TRUE, !duplicated(Z)[-1]))
+   Z.indices <- rep(cumsum(rle(Z.indices)$lengths) - (rle(Z.indices)$lengths - 1), rle(Z.indices)$lengths)
+   ind.table <- table(Z.indices)
+   Z.exact.iter <- round(prod((max(ind.table)+1):x$k) / prod(factorial(ind.table[-which.max(ind.table)])))
+
+   if (is.na(Z.exact.iter))
+      Z.exact.iter <- Inf
+
+   if (x$Z.int.only)
+      Z.exact.iter <- NA
+
+   i.exact.iter <- c(i.exact.iter, Z.exact.iter)
+
    if (!skip.alpha) {
-
-      ### calculate number of permutations for an exact permutation test
-
-      Z <- as.data.frame(x$Z)[do.call(order, as.data.frame(x$Z)),]
-      Z.indices <- cumsum(c(TRUE, !duplicated(Z)[-1]))
-      Z.indices <- rep(cumsum(rle(Z.indices)$lengths) - (rle(Z.indices)$lengths - 1), rle(Z.indices)$lengths)
-      ind.table <- table(Z.indices)
-      Z.exact.iter <- round(prod((max(ind.table)+1):x$k) / prod(factorial(ind.table[-which.max(ind.table)])))
-
-      if (is.na(Z.exact.iter))
-         Z.exact.iter <- Inf
 
       Z.exact <- exact
       Z.iter  <- iter
@@ -647,6 +659,9 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
    ############################################################################
    ############################################################################
    ############################################################################
+
+   if (is.character(exact) && exact == "i")
+      return(i.exact.iter)
 
    out <- list(pval=pval, QMdf=x$QMdf, QMp=QMp, beta=x$beta, se=x$se, zval=x$zval, ci.lb=x$ci.lb, ci.ub=x$ci.ub, QM=x$QM,
                pval.alpha=pval.alpha, QSdf=x$QSdf, QSp=QSp, alpha=x$alpha, se.alpha=x$se.alpha, zval.alpha=x$zval.alpha, ci.lb.alpha=x$ci.lb.alpha, ci.ub.alpha=x$ci.ub.alpha, QS=x$QS,

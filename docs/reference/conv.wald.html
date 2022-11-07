@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-12</span>
       </span>
     </div>
 
@@ -191,6 +191,7 @@
 
 <p>Similarly, study authors may report the test statistic and/or p-value from a Wald-type test of the form <em></em>\(\textrm{zval} = y_i / \sqrt{v_i}\), with the corresponding two-sided p-value given by <em></em>\(\textrm{pval} = 2(1 - \Phi(\textrm{|zval|}))\), where <em></em>\(\Phi(\cdot)\) denotes the cumulative distribution function of a standard normal distribution (i.e., <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">pnorm</a></code>). Test statistics and/or corresponding p-values of this form can be supplied via arguments <code>zval</code> and <code>pval</code>.</p>
 <p>A given p-value can be back-transformed into the corresponding test statistic with <em></em>\(\textrm{zval} = \Phi^{-1}(1 - \textrm{pval}/2)\), where <em></em>\(\Phi^{-1}(\cdot)\) denotes the quantile function or inverse of the cumulative distribution function of a standard normal distribution (i.e., <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">qnorm</a></code>). Then \[v_i = \left(\frac{y_i}{\textrm{zval}}\right)^2\] is used to back-calculate a missing <code>vi</code> value in the dataset.</p>
+<p>Note that the conversion of a p-value to the corresponding test statistic (which is then converted into sampling variance) as shown above assumes that the exact p-value is reported. If authors only report that the p-value fell below a certain threshold (e.g., <em></em>\(p &lt; .01\) or if authors only state that the test was significant -- which typically implies <em></em>\(p &lt; .05\)), then a common approach is to use the value of the cutoff reported (e.g., if <em></em>\(p &lt; .01\) is reported, then assume <em></em>\(p = .01\)), which is conservative (since the actual p-value was below that assumed value by some unknown amount). The conversion will therefore tend to be much less accurate.</p>
 <p>Using the earlier example, suppose that only the odds ratio and the corresponding two-sided p-value from a Wald-type test (whether the log odds ratio differs significantly from zero) is reported for study 2.</p>
 <div class="sourceCode"><pre><code>
 dat &lt;- data.frame(study = 1:3,

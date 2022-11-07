@@ -135,7 +135,7 @@
 ### function to take the square root of a vector of numbers, giving NA for negative numbers (without a warning)
 
 .sqrt <- function(x)
-   sapply(x, function(x) if (x < 0) NA_real_ else sqrt(x))
+   sapply(x, function(x) if (is.na(x) || x < 0) NA_real_ else sqrt(x))
 
 ### function to obtain the trace of a matrix
 

@@ -11,7 +11,7 @@ print.fsn <- function(x, digits=x$digits, ...) {
    cat(mstyle$section(paste("Fail-safe N Calculation Using the", x$type, "Approach")))
    cat("\n\n")
 
-   if (x$type == "Rosenthal") {
+   if (x$type == "Rosenthal" || x$type == "Binomial") {
       cat(mstyle$text("Observed Significance Level: "))
       cat(mstyle$result(fmtp(x$pval, digits[["pval"]])))
       cat("\n")

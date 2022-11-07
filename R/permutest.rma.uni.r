@@ -12,7 +12,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tol", "time", "seed", "verbose", "retpermdist"))
+   .chkdots(ddd, c("tol", "time", "seed", "verbose"))
 
    if (!is.null(ddd$tol)) # in case user specifies comptol in the old manner
       comptol <- ddd$tol
@@ -70,6 +70,9 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
          X.exact.iter <- Inf
 
    }
+
+   if (is.character(exact) && exact == "i")
+      return(X.exact.iter)
 
    ### if 'exact=TRUE' or if the number of iterations for an exact test are smaller
    ### than what is specified under 'iter', then carry out the exact test
