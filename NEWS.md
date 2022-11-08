@@ -1,4 +1,4 @@
-# metafor 3.9-12 (2022-11-07)
+# metafor 3.9-13 (2022-11-08)
 
 - `model.matrix()` gains `asdf` argument
 
@@ -23,6 +23,8 @@
 - added `conv.wald()` function for converting Wald-type confidence intervals and test statistics to sampling variances
 
 - added `exact="i"` option in `permutest()` (to just return the number of iterations required for an exact permutation test)
+
+- improved the documentation of `escalc()` a bit
 
 # metafor 3.8-1 (2022-08-26)
 

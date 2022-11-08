@@ -298,3 +298,17 @@
 #integrate(function(x) x*.daraw(x, n=10, m=2, alpha=.8), lower=-Inf, upper=Inf)
 
 ############################################################################
+
+### function to convert p-value to t-statistic (need this to catch NULL since
+### sign(NULL) and qt(NULL) throw errors)
+
+.convp2t <- function(pval, df) {
+
+   if (is.null(pval))
+      return(NULL)
+
+   sign(pi) * qt(abs(pi)/2, df=df, lower.tail=FALSE)
+
+}
+
+############################################################################

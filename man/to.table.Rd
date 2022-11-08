@@ -11,26 +11,26 @@ to.table(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 }
 \arguments{
    \item{measure}{a character string to specify the effect size or outcome measure corresponding to the summary data supplied. See \sQuote{Details} and the documentation of the \code{\link{escalc}} function for possible options.}
-   \item{ai}{vector to specify the \mjeqn{2 \times 2}{2x2} table frequencies (upper left cell).}
-   \item{bi}{vector to specify the \mjeqn{2 \times 2}{2x2} table frequencies (upper right cell).}
-   \item{ci}{vector to specify the \mjeqn{2 \times 2}{2x2} table frequencies (lower left cell).}
-   \item{di}{vector to specify the \mjeqn{2 \times 2}{2x2} table frequencies (lower right cell).}
-   \item{n1i}{vector to specify the group sizes or row totals (first group/row).}
-   \item{n2i}{vector to specify the group sizes or row totals (second group/row).}
-   \item{x1i}{vector to specify the number of events (first group).}
-   \item{x2i}{vector to specify the number of events (second group).}
-   \item{t1i}{vector to specify the total person-times (first group).}
-   \item{t2i}{vector to specify the total person-times (second group).}
-   \item{m1i}{vector to specify the means (first group or time point).}
-   \item{m2i}{vector to specify the means (second group or time point).}
-   \item{sd1i}{vector to specify the standard deviations (first group or time point).}
-   \item{sd2i}{vector to specify the standard deviations (second group or time point).}
-   \item{xi}{vector to specify the frequencies of the event of interest.}
-   \item{mi}{vector to specify the frequencies of the complement of the event of interest or the group means.}
-   \item{ri}{vector to specify the raw correlation coefficients.}
-   \item{ti}{vector to specify the total person-times.}
-   \item{sdi}{vector to specify the standard deviations.}
-   \item{ni}{vector to specify the sample/group sizes.}
+   \item{ai}{vector with the \mjeqn{2 \times 2}{2x2} table frequencies (upper left cell).}
+   \item{bi}{vector with the \mjeqn{2 \times 2}{2x2} table frequencies (upper right cell).}
+   \item{ci}{vector with the \mjeqn{2 \times 2}{2x2} table frequencies (lower left cell).}
+   \item{di}{vector with the \mjeqn{2 \times 2}{2x2} table frequencies (lower right cell).}
+   \item{n1i}{vector with the group sizes or row totals (first group/row).}
+   \item{n2i}{vector with the group sizes or row totals (second group/row).}
+   \item{x1i}{vector with the number of events (first group).}
+   \item{x2i}{vector with the number of events (second group).}
+   \item{t1i}{vector with the total person-times (first group).}
+   \item{t2i}{vector with the total person-times (second group).}
+   \item{m1i}{vector with the means (first group or time point).}
+   \item{m2i}{vector with the means (second group or time point).}
+   \item{sd1i}{vector with the standard deviations (first group or time point).}
+   \item{sd2i}{vector with the standard deviations (second group or time point).}
+   \item{xi}{vector with the frequencies of the event of interest.}
+   \item{mi}{vector with the frequencies of the complement of the event of interest or the group means.}
+   \item{ri}{vector with the raw correlation coefficients.}
+   \item{ti}{vector with the total person-times.}
+   \item{sdi}{vector with the standard deviations.}
+   \item{ni}{vector with the sample/group sizes.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{slab}{optional vector with labels for the studies.}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the array returned by the function.}

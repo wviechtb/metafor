@@ -1,4 +1,4 @@
-escalc <- function(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, r2i, ni, yi, vi, sei,
+escalc <- function(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, pi, sdi, r2i, ni, yi, vi, sei,
 data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), add.measure=FALSE, append=TRUE, replace=TRUE, digits, ...) {
 
    ### check argument specifications
@@ -487,14 +487,14 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             z1i <- qnorm(p1i)
             z2i <- qnorm(p2i)
             yi <- z1i - z2i
-            vi <- 2*pi*p1i*(1-p1i)*exp(z1i^2)/n1i + 2*pi*p2i*(1-p2i)*exp(z2i^2)/n2i ### from Sanchez-Meca et al. (2003) and Rosenthal (1994; Handbook chapter)
-         }                                                                          ### seems to be right for stratified and cross-sectional/multinomial sampling
-                                                                                    ### see code/probit_transformation directory
+            vi <- 2*base::pi*p1i*(1-p1i)*exp(z1i^2)/n1i + 2*base::pi*p2i*(1-p2i)*exp(z2i^2)/n2i ### from Sanchez-Meca et al. (2003) and Rosenthal (1994; Handbook chapter)
+         }                                                                                      ### seems to be right for stratified and cross-sectional/multinomial sampling
+                                                                                                ### see code/probit_transformation directory
          ### log(OR) transformation to SMD based on logistic distribution
 
          if (is.element(measure, c("OR2D","OR2DL"))) {
-            yi <- sqrt(3) / pi * yi
-            vi <- 3 / pi^2 * vi
+            yi <- sqrt(3) / base::pi * yi
+            vi <- 3 / base::pi^2 * vi
          }
 
          ### log(OR) transformation to SMD based on normal distribution (Cox & Snell method)
@@ -727,13 +727,18 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          n2i  <- .getx("n2i",  mf=mf, data=data, checknumeric=TRUE)
          di   <- .getx("di",   mf=mf, data=data, checknumeric=TRUE)
          ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
+         pi   <- .getx("pi",   mf=mf, data=data, checknumeric=TRUE)
 
          ### for these measures, need m1i, m2i, sd1i, sd2i, n1i, and n2i (and can also specify di and/or ti)
 
          if (is.element(measure, c("SMD","RPB","RBIS","D2OR","D2ORN","D2ORL"))) {
 
-            if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti))
+            if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+            ### convert pi to ti values
+
+            ti <- replmiss(ti, .convp2t(pi, df=n1i+n2i-2))
 
             ### convert ti to di values
 
@@ -747,7 +752,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             sd2i[!is.na(di)] <- 1
 
             if (!.all.specified(m1i, m2i, sd1i, sd2i, n1i, n2i))
-               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd1i, sd2i, n1i, n2i (and di, ti))."))
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd1i, sd2i, n1i, n2i (and di, ti, pi))."))
 
          }
 
@@ -1015,8 +1020,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### SMD to log(OR) transformation based on logistic distribution
 
          if (is.element(measure, c("D2OR","D2ORL"))) {
-            yi <- pi / sqrt(3) * di
-            vi <- pi^2 / 3 * (1/n1i + 1/n2i + di^2/(2*ni))
+            yi <- base::pi / sqrt(3) * di
+            vi <- base::pi^2 / 3 * (1/n1i + 1/n2i + di^2/(2*ni))
          }
 
          ### SMD to log(OR) transformation based on normal distribution (Cox & Snell method)
@@ -1051,16 +1056,21 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ri <- .getx("ri", mf=mf, data=data, checknumeric=TRUE)
          ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
          ti <- .getx("ti", mf=mf, data=data, checknumeric=TRUE)
+         pi <- .getx("pi", mf=mf, data=data, checknumeric=TRUE)
 
-         if (!.equal.length(ri, ni, ti))
+         if (!.equal.length(ri, ni, ti, pi))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+         ### convert pi to ti values
+
+         ti <- replmiss(ti, .convp2t(pi, df=ni-2))
 
          ### convert ti to ri values
 
          ri <- replmiss(ri, ti / sqrt(ni - 2 + ti^2))
 
          if (!.all.specified(ri, ni))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ri, ni (and ti))."))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ri, ni (and ti, pi))."))
 
          k.all <- length(ri)
 

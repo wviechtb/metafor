@@ -1,4 +1,4 @@
-rma <- rma.uni <- function(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, r2i, ni, mods, scale,
+rma <- rma.uni <- function(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, pi, sdi, r2i, ni, mods, scale,
 measure="GEN", intercept=TRUE,
 data, slab, subset,
 add=1/2, to="only0", drop00=FALSE, vtype="LS",
@@ -464,12 +464,14 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          n2i  <- .getx("n2i",  mf=mf, data=data, checknumeric=TRUE)
          di   <- .getx("di",   mf=mf, data=data, checknumeric=TRUE)
          ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
+         pi   <- .getx("pi",   mf=mf, data=data, checknumeric=TRUE)
 
          if (is.element(measure, c("SMD","RPB","RBIS","D2OR","D2ORN","D2ORL"))) {
 
-            if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti))
+            if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
+            ti <- replmiss(ti, .convp2t(pi, df=n1i+n2i-2))
             di <- replmiss(di, ti * sqrt(1/n1i + 1/n2i))
 
             m1i[!is.na(di)]  <- di[!is.na(di)]
@@ -501,10 +503,12 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          ri <- .getx("ri", mf=mf, data=data, checknumeric=TRUE)
          ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
          ti <- .getx("ti", mf=mf, data=data, checknumeric=TRUE)
+         pi <- .getx("pi", mf=mf, data=data, checknumeric=TRUE)
 
-         if (!.equal.length(ri, ni, ti))
+         if (!.equal.length(ri, ni, ti, pi))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
+         ti <- replmiss(ti, .convp2t(pi, df=ni-2))
          ri <- replmiss(ri, ti / sqrt(ni - 2 + ti^2))
 
          k <- length(ri) ### number of outcomes before subsetting

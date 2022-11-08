@@ -11,16 +11,16 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
        correct=TRUE, level=95, verbose=FALSE, digits, \dots)
 }
 \arguments{
-   \item{ai}{vector to specify the \mjeqn{2 \times 2}{2x2} table frequencies (upper left cell). See below and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{bi}{vector to specify the \mjeqn{2 \times 2}{2x2} table frequencies (upper right cell). See below and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{ci}{vector to specify the \mjeqn{2 \times 2}{2x2} table frequencies (lower left cell). See below and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{di}{vector to specify the \mjeqn{2 \times 2}{2x2} table frequencies (lower right cell). See below and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{n1i}{vector to specify the group sizes or row totals (first group). See below and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{n2i}{vector to specify the group sizes or row totals (second group). See below and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{x1i}{vector to specify the number of events (first group). See below and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{x2i}{vector to specify the number of events (second group). See below and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{t1i}{vector to specify the total person-times (first group). See below and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{t2i}{vector to specify the total person-times (second group). See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{ai}{vector with the \mjeqn{2 \times 2}{2x2} table frequencies (upper left cell). See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{bi}{vector with the \mjeqn{2 \times 2}{2x2} table frequencies (upper right cell). See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{ci}{vector with the \mjeqn{2 \times 2}{2x2} table frequencies (lower left cell). See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{di}{vector with the \mjeqn{2 \times 2}{2x2} table frequencies (lower right cell). See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{n1i}{vector with the group sizes or row totals (first group). See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{n2i}{vector with the group sizes or row totals (second group). See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{x1i}{vector with the number of events (first group). See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{x2i}{vector with the number of events (second group). See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{t1i}{vector with the total person-times (first group). See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{t2i}{vector with the total person-times (second group). See below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{measure}{character string to specify the outcome measure to use for the meta-analysis. Possible options are \code{"RR"} for the (log transformed) risk ratio, \code{"OR"} for the (log transformed) odds ratio, \code{"RD"} for the risk difference, \code{"IRR"} for the (log transformed) incidence rate ratio, or \code{"IRD"} for the incidence rate difference.}
    \item{data}{optional data frame containing the data supplied to the function.}
    \item{slab}{optional vector with labels for the \mjseqn{k} studies.}
