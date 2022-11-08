@@ -307,7 +307,7 @@
    if (is.null(pval))
       return(NULL)
 
-   sign(pi) * qt(abs(pi)/2, df=df, lower.tail=FALSE)
+   sign(pval) * qt(abs(pval)/2, df=df, lower.tail=FALSE)
 
 }
 
