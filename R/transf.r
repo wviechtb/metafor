@@ -27,8 +27,11 @@
 
 ############################################################################
 
-transf.rtoz <- function(xi, ...)                   ### resulting value between -Inf (for -1) and +Inf (for +1)
+transf.rtoz <- function(xi, ...) {                 ### resulting value between -Inf (for -1) and +Inf (for +1)
+   xi[xi >  1] <-  1
+   xi[xi < -1] <- -1
    atanh(xi)
+}
 
 transf.ztor <- function(xi, ...)
    tanh(xi)

@@ -14,15 +14,15 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    ### check argument specifications
    ### (arguments "to" and "vtype" are checked inside escalc function)
 
-   if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", # 2x2 table measures
+   if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","ZPHI","YUQ","YUY","RTET","ZTET", # 2x2 table measures
                               "PBIT","OR2D","OR2DN","OR2DL",                       # - transformations to SMD
                               "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",       # - measures for matched pairs data
                               "IRR","IRD","IRSD",                                  # two-group person-time data measures
                               "MD","SMD","SMDH","SMD1","SMD1H","ROM",              # two-group mean/SD measures
                               "CVR","VR",                                          # coefficient of variation ratio, variability ratio
-                              "RPB","RBIS","D2OR","D2ORN","D2ORL",                 # - transformations to r_PB, r_BIS, and log(OR)
+                              "RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL",    # - transformations to r_PB, r_BIS, and log(OR)
                               "COR","UCOR","ZCOR",                                 # correlations (raw and r-to-z transformed)
-                              "PCOR","ZPCOR","SPCOR",                              # partial and semi-partial correlations
+                              "PCOR","ZPCOR","SPCOR","ZSPCOR",                     # partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        # single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            # single-group person-time data (and transformations thereof)
                               "MN","MNLN","CVLN","SDLN","SMN",                     # mean, log(mean), log(CV), log(SD), standardized mean
@@ -168,7 +168,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    addval <- mf[[match("add", names(mf))]]
 
-   if (is.element(measure, c("AS","PHI","RTET","IRSD","PAS","PFT","IRS","IRFT")) && is.null(addval))
+   if (is.element(measure, c("AS","PHI","ZPHI","RTET","ZTET","IRSD","PAS","PFT","IRS","IRFT")) && is.null(addval))
       add <- 0
 
    ### extract yi (either NULL if not specified, a vector, a formula, or an escalc object)
@@ -404,7 +404,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       ### if yi is NULL, try to compute yi/vi based on specified measure and supplied data
 
-      if (is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM"))) {
+      if (is.element(measure, c("RR","OR","PETO","RD","AS","PHI","ZPHI","YUQ","YUY","RTET","ZTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM"))) {
 
          ai  <- .getx("ai",  mf=mf, data=data, checknumeric=TRUE)
          bi  <- .getx("bi",  mf=mf, data=data, checknumeric=TRUE)
@@ -454,7 +454,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       }
 
-      if (is.element(measure, c("MD","SMD","SMDH","SMD1","SMD1H","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
+      if (is.element(measure, c("MD","SMD","SMDH","SMD1","SMD1H","ROM","RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
 
          m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE)
          m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE)
@@ -466,7 +466,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
          pi   <- .getx("pi",   mf=mf, data=data, checknumeric=TRUE)
 
-         if (is.element(measure, c("SMD","RPB","RBIS","D2OR","D2ORN","D2ORL"))) {
+         if (is.element(measure, c("SMD","RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL"))) {
 
             if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -524,7 +524,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       }
 
-      if (is.element(measure, c("PCOR","ZPCOR","SPCOR"))) {
+      if (is.element(measure, c("PCOR","ZPCOR","SPCOR","ZSPCOR"))) {
 
          ti  <- .getx("ti",  mf=mf, data=data, checknumeric=TRUE)
          r2i <- .getx("r2i", mf=mf, data=data, checknumeric=TRUE)

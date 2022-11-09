@@ -14,15 +14,15 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
    if (!is.character(measure))
       stop(mstyle$stop("The 'measure' argument must be a character string."))
 
-   if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","YUQ","YUY","RTET", # 2x2 table measures
+   if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","ZPHI","YUQ","YUY","RTET","ZTET", # 2x2 table measures
                               "PBIT","OR2D","OR2DN","OR2DL",                       # - transformations to SMD
                               "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",       # - measures for matched pairs / pre-post data
                               "IRR","IRD","IRSD",                                  # two-group person-time data measures
                               "MD","SMD","SMDH","SMD1","SMD1H","ROM",              # two-group mean/SD measures
                               "CVR","VR",                                          # coefficient of variation ratio, variability ratio
-                              "RPB","RBIS","D2OR","D2ORN","D2ORL",                 # - transformations to r_PB, r_BIS, and log(OR)
+                              "RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL",    # - transformations to r_PB, r_BIS, and log(OR)
                               "COR","UCOR","ZCOR",                                 # correlations (raw and r-to-z transformed)
-                              "PCOR","ZPCOR","SPCOR",                              # partial and semi-partial correlations
+                              "PCOR","ZPCOR","SPCOR","ZSPCOR",                     # partial and semi-partial correlations
                               "PR","PLN","PLO","PAS","PFT",                        # single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            # single-group person-time data (and transformations thereof)
                               "MN","MNLN","CVLN","SDLN","SMN",                     # mean, log(mean), log(CV), log(SD), standardized mean
@@ -126,7 +126,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
    addval <- mf[[match("add", names(mf))]]
 
-   if (is.element(measure, c("AS","PHI","RTET","IRSD","PAS","PFT","IRS","IRFT")) && is.null(addval))
+   if (is.element(measure, c("AS","PHI","ZPHI","RTET","ZTET","IRSD","PAS","PFT","IRS","IRFT")) && is.null(addval))
       add <- 0
 
    #########################################################################
@@ -135,7 +135,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
    if (is.null(yi)) {
 
-      if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","YUQ","YUY","RTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM"))) {
+      if (is.element(measure, c("RR","OR","RD","AS","PETO","PHI","ZPHI","YUQ","YUY","RTET","ZTET","PBIT","OR2D","OR2DN","OR2DL","MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM"))) {
 
          mf.ai <- mf[[match("ai", names(mf))]]
          if (any("~" %in% as.character(mf.ai)))
@@ -286,10 +286,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ### compute proportions for the two groups (unadjusted and adjusted)
 
-         p1i.u <- ai.u/n1i.u
-         p2i.u <- ci.u/n2i.u
-         p1i <- ai/n1i
-         p2i <- ci/n2i
+         p1i.u <- ai.u / n1i.u
+         p2i.u <- ci.u / n2i.u
+         p1i <- ai / n1i
+         p2i <- ci / n2i
 
          ### log risk ratios
 
@@ -389,7 +389,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             Ei <- xt * n1i / ni
             Vi <- xt * yt * (n1i/ni) * (n2i/ni) / (ni - 1) ### 0 when xt = 0 or yt = 0 in a table
             yi <- (ai - Ei) / Vi                           ### then yi and vi is Inf (set to NA at end)
-            vi <- 1/Vi
+            vi <- 1 / Vi
          }
 
          ### arcsine square root risk difference
@@ -401,7 +401,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ### phi coefficient
 
-         if (measure == "PHI") {
+         if (is.element(measure, c("PHI","ZPHI"))) {
 
             yi <- (ai*di - bi*ci)/sqrt((ai+bi)*(ci+di)*(ai+ci)*(bi+di))
 
@@ -412,10 +412,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             q1i <- 1 - p1i
             q2i <- 1 - p2i
-            pi1. <- (ai+bi)/ni
-            pi2. <- (ci+di)/ni
-            pi.1 <- (ai+ci)/ni
-            pi.2 <- (bi+di)/ni
+            pi1. <- (ai+bi) / ni
+            pi2. <- (ci+di) / ni
+            pi.1 <- (ai+ci) / ni
+            pi.2 <- (bi+di) / ni
 
             if (!all(is.element(vtype, c("ST","LS","CS"))))
                stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'ST', 'LS', or 'CS'."))
@@ -439,22 +439,22 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### Yule's Q (vi equation in Yule, 1900, p.285, and Yule, 1912, p.593)
 
          if (measure == "YUQ") {
-            yi <- (ai/bi)/(ci/di)
-            yi <- (yi-1)/(yi+1)
+            yi <- (ai/bi) / (ci/di)
+            yi <- (yi-1) / (yi+1)
             vi <- 1/4 * (1-yi^2)^2 * (1/ai + 1/bi + 1/ci + 1/di)
          }
 
          ### Yule's Y (vi equation in Yule, 1912, p.593)
 
          if (measure == "YUY") {
-            yi <- (ai/bi)/(ci/di)
-            yi <- (sqrt(yi)-1)/(sqrt(yi)+1)
+            yi <- (ai/bi) / (ci/di)
+            yi <- (sqrt(yi)-1) / (sqrt(yi)+1)
             vi <- 1/16 * (1-yi^2)^2 * (1/ai + 1/bi + 1/ci + 1/di)
          }
 
          ### tetrachoric correlation
 
-         if (measure == "RTET") {
+         if (is.element(measure, c("RTET","ZTET"))) {
 
             ### TODO: allow user to set control arguments for pmvnorm and optimizers
 
@@ -479,6 +479,13 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             #options(warn = warn.before)
 
+         }
+
+         ### r-to-z transformation for PHI and RTET (note: NOT a variance-stabilizing transformation for these measures)
+
+         if (is.element(measure, c("ZPHI","ZTET"))) {
+            vi <- vi / (1 - ifelse(yi^2 > 1, 1, yi^2))^2
+            yi <- transf.rtoz(yi)
          }
 
          ### probit transformation to SMD
@@ -507,10 +514,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### matched pairs / pre-post 2x2 table measures
 
          if (is.element(measure, c("MPRD","MPRR","MPOR"))) {
-            pi12 <- bi/ni
-            pi21 <- ci/ni
-            pi1. <- (ai+bi)/ni
-            pi.1 <- (ai+ci)/ni
+            pi12 <- bi / ni
+            pi21 <- ci / ni
+            pi1. <- (ai+bi) / ni
+            pi.1 <- (ai+ci) / ni
          }
 
          if (measure == "MPRD") {
@@ -717,7 +724,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       ######################################################################
 
-      if (is.element(measure, c("MD","SMD","SMDH","SMD1","SMD1H","ROM","RPB","RBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
+      if (is.element(measure, c("MD","SMD","SMDH","SMD1","SMD1H","ROM","RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
 
          m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE) ### for VR, do not need to supply this
          m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE) ### for VR, do not need to supply this
@@ -731,7 +738,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ### for these measures, need m1i, m2i, sd1i, sd2i, n1i, and n2i (and can also specify di and/or ti)
 
-         if (is.element(measure, c("SMD","RPB","RBIS","D2OR","D2ORN","D2ORL"))) {
+         if (is.element(measure, c("SMD","RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL"))) {
 
             if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -971,12 +978,12 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### Das Gupta (1960) describes the case where Y itself is normal, but the variance expressions therein can
          ### really only be used in some special cases (not useful in practice)
 
-         if (is.element(measure, c("RPB","RBIS"))) {
+         if (is.element(measure, c("RPB","RBIS","ZPB","ZBIS"))) {
 
             hi <- mi/n1i + mi/n2i
-            yi <- di / sqrt(di^2 + hi) ### need this also when measure="RBIS"
+            yi <- di / sqrt(di^2 + hi) ### need this also when measure="RBIS/ZBIS"
 
-            if (measure == "RPB") {    ### this only applies when measure="RPB"
+            if (is.element(measure, c("RPB","ZPB"))) {    ### this only applies when measure="RPB/ZPB"
 
                if (length(vtype) == 1L)
                   vtype <- rep(vtype, k)
@@ -1004,7 +1011,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ### biserial correlation obtained from the standardized mean difference (continued from above)
 
-         if (measure == "RBIS") {
+         if (is.element(measure, c("RBIS","ZBIS"))) {
             p1i <- n1i / ni
             p2i <- n2i / ni
             zi  <- qnorm(p1i, lower.tail=FALSE)
@@ -1015,6 +1022,13 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             vi  <- 1/(ni-1) * (p1i*p2i/fzi^2 - (3/2 + (1 - p1i*zi/fzi)*(1 + p2i*zi/fzi)) * yi.t^2 + yi.t^4) ### from Soper (1914)
             #vi <- 1/(ni-1) * (yi.t^4 + yi.t^2 * (p1i*p2i*zi^2/fzi^2 + (2*p1i-1)*zi/fzi - 5/2) + p1i*p2i/fzi^2) ### from Tate (1955) -- equivalent to eq. from Soper (1914)
             ### equation appears to work even if dichotomization is done based on a sample quantile value (so that p1i, p2i, and fzi are fixed by design)
+         }
+
+         ### r-to-z transformation for RPB and RBIS (note: NOT a variance-stabilizing transformation for these measures)
+
+         if (is.element(measure, c("ZPB","ZBIS"))) {
+            vi <- vi / (1 - ifelse(yi^2 > 1, 1, yi^2))^2
+            yi <- transf.rtoz(yi)
          }
 
          ### SMD to log(OR) transformation based on logistic distribution
@@ -1149,8 +1163,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### r-to-z transformed correlation
 
          if (measure == "ZCOR") {
-            yi <- 1/2 * log((1+ri)/(1-ri))
-            vi <- 1/(ni-3)
+            yi <- transf.rtoz(ri)
+            vi <- 1 / (ni-3)
          }
 
          ### set sampling variances for ni <= 3 to NA
@@ -1161,7 +1175,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       ######################################################################
 
-      if (is.element(measure, c("PCOR","ZPCOR","SPCOR"))) {
+      if (is.element(measure, c("PCOR","ZPCOR","SPCOR","ZSPCOR"))) {
 
          ti  <- .getx("ti",  mf=mf, data=data, checknumeric=TRUE)
          r2i <- .getx("r2i", mf=mf, data=data, checknumeric=TRUE)
@@ -1171,13 +1185,13 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (measure=="PCOR" && !.all.specified(ti, ni, mi))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ti, ni, mi)."))
 
-         if (measure=="SPCOR" && !.all.specified(ti, ni, mi, r2i))
+         if (is.element(measure, c("SPCOR","ZSPCOR")) && !.all.specified(ti, ni, mi, r2i))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ti, ni, mi, r2i)."))
 
          if (measure=="PCOR" && !.equal.length(ti, ni, mi))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
-         if (measure=="SPCOR" && !.equal.length(ti, ni, mi, r2i))
+         if (is.element(measure, c("SPCOR","ZSPCOR")) && !.equal.length(ti, ni, mi, r2i))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          k.all <- length(ti)
@@ -1190,7 +1204,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             ni  <- .getsubset(ni,  subset)
          }
 
-         if (measure=="SPCOR" && any(r2i > 1 | r2i < 0, na.rm=TRUE))
+         if (is.element(measure, c("SPCOR","ZSPCOR")) && any(r2i > 1 | r2i < 0, na.rm=TRUE))
             stop(mstyle$stop("One or more R^2 values are > 1 or < 0."))
 
          if (any(ni <= 0, na.rm=TRUE))
@@ -1240,13 +1254,13 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          if (measure == "ZPCOR") {
             yi <- ti / sqrt(ti^2 + (ni - mi - 1))
-            yi <- 1/2 * log((1+yi)/(1-yi))
-            vi <- 1/(ni-mi-3)
+            yi <- transf.rtoz(yi)
+            vi <- 1 / (ni-mi-3)
          }
 
          ### semi-partial correlation coefficient
 
-         if (measure == "SPCOR") {
+         if (is.element(measure, c("SPCOR","ZSPCOR"))) {
 
             yi <- ti * sqrt(1 - r2i) / sqrt(ni - mi - 1)
 
@@ -1272,6 +1286,13 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             }
 
+         }
+
+         ### r-to-z transformation for ZPCOR (note: NOT a variance-stabilizing transformation for this measure)
+
+         if (measure == "ZSPCOR") {
+            vi <- vi / (1 - ifelse(yi^2 > 1, 1, yi^2))^2
+            yi <- transf.rtoz(yi)
          }
 
       }
@@ -1619,8 +1640,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ### compute rates (unadjusted and adjusted)
 
-         iri.u <- xi.u/ti
-         iri <- xi/ti
+         iri.u <- xi.u / ti
+         iri <- xi / ti
 
          ### raw incidence rate
 
@@ -1631,9 +1652,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                yi <- iri.u
             }
             if (addvi) {
-               vi <- iri/ti ### note: same as xi/ti^2
+               vi <- iri / ti ### note: same as xi/ti^2
             } else {
-               vi <- iri.u/ti ### note: same as xi.u/ti^2
+               vi <- iri.u / ti ### note: same as xi.u/ti^2
             }
          }
 
@@ -1646,9 +1667,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                yi <- log(iri.u)
             }
             if (addvi) {
-               vi <- 1/xi
+               vi <- 1 / xi
             } else {
-               vi <- 1/xi.u
+               vi <- 1 / xi.u
             }
          }
 
@@ -1660,7 +1681,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             } else {
                yi <- sqrt(iri.u)
             }
-            vi <- 1/(4*ti)
+            vi <- 1 / (4*ti)
          }
 
          ### note: addyi and addvi only implemented for measures above
@@ -1668,8 +1689,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### incidence rate with Freeman-Tukey transformation
 
          if (measure == "IRFT") {
-            yi <- 1/2*(sqrt(iri) + sqrt(iri+1/ti))
-            vi <- 1/(4*ti)
+            yi <- 1/2 * (sqrt(iri) + sqrt(iri+1/ti))
+            vi <- 1 / (4*ti)
          }
 
       }
@@ -1732,14 +1753,14 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          if (measure == "MN") {
             yi <- mi
-            vi <- sdi^2/ni
+            vi <- sdi^2 / ni
          }
 
          ### log(mean)
 
          if (measure == "MNLN") {
             yi <- log(mi)
-            vi <- sdi^2/(ni*mi^2)
+            vi <- sdi^2 / (ni*mi^2)
          }
 
          ### log(CV) with bias correction
@@ -1747,15 +1768,15 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### since for normally distributed data the mean and variance (and transformations thereof) are independent
 
          if (measure == "CVLN") {
-            yi <- log(sdi/mi) + 1/(2*(ni-1))
-            vi <- 1/(2*(ni-1)) + sdi^2/(ni*mi^2)
+            yi <- log(sdi/mi) + 1 / (2*(ni-1))
+            vi <- 1 / (2*(ni-1)) + sdi^2 / (ni*mi^2)
          }
 
          ### log(SD) with bias correction
 
          if (measure == "SDLN") {
-            yi <- log(sdi) + 1/(2*(ni-1))
-            vi <- 1/(2*(ni-1))
+            yi <- log(sdi) + 1 / (2*(ni-1))
+            vi <- 1 / (2*(ni-1))
          }
 
          ### single-group standardized mean
@@ -1763,7 +1784,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (measure == "SMN") {
             cmi <- .cmicalc(ni-1)
             yi <- cmi * mi / sdi
-            vi <- 1/ni + yi^2/(2*ni)
+            vi <- 1 / ni + yi^2 / (2*ni)
          }
 
       }
@@ -1939,21 +1960,21 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          if (measure == "ROMC") {
             yi <- log(m1i/m2i)
-            vi <- sd1i^2/(ni*m1i^2) + sd2i^2/(ni*m2i^2) - 2*ri*sd1i*sd2i/(m1i*m2i*ni)
+            vi <- sd1i^2 / (ni*m1i^2) + sd2i^2 / (ni*m2i^2) - 2*ri*sd1i*sd2i/(m1i*m2i*ni)
          }
 
          ### coefficient of variation ratio for pre-post or matched designs
 
          if (measure == "CVRC") {
             yi <- log(sd1i/m1i) - log(sd2i/m2i)
-            vi <- (1-ri^2)/(ni-1) + (m1i^2*sd2i^2 + m2i^2*sd1i^2 - 2*m1i*m2i*ri*sd1i*sd2i) / (m1i^2*m2i^2*ni)
+            vi <- (1-ri^2) / (ni-1) + (m1i^2*sd2i^2 + m2i^2*sd1i^2 - 2*m1i*m2i*ri*sd1i*sd2i) / (m1i^2*m2i^2*ni)
          }
 
          ### variability ratio for pre-post or matched designs
 
          if (measure == "VRC") {
             yi <- log(sd1i/sd2i)
-            vi <- (1-ri^2)/(ni-1)
+            vi <- (1-ri^2) / (ni-1)
          }
 
       }

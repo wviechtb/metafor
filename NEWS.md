@@ -1,6 +1,6 @@
-# metafor 3.9-13 (2022-11-08)
+# metafor 3.9-14 (2022-11-09)
 
-- `model.matrix()` gains `asdf` argument
+- `model.matrix.rma()` gains `asdf` argument
 
 - `emmprep()` function added to create a reference grid for use with the `emmeans()` function from the package of the same name
 
@@ -14,15 +14,17 @@
 
 - the variance of measure `ZPCOR` is now calculated with `1/(ni-mi-3)` (instead of `1/(ni-mi-1)`), which provides a better approximation in small samples (and analogous to how the variance of `ZCOR` is calculated with `1/(ni-3)`)
 
-- `escalc()` provides more informative error messages when not specifying all required arguments to compute a particular measure
+- added `conv.wald()` function for converting Wald-type confidence intervals and test statistics to sampling variances
+
+- added `exact="i"` option in `permutest()` (to just return the number of iterations required for an exact permutation test)
+
+- `escalc()` now provides more informative error messages when not specifying all required arguments to compute a particular measure
 
 - as with `measure="SMD"`, one can now also use arguments `di` and `ti` to specify d-values and t-test statistics for measures `RPB`, `RBIS`, `D2ORN`, and `D2ORL` in `escalc()`
 
 - for measures `COR`, `UCOR`, and `ZCOR`, can now use argument `ti` to specify t-test statistics in `escalc()`
 
-- added `conv.wald()` function for converting Wald-type confidence intervals and test statistics to sampling variances
-
-- added `exact="i"` option in `permutest()` (to just return the number of iterations required for an exact permutation test)
+- can also specify (two-sided) p-values (of the respective t-tests) for these measures via argument `pi` (the sign of p-value is taken to the sign of the measure)
 
 - improved the documentation of `escalc()` a bit
 
