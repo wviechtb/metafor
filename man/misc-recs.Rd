@@ -59,7 +59,7 @@ anova(sav, ...)}
 
    When fitting complex models, it is not guaranteed that all parameters of the model are identifiable (i.e., that there is a unique set of values for the parameters that maximizes the (restricted) likelihood function). For models fitted with the \code{\link{rma.mv}} function, this pertains especially to the variance/correlation components of the model (i.e., what is specified via the \code{random} argument). Therefore, it is strongly advised in general to do post model fitting checks to make sure that the likelihood surface around the ML/REML estimates is not flat for some combination of the parameter estimates (which would imply that the estimates are essentially arbitrary). For example, one can plot the (restricted) log-likelihood as a function of each variance/correlation component in the model to make sure that each profile plot shows a clear peak at the corresponding ML/REML estimate. The \code{\link[=profile.rma]{profile}} function can be used for this purpose. See also Raue et al. (2009) for some further discussion of parameter identifiability and the use of profile likelihoods to check for this.
 
-   The \code{\link[=profile.rma]{profile}} function should also be used after fitting location-scale models with the \code{\link{rma.uni}} function and after fitting selection models with the \code{\link{selmodel}} function.
+   The \code{\link[=profile.rma]{profile}} function should also be used after fitting location-scale models (Viechtbauer & \enc{López-López}{Lopez-Lopez}, 2022) with the \code{\link{rma.uni}} function and after fitting selection models with the \code{\link{selmodel}} function.
 
    }
 
@@ -97,6 +97,8 @@ anova(sav, ...)}
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 
    Viechtbauer, W., \enc{López-López}{Lopez-Lopez}, J. A., \enc{Sánchez-Meca}{Sanchez-Meca}, J., & \enc{Marín-Martínez}{Marin-Martinez}, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. \emph{Psychological Methods}, \bold{20}(3), 360--374. \verb{https://doi.org/10.1037/met0000023}
+
+   Viechtbauer, W., & \enc{López-López}{Lopez-Lopez}, J. A. (2022). Location-scale models for meta-analysis. \emph{Research Synthesis Methods}. \bold{13}(6), 697--715. \verb{https://doi.org/10.1002/jrsm.1562}
 }
 \keyword{documentation}
 \keyword{misc}

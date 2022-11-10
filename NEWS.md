@@ -26,6 +26,8 @@
 
 - can also specify (two-sided) p-values (of the respective t-tests) for these measures via argument `pi` (the sign of p-value is taken to the sign of the measure)
 
+- added measures `"ZPHI"`, `"ZTET"`, `"ZPB"`, `"ZBIS"`, and `"ZSPCOR"` to `escalc()` (but note that Fisher's r-to-z transformation is not a variance-stabilizing transformation for these measures)
+
 - improved the documentation of `escalc()` a bit
 
 # metafor 3.8-1 (2022-08-26)

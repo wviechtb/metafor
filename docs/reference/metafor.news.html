@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-14</span>
       </span>
     </div>
 
@@ -121,9 +121,9 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">metafor.news</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.9-13 (2022-11-08)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.9-14 (2022-11-09)                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - model.matrix() gains asdf argument</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - model.matrix.rma() gains asdf argument</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - emmprep() function added to create a reference grid for use with the</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     emmeans() function from the package of the same name</span>
@@ -147,7 +147,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     small samples (and analogous to how the variance of ZCOR is</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     calculated with 1/(ni-3))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - escalc() provides more informative error messages when not</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - added conv.wald() function for converting Wald-type confidence</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     intervals and test statistics to sampling variances</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - added exact="i" option in permutest() (to just return the number of</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     iterations required for an exact permutation test)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - escalc() now provides more informative error messages when not</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     specifying all required arguments to compute a particular measure</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - as with measure="SMD", one can now also use arguments di and ti to</span>
@@ -157,11 +163,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - for measures COR, UCOR, and ZCOR, can now use argument ti to specify</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     t-test statistics in escalc()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - added conv.wald() function for converting Wald-type confidence</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     intervals and test statistics to sampling variances</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - can also specify (two-sided) p-values (of the respective t-tests)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     for these measures via argument pi (the sign of p-value is taken to</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     the sign of the measure)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - added exact="i" option in permutest() (to just return the number of</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     iterations required for an exact permutation test)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - added measures "ZPHI", "ZTET", "ZPB", "ZBIS", and "ZSPCOR" to</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     escalc() (but note that Fisher's r-to-z transformation is not a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     variance-stabilizing transformation for these measures)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - improved the documentation of escalc() a bit</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

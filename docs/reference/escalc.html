@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-14</span>
       </span>
     </div>
 
@@ -350,7 +350,8 @@
 <li><p><code>"YUQ"</code> for <em>Yule's Q</em> (Yule, 1912),</p></li>
 <li><p><code>"YUY"</code> for <em>Yule's Y</em> (Yule, 1912),</p></li>
 <li><p><code>"RTET"</code> for the <em>tetrachoric correlation coefficient</em>.</p></li>
-</ul><p>Tables with one or more zero counts are handled as described earlier. For <code>measure="PHI"</code>, one must indicate via <code>vtype="ST"</code> or <code>vtype="CS"</code> whether the data for the studies were obtained using stratified or cross-sectional (i.e., multinomial) sampling, respectively (it is also possible to specify an entire vector for the <code>vtype</code> argument in case the sampling scheme differed for the various studies).</p>
+</ul><p>There are also measures <code>"ZPHI"</code> and <code>"ZTET"</code> for applying Fisher's r-to-z transformation to these measures. This may be useful when combining these with other types of correlation coefficients that were r-to-z transformed. However, note that the r-to-z transformation is <em>not</em> a variance-stabilizing transformation for these measures.</p>
+<p>Tables with one or more zero counts are handled as described earlier. For <code>measure="PHI"</code>, one must indicate via <code>vtype="ST"</code> or <code>vtype="CS"</code> whether the data for the studies were obtained using stratified or cross-sectional (i.e., multinomial) sampling, respectively (it is also possible to specify an entire vector for the <code>vtype</code> argument in case the sampling scheme differed for the various studies).</p>
 <p>A dataset corresponding to data of this type is provided in <code><a href="https://wviechtb.github.io/metadat/reference/dat.bourassa1996.html" class="external-link">dat.bourassa1996</a></code>.</p>
 <p></p>
 </div>
@@ -362,7 +363,8 @@
 <p>Finally, we can consider outcome measures that can be used to describe the relationship between two variables, where one variable is dichotomous and the other variable measures some quantitative characteristic. In that case, it is likely that study authors again report summary statistics, such as the mean and standard deviation of the measurements within the two groups (defined by the dichotomous variable). Based on this information, one can compute the point-biserial correlation coefficient (Tate, 1954) as a measure of association between the two variables. If the dichotomous variable is actually a dichotomized version of the responses on an underlying quantitative scale (and assuming that the two variables follow a bivariate normal distribution), it is also possible to estimate the correlation between the two variables using the biserial correlation coefficient (Pearson, 1909; Soper, 1914; Jacobs &amp; Viechtbauer, 2017).</p>
 <p>Here, one again needs to specify <code>m1i</code> and <code>m2i</code> for the observed means of the two groups, <code>sd1i</code> and <code>sd2i</code> for the observed standard deviations, and <code>n1i</code> and <code>n2i</code> for the number of individuals in each group. The options for the <code>measure</code> argument are then:</p><ul><li><p><code>"RPB"</code> for the <em>point-biserial correlation coefficient</em>,</p></li>
 <li><p><code>"RBIS"</code> for the <em>biserial correlation coefficient</em>.</p></li>
-</ul><p>If the means and standard deviations are unknown for some studies, one can also use argument <code>di</code>, <code>ti</code>, or <code>pi</code> to specify standardized mean differences (Cohen's d values), t-statistics from an independent samples t-test, or (signed) p-values for the t-test, respectively, as described earlier under (1a) (together with the group sizes, these are sufficient statistics for computing the (point-)biserial correlation coefficients).</p>
+</ul><p>There are also measures <code>"ZPB"</code> and <code>"ZBIS"</code> for applying Fisher's r-to-z transformation to these measures. This may be useful when combining these with other types of correlation coefficients that were r-to-z transformed. However, note that the r-to-z transformation is <em>not</em> a variance-stabilizing transformation for these measures.</p>
+<p>If the means and standard deviations are unknown for some studies, one can also use argument <code>di</code>, <code>ti</code>, or <code>pi</code> to specify standardized mean differences (Cohen's d values), t-statistics from an independent samples t-test, or (signed) p-values for the t-test, respectively, as described earlier under (1a) (together with the group sizes, these are sufficient statistics for computing the (point-)biserial correlation coefficients).</p>
 <p>For <code>measure="RPB"</code>, one must indicate via <code>vtype="ST"</code> or <code>vtype="CS"</code> whether the data for the studies were obtained using stratified or cross-sectional (i.e., multinomial) sampling, respectively (it is also possible to specify an entire vector for the <code>vtype</code> argument in case the sampling scheme differed for the various studies).</p>
 <p></p>
 </div>
@@ -482,8 +484,9 @@
 
 <p>Aloe and Becker (2012), Aloe and Thompson (2013), and Aloe (2014) describe the use of partial and semi-partial correlation coefficients for meta-analyzing the results from regression models (when the focus is on a common regression coefficient of interest across studies). To compute these measures, one needs to specify <code>ti</code> for the test statistics (i.e., t-tests) of the regression coefficient of interest, <code>ni</code> for the sample sizes of the studies, <code>mi</code> for the number of predictors in the regression models, and <code>r2i</code> for the <em></em>\(R^2\) value of the regression models (the latter is only needed when <code>measure="SPCOR"</code>). The options for the <code>measure</code> argument are then:</p><ul><li><p><code>"PCOR"</code> for the <em>partial correlation coefficient</em>,</p></li>
 <li><p><code>"ZPCOR"</code> for <em>Fisher's r-to-z transformed partial correlation coefficient</em>,</p></li>
-<li><p><code>"SPCOR"</code> for the <em>semi-partial correlation coefficient</em>.</p></li>
-</ul><p>Note that the sign of the (semi-)partial correlation coefficients is determined based on the signs of the values specified via the <code>ti</code> argument. Also, the Fisher transformation can only be applied to partial correlation coefficient, not semi-partial coefficients.</p>
+<li><p><code>"SPCOR"</code> for the <em>semi-partial correlation coefficient</em>,</p></li>
+<li><p><code>"ZSPCOR"</code> for <em>Fisher's r-to-z transformed semi-partial correlation coefficient</em>.</p></li>
+</ul><p>Note that the sign of the (semi-)partial correlation coefficients is determined based on the signs of the values specified via the <code>ti</code> argument. Also, while the Fisher transformation can be applied to both measures, it is only a variance-stabilizing transformation for partial correlation coefficients.</p>
 <p>A dataset corresponding to data of this type is provided in <code><a href="https://wviechtb.github.io/metadat/reference/dat.aloe2013.html" class="external-link">dat.aloe2013</a></code>.</p>
 <p></p>
 </div>

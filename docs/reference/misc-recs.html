@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-14</span>
       </span>
     </div>
 
@@ -158,7 +158,7 @@
 
 
 <p>When fitting complex models, it is not guaranteed that all parameters of the model are identifiable (i.e., that there is a unique set of values for the parameters that maximizes the (restricted) likelihood function). For models fitted with the <code><a href="rma.mv.html">rma.mv</a></code> function, this pertains especially to the variance/correlation components of the model (i.e., what is specified via the <code>random</code> argument). Therefore, it is strongly advised in general to do post model fitting checks to make sure that the likelihood surface around the ML/REML estimates is not flat for some combination of the parameter estimates (which would imply that the estimates are essentially arbitrary). For example, one can plot the (restricted) log-likelihood as a function of each variance/correlation component in the model to make sure that each profile plot shows a clear peak at the corresponding ML/REML estimate. The <code><a href="profile.rma.html">profile</a></code> function can be used for this purpose. See also Raue et al. (2009) for some further discussion of parameter identifiability and the use of profile likelihoods to check for this.</p>
-<p>The <code><a href="profile.rma.html">profile</a></code> function should also be used after fitting location-scale models with the <code><a href="rma.uni.html">rma.uni</a></code> function and after fitting selection models with the <code><a href="selmodel.html">selmodel</a></code> function.</p>
+<p>The <code><a href="profile.rma.html">profile</a></code> function should also be used after fitting location-scale models (Viechtbauer &amp; López-López, 2022) with the <code><a href="rma.uni.html">rma.uni</a></code> function and after fitting selection models with the <code><a href="selmodel.html">selmodel</a></code> function.</p>
 <p></p>
 </div>
 
@@ -184,6 +184,7 @@
 <p>Viechtbauer, W. (2005). Bias and efficiency of meta-analytic variance estimators in the random-effects model. <em>Journal of Educational and Behavioral Statistics</em>, <b>30</b>(3), 261–293. <a href="https://doi.org/10.3102/10769986030003261" class="external-link">https://doi.org/10.3102/10769986030003261</a></p>
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1–48. <a href="https://doi.org/10.18637/jss.v036.i03" class="external-link">https://doi.org/10.18637/jss.v036.i03</a></p>
 <p>Viechtbauer, W., López-López, J. A., Sánchez-Meca, J., &amp; Marín-Martínez, F. (2015). A comparison of procedures to test for moderators in mixed-effects meta-regression models. <em>Psychological Methods</em>, <b>20</b>(3), 360–374. <a href="https://doi.org/10.1037/met0000023" class="external-link">https://doi.org/10.1037/met0000023</a></p>
+<p>Viechtbauer, W., &amp; López-López, J. A. (2022). Location-scale models for meta-analysis. <em>Research Synthesis Methods</em>. <b>13</b>(6), 697–715. <a href="https://doi.org/10.1002/jrsm.1562" class="external-link">https://doi.org/10.1002/jrsm.1562</a></p>
     </div>
 
   </div>

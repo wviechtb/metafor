@@ -246,6 +246,8 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \item \code{"RTET"} for the \emph{tetrachoric correlation coefficient}.
          }
 
+         There are also measures \code{"ZPHI"} and \code{"ZTET"} for applying Fisher's r-to-z transformation to these measures. This may be useful when combining these with other types of correlation coefficients that were r-to-z transformed. However, note that the r-to-z transformation is \emph{not} a variance-stabilizing transformation for these measures.
+
          Tables with one or more zero counts are handled as described earlier. For \code{measure="PHI"}, one must indicate via \code{vtype="ST"} or \code{vtype="CS"} whether the data for the studies were obtained using stratified or cross-sectional (i.e., multinomial) sampling, respectively (it is also possible to specify an entire vector for the \code{vtype} argument in case the sampling scheme differed for the various studies).
 
          A dataset corresponding to data of this type is provided in \code{\link[metadat]{dat.bourassa1996}}.
@@ -261,6 +263,8 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \item \code{"RPB"} for the \emph{point-biserial correlation coefficient},
          \item \code{"RBIS"} for the \emph{biserial correlation coefficient}.
          }
+
+         There are also measures \code{"ZPB"} and \code{"ZBIS"} for applying Fisher's r-to-z transformation to these measures. This may be useful when combining these with other types of correlation coefficients that were r-to-z transformed. However, note that the r-to-z transformation is \emph{not} a variance-stabilizing transformation for these measures.
 
          If the means and standard deviations are unknown for some studies, one can also use argument \code{di}, \code{ti}, or \code{pi} to specify standardized mean differences (Cohen's d values), t-statistics from an independent samples t-test, or (signed) p-values for the t-test, respectively, as described earlier under (1a) (together with the group sizes, these are sufficient statistics for computing the (point-)biserial correlation coefficients).
 
@@ -416,10 +420,11 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \itemize{
          \item \code{"PCOR"} for the \emph{partial correlation coefficient},
          \item \code{"ZPCOR"} for \emph{Fisher's r-to-z transformed partial correlation coefficient},
-         \item \code{"SPCOR"} for the \emph{semi-partial correlation coefficient}.
+         \item \code{"SPCOR"} for the \emph{semi-partial correlation coefficient},
+         \item \code{"ZSPCOR"} for \emph{Fisher's r-to-z transformed semi-partial correlation coefficient}.
          }
 
-         Note that the sign of the (semi-)partial correlation coefficients is determined based on the signs of the values specified via the \code{ti} argument. Also, the Fisher transformation can only be applied to partial correlation coefficient, not semi-partial coefficients.
+         Note that the sign of the (semi-)partial correlation coefficients is determined based on the signs of the values specified via the \code{ti} argument. Also, while the Fisher transformation can be applied to both measures, it is only a variance-stabilizing transformation for partial correlation coefficients.
 
          A dataset corresponding to data of this type is provided in \code{\link[metadat]{dat.aloe2013}}.
 
