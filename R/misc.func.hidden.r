@@ -184,6 +184,14 @@
 .is.matrix <- function(x)
    is.matrix(x) || inherits(x, "Matrix")
 
+### function to test if x is numeric but also allow a (vector of) NA
+
+.is.numeric <- function(x) {
+   if (all(is.na(x)))
+      return(TRUE)
+   is.numeric(x)
+}
+
 ############################################################################
 
 ### function to format p-values (no longer used; use fmtp() instead)
@@ -406,7 +414,7 @@
 
    }
 
-   if (checknumeric && !is.null(out) && !is.list(out) && !is.numeric(out[1])) # using [1] so is.numeric(Matrix(1:3)[1]) works
+   if (checknumeric && !is.null(out) && !is.list(out) && !.is.numeric(out[1])) # using [1] so is.numeric(Matrix(1:3)[1]) works
       stop(mstyle$stop(paste0("The object/variable specified for the '", x, "' argument is not numeric.")), call.=FALSE)
 
    return(out)

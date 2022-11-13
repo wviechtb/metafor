@@ -2090,7 +2090,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       ### check if yi is numeric
 
-      if (!is.numeric(yi))
+      if (!.is.numeric(yi))
          stop(mstyle$stop("The object/variable specified for the 'yi' argument is not numeric."))
 
       ### get vi, sei, and ni
