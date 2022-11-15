@@ -28,21 +28,21 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 
    We can distinguish three cases:
 
-   \subsection{Case 1: Min, Q1, Median, Q3, Max}{
-
-      In case the full five-number summary is available for a study (plus the sample size), then the function uses by default the method by Luo et al. (2016), equation (15), to estimate the mean and the method by Shi et al. (2020), equation (10), to estimate the SD.
-
-   }
-
-   \subsection{Case 2: Min, Median, Max}{
+   \subsection{Case 1: Min, Median, Max}{
 
       In case only the minimum, median, and maximum is available for a study (plus the sample size), then the function uses by default the method by Luo et al. (2016), equation (7), to estimate the mean and the method by Wan et al. (2014), equation (9), to estimate the SD.
 
    }
 
-   \subsection{Case 3: Q1, Median, Q3}{
+   \subsection{Case 2: Q1, Median, Q3}{
 
       In case only the lower/first quartile, median, and upper/third quartile is available for a study (plus the sample size), then the function uses by default the method by Luo et al. (2016), equation (11), to estimate the mean and the method by Wan et al. (2014), equation (16), to estimate the SD.
+
+   }
+
+   \subsection{Case 3: Min, Q1, Median, Q3, Max}{
+
+      In case the full five-number summary is available for a study (plus the sample size), then the function uses by default the method by Luo et al. (2016), equation (15), to estimate the mean and the method by Shi et al. (2020), equation (10), to estimate the SD.
 
    }
 
@@ -54,16 +54,16 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 
    If \code{data} was specified and \code{append=TRUE}, then the original data frame is returned. If \code{var.names[1]} is a variable in \code{data}, then missing values in this variable are replaced with the estimated means (where possible) and otherwise a new variable called \code{var.names[1]} is added to the data frame. Similarly, if \code{var.names[2]} is a variable in \code{data}, then missing values in this variable are replaced with the estimated SDs (where possible) and otherwise a new variable called \code{var.names[2]} is added to the data frame.
 
-   In case missing values in \code{var.names[1]} are replaced, an attribute called \code{"est"} is added to the variable, which is a logical vector that is \code{TRUE} for values that were estimated. The same is done in case missing values in \code{var.names[2]} are replaced.
+   When missing values in \code{var.names[1]} are replaced, an attribute called \code{"est"} is added to the variable, which is a logical vector that is \code{TRUE} for values that were estimated. The same is done when missing values in \code{var.names[2]} are replaced.
 }
 \note{
    A few alternative methods are also implemented, but these are not recommended as they have been shown to be less accurate than the methods that are used by default.
 
-   For case 1, one can set \code{method[1]} to \code{"Bland2015"} or \code{"Wan2014"}, in which case equation (10) from Wan et al. (2014) is used to estimate the mean. One can set \code{method[2]} to \code{"Bland2015"} in which case equation (11) from Wan et al. (2014) is used to estimate the SD or to \code{"Wan2014"} in which case equation (13) from Wan et al. (2014) is used to estimate the SD.
+   For case 1, one can set \code{method} to \code{"Hozo2005"} in which case the methods as described on page 8, right column, from Hozo et al. (2005) are used to estimate the mean and SD. One can set \code{method} to \code{"Wan2014"} in which case equation (3) from Wan et al. (2014) is used to estimate the mean (and equation (9) for the SD per default).
 
-   For case 2, one can set \code{method} to \code{"Hozo2005"} in which case the methods as described on page 8, right column, from Hozo et al. (2005) are used to estimate the mean and SD. One can set \code{method} to \code{"Wan2014"} in which case equation (3) from Wan et al. (2014) is used to estimate the mean (and equation (9) for the SD per default).
+   For case 2, one can set \code{method} to \code{"Wan2014"} in which case equation (14) from Wan et al. (2014) is used to estimate the mean (and equation (16) for the SD per default).
 
-   For case 3, one can set \code{method} to \code{"Wan2014"} in which case equation (14) from Wan et al. (2014) is used to estimate the mean (and equation (16) for the SD per default).
+   For case 3, one can set \code{method[1]} to \code{"Bland2015"} or \code{"Wan2014"}, in which case equation (10) from Wan et al. (2014) is used to estimate the mean. One can set \code{method[2]} to \code{"Bland2015"} in which case equation (11) from Wan et al. (2014) is used to estimate the SD or to \code{"Wan2014"} in which case equation (13) from Wan et al. (2014) is used to estimate the SD.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
@@ -86,8 +86,8 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 }
 \examples{
 # example data frame
-dat <- data.frame(case=c(1:3,NA), min=c(2,2,NA,NA), q1=c(4,NA,4,NA),
-                  median=c(6,6,6,NA), q3=c(10,NA,10,NA), max=c(16,16,NA,NA),
+dat <- data.frame(case=c(1:3,NA), min=c(2,NA,2,NA), q1=c(NA,4,4,NA),
+                  median=c(6,6,6,NA), q3=c(NA,10,10,NA), max=c(16,NA,16,NA),
                   mean=c(NA,NA,NA,7.0), sd=c(NA,NA,NA,4.2), n=c(20,20,20,20))
 dat
 

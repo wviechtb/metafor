@@ -127,7 +127,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, var.names=c
 
       if (case1[i]) {
 
-         ### min, median, and max are given (note: case 2 in the docs)
+         ### case 1: min, median, and max are given
 
          # mean estimation
 
@@ -171,7 +171,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, var.names=c
 
       if (case2[i]) {
 
-         ### q1, median, and q3 are given (note: case 3 in the docs)
+         ### case 2: q1, median, and q3 are given
 
          # mean estimation
 
@@ -196,7 +196,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, var.names=c
 
       if (case3[i]) {
 
-         ### min, q1, median, q3, and max are given (note: case 1 in the docs)
+         ### case 3: min, q1, median, q3, and max are given
 
          # mean estimation
 

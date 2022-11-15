@@ -147,15 +147,7 @@
 <p>The present function can be used to convert five-number summary values (or a subset thereof) to means and standard deviations. To be precise, the function provides estimates of the means and standard deviations based on methods described in the literature (Hozo et al., 2005; Wan et al., 2014; Bland, 2015; Luo et al., 2016; Shi et al., 2020).</p>
 <p>We can distinguish three cases:</p>
 <p></p><div class="section">
-<h3 id="case-min-q-median-q-max">Case 1: Min, Q1, Median, Q3, Max<a class="anchor" aria-label="anchor" href="#case-min-q-median-q-max"></a></h3>
-
-
-<p>In case the full five-number summary is available for a study (plus the sample size), then the function uses by default the method by Luo et al. (2016), equation (15), to estimate the mean and the method by Shi et al. (2020), equation (10), to estimate the SD.</p>
-<p></p>
-</div>
-
-<p></p><div class="section">
-<h3 id="case-min-median-max">Case 2: Min, Median, Max<a class="anchor" aria-label="anchor" href="#case-min-median-max"></a></h3>
+<h3 id="case-min-median-max">Case 1: Min, Median, Max<a class="anchor" aria-label="anchor" href="#case-min-median-max"></a></h3>
 
 
 <p>In case only the minimum, median, and maximum is available for a study (plus the sample size), then the function uses by default the method by Luo et al. (2016), equation (7), to estimate the mean and the method by Wan et al. (2014), equation (9), to estimate the SD.</p>
@@ -163,10 +155,18 @@
 </div>
 
 <p></p><div class="section">
-<h3 id="case-q-median-q-">Case 3: Q1, Median, Q3<a class="anchor" aria-label="anchor" href="#case-q-median-q-"></a></h3>
+<h3 id="case-q-median-q-">Case 2: Q1, Median, Q3<a class="anchor" aria-label="anchor" href="#case-q-median-q-"></a></h3>
 
 
 <p>In case only the lower/first quartile, median, and upper/third quartile is available for a study (plus the sample size), then the function uses by default the method by Luo et al. (2016), equation (11), to estimate the mean and the method by Wan et al. (2014), equation (16), to estimate the SD.</p>
+<p></p>
+</div>
+
+<p></p><div class="section">
+<h3 id="case-min-q-median-q-max">Case 3: Min, Q1, Median, Q3, Max<a class="anchor" aria-label="anchor" href="#case-min-q-median-q-max"></a></h3>
+
+
+<p>In case the full five-number summary is available for a study (plus the sample size), then the function uses by default the method by Luo et al. (2016), equation (15), to estimate the mean and the method by Shi et al. (2020), equation (10), to estimate the SD.</p>
 <p></p>
 </div>
 
@@ -182,14 +182,14 @@
 <p>If <code>data</code> was specified and <code>append=TRUE</code>, then the original data frame is returned. If <code>var.names[1]</code> is a variable in <code>data</code>, then missing values in this variable are replaced with the estimated means (where possible) and otherwise a new variable called <code>var.names[1]</code> is added to the data frame. Similarly, if <code>var.names[2]</code> is a variable in <code>data</code>, then missing values in this variable are replaced with the estimated SDs (where possible) and otherwise a new variable called <code>var.names[2]</code> is added to the data frame.</p>
 
 
-<p>In case missing values in <code>var.names[1]</code> are replaced, an attribute called <code>"est"</code> is added to the variable, which is a logical vector that is <code>TRUE</code> for values that were estimated. The same is done in case missing values in <code>var.names[2]</code> are replaced.</p>
+<p>When missing values in <code>var.names[1]</code> are replaced, an attribute called <code>"est"</code> is added to the variable, which is a logical vector that is <code>TRUE</code> for values that were estimated. The same is done when missing values in <code>var.names[2]</code> are replaced.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
     <p>A few alternative methods are also implemented, but these are not recommended as they have been shown to be less accurate than the methods that are used by default.</p>
-<p>For case 1, one can set <code>method[1]</code> to <code>"Bland2015"</code> or <code>"Wan2014"</code>, in which case equation (10) from Wan et al. (2014) is used to estimate the mean. One can set <code>method[2]</code> to <code>"Bland2015"</code> in which case equation (11) from Wan et al. (2014) is used to estimate the SD or to <code>"Wan2014"</code> in which case equation (13) from Wan et al. (2014) is used to estimate the SD.</p>
-<p>For case 2, one can set <code>method</code> to <code>"Hozo2005"</code> in which case the methods as described on page 8, right column, from Hozo et al. (2005) are used to estimate the mean and SD. One can set <code>method</code> to <code>"Wan2014"</code> in which case equation (3) from Wan et al. (2014) is used to estimate the mean (and equation (9) for the SD per default).</p>
-<p>For case 3, one can set <code>method</code> to <code>"Wan2014"</code> in which case equation (14) from Wan et al. (2014) is used to estimate the mean (and equation (16) for the SD per default).</p>
+<p>For case 1, one can set <code>method</code> to <code>"Hozo2005"</code> in which case the methods as described on page 8, right column, from Hozo et al. (2005) are used to estimate the mean and SD. One can set <code>method</code> to <code>"Wan2014"</code> in which case equation (3) from Wan et al. (2014) is used to estimate the mean (and equation (9) for the SD per default).</p>
+<p>For case 2, one can set <code>method</code> to <code>"Wan2014"</code> in which case equation (14) from Wan et al. (2014) is used to estimate the mean (and equation (16) for the SD per default).</p>
+<p>For case 3, one can set <code>method[1]</code> to <code>"Bland2015"</code> or <code>"Wan2014"</code>, in which case equation (10) from Wan et al. (2014) is used to estimate the mean. One can set <code>method[2]</code> to <code>"Bland2015"</code> in which case equation (11) from Wan et al. (2014) is used to estimate the SD or to <code>"Wan2014"</code> in which case equation (13) from Wan et al. (2014) is used to estimate the SD.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -212,23 +212,23 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># example data frame</span></span></span>
-<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>case<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="cn">NA</span><span class="op">)</span>, min<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>, q1<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="cn">NA</span>,<span class="fl">4</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                  median<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">6</span>,<span class="fl">6</span>,<span class="cn">NA</span><span class="op">)</span>, q3<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="cn">NA</span>,<span class="fl">10</span>,<span class="cn">NA</span><span class="op">)</span>, max<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">16</span>,<span class="fl">16</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>case<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="cn">NA</span><span class="op">)</span>, min<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="cn">NA</span>,<span class="fl">2</span>,<span class="cn">NA</span><span class="op">)</span>, q1<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">4</span>,<span class="fl">4</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                  median<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">6</span>,<span class="fl">6</span>,<span class="cn">NA</span><span class="op">)</span>, q3<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">10</span>,<span class="fl">10</span>,<span class="cn">NA</span><span class="op">)</span>, max<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">16</span>,<span class="cn">NA</span>,<span class="fl">16</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  mean<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">7.0</span><span class="op">)</span>, sd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">4.2</span><span class="op">)</span>, n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">20</span>,<span class="fl">20</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   case min q1 median q3 max mean  sd  n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1   2  4      6 10  16   NA  NA 20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2   2 NA      6 NA  16   NA  NA 20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3  NA  4      6 10  NA   NA  NA 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1   2 NA      6 NA  16   NA  NA 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2  NA  4      6 10  NA   NA  NA 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3   2  4      6 10  16   NA  NA 20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4   NA  NA NA     NA NA  NA    7 4.2 20</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># estimate means/SDs (note: existing values in 'mean' and 'sd' are not touched)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">conv.fivenum</span><span class="op">(</span>min<span class="op">=</span><span class="va">min</span>, q1<span class="op">=</span><span class="va">q1</span>, median<span class="op">=</span><span class="va">median</span>, q3<span class="op">=</span><span class="va">q3</span>, max<span class="op">=</span><span class="va">max</span>, n<span class="op">=</span><span class="va">n</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   case min q1 median q3 max     mean       sd  n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1   2  4      6 10  16 7.127562 4.055747 20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2   2 NA      6 NA  16 6.891702 3.746839 20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3  NA  4      6 10  NA 6.719500 4.787076 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1   2 NA      6 NA  16 6.891702 3.746839 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2  NA  4      6 10  NA 6.719500 4.787076 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3   2  4      6 10  16 7.127562 4.055747 20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4   NA  NA NA     NA NA  NA 7.000000 4.200000 20</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># check for 'est' attribute</span></span></span>
@@ -246,9 +246,9 @@
 <span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   case min q1 median q3 max     mean       sd  n      yi     vi </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1   2  4      6 10  16 7.127562 4.055747 20 -0.5375 0.0425 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2   2 NA      6 NA  16 6.891702 3.746839 20 -0.5831 0.0411 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3  NA  4      6 10  NA 6.719500 4.787076 20 -0.3128 0.0517 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1   2 NA      6 NA  16 6.891702 3.746839 20 -0.5831 0.0411 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2  NA  4      6 10  NA 6.719500 4.787076 20 -0.3128 0.0517 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3   2  4      6 10  16 7.127562 4.055747 20 -0.5375 0.0425 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4   NA  NA NA     NA NA  NA 7.000000 4.200000 20 -0.4845 0.0443 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
