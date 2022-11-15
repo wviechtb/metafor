@@ -20,7 +20,7 @@ to.wide(data, study, grp, ref, grpvars, postfix=c(".1",".2"),
    \item{addcomp}{logical to specify whether a comparison id variable should be added to the data frame (the default is \code{TRUE}).}
    \item{adddesign}{logical to specify whether a design id variable should be added to the data frame (the default is \code{TRUE}).}
    \item{minlen}{integer to specify the minimum length of the shortened group names for the comparison and design id variables (the default is 2).}
-   \item{var.names}{a character string with three elements to specify the name of the id, comparison, and design variables (the defaults are \code{"id"}, \code{"comp"}, and \code{"design"}, respectively).}
+   \item{var.names}{character vector with three elements to specify the name of the id, comparison, and design variables (the defaults are \code{"id"}, \code{"comp"}, and \code{"design"}, respectively).}
 }
 \details{
    A meta-analytic dataset may be structured in a \sQuote{long} format, where each row in the dataset corresponds to a particular study group (e.g., treatment arm). Using this function, such a dataset can be restructured into a \sQuote{wide} format, where each group within a study is contrasted against a particular reference group.

@@ -1,4 +1,4 @@
-# metafor 3.9-14 (2022-11-09)
+# metafor 3.9-15 (2022-11-15)
 
 - `model.matrix.rma()` gains `asdf` argument
 
@@ -15,6 +15,8 @@
 - the variance of measure `ZPCOR` is now calculated with `1/(ni-mi-3)` (instead of `1/(ni-mi-1)`), which provides a better approximation in small samples (and analogous to how the variance of `ZCOR` is calculated with `1/(ni-3)`)
 
 - added `conv.wald()` function for converting Wald-type confidence intervals and test statistics to sampling variances
+
+- added `conv.fivenum()` function for estimating means and standard deviations from five-number summary values
 
 - added `exact="i"` option in `permutest()` (to just return the number of iterations required for an exact permutation test)
 

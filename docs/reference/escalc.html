@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-15</span>
       </span>
     </div>
 
@@ -214,7 +214,7 @@
 <dd><p>a character string to specify the type of sampling variances to calculate. See ‘Details’.</p></dd>
 
    <dt>var.names</dt>
-<dd><p>character string with two elements to specify the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (the defaults are <code>"yi"</code> and <code>"vi"</code>).</p></dd>
+<dd><p>character vector with two elements to specify the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (the defaults are <code>"yi"</code> and <code>"vi"</code>).</p></dd>
 
    <dt>add.measure</dt>
 <dd><p>logical to specify whether a variable should be added to the data frame (with default name <code>"measure"</code>) that indicates the type of outcome measure computed. When using this option, <code>var.names</code> can have a third element to change this variable name.</p></dd>
@@ -608,7 +608,9 @@
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="print.escalc.html">print.escalc</a></code> and <code><a href="print.escalc.html">summary.escalc</a></code> for the print and summary methods.</p>
-<p><code><a href="conv.wald.html">conv.wald</a></code> for a function to convert Wald-type confidence intervals and test statistics to sampling variances. <code><a href="vcalc.html">vcalc</a></code> for a function to construct or approximate the variance-covariance matrix of dependent effect sizes or outcomes.</p>
+<p><code><a href="conv.wald.html">conv.wald</a></code> for a function to convert Wald-type confidence intervals and test statistics to sampling variances.</p>
+<p><code><a href="vcalc.html">vcalc</a></code> for a function to construct or approximate the variance-covariance matrix of dependent effect sizes or outcomes.</p>
+<p><code><a href="conv.fivenum.html">conv.fivenum</a></code> for a function to convert five-number summary values to means and standard deviations (needed to compute various effect size measures, such as raw or standardized mean differences and ratios of means / response ratios).</p>
 <p><code><a href="rma.uni.html">rma.uni</a></code> and <code><a href="rma.mv.html">rma.mv</a></code> for model fitting functions that can take the calculated effect sizes or outcomes (and the corresponding sampling variances) as input.</p>
 <p><code><a href="rma.mh.html">rma.mh</a></code>, <code><a href="rma.peto.html">rma.peto</a></code>, and <code><a href="rma.glmm.html">rma.glmm</a></code> for model fitting functions that take similar inputs.</p></div>
     </div>

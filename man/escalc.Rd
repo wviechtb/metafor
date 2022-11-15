@@ -47,7 +47,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{to}{a character string to specify when the values under \code{add} should be added (either \code{"all"}, \code{"only0"}, \code{"if0all"}, or \code{"none"}). See \sQuote{Details}.}
    \item{drop00}{logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes. See \sQuote{Details}.}
    \item{vtype}{a character string to specify the type of sampling variances to calculate. See \sQuote{Details}.}
-   \item{var.names}{character string with two elements to specify the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (the defaults are \code{"yi"} and \code{"vi"}).}
+   \item{var.names}{character vector with two elements to specify the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (the defaults are \code{"yi"} and \code{"vi"}).}
    \item{add.measure}{logical to specify whether a variable should be added to the data frame (with default name \code{"measure"}) that indicates the type of outcome measure computed. When using this option, \code{var.names} can have a third element to change this variable name.}
    \item{append}{logical to specify whether the data frame provided via the \code{data} argument should be returned together with the observed effect sizes or outcomes and corresponding sampling variances (the default is \code{TRUE}).}
    \item{replace}{logical to specify whether existing values for \code{yi} and \code{vi} in the data frame should be replaced. Only relevant when \code{append=TRUE} and the data frame already contains the \code{yi} and \code{vi} variables. If \code{replace=TRUE} (the default), all of the existing values will be overwritten. If \code{replace=FALSE}, only \code{NA} values will be replaced. See the \sQuote{Value} section for more details.}
@@ -582,7 +582,11 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 \seealso{
    \code{\link{print.escalc}} and \code{\link{summary.escalc}} for the print and summary methods.
 
-   \code{\link{conv.wald}} for a function to convert Wald-type confidence intervals and test statistics to sampling variances. \code{\link{vcalc}} for a function to construct or approximate the variance-covariance matrix of dependent effect sizes or outcomes.
+   \code{\link{conv.wald}} for a function to convert Wald-type confidence intervals and test statistics to sampling variances.
+
+   \code{\link{vcalc}} for a function to construct or approximate the variance-covariance matrix of dependent effect sizes or outcomes.
+
+   \code{\link{conv.fivenum}} for a function to convert five-number summary values to means and standard deviations (needed to compute various effect size measures, such as raw or standardized mean differences and ratios of means / response ratios).
 
    \code{\link{rma.uni}} and \code{\link{rma.mv}} for model fitting functions that can take the calculated effect sizes or outcomes (and the corresponding sampling variances) as input.
 
