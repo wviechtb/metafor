@@ -1,6 +1,4 @@
-# check for skewness according to Shi
-
-conv.fivenum <- function(min, q1, median, q3, max, n, data, include, var.names=c("mean","sd"), append=TRUE, method) {
+conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, var.names=c("mean","sd"), append=TRUE, method) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -43,9 +41,6 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, var.names=c
       stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
    k <- max(length(min), length(q1), length(median), length(q3), length(max), length(n))
-
-   means <- rep(NA_real_, k)
-   sds   <- rep(NA_real_, k)
 
    if (is.null(min))
       min <- rep(NA_real_, k)
@@ -99,9 +94,9 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, var.names=c
 
    # determine cases and check methods
 
-   case1 <- !is.na(min) &  is.na(q1) & !is.na(median) &  is.na(q3) & !is.na(max)
-   case2 <-  is.na(min) & !is.na(q1) & !is.na(median) & !is.na(q3) &  is.na(max)
-   case3 <- !is.na(min) & !is.na(q1) & !is.na(median) & !is.na(q3) & !is.na(max)
+   case1 <- !is.na(min) &  is.na(q1) &  is.na(q3) & !is.na(max)
+   case2 <-  is.na(min) & !is.na(q1) & !is.na(q3) &  is.na(max)
+   case3 <- !is.na(min) & !is.na(q1) & !is.na(q3) & !is.na(max)
 
    if (missing(method))
       method <- "rec"
@@ -123,11 +118,26 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, var.names=c
 
    #########################################################################
 
+   means <- rep(NA_real_, k)
+   sds   <- rep(NA_real_, k)
+   tval  <- rep(NA_real_, k)
+   crit  <- rep(NA_real_, k)
+   sig   <- rep(NA,       k)
+
    for (i in 1:k) {
 
       if (case1[i]) {
 
          ### case 1: min, median, and max are given
+
+         # test for skewness
+
+         tval[i] <- (min[i] + max[i] - 2*median[i]) / (max[i] - min[i])
+         crit[i] <- 1.01 / log(n[i] + 9) + 2.43 / (n[i] + 1)
+         sig[i]  <- isTRUE(abs(tval[i]) >= crit[i])
+
+         if (test && sig[i])
+            next
 
          # mean estimation
 
@@ -173,6 +183,15 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, var.names=c
 
          ### case 2: q1, median, and q3 are given
 
+         # test for skewness
+
+         tval[i] <- (q1[i] + q3[i] - 2*median[i]) / (q3[i] - q1[i])
+         crit[i] <- 2.66 / sqrt(n[i]) - 5.92 / n[i]^2
+         sig[i] <- isTRUE(abs(tval[i]) >= crit[i])
+
+         if (test && sig[i])
+            next
+
          # mean estimation
 
          if (is.element(method[1], c("rec", "luo2016"))) {
@@ -197,6 +216,15 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, var.names=c
       if (case3[i]) {
 
          ### case 3: min, q1, median, q3, and max are given
+
+         # test for skewness
+
+         tval[i] <- max(2.65 * log(0.6 * n[i]) / sqrt(n[i]) * abs((min[i] + max[i] - 2*median[i]) / (max[i] - min[i])), abs((q1[i] + q3[i] - 2*median[i]) / (q3[i] - q1[i])))
+         crit[i] <- 2.97 / sqrt(n[i]) - 39.1 / n[i]^3
+         sig[i] <- isTRUE(abs(tval[i]) >= crit[i])
+
+         if (test && sig[i])
+            next
 
          # mean estimation
 
@@ -242,7 +270,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, var.names=c
       }
 
       if (is.element(var.names[2], names(data))) {
-         attr(data[[var.names[2]]], "est") <- is.na(data[[var.names[2]]]) & !is.na(means)
+         attr(data[[var.names[2]]], "est") <- is.na(data[[var.names[2]]]) & !is.na(sds)
          data[[var.names[2]]] <- replmiss(data[[var.names[2]]], sds)
       } else {
          data <- cbind(data, sds)
@@ -254,6 +282,15 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, var.names=c
       data <- data.frame(means, sds)
       names(data) <- var.names
 
+   }
+
+   if (test) {
+      attr(data[[var.names[1]]], "tval") <- tval
+      attr(data[[var.names[1]]], "crit") <- crit
+      attr(data[[var.names[1]]], "sig")  <- sig
+      attr(data[[var.names[2]]], "tval") <- tval
+      attr(data[[var.names[2]]], "crit") <- crit
+      attr(data[[var.names[2]]], "sig")  <- sig
    }
 
    return(data)
