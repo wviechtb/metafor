@@ -151,8 +151,8 @@ dat <- conv.fivenum(min=ctrl.min, median=ctrl.median, max=ctrl.max, n=ctrl.n,
 dfround(dat, digits=2)
 
 # the test for skewness was significant for studies 1 and 2; their means/SDs are not estimated
-as.data.frame(attributes(dat$case.mean))
-as.data.frame(attributes(dat$ctrl.mean))
+dfround(as.data.frame(attributes(dat$case.mean)), digits=3)
+dfround(as.data.frame(attributes(dat$ctrl.mean)), digits=3)
 
 # compute mean differences and corresponding sampling variances for studies 4-6
 dat <- escalc(measure="MD", m1i=case.mean, sd1i=case.sd, n1i=case.n,

@@ -347,22 +347,22 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6    75.00          NA    22.50   145.00</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># the test for skewness was significant for studies 1 and 2; their means/SDs are not estimated</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">case.mean</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     est      tval      crit   sig</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 FALSE 0.6180556 0.3187870  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 FALSE 0.4927954 0.3187870  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  TRUE 0.3655172 0.4696796 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 FALSE        NA        NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 FALSE        NA        NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 FALSE        NA 0.3343999 FALSE</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">ctrl.mean</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     est      tval      crit   sig</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 FALSE 0.7044534 0.3187870  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 FALSE 0.4509804 0.3246353  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  TRUE 0.1129944 0.4696796 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 FALSE        NA        NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 FALSE        NA        NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 FALSE        NA 0.4567153 FALSE</span>
+<span class="r-in"><span><span class="fu"><a href="dfround.html">dfround</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">case.mean</span><span class="op">)</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     est  tval  crit   sig</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 FALSE 0.618 0.319  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 FALSE 0.493 0.319  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  TRUE 0.366 0.470 FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 FALSE    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 FALSE    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 FALSE    NA 0.334 FALSE</span>
+<span class="r-in"><span><span class="fu"><a href="dfround.html">dfround</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">ctrl.mean</span><span class="op">)</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     est  tval  crit   sig</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 FALSE 0.704 0.319  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 FALSE 0.451 0.325  TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  TRUE 0.113 0.470 FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 FALSE    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 FALSE    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 FALSE    NA 0.457 FALSE</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># compute mean differences and corresponding sampling variances for studies 4-6</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"MD"</span>, m1i<span class="op">=</span><span class="va">case.mean</span>, sd1i<span class="op">=</span><span class="va">case.sd</span>, n1i<span class="op">=</span><span class="va">case.n</span>,</span></span>
