@@ -77,19 +77,6 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, 
    max[!include]    <- NA_real_
    n[!include]      <- NA_real_
 
-   ### check min <= q1 <= median <= q3 <= max
-
-   incorder <- apply(cbind(min, q1, median, q3, max), 1, is.unsorted, na.rm=TRUE)
-
-   if (any(incorder)) {
-      incrows <- which(incorder)
-      if (length(incrows) > 5L) {
-         stop(mstyle$stop(paste0("Found 'min <= q1 <= median <= q3 <= max' not true for row(s): ", paste0(incrows[1:5], collapse=","), ",...")))
-      } else {
-         stop(mstyle$stop(paste0("Found 'min <= q1 <= median <= q3 <= max' not true for row(s): ", paste0(incrows, collapse=","))))
-      }
-   }
-
    #########################################################################
 
    # determine cases and check methods
@@ -125,6 +112,11 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, 
    sig   <- rep(NA,       k)
 
    for (i in 1:k) {
+
+      ### check min <= q1 <= median <= q3 <= max
+
+      if (is.unsorted(c(min[i], q1[i], median[i], q3[i], max[i]), na.rm=TRUE))
+         stop(mstyle$stop(paste0("Found 'min <= q1 <= median <= q3 <= max' not true for row ", i, ".")))
 
       if (case1[i]) {
 
