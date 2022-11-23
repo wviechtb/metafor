@@ -454,7 +454,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{yi}{vector with the observed effect sizes or outcomes.}
    \item{vi}{vector with the corresponding sampling variances.}
 
-   If \code{append=TRUE} and a data frame was specified via the \code{data} argument, then \code{yi} and \code{vi} are appended to this data frame. Note that the \code{var.names} argument actually specifies the names of these two variables (\code{yi} and \code{vi} are the defaults).
+   If a data frame was specified via the \code{data} argument and \code{append=TRUE}, then variables \code{yi} and \code{vi} are appended to this data frame. Note that the \code{var.names} argument actually specifies the names of these two variables (\code{"yi"} and \code{"vi"} are the defaults).
 
    If the data frame already contains two variables with names as specified by the \code{var.names} argument, the values for these two variables will be overwritten when \code{replace=TRUE} (which is the default). By setting \code{replace=FALSE}, only values that are \code{NA} will be replaced.
 

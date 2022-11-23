@@ -1,12 +1,21 @@
-conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, var.names=c("mean","sd"), append=TRUE, method) {
+conv.fivenum <- function(min, q1, median, q3, max, n, data, dist="norm", transf=FALSE,
+                         include, test=TRUE, var.names=c("mean","sd"), append=TRUE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (missing(min) && missing(q1) && missing(median) && missing(q3) && missing(max))
       stop(mstyle$stop("Must specify at least some of these arguments: 'min', 'q1', 'median', 'q3', 'max'."))
 
+   ### get ... argument and check for extra/superfluous arguments
+
+   ddd <- list(...)
+
+   .chkdots(ddd, c("method"))
+
    if (missing(data))
       data <- NULL
+
+   has.data <- !is.null(data)
 
    if (is.null(data)) {
       data <- sys.frame(sys.parent())
@@ -14,8 +23,6 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, 
       if (!is.data.frame(data))
          data <- data.frame(data)
    }
-
-   has.data <- !is.null(data)
 
    ### checks on var.names argument
 
@@ -35,7 +42,11 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, 
    q3      <- .getx("q3",      mf=mf, data=data, checknumeric=TRUE)
    max     <- .getx("max",     mf=mf, data=data, checknumeric=TRUE)
    n       <- .getx("n",       mf=mf, data=data, checknumeric=TRUE)
-   include <- .getx("include", mf=mf, data=data, checknumeric=TRUE)
+   include <- .getx("include", mf=mf, data=data)
+   dist    <- .getx("dist",    mf=mf, data=data)
+
+   if (is.null(dist)) # if 'dist' is not specified, it is NULL
+      dist <- "norm"
 
    if (!.equal.length(min, q1, median, q3, max, n))
       stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -55,6 +66,19 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, 
    if (is.null(n))
       n <- rep(NA_real_, k)
 
+   ### handle dist argument
+
+   if (length(dist) == 1L)
+      dist <- rep(dist, k)
+
+   if (length(dist) != k)
+      stop(mstyle$stop(paste0("Length of 'dist' argument (", length(dist), ") does not match length of data (", k, ").")))
+
+   dist <- c("norm","lnorm")[pmatch(dist, c("norm","lnorm"), duplicates.ok=TRUE)]
+
+   if (anyNA(dist))
+      stop(mstyle$stop("Unknown 'dist' value specified (should either be 'norm' or 'lnorm')."))
+
    ### if include is NULL, set to TRUE vector
 
    if (is.null(include))
@@ -62,7 +86,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, 
 
    ### turn numeric include vector into logical vector
 
-   include <- .chksubset(include, k)
+   include <- .chksubset(include, k, stoponk0=FALSE)
 
    ### exclude rows where n < 5
 
@@ -85,7 +109,13 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, 
    case2 <-  is.na(min) & !is.na(q1) & !is.na(q3) &  is.na(max)
    case3 <- !is.na(min) & !is.na(q1) & !is.na(q3) & !is.na(max)
 
-   if (missing(method))
+   if (is.null(ddd$method)) {
+      method <- "rec"
+   } else {
+      method <- ddd$method
+   }
+
+   if (any(dist == "lnorm")) # if any dist value is 'lnorm', force use of 'recommended' methods
       method <- "rec"
 
    if (length(method) == 1L)
@@ -118,15 +148,33 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, 
       if (is.unsorted(c(min[i], q1[i], median[i], q3[i], max[i]), na.rm=TRUE))
          stop(mstyle$stop(paste0("Found 'min <= q1 <= median <= q3 <= max' not true for row ", i, ".")))
 
+      if (dist[i] == "lnorm") {
+
+         ### check that min, q1, median, q3, and max are all > 0 when assuming a log-normal distribution
+
+         if (any(min[i] <= 0 || q1[i] <= 0 || median[i] <= 0 || q3[i] <= 0 || max[i] <= 0, na.rm=TRUE))
+            stop(mstyle$stop(paste0("Found a non-positive value of 'min', 'q1', 'median', 'q3', or 'max' for row ", i, ".")))
+
+         ### log-transform inputs
+
+         min[i]    <- log(min[i])
+         q1[i]     <- log(q1[i])
+         median[i] <- log(median[i])
+         q3[i]     <- log(q3[i])
+         max[i]    <- log(max[i])
+
+      }
+
       if (case1[i]) {
 
          ### case 1: min, median, and max are given
 
          # test for skewness
 
-         tval[i] <- (min[i] + max[i] - 2*median[i]) / (max[i] - min[i])
-         crit[i] <- 1.01 / log(n[i] + 9) + 2.43 / (n[i] + 1)
-         sig[i]  <- isTRUE(abs(tval[i]) >= crit[i])
+         tval[i] <- abs((min[i] + max[i] - 2*median[i]) / (max[i] - min[i]))
+         #crit[i] <- 1.01 / log(n[i] + 9) + 2.43 / (n[i] + 1) # Shi et al. (2020b)
+         crit[i] <- 1 / log(n[i] + 9) + 2.5 / (n[i] + 1)      # Shi et al. (under review)
+         sig[i]  <- isTRUE(tval[i] >= crit[i])
 
          if (test && sig[i])
             next
@@ -155,7 +203,9 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, 
          if (is.element(method[2], c("rec", "wan2014"))) {
             # Wan et al. (2014), equation (9)
             xi <- 2 * qnorm((n[i] - 0.375) / (n[i] + 0.25))
-            sds[i] <- (max[i] - min[i]) / xi
+            z1 <- ifelse(dist[i] == "norm", 1, 1.01 + 0.25 / log(n[i])^2)
+            #z1 <- 1
+            sds[i] <- (max[i] - min[i]) / xi * (1/sqrt(z1))
          }
          if (method[2] == "hozo2005") {
             if (is.na(n[i])) {
@@ -169,6 +219,17 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, 
             }
          }
 
+         if (dist[i] == "lnorm" && transf) {
+            s41 <- ((max[i] - min[i]) / xi)^4 / (1 + 2.23 / log(n[i])^2)
+            phi1 <- 1 + 0.565 * sds[i]^2 / n[i] + 0.37 * s41 / n[i]
+            btmean <- exp(means[i] + sds[i]^2 / 2) * (1 / phi1)
+            phi11 <- 1 + 2.26 * sds[i]^2 / n[i] + 5.92 * s41 / n[i]
+            phi12 <- 1 + 2.26 * sds[i]^2 / n[i] + 1.48 * s41 / n[i]
+            btsd   <- sqrt(exp(2*means[i] + 2*sds[i]^2) * (1 / phi11) - exp(2*means[i] + sds[i]^2) * (1 / phi12))
+            means[i] <- btmean
+            sds[i]   <- btsd
+         }
+
       }
 
       if (case2[i]) {
@@ -177,9 +238,10 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, 
 
          # test for skewness
 
-         tval[i] <- (q1[i] + q3[i] - 2*median[i]) / (q3[i] - q1[i])
-         crit[i] <- 2.66 / sqrt(n[i]) - 5.92 / n[i]^2
-         sig[i] <- isTRUE(abs(tval[i]) >= crit[i])
+         tval[i] <- abs((q1[i] + q3[i] - 2*median[i]) / (q3[i] - q1[i]))
+         #crit[i] <- 2.66 / sqrt(n[i]) - 5.92 / n[i]^2 # Shi et al. (2020b)
+         crit[i] <- 2.65 / sqrt(n[i]) - 6 / n[i]^2     # Shi et al. (under review)
+         sig[i] <- isTRUE(tval[i] >= crit[i])
 
          if (test && sig[i])
             next
@@ -200,7 +262,20 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, 
          if (is.element(method[2], c("rec", "wan2014"))) {
             # Wan et al. (2014), equation (16)
             eta <- 2 * qnorm((0.75*n[i] - 0.125) / (n[i] + 0.25))
-            sds[i] <- (q3[i] - q1[i]) / eta
+            z2 <- ifelse(dist[i] == "norm", 1, 1 + 1.58 / n[i])
+            #z2 <- 1
+            sds[i] <- (q3[i] - q1[i]) / eta * (1/sqrt(z2))
+         }
+
+         if (dist[i] == "lnorm" && transf) {
+            s42 <- ((q3[i] - q1[i]) / eta)^4 / (1 + 19.2 / n[i]^1.2)
+            phi2 <- 1 + 0.57 * sds[i]^2 / n[i] + 0.75 * s42 / n[i]
+            btmean <- exp(means[i] + sds[i]^2 / 2) * (1 / phi2)
+            phi21 <- 1 + 2.28 * sds[i]^2 / n[i] + 12 * s42 / n[i]
+            phi22 <- 1 + 2.28 * sds[i]^2 / n[i] +  3 * s42 / n[i]
+            btsd   <- sqrt(exp(2*means[i] + 2*sds[i]^2) * (1 / phi21) - exp(2*means[i] + sds[i]^2) * (1 / phi22))
+            means[i] <- btmean
+            sds[i]   <- btsd
          }
 
       }
@@ -212,8 +287,9 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, 
          # test for skewness
 
          tval[i] <- max(2.65 * log(0.6 * n[i]) / sqrt(n[i]) * abs((min[i] + max[i] - 2*median[i]) / (max[i] - min[i])), abs((q1[i] + q3[i] - 2*median[i]) / (q3[i] - q1[i])))
-         crit[i] <- 2.97 / sqrt(n[i]) - 39.1 / n[i]^3
-         sig[i] <- isTRUE(abs(tval[i]) >= crit[i])
+         #crit[i] <- 2.97 / sqrt(n[i]) - 39.1 / n[i]^3 # Shi et al. (2020b)
+         crit[i] <- 3 / sqrt(n[i]) - 40 / n[i]^3       # Shi et al. (under review)
+         sig[i] <- isTRUE(tval[i] >= crit[i])
 
          if (test && sig[i])
             next
@@ -238,12 +314,25 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, 
          if (is.element(method[2], c("rec", "shi2020"))) {
             # Shi et al. (2020), equation (10)
             weight <- 1 / (1 + 0.07 * n[i]^0.6)
-            sds[i] <- weight * (max[i] - min[i]) / xi + (1 - weight) * (q3[i] - q1[i]) / eta
+            z3 <- ifelse(dist[i] == "norm", 1, 1 + 0.28 / log(n[i])^2)
+            #z3 <- 1
+            sds[i] <- (weight * (max[i] - min[i]) / xi + (1 - weight) * (q3[i] - q1[i]) / eta) * (1/sqrt(z3))
          }
          if (method[2] == "wan2014")
             sds[i] <- 1/2 * ((max[i] - min[i]) / xi + (q3[i] - q1[i]) / eta)
          if (method[2] == "bland2015")
             sds[i] <- sqrt((min[i]^2 + 2*q1[i]^2 + 2*median[i]^2 + 2*q3[i]^2 + max[i]^2) / 16 + (min[i]*q1[i] + q1[i]*median[i] + median[i]*q3[i] + q3[i]*max[i]) / 8 - (min[i] + 2*q1[i] + 2*median[i] + 2*q3[i] + max[i])^2 / 64)
+
+         if (dist[i] == "lnorm" && transf) {
+            s43 <- (weight * (max[i] - min[i]) / xi + (1 - weight) * (q3[i] - q1[i]) / eta)^4 / (1 + 3.93 / n[i])
+            phi3 <- 1 + 0.405 * sds[i]^2 / n[i] + 0.315 * s43 / n[i]
+            btmean <- exp(means[i] + sds[i]^2 / 2) * (1 / phi3)
+            phi31 <- 1 + 1.62 * sds[i]^2 / n[i] + 5.04 * s43 / n[i]
+            phi32 <- 1 + 1.62 * sds[i]^2 / n[i] + 1.26 * s43 / n[i]
+            btsd   <- sqrt(exp(2*means[i] + 2*sds[i]^2) * (1 / phi31) - exp(2*means[i] + sds[i]^2) * (1 / phi32))
+            means[i] <- btmean
+            sds[i]   <- btsd
+         }
 
       }
 
@@ -276,14 +365,12 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include, test=TRUE, 
 
    }
 
-   if (test) {
-      attr(data[[var.names[1]]], "tval") <- tval
-      attr(data[[var.names[1]]], "crit") <- crit
-      attr(data[[var.names[1]]], "sig")  <- sig
-      attr(data[[var.names[2]]], "tval") <- tval
-      attr(data[[var.names[2]]], "crit") <- crit
-      attr(data[[var.names[2]]], "sig")  <- sig
-   }
+   attr(data[[var.names[1]]], "tval") <- tval
+   attr(data[[var.names[1]]], "crit") <- crit
+   attr(data[[var.names[1]]], "sig")  <- sig
+   attr(data[[var.names[2]]], "tval") <- tval
+   attr(data[[var.names[2]]], "crit") <- crit
+   attr(data[[var.names[2]]], "sig")  <- sig
 
    return(data)
 

@@ -76,13 +76,14 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("onlyo1", "addyi", "addvi"))
+   .chkdots(ddd, c("onlyo1", "addyi", "addvi", "correct"))
 
-   ### set defaults or get onlyo1, addyi, and addvi arguments
+   ### set defaults or get onlyo1, addyi, addvi, and correct arguments
 
-   onlyo1 <- ifelse(is.null(ddd$onlyo1), FALSE, ddd$onlyo1)
-   addyi  <- ifelse(is.null(ddd$addyi),  TRUE,  ddd$addyi)
-   addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
+   onlyo1  <- ifelse(is.null(ddd$onlyo1),  FALSE, .isTRUE(ddd$onlyo1))
+   addyi   <- ifelse(is.null(ddd$addyi),   TRUE,  .isTRUE(ddd$addyi))
+   addvi   <- ifelse(is.null(ddd$addvi),   TRUE,  .isTRUE(ddd$addvi))
+   correct <- ifelse(is.null(ddd$correct), TRUE,  .isTRUE(ddd$correct))
 
    ### set defaults for digits
 
@@ -870,7 +871,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             ### apply bias-correction to di values
 
-            cmi <- .cmicalc(mi)
+            cmi <- .cmicalc(mi, correct=correct)
             yi <- cmi * di
 
             if (length(vtype) == 1L)
@@ -908,7 +909,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### standardized mean difference (with heteroscedastic SDs)
 
          if (measure == "SMDH") {
-            cmi <- .cmicalc(mi)
+            cmi <- .cmicalc(mi, correct=correct)
             si <- sqrt((sd1i^2 + sd2i^2)/2)
             yi <- cmi * (m1i - m2i) / si
             if (vtype == "LS") {
@@ -925,7 +926,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### standardized mean difference standardized by SD of group 2 (with heteroscedastic SDs)
 
          if (measure == "SMD1H") {
-            cmi <- .cmicalc(mi)
+            cmi <- .cmicalc(mi, correct=correct)
             yi <- cmi * di
             vi <- (sd1i^2/sd2i^2)/n1i + 1/n2i + yi^2/(2*n2i)
             #vi <- cmi^2 * vi
@@ -983,7 +984,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             hi <- mi/n1i + mi/n2i
             yi <- di / sqrt(di^2 + hi) ### need this also when measure="RBIS/ZBIS"
 
-            if (is.element(measure, c("RPB","ZPB"))) {    ### this only applies when measure="RPB/ZPB"
+            if (is.element(measure, c("RPB","ZPB"))) { ### this only applies when measure="RPB/ZPB"
 
                if (length(vtype) == 1L)
                   vtype <- rep(vtype, k)
@@ -1768,14 +1769,22 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### since for normally distributed data the mean and variance (and transformations thereof) are independent
 
          if (measure == "CVLN") {
-            yi <- log(sdi/mi) + 1 / (2*(ni-1))
+            if (correct) {
+               yi <- log(sdi/mi) + 1 / (2*(ni-1))
+            } else {
+               yi <- log(sdi/mi)
+            }
             vi <- 1 / (2*(ni-1)) + sdi^2 / (ni*mi^2)
          }
 
          ### log(SD) with bias correction
 
          if (measure == "SDLN") {
-            yi <- log(sdi) + 1 / (2*(ni-1))
+            if (correct) {
+               yi <- log(sdi) + 1 / (2*(ni-1))
+            } else {
+               yi <- log(sdi)
+            }
             vi <- 1 / (2*(ni-1))
          }
 
@@ -1883,7 +1892,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          if (measure == "SMCC") {
 
-            cmi <- .cmicalc(mi)
+            cmi <- .cmicalc(mi, correct=correct)
             sddi <- sqrt(sd1i^2 + sd2i^2 - 2*ri*sd1i*sd2i)
             di <- (m1i - m2i) / sddi
             yi <- cmi * di
@@ -1915,7 +1924,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          if (measure == "SMCR") {
 
-            cmi <- .cmicalc(mi)
+            cmi <- .cmicalc(mi, correct=correct)
             di <- (m1i - m2i) / sd1i
             yi <- cmi * di
 
@@ -1946,7 +1955,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### with vi computation allowing for heteroscedasticity (Bonett, 2008; and JEBS article)
 
          if (measure == "SMCRH") {
-            cmi <- .cmicalc(mi)
+            cmi <- .cmicalc(mi, correct=correct)
             vardi <- sd1i^2 + sd2i^2 - 2*ri*sd1i*sd2i
             yi <- cmi * (m1i - m2i) / sd1i
             vi <- vardi/(sd1i^2*(ni-1)) + yi^2 / (2*(ni-1))
@@ -2194,7 +2203,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
    ### turn numeric include vector into logical vector (already done for subset)
 
    if (!is.null(include))
-      include <- .chksubset(include, k.all)
+      include <- .chksubset(include, k.all, stoponk0=FALSE)
 
    ### apply subset to include
 

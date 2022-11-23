@@ -1,8 +1,7 @@
 conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, level=95, transf, include, checkci=TRUE, verbose=FALSE, ...) {
 
-   # add a ni argument for providing those to add to attributes(x$yi)?
+   # add a ni argument to add to attributes(x$yi)?
    # what about allowing t-distribution / dfs?
-   # name of function
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -53,7 +52,7 @@ conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, level=95, transf, inc
    zval    <- .getx("zval",    mf=mf, data=data, checknumeric=TRUE)
    pval    <- .getx("pval",    mf=mf, data=data, checknumeric=TRUE)
    level   <- .getx("level",   mf=mf, data=data, checknumeric=TRUE)
-   include <- .getx("include", mf=mf, data=data, checknumeric=TRUE)
+   include <- .getx("include", mf=mf, data=data)
 
    if (is.null(level))
       level <- 95
@@ -76,7 +75,7 @@ conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, level=95, transf, inc
 
    ### turn numeric include vector into logical vector
 
-   include <- .chksubset(include, k)
+   include <- .chksubset(include, k, stoponk0=FALSE)
 
    ### set inputs to NA for rows not to be included
 

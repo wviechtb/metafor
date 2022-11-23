@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-17</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.9-16" id="metafor-39-16-2022-11-16">metafor 3.9-16 (2022-11-16)<a class="anchor" aria-label="anchor" href="#metafor-39-16-2022-11-16"></a></h2>
+<h2 class="page-header" data-toc-text="3.9-17" id="metafor-39-17-2022-11-23">metafor 3.9-17 (2022-11-23)<a class="anchor" aria-label="anchor" href="#metafor-39-17-2022-11-23"></a></h2>
 <ul><li><p><code><a href="../reference/model.matrix.rma.html">model.matrix.rma()</a></code> gains <code>asdf</code> argument</p></li>
 <li><p><code><a href="../reference/emmprep.html">emmprep()</a></code> function added to create a reference grid for use with the <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans()</a></code> function from the package of the same name</p></li>
 <li><p>improved efficiency of <code><a href="../reference/vif.html">vif()</a></code> when <code>sim=TRUE</code> by reshuffling only the data needed in the model matrix; due to some edge cases, the simulation approach cannot be used when some redundant predictors were dropped from the original model; and when redundancies occur after reshuffling the data, the simulated (G)VIF value(s) are now set to <code>Inf</code> instead of <code>NA</code></p></li>
