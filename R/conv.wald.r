@@ -1,7 +1,7 @@
-conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, level=95, transf, include, checkci=TRUE, verbose=FALSE, ...) {
+conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, n,
+                      level=95, transf, include, checkci=TRUE, verbose=FALSE, ...) {
 
-   # add a ni argument to add to attributes(x$yi)?
-   # what about allowing t-distribution / dfs?
+   # allow t-distribution based CIs/tests (then also need dfs argument)?
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -51,6 +51,7 @@ conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, level=95, transf, inc
    ci.ub   <- .getx("ci.ub",   mf=mf, data=data, checknumeric=TRUE)
    zval    <- .getx("zval",    mf=mf, data=data, checknumeric=TRUE)
    pval    <- .getx("pval",    mf=mf, data=data, checknumeric=TRUE)
+   n       <- .getx("n",       mf=mf, data=data, checknumeric=TRUE)
    level   <- .getx("level",   mf=mf, data=data, checknumeric=TRUE)
    include <- .getx("include", mf=mf, data=data)
 
@@ -59,14 +60,16 @@ conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, level=95, transf, inc
 
    if (is.null(out))
       out <- rep(NA, k)
-   if (is.null(zval))
-      zval <- rep(NA, k)
-   if (is.null(pval))
-      pval <- rep(NA, k)
    if (is.null(ci.lb))
       ci.lb <- rep(NA, k)
    if (is.null(ci.ub))
       ci.ub <- rep(NA, k)
+   if (is.null(zval))
+      zval <- rep(NA, k)
+   if (is.null(pval))
+      pval <- rep(NA, k)
+   if (is.null(n))
+      n <- rep(NA, k)
 
    ### if include is NULL, set to TRUE vector
 
@@ -84,6 +87,7 @@ conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, level=95, transf, inc
    ci.ub[!include] <- NA
    zval[!include]  <- NA
    pval[!include]  <- NA
+   n[!include]     <- NA
 
    ### check p-values
 
@@ -98,7 +102,7 @@ conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, level=95, transf, inc
    if (length(level) != k)
       stop(mstyle$stop(paste0("Length of the 'level' argument (", length(level), ") does not correspond to the size of the dataset (", k, ").")))
 
-   if (!.equal.length(out, ci.lb, ci.ub, zval, pval, level))
+   if (!.equal.length(out, ci.lb, ci.ub, zval, pval, n, level))
       stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
    level <- .level(level, allow.vector=TRUE)
@@ -121,6 +125,10 @@ conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, level=95, transf, inc
    }
 
    x[[yi.name]] <- replmiss(x[[yi.name]], out)
+
+   ### replace missing ni attribute values
+
+   attributes(x[[yi.name]])$ni <- replmiss(attributes(x[[yi.name]])$ni, n)
 
    ### convert Wald-type CIs to sampling variances
 

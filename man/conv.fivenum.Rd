@@ -6,7 +6,8 @@
 }
 \usage{
 conv.fivenum(min, q1, median, q3, max, n, data, dist="norm", transf=FALSE,
-             include, test=TRUE, var.names=c("mean","sd"), append=TRUE, \dots)
+             include, test=TRUE, var.names=c("mean","sd"),
+             append=TRUE, replace="ifna", \dots)
 }
 \arguments{
    \item{min}{vector with the sample minimum values.}
@@ -18,16 +19,17 @@ conv.fivenum(min, q1, median, q3, max, n, data, dist="norm", transf=FALSE,
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{dist}{character string indicating what distribution is assumed for the underlying data (either \code{"norm"} for a normal distribution or \code{"lnorm"} for a log-normal distribution). Can also be a string vector if different distributions are assumed for different studies.}
    \item{transf}{logical to specify whether the estimated means and standard deviations of the log-transformed data should be back-transformed as described by Shi et al. (2020c). Only relevant when \code{dist="lnorm"}.}
-   \item{include}{optional (logical or numeric) vector to specify the subset of studies for which the conversion should be carried out (if possible).}
+   \item{include}{optional (logical or numeric) vector to specify the subset of studies for which the conversion should be carried out.}
    \item{test}{logical to specify whether a study should be excluded from the conversion if the test for skewness is significant (the default is \code{TRUE}).}
    \item{var.names}{character vector with two elements to specify the name of the variable for the estimated means and the name of the variable for the estimated standard deviations (the defaults are \code{"mean"} and \code{"sd"}).}
    \item{append}{logical to specify whether the data frame provided via the \code{data} argument should be returned together with the estimated values (the default is \code{TRUE}).}
+   \item{replace}{character string to specify how values in \code{var.names} should be replaced. See the \sQuote{Value} section for more details.}
    \item{\dots}{other arguments.}
 }
 \details{
    Various effect size measures require means and standard deviations (SDs) as input (e.g., raw or standardized mean differences, ratios of means / response ratios; see \code{\link{escalc}} for further details). For some studies, authors may not report means and SDs, but other statistics, such as the so-called \sQuote{five-number summary}, consisting of the minimum, lower/first quartile, median, upper/third quartile, and the maximum of the sample values (plus the sample sizes). Occasionally, only a subset of these values are reported.
 
-   The present function can be used to convert five-number summary values (or a subset thereof) to means and standard deviations. To be precise, the function provides estimates of the means and standard deviations based on methods described in the literature (Hozo et al., 2005; Wan et al., 2014; Bland, 2015; Luo et al., 2016; Shi et al., 2020a).
+   The present function can be used to convert five-number summary values (or a subset thereof) to means and standard deviations. To be precise, the function provides estimates of the means and standard deviations based on methods described in the literature (Hozo et al., 2005; Wan et al., 2014; Bland, 2015; Luo et al., 2016; Shi et al., 2020a; Walter & Yao, 2007). The methods used by the function are those that have been found to be the most accurate (see references).
 
    We can distinguish three cases:
 
@@ -62,7 +64,9 @@ conv.fivenum(min, q1, median, q3, max, n, data, dist="norm", transf=FALSE,
 \value{
    If the \code{data} argument was not specified or \code{append=FALSE}, a data frame with two variables called \code{var.names[1]} (by default \code{"mean"}) and \code{var.names[2]} (by default \code{"sd"}) with the estimated means and SDs.
 
-   If \code{data} was specified and \code{append=TRUE}, then the original data frame is returned. If \code{var.names[1]} is a variable in \code{data}, then missing values in this variable are replaced with the estimated means (where possible) and otherwise a new variable called \code{var.names[1]} is added to the data frame. Similarly, if \code{var.names[2]} is a variable in \code{data}, then missing values in this variable are replaced with the estimated SDs (where possible) and otherwise a new variable called \code{var.names[2]} is added to the data frame.
+   If \code{data} was specified and \code{append=TRUE}, then the original data frame is returned. If \code{var.names[1]} is a variable in \code{data} and \code{replace="all"}, then missing values in this variable are replaced with the estimated means (where possible) and otherwise a new variable called \code{var.names[1]} is added to the data frame. Similarly, if \code{var.names[2]} is a variable in \code{data} and \code{replace="all"}, then missing values in this variable are replaced with the estimated SDs (where possible) and otherwise a new variable called \code{var.names[2]} is added to the data frame.
+
+   If \code{replace="all"}, then all values in \code{var.names[1]} and \code{var.names[2]} where an estimated mean and SD can be computed are replaced, even for cases where the value in \code{var.names[1]} and \code{var.names[2]} is not missing.
 
    When missing values in \code{var.names[1]} are replaced, an attribute called \code{"est"} is added to the variable, which is a logical vector that is \code{TRUE} for values that were estimated. The same is done when missing values in \code{var.names[2]} are replaced.
 
@@ -85,6 +89,8 @@ conv.fivenum(min, q1, median, q3, max, n, data, dist="norm", transf=FALSE,
    Shi, J., Tong, T., Wang, Y. & Genton, M. G. (2020c). Estimating the mean and variance from the five-number summary of a log-normal distribution. Statistics and Its Interface, 13(4), 519-531. https://doi.org/10.4310/sii.2020.v13.n4.a9
 
    Shi, J., Luo, D., Wan, X., Liu, Y., Liu, J., Bian, Z. & Tong, T. (under review). Detecting the skewness of data from the five-number summary and its application to evidence-based medicine. \emph{Statistical Methods in Medical Research}.
+
+   Walter, S. D. & Yao, X. (2007). Effect sizes can be calculated for studies reporting ranges for outcome variables in systematic reviews. \emph{Journal of Clinical Epidemiology}, \bold{60}(8), 849-852. \verb{https://doi.org/10.1016/j.jclinepi.2006.11.003}
 
    Wan, X., Wang, W., Liu, J. & Tong, T. (2014). Estimating the sample mean and standard deviation from the sample size, median, range and/or interquartile range. \emph{BMC Medical Research Methodology}, \bold{14}, 135. \verb{https://doi.org/10.1186/1471-2288-14-135}
 
@@ -140,18 +146,10 @@ dat
 # test for skewness is significant for this study
 dfround(as.data.frame(attributes(dat$mean)), digits=3)
 
-############################################################################
-
-# same data as above
-dat <- data.frame(case=c(1:3,NA), min=c(2,NA,2,NA), q1=c(NA,4,4,NA),
-                  median=c(6,6,6,NA), q3=c(NA,10,14,NA), max=c(14,NA,20,NA),
-                  mean=c(NA,NA,NA,7.0), sd=c(NA,NA,NA,4.2), n=c(20,20,20,20))
-dat
-
 # estimate means/SDs, but assume that the data for study 3 come from a log-normal distribution and
 # back-transform the estimated mean/SD of the log-transformed data back to the raw data
 dat <- conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat,
-                    dist=c("norm","norm","lnorm","norm"), transf=TRUE)
+                    dist=c("norm","norm","lnorm","norm"), transf=TRUE, replace="all")
 dat
 
 # this works now because the test for skewness of the log-transformed data is not significant

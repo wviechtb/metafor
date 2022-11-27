@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-18</span>
       </span>
     </div>
 
@@ -102,7 +102,8 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">conv.fivenum</span><span class="op">(</span><span class="va">min</span>, <span class="va">q1</span>, <span class="va">median</span>, <span class="va">q3</span>, <span class="va">max</span>, <span class="va">n</span>, <span class="va">data</span>, dist<span class="op">=</span><span class="st">"norm"</span>, transf<span class="op">=</span><span class="cn">FALSE</span>,</span>
-<span>             <span class="va">include</span>, test<span class="op">=</span><span class="cn">TRUE</span>, var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>,<span class="st">"sd"</span><span class="op">)</span>, append<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>             <span class="va">include</span>, test<span class="op">=</span><span class="cn">TRUE</span>, var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>,<span class="st">"sd"</span><span class="op">)</span>,</span>
+<span>             append<span class="op">=</span><span class="cn">TRUE</span>, replace<span class="op">=</span><span class="st">"ifna"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -135,7 +136,7 @@
 <dd><p>logical to specify whether the estimated means and standard deviations of the log-transformed data should be back-transformed as described by Shi et al. (2020c). Only relevant when <code>dist="lnorm"</code>.</p></dd>
 
    <dt>include</dt>
-<dd><p>optional (logical or numeric) vector to specify the subset of studies for which the conversion should be carried out (if possible).</p></dd>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies for which the conversion should be carried out.</p></dd>
 
    <dt>test</dt>
 <dd><p>logical to specify whether a study should be excluded from the conversion if the test for skewness is significant (the default is <code>TRUE</code>).</p></dd>
@@ -146,6 +147,9 @@
    <dt>append</dt>
 <dd><p>logical to specify whether the data frame provided via the <code>data</code> argument should be returned together with the estimated values (the default is <code>TRUE</code>).</p></dd>
 
+   <dt>replace</dt>
+<dd><p>character string to specify how values in <code>var.names</code> should be replaced. See the ‘Value’ section for more details.</p></dd>
+
    <dt>...</dt>
 <dd><p>other arguments.</p></dd>
 
@@ -153,7 +157,7 @@
     <div id="details">
     <h2>Details</h2>
     <p>Various effect size measures require means and standard deviations (SDs) as input (e.g., raw or standardized mean differences, ratios of means / response ratios; see <code><a href="escalc.html">escalc</a></code> for further details). For some studies, authors may not report means and SDs, but other statistics, such as the so-called ‘five-number summary’, consisting of the minimum, lower/first quartile, median, upper/third quartile, and the maximum of the sample values (plus the sample sizes). Occasionally, only a subset of these values are reported.</p>
-<p>The present function can be used to convert five-number summary values (or a subset thereof) to means and standard deviations. To be precise, the function provides estimates of the means and standard deviations based on methods described in the literature (Hozo et al., 2005; Wan et al., 2014; Bland, 2015; Luo et al., 2016; Shi et al., 2020a).</p>
+<p>The present function can be used to convert five-number summary values (or a subset thereof) to means and standard deviations. To be precise, the function provides estimates of the means and standard deviations based on methods described in the literature (Hozo et al., 2005; Wan et al., 2014; Bland, 2015; Luo et al., 2016; Shi et al., 2020a; Walter &amp; Yao, 2007). The methods used by the function are those that have been found to be the most accurate (see references).</p>
 <p>We can distinguish three cases:</p>
 <p></p><div class="section">
 <h3 id="case-min-median-max">Case 1: Min, Median, Max<a class="anchor" aria-label="anchor" href="#case-min-median-max"></a></h3>
@@ -192,7 +196,10 @@
 <p>If the <code>data</code> argument was not specified or <code>append=FALSE</code>, a data frame with two variables called <code>var.names[1]</code> (by default <code>"mean"</code>) and <code>var.names[2]</code> (by default <code>"sd"</code>) with the estimated means and SDs.</p>
 
 
-<p>If <code>data</code> was specified and <code>append=TRUE</code>, then the original data frame is returned. If <code>var.names[1]</code> is a variable in <code>data</code>, then missing values in this variable are replaced with the estimated means (where possible) and otherwise a new variable called <code>var.names[1]</code> is added to the data frame. Similarly, if <code>var.names[2]</code> is a variable in <code>data</code>, then missing values in this variable are replaced with the estimated SDs (where possible) and otherwise a new variable called <code>var.names[2]</code> is added to the data frame.</p>
+<p>If <code>data</code> was specified and <code>append=TRUE</code>, then the original data frame is returned. If <code>var.names[1]</code> is a variable in <code>data</code> and <code>replace="all"</code>, then missing values in this variable are replaced with the estimated means (where possible) and otherwise a new variable called <code>var.names[1]</code> is added to the data frame. Similarly, if <code>var.names[2]</code> is a variable in <code>data</code> and <code>replace="all"</code>, then missing values in this variable are replaced with the estimated SDs (where possible) and otherwise a new variable called <code>var.names[2]</code> is added to the data frame.</p>
+
+
+<p>If <code>replace="all"</code>, then all values in <code>var.names[1]</code> and <code>var.names[2]</code> where an estimated mean and SD can be computed are replaced, even for cases where the value in <code>var.names[1]</code> and <code>var.names[2]</code> is not missing.</p>
 
 
 <p>When missing values in <code>var.names[1]</code> are replaced, an attribute called <code>"est"</code> is added to the variable, which is a logical vector that is <code>TRUE</code> for values that were estimated. The same is done when missing values in <code>var.names[2]</code> are replaced.</p>
@@ -213,6 +220,7 @@
 <p>Shi, J., Luo, D., Wan, X., Liu, Y., Liu, J., Bian, Z. &amp; Tong, T. (2020b). Detecting the skewness of data from the sample size and the five-number summary. <em>arXiv</em>, 2010.05749. <a href="https://doi.org/10.48550/arxiv.2010.05749" class="external-link">https://doi.org/10.48550/arxiv.2010.05749</a></p>
 <p>Shi, J., Tong, T., Wang, Y. &amp; Genton, M. G. (2020c). Estimating the mean and variance from the five-number summary of a log-normal distribution. Statistics and Its Interface, 13(4), 519-531. https://doi.org/10.4310/sii.2020.v13.n4.a9</p>
 <p>Shi, J., Luo, D., Wan, X., Liu, Y., Liu, J., Bian, Z. &amp; Tong, T. (under review). Detecting the skewness of data from the five-number summary and its application to evidence-based medicine. <em>Statistical Methods in Medical Research</em>.</p>
+<p>Walter, S. D. &amp; Yao, X. (2007). Effect sizes can be calculated for studies reporting ranges for outcome variables in systematic reviews. <em>Journal of Clinical Epidemiology</em>, <b>60</b>(8), 849-852. <a href="https://doi.org/10.1016/j.jclinepi.2006.11.003" class="external-link">https://doi.org/10.1016/j.jclinepi.2006.11.003</a></p>
 <p>Wan, X., Wang, W., Liu, J. &amp; Tong, T. (2014). Estimating the sample mean and standard deviation from the sample size, median, range and/or interquartile range. <em>BMC Medical Research Methodology</em>, <b>14</b>, 135. <a href="https://doi.org/10.1186/1471-2288-14-135" class="external-link">https://doi.org/10.1186/1471-2288-14-135</a></p>
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1–48. <a href="https://doi.org/10.18637/jss.v036.i03" class="external-link">https://doi.org/10.18637/jss.v036.i03</a></p>
     </div>
@@ -327,23 +335,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3 FALSE 0.818 0.666  TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 FALSE    NA    NA    NA</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">############################################################################</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># same data as above</span></span></span>
-<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>case<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="cn">NA</span><span class="op">)</span>, min<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="cn">NA</span>,<span class="fl">2</span>,<span class="cn">NA</span><span class="op">)</span>, q1<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">4</span>,<span class="fl">4</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                  median<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">6</span>,<span class="fl">6</span>,<span class="cn">NA</span><span class="op">)</span>, q3<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">10</span>,<span class="fl">14</span>,<span class="cn">NA</span><span class="op">)</span>, max<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">14</span>,<span class="cn">NA</span>,<span class="fl">20</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                  mean<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">7.0</span><span class="op">)</span>, sd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">4.2</span><span class="op">)</span>, n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">20</span>,<span class="fl">20</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">dat</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   case min q1 median q3 max mean  sd  n</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1   2 NA      6 NA  14   NA  NA 20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2  NA  4      6 10  NA   NA  NA 20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3   2  4      6 14  20   NA  NA 20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   NA  NA NA     NA NA  NA    7 4.2 20</span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># estimate means/SDs, but assume that the data for study 3 come from a log-normal distribution and</span></span></span>
 <span class="r-in"><span><span class="co"># back-transform the estimated mean/SD of the log-transformed data back to the raw data</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">conv.fivenum</span><span class="op">(</span>min<span class="op">=</span><span class="va">min</span>, q1<span class="op">=</span><span class="va">q1</span>, median<span class="op">=</span><span class="va">median</span>, q3<span class="op">=</span><span class="va">q3</span>, max<span class="op">=</span><span class="va">max</span>, n<span class="op">=</span><span class="va">n</span>, data<span class="op">=</span><span class="va">dat</span>,</span></span>
-<span class="r-in"><span>                    dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"norm"</span>,<span class="st">"norm"</span>,<span class="st">"lnorm"</span>,<span class="st">"norm"</span><span class="op">)</span>, transf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                    dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"norm"</span>,<span class="st">"norm"</span>,<span class="st">"lnorm"</span>,<span class="st">"norm"</span><span class="op">)</span>, transf<span class="op">=</span><span class="cn">TRUE</span>, replace<span class="op">=</span><span class="st">"all"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   case min q1 median q3 max     mean       sd  n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    1   2 NA      6 NA  14 6.594468 3.211576 20</span>

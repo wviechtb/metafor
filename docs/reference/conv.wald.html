@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-18</span>
       </span>
     </div>
 
@@ -101,7 +101,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">conv.wald</span><span class="op">(</span><span class="va">data</span>, <span class="va">out</span>, <span class="va">ci.lb</span>, <span class="va">ci.ub</span>, <span class="va">zval</span>, <span class="va">pval</span>, level<span class="op">=</span><span class="fl">95</span>,</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">conv.wald</span><span class="op">(</span><span class="va">data</span>, <span class="va">out</span>, <span class="va">ci.lb</span>, <span class="va">ci.ub</span>, <span class="va">zval</span>, <span class="va">pval</span>, <span class="va">n</span>, level<span class="op">=</span><span class="fl">95</span>,</span>
 <span>          <span class="va">transf</span>, <span class="va">include</span>, checkci<span class="op">=</span><span class="cn">TRUE</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -124,6 +124,9 @@
 
    <dt>pval</dt>
 <dd><p>vector with the p-values of the Wald-type tests.</p></dd>
+
+   <dt>n</dt>
+<dd><p>vector with the total sample sizes of the studies.</p></dd>
 
    <dt>level</dt>
 <dd><p>numeric value (or vector) to specify the confidence interval level(s) (the default is 95).</p></dd>
@@ -152,8 +155,8 @@
 <h3 id="converting-point-estimates-and-confidence-intervals">Converting Point Estimates and Confidence Intervals<a class="anchor" aria-label="anchor" href="#converting-point-estimates-and-confidence-intervals"></a></h3>
 
 
-<p>In some studies, the effect size estimate or observed outcome may already be reported. If so, such values can be supplied via the <code>out</code> argument and are then substituted for missing <code>yi</code> values. At times, it may be necessary to transform the reported values (e.g., reported odds ratios to log odds ratios). Via argument <code>transf</code>, an appropriate transformation function can be specified (e.g., <code>transf=log</code>).</p>
-<p>Moreover, a confidence interval (CI) may have been reported together with the estimate. The bounds of the CI can be supplied via arguments <code>ci.lb</code> and <code>ci.ub</code>, which are also transformed if a function is specified via <code>transf</code>. Assume that the bounds were obtained from a Wald-type CI of the form <em></em>\(\textrm{val} \pm z_{crit} \sqrt{v_i}\) (on the transformed scale if <code>transf</code> is specified), where <em></em>\(v_i\) is the sampling variance corresponding to the effect size estimate or observed outcome (so that <em></em>\(\sqrt{v_i}\) is the corresponding standard error) and <em></em>\(z_{crit}\) is the appropriate critical value from a standard normal distribution (e.g., <em></em>\(1.96\) for a 95% CI). Then \[v_i = \left(\frac{\textrm{ci.ub} - \textrm{ci.lb}}{2 \times z_{crit}}\right)^2\] is used to back-calculate the sampling variances of the effect size estimates or observed outcomes and these values are then substituted for missing <code>vi</code> values in the dataset.</p>
+<p>In some studies, the effect size estimate or observed outcome may already be reported. If so, such values can be supplied via the <code>out</code> argument and are then substituted for missing <code>yi</code> values. At times, it may be necessary to transform the reported values (e.g., reported odds ratios to log odds ratios). Via argument <code>transf</code>, an appropriate transformation function can be specified (e.g., <code>transf=log</code>), in which case <em></em>\(y_i = f(\textrm{out})\) where <em></em>\(f(\cdot)\) is the function specified via <code>transf</code>.</p>
+<p>Moreover, a confidence interval (CI) may have been reported together with the estimate. The bounds of the CI can be supplied via arguments <code>ci.lb</code> and <code>ci.ub</code>, which are also transformed if a function is specified via <code>transf</code>. Assume that the bounds were obtained from a Wald-type CI of the form <em></em>\(y_i \pm z_{crit} \sqrt{v_i}\) (on the transformed scale if <code>transf</code> is specified), where <em></em>\(v_i\) is the sampling variance corresponding to the effect size estimate or observed outcome (so that <em></em>\(\sqrt{v_i}\) is the corresponding standard error) and <em></em>\(z_{crit}\) is the appropriate critical value from a standard normal distribution (e.g., <em></em>\(1.96\) for a 95% CI). Then \[v_i = \left(\frac{\textrm{ci.ub} - \textrm{ci.lb}}{2 \times z_{crit}}\right)^2\] is used to back-calculate the sampling variances of the effect size estimates or observed outcomes and these values are then substituted for missing <code>vi</code> values in the dataset.</p>
 <p>For example, consider the following dataset of three RCTs used as input for a meta-analysis of log odds ratios:</p>
 <div class="sourceCode"><pre><code><span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>study <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,</span>
@@ -180,8 +183,8 @@
 <span><span class="co"># 3     3         4    46         7    44        NA    NA    NA -0.6864 0.4437</span></span></code></pre></div>
 
 <p>Now variables <code>yi</code> and <code>vi</code> in the dataset are complete.</p>
-<p>If the CI was not a 95% CI, then one specify the appropriate level via the <code>level</code> argument. This can also be an entire vector in case different studies used different levels.</p>
-<p>By default (i.e., when <code>cicheck=TRUE</code>), the function carries out a check to examine if the point estimates fall (approximately) halfway between the CI bounds (on the transformed scale). A warning is used if there are rows where this is not the case. This may indicate that a particular CI was not a Wald-type CI or was computed on a different scale (in which case the back-calculation above would be inappropriate), but can also arise due to rounding of the reported values (in which case the back-calculation would still be appropriate, albeit possibly a bit inaccurate). Care should be taken when using such back-calculated values in a meta-analysis.</p>
+<p>If the CI was not a 95% CI, then one can specify the appropriate level via the <code>level</code> argument. This can also be an entire vector in case different studies used different levels.</p>
+<p>By default (i.e., when <code>cicheck=TRUE</code>), the function carries out a rough check to examine if the point estimates fall (approximately) halfway between the CI bounds (on the transformed scale). A warning is used if there are rows where this is not the case. This may indicate that a particular CI was not a Wald-type CI or was computed on a different scale (in which case the back-calculation above would be inappropriate), but can also arise due to rounding of the reported values (in which case the back-calculation would still be appropriate, albeit possibly a bit inaccurate). Care should be taken when using such back-calculated values in a meta-analysis.</p>
 <p></p>
 </div>
 
@@ -189,7 +192,7 @@
 <h3 id="converting-test-statistics-and-p-values">Converting Test Statistics and P-Values<a class="anchor" aria-label="anchor" href="#converting-test-statistics-and-p-values"></a></h3>
 
 
-<p>Similarly, study authors may report the test statistic and/or p-value from a Wald-type test of the form <em></em>\(\textrm{zval} = y_i / \sqrt{v_i}\), with the corresponding two-sided p-value given by <em></em>\(\textrm{pval} = 2(1 - \Phi(\textrm{|zval|}))\), where <em></em>\(\Phi(\cdot)\) denotes the cumulative distribution function of a standard normal distribution (i.e., <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">pnorm</a></code>). Test statistics and/or corresponding p-values of this form can be supplied via arguments <code>zval</code> and <code>pval</code>.</p>
+<p>Similarly, study authors may report the test statistic and/or p-value from a Wald-type test of the form <em></em>\(\textrm{zval} = y_i / \sqrt{v_i}\) (on the transformed scale if <code>transf</code> is specified), with the corresponding two-sided p-value given by <em></em>\(\textrm{pval} = 2(1 - \Phi(\textrm{|zval|}))\), where <em></em>\(\Phi(\cdot)\) denotes the cumulative distribution function of a standard normal distribution (i.e., <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">pnorm</a></code>). Test statistics and/or corresponding p-values of this form can be supplied via arguments <code>zval</code> and <code>pval</code>.</p>
 <p>A given p-value can be back-transformed into the corresponding test statistic with <em></em>\(\textrm{zval} = \Phi^{-1}(1 - \textrm{pval}/2)\), where <em></em>\(\Phi^{-1}(\cdot)\) denotes the quantile function or inverse of the cumulative distribution function of a standard normal distribution (i.e., <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">qnorm</a></code>). Then \[v_i = \left(\frac{y_i}{\textrm{zval}}\right)^2\] is used to back-calculate a missing <code>vi</code> value in the dataset.</p>
 <p>Note that the conversion of a p-value to the corresponding test statistic (which is then converted into sampling variance) as shown above assumes that the exact p-value is reported. If authors only report that the p-value fell below a certain threshold (e.g., <em></em>\(p &lt; .01\) or if authors only state that the test was significant -- which typically implies <em></em>\(p &lt; .05\)), then a common approach is to use the value of the cutoff reported (e.g., if <em></em>\(p &lt; .01\) is reported, then assume <em></em>\(p = .01\)), which is conservative (since the actual p-value was below that assumed value by some unknown amount). The conversion will therefore tend to be much less accurate.</p>
 <p>Using the earlier example, suppose that only the odds ratio and the corresponding two-sided p-value from a Wald-type test (whether the log odds ratio differs significantly from zero) is reported for study 2.</p>
@@ -221,6 +224,7 @@ dat
 </div>
 
 <p><b>A word of caution</b>: Except for the check on the CI bounds, there is no possibility to determine if the back-calculations done by the function are appropriate in a given context. They are only appropriate when the CI bounds and tests statistics (or p-values) arose from Wald-type CIs / tests as described above. Using the same back-calculations for other purposes is likely to yield nonsensical values.</p>
+<p>Optionally, one can use the <code>n</code> argument to supply the total sample sizes of the studies. This has no relevance for the calculations done by the present function, but some other functions may use this information (e.g., when drawing a funnel plot with the <code><a href="funnel.html">funnel</a></code> function and one adjusts the <code>yaxis</code> argument to one of the options that puts the sample sizes or some transformation thereof on the y-axis).</p>
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -235,6 +239,10 @@ dat
     <div id="references">
     <h2>References</h2>
     <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1–48. <a href="https://doi.org/10.18637/jss.v036.i03" class="external-link">https://doi.org/10.18637/jss.v036.i03</a></p>
+    </div>
+    <div id="see-also">
+    <h2>See also</h2>
+    <div class="dont-index"><p><code><a href="escalc.html">escalc</a></code> for a function to compute various effect size measures.</p></div>
     </div>
 
     <div id="ref-examples">
@@ -307,24 +315,26 @@ dat
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dat2</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dat2</span><span class="op">)</span> <span class="op">==</span> <span class="st">"yi"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"or"</span></span></span>
 <span class="r-in"><span><span class="va">dat2</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"or"</span>,<span class="st">"ci.lb"</span>,<span class="st">"ci.ub"</span>,<span class="st">"pval"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">dat2</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"or"</span>,<span class="st">"ci.lb"</span>,<span class="st">"ci.ub"</span>,<span class="st">"pval"</span><span class="op">)</span><span class="op">]</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat2</span><span class="op">$</span><span class="va">vi</span> <span class="op">&lt;-</span> <span class="va">dat2</span><span class="op">$</span><span class="va">sei</span> <span class="op">&lt;-</span> <span class="va">dat2</span><span class="op">$</span><span class="va">zi</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span></span>
+<span class="r-in"><span><span class="va">dat2</span><span class="op">$</span><span class="va">ntot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dat2</span>, <span class="va">tpos</span> <span class="op">+</span> <span class="va">tneg</span> <span class="op">+</span> <span class="va">cpos</span> <span class="op">+</span> <span class="va">cneg</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">12</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span><span class="op">:</span><span class="fl">6</span>,<span class="fl">9</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
 <span class="r-in"><span><span class="va">dat2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">9</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span><span class="op">:</span><span class="fl">6</span>,<span class="fl">8</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
 <span class="r-in"><span><span class="va">dat2</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span>,<span class="fl">5</span><span class="op">:</span><span class="fl">8</span>,<span class="fl">10</span><span class="op">:</span><span class="fl">11</span>,<span class="fl">13</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
+<span class="r-in"><span><span class="va">dat2</span><span class="op">$</span><span class="va">ntot</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">dat2</span><span class="op">$</span><span class="va">tpos</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
 <span class="r-in"><span><span class="va">dat2</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  author year tpos  tneg cpos  cneg   or pval ci.lb ci.ub</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1               Aronson 1948   NA    NA   NA    NA 0.39 0.12    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      Ferguson &amp; Simes 1949    6   300   29   274   NA   NA    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       Rosenthal et al 1960    3   228   11   209   NA   NA    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Hart &amp; Sutherland 1977   NA    NA   NA    NA 0.23   NA  0.18  0.31</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Frimodt-Moller et al 1973   33  5036   47  5761   NA   NA    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       Stein &amp; Aronson 1953  180  1361  372  1079   NA   NA    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      Vandiviere et al 1973    8  2537   10   619   NA   NA    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8            TPT Madras 1980  505 87886  499 87892   NA   NA    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      Coetzee &amp; Berjak 1968   NA    NA   NA    NA 0.62   NA  0.39  1.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      Rosenthal et al 1961   17  1699   65  1600   NA   NA    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11       Comstock et al 1974  186 50448  141 27197   NA   NA    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12   Comstock &amp; Webster 1969   NA    NA   NA    NA 1.56 0.54    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13       Comstock et al 1976   27 16886   29 17825   NA   NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  author year tpos  tneg cpos  cneg   or pval ci.lb ci.ub  ntot</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1               Aronson 1948   NA    NA   NA    NA 0.39 0.12    NA    NA   262</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      Ferguson &amp; Simes 1949    6   300   29   274   NA   NA    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       Rosenthal et al 1960    3   228   11   209   NA   NA    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Hart &amp; Sutherland 1977   NA    NA   NA    NA 0.23   NA  0.18  0.31 26465</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Frimodt-Moller et al 1973   33  5036   47  5761   NA   NA    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       Stein &amp; Aronson 1953  180  1361  372  1079   NA   NA    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      Vandiviere et al 1973    8  2537   10   619   NA   NA    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8            TPT Madras 1980  505 87886  499 87892   NA   NA    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      Coetzee &amp; Berjak 1968   NA    NA   NA    NA 0.62   NA  0.39  1.00 14776</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10      Rosenthal et al 1961   17  1699   65  1600   NA   NA    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11       Comstock et al 1974  186 50448  141 27197   NA   NA    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12   Comstock &amp; Webster 1969   NA    NA   NA    NA 1.56 0.54    NA    NA  4839</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13       Comstock et al 1976   27 16886   29 17825   NA   NA    NA    NA    NA</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### in studies 1 and 12, authors reported only the odds ratio and the corresponding p-value</span></span></span>
 <span class="r-in"><span><span class="co">### in studies 4 and 9, authors reported only the odds ratio and the corresponding 95% CI</span></span></span>
@@ -333,40 +343,40 @@ dat
 <span class="r-in"><span><span class="va">dat2</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="va">dat2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat2</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  author year tpos  tneg cpos  cneg   or pval ci.lb ci.ub      yi     vi </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1               Aronson 1948   NA    NA   NA    NA 0.39 0.12    NA    NA      NA     NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      Ferguson &amp; Simes 1949    6   300   29   274   NA   NA    NA    NA -1.6662 0.2081 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       Rosenthal et al 1960    3   228   11   209   NA   NA    NA    NA -1.3863 0.4334 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Hart &amp; Sutherland 1977   NA    NA   NA    NA 0.23   NA  0.18  0.31      NA     NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Frimodt-Moller et al 1973   33  5036   47  5761   NA   NA    NA    NA -0.2191 0.0520 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       Stein &amp; Aronson 1953  180  1361  372  1079   NA   NA    NA    NA -0.9581 0.0099 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      Vandiviere et al 1973    8  2537   10   619   NA   NA    NA    NA -1.6338 0.2270 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8            TPT Madras 1980  505 87886  499 87892   NA   NA    NA    NA  0.0120 0.0040 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      Coetzee &amp; Berjak 1968   NA    NA   NA    NA 0.62   NA  0.39  1.00      NA     NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      Rosenthal et al 1961   17  1699   65  1600   NA   NA    NA    NA -1.4012 0.0754 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11       Comstock et al 1974  186 50448  141 27197   NA   NA    NA    NA -0.3408 0.0125 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12   Comstock &amp; Webster 1969   NA    NA   NA    NA 1.56 0.54    NA    NA      NA     NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13       Comstock et al 1976   27 16886   29 17825   NA   NA    NA    NA -0.0173 0.0716 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  author year tpos  tneg cpos  cneg   or pval ci.lb ci.ub  ntot      yi     vi </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1               Aronson 1948   NA    NA   NA    NA 0.39 0.12    NA    NA   262      NA     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      Ferguson &amp; Simes 1949    6   300   29   274   NA   NA    NA    NA    NA -1.6662 0.2081 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       Rosenthal et al 1960    3   228   11   209   NA   NA    NA    NA    NA -1.3863 0.4334 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Hart &amp; Sutherland 1977   NA    NA   NA    NA 0.23   NA  0.18  0.31 26465      NA     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Frimodt-Moller et al 1973   33  5036   47  5761   NA   NA    NA    NA    NA -0.2191 0.0520 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       Stein &amp; Aronson 1953  180  1361  372  1079   NA   NA    NA    NA    NA -0.9581 0.0099 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      Vandiviere et al 1973    8  2537   10   619   NA   NA    NA    NA    NA -1.6338 0.2270 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8            TPT Madras 1980  505 87886  499 87892   NA   NA    NA    NA    NA  0.0120 0.0040 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      Coetzee &amp; Berjak 1968   NA    NA   NA    NA 0.62   NA  0.39  1.00 14776      NA     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10      Rosenthal et al 1961   17  1699   65  1600   NA   NA    NA    NA    NA -1.4012 0.0754 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11       Comstock et al 1974  186 50448  141 27197   NA   NA    NA    NA    NA -0.3408 0.0125 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12   Comstock &amp; Webster 1969   NA    NA   NA    NA 1.56 0.54    NA    NA  4839      NA     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13       Comstock et al 1976   27 16886   29 17825   NA   NA    NA    NA    NA -0.0173 0.0716 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fill in the missing log odds ratios and sampling variances</span></span></span>
-<span class="r-in"><span><span class="va">dat2</span> <span class="op">&lt;-</span> <span class="fu">conv.wald</span><span class="op">(</span><span class="va">dat2</span>, out<span class="op">=</span><span class="va">or</span>, ci.lb<span class="op">=</span><span class="va">ci.lb</span>, ci.ub<span class="op">=</span><span class="va">ci.ub</span>, pval<span class="op">=</span><span class="va">pval</span>, transf<span class="op">=</span><span class="va">log</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat2</span> <span class="op">&lt;-</span> <span class="fu">conv.wald</span><span class="op">(</span><span class="va">dat2</span>, out<span class="op">=</span><span class="va">or</span>, ci.lb<span class="op">=</span><span class="va">ci.lb</span>, ci.ub<span class="op">=</span><span class="va">ci.ub</span>, pval<span class="op">=</span><span class="va">pval</span>, n<span class="op">=</span><span class="va">ntot</span>, transf<span class="op">=</span><span class="va">log</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat2</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  author year tpos  tneg cpos  cneg   or pval ci.lb ci.ub      yi     vi </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1               Aronson 1948   NA    NA   NA    NA 0.39 0.12    NA    NA -0.9416 0.3668 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      Ferguson &amp; Simes 1949    6   300   29   274   NA   NA    NA    NA -1.6662 0.2081 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3       Rosenthal et al 1960    3   228   11   209   NA   NA    NA    NA -1.3863 0.4334 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Hart &amp; Sutherland 1977   NA    NA   NA    NA 0.23   NA  0.18  0.31 -1.4697 0.0192 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Frimodt-Moller et al 1973   33  5036   47  5761   NA   NA    NA    NA -0.2191 0.0520 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6       Stein &amp; Aronson 1953  180  1361  372  1079   NA   NA    NA    NA -0.9581 0.0099 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      Vandiviere et al 1973    8  2537   10   619   NA   NA    NA    NA -1.6338 0.2270 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8            TPT Madras 1980  505 87886  499 87892   NA   NA    NA    NA  0.0120 0.0040 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      Coetzee &amp; Berjak 1968   NA    NA   NA    NA 0.62   NA  0.39  1.00 -0.4780 0.0577 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10      Rosenthal et al 1961   17  1699   65  1600   NA   NA    NA    NA -1.4012 0.0754 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11       Comstock et al 1974  186 50448  141 27197   NA   NA    NA    NA -0.3408 0.0125 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12   Comstock &amp; Webster 1969   NA    NA   NA    NA 1.56 0.54    NA    NA  0.4447 0.5266 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13       Comstock et al 1976   27 16886   29 17825   NA   NA    NA    NA -0.0173 0.0716 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  author year tpos  tneg cpos  cneg   or pval ci.lb ci.ub  ntot      yi     vi </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1               Aronson 1948   NA    NA   NA    NA 0.39 0.12    NA    NA   262 -0.9416 0.3668 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      Ferguson &amp; Simes 1949    6   300   29   274   NA   NA    NA    NA    NA -1.6662 0.2081 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3       Rosenthal et al 1960    3   228   11   209   NA   NA    NA    NA    NA -1.3863 0.4334 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     Hart &amp; Sutherland 1977   NA    NA   NA    NA 0.23   NA  0.18  0.31 26465 -1.4697 0.0192 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  Frimodt-Moller et al 1973   33  5036   47  5761   NA   NA    NA    NA    NA -0.2191 0.0520 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       Stein &amp; Aronson 1953  180  1361  372  1079   NA   NA    NA    NA    NA -0.9581 0.0099 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      Vandiviere et al 1973    8  2537   10   619   NA   NA    NA    NA    NA -1.6338 0.2270 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8            TPT Madras 1980  505 87886  499 87892   NA   NA    NA    NA    NA  0.0120 0.0040 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      Coetzee &amp; Berjak 1968   NA    NA   NA    NA 0.62   NA  0.39  1.00 14776 -0.4780 0.0577 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10      Rosenthal et al 1961   17  1699   65  1600   NA   NA    NA    NA    NA -1.4012 0.0754 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11       Comstock et al 1974  186 50448  141 27197   NA   NA    NA    NA    NA -0.3408 0.0125 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12   Comstock &amp; Webster 1969   NA    NA   NA    NA 1.56 0.54    NA    NA  4839  0.4447 0.5266 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13       Comstock et al 1976   27 16886   29 17825   NA   NA    NA    NA    NA -0.0173 0.0716 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### random-effects model fitted to these data</span></span></span>

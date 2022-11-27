@@ -1,10 +1,12 @@
 conv.fivenum <- function(min, q1, median, q3, max, n, data, dist="norm", transf=FALSE,
-                         include, test=TRUE, var.names=c("mean","sd"), append=TRUE, ...) {
+                         include, test=TRUE, var.names=c("mean","sd"), append=TRUE, replace="ifna", ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    if (missing(min) && missing(q1) && missing(median) && missing(q3) && missing(max))
       stop(mstyle$stop("Must specify at least some of these arguments: 'min', 'q1', 'median', 'q3', 'max'."))
+
+   replace <- match.arg(replace, c("ifna","all"))
 
    ### get ... argument and check for extra/superfluous arguments
 
@@ -123,12 +125,12 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, dist="norm", transf=
 
    method <- tolower(method)
 
-   method1.options <- c("rec", "hozo2005", "wan2014", "bland2015", "luo2016")
+   method1.options <- c("rec", "hozo2005", "wan2014", "bland2015", "luo2016", "walter2007")
    method[1] <- method1.options[grep(method[1], method1.options)[1]]
    if (is.na(method[1]))
       stop(mstyle$stop("Unknown 'method[1]' specified."))
 
-   method2.options <- c("rec", "hozo2005", "wan2014", "bland2015", "shi2020")
+   method2.options <- c("rec", "hozo2005", "wan2014", "bland2015", "shi2020", "walter2007")
    method[2] <- method2.options[grep(method[2], method2.options)[1]]
    if (is.na(method[2]))
       stop(mstyle$stop("Unknown 'method[2]' specified."))
@@ -197,6 +199,8 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, dist="norm", transf=
          }
          if (method[1] == "wan2014")
             means[i] <- (min[i] + 2*median[i] + max[i]) / 4
+         if (method[1] == "walter2007")
+            means[i] <- median[i]
 
          # sd estimation
 
@@ -217,6 +221,16 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, dist="norm", transf=
             } else {
                sds[i] <- (max[i] - min[i]) / 6
             }
+         }
+         if (method[2] == "walter2007") {
+            intfun <- function(x, n) {
+               alpha <- pnorm(x)
+               1 - (1-alpha)^n - alpha^n
+            }
+            f <- try(integrate(intfun, lower=-Inf, upper=Inf, n=n)$value, silent=TRUE)
+            if (inherits(f, "try-error"))
+               next
+            sds[i] <- (max[i] - min[i]) / f
          }
 
          if (dist[i] == "lnorm" && transf) {
@@ -343,16 +357,26 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, dist="norm", transf=
    if (has.data && append) {
 
       if (is.element(var.names[1], names(data))) {
-         attr(data[[var.names[1]]], "est") <- is.na(data[[var.names[1]]]) & !is.na(means)
-         data[[var.names[1]]] <- replmiss(data[[var.names[1]]], means)
+         if (replace=="ifna") {
+            attr(data[[var.names[1]]], "est") <- is.na(data[[var.names[1]]]) & !is.na(means)
+            data[[var.names[1]]] <- replmiss(data[[var.names[1]]], means)
+         } else {
+            attr(data[[var.names[1]]], "est") <- !is.na(means)
+            data[[var.names[1]]][!is.na(means)] <- means[!is.na(means)]
+         }
       } else {
          data <- cbind(data, means)
          names(data)[length(names(data))] <- var.names[1]
       }
 
       if (is.element(var.names[2], names(data))) {
-         attr(data[[var.names[2]]], "est") <- is.na(data[[var.names[2]]]) & !is.na(sds)
-         data[[var.names[2]]] <- replmiss(data[[var.names[2]]], sds)
+         if (replace=="ifna") {
+            attr(data[[var.names[2]]], "est") <- is.na(data[[var.names[2]]]) & !is.na(sds)
+            data[[var.names[2]]] <- replmiss(data[[var.names[2]]], sds)
+         } else {
+            attr(data[[var.names[2]]], "est") <- !is.na(sds)
+            data[[var.names[2]]][!is.na(sds)] <- sds[!is.na(sds)]
+         }
       } else {
          data <- cbind(data, sds)
          names(data)[length(names(data))] <- var.names[2]
