@@ -1,19 +1,14 @@
-conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, n,
-                      level=95, transf, include, checkci=TRUE, verbose=FALSE, ...) {
+conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
+                      level=95, transf, check=TRUE, var.names, append=TRUE, replace="ifna", ...) {
 
-   # allow t-distribution based CIs/tests (then also need dfs argument)?
+   # TODO: allow t-distribution based CIs/tests (then also need dfs argument)?
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   if (missing(data))
-      stop(mstyle$stop("Must specify 'data' argument."))
+   if (missing(out) && missing(ci.lb) && missing(ci.ub) && missing(zval) && missing(pval))
+      stop(mstyle$stop("Must specify at least some of these arguments: 'out', 'ci.lb', 'ci.ub', 'zval', 'pval'."))
 
-   .chkclass(class(data), must="escalc")
-
-   x <- data
-
-   if (missing(transf))
-      transf <- FALSE
+   replace <- match.arg(replace, c("ifna","all"))
 
    ### get ... argument and check for extra/superfluous arguments
 
@@ -25,38 +20,86 @@ conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, n,
 
    #########################################################################
 
-   if (!is.null(attr(x, "yi.names"))) { # if yi.names attributes is available
-      yi.name <- attr(x, "yi.names")[1] # take the first entry to be the yi variable
-   } else {                             # if not, see if 'yi' is in the object and assume that is the yi variable
-      if (!is.element("yi", names(x)))
-         stop(mstyle$stop("Cannot determine name of the 'yi' variable."))
-      yi.name <- "yi"
+   if (missing(data))
+      data <- NULL
+
+   has.data <- !is.null(data)
+
+   if (is.null(data)) {
+      data <- sys.frame(sys.parent())
+   } else {
+      if (!is.data.frame(data))
+         data <- data.frame(data)
    }
-   if (!is.null(attr(x, "vi.names"))) { # if vi.names attributes is available
-      vi.name <- attr(x, "vi.names")[1] # take the first entry to be the vi variable
-   } else {                             # if not, see if 'vi' is in the object and assume that is the vi variable
-      if (!is.element("vi", names(x)))
-         stop(mstyle$stop("Cannot determine name of the 'vi' variable."))
-      vi.name <- "vi"
+
+   x <- data
+
+   ### checks on var.names argument
+
+   if (missing(var.names)) {
+
+      if (inherits(x, "escalc")) {
+
+         if (!is.null(attr(x, "yi.names"))) { # if yi.names attributes is available
+            yi.name <- attr(x, "yi.names")[1] # take the first entry to be the yi variable
+         } else {                             # if not, see if 'yi' is in the object and assume that is the yi variable
+            if (!is.element("yi", names(x)))
+               stop(mstyle$stop("Cannot determine name of the 'yi' variable."))
+            yi.name <- "yi"
+         }
+         if (!is.null(attr(x, "vi.names"))) { # if vi.names attributes is available
+            vi.name <- attr(x, "vi.names")[1] # take the first entry to be the vi variable
+         } else {                             # if not, see if 'vi' is in the object and assume that is the vi variable
+            if (!is.element("vi", names(x)))
+               stop(mstyle$stop("Cannot determine name of the 'vi' variable."))
+            vi.name <- "vi"
+         }
+
+      } else {
+
+         yi.name <- "yi"
+         vi.name <- "vi"
+
+      }
+
+   } else {
+
+      if (length(var.names) != 2L)
+         stop(mstyle$stop("Argument 'var.names' must be of length 2."))
+
+      if (any(var.names != make.names(var.names, unique=TRUE))) {
+         var.names <- make.names(var.names, unique=TRUE)
+         warning(mstyle$warning(paste0("Argument 'var.names' does not contain syntactically valid variable names.\nVariable names adjusted to: var.names = c('", var.names[1], "','", var.names[2], "').")), call.=FALSE)
+      }
+
+      yi.name <- var.names[1]
+      vi.name <- var.names[2]
+
    }
+
+   if (missing(transf))
+      transf <- FALSE
 
    #########################################################################
 
-   k <- nrow(x)
-
    mf <- match.call()
 
-   out     <- .getx("out",     mf=mf, data=data, checknumeric=TRUE)
-   ci.lb   <- .getx("ci.lb",   mf=mf, data=data, checknumeric=TRUE)
-   ci.ub   <- .getx("ci.ub",   mf=mf, data=data, checknumeric=TRUE)
-   zval    <- .getx("zval",    mf=mf, data=data, checknumeric=TRUE)
-   pval    <- .getx("pval",    mf=mf, data=data, checknumeric=TRUE)
-   n       <- .getx("n",       mf=mf, data=data, checknumeric=TRUE)
-   level   <- .getx("level",   mf=mf, data=data, checknumeric=TRUE)
-   include <- .getx("include", mf=mf, data=data)
+   out     <- .getx("out",     mf=mf, data=x, checknumeric=TRUE)
+   ci.lb   <- .getx("ci.lb",   mf=mf, data=x, checknumeric=TRUE)
+   ci.ub   <- .getx("ci.ub",   mf=mf, data=x, checknumeric=TRUE)
+   zval    <- .getx("zval",    mf=mf, data=x, checknumeric=TRUE)
+   pval    <- .getx("pval",    mf=mf, data=x, checknumeric=TRUE)
+   n       <- .getx("n",       mf=mf, data=x, checknumeric=TRUE)
+   level   <- .getx("level",   mf=mf, data=x, checknumeric=TRUE)
+   include <- .getx("include", mf=mf, data=x)
 
    if (is.null(level))
       level <- 95
+
+   if (!.equal.length(out, ci.lb, ci.ub, zval, pval, n))
+      stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+   k <- max(length(out), length(ci.lb), length(ci.ub), length(zval), length(pval), length(n))
 
    if (is.null(out))
       out <- rep(NA, k)
@@ -82,12 +125,12 @@ conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, n,
 
    ### set inputs to NA for rows not to be included
 
-   out[!include]   <- NA
-   ci.lb[!include] <- NA
-   ci.ub[!include] <- NA
-   zval[!include]  <- NA
-   pval[!include]  <- NA
-   n[!include]     <- NA
+   out[!include]   <- NA_real_
+   ci.lb[!include] <- NA_real_
+   ci.ub[!include] <- NA_real_
+   zval[!include]  <- NA_real_
+   pval[!include]  <- NA_real_
+   n[!include]     <- NA_real_
 
    ### check p-values
 
@@ -102,9 +145,6 @@ conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, n,
    if (length(level) != k)
       stop(mstyle$stop(paste0("Length of the 'level' argument (", length(level), ") does not correspond to the size of the dataset (", k, ").")))
 
-   if (!.equal.length(out, ci.lb, ci.ub, zval, pval, n, level))
-      stop(mstyle$stop("Supplied data vectors are not all of the same length."))
-
    level <- .level(level, allow.vector=TRUE)
    crit <- qnorm(level/2, lower.tail=FALSE)
 
@@ -116,19 +156,29 @@ conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, n,
       ci.ub <- sapply(ci.ub, transf)
    }
 
-   ### replace missing x$yi values
+   ### set up data frame if 'data' was not specified or append=FALSE
 
-   if (verbose) {
-      k.repl <- sum(is.na(x[[yi.name]]) & !is.na(out))
-      if (k.repl > 0L)
-         message(mstyle$message("Replacing ", k.repl, " missing 'yi' value", ifelse(k.repl > 1, "s", ""), " via 'out'."))
+   if (!has.data || !append) {
+      x <- data.frame(rep(NA_real_, k), rep(NA_real_, k))
+      names(x) <- c(yi.name, vi.name)
    }
 
-   x[[yi.name]] <- replmiss(x[[yi.name]], out)
+   #########################################################################
+
+   ### replace missing x$yi values
+
+   if (replace=="ifna") {
+      x[[yi.name]] <- replmiss(x[[yi.name]], out)
+   } else {
+      x[[yi.name]][!is.na(out)] <- out[!is.na(out)]
+   }
 
    ### replace missing ni attribute values
 
-   attributes(x[[yi.name]])$ni <- replmiss(attributes(x[[yi.name]])$ni, n)
+   if (!is.null(attributes(x[[yi.name]])$ni))
+      attributes(x[[yi.name]])$ni <- replmiss(attributes(x[[yi.name]])$ni, n)
+
+   #########################################################################
 
    ### convert Wald-type CIs to sampling variances
 
@@ -136,7 +186,7 @@ conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, n,
 
    ### check if yi is about halfway between CI bounds
 
-   if (checkci) {
+   if (check) {
 
       # |-------------+-------------|
       # lb           yi            ub
@@ -161,29 +211,29 @@ conv.wald <- function(data, out, ci.lb, ci.ub, zval, pval, n,
 
    }
 
-   ### replace missing x$vi values
-
-   if (verbose) {
-      k.repl <- sum(is.na(x[[vi.name]]) & !is.na(vi))
-      if (k.repl > 0L)
-         message(mstyle$message("Replacing ", k.repl, " missing 'vi' value", ifelse(k.repl > 1, "s", ""), " via '(ci.lb, ci.ub)'."))
-   }
-
-   x[[vi.name]] <- replmiss(x[[vi.name]], vi)
-
    ### convert two-sided p-values to Wald-type test statistics and replace missing zval values
 
    zval <- replmiss(zval, qnorm(pval/2, lower.tail=FALSE))
 
-   ### convert Wald-type test statistics to sampling variances and replace missing x$vi values
+   ### convert Wald-type test statistics to sampling variances and replace missing vi values
 
-   if (verbose) {
-      k.repl <- sum(is.na(x[[vi.name]]) & !is.na(x[[yi.name]]) & !is.na(zval))
-      if (k.repl > 0L)
-         message(mstyle$message("Replacing ", k.repl, " missing 'vi' value", ifelse(k.repl > 1, "s", ""), " via 'zval' or 'pval'."))
+   vi <- replmiss(vi, (x[[yi.name]] / zval)^2)
+
+   ### note: if both (ci.lb,ci.ub) and zval/pval is available, then this favors
+   ### the back-calculation based on (ci.lb,ci.ub) which seems reasonable
+
+   ### TODO: could consider checking if the back-calculated vi's differs in this case
+   ### (or if x$vi is already available)
+
+   ### replace missing x$vi values
+
+   if (replace=="ifna") {
+      x[[vi.name]] <- replmiss(x[[vi.name]], vi)
+   } else {
+      x[[vi.name]][!is.na(vi)] <- vi[!is.na(vi)]
    }
 
-   x[[vi.name]] <- replmiss(x[[vi.name]], (x[[yi.name]] / zval)^2)
+   #########################################################################
 
    return(x)
 

@@ -1,5 +1,6 @@
-conv.fivenum <- function(min, q1, median, q3, max, n, data, dist="norm", transf=FALSE,
-                         include, test=TRUE, var.names=c("mean","sd"), append=TRUE, replace="ifna", ...) {
+conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
+                         dist="norm", transf=FALSE, test=TRUE,
+                         var.names=c("mean","sd"), append=TRUE, replace="ifna", ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -13,6 +14,8 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, dist="norm", transf=
    ddd <- list(...)
 
    .chkdots(ddd, c("method"))
+
+   #########################################################################
 
    if (missing(data))
       data <- NULL
@@ -33,7 +36,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, dist="norm", transf=
 
    if (any(var.names != make.names(var.names, unique=TRUE))) {
       var.names <- make.names(var.names, unique=TRUE)
-      warning(mstyle$warning(paste0("Argument 'var.names' does not contain syntactically valid variable names.\nVariable names adjusted to: var.names = c('", var.names[1], "', '", var.names[2], "').")), call.=FALSE)
+      warning(mstyle$warning(paste0("Argument 'var.names' does not contain syntactically valid variable names.\nVariable names adjusted to: var.names = c('", var.names[1], "','", var.names[2], "').")), call.=FALSE)
    }
 
    mf <- match.call()

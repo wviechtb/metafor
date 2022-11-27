@@ -16,7 +16,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, olim, digits, transf, ...) {
 
    if (any(out.names != make.names(out.names, unique=TRUE))) {
       out.names <- make.names(out.names, unique=TRUE)
-      warning(mstyle$warning(paste0("Argument 'out.names' does not contain syntactically valid variable names.\nVariable names adjusted to: out.names = c('", out.names[1], "', '", out.names[2], "', '", out.names[3], "', '", out.names[4], "', '", out.names[5], "').")), call.=FALSE)
+      warning(mstyle$warning(paste0("Argument 'out.names' does not contain syntactically valid variable names.\nVariable names adjusted to: out.names = c('", out.names[1], "','", out.names[2], "','", out.names[3], "','", out.names[4], "','", out.names[5], "').")), call.=FALSE)
    }
 
    if (missing(transf))
@@ -50,7 +50,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, olim, digits, transf, ...) {
 
       if (any(var.names != make.names(var.names, unique=TRUE))) {
          var.names <- make.names(var.names, unique=TRUE)
-         warning(mstyle$warning(paste0("Argument 'var.names' does not contain syntactically valid variable names.\nVariable names adjusted to: var.names = c('", var.names[1], "', '", var.names[2], "').")), call.=FALSE)
+         warning(mstyle$warning(paste0("Argument 'var.names' does not contain syntactically valid variable names.\nVariable names adjusted to: var.names = c('", var.names[1], "','", var.names[2], "').")), call.=FALSE)
       }
 
       yi.name <- var.names[1]

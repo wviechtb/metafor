@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-18</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-19</span>
       </span>
     </div>
 
@@ -101,16 +101,13 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">conv.wald</span><span class="op">(</span><span class="va">data</span>, <span class="va">out</span>, <span class="va">ci.lb</span>, <span class="va">ci.ub</span>, <span class="va">zval</span>, <span class="va">pval</span>, <span class="va">n</span>, level<span class="op">=</span><span class="fl">95</span>,</span>
-<span>          <span class="va">transf</span>, <span class="va">include</span>, checkci<span class="op">=</span><span class="cn">TRUE</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">conv.wald</span><span class="op">(</span><span class="va">out</span>, <span class="va">ci.lb</span>, <span class="va">ci.ub</span>, <span class="va">zval</span>, <span class="va">pval</span>, <span class="va">n</span>, <span class="va">data</span>, <span class="va">include</span>,</span>
+<span>          level<span class="op">=</span><span class="fl">95</span>, <span class="va">transf</span>, check<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">var.names</span>, append<span class="op">=</span><span class="cn">TRUE</span>, replace<span class="op">=</span><span class="st">"ifna"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>data</dt>
-<dd><p>an object of class <code>"escalc"</code>.</p></dd>
-
-   <dt>out</dt>
+    <dl><dt>out</dt>
 <dd><p>vector with the observed effect sizes or outcomes.</p></dd>
 
    <dt>ci.lb</dt>
@@ -128,20 +125,29 @@
    <dt>n</dt>
 <dd><p>vector with the total sample sizes of the studies.</p></dd>
 
+   <dt>data</dt>
+<dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
+
+   <dt>include</dt>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies for which the conversion should be carried out.</p></dd>
+
    <dt>level</dt>
 <dd><p>numeric value (or vector) to specify the confidence interval level(s) (the default is 95).</p></dd>
 
    <dt>transf</dt>
 <dd><p>optional argument to specify a function to transform <code>out</code>, <code>ci.lb</code>, and <code>ci.ub</code> (e.g., <code>transf=log</code>). If unspecified, no transformation is used.</p></dd>
 
-   <dt>include</dt>
-<dd><p>optional (logical or numeric) vector to specify the subset of studies for which missing values should be substituted (if possible).</p></dd>
-
-   <dt>checkci</dt>
+   <dt>check</dt>
 <dd><p>logical to specify whether the function should carry out a check to examine if the point estimates fall (approximately) halfway between the CI bounds (the default is <code>TRUE</code>).</p></dd>
 
-   <dt>verbose</dt>
-<dd><p>logical to specify whether output should be generated on the progress of the computations (the default is <code>FALSE</code>).</p></dd>
+   <dt>var.names</dt>
+<dd><p>character vector with two elements to specify the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (if <code>data</code> is an object of class <code>"escalc"</code>, the <code>var.names</code> are taken from the object; otherwise the defaults are <code>"yi"</code> and <code>"vi"</code>).</p></dd>
+
+   <dt>append</dt>
+<dd><p>logical to specify whether the data frame provided via the <code>data</code> argument should be returned together with the estimated values (the default is <code>TRUE</code>).</p></dd>
+
+   <dt>replace</dt>
+<dd><p>character string to specify how values in <code>var.names</code> should be replaced. See the ‘Value’ section for more details.</p></dd>
 
    <dt>...</dt>
 <dd><p>other arguments.</p></dd>
@@ -150,7 +156,7 @@
     <div id="details">
     <h2>Details</h2>
     <p>The <code><a href="escalc.html">escalc</a></code> function can be used to compute a wide variety of effect sizes or ‘outcome measures’. However, the inputs required to compute certain measures with this function may not be reported for all of the studies. Under certain circumstances, other information (such as point estimates and corresponding confidence intervals and/or test statistics) may be available that can be converted into the appropriate format needed for a meta-analysis. The purpose of the present function is to facilitate this process.</p>
-<p>The function takes an object of class <code>"escalc"</code> as input via the <code>data</code> argument. This object should contain variables <code>yi</code> and <code>vi</code> (unless argument <code>var.names</code> was used to adjust these variable names) for the observed effect sizes or outcomes and the corresponding sampling variances, respectively. For some studies, the values for these variables may be missing.</p>
+<p>The function typically takes a data frame created with the <code><a href="escalc.html">escalc</a></code> function as input via the <code>data</code> argument. This object should contain variables <code>yi</code> and <code>vi</code> (unless argument <code>var.names</code> was used to adjust these variable names when the <code>"escalc"</code> object was created) for the observed effect sizes or outcomes and the corresponding sampling variances, respectively. For some studies, the values for these variables may be missing.</p>
 <p></p><div class="section">
 <h3 id="converting-point-estimates-and-confidence-intervals">Converting Point Estimates and Confidence Intervals<a class="anchor" aria-label="anchor" href="#converting-point-estimates-and-confidence-intervals"></a></h3>
 
@@ -174,7 +180,7 @@
 <p>where variable <code>yi</code> contains the log odds ratios and <code>vi</code> the corresponding sampling variances as computed from the counts and group sizes by <code><a href="escalc.html">escalc()</a></code>.</p>
 <p>Study 2 does not report the counts (or sufficient information to reconstruct them), but the odds ratio and a corresponding 95% confidence interval (CI) directly, as given by variables <code>oddsratio</code>, <code>lower</code>, and <code>upper</code>. The CI is a standard Wald-type CI that was computed on the log scale. Then the present function can be used as follows:</p>
 <div class="sourceCode"><pre><code><span></span>
-<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conv.wald.html">conv.wald</a></span><span class="op">(</span><span class="va">dat</span>, out<span class="op">=</span><span class="va">oddsratio</span>, ci.lb<span class="op">=</span><span class="va">lower</span>, ci.ub<span class="op">=</span><span class="va">upper</span>, transf<span class="op">=</span><span class="va">log</span><span class="op">)</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conv.wald.html">conv.wald</a></span><span class="op">(</span>out<span class="op">=</span><span class="va">oddsratio</span>, ci.lb<span class="op">=</span><span class="va">lower</span>, ci.ub<span class="op">=</span><span class="va">upper</span>, data<span class="op">=</span><span class="va">dat</span>, transf<span class="op">=</span><span class="va">log</span><span class="op">)</span></span>
 <span><span class="va">dat</span></span>
 <span></span>
 <span><span class="co">#   study cases.trt n.trt cases.plc n.plc oddsratio lower upper      yi     vi</span></span>
@@ -184,7 +190,7 @@
 
 <p>Now variables <code>yi</code> and <code>vi</code> in the dataset are complete.</p>
 <p>If the CI was not a 95% CI, then one can specify the appropriate level via the <code>level</code> argument. This can also be an entire vector in case different studies used different levels.</p>
-<p>By default (i.e., when <code>cicheck=TRUE</code>), the function carries out a rough check to examine if the point estimates fall (approximately) halfway between the CI bounds (on the transformed scale). A warning is used if there are rows where this is not the case. This may indicate that a particular CI was not a Wald-type CI or was computed on a different scale (in which case the back-calculation above would be inappropriate), but can also arise due to rounding of the reported values (in which case the back-calculation would still be appropriate, albeit possibly a bit inaccurate). Care should be taken when using such back-calculated values in a meta-analysis.</p>
+<p>By default (i.e., when <code>check=TRUE</code>), the function carries out a rough check to examine if the point estimate falls (approximately) halfway between the CI bounds (on the transformed scale) for each study for which the conversion was carried out. A warning is issued if there are studies where this is not the case. This may indicate that a particular CI was not a Wald-type CI or was computed on a different scale (in which case the back-calculation above would be inappropriate), but can also arise due to rounding of the reported values (in which case the back-calculation would still be appropriate, albeit possibly a bit inaccurate). Care should be taken when using such back-calculated values in a meta-analysis.</p>
 <p></p>
 </div>
 
@@ -193,7 +199,7 @@
 
 
 <p>Similarly, study authors may report the test statistic and/or p-value from a Wald-type test of the form <em></em>\(\textrm{zval} = y_i / \sqrt{v_i}\) (on the transformed scale if <code>transf</code> is specified), with the corresponding two-sided p-value given by <em></em>\(\textrm{pval} = 2(1 - \Phi(\textrm{|zval|}))\), where <em></em>\(\Phi(\cdot)\) denotes the cumulative distribution function of a standard normal distribution (i.e., <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">pnorm</a></code>). Test statistics and/or corresponding p-values of this form can be supplied via arguments <code>zval</code> and <code>pval</code>.</p>
-<p>A given p-value can be back-transformed into the corresponding test statistic with <em></em>\(\textrm{zval} = \Phi^{-1}(1 - \textrm{pval}/2)\), where <em></em>\(\Phi^{-1}(\cdot)\) denotes the quantile function or inverse of the cumulative distribution function of a standard normal distribution (i.e., <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">qnorm</a></code>). Then \[v_i = \left(\frac{y_i}{\textrm{zval}}\right)^2\] is used to back-calculate a missing <code>vi</code> value in the dataset.</p>
+<p>A given p-value can be back-transformed into the corresponding test statistic (if it is not already available) with <em></em>\(\textrm{zval} = \Phi^{-1}(1 - \textrm{pval}/2)\), where <em></em>\(\Phi^{-1}(\cdot)\) denotes the quantile function or inverse of the cumulative distribution function of a standard normal distribution (i.e., <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">qnorm</a></code>). Then \[v_i = \left(\frac{y_i}{\textrm{zval}}\right)^2\] is used to back-calculate a missing <code>vi</code> value in the dataset.</p>
 <p>Note that the conversion of a p-value to the corresponding test statistic (which is then converted into sampling variance) as shown above assumes that the exact p-value is reported. If authors only report that the p-value fell below a certain threshold (e.g., <em></em>\(p &lt; .01\) or if authors only state that the test was significant -- which typically implies <em></em>\(p &lt; .05\)), then a common approach is to use the value of the cutoff reported (e.g., if <em></em>\(p &lt; .01\) is reported, then assume <em></em>\(p = .01\)), which is conservative (since the actual p-value was below that assumed value by some unknown amount). The conversion will therefore tend to be much less accurate.</p>
 <p>Using the earlier example, suppose that only the odds ratio and the corresponding two-sided p-value from a Wald-type test (whether the log odds ratio differs significantly from zero) is reported for study 2.</p>
 <div class="sourceCode"><pre><code>
@@ -211,7 +217,7 @@ dat
 
 <p>Then the function can be used as follows:</p>
 <div class="sourceCode"><pre><code><span></span>
-<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conv.wald.html">conv.wald</a></span><span class="op">(</span><span class="va">dat</span>, out<span class="op">=</span><span class="va">oddsratio</span>, pval<span class="op">=</span><span class="va">pval</span>, transf<span class="op">=</span><span class="va">log</span><span class="op">)</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conv.wald.html">conv.wald</a></span><span class="op">(</span>out<span class="op">=</span><span class="va">oddsratio</span>, pval<span class="op">=</span><span class="va">pval</span>, data<span class="op">=</span><span class="va">dat</span>, transf<span class="op">=</span><span class="va">log</span><span class="op">)</span></span>
 <span><span class="va">dat</span></span>
 <span></span>
 <span><span class="co">#   study cases.trt n.trt cases.plc n.plc oddsratio pval      yi     vi</span></span>
@@ -219,7 +225,7 @@ dat
 <span><span class="co"># 2     2        NA   183        NA   188      0.64 0.17 -0.4463 0.1058</span></span>
 <span><span class="co"># 3     3         4    46         7    44        NA   NA -0.6864 0.4437</span></span></code></pre></div>
 
-<p>Note that the back-calculated sampling variance for study 2 is not identical in these two examples, because the CI bounds and p-value are rounded to two decimal places, which introduces some inaccuracies.</p>
+<p>Note that the back-calculated sampling variance for study 2 is not identical in these two examples, because the CI bounds and p-value are rounded to two decimal places, which introduces some inaccuracies. Also, if both (<code>ci.lb</code>, <code>ci.ub</code>) and either <code>zval</code> or pval is available for a study, then the back-calculation of <em></em>\(v_i\) via the confidence interval is preferred.</p>
 <p></p>
 </div>
 
@@ -230,7 +236,13 @@ dat
     <h2>Value</h2>
     
 
-<p>An object of class <code>c("escalc","data.frame")</code> with missing <code>yi</code> and <code>vi</code> substituted based on the back-calculations (where possible).</p>
+<p>If the <code>data</code> argument was not specified or <code>append=FALSE</code>, a data frame with two variables called <code>var.names[1]</code> (by default <code>"yi"</code>) and <code>var.names[2]</code> (by default <code>"vi"</code>) with the observed effect sizes or outcomes and the corresponding sampling variances (computed as described above).</p>
+
+
+<p>If <code>data</code> was specified and <code>append=TRUE</code>, then the original data frame is returned. If <code>var.names[1]</code> is a variable in <code>data</code> and <code>replace="ifna"</code>, then missing values in this variable are replaced with the (possibly transformed) observed effect sizes or outcomes from <code>out</code> (where possible) and otherwise a new variable called <code>var.names[1]</code> is added to the data frame. Similarly, if <code>var.names[2]</code> is a variable in <code>data</code> and <code>replace="ifna"</code>, then missing values in this variable are replaced with the sampling variances back-calculated as described above (where possible) and otherwise a new variable called <code>var.names[2]</code> is added to the data frame.</p>
+
+
+<p>If <code>replace="all"</code>, then all values in <code>var.names[1]</code> and <code>var.names[2]</code> are replaced, even for cases where the value in <code>var.names[1]</code> and <code>var.names[2]</code> is not missing.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -360,7 +372,7 @@ dat
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fill in the missing log odds ratios and sampling variances</span></span></span>
-<span class="r-in"><span><span class="va">dat2</span> <span class="op">&lt;-</span> <span class="fu">conv.wald</span><span class="op">(</span><span class="va">dat2</span>, out<span class="op">=</span><span class="va">or</span>, ci.lb<span class="op">=</span><span class="va">ci.lb</span>, ci.ub<span class="op">=</span><span class="va">ci.ub</span>, pval<span class="op">=</span><span class="va">pval</span>, n<span class="op">=</span><span class="va">ntot</span>, transf<span class="op">=</span><span class="va">log</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat2</span> <span class="op">&lt;-</span> <span class="fu">conv.wald</span><span class="op">(</span>out<span class="op">=</span><span class="va">or</span>, ci.lb<span class="op">=</span><span class="va">ci.lb</span>, ci.ub<span class="op">=</span><span class="va">ci.ub</span>, pval<span class="op">=</span><span class="va">pval</span>, n<span class="op">=</span><span class="va">ntot</span>, data<span class="op">=</span><span class="va">dat2</span>, transf<span class="op">=</span><span class="va">log</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat2</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  author year tpos  tneg cpos  cneg   or pval ci.lb ci.ub  ntot      yi     vi </span>

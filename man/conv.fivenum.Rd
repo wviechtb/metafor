@@ -5,9 +5,9 @@
    Function to convert five-number summary values (or a subset thereof) to means and standard deviations.
 }
 \usage{
-conv.fivenum(min, q1, median, q3, max, n, data, dist="norm", transf=FALSE,
-             include, test=TRUE, var.names=c("mean","sd"),
-             append=TRUE, replace="ifna", \dots)
+conv.fivenum(min, q1, median, q3, max, n, data, include,
+             dist="norm", transf=FALSE, test=TRUE,
+             var.names=c("mean","sd"), append=TRUE, replace="ifna", \dots)
 }
 \arguments{
    \item{min}{vector with the sample minimum values.}
@@ -17,9 +17,9 @@ conv.fivenum(min, q1, median, q3, max, n, data, dist="norm", transf=FALSE,
    \item{max}{vector with the sample maximum values.}
    \item{n}{vector with the sample sizes.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
+   \item{include}{optional (logical or numeric) vector to specify the subset of studies for which the conversion should be carried out.}
    \item{dist}{character string indicating what distribution is assumed for the underlying data (either \code{"norm"} for a normal distribution or \code{"lnorm"} for a log-normal distribution). Can also be a string vector if different distributions are assumed for different studies.}
    \item{transf}{logical to specify whether the estimated means and standard deviations of the log-transformed data should be back-transformed as described by Shi et al. (2020c). Only relevant when \code{dist="lnorm"}.}
-   \item{include}{optional (logical or numeric) vector to specify the subset of studies for which the conversion should be carried out.}
    \item{test}{logical to specify whether a study should be excluded from the conversion if the test for skewness is significant (the default is \code{TRUE}).}
    \item{var.names}{character vector with two elements to specify the name of the variable for the estimated means and the name of the variable for the estimated standard deviations (the defaults are \code{"mean"} and \code{"sd"}).}
    \item{append}{logical to specify whether the data frame provided via the \code{data} argument should be returned together with the estimated values (the default is \code{TRUE}).}
@@ -64,7 +64,7 @@ conv.fivenum(min, q1, median, q3, max, n, data, dist="norm", transf=FALSE,
 \value{
    If the \code{data} argument was not specified or \code{append=FALSE}, a data frame with two variables called \code{var.names[1]} (by default \code{"mean"}) and \code{var.names[2]} (by default \code{"sd"}) with the estimated means and SDs.
 
-   If \code{data} was specified and \code{append=TRUE}, then the original data frame is returned. If \code{var.names[1]} is a variable in \code{data} and \code{replace="all"}, then missing values in this variable are replaced with the estimated means (where possible) and otherwise a new variable called \code{var.names[1]} is added to the data frame. Similarly, if \code{var.names[2]} is a variable in \code{data} and \code{replace="all"}, then missing values in this variable are replaced with the estimated SDs (where possible) and otherwise a new variable called \code{var.names[2]} is added to the data frame.
+   If \code{data} was specified and \code{append=TRUE}, then the original data frame is returned. If \code{var.names[1]} is a variable in \code{data} and \code{replace="ifna"}, then missing values in this variable are replaced with the estimated means (where possible) and otherwise a new variable called \code{var.names[1]} is added to the data frame. Similarly, if \code{var.names[2]} is a variable in \code{data} and \code{replace="ifna"}, then missing values in this variable are replaced with the estimated SDs (where possible) and otherwise a new variable called \code{var.names[2]} is added to the data frame.
 
    If \code{replace="all"}, then all values in \code{var.names[1]} and \code{var.names[2]} where an estimated mean and SD can be computed are replaced, even for cases where the value in \code{var.names[1]} and \code{var.names[2]} is not missing.
 
