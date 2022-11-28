@@ -18,7 +18,6 @@
 }
 \note{
    For the \code{`[`} method, any variables specified as part of the \code{i} argument will be searched for within object \code{x} first (see \sQuote{Examples}).
-
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

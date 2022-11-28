@@ -2,7 +2,10 @@
 
 "[.escalc" <- function(x, i, ...) {
 
-   if (!missing(i)) {
+   mf <- paste0(deparse1(match.call()), collapse="")
+   has.drop <- grepl("drop = T", mf, fixed=TRUE) || grepl("drop = F", mf, fixed=TRUE)
+
+   if (!missing(i) && nargs()-has.drop > 2L) {
       mf <- match.call()
       i <- .getx("i", mf=mf, data=x)
    }
@@ -21,7 +24,7 @@
 
       ### if selecting rows, also subset ni and slab attributes and add them back to each yi variable
 
-      if (!missing(i)) {
+      if (!missing(i) && nargs()-has.drop > 2L) {
          attr(dat[[yi.names[l]]], "ni")   <- attr(x[[yi.names[l]]], "ni")[i]
          attr(dat[[yi.names[l]]], "slab") <- attr(x[[yi.names[l]]], "slab")[i]
       }
