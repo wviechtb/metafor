@@ -72,6 +72,9 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 
    Attributes called \code{"tval"}, \code{"crit"}, and \code{"sig"} are also added to \code{var.names[1]} and \code{var.names[2]} corresponding to the test statistic and critical value for the test of skewness and whether the test was significant.
 }
+\note{
+   \bold{A word of caution:} Under the given distributional assumptions, the estimated means and SDs are approximately unbiased and hence so are any effect size measures computed based on them (assuming a measure is unbiased to begin with when computed with directly reported means and SDs). However, the estimated means and SDs are less precise (i.e., are more variable) than directly reported means and SDs (especially under case 1) and hence computing the sampling variance of a measure with equations that assume that directly reported means and SDs are available will tend to underestimate the actual sampling variance of the measure, giving too much weight to estimates computed based on estimated means and SDs. The actual degree of inflation in the sampling variance depends on various factors and there is currently no general solution for addressing this issue. It would therefore be prudent to treat effect size estimates computed from estimated means and SDs with caution (e.g., by examining in a moderator analysis whether there are systematic differences between studies directly reporting means and SDs and those where the means and SDs needed to be estimated and/or as part of a sensitivity analysis).
+}
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
 }

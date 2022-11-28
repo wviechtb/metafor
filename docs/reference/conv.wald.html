@@ -229,20 +229,23 @@ dat
 <p></p>
 </div>
 
-<p><b>A word of caution</b>: Except for the check on the CI bounds, there is no possibility to determine if the back-calculations done by the function are appropriate in a given context. They are only appropriate when the CI bounds and tests statistics (or p-values) arose from Wald-type CIs / tests as described above. Using the same back-calculations for other purposes is likely to yield nonsensical values.</p>
 <p>Optionally, one can use the <code>n</code> argument to supply the total sample sizes of the studies. This has no relevance for the calculations done by the present function, but some other functions may use this information (e.g., when drawing a funnel plot with the <code><a href="funnel.html">funnel</a></code> function and one adjusts the <code>yaxis</code> argument to one of the options that puts the sample sizes or some transformation thereof on the y-axis).</p>
     </div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>If the <code>data</code> argument was not specified or <code>append=FALSE</code>, a data frame with two variables called <code>var.names[1]</code> (by default <code>"yi"</code>) and <code>var.names[2]</code> (by default <code>"vi"</code>) with the observed effect sizes or outcomes and the corresponding sampling variances (computed as described above).</p>
+<p>If the <code>data</code> argument was not specified or <code>append=FALSE</code>, a data frame of class <code>c("escalc","data.frame")</code> with two variables called <code>var.names[1]</code> (by default <code>"yi"</code>) and <code>var.names[2]</code> (by default <code>"vi"</code>) with the observed effect sizes or outcomes and the corresponding sampling variances (computed as described above).</p>
 
 
 <p>If <code>data</code> was specified and <code>append=TRUE</code>, then the original data frame is returned. If <code>var.names[1]</code> is a variable in <code>data</code> and <code>replace="ifna"</code>, then missing values in this variable are replaced with the (possibly transformed) observed effect sizes or outcomes from <code>out</code> (where possible) and otherwise a new variable called <code>var.names[1]</code> is added to the data frame. Similarly, if <code>var.names[2]</code> is a variable in <code>data</code> and <code>replace="ifna"</code>, then missing values in this variable are replaced with the sampling variances back-calculated as described above (where possible) and otherwise a new variable called <code>var.names[2]</code> is added to the data frame.</p>
 
 
 <p>If <code>replace="all"</code>, then all values in <code>var.names[1]</code> and <code>var.names[2]</code> are replaced, even for cases where the value in <code>var.names[1]</code> and <code>var.names[2]</code> is not missing.</p>
+    </div>
+    <div id="note">
+    <h2>Note</h2>
+    <p><b>A word of caution</b>: Except for the check on the CI bounds, there is no possibility to determine if the back-calculations done by the function are appropriate in a given context. They are only appropriate when the CI bounds and tests statistics (or p-values) arose from Wald-type CIs / tests as described above. Using the same back-calculations for other purposes is likely to yield nonsensical values.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -259,7 +262,23 @@ dat
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### a more elaborate example based on the BCG vaccine dataset</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### a very simple example</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>or<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.37</span>,<span class="fl">1.89</span><span class="op">)</span>, or.lb<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.03</span>,<span class="fl">1.60</span><span class="op">)</span>, or.ub<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.82</span>,<span class="fl">2.23</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     or or.lb or.ub</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 1.37  1.03  1.82</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 1.89  1.60  2.23</span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">conv.wald</span><span class="op">(</span>out<span class="op">=</span><span class="va">or</span>, ci.lb<span class="op">=</span><span class="va">or.lb</span>, ci.ub<span class="op">=</span><span class="va">or.ub</span>, data<span class="op">=</span><span class="va">dat</span>, transf<span class="op">=</span><span class="va">log</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     or or.lb or.ub     yi     vi </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 1.37  1.03  1.82 0.3148 0.0211 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 1.89  1.60  2.23 0.6366 0.0072 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### a more elaborate example based on the BCG vaccine dataset</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">7</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  author year tpos  tneg cpos  cneg</span>

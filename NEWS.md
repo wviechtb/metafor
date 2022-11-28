@@ -26,7 +26,7 @@
 
 - for measures `COR`, `UCOR`, and `ZCOR`, can now use argument `ti` to specify t-test statistics in `escalc()`
 
-- can also specify (two-sided) p-values (of the respective t-tests) for these measures via argument `pi` (the sign of p-value is taken to the sign of the measure)
+- can also specify (two-sided) p-values (of the respective t-tests) for these measures via argument `pi` (the sign of the p-value is taken to be the sign of the measure)
 
 - added measures `"ZPHI"`, `"ZTET"`, `"ZPB"`, `"ZBIS"`, and `"ZSPCOR"` to `escalc()` (but note that Fisher's r-to-z transformation is not a variance-stabilizing transformation for these measures)
 

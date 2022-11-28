@@ -156,9 +156,9 @@ conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
       ci.ub <- sapply(ci.ub, transf)
    }
 
-   ### set up data frame if 'data' was not specified or append=FALSE
+   ### set up data frame if 'data' was not specified
 
-   if (!has.data || !append) {
+   if (!has.data) {
       x <- data.frame(rep(NA_real_, k), rep(NA_real_, k))
       names(x) <- c(yi.name, vi.name)
    }
@@ -234,6 +234,12 @@ conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
    }
 
    #########################################################################
+
+   if (!inherits(x, "escalc"))
+      x <- escalc(data=x, yi=x[[yi.name]], vi=x[[vi.name]], ni=n)
+
+   if (!append)
+      x <- x[,c(yi.name, vi.name)]
 
    return(x)
 
