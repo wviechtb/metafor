@@ -78,7 +78,7 @@ reference:
       Introduction to the package
     contents:
     - metafor-package
-  - title: "Outcome Measures"
+  - title: "Effect Sizes / Outcome Measures"
     desc: >
       Functions to compute various types of effect sizes and outcome measures.
     contents:
@@ -126,7 +126,7 @@ reference:
       - qqnorm.rma
   - title: "Publication Bias"
     desc: >
-      Functions related to publication bias.
+      Functions for detecting, assessing the impact of, and correcting for publication bias.
     contents:
       - regtest
       - ranktest
@@ -137,7 +137,7 @@ reference:
       - tes
   - title: "Inference Methods"
     desc: >
-      Functions for standard and advanced methods for drawing inferences based on meta-analytic data and for assessing the model fit.
+      Functions for drawing inferences based on meta-analytic models and for assessing the model fit.
     contents:
       - anova.rma
       - confint.rma

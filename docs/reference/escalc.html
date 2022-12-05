@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-20</span>
       </span>
     </div>
 
@@ -482,11 +482,12 @@
 <h4 id="partial-and-semi-partial-correlations">Partial and Semi-Partial Correlations<a class="anchor" aria-label="anchor" href="#partial-and-semi-partial-correlations"></a></h4>
 
 
-<p>Aloe and Becker (2012), Aloe and Thompson (2013), and Aloe (2014) describe the use of partial and semi-partial correlation coefficients for meta-analyzing the results from regression models (when the focus is on a common regression coefficient of interest across studies). To compute these measures, one needs to specify <code>ti</code> for the test statistics (i.e., t-tests) of the regression coefficient of interest, <code>ni</code> for the sample sizes of the studies, <code>mi</code> for the number of predictors in the regression models, and <code>r2i</code> for the <em></em>\(R^2\) value of the regression models (the latter is only needed when <code>measure="SPCOR"</code>). The options for the <code>measure</code> argument are then:</p><ul><li><p><code>"PCOR"</code> for the <em>partial correlation coefficient</em>,</p></li>
+<p>Aloe and Becker (2012), Aloe and Thompson (2013), and Aloe (2014) describe the use of partial and semi-partial correlation coefficients for meta-analyzing the results from regression models (when the focus is on a common regression coefficient of interest across studies). To compute these measures, one needs to specify <code>ti</code> for the test statistics (i.e., t-tests) of the regression coefficient of interest, <code>ni</code> for the sample sizes of the studies, <code>mi</code> for the number of predictors in the regression models (not counting the intercept term), and <code>r2i</code> for the <em></em>\(R^2\) value of the regression models (the latter is only needed when <code>measure="SPCOR"</code> or <code>measure="ZSPCOR"</code>). The options for the <code>measure</code> argument are then:</p><ul><li><p><code>"PCOR"</code> for the <em>partial correlation coefficient</em>,</p></li>
 <li><p><code>"ZPCOR"</code> for <em>Fisher's r-to-z transformed partial correlation coefficient</em>,</p></li>
 <li><p><code>"SPCOR"</code> for the <em>semi-partial correlation coefficient</em>,</p></li>
 <li><p><code>"ZSPCOR"</code> for <em>Fisher's r-to-z transformed semi-partial correlation coefficient</em>.</p></li>
-</ul><p>Note that the sign of the (semi-)partial correlation coefficients is determined based on the signs of the values specified via the <code>ti</code> argument. Also, while the Fisher transformation can be applied to both measures, it is only a variance-stabilizing transformation for partial correlation coefficients.</p>
+</ul><p>Note that the signs of the (semi-)partial correlation coefficients is determined based on the signs of the values specified via the <code>ti</code> argument. Also, while the Fisher transformation can be applied to both measures, it is only a variance-stabilizing transformation for partial correlation coefficients.</p>
+<p>If the test statistic (i.e., t-test) of the regression coefficient of interest is unknown for some studies, but the (two-sided) p-values corresponding to the t-tests are known, one can specify those values via argument <code>pi</code>. However, since a two-sided p-value does not carry information about the sign of the test statistic (and hence neither about the correlation), the sign of the p-values (which can be negative) is used as the sign of the correlation coefficients (e.g., <code>escalc(measure="PCOR", pi=-.07, mi=5, ni=30)</code> yields a negative correlation of <code>-0.3610</code>).</p>
 <p>A dataset corresponding to data of this type is provided in <code><a href="https://wviechtb.github.io/metadat/reference/dat.aloe2013.html" class="external-link">dat.aloe2013</a></code>.</p>
 <p></p>
 </div>

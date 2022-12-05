@@ -1179,30 +1179,32 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
       if (is.element(measure, c("PCOR","ZPCOR","SPCOR","ZSPCOR"))) {
 
          ti  <- .getx("ti",  mf=mf, data=data, checknumeric=TRUE)
-         r2i <- .getx("r2i", mf=mf, data=data, checknumeric=TRUE)
          mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE)
          ni  <- .getx("ni",  mf=mf, data=data, checknumeric=TRUE)
+         pi  <- .getx("pi",  mf=mf, data=data, checknumeric=TRUE)
+         r2i <- .getx("r2i", mf=mf, data=data, checknumeric=TRUE)
 
-         if (measure=="PCOR" && !.all.specified(ti, ni, mi))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ti, ni, mi)."))
+         if (!.equal.length(ti, mi, ni, pi, r2i))
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+         ### convert pi to ti values
+
+         ti <- replmiss(ti, .convp2t(pi, df=ni-mi-1))
+
+         if (is.element(measure, c("PCOR","ZPCOR")) && !.all.specified(ti, mi, ni))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ti, mi, ni (and pi))."))
 
          if (is.element(measure, c("SPCOR","ZSPCOR")) && !.all.specified(ti, ni, mi, r2i))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ti, ni, mi, r2i)."))
-
-         if (measure=="PCOR" && !.equal.length(ti, ni, mi))
-            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
-
-         if (is.element(measure, c("SPCOR","ZSPCOR")) && !.equal.length(ti, ni, mi, r2i))
-            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ti, mi, ni, r2i (and pi))."))
 
          k.all <- length(ti)
 
          if (!is.null(subset)) {
             subset <- .chksubset(subset, k.all)
             ti  <- .getsubset(ti,  subset)
-            r2i <- .getsubset(r2i, subset)
             mi  <- .getsubset(mi,  subset)
             ni  <- .getsubset(ni,  subset)
+            r2i <- .getsubset(r2i, subset)
          }
 
          if (is.element(measure, c("SPCOR","ZSPCOR")) && any(r2i > 1 | r2i < 0, na.rm=TRUE))

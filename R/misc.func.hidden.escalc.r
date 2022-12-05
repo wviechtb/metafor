@@ -311,6 +311,9 @@
    if (is.null(pval))
       return(NULL)
 
+   df <- ifelse(df < 1, NA, df)
+   pval <- ifelse(abs(pval) > 1, NA, pval)
+
    sign(pval) * qt(abs(pval)/2, df=df, lower.tail=FALSE)
 
 }

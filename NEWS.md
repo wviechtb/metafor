@@ -1,4 +1,4 @@
-# metafor 3.9-19 (2022-11-27)
+# metafor 3.9-20 (2022-12-05)
 
 - `model.matrix.rma()` gains `asdf` argument
 
@@ -26,7 +26,7 @@
 
 - for measures `COR`, `UCOR`, and `ZCOR`, can now use argument `ti` to specify t-test statistics in `escalc()`
 
-- can also specify (two-sided) p-values (of the respective t-tests) for these measures via argument `pi` (the sign of the p-value is taken to be the sign of the measure)
+- can also specify (two-sided) p-values (of the respective t-tests) for these measures (and for measures `PCOR`, `ZPCOR`, `SPCOR`, and `ZSPCOR`) via argument `pi` (the sign of the p-value is taken to be the sign of the measure)
 
 - added measures `"ZPHI"`, `"ZTET"`, `"ZPB"`, `"ZBIS"`, and `"ZSPCOR"` to `escalc()` (but note that Fisher's r-to-z transformation is not a variance-stabilizing transformation for these measures)
 

@@ -36,7 +36,11 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
    if (!is.null(x$W))
       stop(mstyle$stop("Extraction of random effects not available for models with non-standard weights."))
 
-   expand <- FALSE # TODO: make this an option?
+   ddd <- list(...)
+
+   .chkdots(ddd, c("expand"))
+
+   expand <- ifelse(is.null(expand), FALSE, isTRUE(ddd$expand)) # TODO: make this an option?
 
    #########################################################################
 
