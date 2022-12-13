@@ -1637,11 +1637,31 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    ### when restart=TRUE, restart at current estimates
 
    if (isTRUE(ddd$restart)) {
+
+      ### check that the restart is done for a model that has the same type/number of var-cor components as the initial one
+
+      okrestart <- TRUE
+
+      if (withS && (is.null(.getfromenv("rma.mv", "sigma2")) || length(.getfromenv("rma.mv", "sigma2")) != sigma2s))
+         okrestart <- FALSE
+      if (withG && (is.null(.getfromenv("rma.mv", "tau2")) || length(.getfromenv("rma.mv", "tau2")) != tau2s))
+         okrestart <- FALSE
+      if (withG && (is.null(.getfromenv("rma.mv", "rho")) || length(.getfromenv("rma.mv", "rho")) != rhos))
+         okrestart <- FALSE
+      if (withH && (is.null(.getfromenv("rma.mv", "gamma2")) || length(.getfromenv("rma.mv", "gamma2")) != gamma2s))
+         okrestart <- FALSE
+      if (withH && (is.null(.getfromenv("rma.mv", "phi")) || length(.getfromenv("rma.mv", "phi")) != phis))
+         okrestart <- FALSE
+
+      if (!okrestart)
+         stop(mstyle$stop(paste0("Restarting for a different model than the initial one.")))
+
       con$sigma2.init <- .getfromenv("rma.mv", "sigma2", default=con$sigma2.init)
       con$tau2.init   <- .getfromenv("rma.mv", "tau2",   default=con$tau2.init)
       con$rho.init    <- .getfromenv("rma.mv", "rho",    default=con$rho.init)
       con$gamma2.init <- .getfromenv("rma.mv", "gamma2", default=con$gamma2.init)
       con$phi.init    <- .getfromenv("rma.mv", "phi",    default=con$phi.init)
+
    }
 
    ### check for missings in initial values

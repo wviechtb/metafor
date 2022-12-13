@@ -29,7 +29,7 @@
 
    In particular, for equal- or random-effects models (i.e., models without moderators), this is just the test of the single coefficient of the model (i.e., \mjseqn{\mbox{H}_0{:}\; \theta = 0} or \mjseqn{\mbox{H}_0{:}\; \mu = 0}). For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all coefficients in the model including the first.
 
-   Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} (\sQuote{betas to test}) argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficients from the model are included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string. Using the \code{btt} argument, one can for example select all coefficients corresponding to a particular factor to test if the factor as a whole is significant. One can also specify a list of indices/strings, in which case tests of all list elements will be conducted. See \sQuote{Examples}.
+   Alternatively, one can manually specify the indices of the coefficients to test via the \code{btt} (\sQuote{betas to test}) argument. For example, with \code{btt=c(3,4)}, only the third and fourth coefficients from the model are included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for \code{btt}. In that case, \code{\link{grep}} will be used to search for all coefficient names that match the string (and hence, one can use regular expressions to fine-tune the search for matching strings). Using the \code{btt} argument, one can for example select all coefficients corresponding to a particular factor to test if the factor as a whole is significant. One can also specify a list of indices/strings, in which case tests of all list elements will be conducted. See \sQuote{Examples}.
 
    For location-scale models fitted with the \code{\link{rma.uni}} function, one can use the \code{att} argument in an analogous manner to specify the indices of the scale coefficients to test (i.e., \mjseqn{\mbox{H}_0{:}\; \alpha_{j \in \texttt{att}} = 0}, where \mjseqn{\alpha_{j \in \texttt{att}}} is the set of coefficients to be tested).
 
@@ -118,9 +118,11 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
 ### fit random-effects model
 res1 <- rma(yi, vi, data=dat, method="ML")
+res1
 
 ### fit mixed-effects model with two moderators (absolute latitude and publication year)
 res2 <- rma(yi, vi, mods = ~ ablat + year, data=dat, method="ML")
+res2
 
 ### Wald-type test of the two moderators
 anova(res2)

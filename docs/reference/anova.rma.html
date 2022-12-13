@@ -143,7 +143,7 @@
     <p>The function can be used in three different ways:</p>
 <p></p><ol><li><p>When a single model is specified (via argument <code>object</code>), the function provides a Wald-type test of one or more model coefficients, that is, \[\mbox{H}_0{:}\; \beta_{j \in \texttt{btt}} = 0,\] where <em></em>\(\beta_{j \in \texttt{btt}}\) is the set of coefficients to be tested (by default whether the set of coefficients is significantly different from zero, but one can specify a different value under the null hypothesis via argument <code>rhs</code>).</p>
 <p>In particular, for equal- or random-effects models (i.e., models without moderators), this is just the test of the single coefficient of the model (i.e., <em></em>\(\mbox{H}_0{:}\; \theta = 0\) or <em></em>\(\mbox{H}_0{:}\; \mu = 0\)). For models including moderators, an omnibus test of all model coefficients is conducted that excludes the intercept (the first coefficient) if it is included in the model. If no intercept is included in the model, then the omnibus test includes all coefficients in the model including the first.</p>
-<p>Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> (‘betas to test’) argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficients from the model are included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> will be used to search for all coefficient names that match the string. Using the <code>btt</code> argument, one can for example select all coefficients corresponding to a particular factor to test if the factor as a whole is significant. One can also specify a list of indices/strings, in which case tests of all list elements will be conducted. See ‘Examples’.</p>
+<p>Alternatively, one can manually specify the indices of the coefficients to test via the <code>btt</code> (‘betas to test’) argument. For example, with <code>btt=c(3,4)</code>, only the third and fourth coefficients from the model are included in the test (if an intercept is included in the model, then it corresponds to the first coefficient in the model). Instead of specifying the coefficient numbers, one can specify a string for <code>btt</code>. In that case, <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> will be used to search for all coefficient names that match the string (and hence, one can use regular expressions to fine-tune the search for matching strings). Using the <code>btt</code> argument, one can for example select all coefficients corresponding to a particular factor to test if the factor as a whole is significant. One can also specify a list of indices/strings, in which case tests of all list elements will be conducted. See ‘Examples’.</p>
 <p>For location-scale models fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function, one can use the <code>att</code> argument in an analogous manner to specify the indices of the scale coefficients to test (i.e., <em></em>\(\mbox{H}_0{:}\; \alpha_{j \in \texttt{att}} = 0\), where <em></em>\(\alpha_{j \in \texttt{att}}\) is the set of coefficients to be tested).</p></li>
 <li><p>When a single model is specified (via argument <code>object</code>), one can use the <code>X</code> argument<em></em><a id="footnote1link" style="color:#375f84" href="#footnote1">\(^1\)</a> to specify a linear combination of the coefficients in the model that should be tested using a Wald-type test, that is, \[\mbox{H}_0{:}\; X \beta = 0,\] where <code>X</code> is a (row) vector of the same length as there are coefficients in the model (by default whether the linear combination is significantly different from zero, but one can specify a different value under the null hypothesis via argument <code>rhs</code>). If a matrix of linear combinations is specified, each row defines a particular linear combination to be tested (if <code>rhs</code> is used, then it should either be a scalar or of the same length as the number of combinations to be tested). If the matrix is of full rank, an omnibus Wald-type test of all linear combinations is also provided. Linear combinations can also be obtained with the <code><a href="predict.rma.html">predict</a></code> function, which provides corresponding confidence intervals.</p>
 <p>For location-scale models fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function, one can use the <code>Z</code> argument in an analogous manner to specify one or multiple linear combinations of the scale coefficients in the model that should be tested (i.e., <em></em>\(\mbox{H}_0{:}\; Z \alpha = 0\)).</p></li>
@@ -281,9 +281,55 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit random-effects model</span></span></span>
 <span class="r-in"><span><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"ML"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res1</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 13; tau^2 estimator: ML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of total heterogeneity): 0.2800 (SE = 0.1443)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):      0.5292</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (total heterogeneity / total variability):   91.38%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (total variability / sampling variability):  11.60</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Q(df = 12) = 152.2330, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se     zval    pval    ci.lb    ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  -0.7112  0.1719  -4.1374  &lt;.0001  -1.0481  -0.3743  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit mixed-effects model with two moderators (absolute latitude and publication year)</span></span></span>
 <span class="r-in"><span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">year</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"ML"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: ML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of residual heterogeneity):     0.0269 (SE = 0.0236)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):             0.1640</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (residual heterogeneity / unaccounted variability): 38.41%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (unaccounted variability / sampling variability):   1.62</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R^2 (amount of heterogeneity accounted for):            90.39%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Residual Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QE(df = 10) = 28.3251, p-val = 0.0016</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 2:3):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 2) = 33.9192, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate       se     zval    pval     ci.lb    ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt    6.6048  18.1960   0.3630  0.7166  -29.0587  42.2682      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ablat     -0.0308   0.0063  -4.9057  &lt;.0001   -0.0432  -0.0185  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> year      -0.0032   0.0092  -0.3471  0.7285   -0.0212   0.0148      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### Wald-type test of the two moderators</span></span></span>
 <span class="r-in"><span><span class="fu">anova</span><span class="op">(</span><span class="va">res2</span><span class="op">)</span></span></span>
