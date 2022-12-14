@@ -473,14 +473,16 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
       }
 
       ### check if models are based on the same data (TODO: also check for same weights?)
+      ### note: using as.vector() to strip attributes/names, as.matrix() to make both V matrices non-sparse, and
+      ###       isTRUE(all.equal()) because conversion to non-sparse can introduce some negligible discrepancies
 
       if (inherits(object, "rma.uni")) {
-         if (!(identical(as.vector(model.f$yi), as.vector(model.r$yi)) && identical(as.vector(model.f$vi), as.vector(model.r$vi)))) ### as.vector() to strip attributes/names
+         if (!(identical(as.vector(model.f$yi), as.vector(model.r$yi)) && isTRUE(all.equal(as.vector(model.f$vi), as.vector(model.r$vi)))))
             stop(mstyle$stop("Observed outcomes and/or sampling variances not equal in the full and reduced model."))
       }
 
       if (inherits(object, "rma.mv")) {
-         if (!(identical(as.vector(model.f$yi), as.vector(model.r$yi)) && identical(as.matrix(model.f$V), as.matrix(model.r$V)))) ### as.vector() to strip attributes/names, as.matrix() to make both V matrices non-sparse
+         if (!(identical(as.vector(model.f$yi), as.vector(model.r$yi)) && isTRUE(all.equal(as.matrix(model.f$V), as.matrix(model.r$V)))))
             stop(mstyle$stop("Observed outcomes and/or sampling variances/covariances not equal in the full and reduced model."))
       }
 
