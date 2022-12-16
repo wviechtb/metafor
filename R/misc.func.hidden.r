@@ -613,6 +613,18 @@
             lab <- ifelse(short, lab, "Transformed Phi Coefficient")
          }
       }
+      if (measure == "ZPHI") {
+         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
+            lab <- ifelse(short, expression('Fisher\'s ' * z[phi]), "Fisher's z Transformed Phi Coefficient")
+         } else {
+            lab <- ifelse(short, lab, "Transformed Fisher's z Transformed Phi Coefficient")
+            funlist <- lapply(list(transf.ztor, transf.ztor.int, tanh), deparse)
+            if (any(sapply(funlist, identical, atransf.char)))
+               lab <- ifelse(short, "Phi", "Phi Coefficient")
+            if (any(sapply(funlist, identical, transf.char)))
+               lab <- ifelse(short, "Phi", "Phi Coefficient")
+         }
+      }
       if (measure == "YUQ") {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, "Yule's Q", "Yule's Q")
@@ -683,9 +695,21 @@
       }
       if (measure == "RPB") {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
-            lab <- ifelse(short, "Correlation", "Point-Biserial Correlation")
+            lab <- ifelse(short, "Correlation", "Point-Biserial Correlation Coefficient")
          } else {
-            lab <- ifelse(short, lab, "Transformed Point-Biserial Correlation")
+            lab <- ifelse(short, lab, "Transformed Point-Biserial Correlation Coefficient")
+         }
+      }
+      if (measure == "ZPB") {
+         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
+            lab <- ifelse(short, expression('Fisher\'s ' * z[phi]), "Fisher's z Transformed Point-Biserial Correlation Coefficient")
+         } else {
+            lab <- ifelse(short, lab, "Transformed Fisher's z Transformed Point-Biserial Correlation Coefficient")
+            funlist <- lapply(list(transf.ztor, transf.ztor.int, tanh), deparse)
+            if (any(sapply(funlist, identical, atransf.char)))
+               lab <- ifelse(short, "Correlation", "Point-Biserial Correlation Coefficient")
+            if (any(sapply(funlist, identical, transf.char)))
+               lab <- ifelse(short, "Correlation", "Point-Biserial Correlation Coefficient")
          }
       }
       if (measure == "CVR") {
@@ -720,7 +744,7 @@
             lab <- ifelse(short, lab, "Transformed Correlation Coefficient")
          }
       }
-      if (measure == "ZCOR") {
+      if (is.element(measure, c("ZCOR","ZTET","ZBIS"))) {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, expression('Fisher\'s ' * z[r]), "Fisher's z Transformed Correlation Coefficient")
          } else {
@@ -757,6 +781,18 @@
             lab <- ifelse(short, "Correlation", "Semi-Partial Correlation Coefficient")
          } else {
             lab <- ifelse(short, lab, "Transformed Semi-Partial Correlation Coefficient")
+         }
+      }
+      if (measure == "ZSPCOR") {
+         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
+            lab <- ifelse(short, expression('Fisher\'s ' * z[r]), "Fisher's z Transformed Semi-Partial Correlation Coefficient")
+         } else {
+            lab <- ifelse(short, lab, "Transformed Fisher's z Transformed Semi-Partial Correlation Coefficient")
+            funlist <- lapply(list(transf.ztor, transf.ztor.int, tanh), deparse)
+            if (any(sapply(funlist, identical, atransf.char)))
+               lab <- ifelse(short, "Correlation", "Semi-Partial Correlation Coefficient")
+            if (any(sapply(funlist, identical, transf.char)))
+               lab <- ifelse(short, "Correlation", "Semi-Partial Correlation Coefficient")
          }
       }
       ######################################################################

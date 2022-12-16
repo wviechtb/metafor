@@ -32,6 +32,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
+   # when adding measures, remember to add measure to .setlab()
+
    if (!is.element(to, c("all","only0","if0all","none")))
       stop(mstyle$stop("Unknown 'to' argument specified."))
 
