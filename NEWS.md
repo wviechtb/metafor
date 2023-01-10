@@ -1,4 +1,4 @@
-# metafor 3.9-20 (2022-12-05)
+# metafor 3.9-21 (2023-01-10)
 
 - `model.matrix.rma()` gains `asdf` argument
 
@@ -17,6 +17,8 @@
 - added `conv.wald()` function for converting Wald-type confidence intervals and test statistics to sampling variances
 
 - added `conv.fivenum()` function for estimating means and standard deviations from five-number summary values
+
+- added `conv.delta()` function for transforming observed effect sizes or outcomes and their sampling variances using the delta method
 
 - added `exact="i"` option in `permutest()` (to just return the number of iterations required for an exact permutation test)
 

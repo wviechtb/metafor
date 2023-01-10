@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-21</span>
       </span>
     </div>
 
@@ -211,7 +211,7 @@
     <p>The p-values obtained with permutation tests cannot reach conventional levels of statistical significance (i.e., <em></em>\(p \le .05\)) when <em></em>\(k\) is very small. In particular, for models without moderators, the smallest possible (two-sided) p-value is .0625 when <em></em>\(k=5\) and .03125 when <em></em>\(k=6\). Therefore, the permutation test is only able to reject the null hypothesis at <em></em>\(\alpha=.05\) when <em></em>\(k\) is at least equal to 6. For models with moderators, the smallest possible (two-sided) p-value for a particular model coefficient is .0833 when <em></em>\(k=4\) and .0167 when <em></em>\(k=5\) (assuming that each row in the model matrix is unique). Therefore, the permutation test is only able to reject the null hypothesis at <em></em>\(\alpha=.05\) when <em></em>\(k\) is at least equal to 5. Consequently, permutation-based CIs can also only be obtained when <em></em>\(k\) is sufficiently large.</p>
 <p>When the number of permutations required for the exact test is so large as to be essentially indistinguishable from infinity (e.g., <code>factorial(200)</code>), the function will terminate with an error.</p>
 <p>Determining whether a test statistic under the permuted data is as extreme or more extreme than under the actually observed data requires making <code>&gt;=</code> or <code>&lt;=</code> comparisons. To avoid problems due to the finite precision with which computers generally represent numbers (see <a href="https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-doesn_0027t-R-think-these-numbers-are-equal_003f" class="external-link">this</a> FAQ for details), the function uses a numerical tolerance (<code>control</code> argument <code>comptol</code>, which is set equal to <code>.Machine$double.eps^0.5</code> by default) when making such comparisons (e.g., instead of <code>sqrt(3)^2 &gt;= 3</code>, which may evaluate to <code>FALSE</code>, we use <code>sqrt(3)^2 &gt;= 3 - .Machine$double.eps^0.5</code>, which should evaluate to <code>TRUE</code>).</p>
-<p>When obtaining permutation-based CIs, the function makes use of <code><a href="https://rdrr.io/r/stats/uniroot.html" class="external-link">uniroot</a></code>. By default, the desired accuracy is set equal to <code>.Machine$double.eps^0.25</code> and the maximum number of iterations to <code>100</code>. The desired accuracy and the maximum number of iterations can be adjusted with the <code>control</code> argument (i.e., <code>control=list(tol=value, maxiter=value)</code>). Also, the interval searched for the CI bounds may be too narrow, leading to <code>NA</code> for a bound. In this case, one can try setting <code>control=list(distfac=value)</code> with a value larger than 1 to extend the interval (the value indicating a multiplicative factor by which to extend the width of the interval searched) or <code>control=list(extendInt="yes")</code> to allow <code><a href="https://rdrr.io/r/stats/uniroot.html" class="external-link">uniroot</a></code> to extend the interval dynamically.</p>
+<p>When obtaining permutation-based CIs, the function makes use of <code><a href="https://rdrr.io/r/stats/uniroot.html" class="external-link">uniroot</a></code>. By default, the desired accuracy is set equal to <code>.Machine$double.eps^0.25</code> and the maximum number of iterations to <code>100</code>. The desired accuracy and the maximum number of iterations can be adjusted with the <code>control</code> argument (i.e., <code>control=list(tol=value, maxiter=value)</code>). Also, the interval searched for the CI bounds may be too narrow, leading to <code>NA</code> for a bound. In this case, one can try setting <code>control=list(distfac=value)</code> with a value larger than 1 to extend the interval (the value indicating a multiplicative factor by which to extend the width of the interval searched) or <code>control=list(extendInt="yes")</code> to allow <code><a href="https://rdrr.io/r/stats/uniroot.html" class="external-link">uniroot</a></code> to extend the interval dynamically (in which case it can happen that a bound may try to drift towards <em></em>\(\pm \infty\)).</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -372,7 +372,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

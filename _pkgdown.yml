@@ -86,6 +86,7 @@ reference:
       - rcalc
       - vcalc
       - conv.wald
+      - conv.delta
       - conv.fivenum
   - title: "Model Fitting"
     desc: >

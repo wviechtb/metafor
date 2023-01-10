@@ -28,6 +28,10 @@
 \alias{transf.dtomd}
 \alias{transf.logortord}
 \alias{transf.logortorr}
+\alias{transf.or2dn}
+\alias{transf.or2dl}
+\alias{transf.d2orn}
+\alias{transf.d2orl}
 \title{Transformation Functions}
 \description{
    A set of transformation functions useful for meta-analyses. \loadmathjax
@@ -60,6 +64,10 @@ transf.dtobesd(xi, \dots)
 transf.dtomd(xi, targs, \dots)
 transf.logortord(xi, pc, \dots)
 transf.logortorr(xi, pc, \dots)
+transf.or2dn(xi)
+transf.or2dl(xi)
+transf.d2orn(xi)
+transf.d2orl(xi)
 }
 \arguments{
    \item{xi}{vector of values to be transformed.}
@@ -102,6 +110,10 @@ transf.logortorr(xi, pc, \dots)
    \item \code{transf.dtomd}: transformation of standardized mean differences to mean differences given a known standard deviation, which must be specified via the \code{targs} argument.
    \item \code{transf.logortord}: transformation of log odds ratios to risk differences, assuming a particular value for the control group risk (which needs to be specified via the \code{pc} argument).
    \item \code{transf.logortorr}: transformation of log odds ratios to risk ratios, assuming a particular value for the control group risk (which needs to be specified via the \code{pc} argument).
+   \item \code{transf.or2dn}: transformation of log odds ratios to standardized mean differences (assuming normal distributions) (Cox & Snell, 1989).
+   \item \code{transf.or2dl}: transformation of log odds ratios to standardized mean differences (assuming logistic distributions) (Chinn, 2000).
+   \item \code{transf.d2orn}: transformation of standardized mean differences to log odds ratios (assuming normal distributions) (Cox & Snell, 1989).
+   \item \code{transf.d2orl}: transformation of standardized mean differences to log odds ratios (assuming logistic distributions) (Chinn, 2000).
    }
 }
 \value{
@@ -116,7 +128,11 @@ transf.logortorr(xi, pc, \dots)
 \references{
    Bonett, D. G. (2002). Sample size requirements for testing and estimating coefficient alpha. \emph{Journal of Educational and Behavioral Statistics}, \bold{27}(4), 335--340. \verb{https://doi.org/10.3102/10769986027004335}
 
+   Chinn, S. (2000). A simple method for converting an odds ratio to effect size for use in meta-analysis. \emph{Statistics in Medicine}, \bold{19}(22), 3127--3131. \verb{https://doi.org/10.1002/1097-0258(20001130)19:22<3127::aid-sim784>3.0.co;2-m}
+
    Cohen, J. (1988). \emph{Statistical power analysis for the behavioral sciences} (2nd ed.). Hillsdale, NJ: Lawrence Erlbaum Associates.
+
+   Cox, D. R., & Snell, E. J. (1989). \emph{Analysis of binary data} (2nd ed.). London: Chapman & Hall.
 
    Fisher, R. A. (1921). On the \dQuote{probable error} of a coefficient of correlation deduced from a small sample. \emph{Metron}, \bold{1}, 1--32. \verb{http://hdl.handle.net/2440/15169}
 

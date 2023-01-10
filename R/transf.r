@@ -331,13 +331,16 @@ transf.logortorr <- function(xi, pc, ...) {
 
 ############################################################################
 
-#transf.or2d <- function(xi)
-#   sqrt(3) / base::pi * xi
-#
-#transf.or2dl <- function(xi)
-#   sqrt(3) / base::pi * xi
-#
-#transf.or2dn <- function(xi)
-#   xi / 1.65
+transf.or2dn <- function(xi)
+   xi / 1.65
+
+transf.or2dl <- function(xi)
+   sqrt(3) / base::pi * xi
+
+transf.d2orn <- function(xi)
+   xi * 1.65
+
+transf.d2orl <- function(xi)
+   xi / sqrt(3) * base::pi
 
 ############################################################################

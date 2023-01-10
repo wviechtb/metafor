@@ -235,8 +235,8 @@ conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
 
    #########################################################################
 
-   if (!inherits(x, "escalc"))
-      x <- escalc(data=x, yi=x[[yi.name]], vi=x[[vi.name]], ni=n)
+   #if (!inherits(x, "escalc"))
+   x <- escalc(data=x, yi=x[[yi.name]], vi=x[[vi.name]], ni=n, var.names=c(yi.name,vi.name))
 
    if (!append)
       x <- x[,c(yi.name, vi.name)]

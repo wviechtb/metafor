@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-21</span>
       </span>
     </div>
 
@@ -127,7 +127,11 @@
 <span><span class="fu">transf.dtobesd</span><span class="op">(</span><span class="va">xi</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">transf.dtomd</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">transf.logortord</span><span class="op">(</span><span class="va">xi</span>, <span class="va">pc</span>, <span class="va">...</span><span class="op">)</span></span>
-<span><span class="fu">transf.logortorr</span><span class="op">(</span><span class="va">xi</span>, <span class="va">pc</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">transf.logortorr</span><span class="op">(</span><span class="va">xi</span>, <span class="va">pc</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">transf.or2dn</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
+<span><span class="fu">transf.or2dl</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
+<span><span class="fu">transf.d2orn</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
+<span><span class="fu">transf.d2orl</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -187,6 +191,10 @@
 <li><p><code>transf.dtomd</code>: transformation of standardized mean differences to mean differences given a known standard deviation, which must be specified via the <code>targs</code> argument.</p></li>
 <li><p><code>transf.logortord</code>: transformation of log odds ratios to risk differences, assuming a particular value for the control group risk (which needs to be specified via the <code>pc</code> argument).</p></li>
 <li><p><code>transf.logortorr</code>: transformation of log odds ratios to risk ratios, assuming a particular value for the control group risk (which needs to be specified via the <code>pc</code> argument).</p></li>
+<li><p><code>transf.or2dn</code>: transformation of log odds ratios to standardized mean differences (assuming normal distributions) (Cox &amp; Snell, 1989).</p></li>
+<li><p><code>transf.or2dl</code>: transformation of log odds ratios to standardized mean differences (assuming logistic distributions) (Chinn, 2000).</p></li>
+<li><p><code>transf.d2orn</code>: transformation of standardized mean differences to log odds ratios (assuming normal distributions) (Cox &amp; Snell, 1989).</p></li>
+<li><p><code>transf.d2orl</code>: transformation of standardized mean differences to log odds ratios (assuming logistic distributions) (Chinn, 2000).</p></li>
 </ul></div>
     <div id="value">
     <h2>Value</h2>
@@ -205,7 +213,9 @@
     <div id="references">
     <h2>References</h2>
     <p>Bonett, D. G. (2002). Sample size requirements for testing and estimating coefficient alpha. <em>Journal of Educational and Behavioral Statistics</em>, <b>27</b>(4), 335–340. <a href="https://doi.org/10.3102/10769986027004335" class="external-link">https://doi.org/10.3102/10769986027004335</a></p>
+<p>Chinn, S. (2000). A simple method for converting an odds ratio to effect size for use in meta-analysis. <em>Statistics in Medicine</em>, <b>19</b>(22), 3127–3131. <a href="https://doi.org/10.1002/1097-0258(20001130)19:22&lt;3127::aid-sim784&gt;3.0.co;2-m" class="external-link">https://doi.org/10.1002/1097-0258(20001130)19:22&lt;3127::aid-sim784&gt;3.0.co;2-m</a></p>
 <p>Cohen, J. (1988). <em>Statistical power analysis for the behavioral sciences</em> (2nd ed.). Hillsdale, NJ: Lawrence Erlbaum Associates.</p>
+<p>Cox, D. R., &amp; Snell, E. J. (1989). <em>Analysis of binary data</em> (2nd ed.). London: Chapman &amp; Hall.</p>
 <p>Fisher, R. A. (1921). On the “probable error” of a coefficient of correlation deduced from a small sample. <em>Metron</em>, <b>1</b>, 1–32. <a href="http://hdl.handle.net/2440/15169" class="external-link">http://hdl.handle.net/2440/15169</a></p>
 <p>Freeman, M. F., &amp; Tukey, J. W. (1950). Transformations related to the angular and the square root. <em>Annals of Mathematical Statistics</em>, <b>21</b>(4), 607–611. <a href="https://doi.org/10.1214/aoms/1177729756" class="external-link">https://doi.org/10.1214/aoms/1177729756</a></p>
 <p>Hakstian, A. R., &amp; Whalen, T. E. (1976). A k-sample significance test for independent alpha coefficients. <em>Psychometrika</em>, <b>41</b>(2), 219–231. <a href="https://doi.org/10.1007/BF02291840" class="external-link">https://doi.org/10.1007/BF02291840</a></p>
@@ -265,7 +275,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

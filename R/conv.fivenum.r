@@ -39,6 +39,8 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
       warning(mstyle$warning(paste0("Argument 'var.names' does not contain syntactically valid variable names.\nVariable names adjusted to: var.names = c('", var.names[1], "','", var.names[2], "').")), call.=FALSE)
    }
 
+   #########################################################################
+
    mf <- match.call()
 
    min     <- .getx("min",     mf=mf, data=data, checknumeric=TRUE)

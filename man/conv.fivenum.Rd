@@ -1,8 +1,8 @@
 \name{conv.fivenum}
 \alias{conv.fivenum}
-\title{Convert Five-Number Summary Values to Means and Standard Deviations}
+\title{Estimate Means and Standard Deviations from Five-Number Summary Values}
 \description{
-   Function to convert five-number summary values (or a subset thereof) to means and standard deviations.
+   Function to estimate means and standard deviations from five-number summary values.
 }
 \usage{
 conv.fivenum(min, q1, median, q3, max, n, data, include,
@@ -10,26 +10,26 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
              var.names=c("mean","sd"), append=TRUE, replace="ifna", \dots)
 }
 \arguments{
-   \item{min}{vector with the sample minimum values.}
+   \item{min}{vector with the minimum values.}
    \item{q1}{vector with the lower/first quartile values.}
    \item{median}{vector with the median values.}
    \item{q3}{vector with the upper/third quartile values.}
-   \item{max}{vector with the sample maximum values.}
+   \item{max}{vector with the maximum values.}
    \item{n}{vector with the sample sizes.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
-   \item{include}{optional (logical or numeric) vector to specify the subset of studies for which the conversion should be carried out.}
-   \item{dist}{character string indicating what distribution is assumed for the underlying data (either \code{"norm"} for a normal distribution or \code{"lnorm"} for a log-normal distribution). Can also be a string vector if different distributions are assumed for different studies.}
-   \item{transf}{logical to specify whether the estimated means and standard deviations of the log-transformed data should be back-transformed as described by Shi et al. (2020c). Only relevant when \code{dist="lnorm"}.}
-   \item{test}{logical to specify whether a study should be excluded from the conversion if the test for skewness is significant (the default is \code{TRUE}).}
+   \item{include}{optional (logical or numeric) vector to specify the subset of studies for which means and standard deviations should be estimated.}
+   \item{dist}{character string indicating the distribution assumed for the underlying data (either \code{"norm"} for a normal distribution or \code{"lnorm"} for a log-normal distribution). Can also be a string vector if different distributions are assumed for different studies.}
+   \item{transf}{logical to specify whether the estimated means and standard deviations of the log-transformed data should be back-transformed as described by Shi et al. (2020c) (the default is \code{FALSE}). Only relevant when \code{dist="lnorm"}.}
+   \item{test}{logical to specify whether a study should be excluded from the estimation if the test for skewness is significant (the default is \code{TRUE}).}
    \item{var.names}{character vector with two elements to specify the name of the variable for the estimated means and the name of the variable for the estimated standard deviations (the defaults are \code{"mean"} and \code{"sd"}).}
    \item{append}{logical to specify whether the data frame provided via the \code{data} argument should be returned together with the estimated values (the default is \code{TRUE}).}
-   \item{replace}{character string to specify how values in \code{var.names} should be replaced. See the \sQuote{Value} section for more details.}
+   \item{replace}{character string to specify how values in \code{var.names} should be replaced (only relevant when using the \code{data} argument and if variables \code{var.names} already exist in the data frame). See the \sQuote{Value} section for more details.}
    \item{\dots}{other arguments.}
 }
 \details{
    Various effect size measures require means and standard deviations (SDs) as input (e.g., raw or standardized mean differences, ratios of means / response ratios; see \code{\link{escalc}} for further details). For some studies, authors may not report means and SDs, but other statistics, such as the so-called \sQuote{five-number summary}, consisting of the minimum, lower/first quartile, median, upper/third quartile, and the maximum of the sample values (plus the sample sizes). Occasionally, only a subset of these values are reported.
 
-   The present function can be used to convert five-number summary values (or a subset thereof) to means and standard deviations. To be precise, the function provides estimates of the means and standard deviations based on methods described in the literature (Hozo et al., 2005; Wan et al., 2014; Bland, 2015; Luo et al., 2016; Shi et al., 2020a; Walter & Yao, 2007). The methods used by the function are those that have been found to be the most accurate (see references).
+   The present function can be used to estimate means and standard deviations from five-number summary values based on methods described in the literature (Hozo et al., 2005; Wan et al., 2014; Bland, 2015; Luo et al., 2016; Shi et al., 2020a; Walter & Yao, 2007). The methods used by the function (see below) are those that have been found to be the most accurate (see references).
 
    We can distinguish three cases:
 
@@ -55,9 +55,9 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 
    The median is not actually needed in the methods by Wan et al. (2014) and Shi et al. (2020a) and hence it is possible to estimate the SD even if the median is unavailable (this can be useful if a study reports the mean directly, but instead of the SD, it reports the minimum/maximum and/or first/third quartile values).
 
-   Note that the sample size must be at least 5 to apply these methods. Studies where the sample size is smaller are not included in the conversion. The function also checks that \code{min <= q1 <= median <= q3 <= max} and throws an error if any studies are found where this is not the case.
+   Note that the sample size must be at least 5 to apply these methods. Studies where the sample size is smaller are not included in the estimation. The function also checks that \code{min <= q1 <= median <= q3 <= max} and throws an error if any studies are found where this is not the case.
 
-   The methods described above were derived under the assumption that the data are normally distributed. Testing this assumption would require access to the raw data, but based on the three cases above, Shi et al. (2020b; under review) derived tests of skewness that are automatically carried out. When \code{test=TRUE} (which is the default), a study is automatically excluded from the conversion if the test is significant. If all studies should be considered for conversion, set \code{test=FALSE}, but note that the accuracy of the methods will tend to be poorer when the data come from an apparently skewed distribution.
+   The methods described above were derived under the assumption that the data are normally distributed. Testing this assumption would require access to the raw data, but based on the three cases above, Shi et al. (2020b; under review) derived tests of skewness that are automatically carried out. When \code{test=TRUE} (which is the default), a study is automatically excluded from the estimation if the test is significant. If all studies should be considered for estimation, set \code{test=FALSE}, but note that the accuracy of the methods will tend to be poorer when the data come from an apparently skewed distribution.
 
    Alternatively, when setting \code{dist="lnorm"}, the raw data are assumed to follow a log-normal distribution. In this case, the methods as described by Shi et al. (2020c) are used to estimate the mean and SD of the log transformed data for the three cases above. When setting \code{transf=TRUE} (note that this is not the default), the estimated mean and SD of the log transformed data are back-transformed to the estimated mean and SD of the raw data (using the bias-corrected back-transformation as described by Shi et al., 2020c).
 }

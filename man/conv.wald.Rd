@@ -2,7 +2,7 @@
 \alias{conv.wald}
 \title{Convert Wald-Type Confidence Intervals and Tests to Sampling Variances}
 \description{
-   Function to convert Wald-type confidence intervals (CIs) and test statistics to sampling variances. \loadmathjax
+   Function to convert Wald-type confidence intervals (CIs) and test statistics (or the corresponding p-values) to sampling variances. \loadmathjax
 }
 \usage{
 conv.wald(out, ci.lb, ci.ub, zval, pval, n, data, include,
@@ -22,7 +22,7 @@ conv.wald(out, ci.lb, ci.ub, zval, pval, n, data, include,
    \item{check}{logical to specify whether the function should carry out a check to examine if the point estimates fall (approximately) halfway between the CI bounds (the default is \code{TRUE}).}
    \item{var.names}{character vector with two elements to specify the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (if \code{data} is an object of class \code{"escalc"}, the \code{var.names} are taken from the object; otherwise the defaults are \code{"yi"} and \code{"vi"}).}
    \item{append}{logical to specify whether the data frame provided via the \code{data} argument should be returned together with the estimated values (the default is \code{TRUE}).}
-   \item{replace}{character string to specify how values in \code{var.names} should be replaced. See the \sQuote{Value} section for more details.}
+   \item{replace}{character string to specify how values in \code{var.names} should be replaced (only relevant when using the \code{data} argument and if variables \code{var.names} already exist in the data frame). See the \sQuote{Value} section for more details.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -34,7 +34,7 @@ conv.wald(out, ci.lb, ci.ub, zval, pval, n, data, include,
 
       In some studies, the effect size estimate or observed outcome may already be reported. If so, such values can be supplied via the \code{out} argument and are then substituted for missing \code{yi} values. At times, it may be necessary to transform the reported values (e.g., reported odds ratios to log odds ratios). Via argument \code{transf}, an appropriate transformation function can be specified (e.g., \code{transf=log}), in which case \mjseqn{y_i = f(\textrm{out})} where \mjeqn{f(\cdot)}{f(.)} is the function specified via \code{transf}.
 
-      Moreover, a confidence interval (CI) may have been reported together with the estimate. The bounds of the CI can be supplied via arguments \code{ci.lb} and \code{ci.ub}, which are also transformed if a function is specified via \code{transf}. Assume that the bounds were obtained from a Wald-type CI of the form \mjseqn{y_i \pm z_{crit} \sqrt{v_i}} (on the transformed scale if \code{transf} is specified), where \mjseqn{v_i} is the sampling variance corresponding to the effect size estimate or observed outcome (so that \mjseqn{\sqrt{v_i}} is the corresponding standard error) and \mjeqn{z_{crit}}{z_crit} is the appropriate critical value from a standard normal distribution (e.g., \mjseqn{1.96} for a 95\% CI). Then \mjdeqn{v_i = \left(\frac{\textrm{ci.ub} - \textrm{ci.lb}}{2 \times z_{crit}}\right)^2}{v_i = ((ci.ub - ci.lb) / (2*z_crit))^2} is used to back-calculate the sampling variances of the effect size estimates or observed outcomes and these values are then substituted for missing \code{vi} values in the dataset.
+      Moreover, a confidence interval (CI) may have been reported together with the estimate. The bounds of the CI can be supplied via arguments \code{ci.lb} and \code{ci.ub}, which are also transformed if a function is specified via \code{transf}. Assume that the bounds were obtained from a Wald-type CI of the form \mjseqn{y_i \pm z_{crit} \sqrt{v_i}} (on the transformed scale if \code{transf} is specified), where \mjseqn{v_i} is the sampling variance corresponding to the effect size estimate or observed outcome (so that \mjseqn{\sqrt{v_i}} is the corresponding standard error) and \mjeqn{z_{crit}}{z_crit} is the appropriate critical value from a standard normal distribution (e.g., \mjseqn{1.96} for a 95\% CI). Then \mjdeqn{v_i = \left(\frac{\textrm{ci.ub} - \textrm{ci.lb}}{2 \times z_{crit}}\right)^2}{v_i = ((ci.ub - ci.lb) / (2*z_crit))^2} is used to back-calculate the sampling variances of the (transformed) effect size estimates or observed outcomes and these values are then substituted for missing \code{vi} values in the dataset.
 
       For example, consider the following dataset of three RCTs used as input for a meta-analysis of log odds ratios:
 
@@ -53,7 +53,7 @@ dat
 
       where variable \code{yi} contains the log odds ratios and \code{vi} the corresponding sampling variances as computed from the counts and group sizes by \code{escalc()}.
 
-      Study 2 does not report the counts (or sufficient information to reconstruct them), but the odds ratio and a corresponding 95\% confidence interval (CI) directly, as given by variables \code{oddsratio}, \code{lower}, and \code{upper}. The CI is a standard Wald-type CI that was computed on the log scale. Then the present function can be used as follows:
+      Study 2 does not report the counts (or sufficient information to reconstruct them), but the odds ratio and a corresponding 95\% confidence interval (CI) directly, as given by variables \code{oddsratio}, \code{lower}, and \code{upper}. The CI is a standard Wald-type CI that was computed on the log scale (and whose bounds were then exponentiated). Then the present function can be used as follows:
 
 \preformatted{
 dat <- conv.wald(out=oddsratio, ci.lb=lower, ci.ub=upper, data=dat, transf=log)
@@ -76,7 +76,7 @@ dat
 
       Similarly, study authors may report the test statistic and/or p-value from a Wald-type test of the form \mjseqn{\textrm{zval} = y_i / \sqrt{v_i}} (on the transformed scale if \code{transf} is specified), with the corresponding two-sided p-value given by \mjseqn{\textrm{pval} = 2(1 - \Phi(\textrm{|zval|}))}, where \mjeqn{\Phi(\cdot)}{Phi(.)} denotes the cumulative distribution function of a standard normal distribution (i.e., \code{\link{pnorm}}). Test statistics and/or corresponding p-values of this form can be supplied via arguments \code{zval} and \code{pval}.
 
-      A given p-value can be back-transformed into the corresponding test statistic (if it is not already available) with \mjseqn{\textrm{zval} = \Phi^{-1}(1 - \textrm{pval}/2)}, where \mjeqn{\Phi^{-1}(\cdot)}{Phi^{-1}(.)} denotes the quantile function or inverse of the cumulative distribution function of a standard normal distribution (i.e., \code{\link{qnorm}}). Then \mjdeqn{v_i = \left(\frac{y_i}{\textrm{zval}}\right)^2}{v_i = (yi / zval)^2} is used to back-calculate a missing \code{vi} value in the dataset.
+      A given p-value can be back-transformed into the corresponding test statistic (if it is not already available) with \mjseqn{\textrm{zval} = \Phi^{-1}(1 - \textrm{pval}/2)}, where \mjeqn{\Phi^{-1}(\cdot)}{Phi^{-1}(.)} denotes the quantile function (i.e., the inverse of the cumulative distribution function) of a standard normal distribution (i.e., \code{\link{qnorm}}). Then \mjdeqn{v_i = \left(\frac{y_i}{\textrm{zval}}\right)^2}{v_i = (yi / zval)^2} is used to back-calculate a missing \code{vi} value in the dataset.
 
       Note that the conversion of a p-value to the corresponding test statistic (which is then converted into sampling variance) as shown above assumes that the exact p-value is reported. If authors only report that the p-value fell below a certain threshold (e.g., \mjseqn{p < .01} or if authors only state that the test was significant -- which typically implies \mjseqn{p < .05}), then a common approach is to use the value of the cutoff reported (e.g., if \mjseqn{p < .01} is reported, then assume \mjseqn{p = .01}), which is conservative (since the actual p-value was below that assumed value by some unknown amount). The conversion will therefore tend to be much less accurate.
 
@@ -113,7 +113,7 @@ dat
    Optionally, one can use the \code{n} argument to supply the total sample sizes of the studies. This has no relevance for the calculations done by the present function, but some other functions may use this information (e.g., when drawing a funnel plot with the \code{\link{funnel}} function and one adjusts the \code{yaxis} argument to one of the options that puts the sample sizes or some transformation thereof on the y-axis).
 }
 \value{
-   If the \code{data} argument was not specified or \code{append=FALSE}, a data frame of class \code{c("escalc","data.frame")} with two variables called \code{var.names[1]} (by default \code{"yi"}) and \code{var.names[2]} (by default \code{"vi"}) with the observed effect sizes or outcomes and the corresponding sampling variances (computed as described above).
+   If the \code{data} argument was not specified or \code{append=FALSE}, a data frame of class \code{c("escalc","data.frame")} with two variables called \code{var.names[1]} (by default \code{"yi"}) and \code{var.names[2]} (by default \code{"vi"}) with the (transformed) observed effect sizes or outcomes and the corresponding sampling variances (computed as described above).
 
    If \code{data} was specified and \code{append=TRUE}, then the original data frame is returned. If \code{var.names[1]} is a variable in \code{data} and \code{replace="ifna"}, then missing values in this variable are replaced with the (possibly transformed) observed effect sizes or outcomes from \code{out} (where possible) and otherwise a new variable called \code{var.names[1]} is added to the data frame. Similarly, if \code{var.names[2]} is a variable in \code{data} and \code{replace="ifna"}, then missing values in this variable are replaced with the sampling variances back-calculated as described above (where possible) and otherwise a new variable called \code{var.names[2]} is added to the data frame.
 
