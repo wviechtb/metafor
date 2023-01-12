@@ -19,11 +19,11 @@ conv.delta(yi, vi, data, include, transf, var.names, append=TRUE, replace="ifna"
    \item{\dots}{other arguments for the transformation function.}
 }
 \details{
-   The \code{\link{escalc}} function can be used to compute a wide variety of effect sizes or \sQuote{outcome measures}. In some cases, it may be necessary to transform one type of measure to another. The present function provides a very general method for doing so via the \href{https://en.wikipedia.org/wiki/Delta_method}{delta method}, which briefly works as follows.
+   The \code{\link{escalc}} function can be used to compute a wide variety of effect sizes or \sQuote{outcome measures}. In some cases, it may be necessary to transform one type of measure to another. The present function provides a general method for doing so via the \href{https://en.wikipedia.org/wiki/Delta_method}{delta method}, which briefly works as follows.
 
    Let \mjseqn{y_i} denote the observed effect size or outcome for a particular study and \mjseqn{v_i} the corresponding sampling variance. Then \mjseqn{f(y_i)} will be the transformed effect size or outcome, where \mjeqn{f(\cdot)}{f(.)} is the function specified via the \code{transf} argument. The sampling variance of the transformed effect size or outcome is then computed with \mjseqn{v_i \times f'(y_i)^2}, where \mjseqn{f'(y_i)} denotes the derivative of \mjeqn{f(\cdot)}{f(.)} evaluated at \mjseqn{y_i}. The present function computes the derivative numerically using the \code{\link[numDeriv]{grad}} function from the \code{numDeriv} package.
 
-   The function typically takes a data frame created with the \code{\link{escalc}} function as input via the \code{data} argument. This object should contain variables \code{yi} and \code{vi} (unless argument \code{var.names} was used to adjust these variable names when the \code{"escalc"} object was created) for the observed effect sizes or outcomes and the corresponding sampling variances, respectively.
+   The value of the observed effect size or outcome should be the first argument of the function specified via \code{transf}. The function can have additional arguments, which can be specified via the \dots argument. However, due to the manner in which these additional arguments are evaluated, they cannot have names that match one of the arguments of the \code{\link[numDeriv]{grad}} function (an error will be issed if such a naming clash is detected).
 }
 \value{
    If the \code{data} argument was not specified or \code{append=FALSE}, a data frame of class \code{c("escalc","data.frame")} with two variables called \code{var.names[1]} (by default \code{"yi"}) and \code{var.names[2]} (by default \code{"vi"}) with the transformed observed effect sizes or outcomes and the corresponding sampling variances (computed as described above).
@@ -44,7 +44,8 @@ conv.delta(yi, vi, data, include, transf, var.names, append=TRUE, replace="ifna"
 \examples{
 ############################################################################
 
-### the following examples illustrate that the use of the delta method (with numeric derivatives) ### yields essentially identical results as the analytic calculations that are done by escalc()
+### the following examples illustrate that the use of the delta method (with numeric derivatives)
+### yields essentially identical results as the analytic calculations that are done by escalc()
 
 ### compute logit transformed proportions and corresponding sampling variances for two studies
 escalc(measure="PLO", xi=c(5,12), ni=c(40,80))
