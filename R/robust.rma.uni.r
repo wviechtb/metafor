@@ -52,7 +52,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
 
    ### check if dfs are positive (note: this also handles the case where there is a single cluster)
 
-   if (dfs <= 0)
+   if (!clubSandwich && dfs <= 0)
       stop(mstyle$stop(paste0("Number of clusters (", n, ") must be larger than the number of fixed effects (", x$p, ").")))
 
    ### use clubSandwich if requested to do so
