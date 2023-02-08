@@ -631,7 +631,7 @@
    G <- matrix(0, nrow=dims, ncol=dims)
    G[lower.tri(G)] <- covs
    diag(G) <- vars
-   return(crossprod(G))
+   return(tcrossprod(G))
 }
 
 ### function to construct var-cov matrix for "UNR" structure given the variance and correlations
@@ -651,7 +651,7 @@
    G <- matrix(0, nrow=dims, ncol=dims)
    G[lower.tri(G)] <- cors
    diag(G) <- 1
-   return(var * crossprod(G))
+   return(var * tcrossprod(G))
 }
 
 ############################################################################
