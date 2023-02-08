@@ -39,7 +39,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
    if (inherits(x, "formula")) {
 
       if (missing(data))
-         stop(mstyle$stop("Must specify 'data' argument."))
+         stop(mstyle$stop("Must specify 'data' argument when 'x' is a formula."))
 
       if (!is.data.frame(data))
          data <- data.frame(data)
@@ -77,7 +77,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
       if (length(ni) != nrow(data))
          stop(mstyle$stop("Argument 'ni' must be of the same length as the data frame specified via 'data'."))
 
-      ### check that there are ni missings in the study identifier
+      ### check that there are no missings in the study identifier
       if (anyNA(id))
          stop(mstyle$stop("No missing values allowed in study identifier."))
 
@@ -249,7 +249,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
    ### check if x is symmetric (can be skipped since x must now be symmetric)
 
    #if (!isSymmetric(x))
-   #   stop(mstyle$stop("x must be a symmetric matrix."))
+   #   stop(mstyle$stop("Argument 'x' must be a symmetric matrix."))
 
    ### stack upper/lower triangular part of x into a column vector (this is always done column-wise!)
 

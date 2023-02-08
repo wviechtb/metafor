@@ -122,11 +122,13 @@ dat <- escalc(measure="OR2DN", ai=ai, bi=bi, ci=ci, di=di, data=dat, replace=FAL
 dat
 
 ### use conv.wald() to convert the OR and CI into the log odds ratio and its variance for study 4
-dat <- conv.wald(out=or, ci.lb=lower, ci.ub=upper, data=dat, transf=log, var.names=c("lnor","vlnor"))
+dat <- conv.wald(out=or, ci.lb=lower, ci.ub=upper, data=dat,
+                 transf=log, var.names=c("lnor","vlnor"))
 dat
 
 ### use conv.delta() to transform the log odds ratio into the SMD value for study 4
-dat <- conv.delta(lnor, vlnor, data=dat, transf=transf.or2dn, var.names=c("yi","vi"))
+dat <- conv.delta(lnor, vlnor, data=dat,
+                  transf=transf.or2dn, var.names=c("yi","vi"))
 dat
 
 ### fit an equal-effects model to the SMD values

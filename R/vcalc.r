@@ -54,10 +54,10 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, ...) {
    obs      <- .getx("obs",      mf=mf, data=data)
    grp1     <- .getx("grp1",     mf=mf, data=data)
    grp2     <- .getx("grp2",     mf=mf, data=data)
-   time1    <- .getx("time1",    mf=mf, data=data)
-   time2    <- .getx("time2",    mf=mf, data=data)
-   w1       <- .getx("w1",       mf=mf, data=data)
-   w2       <- .getx("w2",       mf=mf, data=data)
+   time1    <- .getx("time1",    mf=mf, data=data, checknumeric=TRUE)
+   time2    <- .getx("time2",    mf=mf, data=data, checknumeric=TRUE)
+   w1       <- .getx("w1",       mf=mf, data=data, checknumeric=TRUE)
+   w2       <- .getx("w2",       mf=mf, data=data, checknumeric=TRUE)
 
    ############################################################################
 
@@ -332,6 +332,11 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, ...) {
       #return(rho)
 
       ############################################################################
+
+      #### turn obs and type into character variables to that [obs[i],obs[j]] and [type[i],type[j]] below work correctly
+
+      obs  <- as.character(obs)
+      type <- as.character(type)
 
       ### construct R matrix
 

@@ -2451,19 +2451,23 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    #########################################################################
 
-   ### replace interaction() notation with : notation in s.names and g.names for nicer output
+   ### replace interaction() notation with : notation for nicer output
 
    replfun <- function(x) {
       if (grepl("interaction(", x, fixed=TRUE)) {
-         x <- gsub("^interaction\\(", "", x)
-         x <- gsub(", ", ":", x, fixed=TRUE)
-         x <- gsub("\\)$", "", x, fixed=FALSE)
+         #x <- gsub("^interaction\\(", "", x)
+         #x <- gsub(", ", ":", x, fixed=TRUE)
+         #x <- gsub("\\)$", "", x, fixed=FALSE)
+         #x <- gsub("(.*)interaction\\(\\s*(.*)\\s*,\\s*(.*)\\s*\\)(.*)", "\\1(\\2:\\3)\\4", x)
+         x <- gsub("interaction\\((.*),\\s*(.*)\\)", "(\\1:\\2)", x)
+         x <- gsub("^\\((.*)\\)$", "\\1", x) # if a name is "(...)", then can remove the ()
       }
       return(x)
    }
 
    s.names <- sapply(s.names, replfun)
    g.names <- sapply(g.names, replfun)
+   h.names <- sapply(h.names, replfun)
 
    ############################################################################
 

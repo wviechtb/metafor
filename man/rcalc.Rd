@@ -8,7 +8,7 @@
 rcalc(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, \dots)
 }
 \arguments{
-   \item{x}{a formula of the form \code{ri ~ var1 + var2 | study}. See \sQuote{Details}.}
+   \item{x}{a formula of the form \code{ri ~ var1 + var2 | study}. Can also be a correlation matrix or list thereof. See \sQuote{Details}.}
    \item{ni}{vector to specify the sample sizes based on which the correlations were computed.}
    \item{data}{data frame containing the variables specified via the formula (and the sample sizes).}
    \item{rtoz}{logical to specify whether to transform the correlations via Fisher's r-to-z transformation (the default is \code{FALSE}).}
@@ -22,7 +22,7 @@ rcalc(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, \dots)
    When computing the covariance between two correlation coefficients, we can distinguish two cases:
    \enumerate{
    \item In the first case, one of the variables involved in the two correlation coefficients is the same. For example, in \mjseqn{r_{12}} and \mjseqn{r_{13}}, variable 1 is common to both correlation coefficients. This is sometimes called the (partially) \sQuote{overlapping} case. The covariance between the two correlation coefficients, \mjeqn{\mbox{Cov}[r_{12}, r_{13}]}{Cov[r_{12}, r_{13}]}, then depends on the degree of correlation between variables 2 and 3 (i.e., \mjseqn{r_{23}}).
-   \item In the second case, none of the variables are common to both correlation coefficients. For example, this would be the case if we have correlations \mjseqn{r_{12}} and \mjseqn{r_{34}} based on 4 variables. This sometimes called the \sQuote{non-overlapping} case. The covariance between the two correlation coefficients, \mjeqn{\mbox{Cov}[r_{12}, r_{34}]}{Cov[r_{12}, r_{34}]}, then depends on \mjseqn{r_{13}}, \mjseqn{r_{14}}, \mjseqn{r_{23}}, and \mjseqn{r_{24}}.
+   \item In the second case, none of the variables are common to both correlation coefficients. For example, this would be the case if we have correlations \mjseqn{r_{12}} and \mjseqn{r_{34}} based on 4 variables. This is sometimes called the \sQuote{non-overlapping} case. The covariance between the two correlation coefficients, \mjeqn{\mbox{Cov}[r_{12}, r_{34}]}{Cov[r_{12}, r_{34}]}, then depends on \mjseqn{r_{13}}, \mjseqn{r_{14}}, \mjseqn{r_{23}}, and \mjseqn{r_{24}}.
    }
 
    Equations to compute these covariances can be found, for example, in Steiger (1980) and Olkin and Finn (1990).
@@ -32,6 +32,8 @@ rcalc(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, \dots)
    When argument \code{rtoz} is set to \code{TRUE}, then the correlations are transformed with Fisher's r-to-z transformation (Fisher, 1921) and the variance-covariance matrix is computed for the transformed values.
 
    In some cases, the sample size may not be identical within a study (e.g., \mjseqn{r_{12}} may have been computed based on 120 subjects while \mjseqn{r_{13}} was computed based on 118 subjects due to 2 missing values in variable 3). For constructing the variance-covariance matrix, we need to assume a \sQuote{common} sample size for all correlation coefficients within the study. Argument \code{nfun} provides some options for how the common sample size should be computed. Possible options are \code{"min"} (for using the minimum sample size within a study as the common sample size), \code{"harmonic"} (for using the harmonic mean), or \code{"mean"} (for using the arithmetic mean). The default is \code{"min"}, which is a conservative choice (i.e., it will overestimate the sampling variances of coefficients that were computed based on a sample size that was actually larger than the minimum sample size). One can also specify a function via the \code{nfun} argument (which should take a numeric vector as input and return a single value).
+
+   Instead of specifying a formula, one can also pass a correlation matrix to the function via argument \code{x}. Argument \code{ni} then specifies the (common) sample size based on which the elements in the correlation matrix were computed. One can also pass a list of correlation matrices via argument \code{x}, in which case argument \code{ni} should be a vector of sample sizes of the same length as \code{x}.
 }
 \value{
    A list containing the following components:
@@ -41,7 +43,7 @@ rcalc(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, \dots)
    Note that a particular covariance can only be computed when all of the correlation coefficients involved in the covariance equation are included in the dataset. If one or more coefficients needed for the computation are missing, then the resulting covariance will also be missing (i.e., \code{NA}).
 }
 \note{
-   For raw correlation coefficients, the variance-covariance matrix is computed with \mjseqn{n-1} in the denominator (instead of \mjseqn{n} as suggested in Steiger, 1980, and Olkin & Finn, 1990). This is more consistent with the usual equation for computing the sampling variance of a correlation coefficient (with \mjseqn{n-1} in the denominator).
+   For raw correlation coefficients, the variance-covariance matrix is computed with \mjseqn{n-1} in the denominator (instead of \mjseqn{n} as suggested in Steiger, 1980, and Olkin & Finn, 1990). This is more consistent with the usual equation for computing the sampling variance of a correlation coefficient (which also typically uses \mjseqn{n-1} in the denominator).
 
    For raw and r-to-z transformed coefficients, the variance-covariance matrix will only be computed when the (common) sample size for a study is at least 5.
 }
@@ -61,24 +63,65 @@ rcalc(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, \dots)
    \code{\link[metadat]{dat.craft2003}} for an illustrative example.
 }
 \examples{
-### copy data into 'dat'
+############################################################################
+
+### copy data into 'dat' and examine the first 12 rows
 dat <- dat.craft2003
+head(dat, 12)
 
 ### construct dataset and var-cov matrix of the correlations
 tmp <- rcalc(ri ~ var1 + var2 | study, ni=ni, data=dat)
 V <- tmp$V
 dat <- tmp$dat
 
-### examine data for study 1
+### examine data and var-cov matrix for study 1
 dat[dat$study == 1,]
-blsplit(V, dat$study, round, 4)$`6`
+blsplit(V, dat$study, round, 4)$`1`
 
-### examine data for study 6
+### examine data and var-cov matrix for study 6
 dat[dat$study == 6,]
 blsplit(V, dat$study, round, 4)$`6`
 
-### examine data for study 17
+### examine data and var-cov matrix for study 17
 dat[dat$study == 17,]
 blsplit(V, dat$study, round, 4)$`17`
+
+############################################################################
+
+### copy data into 'dat' and examine the first 12 rows
+dat <- dat.craft2003
+head(dat, 12)
+
+### restructure data from study 1 into a correlation matrix
+R1 <- diag(4)
+R1[lower.tri(R1)] <- dat$ri[dat$study == 1]
+R1[upper.tri(R1)] <- t(R1)[upper.tri(R1)]
+rownames(R1) <- colnames(R1) <- c("perf", "acog", "asom", "conf")
+R1
+
+### restructure data from study 3 into a correlation matrix
+R3 <- diag(4)
+R3[lower.tri(R3)] <- dat$ri[dat$study == 3]
+R3[upper.tri(R3)] <- t(R3)[upper.tri(R3)]
+rownames(R3) <- colnames(R3) <- c("perf", "acog", "asom", "conf")
+R3
+
+### an example where a correlation matrix is passed to rcalc()
+rcalc(R1, ni=142)
+
+### an example where a list of correlation matrices is passed to rcalc()
+tmp <- rcalc(list("1"=R1,"3"=R3), ni=c(142,37))
+V <- tmp$V
+dat <- tmp$dat
+
+### examine data and var-cov matrix for study 1
+dat[dat$id == 1,]
+blsplit(V, dat$id, round, 4)$`1`
+
+### examine data and var-cov matrix for study 3
+dat[dat$id == 3,]
+blsplit(V, dat$id, round, 4)$`3`
+
+############################################################################
 }
 \keyword{datagen}
