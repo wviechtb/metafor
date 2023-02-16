@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-23</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.9-21" id="metafor-39-21-2023-01-12">metafor 3.9-21 (2023-01-12)<a class="anchor" aria-label="anchor" href="#metafor-39-21-2023-01-12"></a></h2>
+<h2 class="page-header" data-toc-text="3.9-23" id="metafor-39-23-2023-02-16">metafor 3.9-23 (2023-02-16)<a class="anchor" aria-label="anchor" href="#metafor-39-23-2023-02-16"></a></h2>
 <ul><li><p><code><a href="../reference/model.matrix.rma.html">model.matrix.rma()</a></code> gains <code>asdf</code> argument</p></li>
 <li><p><code><a href="../reference/emmprep.html">emmprep()</a></code> function added to create a reference grid for use with the <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans()</a></code> function from the package of the same name</p></li>
 <li><p>improved efficiency of <code><a href="../reference/vif.html">vif()</a></code> when <code>sim=TRUE</code> by reshuffling only the data needed in the model matrix; due to some edge cases, the simulation approach cannot be used when some redundant predictors were dropped from the original model; and when redundancies occur after reshuffling the data, the simulated (G)VIF value(s) are now set to <code>Inf</code> instead of <code>NA</code></p></li>
@@ -113,6 +113,7 @@
 <li><p>for measures <code>COR</code>, <code>UCOR</code>, and <code>ZCOR</code>, can now use argument <code>ti</code> to specify t-test statistics in <code><a href="../reference/escalc.html">escalc()</a></code></p></li>
 <li><p>can also specify (two-sided) p-values (of the respective t-tests) for these measures (and for measures <code>PCOR</code>, <code>ZPCOR</code>, <code>SPCOR</code>, and <code>ZSPCOR</code>) via argument <code>pi</code> (the sign of the p-value is taken to be the sign of the measure)</p></li>
 <li><p>added measures <code>"ZPHI"</code>, <code>"ZTET"</code>, <code>"ZPB"</code>, <code>"ZBIS"</code>, and <code>"ZSPCOR"</code> to <code><a href="../reference/escalc.html">escalc()</a></code> (but note that Fisher’s r-to-z transformation is not a variance-stabilizing transformation for these measures)</p></li>
+<li><p>when passing a correlation marix to <code><a href="../reference/rcalc.html">rcalc()</a></code>, it now orders the elements (columnwise) based on the lower triangular part of the matrix, not the upper one (which is more consistent with what <code><a href="../reference/matreg.html">matreg()</a></code> expects as input when using the <code>V</code> argument)</p></li>
 <li><p>improved the documentation of <code><a href="../reference/escalc.html">escalc()</a></code> a bit</p></li>
 </ul></div>
     <div class="section level2">

@@ -32,13 +32,13 @@ print.regtest <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
    cat("\n")
 
    if (ret.fit) {
-      .space(FALSE)
       if (x$model == "lm") {
          print(summary(x$fit))
       } else {
+         .space(FALSE)
          print(x$fit)
+         .space(FALSE)
       }
-      .space(FALSE)
    } else {
       cat("\n")
    }

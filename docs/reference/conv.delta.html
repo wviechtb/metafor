@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-23</span>
       </span>
     </div>
 
@@ -339,7 +339,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### use conv.wald() to convert the OR and CI into the log odds ratio and its variance for study 4</span></span></span>
-<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="conv.wald.html">conv.wald</a></span><span class="op">(</span>out<span class="op">=</span><span class="va">or</span>, ci.lb<span class="op">=</span><span class="va">lower</span>, ci.ub<span class="op">=</span><span class="va">upper</span>, data<span class="op">=</span><span class="va">dat</span>, transf<span class="op">=</span><span class="va">log</span>, var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lnor"</span>,<span class="st">"vlnor"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="conv.wald.html">conv.wald</a></span><span class="op">(</span>out<span class="op">=</span><span class="va">or</span>, ci.lb<span class="op">=</span><span class="va">lower</span>, ci.ub<span class="op">=</span><span class="va">upper</span>, data<span class="op">=</span><span class="va">dat</span>,</span></span>
+<span class="r-in"><span>                 transf<span class="op">=</span><span class="va">log</span>, var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lnor"</span>,<span class="st">"vlnor"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   study  m1i sd1i n1i  m2i sd2i n2i   ti ai bi ci di   or lower upper     yi     vi   lnor  vlnor </span>
@@ -350,7 +351,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### use conv.delta() to transform the log odds ratio into the SMD value for study 4</span></span></span>
-<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">conv.delta</span><span class="op">(</span><span class="va">lnor</span>, <span class="va">vlnor</span>, data<span class="op">=</span><span class="va">dat</span>, transf<span class="op">=</span><span class="va">transf.or2dn</span>, var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"yi"</span>,<span class="st">"vi"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">conv.delta</span><span class="op">(</span><span class="va">lnor</span>, <span class="va">vlnor</span>, data<span class="op">=</span><span class="va">dat</span>,</span></span>
+<span class="r-in"><span>                  transf<span class="op">=</span><span class="va">transf.or2dn</span>, var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"yi"</span>,<span class="st">"vi"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   study  m1i sd1i n1i  m2i sd2i n2i   ti ai bi ci di   or lower upper     yi     vi   lnor  vlnor </span>

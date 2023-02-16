@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-23</span>
       </span>
     </div>
 
@@ -121,7 +121,7 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">metafor.news</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.9-21 (2023-01-12)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.9-23 (2023-02-16)                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - model.matrix.rma() gains asdf argument</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -177,6 +177,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added measures "ZPHI", "ZTET", "ZPB", "ZBIS", and "ZSPCOR" to</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     escalc() (but note that Fisher's r-to-z transformation is not a</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     variance-stabilizing transformation for these measures)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - when passing a correlation marix to rcalc(), it now orders the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     elements (columnwise) based on the lower triangular part of the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     matrix, not the upper one (which is more consistent with what</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     matreg() expects as input when using the V argument)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - improved the documentation of escalc() a bit</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

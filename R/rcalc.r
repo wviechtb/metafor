@@ -18,7 +18,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
    .chkdots(ddd, c("upper", "simplify", "rowid", "vnames", "noid"))
 
    if (is.null(ddd$upper)) {
-      upper <- TRUE
+      upper <- FALSE
    } else {
       upper <- ddd$upper
    }

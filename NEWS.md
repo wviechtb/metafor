@@ -1,4 +1,4 @@
-# metafor 3.9-22 (2023-02-08)
+# metafor 3.9-23 (2023-02-16)
 
 - `model.matrix.rma()` gains `asdf` argument
 
@@ -31,6 +31,8 @@
 - can also specify (two-sided) p-values (of the respective t-tests) for these measures (and for measures `PCOR`, `ZPCOR`, `SPCOR`, and `ZSPCOR`) via argument `pi` (the sign of the p-value is taken to be the sign of the measure)
 
 - added measures `"ZPHI"`, `"ZTET"`, `"ZPB"`, `"ZBIS"`, and `"ZSPCOR"` to `escalc()` (but note that Fisher's r-to-z transformation is not a variance-stabilizing transformation for these measures)
+
+- when passing a correlation marix to `rcalc()`, it now orders the elements (columnwise) based on the lower triangular part of the matrix, not the upper one (which is more consistent with what `matreg()` expects as input when using the `V` argument)
 
 - improved the documentation of `escalc()` a bit
 
