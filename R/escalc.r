@@ -551,7 +551,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             ci.p <- ci.u - ai.p
             di.p <- bi.u - ci.u + ai.p
             ri.p <- (ai.p*di.p - bi.p*ci.p) / sqrt((ai.p+bi.p)*(ci.p+di.p)*(ai.p+ci.p)*(bi.p+di.p))
-            ri.p[ri.p < 1 | ri.p > 1] <- NA
+            ri.p[ri.p < -1 | ri.p > 1] <- NA
             ri <- replmiss(ri, ri.p)
 
             if (addvi) {
