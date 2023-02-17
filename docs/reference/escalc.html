@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-24</span>
       </span>
     </div>
 
@@ -454,7 +454,7 @@
 <p>The options for the <code>measure</code> argument that will compute outcome measures based on the paired table are:</p><ul><li><p><code>"MPORC"</code> for the <em>conditional log odds ratio</em>,</p></li>
 <li><p><code>"MPPETO"</code> for the <em>conditional log odds ratio</em> estimated with Peto's method.</p></li>
 </ul><p>See Curtin et al. (2002) and Zou (2007) for discussions of these measures.</p>
-<p>If only marginal tables are available, then another possibility is to compute the marginal log odds ratios based on these table directly. However, for the correct computation of the sampling variances, the correlations (phi coefficients) from the paired tables must be known (or ‘guestimated’). To use this approach, set <code>measure="MPORM"</code> and use argument <code>ri</code> to specify the correlation coefficients.</p>
+<p>If only marginal tables are available, then another possibility is to compute the marginal log odds ratios based on these table directly. However, for the correct computation of the sampling variances, the correlations (phi coefficients) from the paired tables must be known (or ‘guestimated’). To use this approach, set <code>measure="MPORM"</code> and use argument <code>ri</code> to specify the correlation coefficients. Instead of specifying <code>ri</code>, one can use argument <code>pi</code> to specify the proportions (or ‘guestimates’ thereof) of individuals (or pairs) that experienced the outcome of interest (i.e., ‘outcome1’ in the paired <em></em>\(2 \times 2\) table) under both treatments (i.e., <code>ai / (ai + bi + ci + di)</code>). Based on these proportions, the correlation coefficients are then back-calculated and used to calculate the correct sampling variances. Note that the values in the marginal tables put constraints on the possible values for <code>ri</code> and <code>pi</code>. If a specified value for <code>ri</code> or <code>pi</code> is not feasible under a given table, the sampling variance will be <code>NA</code>.</p>
 <p></p>
 </div>
 

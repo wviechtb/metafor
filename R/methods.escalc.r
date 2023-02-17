@@ -8,6 +8,10 @@
    if (!missing(i) && nargs()-has.drop > 2L) {
       mf <- match.call()
       i <- .getx("i", mf=mf, data=x)
+      # TODO: enable this?
+      # treat missings in a logical vector as FALSE when selecting rows
+      #if (is.logical(i) && length(i) == nrow(x))
+      #   i[is.na(i)] <- FALSE
    }
 
    dat <- NextMethod("[")

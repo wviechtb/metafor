@@ -413,6 +413,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          n1i <- .getx("n1i", mf=mf, data=data, checknumeric=TRUE)
          n2i <- .getx("n2i", mf=mf, data=data, checknumeric=TRUE)
          ri  <- .getx("ri",  mf=mf, data=data, checknumeric=TRUE)
+         pi  <- .getx("pi",  mf=mf, data=data, checknumeric=TRUE)
 
          if (is.null(bi)) bi <- n1i - ai
          if (is.null(di)) di <- n2i - ci
@@ -426,9 +427,11 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             bi <- .getsubset(bi, subset)
             ci <- .getsubset(ci, subset)
             di <- .getsubset(di, subset)
+            ri <- .getsubset(ri, subset)
+            pi <- .getsubset(pi, subset)
          }
 
-         args <- list(measure=measure, ai=ai, bi=bi, ci=ci, di=di, ri=ri, add=add, to=to, drop00=drop00, vtype=vtype, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
+         args <- list(measure=measure, ai=ai, bi=bi, ci=ci, di=di, ri=ri, pi=pi, add=add, to=to, drop00=drop00, vtype=vtype, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
 
       }
 

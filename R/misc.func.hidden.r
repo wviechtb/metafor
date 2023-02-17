@@ -1376,7 +1376,7 @@
 
 .getsubset <- function(x, subset, col=FALSE, drop=FALSE) {
 
-   if (is.null(x) || is.null(subset)) # if x or subset is NULL, return x (i.e., NULL)
+   if (is.null(x) || is.null(subset)) # if x or subset is NULL, return x
       return(x)
 
    mstyle <- .get.mstyle("crayon" %in% .packages())

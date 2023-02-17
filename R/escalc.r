@@ -151,8 +151,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          n1i <- .getx("n1i", mf=mf, data=data, checknumeric=TRUE)
          n2i <- .getx("n2i", mf=mf, data=data, checknumeric=TRUE)
          ri  <- .getx("ri",  mf=mf, data=data, checknumeric=TRUE)
+         pi  <- .getx("pi",  mf=mf, data=data, checknumeric=TRUE)
 
-         if (!.equal.length(ai, bi, ci, di, n1i, n2i, ri))
+         if (!.equal.length(ai, bi, ci, di, n1i, n2i, ri, pi))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          n1i.inc <- n1i != ai + bi
@@ -169,8 +170,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (!.all.specified(ai, bi, ci, di))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ai, bi, ci, di or ai, n1i, ci, n2i)."))
 
-         if (measure == "MPORM" && !.all.specified(ri))
-            stop(mstyle$stop("Need to specify also argument 'ri' for this measure."))
+         if (measure == "MPORM" && !(.all.specified(ri) || .all.specified(pi)))
+            stop(mstyle$stop("Need to specify also argument 'ri' (and/or 'pi') for this measure."))
 
          k.all <- length(ai)
 
@@ -180,6 +181,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             bi <- .getsubset(bi, subset)
             ci <- .getsubset(ci, subset)
             di <- .getsubset(di, subset)
+            ri <- .getsubset(ri, subset)
+            pi <- .getsubset(pi, subset)
          }
 
          n1i <- ai + bi
@@ -194,8 +197,11 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(c(n1i < 0, n2i < 0), na.rm=TRUE)) # note: in cross-sectional sampling, group sizes could be 0
             stop(mstyle$stop("One or more group sizes are negative."))
 
-         if (measure == "MPORM" && any(abs(ri) > 1, na.rm=TRUE))
-               stop(mstyle$stop("One or more correlations are > 1 or < -1."))
+         if (measure == "MPORM" && !is.null(ri) && any(abs(ri) > 1, na.rm=TRUE))
+            stop(mstyle$stop("One or more correlations are > 1 or < -1."))
+
+         if (measure == "MPORM" && !is.null(pi) && any(pi < 0 | pi > 1, na.rm=TRUE))
+            stop(mstyle$stop("One or more proportions are > 1 or < 0."))
 
          ni.u <- ai + bi + ci + di ### unadjusted total sample sizes
 
@@ -539,6 +545,15 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          }
 
          if (measure == "MPORM") {
+
+            ai.p <- pi * (ai.u+bi.u)
+            bi.p <- ai.u - ai.p
+            ci.p <- ci.u - ai.p
+            di.p <- bi.u - ci.u + ai.p
+            ri.p <- (ai.p*di.p - bi.p*ci.p) / sqrt((ai.p+bi.p)*(ci.p+di.p)*(ai.p+ci.p)*(bi.p+di.p))
+            ri.p[ri.p < 1 | ri.p > 1] <- NA
+            ri <- replmiss(ri, ri.p)
+
             if (addvi) {
                si <- (ri * sqrt(ai * bi * ci * di) + (ai * bi)) / ni
                deltai <- ni^2 * (ni * si - ai * bi) / (ai * bi * ci * di)

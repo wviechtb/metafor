@@ -1,4 +1,4 @@
-# metafor 3.9-23 (2023-02-16)
+# metafor 3.9-24 (2023-02-17)
 
 - `model.matrix.rma()` gains `asdf` argument
 
