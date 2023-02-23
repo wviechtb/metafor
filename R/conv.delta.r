@@ -104,11 +104,21 @@ conv.delta <- function(yi, vi, data, include, transf, var.names, append=TRUE, re
    yi[!include] <- NA_real_
    vi[!include] <- NA_real_
 
+   ### get names of arguments to transf (except the first and ...)
+
+   transfargs <- names(formals(args(transf)))
+   transfargs <- transfargs[-1]
+   transfargs <- transfargs[transfargs != "..."]
+
    ### get ... args
 
    args <- names(sapply(mf[-1], deparse))
    rmargs <- c("yi", "vi", "data", "include", "transf", "var.names", "append", "replace")
    dotargs <- args[!args %in% rmargs]
+
+   ### keep arguments in dotargs that are actual arguments of 'transf'
+
+   dotargs <- dotargs[dotargs %in% transfargs]
 
    dotarglist <- list()
 

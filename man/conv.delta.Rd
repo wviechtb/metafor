@@ -23,7 +23,7 @@ conv.delta(yi, vi, data, include, transf, var.names, append=TRUE, replace="ifna"
 
    Let \mjseqn{y_i} denote the observed effect size or outcome for a particular study and \mjseqn{v_i} the corresponding sampling variance. Then \mjseqn{f(y_i)} will be the transformed effect size or outcome, where \mjeqn{f(\cdot)}{f(.)} is the function specified via the \code{transf} argument. The sampling variance of the transformed effect size or outcome is then computed with \mjseqn{v_i \times f'(y_i)^2}, where \mjseqn{f'(y_i)} denotes the derivative of \mjeqn{f(\cdot)}{f(.)} evaluated at \mjseqn{y_i}. The present function computes the derivative numerically using the \code{\link[numDeriv]{grad}} function from the \code{numDeriv} package.
 
-   The value of the observed effect size or outcome should be the first argument of the function specified via \code{transf}. The function can have additional arguments, which can be specified via the \dots argument. However, due to the manner in which these additional arguments are evaluated, they cannot have names that match one of the arguments of the \code{\link[numDeriv]{grad}} function (an error will be issed if such a naming clash is detected).
+   The value of the observed effect size or outcome should be the first argument of the function specified via \code{transf}. The function can have additional arguments, which can be specified via the \dots argument. However, due to the manner in which these additional arguments are evaluated, they cannot have names that match one of the arguments of the \code{\link[numDeriv]{grad}} function (an error will be issued if such a naming clash is detected).
 }
 \value{
    If the \code{data} argument was not specified or \code{append=FALSE}, a data frame of class \code{c("escalc","data.frame")} with two variables called \code{var.names[1]} (by default \code{"yi"}) and \code{var.names[2]} (by default \code{"vi"}) with the transformed observed effect sizes or outcomes and the corresponding sampling variances (computed as described above).
@@ -50,7 +50,7 @@ conv.delta(yi, vi, data, include, transf, var.names, append=TRUE, replace="ifna"
 ### compute logit transformed proportions and corresponding sampling variances for two studies
 escalc(measure="PLO", xi=c(5,12), ni=c(40,80))
 
-### compute raw proportions and corresponding sampling variances for two studies
+### compute raw proportions and corresponding sampling variances for the two studies
 dat <- escalc(measure="PR", xi=c(5,12), ni=c(40,80))
 dat
 
@@ -65,8 +65,8 @@ conv.delta(yi, vi, data=dat, transf=transf.logit, replace="all")
 
 ######################################
 
-### use escalc() with measure D2ORN which transforms the standardized mean differences (computed
-### from the means and standard deviations) into the corresponding log odds ratios
+### use escalc() with measure D2ORN which transforms standardized mean differences (computed
+### from means and standard deviations) into the corresponding log odds ratios
 escalc(measure="D2ORN", m1i=m1i, sd1i=sd1i, n1i=n1i,
                         m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat.normand1999)
 
@@ -74,14 +74,14 @@ escalc(measure="D2ORN", m1i=m1i, sd1i=sd1i, n1i=n1i,
 ### then apply the same transformation to the standardized mean differences
 dat <- escalc(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i,
                              m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat.normand1999, correct=FALSE)
-conv.delta(yi, vi, data=dat, transf=transf.d2orn, replace="all")
+conv.delta(yi, vi, data=dat, transf=transf.dtolnorn, replace="all")
 
 ######################################
 
 ### an example where the transformation function takes additional arguments
 
-### use escalc() with measure RPB which transforms the standardized mean differences (computed
-### from the means and standard deviations) into the corresponding point-biserial correlations
+### use escalc() with measure RPB which transforms standardized mean differences (computed
+### from means and standard deviations) into the corresponding point-biserial correlations
 escalc(measure="RPB", m1i=m1i, sd1i=sd1i, n1i=n1i,
                       m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat.normand1999)
 
@@ -101,7 +101,7 @@ conv.delta(yi, vi, data=dat,
 dat <- data.frame(study=1:4,
                   m1i=c(2.03,NA,NA,NA), sd1i=c(0.95,NA,NA,NA), n1i=c(32,95,NA,NA),
                   m2i=c(1.25,NA,NA,NA), sd2i=c(1.04,NA,NA,NA), n2i=c(30,99,NA,NA),
-                  ti=c(NA,2.12,NA,NA),
+                  tval=c(NA,2.12,NA,NA),
                   ai=c(NA,NA,26,NA), bi=c(NA,NA,58,NA), ci=c(NA,NA,11,NA), di=c(NA,NA,74,NA),
                   or=c(NA,NA,NA,2.56), lower=c(NA,NA,NA,1.23), upper=c(NA,NA,NA,5.30))
 dat
@@ -110,11 +110,11 @@ dat
 ### 1) provides means and SDs so that the SMD can be directly calculated
 ### 2) provides the t-statistic from an independent samples t-test
 ### 3) dichotomized the continuous dependent variable and reports the resulting 2x2 table
-### 4) dichotomized the continuous dependent variable and reports an odds ratio (or) with 95% CI
+### 4) dichotomized the continuous dependent variable and reports an odds ratio with 95% CI
 
 ### use escalc() to directly compute the SMD and its variance for studies 1 and 2
 dat <- escalc(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i,
-                             m2i=m2i, sd2i=sd2i, n2i=n2i, ti=ti, data=dat)
+                             m2i=m2i, sd2i=sd2i, n2i=n2i, ti=tval, data=dat)
 dat
 
 ### use escalc() with measure OR2DN to compute the SMD value for study 3
@@ -128,10 +128,58 @@ dat
 
 ### use conv.delta() to transform the log odds ratio into the SMD value for study 4
 dat <- conv.delta(lnor, vlnor, data=dat,
-                  transf=transf.or2dn, var.names=c("yi","vi"))
+                  transf=transf.lnortodn, var.names=c("yi","vi"))
 dat
 
 ### fit an equal-effects model to the SMD values
+rma(yi, vi, data=dat, method="EE")
+
+############################################################################
+
+### another example for a meta-analysis of correlation coefficients
+
+dat <- data.frame(study=1:5,
+                  ri=c(.42,NA,NA,NA,NA),
+                  tval=c(NA,2.85,NA,NA,NA),
+                  ni=c(93,182,NA,NA,NA),
+                  ai=c(NA,NA,61,NA,NA), bi=c(NA,NA,36,NA,NA),
+                  ci=c(NA,NA,39,NA,NA), di=c(NA,NA,57,NA,NA),
+                  or=c(NA,NA,NA,1.86,NA), lower=c(NA,NA,NA,1.12,NA), upper=c(NA,NA,NA,3.10,NA),
+                  m1i=c(NA,NA,NA,NA,54.1), sd1i=c(NA,NA,NA,NA,5.79), n1i=c(NA,NA,NA,NA,66),
+                  m2i=c(NA,NA,NA,NA,51.7), sd2i=c(NA,NA,NA,NA,6.23), n2i=c(NA,NA,NA,NA,65))
+dat
+
+### study types:
+### 1) provides the correlation coefficient and sample size
+### 2) provides the t-statistic from a t-test of H0: rho = 0
+### 3) dichotomized both variables and reports the resulting 2x2 table
+### 4) dichotomized both variables and reports an odds ratio with 95% CI
+### 5) dichotomized one variable and reports means and SDs for the two corresponding groups
+
+### use escalc() to directly compute the correlation and its variance for studies 1 and 2
+dat <- escalc(measure="COR", ri=ri, ni=ni, ti=tval, data=dat)
+dat
+
+### use escalc() with measure RTET to compute the tetrachoric correlation for study 3
+dat <- escalc(measure="RTET", ai=ai, bi=bi, ci=ci, di=di, data=dat, replace=FALSE)
+dat
+
+### use conv.wald() to convert the OR and CI into the log odds ratio and its variance for study 4
+dat <- conv.wald(out=or, ci.lb=lower, ci.ub=upper, data=dat,
+                 transf=log, var.names=c("lnor","vlnor"))
+dat
+
+### use conv.delta() to estimate the tetrachoric correlation from the log odds ratio for study 4
+dat <- conv.delta(lnor, vlnor, data=dat,
+                  transf=transf.lnortortet.pearson, var.names=c("yi","vi"))
+dat
+
+### use escalc() with measure RBIS to compute the biserial correlation for study 5
+dat <- escalc(measure="RBIS", m1i=m1i, sd1i=sd1i, n1i=n1i,
+                              m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, replace=FALSE)
+dat
+
+### fit an equal-effects model to the correlations
 rma(yi, vi, data=dat, method="EE")
 
 ############################################################################

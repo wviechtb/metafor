@@ -26,12 +26,14 @@
 \alias{transf.dtorpb}
 \alias{transf.dtobesd}
 \alias{transf.dtomd}
-\alias{transf.logortord}
-\alias{transf.logortorr}
-\alias{transf.or2dn}
-\alias{transf.or2dl}
-\alias{transf.d2orn}
-\alias{transf.d2orl}
+\alias{transf.lnortord}
+\alias{transf.lnortorr}
+\alias{transf.lnortodn}
+\alias{transf.lnortodl}
+\alias{transf.dtolnorn}
+\alias{transf.dtolnorl}
+\alias{transf.lnortortet.pearson}
+\alias{transf.lnortortet.digby}
 \title{Transformation Functions}
 \description{
    A set of transformation functions useful for meta-analyses. \loadmathjax
@@ -62,12 +64,14 @@ transf.dtou3(xi, \dots)
 transf.dtorpb(xi, n1i, n2i, \dots)
 transf.dtobesd(xi, \dots)
 transf.dtomd(xi, targs, \dots)
-transf.logortord(xi, pc, \dots)
-transf.logortorr(xi, pc, \dots)
-transf.or2dn(xi)
-transf.or2dl(xi)
-transf.d2orn(xi)
-transf.d2orl(xi)
+transf.lnortord(xi, pc, \dots)
+transf.lnortorr(xi, pc, \dots)
+transf.lnortodn(xi)
+transf.lnortodl(xi)
+transf.dtolnorn(xi)
+transf.dtolnorl(xi)
+transf.lnortortet.pearson(xi)
+transf.lnortortet.digby(xi)
 }
 \arguments{
    \item{xi}{vector of values to be transformed.}
@@ -108,12 +112,14 @@ transf.d2orl(xi)
    \item \code{transf.dtorpb}: transformation of standardized mean differences to point-biserial correlations. If \code{n1i} and \code{n2i} are not specified, the function assumes \code{n1i = n2i} and uses the approximate formula \mjeqn{r_{pb} = \frac{d}{\sqrt{d^2 + 4}}}{r_pb = d / \sqrt{d^2 + 4}}. If \code{n1i} and \code{n2i} are specified, uses the exact transformation formula \mjeqn{r_{pb} = \frac{d}{\sqrt{d^2 + h}}}{r_pb = d / \sqrt{d^2 + h}}, where \mjeqn{h = \frac{m}{n_1} + \frac{m}{n_2}}{h = m / n_1 + m / n_2} and \mjseqn{m = n_1 + n_2 - 2}.
    \item \code{transf.dtobesd}: transformation of standardized mean differences to binomial effect size display values (Rosenthal & Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply one minus the proportion in the first group scoring above the median).
    \item \code{transf.dtomd}: transformation of standardized mean differences to mean differences given a known standard deviation, which must be specified via the \code{targs} argument.
-   \item \code{transf.logortord}: transformation of log odds ratios to risk differences, assuming a particular value for the control group risk (which needs to be specified via the \code{pc} argument).
-   \item \code{transf.logortorr}: transformation of log odds ratios to risk ratios, assuming a particular value for the control group risk (which needs to be specified via the \code{pc} argument).
-   \item \code{transf.or2dn}: transformation of log odds ratios to standardized mean differences (assuming normal distributions) (Cox & Snell, 1989).
-   \item \code{transf.or2dl}: transformation of log odds ratios to standardized mean differences (assuming logistic distributions) (Chinn, 2000).
-   \item \code{transf.d2orn}: transformation of standardized mean differences to log odds ratios (assuming normal distributions) (Cox & Snell, 1989).
-   \item \code{transf.d2orl}: transformation of standardized mean differences to log odds ratios (assuming logistic distributions) (Chinn, 2000).
+   \item \code{transf.lnortord}: transformation of log odds ratios to risk differences, assuming a particular value for the control group risk (which needs to be specified via the \code{pc} argument).
+   \item \code{transf.lnortorr}: transformation of log odds ratios to risk ratios, assuming a particular value for the control group risk (which needs to be specified via the \code{pc} argument).
+   \item \code{transf.lnortodn}: transformation of log odds ratios to standardized mean differences (assuming normal distributions) (Cox & Snell, 1989).
+   \item \code{transf.lnortodl}: transformation of log odds ratios to standardized mean differences (assuming logistic distributions) (Chinn, 2000).
+   \item \code{transf.dtolnorn}: transformation of standardized mean differences to log odds ratios (assuming normal distributions) (Cox & Snell, 1989).
+   \item \code{transf.dtolnorl}: transformation of standardized mean differences to log odds ratios (assuming logistic distributions) (Chinn, 2000).
+   \item \code{transf.lnortortet.pearson}: transformation of log odds ratios to tetrachoric correlations as suggested by Pearson (1900).
+   \item \code{transf.lnortortet.digby}: transformation of log odds ratios to tetrachoric correlations as suggested by Digby (1983).
    }
 }
 \value{
@@ -134,6 +140,8 @@ transf.d2orl(xi)
 
    Cox, D. R., & Snell, E. J. (1989). \emph{Analysis of binary data} (2nd ed.). London: Chapman & Hall.
 
+   Digby, P. G. N. (1983). Approximating the tetrachoric correlation coefficient. \emph{Biometrics}, \bold{39}(3), 753--757. \verb{https://doi.org/10.2307/2531104}
+
    Fisher, R. A. (1921). On the \dQuote{probable error} of a coefficient of correlation deduced from a small sample. \emph{Metron}, \bold{1}, 1--32. \verb{http://hdl.handle.net/2440/15169}
 
    Freeman, M. F., & Tukey, J. W. (1950). Transformations related to the angular and the square root. \emph{Annals of Mathematical Statistics}, \bold{21}(4), 607--611. \verb{https://doi.org/10.1214/aoms/1177729756}
@@ -143,6 +151,8 @@ transf.d2orl(xi)
    McGraw, K. O., & Wong, S. P. (1992). A common language effect size statistic. \emph{Psychological Bulletin}, \bold{111}(2), 361--365. \verb{https://doi.org/10.1037/0033-2909.111.2.361}
 
    Miller, J. J. (1978). The inverse of the Freeman-Tukey double arcsine transformation. \emph{American Statistician}, \bold{32}(4), 138. \verb{https://doi.org/10.1080/00031305.1978.10479283}
+
+   Pearson, K. (1900). Mathematical contributions to the theory of evolution. VII. On the correlation of characters not quantitatively measurable. \emph{Philosophical Transactions of the Royal Society of London, Series A}, \bold{195}, 1--47. \verb{https://doi.org/10.1098/rsta.1900.0022}
 
    Rosenthal, R., & Rubin, D. B. (1982). A simple, general purpose display of magnitude of experimental effect. \emph{Journal of Educational Psychology}, \bold{74}(2), 166--169. \verb{https://doi.org/10.1037/0022-0663.74.2.166}
 

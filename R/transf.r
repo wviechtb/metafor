@@ -309,7 +309,7 @@ transf.dtomd <- function(xi, targs=NULL, ...) {
    return(xi * sd)
 }
 
-transf.logortord <- function(xi, pc, ...) {
+transf.lnortord <- function(xi, pc, ...) {
    if (length(pc) == 1L)
       pc <- rep(pc, length(xi))
    if (length(xi) != length(pc))
@@ -319,7 +319,7 @@ transf.logortord <- function(xi, pc, ...) {
    return(exp(xi)*pc / (1 - pc + pc * exp(xi)) - pc)
 }
 
-transf.logortorr <- function(xi, pc, ...) {
+transf.lnortorr <- function(xi, pc, ...) {
    if (length(pc) == 1L)
       pc <- rep(pc, length(xi))
    if (length(xi) != length(pc))
@@ -331,16 +331,22 @@ transf.logortorr <- function(xi, pc, ...) {
 
 ############################################################################
 
-transf.or2dn <- function(xi)
+transf.lnortodn <- function(xi)
    xi / 1.65
 
-transf.or2dl <- function(xi)
+transf.lnortodl <- function(xi)
    sqrt(3) / base::pi * xi
 
-transf.d2orn <- function(xi)
+transf.dtolnorn <- function(xi)
    xi * 1.65
 
-transf.d2orl <- function(xi)
+transf.dtolnorl <- function(xi)
    xi / sqrt(3) * base::pi
+
+transf.lnortortet.pearson <- function(xi)
+   cos(base::pi / (1 + sqrt(exp(xi))))
+
+transf.lnortortet.digby <- function(xi)
+   (exp(xi)^(3/4) - 1) / (exp(xi)^(3/4) + 1)
 
 ############################################################################
