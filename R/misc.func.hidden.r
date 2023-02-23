@@ -1565,6 +1565,16 @@
          stop(mstyle$stop("Please install the 'alabama' package to use this optimizer."), call.=FALSE)
    }
 
+   if (optimizer == "Rcgmin") {
+      if (!requireNamespace("Rcgmin", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'Rcgmin' package to use this optimizer."), call.=FALSE)
+   }
+
+   if (optimizer == "Rvmmin") {
+      if (!requireNamespace("Rvmmin", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'Rvmmin' package to use this optimizer."), call.=FALSE)
+   }
+
    #########################################################################
 
    if (is.element(optimizer, c("optim","constrOptim"))) {
@@ -1635,6 +1645,20 @@
       }
    }
 
+   if (optimizer == "Rcgmin") {
+      par.arg <- "par"
+      optimizer <- "Rcgmin::Rcgmin"
+      #ctrl.arg <- ", gr='grnd', control=optcontrol"
+      ctrl.arg <- ", control=optcontrol"
+   }
+
+   if (optimizer == "Rvmmin") {
+      par.arg <- "par"
+      optimizer <- "Rvmmin::Rvmmin"
+      #ctrl.arg <- ", gr='grnd', control=optcontrol"
+      ctrl.arg <- ", control=optcontrol"
+   }
+
    if (optimizer == "optimParallel") {
       par.arg <- "par"
       optimizer <- "optimParallel::optimParallel"
@@ -1662,7 +1686,7 @@
    if (optimizer == "lbfgsb3c::lbfgsb3c" && is.null(opt.res$convergence)) # special provision for lbfgsb3c in case 'convergence' is missing
       opt.res$convergence <- -99
 
-   if (is.element(optimizer, c("optim","constrOptim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rsolnp::solnp","alabama::constrOptim.nl","optimParallel::optimParallel")) && opt.res$convergence != 0)
+   if (is.element(optimizer, c("optim","constrOptim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rsolnp::solnp","alabama::constrOptim.nl","Rcgmin::Rcgmin","Rvmmin:Rvmmin","optimParallel::optimParallel")) && opt.res$convergence != 0)
       stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")), call.=FALSE)
 
    if (is.element(optimizer, c("dfoptim::mads")) && opt.res$convergence > optcontrol$tol)

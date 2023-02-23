@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-24</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-26</span>
       </span>
     </div>
 
@@ -454,7 +454,7 @@
 <p>The options for the <code>measure</code> argument that will compute outcome measures based on the paired table are:</p><ul><li><p><code>"MPORC"</code> for the <em>conditional log odds ratio</em>,</p></li>
 <li><p><code>"MPPETO"</code> for the <em>conditional log odds ratio</em> estimated with Peto's method.</p></li>
 </ul><p>See Curtin et al. (2002) and Zou (2007) for discussions of these measures.</p>
-<p>If only marginal tables are available, then another possibility is to compute the marginal log odds ratios based on these table directly. However, for the correct computation of the sampling variances, the correlations (phi coefficients) from the paired tables must be known (or ‘guestimated’). To use this approach, set <code>measure="MPORM"</code> and use argument <code>ri</code> to specify the correlation coefficients. Instead of specifying <code>ri</code>, one can use argument <code>pi</code> to specify the proportions (or ‘guestimates’ thereof) of individuals (or pairs) that experienced the outcome of interest (i.e., ‘outcome1’ in the paired <em></em>\(2 \times 2\) table) under both treatments (i.e., <code>ai / (ai + bi + ci + di)</code>). Based on these proportions, the correlation coefficients are then back-calculated and used to calculate the correct sampling variances. Note that the values in the marginal tables put constraints on the possible values for <code>ri</code> and <code>pi</code>. If a specified value for <code>ri</code> or <code>pi</code> is not feasible under a given table, the sampling variance will be <code>NA</code>.</p>
+<p>If only marginal tables are available, then another possibility is to compute the marginal log odds ratios based on these table directly. However, for the correct computation of the sampling variances, the correlations (phi coefficients) from the paired tables must be known (or ‘guestimated’). To use this approach, set <code>measure="MPORM"</code> and use argument <code>ri</code> to specify the correlation coefficients. Instead of specifying <code>ri</code>, one can use argument <code>pi</code> to specify the proportions (or ‘guestimates’ thereof) of individuals (or pairs) that experienced the outcome of interest (i.e., ‘outcome1’ in the paired <em></em>\(2 \times 2\) table) under both treatments (i.e., <code>ai / (ai + bi + ci + di)</code>). Based on these proportions, the correlation coefficients are then back-calculated and used to calculate the correct sampling variances. Note that the values in the marginal tables put constraints on the possible values for <code>ri</code> and <code>pi</code>. If a specified value for <code>ri</code> or <code>pi</code> is not feasible under a given table, the corresponding sampling variance will be <code>NA</code>.</p>
 <p></p>
 </div>
 
@@ -618,7 +618,27 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### data from the meta-analysis by Coliditz et al. (1994) on the efficacy of</span></span></span>
+<span class="r-in"><span><span class="co">### BCG vaccine in the prevention of tuberculosis dat.bcg</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    trial               author year tpos  tneg cpos  cneg ablat      alloc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1              Aronson 1948    4   119   11   128    44     random</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      3      Rosenthal et al 1960    3   228   11   209    42     random</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      7     Vandiviere et al 1973    8  2537   10   619    19     random</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      8           TPT Madras 1980  505 87886  499 87892    13     random</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    11       Comstock et al 1974  186 50448  141 27197    18 systematic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    13       Comstock et al 1976   27 16886   29 17825    33 systematic</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">escalc</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -708,6 +728,69 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13    13       Comstock et al 1976   27 16886   29 17825    33 systematic      NA     NA </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### illustrate the 'var.names' argument</span></span></span>
+<span class="r-in"><span><span class="fu">escalc</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lnrr"</span>,<span class="st">"var"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    trial               author year tpos  tneg cpos  cneg ablat      alloc    lnrr    var </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1              Aronson 1948    4   119   11   128    44     random -0.8893 0.3256 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random -1.5854 0.1946 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      3      Rosenthal et al 1960    3   228   11   209    42     random -1.3481 0.4154 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random -1.4416 0.0200 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate -0.2175 0.0512 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate -0.7861 0.0069 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      7     Vandiviere et al 1973    8  2537   10   619    19     random -1.6209 0.2230 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      8           TPT Madras 1980  505 87886  499 87892    13     random  0.0120 0.0040 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random -0.4694 0.0564 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic -1.3713 0.0730 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    11       Comstock et al 1974  186 50448  141 27197    18 systematic -0.3394 0.0124 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic  0.4459 0.5325 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    13       Comstock et al 1976   27 16886   29 17825    33 systematic -0.0173 0.0714 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### illustrate the 'slab' argument</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">escalc</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>,</span></span>
+<span class="r-in"><span>              data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, slab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">author</span>, <span class="st">", "</span>, <span class="va">year</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    trial               author year tpos  tneg cpos  cneg ablat      alloc      yi     vi </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1              Aronson 1948    4   119   11   128    44     random -0.8893 0.3256 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random -1.5854 0.1946 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      3      Rosenthal et al 1960    3   228   11   209    42     random -1.3481 0.4154 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random -1.4416 0.0200 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate -0.2175 0.0512 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate -0.7861 0.0069 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      7     Vandiviere et al 1973    8  2537   10   619    19     random -1.6209 0.2230 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      8           TPT Madras 1980  505 87886  499 87892    13     random  0.0120 0.0040 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random -0.4694 0.0564 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic -1.3713 0.0730 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    11       Comstock et al 1974  186 50448  141 27197    18 systematic -0.3394 0.0124 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic  0.4459 0.5325 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    13       Comstock et al 1976   27 16886   29 17825    33 systematic -0.0173 0.0714 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### note: the output looks the same but the study labels are stored as an attribute with the</span></span></span>
+<span class="r-in"><span><span class="co">### effect size estimates (together with the total sample size of the studies and the chosen</span></span></span>
+<span class="r-in"><span><span class="co">### effect size measure)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.88931133 -1.58538866 -1.34807315 -1.44155119 -0.21754732 -0.78611559 -1.62089822  0.01195233</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] -0.46941765 -1.37134480 -0.33935883  0.44591340 -0.01731395</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"ni")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1]    262    609    451  26465  10877   2992   3174 176782  14776   3381  77972   4839  34767</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"slab")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "Aronson, 1948"              "Ferguson &amp; Simes, 1949"     "Rosenthal et al, 1960"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "Hart &amp; Sutherland, 1977"    "Frimodt-Moller et al, 1973" "Stein &amp; Aronson, 1953"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "Vandiviere et al, 1973"     "TPT Madras, 1980"           "Coetzee &amp; Berjak, 1968"    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "Rosenthal et al, 1961"      "Comstock et al, 1974"       "Comstock &amp; Webster, 1969"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "Comstock et al, 1976"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"measure")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "RR"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### this information can then be used by other functions; for example in a forest plot</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span>, <span class="va">dat</span><span class="op">$</span><span class="va">vi</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="escalc-1.png" alt="" width="864" height="768"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### convert a regular data frame to an 'escalc' object</span></span></span>
 <span class="r-in"><span><span class="co">### dataset from Lipsey &amp; Wilson (2001), Table 7.1, page 130</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">308</span>, <span class="fl">1596</span>, <span class="fl">2479</span>, <span class="fl">9021</span>, <span class="fl">9028</span>, <span class="fl">161</span>, <span class="fl">172</span>, <span class="fl">537</span>, <span class="fl">7049</span><span class="op">)</span>,</span></span>
@@ -715,6 +798,18 @@
 <span class="r-in"><span>                  vi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.084</span>, <span class="fl">0.035</span>, <span class="fl">0.017</span>, <span class="fl">0.034</span>, <span class="fl">0.072</span>, <span class="fl">0.117</span>, <span class="fl">0.102</span>, <span class="fl">0.093</span>, <span class="fl">0.012</span>, <span class="fl">0.067</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  random <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  intensity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">3</span>, <span class="fl">7</span>, <span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">7</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      id    yi    vi random intensity</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   100 -0.33 0.084      0         7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   308  0.32 0.035      0         3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  1596  0.39 0.017      0         7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  2479  0.31 0.034      0         5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  9021  0.17 0.072      0         7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  9028  0.64 0.117      0         7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   161 -0.33 0.102      1         4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   172  0.15 0.093      1         4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   537 -0.02 0.012      1         5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 7049  0.00 0.067      1         6</span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">escalc</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"SMD"</span>, yi<span class="op">=</span><span class="va">yi</span>, vi<span class="op">=</span><span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, slab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Study ID:"</span>, <span class="va">id</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -730,6 +825,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9   537 -0.020 0.012      1         5 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 7049  0.000 0.067      1         6 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
 </code></pre></div>
     </div>
   </div>

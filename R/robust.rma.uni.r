@@ -145,7 +145,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
          QMp  <- pval
       } else {
          QM   <- max(0, cs.wald$Fstat)
-         QMdf <- c(cs.wald$df_num, cs.wald$df_denom)
+         QMdf <- c(cs.wald$df_num, max(0, cs.wald$df_denom))
          QMp  <- cs.wald$p_val
       }
 

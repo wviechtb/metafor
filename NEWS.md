@@ -1,4 +1,4 @@
-# metafor 3.9-24 (2023-02-17)
+# metafor 3.9-26 (2023-02-23)
 
 - `model.matrix.rma()` gains `asdf` argument
 
@@ -33,6 +33,8 @@
 - added measures `"ZPHI"`, `"ZTET"`, `"ZPB"`, `"ZBIS"`, and `"ZSPCOR"` to `escalc()` (but note that Fisher's r-to-z transformation is not a variance-stabilizing transformation for these measures)
 
 - when passing a correlation marix to `rcalc()`, it now orders the elements (columnwise) based on the lower triangular part of the matrix, not the upper one (which is more consistent with what `matreg()` expects as input when using the `V` argument)
+
+- optimizers `Rcgmin` and `Rvmmin` are now available in `rma.uni()`, `rma.mv()`, `rma.glmm()`, and `selmodel()`
 
 - improved the documentation of `escalc()` a bit
 

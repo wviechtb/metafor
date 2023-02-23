@@ -595,6 +595,12 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \code{\link{rma.mh}}, \code{\link{rma.peto}}, and \code{\link{rma.glmm}} for model fitting functions that take similar inputs.
 }
 \examples{
+############################################################################
+
+### data from the meta-analysis by Coliditz et al. (1994) on the efficacy of
+### BCG vaccine in the prevention of tuberculosis dat.bcg
+dat.bcg
+
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 dat
@@ -612,6 +618,24 @@ dat
 escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, subset=1:6)
 escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, include=1:6)
 
+### illustrate the 'var.names' argument
+escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, var.names=c("lnrr","var"))
+
+### illustrate the 'slab' argument
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
+              data=dat.bcg, slab=paste0(author, ", ", year))
+dat
+
+### note: the output looks the same but the study labels are stored as an attribute with the
+### effect size estimates (together with the total sample size of the studies and the chosen
+### effect size measure)
+dat$yi
+
+### this information can then be used by other functions; for example in a forest plot
+forest(dat$yi, dat$vi, header=TRUE)
+
+############################################################################
+
 ### convert a regular data frame to an 'escalc' object
 ### dataset from Lipsey & Wilson (2001), Table 7.1, page 130
 dat <- data.frame(id = c(100, 308, 1596, 2479, 9021, 9028, 161, 172, 537, 7049),
@@ -619,7 +643,10 @@ dat <- data.frame(id = c(100, 308, 1596, 2479, 9021, 9028, 161, 172, 537, 7049),
                   vi = c(0.084, 0.035, 0.017, 0.034, 0.072, 0.117, 0.102, 0.093, 0.012, 0.067),
                   random = c(0, 0, 0, 0, 0, 0, 1, 1, 1, 1),
                   intensity = c(7, 3, 7, 5, 7, 7, 4, 4, 5, 6))
+dat
 dat <- escalc(measure="SMD", yi=yi, vi=vi, data=dat, slab=paste("Study ID:", id), digits=3)
 dat
+
+############################################################################
 }
 \keyword{datagen}
