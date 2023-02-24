@@ -187,7 +187,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    len <- ya.xpos
    xis <- rep(NA_real_,length(atyis))
    zis <- rep(NA_real_,length(atyis))
-   for (i in seq_len(length(atyis))) {
+   for (i in seq_along(atyis)) {
       xis[i] <- sqrt(len^2/(1+(atyis[i]/asp.rat)^2))
       zis[i] <- xis[i]*atyis[i]
    }
@@ -209,7 +209,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    zis.l <- rep(NA_real_,length(atyis))
    xis.u <- rep(NA_real_,length(atyis))
    zis.u <- rep(NA_real_,length(atyis))
-   for (i in seq_len(length(atyis))) {
+   for (i in seq_along(atyis)) {
       xis.l[i] <- sqrt(len.l^2/(1+(atyis[i]/asp.rat)^2))
       zis.l[i] <- xis.l[i]*atyis[i]
       xis.u[i] <- sqrt(len.u^2/(1+(atyis[i]/asp.rat)^2))
@@ -234,7 +234,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    len <- ya.xpos+.02*(xlims[2]-xlims[1])
    xis <- rep(NA_real_,length(atyis))
    zis <- rep(NA_real_,length(atyis))
-   for (i in seq_len(length(atyis))) {
+   for (i in seq_along(atyis)) {
       xis[i] <- sqrt(len^2/(1+(atyis[i]/asp.rat)^2))
       zis[i] <- xis[i]*atyis[i]
    }
@@ -258,7 +258,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    len <- ci.xpos
    xis <- rep(NA_real_,length(atyis))
    zis <- rep(NA_real_,length(atyis))
-   for (i in seq_len(length(atyis))) {
+   for (i in seq_along(atyis)) {
       xis[i] <- sqrt(len^2/(1+(atyis[i]/asp.rat)^2))
       zis[i] <- xis[i]*atyis[i]
    }
@@ -277,7 +277,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    zis.l <- rep(NA_real_,3L)
    xis.u <- rep(NA_real_,3L)
    zis.u <- rep(NA_real_,3L)
-   for (i in seq_len(length(atyis))) {
+   for (i in seq_along(atyis)) {
       xis.l[i] <- sqrt(len.l^2/(1+(atyis[i]/asp.rat)^2))
       zis.l[i] <- xis.l[i]*atyis[i]
       xis.u[i] <- sqrt(len.u^2/(1+(atyis[i]/asp.rat)^2))

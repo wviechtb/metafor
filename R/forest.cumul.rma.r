@@ -282,7 +282,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
          rows.new <- rows                       # rearrange rows due to NAs being omitted from plot
          rows.na  <- rows[!not.na]              # shift higher rows down according to number of NAs omitted
-         for (j in seq_len(length(rows.na))) {
+         for (j in seq_along(rows.na)) {
             rows.new[rows >= rows.na[j]] <- rows.new[rows >= rows.na[j]] - 1
          }
          rows <- rows.new[not.na]

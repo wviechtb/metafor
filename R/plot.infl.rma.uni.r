@@ -124,7 +124,7 @@ col.na="lightgray", ...) {
 
       ######################################################################
 
-      for (i in seq_len(length(which.inf))) {
+      for (i in seq_along(which.inf)) {
 
          if (which.inf[i] == 1) {
 
@@ -436,7 +436,7 @@ col.na="lightgray", ...) {
 
       par(mfrow=c(length(which.dfbs),1))
 
-      for (i in seq_len(length(which.dfbs))) {
+      for (i in seq_along(which.dfbs)) {
 
          zi     <- x$dfbs[[which.dfbs[i]]]
          not.na <- !is.na(zi)

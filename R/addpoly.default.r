@@ -233,7 +233,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
 
          rows.new <- rows
          rows.na  <- rows[!not.na]
-         for (j in seq_len(length(rows.na))) {
+         for (j in seq_along(rows.na)) {
             rows.new[rows <= rows.na[j]] <- rows.new[rows <= rows.na[j]] + 1
          }
          rows <- rows.new[not.na]
