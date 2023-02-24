@@ -104,7 +104,7 @@ conv.delta <- function(yi, vi, data, include, transf, var.names, append=TRUE, re
    yi[!include] <- NA_real_
    vi[!include] <- NA_real_
 
-   ### get names of arguments to transf (except the first and ...)
+   ### get names of arguments to transf (except the first and ... in case that is there)
 
    transfargs <- names(formals(args(transf)))
    transfargs <- transfargs[-1]

@@ -74,7 +74,7 @@ escalc(measure="D2ORN", m1i=m1i, sd1i=sd1i, n1i=n1i,
 ### then apply the same transformation to the standardized mean differences
 dat <- escalc(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i,
                              m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat.normand1999, correct=FALSE)
-conv.delta(yi, vi, data=dat, transf=transf.dtolnorn, replace="all")
+conv.delta(yi, vi, data=dat, transf=transf.dtolnor.norm, replace="all")
 
 ######################################
 
@@ -128,7 +128,7 @@ dat
 
 ### use conv.delta() to transform the log odds ratio into the SMD value for study 4
 dat <- conv.delta(lnor, vlnor, data=dat,
-                  transf=transf.lnortodn, var.names=c("yi","vi"))
+                  transf=transf.lnortod.norm, var.names=c("yi","vi"))
 dat
 
 ### fit an equal-effects model to the SMD values

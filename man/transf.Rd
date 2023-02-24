@@ -28,10 +28,10 @@
 \alias{transf.dtomd}
 \alias{transf.lnortord}
 \alias{transf.lnortorr}
-\alias{transf.lnortodn}
-\alias{transf.lnortodl}
-\alias{transf.dtolnorn}
-\alias{transf.dtolnorl}
+\alias{transf.lnortod.norm}
+\alias{transf.lnortod.logis}
+\alias{transf.dtolnor.norm}
+\alias{transf.dtolnor.logis}
 \alias{transf.lnortortet.pearson}
 \alias{transf.lnortortet.digby}
 \title{Transformation Functions}
@@ -66,10 +66,10 @@ transf.dtobesd(xi, \dots)
 transf.dtomd(xi, targs, \dots)
 transf.lnortord(xi, pc, \dots)
 transf.lnortorr(xi, pc, \dots)
-transf.lnortodn(xi)
-transf.lnortodl(xi)
-transf.dtolnorn(xi)
-transf.dtolnorl(xi)
+transf.lnortod.norm(xi)
+transf.lnortod.logis(xi)
+transf.dtolnor.norm(xi)
+transf.dtolnor.logis(xi)
 transf.lnortortet.pearson(xi)
 transf.lnortortet.digby(xi)
 }
@@ -87,37 +87,37 @@ transf.lnortortet.digby(xi)
    The following transformation functions are currently implemented:
    \itemize{
    \item \code{transf.rtoz}: Fisher's r-to-z transformation for correlation coefficients (same as \code{atanh(x)}).
-   \item \code{transf.ztor}: inverse of Fisher's r-to-z transformation (i.e., the z-to-r transformation; same as \code{tanh(x)}).
+   \item \code{transf.ztor}: inverse of the former (i.e., the z-to-r transformation; same as \code{tanh(x)}).
    \item \code{transf.logit}: logit (log odds) transformation for proportions (same as \code{qlogis(x)}).
-   \item \code{transf.ilogit}: inverse of the logit transformation (same as \code{plogis(x)}).
+   \item \code{transf.ilogit}: inverse of the former (same as \code{plogis(x)}).
    \item \code{transf.arcsin}: arcsine square root transformation for proportions.
-   \item \code{transf.iarcsin}: inverse of the arcsine transformation.
+   \item \code{transf.iarcsin}: inverse of the former.
    \item \code{transf.pft}: Freeman-Tukey (double arcsine) transformation for proportions. See Freeman & Tukey (1950). The \code{xi} argument is used to specify the proportions and the \code{ni} argument the corresponding sample sizes.
-   \item \code{transf.ipft}: inverse of the Freeman-Tukey (double arcsine) transformation for proportions. See Miller (1978).
-   \item \code{transf.ipft.hm}: inverse of the Freeman-Tukey (double arcsine) transformation for proportions using the harmonic mean of the sample sizes for the back-transformation. See Miller (1978). The sample sizes are specified via the \code{targs} argument (the list element should be called \code{ni}).
+   \item \code{transf.ipft}: inverse of the former. See Miller (1978).
+   \item \code{transf.ipft.hm}: inverse of the former, using the harmonic mean of the sample sizes for the back-transformation. See Miller (1978). The sample sizes are specified via the \code{targs} argument (the list element should be called \code{ni}).
    \item \code{transf.isqrt}: inverse of the square root transformation (i.e., function to square a number).
    \item \code{transf.irft}: Freeman-Tukey transformation for incidence rates. See Freeman & Tukey (1950). The \code{xi} argument is used to specify the incidence rates and the \code{ti} argument the corresponding person-times at risk.
-   \item \code{transf.iirft}: inverse of the Freeman-Tukey transformation for incidence rates.
+   \item \code{transf.iirft}: inverse of the former.
    \item \code{transf.ahw}: transformation of coefficient alpha as suggested by Hakstian & Whalen (1976), except that \mjeqn{1-(1-\alpha)^{1/3}}{1-(1-\alpha)^(1/3)} is used (so that the transformed values are a monotonically increasing function of the \mjseqn{\alpha} values).
-   \item \code{transf.iahw}: inverse of the transformation of coefficient alpha as suggested by Hakstian & Whalen (1976).
+   \item \code{transf.iahw}: inverse of the former.
    \item \code{transf.abt}: transformation of coefficient alpha as suggested by Bonett (2002), except that \mjeqn{-\ln(1-\alpha)}{-ln(1-\alpha)} is used (so that the transformed values are a monotonically increasing function of the \mjseqn{\alpha} values).
-   \item \code{transf.iabt}: inverse of the transformation of coefficient alpha as suggested by Bonett (2002).
+   \item \code{transf.iabt}: inverse of the former.
    \item \code{transf.ztor.int}: integral transformation method for the z-to-r transformation.
    \item \code{transf.exp.int}: integral transformation method for the exponential transformation.
-   \item \code{transf.ilogit.int}: integral transformation method for the inverse of the logit transformation.
+   \item \code{transf.ilogit.int}: integral transformation method for the inverse logit transformation.
    \item \code{transf.dtou1}: transformation of standardized mean differences to Cohen's \mjseqn{U_1} values (Cohen, 1988). Under the assumption that the data for those in the first (say, treated) and second (say, control) group are normally distributed with equal variances but potentially different means, Cohen's \mjseqn{U_1} indicates the proportion of non-overlap between the two distributions (i.e., when \mjseqn{d=0}, then \mjseqn{U_1} is equal to 0, which goes to 1 as \mjseqn{d} increases).
    \item \code{transf.dtou2}: transformation of standardized mean differences to Cohen's \mjseqn{U_2} values (Cohen, 1988). Under the same assumptions as above, Cohen's \mjseqn{U_2} indicates the proportion in the first group that exceeds the same proportion in the second group (i.e., when \mjseqn{d=0}, then \mjseqn{U_2} is equal to 0.5, which goes to 1 as \mjseqn{d} increases).
    \item \code{transf.dtou3}: transformation of standardized mean differences to Cohen's \mjseqn{U_3} values (Cohen, 1988). Under the same assumptions as above, Cohen's \mjseqn{U_3} indicates the proportion of individuals in the first group that have a higher value than the mean of those in the second group (i.e., when \mjseqn{d=0}, then \mjseqn{U_3} is equal to 0.5, which goes to 1 as \mjseqn{d} increases).
    \item \code{transf.dtocles}: transformation of standardized mean differences to common language effect size (CLES) values (McGraw & Wong, 1992) (also called the probability of superiority). A CLES value indicates the probability that a randomly sampled individual from the first group has a higher value than a randomly sampled individual from the second group (i.e., when \mjseqn{d=0}, then the CLES is equal to 0.5, which goes to 1 as \mjseqn{d} increases).
    \item \code{transf.dtorpb}: transformation of standardized mean differences to point-biserial correlations. If \code{n1i} and \code{n2i} are not specified, the function assumes \code{n1i = n2i} and uses the approximate formula \mjeqn{r_{pb} = \frac{d}{\sqrt{d^2 + 4}}}{r_pb = d / \sqrt{d^2 + 4}}. If \code{n1i} and \code{n2i} are specified, uses the exact transformation formula \mjeqn{r_{pb} = \frac{d}{\sqrt{d^2 + h}}}{r_pb = d / \sqrt{d^2 + h}}, where \mjeqn{h = \frac{m}{n_1} + \frac{m}{n_2}}{h = m / n_1 + m / n_2} and \mjseqn{m = n_1 + n_2 - 2}.
-   \item \code{transf.dtobesd}: transformation of standardized mean differences to binomial effect size display values (Rosenthal & Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply one minus the proportion in the first group scoring above the median).
-   \item \code{transf.dtomd}: transformation of standardized mean differences to mean differences given a known standard deviation, which must be specified via the \code{targs} argument.
+   \item \code{transf.dtobesd}: transformation of standardized mean differences to binomial effect size display values (Rosenthal & Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply one minus this value).
+   \item \code{transf.dtomd}: transformation of standardized mean differences to mean differences given a known standard deviation (which needs to be specified via the \code{targs} argument).
    \item \code{transf.lnortord}: transformation of log odds ratios to risk differences, assuming a particular value for the control group risk (which needs to be specified via the \code{pc} argument).
    \item \code{transf.lnortorr}: transformation of log odds ratios to risk ratios, assuming a particular value for the control group risk (which needs to be specified via the \code{pc} argument).
-   \item \code{transf.lnortodn}: transformation of log odds ratios to standardized mean differences (assuming normal distributions) (Cox & Snell, 1989).
-   \item \code{transf.lnortodl}: transformation of log odds ratios to standardized mean differences (assuming logistic distributions) (Chinn, 2000).
-   \item \code{transf.dtolnorn}: transformation of standardized mean differences to log odds ratios (assuming normal distributions) (Cox & Snell, 1989).
-   \item \code{transf.dtolnorl}: transformation of standardized mean differences to log odds ratios (assuming logistic distributions) (Chinn, 2000).
+   \item \code{transf.lnortod.norm}: transformation of log odds ratios to standardized mean differences (assuming normal distributions) (Cox & Snell, 1989).
+   \item \code{transf.lnortod.logis}: transformation of log odds ratios to standardized mean differences (assuming logistic distributions) (Chinn, 2000).
+   \item \code{transf.dtolnor.norm}: transformation of standardized mean differences to log odds ratios (assuming normal distributions) (Cox & Snell, 1989).
+   \item \code{transf.dtolnor.logis}: transformation of standardized mean differences to log odds ratios (assuming logistic distributions) (Chinn, 2000).
    \item \code{transf.lnortortet.pearson}: transformation of log odds ratios to tetrachoric correlations as suggested by Pearson (1900).
    \item \code{transf.lnortortet.digby}: transformation of log odds ratios to tetrachoric correlations as suggested by Digby (1983).
    }

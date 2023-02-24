@@ -331,16 +331,16 @@ transf.lnortorr <- function(xi, pc, ...) {
 
 ############################################################################
 
-transf.lnortodn <- function(xi)
+transf.lnortod.norm <- function(xi)
    xi / 1.65
 
-transf.lnortodl <- function(xi)
+transf.lnortod.logis <- function(xi)
    sqrt(3) / base::pi * xi
 
-transf.dtolnorn <- function(xi)
+transf.dtolnor.norm <- function(xi)
    xi * 1.65
 
-transf.dtolnorl <- function(xi)
+transf.dtolnor.logis <- function(xi)
    xi / sqrt(3) * base::pi
 
 transf.lnortortet.pearson <- function(xi)

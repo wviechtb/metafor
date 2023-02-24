@@ -126,12 +126,14 @@
 <span><span class="fu">transf.dtorpb</span><span class="op">(</span><span class="va">xi</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">transf.dtobesd</span><span class="op">(</span><span class="va">xi</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">transf.dtomd</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span>, <span class="va">...</span><span class="op">)</span></span>
-<span><span class="fu">transf.logortord</span><span class="op">(</span><span class="va">xi</span>, <span class="va">pc</span>, <span class="va">...</span><span class="op">)</span></span>
-<span><span class="fu">transf.logortorr</span><span class="op">(</span><span class="va">xi</span>, <span class="va">pc</span>, <span class="va">...</span><span class="op">)</span></span>
-<span><span class="fu">transf.or2dn</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
-<span><span class="fu">transf.or2dl</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
-<span><span class="fu">transf.d2orn</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
-<span><span class="fu">transf.d2orl</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">transf.lnortord</span><span class="op">(</span><span class="va">xi</span>, <span class="va">pc</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">transf.lnortorr</span><span class="op">(</span><span class="va">xi</span>, <span class="va">pc</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">transf.lnortod.norm</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
+<span><span class="fu">transf.lnortod.logis</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
+<span><span class="fu">transf.dtolnor.norm</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
+<span><span class="fu">transf.dtolnor.logis</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
+<span><span class="fu">transf.lnortortet.pearson</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
+<span><span class="fu">transf.lnortortet.digby</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -164,37 +166,39 @@
     <div id="details">
     <h2>Details</h2>
     <p>The following transformation functions are currently implemented:</p><ul><li><p><code>transf.rtoz</code>: Fisher's r-to-z transformation for correlation coefficients (same as <code>atanh(x)</code>).</p></li>
-<li><p><code>transf.ztor</code>: inverse of Fisher's r-to-z transformation (i.e., the z-to-r transformation; same as <code>tanh(x)</code>).</p></li>
+<li><p><code>transf.ztor</code>: inverse of the former (i.e., the z-to-r transformation; same as <code>tanh(x)</code>).</p></li>
 <li><p><code>transf.logit</code>: logit (log odds) transformation for proportions (same as <code>qlogis(x)</code>).</p></li>
-<li><p><code>transf.ilogit</code>: inverse of the logit transformation (same as <code>plogis(x)</code>).</p></li>
+<li><p><code>transf.ilogit</code>: inverse of the former (same as <code>plogis(x)</code>).</p></li>
 <li><p><code>transf.arcsin</code>: arcsine square root transformation for proportions.</p></li>
-<li><p><code>transf.iarcsin</code>: inverse of the arcsine transformation.</p></li>
+<li><p><code>transf.iarcsin</code>: inverse of the former.</p></li>
 <li><p><code>transf.pft</code>: Freeman-Tukey (double arcsine) transformation for proportions. See Freeman &amp; Tukey (1950). The <code>xi</code> argument is used to specify the proportions and the <code>ni</code> argument the corresponding sample sizes.</p></li>
-<li><p><code>transf.ipft</code>: inverse of the Freeman-Tukey (double arcsine) transformation for proportions. See Miller (1978).</p></li>
-<li><p><code>transf.ipft.hm</code>: inverse of the Freeman-Tukey (double arcsine) transformation for proportions using the harmonic mean of the sample sizes for the back-transformation. See Miller (1978). The sample sizes are specified via the <code>targs</code> argument (the list element should be called <code>ni</code>).</p></li>
+<li><p><code>transf.ipft</code>: inverse of the former. See Miller (1978).</p></li>
+<li><p><code>transf.ipft.hm</code>: inverse of the former, using the harmonic mean of the sample sizes for the back-transformation. See Miller (1978). The sample sizes are specified via the <code>targs</code> argument (the list element should be called <code>ni</code>).</p></li>
 <li><p><code>transf.isqrt</code>: inverse of the square root transformation (i.e., function to square a number).</p></li>
 <li><p><code>transf.irft</code>: Freeman-Tukey transformation for incidence rates. See Freeman &amp; Tukey (1950). The <code>xi</code> argument is used to specify the incidence rates and the <code>ti</code> argument the corresponding person-times at risk.</p></li>
-<li><p><code>transf.iirft</code>: inverse of the Freeman-Tukey transformation for incidence rates.</p></li>
+<li><p><code>transf.iirft</code>: inverse of the former.</p></li>
 <li><p><code>transf.ahw</code>: transformation of coefficient alpha as suggested by Hakstian &amp; Whalen (1976), except that <em></em>\(1-(1-\alpha)^{1/3}\) is used (so that the transformed values are a monotonically increasing function of the <em></em>\(\alpha\) values).</p></li>
-<li><p><code>transf.iahw</code>: inverse of the transformation of coefficient alpha as suggested by Hakstian &amp; Whalen (1976).</p></li>
+<li><p><code>transf.iahw</code>: inverse of the former.</p></li>
 <li><p><code>transf.abt</code>: transformation of coefficient alpha as suggested by Bonett (2002), except that <em></em>\(-\ln(1-\alpha)\) is used (so that the transformed values are a monotonically increasing function of the <em></em>\(\alpha\) values).</p></li>
-<li><p><code>transf.iabt</code>: inverse of the transformation of coefficient alpha as suggested by Bonett (2002).</p></li>
+<li><p><code>transf.iabt</code>: inverse of the former.</p></li>
 <li><p><code>transf.ztor.int</code>: integral transformation method for the z-to-r transformation.</p></li>
 <li><p><code>transf.exp.int</code>: integral transformation method for the exponential transformation.</p></li>
-<li><p><code>transf.ilogit.int</code>: integral transformation method for the inverse of the logit transformation.</p></li>
+<li><p><code>transf.ilogit.int</code>: integral transformation method for the inverse logit transformation.</p></li>
 <li><p><code>transf.dtou1</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_1\) values (Cohen, 1988). Under the assumption that the data for those in the first (say, treated) and second (say, control) group are normally distributed with equal variances but potentially different means, Cohen's <em></em>\(U_1\) indicates the proportion of non-overlap between the two distributions (i.e., when <em></em>\(d=0\), then <em></em>\(U_1\) is equal to 0, which goes to 1 as <em></em>\(d\) increases).</p></li>
 <li><p><code>transf.dtou2</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_2\) values (Cohen, 1988). Under the same assumptions as above, Cohen's <em></em>\(U_2\) indicates the proportion in the first group that exceeds the same proportion in the second group (i.e., when <em></em>\(d=0\), then <em></em>\(U_2\) is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>
 <li><p><code>transf.dtou3</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_3\) values (Cohen, 1988). Under the same assumptions as above, Cohen's <em></em>\(U_3\) indicates the proportion of individuals in the first group that have a higher value than the mean of those in the second group (i.e., when <em></em>\(d=0\), then <em></em>\(U_3\) is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>
 <li><p><code>transf.dtocles</code>: transformation of standardized mean differences to common language effect size (CLES) values (McGraw &amp; Wong, 1992) (also called the probability of superiority). A CLES value indicates the probability that a randomly sampled individual from the first group has a higher value than a randomly sampled individual from the second group (i.e., when <em></em>\(d=0\), then the CLES is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>
 <li><p><code>transf.dtorpb</code>: transformation of standardized mean differences to point-biserial correlations. If <code>n1i</code> and <code>n2i</code> are not specified, the function assumes <code>n1i = n2i</code> and uses the approximate formula <em></em>\(r_{pb} = \frac{d}{\sqrt{d^2 + 4}}\). If <code>n1i</code> and <code>n2i</code> are specified, uses the exact transformation formula <em></em>\(r_{pb} = \frac{d}{\sqrt{d^2 + h}}\), where <em></em>\(h = \frac{m}{n_1} + \frac{m}{n_2}\) and <em></em>\(m = n_1 + n_2 - 2\).</p></li>
-<li><p><code>transf.dtobesd</code>: transformation of standardized mean differences to binomial effect size display values (Rosenthal &amp; Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply one minus the proportion in the first group scoring above the median).</p></li>
-<li><p><code>transf.dtomd</code>: transformation of standardized mean differences to mean differences given a known standard deviation, which must be specified via the <code>targs</code> argument.</p></li>
-<li><p><code>transf.logortord</code>: transformation of log odds ratios to risk differences, assuming a particular value for the control group risk (which needs to be specified via the <code>pc</code> argument).</p></li>
-<li><p><code>transf.logortorr</code>: transformation of log odds ratios to risk ratios, assuming a particular value for the control group risk (which needs to be specified via the <code>pc</code> argument).</p></li>
-<li><p><code>transf.or2dn</code>: transformation of log odds ratios to standardized mean differences (assuming normal distributions) (Cox &amp; Snell, 1989).</p></li>
-<li><p><code>transf.or2dl</code>: transformation of log odds ratios to standardized mean differences (assuming logistic distributions) (Chinn, 2000).</p></li>
-<li><p><code>transf.d2orn</code>: transformation of standardized mean differences to log odds ratios (assuming normal distributions) (Cox &amp; Snell, 1989).</p></li>
-<li><p><code>transf.d2orl</code>: transformation of standardized mean differences to log odds ratios (assuming logistic distributions) (Chinn, 2000).</p></li>
+<li><p><code>transf.dtobesd</code>: transformation of standardized mean differences to binomial effect size display values (Rosenthal &amp; Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply one minus this value).</p></li>
+<li><p><code>transf.dtomd</code>: transformation of standardized mean differences to mean differences given a known standard deviation (which needs to be specified via the <code>targs</code> argument).</p></li>
+<li><p><code>transf.lnortord</code>: transformation of log odds ratios to risk differences, assuming a particular value for the control group risk (which needs to be specified via the <code>pc</code> argument).</p></li>
+<li><p><code>transf.lnortorr</code>: transformation of log odds ratios to risk ratios, assuming a particular value for the control group risk (which needs to be specified via the <code>pc</code> argument).</p></li>
+<li><p><code>transf.lnortod.norm</code>: transformation of log odds ratios to standardized mean differences (assuming normal distributions) (Cox &amp; Snell, 1989).</p></li>
+<li><p><code>transf.lnortod.logis</code>: transformation of log odds ratios to standardized mean differences (assuming logistic distributions) (Chinn, 2000).</p></li>
+<li><p><code>transf.dtolnor.norm</code>: transformation of standardized mean differences to log odds ratios (assuming normal distributions) (Cox &amp; Snell, 1989).</p></li>
+<li><p><code>transf.dtolnor.logis</code>: transformation of standardized mean differences to log odds ratios (assuming logistic distributions) (Chinn, 2000).</p></li>
+<li><p><code>transf.lnortortet.pearson</code>: transformation of log odds ratios to tetrachoric correlations as suggested by Pearson (1900).</p></li>
+<li><p><code>transf.lnortortet.digby</code>: transformation of log odds ratios to tetrachoric correlations as suggested by Digby (1983).</p></li>
 </ul></div>
     <div id="value">
     <h2>Value</h2>
@@ -216,11 +220,13 @@
 <p>Chinn, S. (2000). A simple method for converting an odds ratio to effect size for use in meta-analysis. <em>Statistics in Medicine</em>, <b>19</b>(22), 3127–3131. <a href="https://doi.org/10.1002/1097-0258(20001130)19:22&lt;3127::aid-sim784&gt;3.0.co;2-m" class="external-link">https://doi.org/10.1002/1097-0258(20001130)19:22&lt;3127::aid-sim784&gt;3.0.co;2-m</a></p>
 <p>Cohen, J. (1988). <em>Statistical power analysis for the behavioral sciences</em> (2nd ed.). Hillsdale, NJ: Lawrence Erlbaum Associates.</p>
 <p>Cox, D. R., &amp; Snell, E. J. (1989). <em>Analysis of binary data</em> (2nd ed.). London: Chapman &amp; Hall.</p>
+<p>Digby, P. G. N. (1983). Approximating the tetrachoric correlation coefficient. <em>Biometrics</em>, <b>39</b>(3), 753–757. <a href="https://doi.org/10.2307/2531104" class="external-link">https://doi.org/10.2307/2531104</a></p>
 <p>Fisher, R. A. (1921). On the “probable error” of a coefficient of correlation deduced from a small sample. <em>Metron</em>, <b>1</b>, 1–32. <a href="http://hdl.handle.net/2440/15169" class="external-link">http://hdl.handle.net/2440/15169</a></p>
 <p>Freeman, M. F., &amp; Tukey, J. W. (1950). Transformations related to the angular and the square root. <em>Annals of Mathematical Statistics</em>, <b>21</b>(4), 607–611. <a href="https://doi.org/10.1214/aoms/1177729756" class="external-link">https://doi.org/10.1214/aoms/1177729756</a></p>
 <p>Hakstian, A. R., &amp; Whalen, T. E. (1976). A k-sample significance test for independent alpha coefficients. <em>Psychometrika</em>, <b>41</b>(2), 219–231. <a href="https://doi.org/10.1007/BF02291840" class="external-link">https://doi.org/10.1007/BF02291840</a></p>
 <p>McGraw, K. O., &amp; Wong, S. P. (1992). A common language effect size statistic. <em>Psychological Bulletin</em>, <b>111</b>(2), 361–365. <a href="https://doi.org/10.1037/0033-2909.111.2.361" class="external-link">https://doi.org/10.1037/0033-2909.111.2.361</a></p>
 <p>Miller, J. J. (1978). The inverse of the Freeman-Tukey double arcsine transformation. <em>American Statistician</em>, <b>32</b>(4), 138. <a href="https://doi.org/10.1080/00031305.1978.10479283" class="external-link">https://doi.org/10.1080/00031305.1978.10479283</a></p>
+<p>Pearson, K. (1900). Mathematical contributions to the theory of evolution. VII. On the correlation of characters not quantitatively measurable. <em>Philosophical Transactions of the Royal Society of London, Series A</em>, <b>195</b>, 1–47. <a href="https://doi.org/10.1098/rsta.1900.0022" class="external-link">https://doi.org/10.1098/rsta.1900.0022</a></p>
 <p>Rosenthal, R., &amp; Rubin, D. B. (1982). A simple, general purpose display of magnitude of experimental effect. <em>Journal of Educational Psychology</em>, <b>74</b>(2), 166–169. <a href="https://doi.org/10.1037/0022-0663.74.2.166" class="external-link">https://doi.org/10.1037/0022-0663.74.2.166</a></p>
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1–48. <a href="https://doi.org/10.18637/jss.v036.i03" class="external-link">https://doi.org/10.18637/jss.v036.i03</a></p>
     </div>
