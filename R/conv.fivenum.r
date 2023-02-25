@@ -148,7 +148,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
    crit  <- rep(NA_real_, k)
    sig   <- rep(NA,       k)
 
-   for (i in 1:k) {
+   for (i in seq_len(k)) {
 
       ### check min <= q1 <= median <= q3 <= max
 

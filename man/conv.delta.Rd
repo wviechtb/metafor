@@ -15,7 +15,7 @@ conv.delta(yi, vi, data, include, transf, var.names, append=TRUE, replace="ifna"
    \item{transf}{a function which should be used for the transformation.}
    \item{var.names}{character vector with two elements to specify the name of the variable for the transformed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (if \code{data} is an object of class \code{"escalc"}, the \code{var.names} are taken from the object; otherwise the defaults are \code{"yi"} and \code{"vi"}).}
    \item{append}{logical to specify whether the data frame provided via the \code{data} argument should be returned together with the estimated values (the default is \code{TRUE}).}
-   \item{replace}{character string to specify how values in \code{var.names} should be replaced (only relevant when using the \code{data} argument and if variables \code{var.names} already exist in the data frame). See the \sQuote{Value} section for more details.}
+   \item{replace}{character string to specify how values in \code{var.names} should be replaced (only relevant when using the \code{data} argument and if variables in \code{var.names} already exist in the data frame). See the \sQuote{Value} section for more details.}
    \item{\dots}{other arguments for the transformation function.}
 }
 \details{
@@ -99,11 +99,11 @@ conv.delta(yi, vi, data=dat,
 ### preparation steps for a meta-analysis of standardized mean differences (SMDs)
 
 dat <- data.frame(study=1:4,
-                  m1i=c(2.03,NA,NA,NA), sd1i=c(0.95,NA,NA,NA), n1i=c(32,95,NA,NA),
-                  m2i=c(1.25,NA,NA,NA), sd2i=c(1.04,NA,NA,NA), n2i=c(30,99,NA,NA),
-                  tval=c(NA,2.12,NA,NA),
-                  ai=c(NA,NA,26,NA), bi=c(NA,NA,58,NA), ci=c(NA,NA,11,NA), di=c(NA,NA,74,NA),
-                  or=c(NA,NA,NA,2.56), lower=c(NA,NA,NA,1.23), upper=c(NA,NA,NA,5.30))
+         m1i=c(2.03,NA,NA,NA), sd1i=c(0.95,NA,NA,NA), n1i=c(32,95,NA,NA),
+         m2i=c(1.25,NA,NA,NA), sd2i=c(1.04,NA,NA,NA), n2i=c(30,99,NA,NA),
+         tval=c(NA,2.12,NA,NA),
+         ai=c(NA,NA,26,NA), bi=c(NA,NA,58,NA), ci=c(NA,NA,11,NA), di=c(NA,NA,74,NA),
+         or=c(NA,NA,NA,2.56), lower=c(NA,NA,NA,1.23), upper=c(NA,NA,NA,5.30))
 dat
 
 ### study types:
@@ -136,47 +136,54 @@ rma(yi, vi, data=dat, method="EE")
 
 ############################################################################
 
-### another example for a meta-analysis of correlation coefficients
+### a more elaborate example showing how this function could be used in the data
+### preparation steps for a meta-analysis of correlation coefficients
 
-dat <- data.frame(study=1:5,
-                  ri=c(.42,NA,NA,NA,NA),
-                  tval=c(NA,2.85,NA,NA,NA),
-                  ni=c(93,182,NA,NA,NA),
-                  ai=c(NA,NA,61,NA,NA), bi=c(NA,NA,36,NA,NA),
-                  ci=c(NA,NA,39,NA,NA), di=c(NA,NA,57,NA,NA),
-                  or=c(NA,NA,NA,1.86,NA), lower=c(NA,NA,NA,1.12,NA), upper=c(NA,NA,NA,3.10,NA),
-                  m1i=c(NA,NA,NA,NA,54.1), sd1i=c(NA,NA,NA,NA,5.79), n1i=c(NA,NA,NA,NA,66),
-                  m2i=c(NA,NA,NA,NA,51.7), sd2i=c(NA,NA,NA,NA,6.23), n2i=c(NA,NA,NA,NA,65))
+dat <- data.frame(study=1:6,
+         ri=c(.42,NA,NA,NA,NA,NA),
+         tval=c(NA,2.85,NA,NA,NA,NA),
+         phi=c(NA,NA,NA,0.27,NA,NA),
+         ni=c(93,182,NA,112,NA,NA),
+         ai=c(NA,NA,NA,NA,61,NA), bi=c(NA,NA,NA,NA,36,NA),
+         ci=c(NA,NA,NA,NA,39,NA), di=c(NA,NA,NA,NA,57,NA),
+         or=c(NA,NA,NA,NA,NA,1.86), lower=c(NA,NA,NA,NA,NA,1.12), upper=c(NA,NA,NA,NA,NA,3.10),
+         m1i=c(NA,NA,54.1,NA,NA,NA), sd1i=c(NA,NA,5.79,NA,NA,NA), n1i=c(NA,NA,66,75,NA,NA),
+         m2i=c(NA,NA,51.7,NA,NA,NA), sd2i=c(NA,NA,6.23,NA,NA,NA), n2i=c(NA,NA,65,88,NA,NA))
 dat
 
 ### study types:
 ### 1) provides the correlation coefficient and sample size
 ### 2) provides the t-statistic from a t-test of H0: rho = 0
-### 3) dichotomized both variables and reports the resulting 2x2 table
-### 4) dichotomized both variables and reports an odds ratio with 95% CI
-### 5) dichotomized one variable and reports means and SDs for the two corresponding groups
+### 3) dichotomized one variable and reports means and SDs for the two corresponding groups
+### 4) provides the phi coefficient, marginal counts, and total sample size
+### 5) dichotomized both variables and reports the resulting 2x2 table
+### 6) dichotomized both variables and reports an odds ratio with 95% CI
 
 ### use escalc() to directly compute the correlation and its variance for studies 1 and 2
 dat <- escalc(measure="COR", ri=ri, ni=ni, ti=tval, data=dat)
 dat
 
-### use escalc() with measure RTET to compute the tetrachoric correlation for study 3
+### use escalc() with measure RBIS to compute the biserial correlation for study 3
+dat <- escalc(measure="RBIS", m1i=m1i, sd1i=sd1i, n1i=n1i,
+                              m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, replace=FALSE)
+dat
+
+### use calc2x2() to reconstruct the 2x2 table for study 4
+dat <- calc2x2(ri=phi, ni=ni, n1i=n1i, n2i=n2i, data=dat)
+dat
+
+### use escalc() with measure RTET to compute the tetrachoric correlation for studies 4 and 5
 dat <- escalc(measure="RTET", ai=ai, bi=bi, ci=ci, di=di, data=dat, replace=FALSE)
 dat
 
-### use conv.wald() to convert the OR and CI into the log odds ratio and its variance for study 4
+### use conv.wald() to convert the OR and CI into the log odds ratio and its variance for study 6
 dat <- conv.wald(out=or, ci.lb=lower, ci.ub=upper, data=dat,
                  transf=log, var.names=c("lnor","vlnor"))
 dat
 
-### use conv.delta() to estimate the tetrachoric correlation from the log odds ratio for study 4
+### use conv.delta() to estimate the tetrachoric correlation from the log odds ratio for study 6
 dat <- conv.delta(lnor, vlnor, data=dat,
                   transf=transf.lnortortet.pearson, var.names=c("yi","vi"))
-dat
-
-### use escalc() with measure RBIS to compute the biserial correlation for study 5
-dat <- escalc(measure="RBIS", m1i=m1i, sd1i=sd1i, n1i=n1i,
-                              m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, replace=FALSE)
 dat
 
 ### fit an equal-effects model to the correlations

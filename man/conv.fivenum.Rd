@@ -23,7 +23,7 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
    \item{test}{logical to specify whether a study should be excluded from the estimation if the test for skewness is significant (the default is \code{TRUE}).}
    \item{var.names}{character vector with two elements to specify the name of the variable for the estimated means and the name of the variable for the estimated standard deviations (the defaults are \code{"mean"} and \code{"sd"}).}
    \item{append}{logical to specify whether the data frame provided via the \code{data} argument should be returned together with the estimated values (the default is \code{TRUE}).}
-   \item{replace}{character string to specify how values in \code{var.names} should be replaced (only relevant when using the \code{data} argument and if variables \code{var.names} already exist in the data frame). See the \sQuote{Value} section for more details.}
+   \item{replace}{character string to specify how values in \code{var.names} should be replaced (only relevant when using the \code{data} argument and if variables in \code{var.names} already exist in the data frame). See the \sQuote{Value} section for more details.}
    \item{\dots}{other arguments.}
 }
 \details{

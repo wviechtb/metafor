@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-26</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-27</span>
       </span>
     </div>
 
@@ -299,7 +299,7 @@
 <h3 id="observed-effect-sizes-or-outcomes-of-the-individual-studies">Observed Effect Sizes or Outcomes of the Individual Studies<a class="anchor" aria-label="anchor" href="#observed-effect-sizes-or-outcomes-of-the-individual-studies"></a></h3>
 
 
-<p>The various models do not require the calculation of the observed effect sizes or outcomes of the individual studies (e.g., the observed log odds ratios of the <em></em>\(k\) studies) and directly make use of the table/event counts. Zero cells/events are not a problem (except in extreme cases, such as when one of the two outcomes never occurs or when there are no events in any of the studies). Therefore, it is unnecessary to add some constant to the cell/event counts when there are zero cells/events.</p>
+<p>The various models do not require the calculation of the observed effect sizes or outcomes of the individual studies (e.g., the observed log odds ratios of the <em></em>\(k\) studies) and directly make use of the cell/event counts. Zero cells/events are not a problem (except in extreme cases, such as when one of the two outcomes never occurs or when there are no events in any of the studies). Therefore, it is unnecessary to add some constant to the cell/event counts when there are zero cells/events.</p>
 <p>However, for plotting and various other functions, it is necessary to calculate the observed effect sizes or outcomes for the <em></em>\(k\) studies. Here, zero cells/events can be problematic, so adding a constant value to the cell/event counts ensures that all <em></em>\(k\) values can be calculated. The <code>add</code> and <code>to</code> arguments are used to specify what value should be added to the cell/event counts and under what circumstances when calculating the observed effect sizes or outcomes. The documentation of the <code><a href="escalc.html">escalc</a></code> function explains how the <code>add</code> and <code>to</code> arguments work. Note that <code>drop00</code> is set to <code>TRUE</code> by default, since studies where <code>ai=ci=0</code> or <code>bi=di=0</code> or studies where <code>x1i=x2i=0</code> are uninformative about the size of the effect.</p>
 <p></p>
 </div>

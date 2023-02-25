@@ -128,7 +128,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
                  \tab \ics \tab outcome 1 \tab \ics \tab outcome 2 \tab \ics \tab total      \cr
          group 1 \tab \ics \tab \code{ai} \tab \ics \tab \code{bi} \tab \ics \tab \code{n1i} \cr
          group 2 \tab \ics \tab \code{ci} \tab \ics \tab \code{di} \tab \ics \tab \code{n2i}}
-         where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies (i.e., the number of people falling into a particular category) and \code{n1i} and \code{n2i} are the row totals (i.e., the group sizes).
+         where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies (i.e., the number of individuals falling into a particular category) and \code{n1i} and \code{n2i} are the row totals (i.e., the group sizes).
 
          For example, in a set of randomized clinical trials, group 1 and group 2 may refer to the treatment and placebo/control group, respectively, with outcome 1 denoting some event of interest (e.g., death, complications, failure to improve under the treatment) and outcome 2 its complement. Similarly, in a set of cohort studies, group 1 and group 2 may denote those who engage in and those who do not engage in a potentially harmful behavior (e.g., smoking), with outcome 1 denoting the development of a particular disease (e.g., lung cancer) during the follow-up period. Finally, in a set of case-control studies, group 1 and group 2 may refer to those with the disease (i.e., cases) and those free of the disease (i.e., controls), with outcome 1 denoting, for example, exposure to some environmental risk factor in the past and outcome 2 non-exposure. Note that in all of these examples, the stratified sampling scheme fixes the row totals (i.e., the group sizes) by design.
 
@@ -234,6 +234,13 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
       \subsection{(2b) Measures for Two Dichotomous Variables}{
 
          When the goal of a meta-analysis is to examine the relationship between two dichotomous variables, the data for each study can again be presented in the form of a \mjeqn{2 \times 2}{2x2} table, except that there may not be a clear distinction between the grouping variable and the outcome variable. Moreover, the table may be a result of cross-sectional (i.e., multinomial) sampling, where none of the table margins (except the total sample size) are fixed by the study design.
+
+         In particular, assume that the data of interest for a particular study are of the form:
+         \tabular{lcccccc}{
+                               \tab \ics \tab variable 2, outcome + \tab \ics \tab variable 2, outcome - \tab \ics \tab total      \cr
+         variable 1, outcome + \tab \ics \tab \code{ai}             \tab \ics \tab \code{bi}             \tab \ics \tab \code{n1i} \cr
+         variable 1, outcome - \tab \ics \tab \code{ci}             \tab \ics \tab \code{di}             \tab \ics \tab \code{n2i}}
+         where \code{ai}, \code{bi}, \code{ci}, and \code{di} denote the cell frequencies (i.e., the number of individuals falling into a particular category) and \code{n1i} and \code{n2i} are the row totals.
 
          The phi coefficient and the odds ratio are commonly used measures of association for \mjeqn{2 \times 2}{2x2} table data (e.g., Fleiss & Berlin, 2009). The latter is particularly advantageous, as it is directly comparable to values obtained from stratified sampling (as described earlier). Yule's Q and Yule's Y (Yule, 1912) are additional measures of association for \mjeqn{2 \times 2}{2x2} table data (although they are not typically used in meta-analyses). Finally, assuming that the two dichotomous variables are actually dichotomized versions of the responses on two underlying quantitative scales (and assuming that the two variables follow a bivariate normal distribution), it is also possible to estimate the correlation between the two quantitative variables using the tetrachoric correlation coefficient (Pearson, 1900; Kirk, 1973).
 

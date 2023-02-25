@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-26</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-27</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.9-26" id="metafor-39-26-2023-02-23">metafor 3.9-26 (2023-02-23)<a class="anchor" aria-label="anchor" href="#metafor-39-26-2023-02-23"></a></h2>
+<h2 class="page-header" data-toc-text="3.9-27" id="metafor-39-27-2023-02-25">metafor 3.9-27 (2023-02-25)<a class="anchor" aria-label="anchor" href="#metafor-39-27-2023-02-25"></a></h2>
 <ul><li><p><code><a href="../reference/model.matrix.rma.html">model.matrix.rma()</a></code> gains <code>asdf</code> argument</p></li>
 <li><p><code><a href="../reference/emmprep.html">emmprep()</a></code> function added to create a reference grid for use with the <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans()</a></code> function from the package of the same name</p></li>
 <li><p>improved efficiency of <code><a href="../reference/vif.html">vif()</a></code> when <code>sim=TRUE</code> by reshuffling only the data needed in the model matrix; due to some edge cases, the simulation approach cannot be used when some redundant predictors were dropped from the original model; and when redundancies occur after reshuffling the data, the simulated (G)VIF value(s) are now set to <code>Inf</code> instead of <code>NA</code></p></li>
@@ -104,6 +104,7 @@
 <li><p><code><a href="../reference/selmodel.html">selmodel()</a></code> gains <code>type='trunc'</code> and <code>type='truncest'</code> models (the latter should be considered experimental)</p></li>
 <li><p>package <code>numDeriv</code> moved from <code>Suggests</code> to <code>Depends</code></p></li>
 <li><p>the variance of measure <code>ZPCOR</code> is now calculated with <code>1/(ni-mi-3)</code> (instead of <code>1/(ni-mi-1)</code>), which provides a better approximation in small samples (and analogous to how the variance of <code>ZCOR</code> is calculated with <code>1/(ni-3)</code>)</p></li>
+<li><p>added <code><a href="../reference/calc2x2.html">calc2x2()</a></code> function for reconstructing the cell frequencies in 2x2 tables based on other summary statistics</p></li>
 <li><p>added <code><a href="../reference/conv.wald.html">conv.wald()</a></code> function for converting Wald-type confidence intervals and test statistics to sampling variances</p></li>
 <li><p>added <code><a href="../reference/conv.fivenum.html">conv.fivenum()</a></code> function for estimating means and standard deviations from five-number summary values</p></li>
 <li><p>added <code><a href="../reference/conv.delta.html">conv.delta()</a></code> function for transforming observed effect sizes or outcomes and their sampling variances using the delta method</p></li>

@@ -105,7 +105,7 @@
 
    ### cases where only one cell is equal to zero are handled further below
 
-   ### in all other cases, first optimize over rho with cut values set to sample values
+   ### in all other cases, first optimize over rho with cut values set to the sample values
    ### use suppressWarnings() to suppress "NA/Inf replaced by maximum positive value" warnings
    res <- try(suppressWarnings(optimize(fn, interval=c(-1,1), ai=ai, bi=bi, ci=ci, di=di, maxcor=maxcor, fixcut=TRUE)), silent=TRUE)
 
@@ -116,7 +116,7 @@
    }
 
    ### then use the value as the starting point and maximize over rho and the cut values
-   ### (Nelder-Mead seems to do fine here; using L-BFGS-B doesn't seems to improve on this)
+   ### (Nelder-Mead seems to do fine here; using L-BFGS-B doesn't seem to improve on this)
    res <- try(optim(par=c(res$minimum,qnorm((ai+bi)/ni),qnorm((ai+ci)/ni)), fn, ai=ai, bi=bi, ci=ci, di=di, maxcor=maxcor, fixcut=FALSE, hessian=TRUE), silent=TRUE)
    #res <- try(optim(par=c(res$minimum,qnorm((ai+bi)/ni),qnorm((ai+ci)/ni)), fn, method="L-BFGS-B", lower=c(-1,-Inf,-Inf), upper=c(1,Inf,Inf), ai=ai, bi=bi, ci=ci, di=di, maxcor=maxcor, fixcut=FALSE, hessian=TRUE), silent=TRUE)
 

@@ -78,9 +78,9 @@ reference:
       Introduction to the package
     contents:
     - metafor-package
-  - title: "Effect Sizes / Outcome Measures"
+  - title: "Effect Sizes / Outcome Measures / Data Prep"
     desc: >
-      Functions to compute various types of effect sizes and outcome measures.
+      Functions to compute various types of effect sizes / outcome measures and for data preparation.
     contents:
       - escalc
       - rcalc
@@ -88,6 +88,7 @@ reference:
       - conv.wald
       - conv.delta
       - conv.fivenum
+      - calc2x2
   - title: "Model Fitting"
     desc: >
       Main model fitting functions.
