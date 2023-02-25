@@ -168,8 +168,8 @@ dat <- escalc(measure="RBIS", m1i=m1i, sd1i=sd1i, n1i=n1i,
                               m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, replace=FALSE)
 dat
 
-### use calc2x2() to reconstruct the 2x2 table for study 4
-dat <- calc2x2(ri=phi, ni=ni, n1i=n1i, n2i=n2i, data=dat)
+### use conv.2x2() to reconstruct the 2x2 table for study 4
+dat <- conv.2x2(ri=phi, ni=ni, n1i=n1i, n2i=n2i, data=dat)
 dat
 
 ### use escalc() with measure RTET to compute the tetrachoric correlation for studies 4 and 5

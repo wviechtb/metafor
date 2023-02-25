@@ -1,4 +1,4 @@
-calc2x2 <- function(ri, ori, ni, n1i, n2i, data, include,
+conv.2x2 <- function(ri, ori, ni, n1i, n2i, data, include,
                     var.names=c("ai","bi","ci","di"), append=TRUE, replace="ifna") {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
@@ -123,6 +123,7 @@ calc2x2 <- function(ri, ori, ni, n1i, n2i, data, include,
 
    }
 
+   # TODO: give warning about such cases
    p11i <- ifelse(p11i < 0 | p11i > 1, NA_real_, p11i)
 
    ai <- round(ni * p11i)

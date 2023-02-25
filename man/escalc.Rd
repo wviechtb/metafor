@@ -591,11 +591,15 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 \seealso{
    \code{\link{print.escalc}} and \code{\link{summary.escalc}} for the print and summary methods.
 
-   \code{\link{conv.wald}} for a function to convert Wald-type confidence intervals and test statistics to sampling variances.
-
-   \code{\link{vcalc}} for a function to construct or approximate the variance-covariance matrix of dependent effect sizes or outcomes.
+   \code{\link{conv.2x2}} for a function to reconstruct the cell frequencies of \mjeqn{2 \times 2}{2x2} tables based on other summary statistics.
 
    \code{\link{conv.fivenum}} for a function to convert five-number summary values to means and standard deviations (needed to compute various effect size measures, such as raw or standardized mean differences and ratios of means / response ratios).
+
+   \code{\link{conv.wald}} for a function to convert Wald-type confidence intervals and test statistics to sampling variances.
+
+   \code{\link{conv.delta}} for a function to transform observed effect sizes or outcomes and their sampling variances using the delta method.
+
+   \code{\link{vcalc}} for a function to construct or approximate the variance-covariance matrix of dependent effect sizes or outcomes.
 
    \code{\link{rma.uni}} and \code{\link{rma.mv}} for model fitting functions that can take the calculated effect sizes or outcomes (and the corresponding sampling variances) as input.
 

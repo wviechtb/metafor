@@ -14,7 +14,7 @@
 
 - the variance of measure `ZPCOR` is now calculated with `1/(ni-mi-3)` (instead of `1/(ni-mi-1)`), which provides a better approximation in small samples (and analogous to how the variance of `ZCOR` is calculated with `1/(ni-3)`)
 
-- added `calc2x2()` function for reconstructing the cell frequencies in 2x2 tables based on other summary statistics
+- added `conv.2x2()` function for reconstructing the cell frequencies in 2x2 tables based on other summary statistics
 
 - added `conv.wald()` function for converting Wald-type confidence intervals and test statistics to sampling variances
 

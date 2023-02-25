@@ -88,7 +88,7 @@ reference:
       - conv.wald
       - conv.delta
       - conv.fivenum
-      - calc2x2
+      - conv.2x2
   - title: "Model Fitting"
     desc: >
       Main model fitting functions.

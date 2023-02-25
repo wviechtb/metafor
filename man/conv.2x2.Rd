@@ -1,12 +1,12 @@
-\name{calc2x2}
-\alias{calc2x2}
+\name{conv.2x2}
+\alias{conv.2x2}
 \title{Reconstruct Cell Frequencies of \mjeqn{2 \times 2}{2x2} Tables}
 \description{
    Function to reconstruct the cell frequencies of \mjeqn{2 \times 2}{2x2} tables based on other summary statistics. \loadmathjax
 }
 \usage{
-calc2x2(ri, ori, ni, n1i, n2i, data, include,
-        var.names=c("ai","bi","ci","di"), append=TRUE, replace="ifna")
+conv.2x2(ri, ori, ni, n1i, n2i, data, include,
+         var.names=c("ai","bi","ci","di"), append=TRUE, replace="ifna")
 }
 \arguments{
    \item{ri}{vector with the phi coefficients corresponding to the tables.}
@@ -74,7 +74,7 @@ dat$n2i[2:3] <- with(dat, ai[1] + ci[1])
 dat
 
 ### reconstruct cell frequencies for rows 2 and 3
-dat <- calc2x2(ri=phi, ori=oddsratio, ni=ni, n1i=n1i, n2i=n2i, data=dat)
+dat <- conv.2x2(ri=phi, ori=oddsratio, ni=ni, n1i=n1i, n2i=n2i, data=dat)
 dat
 
 ### same example but with cell frequencies that are 10 times as large
@@ -85,7 +85,7 @@ dat$oddsratio[3] <- round(exp(escalc(measure="OR", ai=ai, bi=bi, ci=ci, di=di, d
 dat$ni[2:3]  <- with(dat, ai[1] + bi[1] + ci[1] + di[1])
 dat$n1i[2:3] <- with(dat, ai[1] + bi[1])
 dat$n2i[2:3] <- with(dat, ai[1] + ci[1])
-dat <- calc2x2(ri=phi, ori=oddsratio, ni=ni, n1i=n1i, n2i=n2i, data=dat)
+dat <- conv.2x2(ri=phi, ori=oddsratio, ni=ni, n1i=n1i, n2i=n2i, data=dat)
 dat # slight inaccuracy in row 2 due to rounding
 }
 \keyword{manip}
