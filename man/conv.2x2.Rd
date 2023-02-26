@@ -37,7 +37,11 @@ conv.2x2(ri, ori, ni, n1i, n2i, data, include,
 
    Typically, the odds ratio or phi coefficient that can be extracted from a study will be rounded to a certain degree. The calculations underlying the function are exact only for unrounded values. Discrepancies introduced due to rounding should be relatively minor though.
 
-   If a marginal total is unknown, then external information needs to be used to \sQuote{guestimate} the number of individuals that experienced the outcome of interest on this variable. Depending on the accuracy of such an estimate, the reconstructed cell frequencies will be more or less accurate and need to be treated with due caution. If only one of the two marginal counts is unknown but a 95\% CI for the odds ratio is also available, then the \href{https://cran.r-project.org/package=estimraw}{estimraw} package can also be used to reconstruct the corresponding cell frequencies (Di Pietrantonj, 2006, but see Veroniki et al., 2013, for some cautions).
+   If a marginal total is unknown, then external information needs to be used to \sQuote{guestimate} the number of individuals that experienced the outcome of interest on this variable. Depending on the accuracy of such an estimate, the reconstructed cell frequencies will be more or less accurate and need to be treated with due caution.
+
+   The true marginal counts also put constraints on the possible values for the odds ratio and the phi coefficient. If a marginal count is replaced by a guestimate which is not compatible with the given odds ratio or phi coefficient, one or more reconstructed cell frequencies may be negative. The function issues a warning if this happens and sets the cell frequencies to \code{NA}.
+
+   If only one of the two marginal counts is unknown but a 95\% CI for the odds ratio is also available, then the \href{https://cran.r-project.org/package=estimraw}{estimraw} package can also be used to reconstruct the corresponding cell frequencies (Di Pietrantonj, 2006, but see Veroniki et al., 2013, for some cautions).
 }
 \value{
    If the \code{data} argument was not specified or \code{append=FALSE}, a data frame with four variables called \code{var.names} with the reconstructed cell frequencies.
@@ -64,7 +68,7 @@ conv.2x2(ri, ori, ni, n1i, n2i, data, include,
 \examples{
 ### demonstration that the reconstruction of the 2x2 table works
 ### (note: the values in rows 2 and 3 correspond to those in row 1)
-dat <- data.frame(ai=c(49,NA,NA), bi=c(23,NA,NA), ci=c(12,NA,NA), di=c(19,NA,NA),
+dat <- data.frame(ai=c(36,NA,NA), bi=c(86,NA,NA), ci=c(20,NA,NA), di=c(98,NA,NA),
                   phi=NA, oddsratio=NA, ni=NA, n1i=NA, n2i=NA)
 dat$phi[2] <- round(escalc(measure="PHI", ai=ai, bi=bi, ci=ci, di=di, data=dat)$yi[1], 2)
 dat$oddsratio[3] <- round(exp(escalc(measure="OR", ai=ai, bi=bi, ci=ci, di=di, data=dat)$yi[1]), 2)
@@ -78,7 +82,7 @@ dat <- conv.2x2(ri=phi, ori=oddsratio, ni=ni, n1i=n1i, n2i=n2i, data=dat)
 dat
 
 ### same example but with cell frequencies that are 10 times as large
-dat <- data.frame(ai=c(490,NA,NA), bi=c(230,NA,NA), ci=c(120,NA,NA), di=c(190,NA,NA),
+dat <- data.frame(ai=c(360,NA,NA), bi=c(860,NA,NA), ci=c(200,NA,NA), di=c(980,NA,NA),
                   phi=NA, oddsratio=NA, ni=NA, n1i=NA, n2i=NA)
 dat$phi[2] <- round(escalc(measure="PHI", ai=ai, bi=bi, ci=ci, di=di, data=dat)$yi[1], 2)
 dat$oddsratio[3] <- round(exp(escalc(measure="OR", ai=ai, bi=bi, ci=ci, di=di, data=dat)$yi[1]), 2)
@@ -87,5 +91,11 @@ dat$n1i[2:3] <- with(dat, ai[1] + bi[1])
 dat$n2i[2:3] <- with(dat, ai[1] + ci[1])
 dat <- conv.2x2(ri=phi, ori=oddsratio, ni=ni, n1i=n1i, n2i=n2i, data=dat)
 dat # slight inaccuracy in row 2 due to rounding
+
+### demonstrate what happens when a true marginal count is guestimated
+escalc(measure="PHI", ai=176, bi=24, ci=72, di=128)
+conv.2x2(ri=0.54, ni=400, n1i=200, n2i=248) # using the true marginal counts
+conv.2x2(ri=0.54, ni=400, n1i=200, n2i=200) # marginal count for variable 2 is guestimated
+conv.2x2(ri=0.54, ni=400, n1i=200, n2i=50)  # marginal count for variable 2 is incompatible
 }
 \keyword{manip}

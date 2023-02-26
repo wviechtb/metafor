@@ -104,10 +104,7 @@ conv.2x2 <- function(ri, ori, ni, n1i, n2i, data, include,
       if (is.na(ni[i]) || is.na(n1i[i]) || is.na(n2i[i]))
          next
 
-      if (!is.na(ri[i]))
-         p11i[i] <- p1i[i]*p2i[i] + ri[i] * sqrt(p1i[i]*(1-p1i[i])*p2i[i]*(1-p2i[i]))
-
-      if (is.na(p11i[i]) && !is.na(ori[i])) {
+      if (!is.na(ori[i])) {
 
          p1. <- p1i[i]
          p2. <- 1-p1i[i]
@@ -121,15 +118,31 @@ conv.2x2 <- function(ri, ori, ni, n1i, n2i, data, include,
 
       }
 
-   }
+      if (is.na(p11i[i]) && !is.na(ri[i]))
+         p11i[i] <- p1i[i]*p2i[i] + ri[i] * sqrt(p1i[i]*(1-p1i[i])*p2i[i]*(1-p2i[i]))
 
-   # TODO: give warning about such cases
-   p11i <- ifelse(p11i < 0 | p11i > 1, NA_real_, p11i)
+   }
 
    ai <- round(ni * p11i)
    bi <- n1i - ai
    ci <- n2i - ai
    di <- ni - ai - bi - ci
+
+   ### check for negative cell frequencies
+
+   hasneg <- (ai < 0) | (bi < 0) | (ci < 0) | (di < 0)
+
+   if (any(hasneg, na.rm=TRUE)) {
+
+      warning(mstyle$warning(paste0("There are negative cell frequencies in table", ifelse(sum(hasneg, na.rm=TRUE) > 1, "s ", " "),
+                                    paste0(which(hasneg), collapse=","), ".")), call.=FALSE)
+
+      ai[hasneg] <- NA
+      bi[hasneg] <- NA
+      ci[hasneg] <- NA
+      di[hasneg] <- NA
+
+   }
 
    #########################################################################
 
