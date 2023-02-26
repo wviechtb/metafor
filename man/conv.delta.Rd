@@ -98,35 +98,36 @@ conv.delta(yi, vi, data=dat,
 ### a more elaborate example showing how this function could be used in the data
 ### preparation steps for a meta-analysis of standardized mean differences (SMDs)
 
-dat <- data.frame(study=1:4,
-         m1i=c(2.03,NA,NA,NA), sd1i=c(0.95,NA,NA,NA), n1i=c(32,95,NA,NA),
-         m2i=c(1.25,NA,NA,NA), sd2i=c(1.04,NA,NA,NA), n2i=c(30,99,NA,NA),
-         tval=c(NA,2.12,NA,NA),
-         ai=c(NA,NA,26,NA), bi=c(NA,NA,58,NA), ci=c(NA,NA,11,NA), di=c(NA,NA,74,NA),
-         or=c(NA,NA,NA,2.56), lower=c(NA,NA,NA,1.23), upper=c(NA,NA,NA,5.30))
+dat <- data.frame(study=1:5,
+         m1i=c(2.03,NA,NA,NA,NA), sd1i=c(0.95,NA,NA,NA,NA), n1i=c(32,95,145,NA,NA),
+         m2i=c(1.25,NA,NA,NA,NA), sd2i=c(1.04,NA,NA,NA,NA), n2i=c(30,99,155,NA,NA),
+         tval=c(NA,2.12,NA,NA,NA), dval=c(NA,NA,0.37,NA,NA),
+         ai=c(NA,NA,NA,26,NA), bi=c(NA,NA,NA,58,NA), ci=c(NA,NA,NA,11,NA), di=c(NA,NA,NA,74,NA),
+         or=c(NA,NA,NA,NA,2.56), lower=c(NA,NA,NA,NA,1.23), upper=c(NA,NA,NA,NA,5.30))
 dat
 
 ### study types:
-### 1) provides means and SDs so that the SMD can be directly calculated
-### 2) provides the t-statistic from an independent samples t-test
-### 3) dichotomized the continuous dependent variable and reports the resulting 2x2 table
-### 4) dichotomized the continuous dependent variable and reports an odds ratio with 95% CI
+### 1) reports means and SDs so that the SMD can be directly calculated
+### 2) reports the t-statistic from an independent samples t-test (and group sizes)
+### 3) reports the standardized mean difference directly (and group sizes)
+### 4) dichotomized the continuous dependent variable and reports the resulting 2x2 table
+### 5) dichotomized the continuous dependent variable and reports an odds ratio with 95% CI
 
-### use escalc() to directly compute the SMD and its variance for studies 1 and 2
+### use escalc() to directly compute the SMD and its variance for studies 1, 2, and 3
 dat <- escalc(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i,
-                             m2i=m2i, sd2i=sd2i, n2i=n2i, ti=tval, data=dat)
+                             m2i=m2i, sd2i=sd2i, n2i=n2i, ti=tval, di=dval, data=dat)
 dat
 
-### use escalc() with measure OR2DN to compute the SMD value for study 3
+### use escalc() with measure OR2DN to compute the SMD value for study 4
 dat <- escalc(measure="OR2DN", ai=ai, bi=bi, ci=ci, di=di, data=dat, replace=FALSE)
 dat
 
-### use conv.wald() to convert the OR and CI into the log odds ratio and its variance for study 4
+### use conv.wald() to convert the OR and CI into the log odds ratio and its variance for study 5
 dat <- conv.wald(out=or, ci.lb=lower, ci.ub=upper, data=dat,
                  transf=log, var.names=c("lnor","vlnor"))
 dat
 
-### use conv.delta() to transform the log odds ratio into the SMD value for study 4
+### use conv.delta() to transform the log odds ratio into the SMD value for study 5
 dat <- conv.delta(lnor, vlnor, data=dat,
                   transf=transf.lnortod.norm, var.names=c("yi","vi"))
 dat
@@ -152,10 +153,10 @@ dat <- data.frame(study=1:6,
 dat
 
 ### study types:
-### 1) provides the correlation coefficient and sample size
-### 2) provides the t-statistic from a t-test of H0: rho = 0
+### 1) reports the correlation coefficient directly
+### 2) reports the t-statistic from a t-test of H0: rho = 0
 ### 3) dichotomized one variable and reports means and SDs for the two corresponding groups
-### 4) provides the phi coefficient, marginal counts, and total sample size
+### 4) reports the phi coefficient, marginal counts, and total sample size
 ### 5) dichotomized both variables and reports the resulting 2x2 table
 ### 6) dichotomized both variables and reports an odds ratio with 95% CI
 

@@ -135,6 +135,8 @@ dat
 ### a very simple example
 dat <- data.frame(or=c(1.37,1.89), or.lb=c(1.03,1.60), or.ub=c(1.82,2.23))
 dat
+
+### convert the odds ratios and CIs into log odds ratios with corresponding sampling variances
 dat <- conv.wald(out=or, ci.lb=or.lb, ci.ub=or.ub, data=dat, transf=log)
 dat
 

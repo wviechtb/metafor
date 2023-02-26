@@ -296,87 +296,105 @@
 <span class="r-in"><span><span class="co">### a more elaborate example showing how this function could be used in the data</span></span></span>
 <span class="r-in"><span><span class="co">### preparation steps for a meta-analysis of standardized mean differences (SMDs)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>study<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,</span></span>
-<span class="r-in"><span>         m1i<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.03</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>, sd1i<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.95</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>, n1i<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">32</span>,<span class="fl">95</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>         m2i<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.25</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>, sd2i<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.04</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>, n2i<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>,<span class="fl">99</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>         tval<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">2.12</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>         ai<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">26</span>,<span class="cn">NA</span><span class="op">)</span>, bi<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">58</span>,<span class="cn">NA</span><span class="op">)</span>, ci<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">11</span>,<span class="cn">NA</span><span class="op">)</span>, di<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">74</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>         or<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">2.56</span><span class="op">)</span>, lower<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">1.23</span><span class="op">)</span>, upper<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">5.30</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>study<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,</span></span>
+<span class="r-in"><span>         m1i<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.03</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>, sd1i<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.95</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>, n1i<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">32</span>,<span class="fl">95</span>,<span class="fl">145</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         m2i<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.25</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>, sd2i<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.04</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>, n2i<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>,<span class="fl">99</span>,<span class="fl">155</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         tval<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">2.12</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>, dval<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">0.37</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         ai<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">26</span>,<span class="cn">NA</span><span class="op">)</span>, bi<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">58</span>,<span class="cn">NA</span><span class="op">)</span>, ci<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">11</span>,<span class="cn">NA</span><span class="op">)</span>, di<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">74</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         or<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">2.56</span><span class="op">)</span>, lower<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">1.23</span><span class="op">)</span>, upper<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">5.30</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   study  m1i sd1i n1i  m2i sd2i n2i tval ai bi ci di   or lower upper</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1 2.03 0.95  32 1.25 1.04  30   NA NA NA NA NA   NA    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2   NA   NA  95   NA   NA  99 2.12 NA NA NA NA   NA    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     3   NA   NA  NA   NA   NA  NA   NA 26 58 11 74   NA    NA    NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4   NA   NA  NA   NA   NA  NA   NA NA NA NA NA 2.56  1.23   5.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   study  m1i sd1i n1i  m2i sd2i n2i tval dval ai bi ci di   or lower upper</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1 2.03 0.95  32 1.25 1.04  30   NA   NA NA NA NA NA   NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2   NA   NA  95   NA   NA  99 2.12   NA NA NA NA NA   NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     3   NA   NA 145   NA   NA 155   NA 0.37 NA NA NA NA   NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4   NA   NA  NA   NA   NA  NA   NA   NA 26 58 11 74   NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     5   NA   NA  NA   NA   NA  NA   NA   NA NA NA NA NA 2.56  1.23   5.3</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### study types:</span></span></span>
-<span class="r-in"><span><span class="co">### 1) provides means and SDs so that the SMD can be directly calculated</span></span></span>
-<span class="r-in"><span><span class="co">### 2) provides the t-statistic from an independent samples t-test</span></span></span>
-<span class="r-in"><span><span class="co">### 3) dichotomized the continuous dependent variable and reports the resulting 2x2 table</span></span></span>
-<span class="r-in"><span><span class="co">### 4) dichotomized the continuous dependent variable and reports an odds ratio with 95% CI</span></span></span>
+<span class="r-in"><span><span class="co">### 1) reports means and SDs so that the SMD can be directly calculated</span></span></span>
+<span class="r-in"><span><span class="co">### 2) reports the t-statistic from an independent samples t-test (and group sizes)</span></span></span>
+<span class="r-in"><span><span class="co">### 3) reports the standardized mean difference directly (and group sizes)</span></span></span>
+<span class="r-in"><span><span class="co">### 4) dichotomized the continuous dependent variable and reports the resulting 2x2 table</span></span></span>
+<span class="r-in"><span><span class="co">### 5) dichotomized the continuous dependent variable and reports an odds ratio with 95% CI</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### use escalc() to directly compute the SMD and its variance for studies 1 and 2</span></span></span>
+<span class="r-in"><span><span class="co">### use escalc() to directly compute the SMD and its variance for studies 1, 2, and 3</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"SMD"</span>, m1i<span class="op">=</span><span class="va">m1i</span>, sd1i<span class="op">=</span><span class="va">sd1i</span>, n1i<span class="op">=</span><span class="va">n1i</span>,</span></span>
-<span class="r-in"><span>                             m2i<span class="op">=</span><span class="va">m2i</span>, sd2i<span class="op">=</span><span class="va">sd2i</span>, n2i<span class="op">=</span><span class="va">n2i</span>, ti<span class="op">=</span><span class="va">tval</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                             m2i<span class="op">=</span><span class="va">m2i</span>, sd2i<span class="op">=</span><span class="va">sd2i</span>, n2i<span class="op">=</span><span class="va">n2i</span>, ti<span class="op">=</span><span class="va">tval</span>, di<span class="op">=</span><span class="va">dval</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   study  m1i sd1i n1i  m2i sd2i n2i tval ai bi ci di   or lower upper     yi     vi </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1 2.03 0.95  32 1.25 1.04  30   NA NA NA NA NA   NA    NA    NA 0.7744 0.0694 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2   NA   NA  95   NA   NA  99 2.12 NA NA NA NA   NA    NA    NA 0.3033 0.0209 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     3   NA   NA  NA   NA   NA  NA   NA 26 58 11 74   NA    NA    NA     NA     NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4   NA   NA  NA   NA   NA  NA   NA NA NA NA NA 2.56  1.23   5.3     NA     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   study  m1i sd1i n1i  m2i sd2i n2i tval dval ai bi ci di   or lower upper     yi     vi </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1 2.03 0.95  32 1.25 1.04  30   NA   NA NA NA NA NA   NA    NA    NA 0.7744 0.0694 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2   NA   NA  95   NA   NA  99 2.12   NA NA NA NA NA   NA    NA    NA 0.3033 0.0209 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     3   NA   NA 145   NA   NA 155   NA 0.37 NA NA NA NA   NA    NA    NA 0.3691 0.0136 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4   NA   NA  NA   NA   NA  NA   NA   NA 26 58 11 74   NA    NA    NA     NA     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     5   NA   NA  NA   NA   NA  NA   NA   NA NA NA NA NA 2.56  1.23   5.3     NA     NA </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### use escalc() with measure OR2DN to compute the SMD value for study 3</span></span></span>
+<span class="r-in"><span><span class="co">### use escalc() with measure OR2DN to compute the SMD value for study 4</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR2DN"</span>, ai<span class="op">=</span><span class="va">ai</span>, bi<span class="op">=</span><span class="va">bi</span>, ci<span class="op">=</span><span class="va">ci</span>, di<span class="op">=</span><span class="va">di</span>, data<span class="op">=</span><span class="va">dat</span>, replace<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   study  m1i sd1i n1i  m2i sd2i n2i tval ai bi ci di   or lower upper     yi     vi </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1 2.03 0.95  32 1.25 1.04  30   NA NA NA NA NA   NA    NA    NA 0.7744 0.0694 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2   NA   NA  95   NA   NA  99 2.12 NA NA NA NA   NA    NA    NA 0.3033 0.0209 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     3   NA   NA  NA   NA   NA  NA   NA 26 58 11 74   NA    NA    NA 0.6690 0.0588 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4   NA   NA  NA   NA   NA  NA   NA NA NA NA NA 2.56  1.23   5.3     NA     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   study  m1i sd1i n1i  m2i sd2i n2i tval dval ai bi ci di   or lower upper     yi     vi </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1 2.03 0.95  32 1.25 1.04  30   NA   NA NA NA NA NA   NA    NA    NA 0.7744 0.0694 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2   NA   NA  95   NA   NA  99 2.12   NA NA NA NA NA   NA    NA    NA 0.3033 0.0209 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     3   NA   NA 145   NA   NA 155   NA 0.37 NA NA NA NA   NA    NA    NA 0.3691 0.0136 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4   NA   NA  NA   NA   NA  NA   NA   NA 26 58 11 74   NA    NA    NA 0.6690 0.0588 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     5   NA   NA  NA   NA   NA  NA   NA   NA NA NA NA NA 2.56  1.23   5.3     NA     NA </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### use conv.wald() to convert the OR and CI into the log odds ratio and its variance for study 4</span></span></span>
+<span class="r-in"><span><span class="co">### use conv.wald() to convert the OR and CI into the log odds ratio and its variance for study 5</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="conv.wald.html">conv.wald</a></span><span class="op">(</span>out<span class="op">=</span><span class="va">or</span>, ci.lb<span class="op">=</span><span class="va">lower</span>, ci.ub<span class="op">=</span><span class="va">upper</span>, data<span class="op">=</span><span class="va">dat</span>,</span></span>
 <span class="r-in"><span>                 transf<span class="op">=</span><span class="va">log</span>, var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lnor"</span>,<span class="st">"vlnor"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   study  m1i sd1i n1i  m2i sd2i n2i tval ai bi ci di   or lower upper     yi     vi   lnor  vlnor </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1 2.03 0.95  32 1.25 1.04  30   NA NA NA NA NA   NA    NA    NA 0.7744 0.0694     NA     NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2   NA   NA  95   NA   NA  99 2.12 NA NA NA NA   NA    NA    NA 0.3033 0.0209     NA     NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     3   NA   NA  NA   NA   NA  NA   NA 26 58 11 74   NA    NA    NA 0.6690 0.0588     NA     NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4   NA   NA  NA   NA   NA  NA   NA NA NA NA NA 2.56  1.23   5.3     NA     NA 0.9400 0.1389 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   study  m1i sd1i n1i  m2i sd2i n2i tval dval ai bi ci di   or lower upper     yi     vi   lnor </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1 2.03 0.95  32 1.25 1.04  30   NA   NA NA NA NA NA   NA    NA    NA 0.7744 0.0694     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2   NA   NA  95   NA   NA  99 2.12   NA NA NA NA NA   NA    NA    NA 0.3033 0.0209     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     3   NA   NA 145   NA   NA 155   NA 0.37 NA NA NA NA   NA    NA    NA 0.3691 0.0136     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4   NA   NA  NA   NA   NA  NA   NA   NA 26 58 11 74   NA    NA    NA 0.6690 0.0588     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     5   NA   NA  NA   NA   NA  NA   NA   NA NA NA NA NA 2.56  1.23   5.3     NA     NA 0.9400 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    vlnor </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.1389 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### use conv.delta() to transform the log odds ratio into the SMD value for study 4</span></span></span>
+<span class="r-in"><span><span class="co">### use conv.delta() to transform the log odds ratio into the SMD value for study 5</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">conv.delta</span><span class="op">(</span><span class="va">lnor</span>, <span class="va">vlnor</span>, data<span class="op">=</span><span class="va">dat</span>,</span></span>
 <span class="r-in"><span>                  transf<span class="op">=</span><span class="va">transf.lnortod.norm</span>, var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"yi"</span>,<span class="st">"vi"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   study  m1i sd1i n1i  m2i sd2i n2i tval ai bi ci di   or lower upper     yi     vi   lnor  vlnor </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1 2.03 0.95  32 1.25 1.04  30   NA NA NA NA NA   NA    NA    NA 0.7744 0.0694     NA     NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2   NA   NA  95   NA   NA  99 2.12 NA NA NA NA   NA    NA    NA 0.3033 0.0209     NA     NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     3   NA   NA  NA   NA   NA  NA   NA 26 58 11 74   NA    NA    NA 0.6690 0.0588     NA     NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4   NA   NA  NA   NA   NA  NA   NA NA NA NA NA 2.56  1.23   5.3 0.5697 0.0510 0.9400 0.1389 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   study  m1i sd1i n1i  m2i sd2i n2i tval dval ai bi ci di   or lower upper     yi     vi   lnor </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     1 2.03 0.95  32 1.25 1.04  30   NA   NA NA NA NA NA   NA    NA    NA 0.7744 0.0694     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     2   NA   NA  95   NA   NA  99 2.12   NA NA NA NA NA   NA    NA    NA 0.3033 0.0209     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     3   NA   NA 145   NA   NA 155   NA 0.37 NA NA NA NA   NA    NA    NA 0.3691 0.0136     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     4   NA   NA  NA   NA   NA  NA   NA   NA 26 58 11 74   NA    NA    NA 0.6690 0.0588     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5     5   NA   NA  NA   NA   NA  NA   NA   NA NA NA NA NA 2.56  1.23   5.3 0.5697 0.0510 0.9400 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    vlnor </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4     NA </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.1389 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit an equal-effects model to the SMD values</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"EE"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Effects Model (k = 4)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Equal-Effects Model (k = 5)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (total heterogeneity / total variability):   14.41%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (total variability / sampling variability):  1.17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (total heterogeneity / total variability):   2.38%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (total variability / sampling variability):  1.02</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test for Heterogeneity:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Q(df = 3) = 3.5050, p-val = 0.3201</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Q(df = 4) = 4.0974, p-val = 0.3930</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se    zval    pval   ci.lb   ci.ub      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   0.4875  0.1005  4.8493  &lt;.0001  0.2905  0.6846  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.4370  0.0761  5.7409  &lt;.0001  0.2878  0.5861  *** </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
@@ -407,10 +425,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6     6   NA   NA   NA  NA NA NA NA NA 1.86  1.12   3.1   NA   NA  NA   NA   NA  NA</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### study types:</span></span></span>
-<span class="r-in"><span><span class="co">### 1) provides the correlation coefficient and sample size</span></span></span>
-<span class="r-in"><span><span class="co">### 2) provides the t-statistic from a t-test of H0: rho = 0</span></span></span>
+<span class="r-in"><span><span class="co">### 1) reports the correlation coefficient directly</span></span></span>
+<span class="r-in"><span><span class="co">### 2) reports the t-statistic from a t-test of H0: rho = 0</span></span></span>
 <span class="r-in"><span><span class="co">### 3) dichotomized one variable and reports means and SDs for the two corresponding groups</span></span></span>
-<span class="r-in"><span><span class="co">### 4) provides the phi coefficient, marginal counts, and total sample size</span></span></span>
+<span class="r-in"><span><span class="co">### 4) reports the phi coefficient, marginal counts, and total sample size</span></span></span>
 <span class="r-in"><span><span class="co">### 5) dichotomized both variables and reports the resulting 2x2 table</span></span></span>
 <span class="r-in"><span><span class="co">### 6) dichotomized both variables and reports an odds ratio with 95% CI</span></span></span>
 <span class="r-in"><span></span></span>

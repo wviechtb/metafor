@@ -268,6 +268,8 @@ dat
 <span class="r-out co"><span class="r-pr">#&gt;</span>     or or.lb or.ub</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 1.37  1.03  1.82</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 1.89  1.60  2.23</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### convert the odds ratios and CIs into log odds ratios with corresponding sampling variances</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">conv.wald</span><span class="op">(</span>out<span class="op">=</span><span class="va">or</span>, ci.lb<span class="op">=</span><span class="va">or.lb</span>, ci.ub<span class="op">=</span><span class="va">or.ub</span>, data<span class="op">=</span><span class="va">dat</span>, transf<span class="op">=</span><span class="va">log</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
