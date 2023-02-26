@@ -32,7 +32,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{mi}{vector with the frequencies of the complement of the event of interest or the group means.}
    \item{ri}{vector with the raw correlation coefficients.}
    \item{ti}{vector with the total person-times or t-test statistics.}
-   \item{pi}{vector with the p-values.}
+   \item{pi}{vector with the (signed) p-values.}
    \item{sdi}{vector with the standard deviations.}
    \item{r2i}{vector with the \mjseqn{R^2} values.}
    \item{ni}{vector with the sample/group sizes.}

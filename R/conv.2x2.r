@@ -1,4 +1,4 @@
-conv.2x2 <- function(ri, ori, ni, n1i, n2i, data, include,
+conv.2x2 <- function(ori, ri, x2i, ni, n1i, n2i, correct=TRUE, data, include,
                     var.names=c("ai","bi","ci","di"), append=TRUE, replace="ifna") {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
@@ -33,28 +33,45 @@ conv.2x2 <- function(ri, ori, ni, n1i, n2i, data, include,
 
    mf <- match.call()
 
-   ri      <- .getx("ri",      mf=mf, data=data, checknumeric=TRUE)
    ori     <- .getx("ori",     mf=mf, data=data, checknumeric=TRUE)
+   ri      <- .getx("ri",      mf=mf, data=data, checknumeric=TRUE)
+   x2i     <- .getx("x2i",     mf=mf, data=data, checknumeric=TRUE)
    ni      <- .getx("ni",      mf=mf, data=data, checknumeric=TRUE)
    n1i     <- .getx("n1i",     mf=mf, data=data, checknumeric=TRUE)
    n2i     <- .getx("n2i",     mf=mf, data=data, checknumeric=TRUE)
+   correct <- .getx("correct", mf=mf, data=data)
    include <- .getx("include", mf=mf, data=data)
 
-   if (!.equal.length(ri, ori, ni, n1i, n2i))
+   if (is.null(correct)) # if 'correct' is not specified, it is NULL
+      correct <- TRUE
+
+   if (!.equal.length(ori, ri, x2i, ni, n1i, n2i))
       stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
-   k <- max(length(ri), length(ori), length(ni), length(n1i), length(n2i))
+   k <- max(length(ori), length(ri), length(x2i), length(ni), length(n1i), length(n2i))
 
-   if (is.null(ri))
-      ri <- rep(NA_real_, k)
    if (is.null(ori))
       ori <- rep(NA_real_, k)
+   if (is.null(ri))
+      ri <- rep(NA_real_, k)
+   if (is.null(x2i))
+      x2i <- rep(NA_real_, k)
    if (is.null(ni))
       ni <- rep(NA_real_, k)
    if (is.null(n1i))
       n1i <- rep(NA_real_, k)
    if (is.null(n2i))
       n2i <- rep(NA_real_, k)
+
+   ### handle correct argument
+
+   if (length(correct) == 1L)
+      correct <- rep(correct, k)
+
+   if (length(correct) != k)
+      stop(mstyle$stop(paste0("Length of 'correct' argument (", length(correct), ") does not match length of data (", k, ").")))
+
+   correct[is.na(correct)] <- TRUE
 
    ### if include is NULL, set to TRUE vector
 
@@ -67,8 +84,9 @@ conv.2x2 <- function(ri, ori, ni, n1i, n2i, data, include,
 
    ### set inputs to NA for rows not to be included
 
-   ri[!include]  <- NA_real_
    ori[!include] <- NA_real_
+   ri[!include]  <- NA_real_
+   x2i[!include] <- NA_real_
    ni[!include]  <- NA_real_
    n1i[!include] <- NA_real_
    n2i[!include] <- NA_real_
@@ -118,6 +136,16 @@ conv.2x2 <- function(ri, ori, ni, n1i, n2i, data, include,
 
       }
 
+      # note: when x2i=0, then sign(0) = 0 and hence ri is automatically 0, which is correct
+      # (i.e., we do not want to use the continuity correction in this case)
+      if (is.na(ri[i]) && !is.na(x2i[i])) {
+         if (correct[i]) {
+            ri[i] <- sign(x2i[i]) * (sqrt(abs(x2i[i])/ni[i]) + ni[i] / (2*sqrt(n1i[i]*(ni[i]-n1i[i])*n2i[i]*(ni[i]-n2i[i]))))
+         } else {
+            ri[i] <- sign(x2i[i]) * sqrt(abs(x2i[i])/ni[i])
+         }
+      }
+
       if (is.na(p11i[i]) && !is.na(ri[i]))
          p11i[i] <- p1i[i]*p2i[i] + ri[i] * sqrt(p1i[i]*(1-p1i[i])*p2i[i]*(1-p2i[i]))
 
@@ -127,6 +155,8 @@ conv.2x2 <- function(ri, ori, ni, n1i, n2i, data, include,
    bi <- n1i - ai
    ci <- n2i - ai
    di <- ni - ai - bi - ci
+
+   #print(matrix(c(ai,bi,ci,di), nrow=2, byrow=TRUE))
 
    ### check for negative cell frequencies
 
