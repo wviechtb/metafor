@@ -43,7 +43,7 @@ fmtt(val, tname, df, df1, df2, pval, digits=4,
 \details{
    The \code{fmtp} function takes one or multiple p-values as input and rounds them to the chosen number of digits. For p-values that are smaller than \code{10^(-digits)} (e.g., \code{0.0001} for \code{digits=4}), the value is shown to fall below this bound (e.g., \code{<.0001}).
 
-   The \code{fmtx} function takes one or multiple numeric values as input and rounds them to the chosen number of digits, without using scientific notation and without dropping trailing zeros, so that the resulting character strings are always guaranteed to be of length \code{digits+2} for positive and \code{digits+3} for negative values (unless \code{flag} is used).
+   The \code{fmtx} function takes one or multiple numeric values as input and rounds them to the chosen number of digits, without using scientific notation and without dropping trailing zeros (using \code{\link{formatC}}).
 
    The \code{fmtt} function takes a single test statistic value as input (and, if applicable, its degrees of freedom via argument \code{df} or its numerator and denominator degrees of freedom via arguments \code{df1} and \code{df2}) and the corresponding p-value and formats it for printing. Two different formats are available (chosen via the \code{format} argument), one giving the degrees of freedom before the test statistic (in parentheses) and one after the test statistic.
 }

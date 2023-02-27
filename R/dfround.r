@@ -1,4 +1,4 @@
-dfround <- function(x, digits) {
+dfround <- function(x, digits, drop0=TRUE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -15,16 +15,29 @@ dfround <- function(x, digits) {
    if (length(digits) == 1L)
       digits <- rep(digits, p)
 
+   if (length(drop0) == 1L)
+      drop0 <- rep(drop0, p)
+
    if (p != length(digits))
       stop(mstyle$stop(paste0("Number of columns in 'x' (", p, ") does not match length of 'digits' (", length(digits), ").")))
+
+   if (p != length(drop0))
+      stop(mstyle$stop(paste0("Number of columns in 'x' (", p, ") does not match length of 'drop0' (", length(drop0), ").")))
 
    if (!is.numeric(digits))
       stop(mstyle$stop("Argument 'digits' must be a numeric vector."))
 
+   if (!is.logical(drop0))
+      stop(mstyle$stop("Argument 'drop0' must be a logical vector."))
+
    for (i in seq_len(p)) {
       if (!is.numeric(x[[i]]))
          next
-      x[[i]] <- round(x[[i]], digits[i])
+      if (drop0[i]) {
+         x[[i]] <- round(x[[i]], digits[i])
+      } else {
+         x[[i]] <- formatC(x[[i]], format="f", digits=digits[i])
+      }
    }
 
    return(x)

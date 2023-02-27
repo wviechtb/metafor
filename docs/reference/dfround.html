@@ -101,7 +101,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dfround</span><span class="op">(</span><span class="va">x</span>, <span class="va">digits</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">dfround</span><span class="op">(</span><span class="va">x</span>, <span class="va">digits</span>, drop0<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -112,11 +112,15 @@
    <dt>digits</dt>
 <dd><p>either a single integer or a numeric vector of the same length as there are columns in <code>x</code>.</p></dd>
 
+   <dt>drop0</dt>
+<dd><p>logical (or a vector thereof) indicating if trailing zeros after the decimal mark should be removed (the default is <code>TRUE</code>).</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
     <p>A simple convenience function to round the numeric variables in a data frame, possibly to different numbers of digits. Hence, <code>digits</code> can either be a single integer (which will then be used to round all numeric variables to the specified number of digits) or a numeric vector (of the same length as there are columns in <code>x</code>) to specify the number of digits to which each variable should be rounded.</p>
 <p>Non-numeric variables are skipped. If <code>digits</code> is a vector, some arbitrary value (or <code>NA</code>) can be specified for those variables.</p>
+<p>Note: When <code>drop0=FALSE</code>, then <code><a href="https://rdrr.io/r/base/formatc.html" class="external-link">formatC</a></code> is used to format the numbers, which turns them into character variables.</p>
     </div>
     <div id="value">
     <h2>Value</h2>
