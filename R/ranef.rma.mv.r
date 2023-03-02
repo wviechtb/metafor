@@ -143,7 +143,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
          if (expand) {
 
-            rows <- c(x$Z.S[[j]] %*% seq_along(x$s.levels[[j]]))
+            rows <- as.vector(x$Z.S[[j]] %*% seq_along(x$s.levels[[j]]))
             pred <- pred[rows,]
             rnames <- x$s.levels[[j]][rows]
 
