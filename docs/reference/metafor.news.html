@@ -121,7 +121,7 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">metafor.news</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.9-28 (2023-02-27)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.9-28 (2023-03-04)                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - model.matrix.rma() gains asdf argument</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -142,11 +142,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - package numDeriv moved from Suggests to Depends</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - the variance of measure ZPCOR is now calculated with 1/(ni-mi-3)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     (instead of 1/(ni-mi-1)), which provides a better approximation in</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     small samples (and analogous to how the variance of ZCOR is</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     calculated with 1/(ni-3))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added conv.2x2() function for reconstructing the cell frequencies</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     in 2x2 tables based on other summary statistics</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -165,6 +160,15 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - escalc() now provides more informative error messages when not</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     specifying all required arguments to compute a particular measure</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - added measures "ZPHI", "ZTET", "ZPB", "ZBIS", and "ZSPCOR" to</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     escalc() (but note that Fisher's r-to-z transformation is not a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     variance-stabilizing transformation for these measures)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - the variance of measure ZPCOR is now calculated with 1/(ni-mi-3)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     (instead of 1/(ni-mi-1)), which provides a better approximation in</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     small samples (and analogous to how the variance of ZCOR is</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     calculated with 1/(ni-3))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - as with measure="SMD", one can now also use arguments di and ti to</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     specify d-values and t-test statistics for measures RPB, RBIS,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     D2ORN, and D2ORL in escalc()</span>
@@ -177,9 +181,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     via argument pi (the sign of the p-value is taken to be the sign of</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     the measure)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - added measures "ZPHI", "ZTET", "ZPB", "ZBIS", and "ZSPCOR" to</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     escalc() (but note that Fisher's r-to-z transformation is not a</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     variance-stabilizing transformation for these measures)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - can also specify (semi-)partial correlations directly via argument</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     ri for measures PCOR, ZPCOR, SPCOR, and ZSPCOR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - when passing a correlation marix to rcalc(), it now orders the</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     elements (columnwise) based on the lower triangular part of the</span>
@@ -189,7 +192,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - optimizers Rcgmin and Rvmmin are now available in rma.uni(),</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     rma.mv(), rma.glmm(), and selmodel()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - improved the documentation of escalc() a bit</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - improved the documentation a bit</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.8-1 (2022-08-26)                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

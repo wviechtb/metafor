@@ -529,29 +529,36 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       if (is.element(measure, c("PCOR","ZPCOR","SPCOR","ZSPCOR"))) {
 
+         ri  <- .getx("ri",  mf=mf, data=data, checknumeric=TRUE)
          ti  <- .getx("ti",  mf=mf, data=data, checknumeric=TRUE)
          mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE)
          ni  <- .getx("ni",  mf=mf, data=data, checknumeric=TRUE)
          pi  <- .getx("pi",  mf=mf, data=data, checknumeric=TRUE)
          r2i <- .getx("r2i", mf=mf, data=data, checknumeric=TRUE)
 
-         if (!.equal.length(ti, mi, ni, pi, r2i))
+         if (!.equal.length(ri, ti, mi, ni, pi, r2i))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          ti <- replmiss(ti, .convp2t(pi, df=ni-mi-1))
 
-         k <- length(ti) ### number of outcomes before subsetting
+         if (is.element(measure, c("PCOR","ZPCOR")))
+            ri <- replmiss(ri, ti / sqrt(ti^2 + (ni - mi - 1)))
+
+         if (is.element(measure, c("SPCOR","ZSPCOR")))
+            ri <- replmiss(ri, ti * sqrt(1 - r2i) / sqrt(ni - mi - 1))
+
+         k <- length(ri) ### number of outcomes before subsetting
          k.all <- k
 
          if (!is.null(subset)) {
             subset <- .chksubset(subset, k)
-            ti  <- .getsubset(ti,  subset)
+            ri  <- .getsubset(ri,  subset)
             mi  <- .getsubset(mi,  subset)
             ni  <- .getsubset(ni,  subset)
             r2i <- .getsubset(r2i, subset)
          }
 
-         args <- list(measure=measure, ti=ti, mi=mi, ni=ni, r2i=r2i, vtype=vtype)
+         args <- list(measure=measure, ri=ri, mi=mi, ni=ni, r2i=r2i, vtype=vtype)
 
       }
 

@@ -1,4 +1,4 @@
-# metafor 3.9-28 (2023-02-27)
+# metafor 3.9-28 (2023-03-04)
 
 - `model.matrix.rma()` gains `asdf` argument
 
@@ -12,8 +12,6 @@
 
 - package `numDeriv` moved from `Suggests` to `Depends`
 
-- the variance of measure `ZPCOR` is now calculated with `1/(ni-mi-3)` (instead of `1/(ni-mi-1)`), which provides a better approximation in small samples (and analogous to how the variance of `ZCOR` is calculated with `1/(ni-3)`)
-
 - added `conv.2x2()` function for reconstructing the cell frequencies in 2x2 tables based on other summary statistics
 
 - added `conv.wald()` function for converting Wald-type confidence intervals and test statistics to sampling variances
@@ -26,19 +24,23 @@
 
 - `escalc()` now provides more informative error messages when not specifying all required arguments to compute a particular measure
 
+- added measures `"ZPHI"`, `"ZTET"`, `"ZPB"`, `"ZBIS"`, and `"ZSPCOR"` to `escalc()` (but note that Fisher's r-to-z transformation is not a variance-stabilizing transformation for these measures)
+
+- the variance of measure `ZPCOR` is now calculated with `1/(ni-mi-3)` (instead of `1/(ni-mi-1)`), which provides a better approximation in small samples (and analogous to how the variance of `ZCOR` is calculated with `1/(ni-3)`)
+
 - as with `measure="SMD"`, one can now also use arguments `di` and `ti` to specify d-values and t-test statistics for measures `RPB`, `RBIS`, `D2ORN`, and `D2ORL` in `escalc()`
 
 - for measures `COR`, `UCOR`, and `ZCOR`, can now use argument `ti` to specify t-test statistics in `escalc()`
 
 - can also specify (two-sided) p-values (of the respective t-tests) for these measures (and for measures `PCOR`, `ZPCOR`, `SPCOR`, and `ZSPCOR`) via argument `pi` (the sign of the p-value is taken to be the sign of the measure)
 
-- added measures `"ZPHI"`, `"ZTET"`, `"ZPB"`, `"ZBIS"`, and `"ZSPCOR"` to `escalc()` (but note that Fisher's r-to-z transformation is not a variance-stabilizing transformation for these measures)
+- can also specify (semi-)partial correlations directly via argument `ri` for measures `PCOR`, `ZPCOR`, `SPCOR`, and `ZSPCOR`
 
 - when passing a correlation marix to `rcalc()`, it now orders the elements (columnwise) based on the lower triangular part of the matrix, not the upper one (which is more consistent with what `matreg()` expects as input when using the `V` argument)
 
 - optimizers `Rcgmin` and `Rvmmin` are now available in `rma.uni()`, `rma.mv()`, `rma.glmm()`, and `selmodel()`
 
-- improved the documentation of `escalc()` a bit
+- improved the documentation a bit
 
 # metafor 3.8-1 (2022-08-26)
 

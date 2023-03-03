@@ -1195,34 +1195,46 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("PCOR","ZPCOR","SPCOR","ZSPCOR"))) {
 
+         ri  <- .getx("ri",  mf=mf, data=data, checknumeric=TRUE)
          ti  <- .getx("ti",  mf=mf, data=data, checknumeric=TRUE)
          mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE)
          ni  <- .getx("ni",  mf=mf, data=data, checknumeric=TRUE)
          pi  <- .getx("pi",  mf=mf, data=data, checknumeric=TRUE)
          r2i <- .getx("r2i", mf=mf, data=data, checknumeric=TRUE)
 
-         if (!.equal.length(ti, mi, ni, pi, r2i))
+         if (!.equal.length(ri, ti, mi, ni, pi, r2i))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          ### convert pi to ti values
 
          ti <- replmiss(ti, .convp2t(pi, df=ni-mi-1))
 
-         if (is.element(measure, c("PCOR","ZPCOR")) && !.all.specified(ti, mi, ni))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ti, mi, ni (and pi))."))
+         ### convert ti to ri values
 
-         if (is.element(measure, c("SPCOR","ZSPCOR")) && !.all.specified(ti, ni, mi, r2i))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ti, mi, ni, r2i (and pi))."))
+         if (is.element(measure, c("PCOR","ZPCOR")))
+            ri <- replmiss(ri, ti / sqrt(ti^2 + (ni - mi - 1)))
 
-         k.all <- length(ti)
+         if (is.element(measure, c("SPCOR","ZSPCOR")))
+            ri <- replmiss(ri, ti * sqrt(1 - r2i) / sqrt(ni - mi - 1))
+
+         if (is.element(measure, c("PCOR","ZPCOR")) && !.all.specified(ri, mi, ni))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ri, ti, mi, ni (and pi))."))
+
+         if (is.element(measure, c("SPCOR","ZSPCOR")) && !.all.specified(ri, ni, mi, r2i))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ri, ti, mi, ni, r2i (and pi))."))
+
+         k.all <- length(ri)
 
          if (!is.null(subset)) {
             subset <- .chksubset(subset, k.all)
-            ti  <- .getsubset(ti,  subset)
+            ri  <- .getsubset(ri,  subset)
             mi  <- .getsubset(mi,  subset)
             ni  <- .getsubset(ni,  subset)
             r2i <- .getsubset(r2i, subset)
          }
+
+         if (any(abs(ri) > 1, na.rm=TRUE))
+            stop(mstyle$stop("One or more (semi-)partial correlations are > 1 or < -1."))
 
          if (is.element(measure, c("SPCOR","ZSPCOR")) && any(r2i > 1 | r2i < 0, na.rm=TRUE))
             stop(mstyle$stop("One or more R^2 values are > 1 or < 0."))
@@ -1238,13 +1250,13 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ni.u <- ni ### unadjusted total sample sizes
 
-         k <- length(ti)
+         k <- length(ri)
 
          ### partial correlation coefficient
 
          if (measure == "PCOR") {
 
-            yi <- ti / sqrt(ti^2 + (ni - mi - 1))
+            yi <- ri
 
             if (length(vtype) == 1L)
                vtype <- rep(vtype, k)
@@ -1273,8 +1285,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### r-to-z transformed partial correlation
 
          if (measure == "ZPCOR") {
-            yi <- ti / sqrt(ti^2 + (ni - mi - 1))
-            yi <- transf.rtoz(yi)
+            yi <- transf.rtoz(ri)
             vi <- 1 / (ni-mi-3)
          }
 
@@ -1282,7 +1293,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          if (is.element(measure, c("SPCOR","ZSPCOR"))) {
 
-            yi <- ti * sqrt(1 - r2i) / sqrt(ni - mi - 1)
+            yi <- ri
 
             if (length(vtype) == 1L)
                vtype <- rep(vtype, k)
