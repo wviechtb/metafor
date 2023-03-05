@@ -423,7 +423,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
       \subsection{Partial and Semi-Partial Correlations}{
 
-         Aloe and Becker (2012), Aloe and Thompson (2013), and Aloe (2014) describe the use of partial and semi-partial correlation coefficients for meta-analyzing the results from regression models (when the focus is on a common regression coefficient of interest across studies). To compute these measures, one needs to specify \code{ti} for the test statistics (i.e., t-tests) of the regression coefficient of interest, \code{ni} for the sample sizes of the studies, \code{mi} for the number of predictors in the regression models (not counting the intercept term), and \code{r2i} for the \mjseqn{R^2} value of the regression models (the latter is only needed when \code{measure="SPCOR"} or \code{measure="ZSPCOR"}). In the rare case that one already knows the (semi-)partial correlation for a study, then this can be specified via the \code{ri} argument. The options for the \code{measure} argument are then:
+         Aloe and Becker (2012), Aloe and Thompson (2013), and Aloe (2014) describe the use of partial and semi-partial correlation coefficients for meta-analyzing the results from regression models (when the focus is on a common regression coefficient of interest across studies). To compute these measures, one needs to specify \code{ti} for the test statistics (i.e., t-tests) of the regression coefficient of interest, \code{ni} for the sample sizes of the studies, \code{mi} for the number of predictors in the regression models (not counting the intercept term), and \code{r2i} for the \mjseqn{R^2} value of the regression models (the latter is only needed when \code{measure="SPCOR"} or \code{measure="ZSPCOR"}). The options for the \code{measure} argument are then:
          \itemize{
          \item \code{"PCOR"} for the \emph{partial correlation coefficient},
          \item \code{"ZPCOR"} for \emph{Fisher's r-to-z transformed partial correlation coefficient},
@@ -431,9 +431,11 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \item \code{"ZSPCOR"} for \emph{Fisher's r-to-z transformed semi-partial correlation coefficient}.
          }
 
-         Note that the signs of the (semi-)partial correlation coefficients is determined based on the signs of the values specified via the \code{ti} argument (for studies where \code{ti} is known but \code{ri} is missing). Also, while the Fisher transformation can be applied to both measures, it is only a variance-stabilizing transformation for partial correlation coefficients.
+         Note that the signs of the (semi-)partial correlation coefficients is determined based on the signs of the values specified via the \code{ti} argument. Also, while the Fisher transformation can be applied to both measures, it is only a variance-stabilizing transformation for partial correlation coefficients.
 
          If the test statistic (i.e., t-test) of the regression coefficient of interest is unknown for some studies, but the (two-sided) p-values corresponding to the t-tests are known, one can specify those values via argument \code{pi}. However, since a two-sided p-value does not carry information about the sign of the test statistic (and hence neither about the correlation), the sign of the p-values (which can be negative) is used as the sign of the correlation coefficients (e.g., \code{escalc(measure="PCOR", pi=-.07, mi=5, ni=30)} yields a negative correlation of \code{-0.3610}).
+
+         In the rare case that the (semi-)partial correlations are known for some of the studies, then these can be directly specified via the \code{ri} argument. This can be useful, for example, when \mjseqn{\eta^2_p} (i.e., partial eta squared) is known for the regression coefficient of interest, since the square root thereof is identical to the absolute value of the partial correlation (although the correct sign then still needs to be reconstructed based on other information).
 
          A dataset corresponding to data of this type is provided in \code{\link[metadat]{dat.aloe2013}}.
 
