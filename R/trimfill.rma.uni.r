@@ -198,7 +198,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
       m <- -1:(k0-1)
       res$p.k0 <- 1 - sum(choose(0+m+1, m+1) * 0.5^(0+m+2))
    } else {
-      res$p.k0 <- NA
+      res$p.k0 <- NA_real_
    }
 
    class(res) <- c("rma.uni.trimfill", class(res))

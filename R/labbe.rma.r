@@ -125,14 +125,14 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    ### make sure that the corresponding arm-based yi values are also NA
 
    yi.is.na <- is.na(x$yi.f)
-   ai[yi.is.na]  <- NA
-   bi[yi.is.na]  <- NA
-   ci[yi.is.na]  <- NA
-   di[yi.is.na]  <- NA
-   x1i[yi.is.na] <- NA
-   x2i[yi.is.na] <- NA
-   t1i[yi.is.na] <- NA
-   t2i[yi.is.na] <- NA
+   ai[yi.is.na]  <- NA_real_
+   bi[yi.is.na]  <- NA_real_
+   ci[yi.is.na]  <- NA_real_
+   di[yi.is.na]  <- NA_real_
+   x1i[yi.is.na] <- NA_real_
+   x2i[yi.is.na] <- NA_real_
+   t1i[yi.is.na] <- NA_real_
+   t2i[yi.is.na] <- NA_real_
 
    options(na.action = "na.pass") ### to make sure dat.t and dat.c are of the same length
 

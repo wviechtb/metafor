@@ -195,7 +195,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
          }
          if (method[1] == "hozo2005") {
             if (is.na(n[i])) {
-               means[i] <- NA
+               means[i] <- NA_real_
             } else if (n[i] <= 25) {
                means[i] <- (min[i] + 2*median[i] + max[i]) / 4
             } else {
@@ -218,7 +218,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
          }
          if (method[2] == "hozo2005") {
             if (is.na(n[i])) {
-               sds[i] <- NA
+               sds[i] <- NA_real_
             } else if (n[i] <= 15) {
                sds[i] <- 1/sqrt(12) * sqrt((min[i] - 2*median[i] + max[i])^2 / 4 + (max[i]-min[i])^2)
             } else if (n[i] <= 70) {

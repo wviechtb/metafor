@@ -21,7 +21,7 @@ fitted.rma <- function(object, ...) {
    if (na.act == "na.omit")
       out <- out[object$not.na]
    if (na.act == "na.exclude")
-      out[!object$not.na] <- NA
+      out[!object$not.na] <- NA_real_
    if (na.act == "na.fail" && any(!object$not.na))
       stop(mstyle$stop("Missing values in results."))
 
@@ -37,7 +37,7 @@ fitted.rma <- function(object, ...) {
       if (na.act == "na.omit")
          out$scale <- out$scale[object$not.na]
       if (na.act == "na.exclude")
-         out$scale[!object$not.na] <- NA
+         out$scale[!object$not.na] <- NA_real_
       if (na.act == "na.fail" && any(!object$not.na))
          stop(mstyle$stop("Missing values in results."))
 

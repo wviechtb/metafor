@@ -439,9 +439,9 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
 
    } else {
 
-      beta.perm <- NA
-      zval.perm <- NA
-      QM.perm <- NA
+      beta.perm <- NA_real_
+      zval.perm <- NA_real_
+      QM.perm <- NA_real_
       pval <- x$pval
       QMp <- x$QMp
       X.exact.iter <- 0
@@ -464,7 +464,7 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
       Z.exact.iter <- Inf
 
    if (x$Z.int.only)
-      Z.exact.iter <- NA
+      Z.exact.iter <- NA_integer_
 
    i.exact.iter <- c(i.exact.iter, Z.exact.iter)
 
@@ -638,7 +638,7 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
       }
 
       pval.alpha[pval.alpha > 1] <- 1
-      pval.alpha[x$alpha.fix] <- NA
+      pval.alpha[x$alpha.fix] <- NA_real_
 
       QSp <- mean(QS.perm >= x$QS - con$comptol, na.rm=TRUE)
 
@@ -647,11 +647,11 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
 
    } else {
 
-      alpha.perm <- NA
-      zval.alpha.perm <- NA
-      QS.perm <- NA
+      alpha.perm <- NA_real_
+      zval.alpha.perm <- NA_real_
+      QS.perm <- NA_real_
       pval.alpha <- x$pval.alpha
-      QSp <- NA
+      QSp <- NA_real_
       Z.exact.iter <- 0
 
    }

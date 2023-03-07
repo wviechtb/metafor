@@ -131,8 +131,8 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
 
    } else {
 
-      ys.lb <- NA
-      ys.ub <- NA
+      ys.lb <- NA_real_
+      ys.ub <- NA_real_
 
    }
 
@@ -141,7 +141,7 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
       #is.inf.pos <- ys ==  Inf
       #is.inf.neg <- ys == -Inf
 
-      ys[is.infinite(ys)] <- NA
+      ys[is.infinite(ys)] <- NA_real_
 
       rng.ys <- max(ys, na.rm=TRUE) - min(ys, na.rm=TRUE)
       min.ys <- min(ys, na.rm=TRUE)

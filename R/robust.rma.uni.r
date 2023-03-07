@@ -97,7 +97,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
          stop(mstyle$stop("Could not obtain the cluster-robust variance-covariance matrix (use verbose=TRUE for more details)."))
 
       #meat <- try(clubSandwich::vcovCR(x, cluster=cluster, type=ddd$vcov, form="estfun"), silent=!isTRUE(ddd$verbose))
-      meat <- NA
+      meat <- NA_real_
 
       ### obtain cluster-robust inferences
 
@@ -113,7 +113,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
 
       if (x$int.only) {
 
-         cs.wald <- NA
+         cs.wald <- NA_real_
 
       } else {
 
@@ -121,7 +121,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
 
          if (inherits(cs.wald, "try-error")) {
             warning(mstyle$warning("Could not obtain the cluster-robust omnibus Wald test (use verbose=TRUE for more details)."))
-            cs.wald <- list(Fstat=NA, df_num=NA, df_denom=NA)
+            cs.wald <- list(Fstat=NA_real_, df_num=NA_integer_, df_denom=NA_real_)
          }
 
       }
@@ -132,12 +132,12 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
 
       beta  <- x$beta
       se    <- cs.coef$SE
-      zval  <- ifelse(is.infinite(cs.coef$tstat), NA, cs.coef$tstat)
+      zval  <- ifelse(is.infinite(cs.coef$tstat), NA_real_, cs.coef$tstat)
       pval  <- switch(ddd$coef_test, "z" = cs.coef$p_z,  "naive-t" = cs.coef$p_t,  "naive-tp" = cs.coef$p_tp,  "Satterthwaite" = cs.coef$p_Satt, "saddlepoint" = cs.coef$p_saddle)
-      dfs   <- switch(ddd$coef_test, "z" = cs.coef$df_z, "naive-t" = cs.coef$df_t, "naive-tp" = cs.coef$df_tp, "Satterthwaite" = cs.coef$df,     "saddlepoint" = NA)
-      dfs   <- ifelse(is.na(dfs), NA, dfs) # ifelse() part to change NaN into just NA
-      ci.lb <- ifelse(is.na(cs.conf$CI_L), NA, cs.conf$CI_L) # note: if ddd$coef_test != ddd$conf_test, dfs for CI may be different
-      ci.ub <- ifelse(is.na(cs.conf$CI_U), NA, cs.conf$CI_U)
+      dfs   <- switch(ddd$coef_test, "z" = cs.coef$df_z, "naive-t" = cs.coef$df_t, "naive-tp" = cs.coef$df_tp, "Satterthwaite" = cs.coef$df,     "saddlepoint" = NA_real_)
+      dfs   <- ifelse(is.na(dfs), NA_real_, dfs) # ifelse() part to change NaN into just NA
+      ci.lb <- ifelse(is.na(cs.conf$CI_L), NA_real_, cs.conf$CI_L) # note: if ddd$coef_test != ddd$conf_test, dfs for CI may be different
+      ci.ub <- ifelse(is.na(cs.conf$CI_U), NA_real_, cs.conf$CI_U)
 
       if (x$int.only) {
          QM   <- max(0, zval^2)
@@ -257,7 +257,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
 
       if (inherits(QM, "try-error") || is.na(QM)) {
          warning(mstyle$warning("Could not obtain the cluster-robust omnibus Wald test."))
-         QM <- NA
+         QM <- NA_real_
       }
 
       QM   <- QM / x$m # note: m is the number of coefficients in btt, not the number of clusters

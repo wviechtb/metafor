@@ -117,7 +117,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    ### set refline to NA if it is not specified
 
    if (missing(refline))
-      refline <- NA
+      refline <- NA_real_
 
    ### set lcol, lty, and lwd (1 = reg line, 2 = ci bounds, 3 = pi bounds, 4 = refline)
 

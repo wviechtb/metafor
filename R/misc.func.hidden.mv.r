@@ -1083,12 +1083,12 @@
    }
 
    if (inherits(res, "try-error"))
-      return(list(cook.d = NA))
+      return(list(cook.d = NA_real_))
 
    ### removing a cluster could lead to a model coefficient becoming inestimable
 
    if (any(res$coef.na))
-      return(list(cook.d = NA))
+      return(list(cook.d = NA_real_))
 
    ### compute dfbeta value(s) (including coefficients as specified via btt)
 
@@ -1139,12 +1139,12 @@
    }
 
    if (inherits(res, "try-error"))
-      return(list(delresid = rep(NA, k.id), sedelresid = rep(NA, k.id), X2 = NA, k.id = NA, pos = which(incl)))
+      return(list(delresid = rep(NA_real_, k.id), sedelresid = rep(NA_real_, k.id), X2 = NA_real_, k.id = NA_integer_, pos = which(incl)))
 
    ### removing a cluster could lead to a model coefficient becoming inestimable
 
    if (any(res$coef.na))
-      return(list(delresid = rep(NA, k.id), sedelresid = rep(NA, k.id), X2 = NA, k.id = NA, pos = which(incl)))
+      return(list(delresid = rep(NA_real_, k.id), sedelresid = rep(NA_real_, k.id), X2 = NA_real_, k.id = NA_integer_, pos = which(incl)))
 
    ### elements that need to be returned
 
@@ -1165,7 +1165,7 @@
    #sve <- try(solve(tmp$M[incl,incl,drop=FALSE] + vdelpred), silent=TRUE)
 
    if (inherits(sve, "try-error"))
-      return(list(delresid = delresid, sedelresid = sedelresid, X2 = NA, k.id = k.id, pos = which(incl)))
+      return(list(delresid = delresid, sedelresid = sedelresid, X2 = NA_real_, k.id = k.id, pos = which(incl)))
 
    X2 <- c(rbind(delresid) %*% sve %*% cbind(delresid))
 
@@ -1213,12 +1213,12 @@
    }
 
    if (inherits(res, "try-error"))
-      return(list(dfbs = NA))
+      return(list(dfbs = NA_real_))
 
    ### removing a cluster could lead to a model coefficient becoming inestimable
 
    if (any(res$coef.na))
-      return(list(dfbs = NA))
+      return(list(dfbs = NA_real_))
 
    ### elements that need to be returned
 

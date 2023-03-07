@@ -68,7 +68,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
          if (x$tau2.fix) {
             tau2 <- x$tau2
          } else {
-            tau2 <- NA
+            tau2 <- NA_real_
          }
       }
 
@@ -84,7 +84,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    ### handle 'beta' argument from ...
 
    if (is.null(ddd$beta)) {
-      beta <- rep(NA, x$p)
+      beta <- rep(NA_real_, x$p)
       betaspec <- FALSE
    } else {
       beta <- ddd$beta
@@ -143,7 +143,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (missing(steps) || (length(steps) == 1L && is.na(steps))) {
 
       stepsspec <- FALSE
-      steps <- NA
+      steps <- NA_real_
 
    } else {
 
@@ -324,7 +324,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
          warning(mstyle$warning("Argument 'steps' ignored (not applicable to this type of selection model)."), call.=FALSE)
 
       stepsspec <- FALSE
-      steps <- NA
+      steps <- NA_real_
 
       if (precspec)
          warning(mstyle$warning("Argument 'prec' ignored (not applicable to this type of selection model)."), call.=FALSE)
@@ -534,7 +534,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
          warning(mstyle$warning("Argument 'steps' ignored (not applicable to this type of selection model)."), call.=FALSE)
 
       stepsspec <- FALSE
-      steps <- NA
+      steps <- NA_real_
 
       if (precspec)
          warning(mstyle$warning("Argument 'prec' ignored (not applicable to this type of selection model)."), call.=FALSE)
@@ -571,7 +571,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    ### checks on delta, delta.init, delta.min, delta.max
 
    if (missing(delta)) {
-      delta <- rep(NA, deltas)
+      delta <- rep(NA_real_, deltas)
    } else {
       if (length(delta) == 1L)
          delta <- rep(delta, deltas)
@@ -850,9 +850,9 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ### computing (inverse) Hessian
 
-   H        <- NA
+   H        <- NA_real_
    vb       <- matrix(NA_real_, nrow=p, ncol=p)
-   se.tau2  <- NA
+   se.tau2  <- NA_real_
    vd       <- matrix(NA_real_, nrow=deltas, ncol=deltas)
 
    if (con$beta.fix) {
@@ -980,7 +980,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    QM <- try(as.vector(t(beta)[x$btt] %*% chol2inv(chol(vb[x$btt,x$btt])) %*% beta[x$btt]), silent=TRUE)
 
    if (inherits(QM, "try-error"))
-      QM <- NA
+      QM <- NA_real_
 
    QMp <- pchisq(QM, df=x$m, lower.tail=FALSE)
 
@@ -1029,7 +1029,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (con$htransf) {
       ci.lb.tau2 <- exp(tau2.transf - crit * se.tau2)
       ci.ub.tau2 <- exp(tau2.transf + crit * se.tau2)
-      se.tau2 <- NA
+      se.tau2 <- NA_real_
    } else {
       ci.lb.tau2 <- tau2 - crit * se.tau2
       ci.ub.tau2 <- tau2 + crit * se.tau2
@@ -1041,8 +1041,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ### LRT for H0: tau^2 = 0 (only when NOT fitting a FE model)
 
-   LRT.tau2  <- NA
-   LRTp.tau2 <- NA
+   LRT.tau2  <- NA_real_
+   LRTp.tau2 <- NA_real_
 
    if (!x$tau2.fix && !is.element(x$method, c("FE","EE","CE")) && !isTRUE(ddd$skiphet)) {
 
@@ -1114,7 +1114,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    BIC.ML  <- -2 * ll.ML +   parms * log(k)
    AICc.ML <- -2 * ll.ML + 2*parms * max(k, parms+2) / (max(k, parms+2) - parms - 1)
 
-   fit.stats <- matrix(c(ll.ML, dev.ML, AIC.ML, BIC.ML, AICc.ML, ll.REML=NA, dev.REML=NA, AIC.REML=NA, BIC.REML=NA, AICc.REML=NA), ncol=2, byrow=FALSE)
+   fit.stats <- matrix(c(ll.ML, dev.ML, AIC.ML, BIC.ML, AICc.ML, ll.REML=NA_real_, dev.REML=NA_real_, AIC.REML=NA_real_, BIC.REML=NA_real_, AICc.REML=NA_real_), ncol=2, byrow=FALSE)
    dimnames(fit.stats) <- list(c("ll","dev","AIC","BIC","AICc"), c("ML","REML"))
    fit.stats <- data.frame(fit.stats)
 
@@ -1142,12 +1142,12 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    res$ci.lb.tau2 <- ci.lb.tau2
    res$ci.ub.tau2 <- ci.ub.tau2
 
-   res$dfs <- res$ddf <- NA
+   res$dfs <- res$ddf <- NA_integer_
    res$test <- "z"
    res$s2w  <- 1
 
-   res$QE <- res$QEp <- NA
-   res$I2 <- res$H2 <- res$vt <- NA
+   res$QE <- res$QEp <- NA_real_
+   res$I2 <- res$H2 <- res$vt <- NA_real_
    res$R2 <- NULL
 
    res$QM  <- QM

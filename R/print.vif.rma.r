@@ -86,9 +86,9 @@ print.vif.rma <- function(x, digits=x$digits, ...) {
          } else {
 
             if (length(vifs) != length(x$table$estimate)) {
-               vifs <- c(NA, vifs)
-               sifs <- c(NA, sifs)
-               x$prop <- c(NA, x$prop)
+               vifs <- c(NA_real_, vifs)
+               sifs <- c(NA_real_, sifs)
+               x$prop <- c(NA_real_, x$prop)
             }
 
             if (is.element(x$test, c("knha","adhoc","t"))) {

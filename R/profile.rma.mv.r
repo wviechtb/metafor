@@ -256,11 +256,11 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
 
    ### if everything is good so far, get value of the variance component and set 'comp'
 
-   sigma2.pos <- NA
-   tau2.pos   <- NA
-   rho.pos    <- NA
-   gamma2.pos <- NA
-   phi.pos    <- NA
+   sigma2.pos <- NA_integer_
+   tau2.pos   <- NA_integer_
+   rho.pos    <- NA_integer_
+   gamma2.pos <- NA_integer_
+   phi.pos    <- NA_integer_
 
    if (!missing(sigma2)) {
       vc <- x$sigma2[sigma2]

@@ -23,7 +23,7 @@ replmiss <- function(x, y, data) {
       return(x)
 
    if (length(x) == 0L)
-      x <- rep(NA, length(y))
+      x <- rep(NA_real_, length(y))
 
    ### in case user specifies a constant to use for replacement
 

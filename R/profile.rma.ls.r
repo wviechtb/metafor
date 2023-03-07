@@ -133,7 +133,7 @@ profile.rma.ls <- function(fitted, alpha,
 
    ### if everything is good so far, get value of the component and set 'comp'
 
-   alpha.pos <- NA
+   alpha.pos <- NA_integer_
 
    if (!missing(alpha)) {
       vc <- x$alpha[alpha]

@@ -104,7 +104,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
 
    if (is.element(measure, c("RR","OR","RD"))) {
 
-      x1i <- x2i <- t1i <- t2i <- NA
+      x1i <- x2i <- t1i <- t2i <- NA_real_
 
       ai  <- .getx("ai",  mf=mf, data=data, checknumeric=TRUE)
       bi  <- .getx("bi",  mf=mf, data=data, checknumeric=TRUE)
@@ -187,10 +187,10 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       if (drop00[2]) {
          id00 <- c(ai == 0L & ci == 0L) | c(bi == 0L & di == 0L)
          id00[is.na(id00)] <- FALSE
-         ai[id00] <- NA
-         bi[id00] <- NA
-         ci[id00] <- NA
-         di[id00] <- NA
+         ai[id00] <- NA_real_
+         bi[id00] <- NA_real_
+         ci[id00] <- NA_real_
+         di[id00] <- NA_real_
       }
 
       ### save the actual cell frequencies and yi/vi values (including potential NAs)
@@ -317,7 +317,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
 
    if (is.element(measure, c("IRR","IRD"))) {
 
-      ai <- bi <- ci <- di <- NA
+      ai <- bi <- ci <- di <- NA_real_
 
       x1i <- .getx("x1i", mf=mf, data=data)
       x2i <- .getx("x2i", mf=mf, data=data)
@@ -393,8 +393,8 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       if (drop00[2]) {
          id00 <- c(x1i == 0L & x2i == 0L)
          id00[is.na(id00)] <- FALSE
-         x1i[id00] <- NA
-         x2i[id00] <- NA
+         x1i[id00] <- NA_real_
+         x2i[id00] <- NA_real_
       }
 
       ### save the actual cell frequencies and yi/vi values (including potential NAs)
@@ -511,7 +511,8 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
 
    level <- .level(level)
 
-   CO <- COp <- MH <- MHp <- BD <- BDp <- TA <- TAp <- k.pos <- NA
+   CO <- COp <- MH <- MHp <- BD <- BDp <- TA <- TAp <- NA_real_
+   k.pos <- NA_integer_
 
    ###### model fitting, test statistics, and confidence intervals
 
@@ -528,13 +529,13 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       S  <- sum(Si)
 
       if (identical(R,0) || identical(S,0) || identical(R,0L) || identical(S,0L)) {
-         beta.exp <- NA
-         beta     <- NA
-         se       <- NA
-         zval     <- NA
-         pval     <- NA
-         ci.lb    <- NA
-         ci.ub    <- NA
+         beta.exp <- NA_real_
+         beta     <- NA_real_
+         se       <- NA_real_
+         zval     <- NA_real_
+         pval     <- NA_real_
+         ci.lb    <- NA_real_
+         ci.ub    <- NA_real_
       } else {
          beta.exp <- R/S
          beta     <- log(beta.exp)
@@ -554,10 +555,10 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       yt <- bi + di
 
       if (identical(sum(xt),0) || identical(sum(yt),0) || identical(sum(xt),0L) || identical(sum(yt),0L)) {
-         CO  <- NA
-         COp <- NA
-         MH  <- NA
-         MHp <- NA
+         CO  <- NA_real_
+         COp <- NA_real_
+         MH  <- NA_real_
+         MHp <- NA_real_
       } else {
          CO  <- (abs(sum(ai - (n1i/Ni)*xt)) - ifelse(correct, 0.5, 0))^2 / sum((n1i/Ni)*(n2i/Ni)*(xt*(yt/Ni)))
          COp <- pchisq(CO, df=1, lower.tail=FALSE)
@@ -568,11 +569,11 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       ### Breslow-Day and Tarone's Test for Heterogeneity
 
       if (is.na(beta)) {
-         BD    <- NA
-         TA    <- NA
-         BDp   <- NA
-         TAp   <- NA
-         k.pos <- 0
+         BD    <- NA_real_
+         TA    <- NA_real_
+         BDp   <- NA_real_
+         TAp   <- NA_real_
+         k.pos <- 0L
       } else {
          if (identical(beta.exp,1) || identical(beta.exp,1L)) {
             N11 <- (n1i/Ni)*xt
@@ -589,12 +590,12 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
          N22   <- N11 - n1i[pos] - xt[pos] + Ni[pos]
          BD    <- max(0, sum((ai[pos]-N11)^2 / (1/N11 + 1/N12 + 1/N21 + 1/N22)^(-1)))
          TA    <- max(0, BD - sum(ai[pos]-N11)^2 / sum((1/N11 + 1/N12 + 1/N21 + 1/N22)^(-1)))
-         if (k.pos > 1) {
-            BDp <- pchisq(BD, df=k.pos-1, lower.tail=FALSE)
-            TAp <- pchisq(TA, df=k.pos-1, lower.tail=FALSE)
+         if (k.pos > 1L) {
+            BDp <- pchisq(BD, df=k.pos-1L, lower.tail=FALSE)
+            TAp <- pchisq(TA, df=k.pos-1L, lower.tail=FALSE)
          } else {
-            BDp <- NA
-            TAp <- NA
+            BDp <- NA_real_
+            TAp <- NA_real_
          }
       }
 
@@ -606,13 +607,13 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       S <- sum(ci * (n1i/Ni))
 
       if (identical(sum(ai),0) || identical(sum(ci),0) || identical(sum(ai),0L) || identical(sum(ci),0L)) {
-         beta.exp <- NA
-         beta     <- NA
-         se       <- NA
-         zval     <- NA
-         pval     <- NA
-         ci.lb    <- NA
-         ci.ub    <- NA
+         beta.exp <- NA_real_
+         beta     <- NA_real_
+         se       <- NA_real_
+         zval     <- NA_real_
+         pval     <- NA_real_
+         ci.lb    <- NA_real_
+         ci.ub    <- NA_real_
       } else {
          beta.exp <- R/S
          beta     <- log(beta.exp)
@@ -649,13 +650,13 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       S <- sum(x2i * (t1i/Ti))
 
       if (identical(sum(x1i),0) || identical(sum(x2i),0) || identical(sum(x1i),0L) || identical(sum(x2i),0L)) {
-         beta.exp <- NA
-         beta     <- NA
-         se       <- NA
-         zval     <- NA
-         pval     <- NA
-         ci.lb    <- NA
-         ci.ub    <- NA
+         beta.exp <- NA_real_
+         beta     <- NA_real_
+         se       <- NA_real_
+         zval     <- NA_real_
+         pval     <- NA_real_
+         ci.lb    <- NA_real_
+         ci.ub    <- NA_real_
       } else {
          beta.exp <- R/S
          beta     <- log(beta.exp)
@@ -673,8 +674,8 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
 
       xt <- x1i + x2i
       if (identical(sum(xt),0) || identical(sum(xt),0L)) {
-         MH  <- NA
-         MHp <- NA
+         MH  <- NA_real_
+         MHp <- NA_real_
       } else {
          MH  <- (abs(sum(x1i - xt*(t1i/Ti))) - ifelse(correct, 0.5, 0))^2 / sum(xt*(t1i/Ti)*(t2i/Ti))
          MHp <- pchisq(MH, df=1, lower.tail=FALSE)
@@ -744,7 +745,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       fit.stats <- matrix(c(ll.ML, dev.ML, AIC.ML, BIC.ML, AICc.ML, ll.REML, dev.REML, AIC.REML, BIC.REML, AICc.REML), ncol=2, byrow=FALSE)
 
    } else {
-      fit.stats <- matrix(NA, nrow=5, ncol=2, byrow=FALSE)
+      fit.stats <- matrix(NA_real_, nrow=5, ncol=2, byrow=FALSE)
    }
 
    dimnames(fit.stats) <- list(c("ll","dev","AIC","BIC","AICc"), c("ML","REML"))
@@ -772,7 +773,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
    method    <- "FE"
    weighted  <- TRUE
    test      <- "z"
-   ddf       <- NA
+   ddf       <- NA_integer_
 
    if (is.null(ddd$outlist) || ddd$outlist == "nodata") {
 

@@ -205,7 +205,7 @@
    cutoff  <- paste(c(".", rep(0,digits-1),1), collapse="")
    ncutoff <- as.numeric(cutoff)
 
-   ifelse(is.na(p), paste0(ifelse(showeq, "=", ""), sep, NA),
+   ifelse(is.na(p), paste0(ifelse(showeq, "=", ""), sep, "NA"),
                     ifelse(p >= ncutoff, paste0(ifelse(showeq, "=", ""), sep, formatC(p, digits=digits, format="f")),
                                          paste0("<", sep, ifelse(add0, "0", ""), cutoff)))
 

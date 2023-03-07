@@ -1313,7 +1313,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    ### check which beta elements are estimated versus fixed
 
    if (is.null(ddd$beta)) {
-      beta.val <- rep(NA, p)
+      beta.val <- rep(NA_real_, p)
       beta.est <- rep(TRUE, p)
    } else {
       beta.val <- ddd$beta
@@ -1537,7 +1537,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (verbose > 1)
       message(mstyle$message("Extracting/computing initial values ..."))
 
-   QE <- NA
+   QE <- NA_real_
 
    if (!V0) { # for V0 case, this always fails, so can skip it
 
@@ -1908,16 +1908,16 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
          cat("\n\n")
       } else {
          cat("\n\n")
-         vcs <- rbind(c("sigma2" = if (withS) round(sigma2.init, digits[["var"]]) else NA,
-                        "tau2"   = if (withG) round(tau2.init, digits[["var"]]) else NA,
-                        "rho"    = if (withG) round(rho.init, digits[["var"]]) else NA,
-                        "gamma2" = if (withH) round(gamma2.init, digits[["var"]]) else NA,
-                        "phi"    = if (withH) round(phi.init, digits[["var"]]) else NA),
-                        round(c(   if (withS) sigma2 else NA,
-                                   if (withG) tau2 else NA,
-                                   if (withG) rho else NA,
-                                   if (withH) gamma2 else NA,
-                                   if (withH) phi else NA), digits[["var"]]))
+         vcs <- rbind(c("sigma2" = if (withS) round(sigma2.init, digits[["var"]]) else NA_real_,
+                        "tau2"   = if (withG) round(tau2.init, digits[["var"]]) else NA_real_,
+                        "rho"    = if (withG) round(rho.init, digits[["var"]]) else NA_real_,
+                        "gamma2" = if (withH) round(gamma2.init, digits[["var"]]) else NA_real_,
+                        "phi"    = if (withH) round(phi.init, digits[["var"]]) else NA_real_),
+                        round(c(   if (withS) sigma2 else NA_real_,
+                                   if (withG) tau2 else NA_real_,
+                                   if (withG) rho else NA_real_,
+                                   if (withH) gamma2 else NA_real_,
+                                   if (withH) phi else NA_real_), digits[["var"]]))
          vcs <- data.frame(vcs, stringsAsFactors=FALSE)
          rownames(vcs) <- c("initial", "specified")
          vcs <- rbind(included=ifelse(c(rep(withS, sigma2s), rep(withG, tau2s), rep(withG, rhos), rep(withH, gamma2s), rep(withH, phis)), "Yes", "No"), fixed=unlist(vc.fix), vcs)
@@ -2070,8 +2070,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    beta <- as.matrix(fitcall$beta)
    vb   <- as.matrix(fitcall$vb)
 
-   vb[!beta.est,] <- NA
-   vb[,!beta.est] <- NA
+   vb[!beta.est,] <- NA_real_
+   vb[,!beta.est] <- NA_real_
 
    if (withS)
       sigma2 <- fitcall$sigma2
@@ -2124,7 +2124,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (is.element(test, c("knha","adhoc","t"))) {
       ddf <- .ddf.calc(dfs, X=X, k=k, p=p, mf.s=mf.s, mf.g=mf.g, mf.h=mf.h)
    } else {
-      ddf <- rep(NA, p)
+      ddf <- rep(NA_integer_, p)
    }
 
    ### the Knapp & Hartung method (this is experimental)
@@ -2157,7 +2157,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    QM <- try(as.vector(t(beta)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% beta[btt]), silent=TRUE)
 
    if (inherits(QM, "try-error"))
-      QM <- NA
+      QM <- NA_real_
 
    ### abbreviate some types of coefficient names
 
@@ -2185,11 +2185,11 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (is.element(test, c("knha","adhoc","t"))) {
       QM   <- QM / m
       QMdf <- c(m, min(ddf[btt]))
-      QMp  <- if (QMdf[2] > 0) pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE) else NA
-      pval <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) 2*pt(abs(zval[j]), df=ddf[j], lower.tail=FALSE) else NA)
-      crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/2, df=ddf[j], lower.tail=FALSE) else NA)
+      QMp  <- if (QMdf[2] > 0) pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE) else NA_real_
+      pval <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) 2*pt(abs(zval[j]), df=ddf[j], lower.tail=FALSE) else NA_real_)
+      crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/2, df=ddf[j], lower.tail=FALSE) else NA_real_)
    } else {
-      QMdf <- c(m, NA)
+      QMdf <- c(m, NA_integer_)
       QMp  <- pchisq(QM, df=QMdf[1], lower.tail=FALSE)
       pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
       crit <- qnorm(level/2, lower.tail=FALSE)
@@ -2231,8 +2231,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ###### compute Hessian
 
-   hessian <- NA
-   vvc <- NA
+   hessian <- NA_real_
+   vvc <- NA_real_
 
    if (.isTRUE(cvvc) || cvvc %in% c("varcor","varcov","transf")) {
 
@@ -2307,7 +2307,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       if (inherits(hessian, "try-error")) {
 
          warning(mstyle$warning("Error when trying to compute the Hessian."), call.=FALSE)
-         hessian <- NA
+         hessian <- NA_real_
 
       } else {
 
@@ -2362,12 +2362,12 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
          if (!withS && withG && !withH)
             hessian <- hessian[2:(nrow(hessian)-2),2:(ncol(hessian)-2), drop=FALSE]
          if (!withS && !withG && !withH)
-            hessian <- NA
+            hessian <- NA_real_
 
          ### reorder hessian when vccov into the order of the lower triangular elements of G/H
 
          if (cvvc == "varcov" && withG) {
-            posG <- matrix(NA, nrow=tau2s, ncol=tau2s)
+            posG <- matrix(NA_real_, nrow=tau2s, ncol=tau2s)
             diag(posG) <- 1:tau2s
             posG[lower.tri(posG)] <- (tau2s+1):(tau2s*(tau2s+1)/2)
             posG <- posG[lower.tri(posG, diag=TRUE)]
@@ -2377,7 +2377,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
                pos <- posG
             }
             if (withH) {
-               posH <- matrix(NA, nrow=gamma2s, ncol=gamma2s)
+               posH <- matrix(NA_real_, nrow=gamma2s, ncol=gamma2s)
                diag(posH) <- 1:gamma2s
                posH[lower.tri(posH)] <- (gamma2s+1):(gamma2s*(gamma2s+1)/2)
                posH <- posH[lower.tri(posH, diag=TRUE)]
@@ -2397,7 +2397,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
          if (inherits(vvc, "try-error") || anyNA(vvc) || any(is.infinite(vvc))) {
             warning(mstyle$warning("Error when trying to invert Hessian."), call.=FALSE)
-            vvc <- NA
+            vvc <- NA_real_
          } else {
             dimnames(vvc) <- dimnames(hessian)
          }

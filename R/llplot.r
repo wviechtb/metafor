@@ -159,10 +159,10 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       ### if drop00=TRUE, set counts to NA for studies that have no events (or all events) in both arms
 
       if (drop00) {
-         ai[id00] <- NA
-         bi[id00] <- NA
-         ci[id00] <- NA
-         di[id00] <- NA
+         ai[id00] <- NA_real_
+         bi[id00] <- NA_real_
+         ci[id00] <- NA_real_
+         di[id00] <- NA_real_
       }
 
       ### subsetting
@@ -346,7 +346,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       }
    }
 
-   lls[out] <- NA
+   lls[out] <- NA_real_
 
    ### set y-axis limits
 

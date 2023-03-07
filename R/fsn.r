@@ -50,9 +50,9 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
       iters <- ddd$iters
    }
 
-   meanes  <- NA
-   pval    <- NA
-   rejrate <- NA
+   meanes  <- NA_real_
+   pval    <- NA_real_
+   rejrate <- NA_real_
 
    #########################################################################
 
@@ -134,7 +134,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
       z.avg  <- abs(sum(zi) / sqrt(k))
       pval   <- pnorm(z.avg, lower.tail=FALSE)
       fsnum  <- max(0, k * (z.avg / qnorm(alpha, lower.tail=FALSE))^2 - k)
-      target <- NA
+      target <- NA_real_
 
    }
 
@@ -151,7 +151,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
          if (inherits(fsnum, "try-error"))
             stop(mstyle$stop("Could not find fail-safe N using Fisher's method."))
       }
-      target <- NA
+      target <- NA_real_
 
    }
 
@@ -188,7 +188,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
       w.p    <- (sum(wi*yi) / qnorm(alpha/2, lower.tail=FALSE))^2 - sum(wi)
       pval   <- 2*pnorm(abs(zval), lower.tail=FALSE)
       fsnum  <- max(0, k*w.p/sum(wi))
-      target <- NA
+      target <- NA_real_
 
    }
 
@@ -207,7 +207,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
             pvalnew <- binom.test(kpos + fsnum/2, k + fsnum)$p.value
          }
       }
-      target <- NA
+      target <- NA_real_
 
    }
 

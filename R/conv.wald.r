@@ -102,17 +102,17 @@ conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
    k <- max(length(out), length(ci.lb), length(ci.ub), length(zval), length(pval), length(n))
 
    if (is.null(out))
-      out <- rep(NA, k)
+      out <- rep(NA_real_, k)
    if (is.null(ci.lb))
-      ci.lb <- rep(NA, k)
+      ci.lb <- rep(NA_real_, k)
    if (is.null(ci.ub))
-      ci.ub <- rep(NA, k)
+      ci.ub <- rep(NA_real_, k)
    if (is.null(zval))
-      zval <- rep(NA, k)
+      zval <- rep(NA_real_, k)
    if (is.null(pval))
-      pval <- rep(NA, k)
+      pval <- rep(NA_real_, k)
    if (is.null(n))
-      n <- rep(NA, k)
+      n <- rep(NA_real_, k)
 
    ### if include is NULL, set to TRUE vector
 

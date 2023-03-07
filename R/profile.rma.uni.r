@@ -61,8 +61,8 @@ profile.rma.uni <- function(fitted,
 
       if (inherits(vc.ci, "try-error")) {
 
-         vc.lb <- NA
-         vc.ub <- NA
+         vc.lb <- NA_real_
+         vc.ub <- NA_real_
 
       } else {
 

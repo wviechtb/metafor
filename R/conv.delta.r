@@ -159,7 +159,7 @@ conv.delta <- function(yi, vi, data, include, transf, var.names, append=TRUE, re
       #tmp <- try(do.call(transf, args), silent=FALSE)
 
       if (inherits(tmp, "try-error")) {
-         yi.t[i] <- NA
+         yi.t[i] <- NA_real_
       } else {
          yi.t[i] <- tmp
       }
@@ -171,7 +171,7 @@ conv.delta <- function(yi, vi, data, include, transf, var.names, append=TRUE, re
       #tmp <- try(do.call(numDeriv::grad, args))
 
       if (inherits(tmp, "try-error")) {
-         vi.t[i] <- NA
+         vi.t[i] <- NA_real_
       } else {
          vi.t[i] <- vi[i] * tmp^2
       }
@@ -179,7 +179,7 @@ conv.delta <- function(yi, vi, data, include, transf, var.names, append=TRUE, re
       #tmp <- try(suppressWarnings(numDeriv::grad(func=transf, yi[i])), silent=TRUE)
 
       #if (inherits(tmp, "try-error")) {
-      #   deriv[i] <- NA
+      #   deriv[i] <- NA_real_
       #} else {
       #   deriv[i] <- tmp
       #}

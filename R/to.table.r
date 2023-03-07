@@ -116,10 +116,10 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       if (drop00) {
          id00 <- c(ai == 0L & ci == 0L) | c(bi == 0L & di == 0L)
          id00[is.na(id00)] <- FALSE
-         ai[id00] <- NA
-         bi[id00] <- NA
-         ci[id00] <- NA
-         di[id00] <- NA
+         ai[id00] <- NA_real_
+         bi[id00] <- NA_real_
+         ci[id00] <- NA_real_
+         di[id00] <- NA_real_
       }
 
       if (to == "all") {
@@ -205,8 +205,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
       if (drop00) {
          id00 <- c(x1i == 0L & x2i == 0L)
          id00[is.na(id00)] <- FALSE
-         x1i[id00] <- NA
-         x2i[id00] <- NA
+         x1i[id00] <- NA_real_
+         x2i[id00] <- NA_real_
       }
 
       if (to == "all") {
@@ -682,7 +682,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             stop(mstyle$stop("Outcome names not of length 2."))
       }
 
-      dat <- array(NA, dim=c(2,2,k), dimnames=list(rows, cols, slab))
+      dat <- array(NA_real_, dim=c(2,2,k), dimnames=list(rows, cols, slab))
 
       for (i in seq_len(k)) {
          tab.i <- rbind(c(ai[i],bi[i]), c(ci[i],di[i]))
@@ -740,7 +740,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             stop(mstyle$stop("Outcome names not of length 2."))
       }
 
-      dat <- array(NA, dim=c(2,2,k), dimnames=list(rows, cols, slab))
+      dat <- array(NA_real_, dim=c(2,2,k), dimnames=list(rows, cols, slab))
 
       for (i in seq_len(k)) {
          tab.i <- rbind(c(ai[i]+bi[i],ci[i]+di[i]), c(ai[i]+ci[i],bi[i]+di[i]))
@@ -798,7 +798,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             stop(mstyle$stop("Time2 names not of length 2."))
       }
 
-      dat <- array(NA, dim=c(2,2,k), dimnames=list(rows, cols, slab))
+      dat <- array(NA_real_, dim=c(2,2,k), dimnames=list(rows, cols, slab))
 
       for (i in seq_len(k)) {
          tab.i <- rbind(c(ai[i],bi[i]), c(ci[i],di[i]))
@@ -856,7 +856,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             stop(mstyle$stop("Outcome names not of length 2."))
       }
 
-      dat <- array(NA, dim=c(2,2,k), dimnames=list(rows, cols, slab))
+      dat <- array(NA_real_, dim=c(2,2,k), dimnames=list(rows, cols, slab))
 
       for (i in seq_len(k)) {
          tab.i <- rbind(c(x1i[i],t1i[i]), c(x2i[i],t2i[i]))
@@ -916,7 +916,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             stop(mstyle$stop("Outcome names not of length 3."))
       }
 
-      dat <- array(NA, dim=c(2,3,k), dimnames=list(rows, cols, slab))
+      dat <- array(NA_real_, dim=c(2,3,k), dimnames=list(rows, cols, slab))
 
       for (i in seq_len(k)) {
          tab.i <- rbind(c(m1i[i],sd1i[i],n1i[i]), c(m2i[i],sd2i[i],n2i[i]))
@@ -972,7 +972,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             stop(mstyle$stop("Outcome names not of length 2."))
       }
 
-      dat <- array(NA, dim=c(1,2,k), dimnames=list(rows, cols, slab))
+      dat <- array(NA_real_, dim=c(1,2,k), dimnames=list(rows, cols, slab))
 
       for (i in seq_len(k)) {
          tab.i <- c(ri[i],ni[i])
@@ -1028,7 +1028,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             stop(mstyle$stop("Outcome names not of length 2."))
       }
 
-      dat <- array(NA, dim=c(1,2,k), dimnames=list(rows, cols, slab))
+      dat <- array(NA_real_, dim=c(1,2,k), dimnames=list(rows, cols, slab))
 
       for (i in seq_len(k)) {
          tab.i <- c(xi[i],mi[i])
@@ -1084,7 +1084,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             stop(mstyle$stop("Outcome names not of length 2."))
       }
 
-      dat <- array(NA, dim=c(1,2,k), dimnames=list(rows, cols, slab))
+      dat <- array(NA_real_, dim=c(1,2,k), dimnames=list(rows, cols, slab))
 
       for (i in seq_len(k)) {
          tab.i <- c(xi[i],ti[i])
@@ -1141,7 +1141,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             stop(mstyle$stop("Outcome names not of length 3."))
       }
 
-      dat <- array(NA, dim=c(1,3,k), dimnames=list(rows, cols, slab))
+      dat <- array(NA_real_, dim=c(1,3,k), dimnames=list(rows, cols, slab))
 
       for (i in seq_len(k)) {
          tab.i <- c(mi[i],sdi[i],ni[i])
@@ -1217,7 +1217,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       if (is.element(measure, c("MC","SMCC","SMCRH","ROMC","CVRC"))) {
 
-         dat <- array(NA, dim=c(1,6,k), dimnames=list(rows, cols, slab))
+         dat <- array(NA_real_, dim=c(1,6,k), dimnames=list(rows, cols, slab))
 
          for (i in seq_len(k)) {
             tab.i <- c(m1i[i],m2i[i],sd1i[i],sd2i[i],ni[i],ri[i])
@@ -1226,7 +1226,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       } else {
 
-         dat <- array(NA, dim=c(1,5,k), dimnames=list(rows, cols, slab))
+         dat <- array(NA_real_, dim=c(1,5,k), dimnames=list(rows, cols, slab))
 
          for (i in seq_len(k)) {
             tab.i <- c(m1i[i],m2i[i],sd1i[i],ni[i],ri[i])
@@ -1285,7 +1285,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             stop(mstyle$stop("Outcome names not of length 3."))
       }
 
-      dat <- array(NA, dim=c(1,3,k), dimnames=list(rows, cols, slab))
+      dat <- array(NA_real_, dim=c(1,3,k), dimnames=list(rows, cols, slab))
 
       for (i in seq_len(k)) {
          tab.i <- c(ai[i],mi[i],ni[i])

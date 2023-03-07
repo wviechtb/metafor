@@ -130,7 +130,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
             s.levels.r <- !is.element(x$s.levels.f[[j]], x$s.levels[[j]])
 
-            NAs <- rep(NA, x$s.nlevels.f[j])
+            NAs <- rep(NA_real_, x$s.nlevels.f[j])
             tmp <- data.frame(intrcpt=NAs, se=NAs, pi.lb=NAs, pi.ub=NAs)
             tmp[!s.levels.r,] <- pred
             pred <- tmp

@@ -65,17 +65,17 @@ as.data.frame.anova.rma <- function(x, ...) {
                         c(x$fit.stats.f["BIC"], x$fit.stats.r["BIC"]),
                         c(x$fit.stats.f["AICc"], x$fit.stats.r["AICc"]),
                         c(x$fit.stats.f["ll"], x$fit.stats.r["ll"]),
-                        c(NA, x$LRT),
-                        c(NA, x$pval),
+                        c(NA_real_, x$LRT),
+                        c(NA_real_, x$pval),
                         c(x$QE.f, x$QE.r),
                         c(x$tau2.f, x$tau2.r),
-                        c(NA, NA))
+                        c(NA_real_, NA_real_))
 
       colnames(tab) <- c("df", "AIC", "BIC", "AICc", "logLik", "LRT", "pval", "QE", "tau^2", "R^2")
       rownames(tab) <- c("Full", "Reduced")
 
-      tab["Full",c("LRT","pval")] <- NA
-      tab["Full","R^2"] <- NA
+      tab["Full",c("LRT","pval")] <- NA_real_
+      tab["Full","R^2"] <- NA_real_
       tab["Reduced","R^2"] <- x$R2
 
       ### remove tau^2 column if full model is a FE/EE/CE model or tau2.f/tau2.r is NA

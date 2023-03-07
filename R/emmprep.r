@@ -88,7 +88,7 @@ emmprep <- function(x, verbose=FALSE, ...) {
       if (!inherits(x, c("rma.ls","rma.mv"))) {
          sigma <- sqrt(x$tau2)
       } else {
-         sigma <- NA
+         sigma <- NA_real_
       }
 
    } else {

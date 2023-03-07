@@ -185,8 +185,8 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    }
 
    len <- ya.xpos
-   xis <- rep(NA_real_,length(atyis))
-   zis <- rep(NA_real_,length(atyis))
+   xis <- rep(NA_real_, length(atyis))
+   zis <- rep(NA_real_, length(atyis))
    for (i in seq_along(atyis)) {
       xis[i] <- sqrt(len^2/(1+(atyis[i]/asp.rat)^2))
       zis[i] <- xis[i]*atyis[i]
@@ -205,10 +205,10 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    len.l <- ya.xpos
    len.u <- ya.xpos + .015*(xlims[2]-xlims[1])
-   xis.l <- rep(NA_real_,length(atyis))
-   zis.l <- rep(NA_real_,length(atyis))
-   xis.u <- rep(NA_real_,length(atyis))
-   zis.u <- rep(NA_real_,length(atyis))
+   xis.l <- rep(NA_real_, length(atyis))
+   zis.l <- rep(NA_real_, length(atyis))
+   xis.u <- rep(NA_real_, length(atyis))
+   zis.u <- rep(NA_real_, length(atyis))
    for (i in seq_along(atyis)) {
       xis.l[i] <- sqrt(len.l^2/(1+(atyis[i]/asp.rat)^2))
       zis.l[i] <- xis.l[i]*atyis[i]
@@ -232,8 +232,8 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    }
 
    len <- ya.xpos+.02*(xlims[2]-xlims[1])
-   xis <- rep(NA_real_,length(atyis))
-   zis <- rep(NA_real_,length(atyis))
+   xis <- rep(NA_real_, length(atyis))
+   zis <- rep(NA_real_, length(atyis))
    for (i in seq_along(atyis)) {
       xis[i] <- sqrt(len^2/(1+(atyis[i]/asp.rat)^2))
       zis[i] <- xis[i]*atyis[i]
@@ -256,8 +256,8 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    atyis <- seq(ci.lb, ci.ub, length.out=arc.res[2])
    len <- ci.xpos
-   xis <- rep(NA_real_,length(atyis))
-   zis <- rep(NA_real_,length(atyis))
+   xis <- rep(NA_real_, length(atyis))
+   zis <- rep(NA_real_, length(atyis))
    for (i in seq_along(atyis)) {
       xis[i] <- sqrt(len^2/(1+(atyis[i]/asp.rat)^2))
       zis[i] <- xis[i]*atyis[i]
@@ -273,10 +273,10 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    atyis <- c(ci.lb, beta, ci.ub)
    len.l <- ci.xpos-.007*(xlims[2]-xlims[1])
    len.u <- ci.xpos+.007*(xlims[2]-xlims[1])
-   xis.l <- rep(NA_real_,3L)
-   zis.l <- rep(NA_real_,3L)
-   xis.u <- rep(NA_real_,3L)
-   zis.u <- rep(NA_real_,3L)
+   xis.l <- rep(NA_real_, 3L)
+   zis.l <- rep(NA_real_, 3L)
+   xis.u <- rep(NA_real_, 3L)
+   zis.u <- rep(NA_real_, 3L)
    for (i in seq_along(atyis)) {
       xis.l[i] <- sqrt(len.l^2/(1+(atyis[i]/asp.rat)^2))
       zis.l[i] <- xis.l[i]*atyis[i]

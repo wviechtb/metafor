@@ -325,13 +325,13 @@ tes <- function(x, vi, sei, subset, data,
 
       if (test == "binom") {
          res <- binom.test(O, k, p=E/k, alternative=tes.alternative)
-         X2 <- NA
+         X2 <- NA_real_
          pval <- binom.test(O, k, p=E/k, alternative=tes.alternative)$p.value
       }
 
       if (test == "exact") {
 
-         X2 <- NA
+         X2 <- NA_real_
 
          if (progbar)
             pbar <- pbapply::startpb(min=0, max=length(js))
@@ -387,7 +387,7 @@ tes <- function(x, vi, sei, subset, data,
 
             diff.H0 <- .tes.lim(H0, yi=yi, vi=vi, H0=H0, alternative=alternative, alpha=alpha, tau2=tau2, test=test, tes.alternative=tes.alternative, progbar=FALSE, tes.alpha=tes.alpha, correct=correct, rel.tol=rel.tol, subdivisions=subdivisions, tau2.lb=tau2.lb)
             if (diff.H0 >= 0) {
-               theta.lim <- NA
+               theta.lim <- NA_real_
             } else {
                if (theta.1 >= H0) {
                   theta.lim <- try(uniroot(.tes.lim, interval=c(H0,theta.1), extendInt="upX", yi=yi, vi=vi, H0=H0, alternative=alternative, alpha=alpha, tau2=tau2, test=test, tes.alternative=tes.alternative, progbar=FALSE, tes.alpha=tes.alpha, correct=correct, rel.tol=rel.tol, subdivisions=subdivisions, tau2.lb=tau2.lb)$root, silent=TRUE)
@@ -395,7 +395,7 @@ tes <- function(x, vi, sei, subset, data,
                   theta.lim <- try(uniroot(.tes.lim, interval=c(theta.1,H0), extendInt="downX", yi=yi, vi=vi, H0=H0, alternative=alternative, alpha=alpha, tau2=tau2, test=test, tes.alternative=tes.alternative, progbar=FALSE, tes.alpha=tes.alpha, correct=correct, rel.tol=rel.tol, subdivisions=subdivisions, tau2.lb=tau2.lb)$root, silent=TRUE)
                }
                if (inherits(theta.lim, "try-error"))
-                  theta.lim <- NA
+                  theta.lim <- NA_real_
             }
 
          }
@@ -404,7 +404,7 @@ tes <- function(x, vi, sei, subset, data,
 
             diff.H0 <- .tes.lim(H0, yi=yi, vi=vi, H0=H0, alternative=alternative, alpha=alpha, tau2=tau2, test=test, tes.alternative=tes.alternative, progbar=FALSE, tes.alpha=tes.alpha, correct=correct, rel.tol=rel.tol, subdivisions=subdivisions, tau2.lb=tau2.lb)
             if (diff.H0 <= 0) {
-                  theta.lim <- NA
+                  theta.lim <- NA_real_
                } else {
                   if (theta.1 >= H0) {
                      theta.lim <- try(uniroot(.tes.lim, interval=c(H0,theta.1), extendInt="downX", yi=yi, vi=vi, H0=H0, alternative=alternative, alpha=alpha, tau2=tau2, test=test, tes.alternative=tes.alternative, progbar=FALSE, tes.alpha=tes.alpha, correct=correct, rel.tol=rel.tol, subdivisions=subdivisions, tau2.lb=tau2.lb)$root, silent=TRUE)
@@ -412,7 +412,7 @@ tes <- function(x, vi, sei, subset, data,
                      theta.lim <- try(uniroot(.tes.lim, interval=c(theta.1,H0), extendInt="upX", yi=yi, vi=vi, H0=H0, alternative=alternative, alpha=alpha, tau2=tau2, test=test, tes.alternative=tes.alternative, progbar=FALSE, tes.alpha=tes.alpha, correct=correct, rel.tol=rel.tol, subdivisions=subdivisions, tau2.lb=tau2.lb)$root, silent=TRUE)
                   }
                   if (inherits(theta.lim, "try-error"))
-                     theta.lim <- NA
+                     theta.lim <- NA_real_
             }
 
          }

@@ -120,10 +120,10 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       if (drop00) {
          id00 <- c(ai == 0L & ci == 0L) | c(bi == 0L & di == 0L)
          id00[is.na(id00)] <- FALSE
-         ai[id00] <- NA
-         bi[id00] <- NA
-         ci[id00] <- NA
-         di[id00] <- NA
+         ai[id00] <- NA_real_
+         bi[id00] <- NA_real_
+         ci[id00] <- NA_real_
+         di[id00] <- NA_real_
       }
 
       if (to == "all") {
@@ -209,8 +209,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       if (drop00) {
          id00 <- c(x1i == 0L & x2i == 0L)
          id00[is.na(id00)] <- FALSE
-         x1i[id00] <- NA
-         x2i[id00] <- NA
+         x1i[id00] <- NA_real_
+         x2i[id00] <- NA_real_
       }
 
       if (to == "all") {

@@ -441,8 +441,8 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             coefs <- seq_len(x$p)
          }
 
-         ci.lb <- rep(NA, x$p)
-         ci.ub <- rep(NA, x$p)
+         ci.lb <- rep(NA_real_, x$p)
+         ci.ub <- rep(NA_real_, x$p)
 
          for (j in coefs) {
 
@@ -458,7 +458,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             tmp <- try(uniroot(.permci, interval=c(x$ci.lb[j] - con$distfac*(x$beta[j,1] - x$ci.lb[j]), x$beta[j,1]), extendInt=ifelse(con$extendInt == "no", "no", "upX"), tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=X.exact, iter=X.iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
 
             if (inherits(tmp, "try-error")) {
-               ci.lb[j] <- NA
+               ci.lb[j] <- NA_real_
             } else {
                ci.lb[j] <- tmp
             }
@@ -475,7 +475,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
             tmp <- try(uniroot(.permci, interval=c(x$beta[j,1], x$ci.ub[j] + con$distfac*(x$ci.ub[j] - x$beta[j,1])), extendInt=ifelse(con$extendInt == "no", "no", "downX"), tol=con$tol, maxiter=con$maxiter, obj=x, j=j, exact=X.exact, iter=X.iter, progbar=progbar, level=level, digits=digits, control=con)$root, silent=TRUE)
 
             if (inherits(tmp, "try-error")) {
-               ci.ub[j] <- NA
+               ci.ub[j] <- NA_real_
             } else {
                ci.ub[j] <- tmp
             }

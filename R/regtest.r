@@ -98,7 +98,7 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
       test     <- ifelse(is.null(ddd$test), x$test, ddd$test)
       weights  <- x$weights
       weighted <- x$weighted
-      tau2     <- ifelse(x$tau2.fix, x$tau2, NA)
+      tau2     <- ifelse(x$tau2.fix, x$tau2, NA_real_)
       control  <- x$control
 
    } else {
@@ -211,7 +211,7 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
       test     <- ifelse(is.null(ddd$test), "z", ddd$test)
       weights  <- NULL
       weighted <- TRUE
-      tau2     <- NA
+      tau2     <- NA_real_
       control  <- list()
 
    }

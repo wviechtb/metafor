@@ -119,8 +119,8 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
       ######################################################################
 
-      tau2.lb <- NA
-      tau2.ub <- NA
+      tau2.lb <- NA_real_
+      tau2.ub <- NA_real_
       ci.null <- FALSE ### logical if CI is a null set
       lb.conv <- FALSE ### logical if search converged for lower bound (LB)
       ub.conv <- FALSE ### logical if search converged for upper bound (UB)

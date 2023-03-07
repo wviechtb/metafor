@@ -232,8 +232,8 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
       if (is.null(newscale)) {
 
-         Z.new  <- matrix(NA, nrow=k.new, ncol=x$q)
-         tau2.f <- rep(NA, k.new)
+         Z.new  <- matrix(NA_real_, nrow=k.new, ncol=x$q)
+         tau2.f <- rep(NA_real_, k.new)
          addz   <- FALSE
 
       } else {
@@ -286,7 +286,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       }
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         crit <- if (ddf > 0) qt(level/2, df=ddf, lower.tail=FALSE) else NA
+         crit <- if (ddf > 0) qt(level/2, df=ddf, lower.tail=FALSE) else NA_real_
       } else {
          crit <- qnorm(level/2, lower.tail=FALSE)
       }
@@ -302,7 +302,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       }
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         crit <- if (ddf > 0) qt(level/2, df=ddf, lower.tail=FALSE) else NA
+         crit <- if (ddf > 0) qt(level/2, df=ddf, lower.tail=FALSE) else NA_real_
       } else {
          crit <- qnorm(level/2, lower.tail=FALSE)
       }
@@ -357,8 +357,8 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       if (vcov)
          vcovpred <- Z.new %*% x$va %*% t(Z.new)
 
-      pi.lb <- NA
-      pi.ub <- NA
+      pi.lb <- NA_real_
+      pi.ub <- NA_real_
 
    }
 
@@ -369,14 +369,14 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    if (is.function(transf)) {
       if (is.null(targs)) {
          pred  <- sapply(pred, transf)
-         se    <- rep(NA,k.new)
+         se    <- rep(NA_real_, k.new)
          ci.lb <- sapply(ci.lb, transf)
          ci.ub <- sapply(ci.ub, transf)
          pi.lb <- sapply(pi.lb, transf)
          pi.ub <- sapply(pi.ub, transf)
       } else {
          pred  <- sapply(pred, transf, targs)
-         se    <- rep(NA,k.new)
+         se    <- rep(NA_real_, k.new)
          ci.lb <- sapply(ci.lb, transf, targs)
          ci.ub <- sapply(ci.ub, transf, targs)
          pi.lb <- sapply(pi.lb, transf, targs)
@@ -463,11 +463,11 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    if (na.act == "na.exclude" && is.null(newmods)) {
 
-      out <- lapply(out, function(val) ifelse(x$not.na, val, NA))
+      out <- lapply(out, function(val) ifelse(x$not.na, val, NA_real_))
 
       if (vcov) {
-         vcovpred[!x$not.na,] <- NA
-         vcovpred[,!x$not.na] <- NA
+         vcovpred[!x$not.na,] <- NA_real_
+         vcovpred[,!x$not.na] <- NA_real_
       }
 
    }

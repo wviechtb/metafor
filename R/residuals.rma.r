@@ -89,7 +89,7 @@ residuals.rma <- function(object, type="response", ...) {
          out <- out[object$not.na]
 
       if (na.act == "na.exclude")
-         out[!object$not.na] <- NA
+         out[!object$not.na] <- NA_real_
 
       if (na.act == "na.fail" && any(!object$not.na))
          stop(mstyle$stop("Missing values in results."))

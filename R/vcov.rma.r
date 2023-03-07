@@ -94,8 +94,8 @@ vcov.rma <- function(object, type="fixed", ...) {
          out <- out[object$not.na, object$not.na]
 
       if (na.act == "na.exclude" || na.act == "na.pass") {
-         out[!object$not.na,] <- NA
-         out[,!object$not.na] <- NA
+         out[!object$not.na,] <- NA_real_
+         out[,!object$not.na] <- NA_real_
       }
 
       return(out)

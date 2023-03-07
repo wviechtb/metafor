@@ -215,10 +215,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (drop00) {
             id00 <- c(ai == 0L & ci == 0L) | c(bi == 0L & di == 0L)
             id00[is.na(id00)] <- FALSE
-            ai[id00] <- NA
-            bi[id00] <- NA
-            ci[id00] <- NA
-            di[id00] <- NA
+            ai[id00] <- NA_real_
+            bi[id00] <- NA_real_
+            ci[id00] <- NA_real_
+            di[id00] <- NA_real_
          }
 
          ### save unadjusted counts
@@ -551,7 +551,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             ci.p <- ci.u - ai.p
             di.p <- bi.u - ci.u + ai.p
             ri.p <- (ai.p*di.p - bi.p*ci.p) / sqrt((ai.p+bi.p)*(ci.p+di.p)*(ai.p+ci.p)*(bi.p+di.p))
-            ri.p[ri.p < -1 | ri.p > 1] <- NA
+            ri.p[ri.p < -1 | ri.p > 1] <- NA_real_
             ri <- replmiss(ri, ri.p)
 
             if (addvi) {
@@ -641,8 +641,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (drop00) {
             id00 <- c(x1i == 0L & x2i == 0L)
             id00[is.na(id00)] <- FALSE
-            x1i[id00] <- NA
-            x2i[id00] <- NA
+            x1i[id00] <- NA_real_
+            x2i[id00] <- NA_real_
          }
 
          ### save unadjusted counts
@@ -1140,7 +1140,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          if (measure == "UCOR") {
             #yi <- ri + ri*(1-ri^2)/(2*(ni-4)) ### approximation
-            #yi[ni <= 4] <- NA ### set corrected correlations for ni <= 4 to NA
+            #yi[ni <= 4] <- NA_real_ ### set corrected correlations for ni <= 4 to NA_real_
             yi <- ri * .Fcalc(1/2, 1/2, (ni-2)/2, 1-ri^2)
          }
 
@@ -1187,7 +1187,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ### set sampling variances for ni <= 3 to NA
 
-         vi[ni <= 3] <- NA
+         vi[ni <= 3] <- NA_real_
 
       }
 
@@ -2183,8 +2183,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
    if (any(is.inf)) {
       warning(mstyle$warning("Some 'yi' and/or 'vi' values equal to +-Inf. Recoded to NAs."), call.=FALSE)
-      yi[is.inf] <- NA
-      vi[is.inf] <- NA
+      yi[is.inf] <- NA_real_
+      vi[is.inf] <- NA_real_
    }
 
    ### check for NaN values and set them to NA
@@ -2192,13 +2192,13 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
    is.NaN <- is.nan(yi) | is.nan(vi)
 
    if (any(is.NaN)) {
-      yi[is.NaN] <- NA
-      vi[is.NaN] <- NA
+      yi[is.NaN] <- NA_real_
+      vi[is.NaN] <- NA_real_
    }
 
    ### check for negative vi's (should not happen, but just in case)
 
-   vi[vi < 0] <- NA
+   vi[vi < 0] <- NA_real_
 
    ### add study labels if specified
 

@@ -328,7 +328,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
 
       fun1 <- function(x) {
          m <- mean(x, na.rm=na.rm[2])
-         if (is.nan(m)) NA else m
+         if (is.nan(m)) NA_real_ else m
       }
       fun2 <- fun1
       fun3 <- function(x) {
@@ -339,7 +339,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
             tab <- table(x, useNA="ifany")
          }
          val <- tail(names(sort(tab)), 1)
-         if (is.null(val)) NA else val
+         if (is.null(val)) NA_integer_ else val
       }
 
    }

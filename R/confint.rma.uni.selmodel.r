@@ -165,7 +165,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
       ### if everything is good so far, get value of the variance component and set 'comp'
 
-      delta.pos <- NA
+      delta.pos <- NA_integer_
 
       if (!missing(tau2)) {
          vc <- x$tau2
@@ -208,8 +208,8 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
       ######################################################################
 
-      vc.lb <- NA
-      vc.ub <- NA
+      vc.lb <- NA_real_
+      vc.ub <- NA_real_
       ci.null <- FALSE ### logical if CI is a null set
       lb.conv <- FALSE ### logical if search converged for lower bound (LB)
       ub.conv <- FALSE ### logical if search converged for upper bound (UB)

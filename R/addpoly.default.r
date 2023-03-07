@@ -195,8 +195,8 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
 
    } else {
 
-      pi.lb <- rep(NA, k)
-      pi.ub <- rep(NA, k)
+      pi.lb <- rep(NA_real_, k)
+      pi.ub <- rep(NA_real_, k)
 
    }
 

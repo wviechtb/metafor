@@ -15,7 +15,7 @@ print.gosh.rma <- function(x, digits=x$digits, ...) {
    cat(mstyle$result(sum(x$fit)))
    cat("\n\n")
 
-   res.table <- matrix(NA, nrow=ncol(x$res), ncol=6)
+   res.table <- matrix(NA_real_, nrow=ncol(x$res), ncol=6)
 
    res.table[,1] <- apply(x$res, 2, mean, na.rm=TRUE)
    res.table[,2] <- apply(x$res, 2, min, na.rm=TRUE)

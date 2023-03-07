@@ -254,7 +254,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
          invXtX <- try(suppressWarnings(chol2inv(chol(XtX))), silent=TRUE)
 
          if (inherits(invXtX, "try-error")) {
-            vb <- matrix(NA, nrow=(m+1), ncol=(m+1))
+            vb <- matrix(NA_real_, nrow=(m+1), ncol=(m+1))
             warning(mstyle$warning("Cannot obtain var-cov matrix of the regression coefficients."), call.=FALSE)
          } else {
             mse <- sdy^2 * (n-1) * (1 - R2) / df
@@ -262,9 +262,9 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
          }
 
          if (!has.means) {
-            b[1,]  <- NA
-            vb[1,] <- NA
-            vb[,1] <- NA
+            b[1,]  <- NA_real_
+            vb[1,] <- NA_real_
+            vb[,1] <- NA_real_
          }
 
       }
@@ -302,7 +302,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
 
       }
 
-      U <- matrix(NA, nrow=p, ncol=p)
+      U <- matrix(NA_integer_, nrow=p, ncol=p)
       U[lower.tri(U, diag=Udiag)] <- seq_len(s)
       U[upper.tri(U, diag=Udiag)] <- t(U)[upper.tri(U, diag=Udiag)]
 
@@ -336,9 +336,9 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
          vb <- X %*% vb %*% t(X)
 
          if (!has.means) {
-            b[1,]  <- NA
-            vb[1,] <- NA
-            vb[,1] <- NA
+            b[1,]  <- NA_real_
+            vb[1,] <- NA_real_
+            vb[,1] <- NA_real_
          }
 
       }
@@ -357,13 +357,13 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
       }
 
       if (inherits(QM, "try-error"))
-         QM <- NA
+         QM <- NA_real_
 
       QMp <- pchisq(QM, df=m, lower.tail=FALSE)
 
       rownames(vb) <- colnames(vb) <- rownames(b)
 
-      res <- list(tab = data.frame(beta=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, QM=QM, QMdf=c(m,NA), QMp=QMp, digits=digits, test="z")
+      res <- list(tab = data.frame(beta=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, QM=QM, QMdf=c(m,NA_integer_), QMp=QMp, digits=digits, test="z")
 
    }
 

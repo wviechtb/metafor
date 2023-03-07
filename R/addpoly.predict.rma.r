@@ -54,8 +54,8 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
       pi.lb <- x$pi.lb
       pi.ub <- x$pi.ub
    } else {
-      pi.lb <- rep(NA, length(x$pred))
-      pi.ub <- rep(NA, length(x$pred))
+      pi.lb <- rep(NA_real_, length(x$pred))
+      pi.ub <- rep(NA_real_, length(x$pred))
    }
 
    #########################################################################

@@ -134,7 +134,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
       ### if everything is good so far, get value of the variance component and set 'comp'
 
-      alpha.pos <- NA
+      alpha.pos <- NA_integer_
 
       if (!missing(alpha)) {
          vc <- x$alpha[alpha]
@@ -185,8 +185,8 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
       ######################################################################
 
-      vc.lb <- NA
-      vc.ub <- NA
+      vc.lb <- NA_real_
+      vc.ub <- NA_real_
       ci.null <- FALSE ### logical if CI is a null set
       lb.conv <- FALSE ### logical if search converged for lower bound (LB)
       ub.conv <- FALSE ### logical if search converged for upper bound (UB)

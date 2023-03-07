@@ -11,7 +11,7 @@ vec2mat <- function(x, diag=FALSE, corr=!diag, dimnames) {
 
    dims <- round(dims)
 
-   R <- matrix(NA, nrow=dims, ncol=dims)
+   R <- matrix(NA_real_, nrow=dims, ncol=dims)
 
    if (!missing(dimnames)) {
       if (length(dimnames) != dims)

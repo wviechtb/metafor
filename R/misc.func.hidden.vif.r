@@ -163,7 +163,7 @@
          return(rep(NA_real_, length(btt)))
 
       if (any(tmp$coef.na))
-         return(sapply(btt, function(x) if (any(which(tmp$coef.na) %in% x)) Inf else NA))
+         return(sapply(btt, function(x) if (any(which(tmp$coef.na) %in% x)) Inf else NA_real_))
 
       vcov <- vcov(tmp, type="beta")
 
@@ -204,7 +204,7 @@
          return(rep(NA_real_, length(att)))
 
       if (any(tmp$coef.na.Z))
-         return(sapply(att, function(x) if (any(which(tmp$coef.na.Z) %in% x)) Inf else NA))
+         return(sapply(att, function(x) if (any(which(tmp$coef.na.Z) %in% x)) Inf else NA_real_))
 
       vcov <- vcov(tmp, type="alpha")
 

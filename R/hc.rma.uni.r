@@ -126,8 +126,8 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
       if (is.null(targs)) {
          beta      <- sapply(beta, transf)
          beta.rma  <- sapply(beta.rma, transf)
-         se        <- NA
-         se.rma    <- NA
+         se        <- NA_real_
+         se.rma    <- NA_real_
          ci.lb     <- sapply(ci.lb, transf)
          ci.ub     <- sapply(ci.ub, transf)
          ci.lb.rma <- sapply(ci.lb.rma, transf)
@@ -135,8 +135,8 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
       } else {
          beta      <- sapply(beta, transf, targs)
          beta.rma  <- sapply(beta.rma, transf, targs)
-         se        <- NA
-         se.rma    <- NA
+         se        <- NA_real_
+         se.rma    <- NA_real_
          ci.lb     <- sapply(ci.lb, transf, targs)
          ci.ub     <- sapply(ci.ub, transf, targs)
          ci.lb.rma <- sapply(ci.lb.rma, transf, targs)

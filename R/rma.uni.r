@@ -110,13 +110,13 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    if (!is.null(ddd$alpha)) {
       alpha <- ddd$alpha
    } else {
-      alpha <- NA
+      alpha <- NA_real_
    }
 
    if (!is.null(ddd$beta)) {
       beta <- ddd$beta
    } else {
-      beta <- NA
+      beta <- NA_real_
    }
 
    if (model == "rma.uni" && !missing(att))
@@ -188,7 +188,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    mods    <- .getx("mods",    mf=mf, data=data)
    scale   <- .getx("scale",   mf=mf, data=data)
 
-   ai <- bi <- ci <- di <- x1i <- x2i <- t1i <- t2i <- NA
+   ai <- bi <- ci <- di <- x1i <- x2i <- t1i <- t2i <- NA_real_
 
    if (!is.null(weights) && optbeta)
       stop(mstyle$stop("Cannot use custom weights when 'optbeta=TRUE'."))
@@ -1002,7 +1002,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          if (p > k)
             stop(mstyle$stop("Number of parameters to be estimated is larger than the number of observations."))
       } else {
-         if (is.numeric(tau2)) {                      ### have to estimate p parms (tau2 is fixed at value specified)
+         if (!is.null(tau2) && !is.na(tau2)) {        ### have to estimate p parms (tau2 is fixed at value specified)
             if (p > k)
                stop(mstyle$stop("Number of parameters to be estimated is larger than the number of observations."))
          } else {
@@ -1123,7 +1123,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    ### set some defaults
 
-   se.tau2 <- I2 <- H2 <- QE <- QEp <- NA
+   se.tau2 <- I2 <- H2 <- QE <- QEp <- NA_real_
    s2w <- 1
    level <- .level(level)
 
@@ -1140,12 +1140,12 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    if (model == "rma.uni") {
 
-      if (is.numeric(tau2) && !is.element(method[1], c("FE","EE","CE"))) { # if user has fixed the tau2 value
+      if (!is.null(tau2) && !is.na(tau2) && !is.element(method[1], c("FE","EE","CE"))) { # if user has fixed the tau2 value
          tau2.fix <- TRUE
          tau2.val <- tau2
       } else {
          tau2.fix <- FALSE
-         tau2.val <- NA
+         tau2.val <- NA_real_
       }
 
       if (verbose > 1 && !tau2.fix && !is.element(method[1], c("FE","EE","CE")))
@@ -1676,7 +1676,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       tau2.fix <- FALSE
 
-      if (is.numeric(tau2))
+      if (!is.null(tau2) && !is.na(tau2))
          warning(mstyle$warning("Argument 'tau2' ignored for location-scale models."), call.=FALSE)
 
       ### get optimizer arguments from control argument
@@ -1763,7 +1763,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       ### checks on alpha argument
 
       if (missing(alpha) || is.null(alpha) || all(is.na(alpha))) {
-         alpha <- rep(NA, q)
+         alpha <- rep(NA_real_, q)
       } else {
          if (length(alpha) == 1L)
             alpha <- rep(alpha, q)
@@ -1776,7 +1776,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       if (optbeta) {
 
          if (missing(beta) || is.null(beta) || all(is.na(beta))) {
-            beta <- rep(NA, p)
+            beta <- rep(NA_real_, p)
          } else {
             if (length(beta) == 1L)
                beta <- rep(beta, p)
@@ -2046,7 +2046,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       ### try to compute vcov matrix for scale parameter estimates
 
-      H <- NA
+      H <- NA_real_
 
       if (optbeta) {
          va <- matrix(NA_real_, nrow=p+q, ncol=p+q)
@@ -2123,8 +2123,8 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          va[!hest,] <- 0
          va[,!hest] <- 0
          va <- mZ %*% va %*% t(mZ)
-         va[!hest,] <- NA
-         va[,!hest] <- NA
+         va[!hest,] <- NA_real_
+         va[,!hest] <- NA_real_
          Z <- Zsave
       }
 
@@ -2138,7 +2138,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       if (is.element(test, c("knha","adhoc","t"))) {
          ddf.alpha <- k-q
       } else {
-         ddf.alpha <- NA
+         ddf.alpha <- NA_integer_
       }
 
       ### QS calculation
@@ -2146,7 +2146,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       QS <- try(as.vector(t(alpha)[att] %*% chol2inv(chol(va[att,att])) %*% alpha[att]), silent=TRUE)
 
       if (inherits(QS, "try-error"))
-         QS <- NA
+         QS <- NA_real_
 
       se.alpha <- sqrt(diag(va))
 
@@ -2158,11 +2158,11 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       if (is.element(test, c("knha","adhoc","t"))) {
          QS         <- QS / m.alpha
          QSdf       <- c(m.alpha, k-q)
-         QSp        <- if (QSdf[2] > 0) pf(QS, df1=QSdf[1], df2=QSdf[2], lower.tail=FALSE) else NA
-         pval.alpha <- if (ddf.alpha > 0) 2*pt(abs(zval.alpha), df=ddf.alpha, lower.tail=FALSE) else rep(NA,q)
-         crit.alpha <- if (ddf.alpha > 0) qt(level/2, df=ddf.alpha, lower.tail=FALSE) else NA
+         QSp        <- if (QSdf[2] > 0) pf(QS, df1=QSdf[1], df2=QSdf[2], lower.tail=FALSE) else NA_real_
+         pval.alpha <- if (ddf.alpha > 0) 2*pt(abs(zval.alpha), df=ddf.alpha, lower.tail=FALSE) else rep(NA_real_,q)
+         crit.alpha <- if (ddf.alpha > 0) qt(level/2, df=ddf.alpha, lower.tail=FALSE) else NA_real_
       } else {
-         QSdf       <- c(m.alpha, NA)
+         QSdf       <- c(m.alpha, NA_integer_)
          QSp        <- pchisq(QS, df=QSdf[1], lower.tail=FALSE)
          pval.alpha <- 2*pnorm(abs(zval.alpha), lower.tail=FALSE)
          crit.alpha <- qnorm(level/2, lower.tail=FALSE)
@@ -2319,10 +2319,10 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       if (is.null(ddd$dfs)) {
          ddf <- k-p
       } else {
-         ddf <- ddd$dfs[1] # would be nice to allow multiple dfs values, but tricky
-      }                    # since some methods are set up for a single df value
+         ddf <- ddd$dfs[[1]] # would be nice to allow multiple dfs values, but tricky
+      }                      # since some methods are set up for a single df value
    } else {
-      ddf <- NA
+      ddf <- NA_integer_
    }
 
    ### QM calculation
@@ -2330,7 +2330,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    QM <- try(as.vector(t(beta)[btt] %*% chol2inv(chol(vb[btt,btt])) %*% beta[btt]), silent=TRUE)
 
    if (inherits(QM, "try-error"))
-      QM <- NA
+      QM <- NA_real_
 
    ### abbreviate some types of coefficient names
 
@@ -2358,11 +2358,11 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    if (is.element(test, c("knha","adhoc","t"))) {
       QM   <- QM / m
       QMdf <- c(m, k-p)
-      QMp  <- if (QMdf[2] > 0) pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE) else NA
-      pval <- if (ddf > 0) 2*pt(abs(zval), df=ddf, lower.tail=FALSE) else rep(NA,p)
-      crit <- if (ddf > 0) qt(level/2, df=ddf, lower.tail=FALSE) else NA
+      QMp  <- if (QMdf[2] > 0) pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE) else NA_real_
+      pval <- if (ddf > 0) 2*pt(abs(zval), df=ddf, lower.tail=FALSE) else rep(NA_real_,p)
+      crit <- if (ddf > 0) qt(level/2, df=ddf, lower.tail=FALSE) else NA_real_
    } else {
-      QMdf <- c(m, NA)
+      QMdf <- c(m, NA_integer_)
       QMp  <- pchisq(QM, df=QMdf[1], lower.tail=FALSE)
       pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
       crit <- qnorm(level/2, lower.tail=FALSE)
@@ -2433,7 +2433,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       if (!vi0)
          warning(mstyle$warning(paste0("Cannot compute ", ifelse(int.only, "Q", "QE"), "-test, I^2, or H^2 when there are non-positive sampling variances in the data.")), call.=FALSE)
 
-      vt <- NA
+      vt <- NA_real_
 
    }
 
@@ -2561,7 +2561,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
             } else {
 
-               R2 <- NA
+               R2 <- NA_real_
 
             }
 
@@ -2672,7 +2672,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       res$link           <- link
       res$Z              <- Z
       res$Z.f            <- Z.f
-      res$tau2.f         <- rep(NA, k.f)
+      res$tau2.f         <- rep(NA_real_, k.f)
       res$tau2.f[not.na] <- tau2
       res$att            <- att
       res$m.alpha        <- m.alpha

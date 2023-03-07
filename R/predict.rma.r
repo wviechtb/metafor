@@ -304,7 +304,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          stop(mstyle$stop("Could not obtain the linear contrast(s) (use verbose=TRUE for more details)."))
 
       ddf  <- cs.lc$df
-      crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/2, df=ddf[j], lower.tail=FALSE) else NA)
+      crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/2, df=ddf[j], lower.tail=FALSE) else NA_real_)
 
       pred  <- cs.lc$Est
       se    <- cs.lc$SE
@@ -324,7 +324,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       if (length(x$ddf) == 1L) {
          ddf <- rep(x$ddf, k.new)     # when test="z", x$ddf is NA, so this then results in a vector of NAs
       } else {
-         ddf <- rep(NA, k.new)
+         ddf <- rep(NA_integer_, k.new)
          for (j in seq_len(k.new)) {
             bn0 <- X.new[j,] != 0     # determine which coefficients are involved in the linear contrast
             ddf[j] <- min(x$ddf[bn0]) # take the smallest ddf value for those coefficients
@@ -344,7 +344,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       }
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/2, df=ddf[j], lower.tail=FALSE) else NA)
+         crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/2, df=ddf[j], lower.tail=FALSE) else NA_real_)
       } else {
          crit <- qnorm(level/2, lower.tail=FALSE)
       }
@@ -374,7 +374,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       if (pi.type == "t")
          pi.ddf <- ddf
       pi.ddf[pi.ddf < 1] <- 1
-      crit <- sapply(seq_along(pi.ddf), function(j) if (pi.ddf[j] > 0) qt(level/2, df=pi.ddf[j], lower.tail=FALSE) else NA)
+      crit <- sapply(seq_along(pi.ddf), function(j) if (pi.ddf[j] > 0) qt(level/2, df=pi.ddf[j], lower.tail=FALSE) else NA_real_)
    }
 
    if (is.null(ddd$newvi)) {
@@ -428,8 +428,8 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
                ### if user has not specified tau2.levels, cannot compute bounds
 
-               pi.lb <- rep(NA, k.new)
-               pi.ub <- rep(NA, k.new)
+               pi.lb <- rep(NA_real_, k.new)
+               pi.ub <- rep(NA_real_, k.new)
                tau2.levels <- rep(NA, k.new)
 
             } else {
@@ -467,8 +467,8 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
                ### if user has not specified tau2.levels and gamma2.levels, cannot compute bounds
 
-               pi.lb <- rep(NA, k.new)
-               pi.ub <- rep(NA, k.new)
+               pi.lb <- rep(NA_real_, k.new)
+               pi.ub <- rep(NA_real_, k.new)
                tau2.levels <- rep(NA, k.new)
                gamma2.levels <- rep(NA, k.new)
 
@@ -504,14 +504,14 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       #   targs <- c(tau2=x$tau2)
       if (is.null(targs)) {
          pred  <- sapply(pred, transf)
-         se    <- rep(NA,k.new)
+         se    <- rep(NA_real_, k.new)
          ci.lb <- sapply(ci.lb, transf)
          ci.ub <- sapply(ci.ub, transf)
          pi.lb <- sapply(pi.lb, transf)
          pi.ub <- sapply(pi.ub, transf)
       } else {
          pred  <- sapply(pred, transf, targs)
-         se    <- rep(NA,k.new)
+         se    <- rep(NA_real_, k.new)
          ci.lb <- sapply(ci.lb, transf, targs)
          ci.ub <- sapply(ci.ub, transf, targs)
          pi.lb <- sapply(pi.lb, transf, targs)
@@ -579,11 +579,11 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    if (na.act == "na.exclude" && is.null(newmods) && !x$int.only) {
 
-      out <- lapply(out, function(val) ifelse(x$not.na, val, NA))
+      out <- lapply(out, function(val) ifelse(x$not.na, val, NA_real_))
 
       if (vcov) {
-         vcovpred[!x$not.na,] <- NA
-         vcovpred[,!x$not.na] <- NA
+         vcovpred[!x$not.na,] <- NA_real_
+         vcovpred[,!x$not.na] <- NA_real_
       }
 
    }

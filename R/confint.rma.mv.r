@@ -253,11 +253,11 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
       ### if everything is good so far, get value of the variance component and set 'comp'
 
-      sigma2.pos <- NA
-      tau2.pos   <- NA
-      rho.pos    <- NA
-      gamma2.pos <- NA
-      phi.pos    <- NA
+      sigma2.pos <- NA_integer_
+      tau2.pos   <- NA_integer_
+      rho.pos    <- NA_integer_
+      gamma2.pos <- NA_integer_
+      phi.pos    <- NA_integer_
 
       if (!missing(sigma2)) {
          vc <- x$sigma2[sigma2]
@@ -349,8 +349,8 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
       ######################################################################
 
-      vc.lb <- NA
-      vc.ub <- NA
+      vc.lb <- NA_real_
+      vc.ub <- NA_real_
       ci.null <- FALSE ### logical if CI is a null set
       lb.conv <- FALSE ### logical if search converged for lower bound (LB)
       ub.conv <- FALSE ### logical if search converged for upper bound (UB)
@@ -552,7 +552,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
    if (fixed) {
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         crit <- sapply(seq_along(x$ddf), function(j) if (x$ddf[j] > 0) qt(level/2, df=x$ddf[j], lower.tail=FALSE) else NA)
+         crit <- sapply(seq_along(x$ddf), function(j) if (x$ddf[j] > 0) qt(level/2, df=x$ddf[j], lower.tail=FALSE) else NA_real_)
       } else {
          crit <- qnorm(level/2, lower.tail=FALSE)
       }

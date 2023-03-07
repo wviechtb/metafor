@@ -167,10 +167,10 @@ conv.2x2 <- function(ori, ri, x2i, ni, n1i, n2i, correct=TRUE, data, include,
       warning(mstyle$warning(paste0("There are negative cell frequencies in table", ifelse(sum(hasneg, na.rm=TRUE) > 1, "s ", " "),
                                     paste0(which(hasneg), collapse=","), ".")), call.=FALSE)
 
-      ai[hasneg] <- NA
-      bi[hasneg] <- NA
-      ci[hasneg] <- NA
-      di[hasneg] <- NA
+      ai[hasneg] <- NA_real_
+      bi[hasneg] <- NA_real_
+      ci[hasneg] <- NA_real_
+      di[hasneg] <- NA_real_
 
    }
 

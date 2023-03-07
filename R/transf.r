@@ -39,7 +39,7 @@ transf.ztor <- function(xi)
 transf.ztor.int <- function(xi, targs=NULL) {
 
    if (is.na(xi))
-      return(NA)
+      return(NA_real_)
 
    targs <- .chktargsint(targs)
 
@@ -69,7 +69,7 @@ transf.ztor.int <- function(xi, targs=NULL) {
 transf.exp.int <- function(xi, targs=NULL) {
 
    if (is.na(xi))
-      return(NA)
+      return(NA_real_)
 
    targs <- .chktargsint(targs)
 
@@ -105,7 +105,7 @@ transf.ilogit <- function(xi)
 transf.ilogit.int <- function(xi, targs=NULL) {
 
    if (is.na(xi))
-      return(NA)
+      return(NA_real_)
 
    targs <- .chktargsint(targs)
 
@@ -145,7 +145,7 @@ transf.iarcsin <- function(xi) {
 # transf.iarcsin.int <- function(xi, targs=NULL) {
 #
 #   if (is.na(xi))
-#      return(NA)
+#      return(NA_real_)
 #
 #   targs <- .chktargsint(targs)
 #

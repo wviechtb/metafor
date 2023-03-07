@@ -94,7 +94,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
       ni  <- split(ni, id)
 
       Rlist <- list()
-      nmi <- rep(NA, length(ni))
+      nmi <- rep(NA_real_, length(ni))
 
       for (i in seq_along(dat)) {
 
@@ -135,7 +135,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
 
          vars <- sort(unique(c(var1, var2)))
 
-         Ri <- matrix(NA, nrow=length(vars), ncol=length(vars))
+         Ri <- matrix(NA_real_, nrow=length(vars), ncol=length(vars))
          diag(Ri) <- 1
          rownames(Ri) <- colnames(Ri) <- vars
 
@@ -295,7 +295,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
 
    ### set up V matrix
 
-   V <- matrix(NA, nrow=dimsV, ncol=dimsV)
+   V <- matrix(NA_real_, nrow=dimsV, ncol=dimsV)
 
    for (ro in seq_len(dimsV)) {
       for (co in seq_len(dimsV)) {
@@ -335,7 +335,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
          V <- V/(ni-1)
       }
    } else {
-      V <- NA*V
+      V <- NA_real_*V
    }
 
    ### create matrix with var1 and var2 names and sort rowwise

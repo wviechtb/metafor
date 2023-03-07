@@ -174,10 +174,10 @@ level=95, verbose=FALSE, digits, ...) {
    if (drop00[2]) {
       id00 <- c(ai == 0L & ci == 0L) | c(bi == 0L & di == 0L)
       id00[is.na(id00)] <- FALSE
-      ai[id00] <- NA
-      bi[id00] <- NA
-      ci[id00] <- NA
-      di[id00] <- NA
+      ai[id00] <- NA_real_
+      bi[id00] <- NA_real_
+      ci[id00] <- NA_real_
+      di[id00] <- NA_real_
    }
 
    ### save the actual cell frequencies and yi/vi values (including potential NAs)
@@ -332,11 +332,11 @@ level=95, verbose=FALSE, digits, ...) {
    if (verbose)
       message(mstyle$message("Heterogeneity testing ..."))
 
-   k.pos <- sum(Vi > 0) ### number of tables with positive sampling variance
-   Vi[Vi == 0] <- NA    ### set 0 sampling variances to NA
+   k.pos <- sum(Vi > 0)    ### number of tables with positive sampling variance
+   Vi[Vi == 0] <- NA_real_ ### set 0 sampling variances to NA
    QE <- max(0, sum((ai - Ei)^2 / Vi, na.rm=TRUE) - sum(ai - Ei)^2 / sum(Vi, na.rm=TRUE))
 
-   if (k.pos > 1) {
+   if (k.pos > 1L) {
       QEp <- pchisq(QE, df=k.yi-1, lower.tail=FALSE)
       I2  <- max(0, 100 * (QE - (k.yi-1)) / QE)
       H2  <- QE / (k.yi-1)
@@ -397,7 +397,7 @@ level=95, verbose=FALSE, digits, ...) {
    method    <- "FE"
    weighted  <- TRUE
    test      <- "z"
-   ddf       <- NA
+   ddf       <- NA_integer_
 
    if (is.null(ddd$outlist) || ddd$outlist == "nodata") {
 

@@ -80,7 +80,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
             QS <- try(as.vector(t(x$alpha)[att] %*% chol2inv(chol(x$va[att,att])) %*% x$alpha[att]), silent=TRUE)
 
             if (inherits(QS, "try-error"))
-               QS <- NA
+               QS <- NA_real_
 
             if (is.element(x$test, c("knha","adhoc","t"))) {
                QS   <- QS / m
@@ -143,14 +143,14 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                QM <- try(as.vector(t(x$beta)[btt] %*% chol2inv(chol(x$vb[btt,btt])) %*% x$beta[btt]), silent=TRUE)
 
                if (inherits(QM, "try-error"))
-                  QM <- NA
+                  QM <- NA_real_
 
                if (is.element(x$test, c("knha","adhoc","t"))) {
                   QM   <- QM / m
                   QMdf <- c(m, x$QMdf[2])
                   QMp  <- pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE)
                } else {
-                  QMdf <- c(m, NA)
+                  QMdf <- c(m, NA_integer_)
                   QMp  <- pchisq(QM, df=QMdf[1], lower.tail=FALSE)
                }
 
@@ -208,29 +208,29 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
             zval <- c(Za/se)
 
             if (is.element(x$test, c("knha","adhoc","t"))) {
-               pval <- if (x$ddf.alpha > 0) 2*pt(abs(zval), df=x$ddf.alpha, lower.tail=FALSE) else rep(NA,m)
+               pval <- if (x$ddf.alpha > 0) 2*pt(abs(zval), df=x$ddf.alpha, lower.tail=FALSE) else rep(NA_real_,m)
             } else {
                pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
             }
 
             ### omnibus test of all hypotheses (only possible if 'Z' is of full rank)
 
-            QS  <- NA ### need this in case QS cannot be calculated below
-            QSp <- NA ### need this in case QSp cannot be calculated below
+            QS  <- NA_real_ ### need this in case QS cannot be calculated below
+            QSp <- NA_real_ ### need this in case QSp cannot be calculated below
 
             if (rankMatrix(Z) == m) {
 
                QS <- try(as.vector(t(Za) %*% chol2inv(chol(vZa)) %*% Za), silent=TRUE)
 
                if (inherits(QS, "try-error"))
-                  QS <- NA
+                  QS <- NA_real_
 
                if (is.element(x$test, c("knha","adhoc","t"))) {
                   QS   <- QS / m
                   QSdf <- c(m, x$QSdf[2])
-                  QSp  <- if (QSdf[2] > 0) pf(QS, df1=QSdf[1], df2=QSdf[2], lower.tail=FALSE) else NA
+                  QSp  <- if (QSdf[2] > 0) pf(QS, df1=QSdf[1], df2=QSdf[2], lower.tail=FALSE) else NA_real_
                } else {
-                  QSdf <- c(m, NA)
+                  QSdf <- c(m, NA_integer_)
                   QSp  <- pchisq(QS, df=QSdf[1], lower.tail=FALSE)
                }
 
@@ -305,9 +305,9 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
                ### omnibus test of all hypotheses (only possible if 'X' is of full rank)
 
-               QM   <- NA ### need this in case QMp cannot be calculated below
-               QMdf <- NA ### need this in case X is not of full rank
-               QMp  <- NA ### need this in case QMp cannot be calculated below
+               QM   <- NA_real_    # need this in case QMp cannot be calculated below
+               QMp  <- NA_real_    # need this in case QMp cannot be calculated below
+               QMdf <- NA_integer_ # need this in case X is not of full rank
 
                if (rankMatrix(X) == m) {
 
@@ -330,14 +330,14 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                   if (length(x$ddf) == 1L) {
                      ddf <- rep(x$ddf, m)
                   } else {
-                     ddf <- rep(NA, m)
+                     ddf <- rep(NA_integer_, m)
                      for (j in seq_len(m)) {
                         bn0 <- X[j,] != 0
                         ddf[j] <- min(x$ddf[bn0])
                      }
                   }
                } else {
-                  ddf <- rep(NA, m)
+                  ddf <- rep(NA_integer_, m)
                }
 
                ### specification of the right-hand side
@@ -360,16 +360,16 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                zval <- c(Xb/se)
 
                if (is.element(x$test, c("knha","adhoc","t"))) {
-                  pval <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) 2*pt(abs(zval[j]), df=ddf[j], lower.tail=FALSE) else NA)
+                  pval <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) 2*pt(abs(zval[j]), df=ddf[j], lower.tail=FALSE) else NA_real_)
                } else {
                   pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
                }
 
                ### omnibus test of all hypotheses (only possible if 'X' is of full rank)
 
-               QM   <- NA ### need this in case QMp cannot be calculated below
-               QMdf <- NA ### need this in case X is not of full rank
-               QMp  <- NA ### need this in case QMp cannot be calculated below
+               QM   <- NA_real_    # need this in case QMp cannot be calculated below
+               QMp  <- NA_real_    # need this in case QMp cannot be calculated below
+               QMdf <- NA_integer_ # need this in case X is not of full rank
 
                if (rankMatrix(X) == m) {
 
@@ -381,14 +381,14 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                   QM <- try(as.vector(t(Xb) %*% chol2inv(chol(vXb)) %*% Xb), silent=TRUE)
 
                   if (inherits(QM, "try-error"))
-                     QM <- NA
+                     QM <- NA_real_
 
                   if (is.element(x$test, c("knha","adhoc","t"))) {
                      QM   <- QM / m
                      QMdf <- c(m, min(ddf))
-                     QMp  <- if (QMdf[2] > 0) pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE) else NA
+                     QMp  <- if (QMdf[2] > 0) pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE) else NA_real_
                   } else {
-                     QMdf <- c(m, NA)
+                     QMdf <- c(m, NA_integer_)
                      QMp  <- pchisq(QM, df=QMdf[1], lower.tail=FALSE)
                   }
 
@@ -577,7 +577,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
             R2 <- 100 * max(0, (model.r$tau2 - model.f$tau2) / model.r$tau2)
          }
       } else {
-         R2 <- NA
+         R2 <- NA_real_
       }
 
       ### for 'rma.uni' objects, extract tau^2 estimates
@@ -586,8 +586,8 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
          tau2.f <- model.f$tau2
          tau2.r <- model.r$tau2
       } else {
-         tau2.f <- NA
-         tau2.r <- NA
+         tau2.f <- NA_real_
+         tau2.r <- NA_real_
       }
 
       if (test == "LRT") {

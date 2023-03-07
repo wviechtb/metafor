@@ -21,7 +21,7 @@
    if (profile) {
 
       if (inherits(res, "try-error")) {
-         sav <- list(ll = NA, beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
+         sav <- list(ll = NA_real_, beta = matrix(NA_real_, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA_real_, length(obj$ci.lb)), ci.ub = rep(NA_real_, length(obj$ci.ub)))
       } else {
          sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
       }
@@ -105,11 +105,11 @@
       ### for profile and confint, fit model with component fixed to 'val'
 
       ### set any fixed components to their values
-      sigma2.arg <- ifelse(obj$vc.fix$sigma2, obj$sigma2, NA)
-      tau2.arg   <- ifelse(obj$vc.fix$tau2, obj$tau2, NA)
-      rho.arg    <- ifelse(obj$vc.fix$rho, obj$rho, NA)
-      gamma2.arg <- ifelse(obj$vc.fix$gamma2, obj$gamma2, NA)
-      phi.arg    <- ifelse(obj$vc.fix$phi, obj$phi, NA)
+      sigma2.arg <- ifelse(obj$vc.fix$sigma2, obj$sigma2, NA_real_)
+      tau2.arg   <- ifelse(obj$vc.fix$tau2, obj$tau2, NA_real_)
+      rho.arg    <- ifelse(obj$vc.fix$rho, obj$rho, NA_real_)
+      gamma2.arg <- ifelse(obj$vc.fix$gamma2, obj$gamma2, NA_real_)
+      phi.arg    <- ifelse(obj$vc.fix$phi, obj$phi, NA_real_)
 
       if (comp == "sigma2")
          sigma2.arg[sigma2.pos] <- val
@@ -134,7 +134,7 @@
    if (profile) {
 
       if (inherits(res, "try-error")) {
-         sav <- list(ll = NA, beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
+         sav <- list(ll = NA_real_, beta = matrix(NA_real_, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA_real_, length(obj$ci.lb)), ci.ub = rep(NA_real_, length(obj$ci.ub)))
       } else {
          sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
       }
@@ -222,8 +222,8 @@
       ### for profile and confint, fit model with component fixed to 'val'
 
       ### set any fixed components to their values
-      tau2.arg  <- ifelse(is.element(obj$method, c("FE","EE","CE")) || obj$tau2.fix, obj$tau2, NA)
-      delta.arg <- ifelse(obj$delta.fix, obj$delta, NA)
+      tau2.arg  <- ifelse(is.element(obj$method, c("FE","EE","CE")) || obj$tau2.fix, obj$tau2, NA_real_)
+      delta.arg <- ifelse(obj$delta.fix, obj$delta, NA_real_)
 
       if (comp == "tau2")
          tau2.arg <- val
@@ -245,7 +245,7 @@
    if (profile) {
 
       if (inherits(res, "try-error")) {
-         sav <- list(ll = NA, beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
+         sav <- list(ll = NA_real_, beta = matrix(NA_real_, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA_real_, length(obj$ci.lb)), ci.ub = rep(NA_real_, length(obj$ci.ub)))
       } else {
          sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
       }
@@ -290,7 +290,7 @@
       ### for profile and confint, fit model with component fixed to 'val'
 
       ### set any fixed components to their values
-      alpha.arg <- ifelse(obj$alpha.fix, obj$alpha, NA)
+      alpha.arg <- ifelse(obj$alpha.fix, obj$alpha, NA_real_)
 
       if (comp == "alpha")
          alpha.arg[alpha.pos] <- val
@@ -303,7 +303,7 @@
    if (profile) {
 
       if (inherits(res, "try-error")) {
-         sav <- list(ll = NA, beta = matrix(NA, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA, length(obj$ci.lb)), ci.ub = rep(NA, length(obj$ci.ub)))
+         sav <- list(ll = NA_real_, beta = matrix(NA_real_, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA_real_, length(obj$ci.lb)), ci.ub = rep(NA_real_, length(obj$ci.ub)))
       } else {
          sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
       }

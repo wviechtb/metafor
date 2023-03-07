@@ -64,12 +64,12 @@ blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
    if (is.function(transf)) {
       if (is.null(targs)) {
          pred  <- sapply(pred, transf)
-         se    <- rep(NA,x$k.f)
+         se    <- rep(NA_real_, x$k.f)
          pi.lb <- sapply(pi.lb, transf)
          pi.ub <- sapply(pi.ub, transf)
       } else {
          pred  <- sapply(pred, transf, targs)
-         se    <- rep(NA,x$k.f)
+         se    <- rep(NA_real_, x$k.f)
          pi.lb <- sapply(pi.lb, transf, targs)
          pi.ub <- sapply(pi.ub, transf, targs)
       }

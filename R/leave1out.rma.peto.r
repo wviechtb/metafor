@@ -98,12 +98,12 @@ leave1out.rma.peto <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    if (is.function(transf)) {
       if (is.null(targs)) {
          beta  <- sapply(beta, transf)
-         se    <- rep(NA,x$k.f)
+         se    <- rep(NA_real_, x$k.f)
          ci.lb <- sapply(ci.lb, transf)
          ci.ub <- sapply(ci.ub, transf)
       } else {
          beta  <- sapply(beta, transf, targs)
-         se    <- rep(NA,x$k.f)
+         se    <- rep(NA_real_, x$k.f)
          ci.lb <- sapply(ci.lb, transf, targs)
          ci.ub <- sapply(ci.ub, transf, targs)
       }

@@ -70,8 +70,8 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
       pi.lb <- pred$pi.lb
       pi.ub <- pred$pi.ub
    } else {
-      pi.lb <- NA
-      pi.ub <- NA
+      pi.lb <- NA_real_
+      pi.ub <- NA_real_
    }
 
    #########################################################################

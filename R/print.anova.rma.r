@@ -129,11 +129,11 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
                               c(fmtx(x$fit.stats.f["BIC"],  digits[["fit"]]), fmtx(x$fit.stats.r["BIC"],  digits[["fit"]])),
                               c(fmtx(x$fit.stats.f["AICc"], digits[["fit"]]), fmtx(x$fit.stats.r["AICc"], digits[["fit"]])),
                               c(fmtx(x$fit.stats.f["ll"],   digits[["fit"]]), fmtx(x$fit.stats.r["ll"],   digits[["fit"]])),
-                              c(NA, fmtx(x$LRT, digits[["test"]])),
-                              c(NA, fmtp(x$pval, digits[["pval"]])),
+                              c(NA_character_, fmtx(x$LRT, digits[["test"]])),
+                              c(NA_character_, fmtp(x$pval, digits[["pval"]])),
                               c(fmtx(x$QE.f, digits[["test"]]),  fmtx(x$QE.r, digits[["test"]])),
                               c(fmtx(x$tau2.f, digits[["var"]]), fmtx(x$tau2.r, digits[["var"]])),
-                              c(NA, NA), stringsAsFactors=FALSE)
+                              c(NA_character_, NA_character_), stringsAsFactors=FALSE)
 
       colnames(res.table) <- c("df", "AIC", "BIC", "AICc", "logLik", "LRT", "pval", "QE", "tau^2", "R^2")
       rownames(res.table) <- c("Full", "Reduced")
