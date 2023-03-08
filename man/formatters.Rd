@@ -11,7 +11,7 @@
 fmtp(p, digits=4, pname="", equal=FALSE, sep=FALSE, add0=FALSE)
 fmtx(x, digits=4, flag="", \dots)
 fmtt(val, tname, df, df1, df2, pval, digits=4,
-     pname="p-val", format=1, sep=TRUE, call=FALSE)
+     pname="p-val", format=1, sep=TRUE, call=FALSE, \dots)
 }
 \arguments{
    \emph{Arguments for \code{fmtp}:}

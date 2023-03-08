@@ -93,7 +93,7 @@ fmtx <- function(x, digits=4, flag="", ...) {
 
 ############################################################################
 
-fmtt <- function(val, tname, df, df1, df2, pval, digits=4, pname="p-val", format=1, sep=TRUE, call=FALSE) {
+fmtt <- function(val, tname, df, df1, df2, pval, digits=4, pname="p-val", format=1, sep=TRUE, call=FALSE, ...) {
 
    if (length(val) != 1L)
       stop("Argument 'val' must be a scalar.")
@@ -112,6 +112,14 @@ fmtt <- function(val, tname, df, df1, df2, pval, digits=4, pname="p-val", format
       sep <- ""
    }
 
+   ddd <- list(...)
+
+   if (is.null(ddd$flag)) {
+      flag <- ""
+   } else {
+      flag <- ddd$flag
+   }
+
    if (length(digits) == 1L)
       digits <- c(test = digits, pval = digits)
    if (length(digits) == 2L)
@@ -123,13 +131,13 @@ fmtt <- function(val, tname, df, df1, df2, pval, digits=4, pname="p-val", format
 
       if (missing(df)) {
          if (!missing(df1) && !missing(df2)) {
-            out <- bquote(paste(.(tname), "(df1", .(sep), "=", .(sep), .(df1), ",", .(sep), "df2", .(sep), "=", .(sep), .(round(df2,2)), ")", .(sep), "=", .(sep), .(fmtx(val, digits[["test"]])), ", ", .(pname), .(sep), .(fmtp(pval, digits[["pval"]], equal=TRUE, sep=sepset)), sep=""))
+            out <- bquote(paste(.(tname), "(df1", .(sep), "=", .(sep), .(df1), ",", .(sep), "df2", .(sep), "=", .(sep), .(round(df2,2)), ")", .(sep), "=", .(sep), .(fmtx(val, digits[["test"]], flag=flag)), ", ", .(pname), .(sep), .(fmtp(pval, digits[["pval"]], equal=TRUE, sep=sepset)), sep=""))
             #paste0(tname, "(df1 = ", df1, ", df2 = ", round(df2,2), ") = ", fmtx(val, digits[["test"]]), ", ", pname, fmtp(pval, digits[["pval"]], equal=TRUE, sep=TRUE))
          } else {
-            out <- bquote(paste(.(tname), .(sep), "=", .(sep), .(fmtx(val, digits[["test"]])), ", ", .(pname), .(sep), .(fmtp(pval, digits[["pval"]], equal=TRUE, sep=sepset)), sep=""))
+            out <- bquote(paste(.(tname), .(sep), "=", .(sep), .(fmtx(val, digits[["test"]], flag=flag)), ", ", .(pname), .(sep), .(fmtp(pval, digits[["pval"]], equal=TRUE, sep=sepset)), sep=""))
          }
       } else {
-         out <- bquote(paste(.(tname), "(df", .(sep), "=", .(sep), .(df), ")", .(sep), "=", .(sep), .(fmtx(val, digits[["test"]])), ", ", .(pname), .(sep), .(fmtp(pval, digits[["pval"]], equal=TRUE, sep=sepset)), sep=""))
+         out <- bquote(paste(.(tname), "(df", .(sep), "=", .(sep), .(df), ")", .(sep), "=", .(sep), .(fmtx(val, digits[["test"]], flag=flag)), ", ", .(pname), .(sep), .(fmtp(pval, digits[["pval"]], equal=TRUE, sep=sepset)), sep=""))
          #paste0(tname, "(df = ", df, ") = ", fmtx(val, digits[["test"]]), ", ", pname, fmtp(pval, digits[["pval"]], equal=TRUE, sep=TRUE))
       }
 
@@ -139,12 +147,12 @@ fmtt <- function(val, tname, df, df1, df2, pval, digits=4, pname="p-val", format
 
       if (missing(df)) {
          if (!missing(df1) && !missing(df2)) {
-            out <- bquote(paste(.(tname), .(sep), "=", .(sep), .(fmtx(val, digits[["test"]])), ", df1", .(sep), "=", .(sep), .(df1), ", df2", .(sep), "=", .(sep), .(round(df2,2)), ", ", .(pname), .(sep), .(fmtp(pval, digits[["pval"]], equal=TRUE, sep=sepset)), sep=""))
+            out <- bquote(paste(.(tname), .(sep), "=", .(sep), .(fmtx(val, digits[["test"]], flag=flag)), ", df1", .(sep), "=", .(sep), .(df1), ", df2", .(sep), "=", .(sep), .(round(df2,2)), ", ", .(pname), .(sep), .(fmtp(pval, digits[["pval"]], equal=TRUE, sep=sepset)), sep=""))
          } else {
-            out <- bquote(paste(.(tname), .(sep), "=", .(sep), .(fmtx(val, digits[["test"]])), ", ", .(pname), .(sep), .(fmtp(pval, digits[["pval"]], equal=TRUE, sep=sepset)), sep=""))
+            out <- bquote(paste(.(tname), .(sep), "=", .(sep), .(fmtx(val, digits[["test"]], flag=flag)), ", ", .(pname), .(sep), .(fmtp(pval, digits[["pval"]], equal=TRUE, sep=sepset)), sep=""))
          }
       } else {
-         out <- bquote(paste(.(tname), .(sep), "=", .(sep), .(fmtx(val, digits[["test"]])), ", df", .(sep), "=", .(sep), .(df), ", ", .(pname), .(sep), .(fmtp(pval, digits[["pval"]], equal=TRUE, sep=sepset)), sep=""))
+         out <- bquote(paste(.(tname), .(sep), "=", .(sep), .(fmtx(val, digits[["test"]], flag=flag)), ", df", .(sep), "=", .(sep), .(df), ", ", .(pname), .(sep), .(fmtp(pval, digits[["pval"]], equal=TRUE, sep=sepset)), sep=""))
       }
 
    }
