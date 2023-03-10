@@ -6,7 +6,7 @@
 }
 \usage{
 conv.fivenum(min, q1, median, q3, max, n, data, include,
-             dist="norm", transf=FALSE, test=TRUE,
+             method="default", dist="norm", transf=TRUE, test=TRUE,
              var.names=c("mean","sd"), append=TRUE, replace="ifna", \dots)
 }
 \arguments{
@@ -18,8 +18,9 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
    \item{n}{vector with the sample sizes.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{include}{optional (logical or numeric) vector to specify the subset of studies for which means and standard deviations should be estimated.}
-   \item{dist}{character string indicating the distribution assumed for the underlying data (either \code{"norm"} for a normal distribution or \code{"lnorm"} for a log-normal distribution). Can also be a string vector if different distributions are assumed for different studies.}
-   \item{transf}{logical to specify whether the estimated means and standard deviations of the log-transformed data should be back-transformed as described by Shi et al. (2020c) (the default is \code{FALSE}). Only relevant when \code{dist="lnorm"}.}
+   \item{method}{character string indicating the method to use. See below for details.}
+   \item{dist}{character string indicating the distribution assumed for the underlying data (either \code{"norm"} for a normal distribution or \code{"lnorm"} for a log-normal distribution). Can also be a string vector if different distributions are assumed for different studies. Only relevant when \code{method="default"}.}
+   \item{transf}{logical to specify whether the estimated means and standard deviations of the log-transformed data should be back-transformed as described by Shi et al. (2020c) (the default is \code{TRUE}). Only relevant when \code{dist="lnorm"} and when \code{method="default"}.}
    \item{test}{logical to specify whether a study should be excluded from the estimation if the test for skewness is significant (the default is \code{TRUE}).}
    \item{var.names}{character vector with two elements to specify the name of the variable for the estimated means and the name of the variable for the estimated standard deviations (the defaults are \code{"mean"} and \code{"sd"}).}
    \item{append}{logical to specify whether the data frame provided via the \code{data} argument should be returned together with the estimated values (the default is \code{TRUE}).}
@@ -29,9 +30,9 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 \details{
    Various effect size measures require means and standard deviations (SDs) as input (e.g., raw or standardized mean differences, ratios of means / response ratios; see \code{\link{escalc}} for further details). For some studies, authors may not report means and SDs, but other statistics, such as the so-called \sQuote{five-number summary}, consisting of the minimum, lower/first quartile, median, upper/third quartile, and the maximum of the sample values (plus the sample sizes). Occasionally, only a subset of these values are reported.
 
-   The present function can be used to estimate means and standard deviations from five-number summary values based on methods described in the literature (Hozo et al., 2005; Wan et al., 2014; Bland, 2015; Luo et al., 2016; Shi et al., 2020a; Walter & Yao, 2007). The methods used by the function (see below) are those that have been found to be the most accurate (see references).
+   The present function can be used to estimate means and standard deviations from five-number summary values based on various methods described in the literature (Bland, 2015; Cai et al. 2021; Hozo et al., 2005; Luo et al., 2016; McGrath et al., 2020; Shi et al., 2020a; Walter & Yao, 2007; Wan et al., 2014).
 
-   We can distinguish three cases:
+   When \code{method="default"}, the following methods are used:
 
    \subsection{Case 1: Min, Median, Max}{
 
@@ -57,9 +58,13 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 
    Note that the sample size must be at least 5 to apply these methods. Studies where the sample size is smaller are not included in the estimation. The function also checks that \code{min <= q1 <= median <= q3 <= max} and throws an error if any studies are found where this is not the case.
 
-   The methods described above were derived under the assumption that the data are normally distributed. Testing this assumption would require access to the raw data, but based on the three cases above, Shi et al. (2020b; under review) derived tests of skewness that are automatically carried out. When \code{test=TRUE} (which is the default), a study is automatically excluded from the estimation if the test is significant. If all studies should be considered for estimation, set \code{test=FALSE}, but note that the accuracy of the methods will tend to be poorer when the data come from an apparently skewed distribution.
+   The methods described above were derived under the assumption that the data are normally distributed. Testing this assumption would require access to the raw data, but based on the three cases above, Shi et al. (2020b; under review) derived tests of skewness that only require the reported quantile values and that are automatically carried out. When \code{test=TRUE} (which is the default), a study is automatically excluded from the estimation if the test is significant. If all studies should be considered for estimation, set \code{test=FALSE}, but note that the accuracy of the methods will tend to be poorer when the data come from an apparently skewed distribution.
 
-   Alternatively, when setting \code{dist="lnorm"}, the raw data are assumed to follow a log-normal distribution. In this case, the methods as described by Shi et al. (2020c) are used to estimate the mean and SD of the log transformed data for the three cases above. When setting \code{transf=TRUE} (note that this is not the default), the estimated mean and SD of the log transformed data are back-transformed to the estimated mean and SD of the raw data (using the bias-corrected back-transformation as described by Shi et al., 2020c).
+   Alternatively, when setting \code{dist="lnorm"}, the raw data are assumed to follow a log-normal distribution. In this case, the methods as described by Shi et al. (2020c) are used to estimate the mean and SD of the log transformed data for the three cases above. When \code{transf=TRUE} (the default), the estimated mean and SD of the log transformed data are back-transformed to the estimated mean and SD of the raw data (using the bias-corrected back-transformation as described by Shi et al., 2020c).
+
+   ---------
+
+   Finally, as an alternative to the methods above, one can make use of the methods implemented in the \href{https://cran.r-project.org/package=estmeansd}{estmeansd} package to estimate means and SDs based on the three cases above. Available are the quantile estimation method (\code{method="qe"}; using the \code{\link[estmeansd]{qe.mean.sd}} function), the Box-Cox method (\code{method="bc"}; using the \code{\link[estmeansd]{bc.mean.sd}} function), and the method for unknown non-normal distributions (\code{method="mln"}; using the \code{\link[estmeansd]{mln.mean.sd}} function). The advantage of these methods is that they do not assume that the data underlying the reported values are normally distributed (and hence the \code{test} argument is ignored), but they can only be used when the values are positive (except for the quantile estimation method, which can also be used when one or more of the values are negative, but in this case the method does assume that the data are normally distributed and hence the test of skewness is applied when \code{test=TRUE}). Note that all of these methods may struggle to provide sensible estimates when some of the values are equal to each other (which can happen when the data include a lot of ties and/or the reported values are rounded). Also, the Box-Cox method and the method for unknown non-normal distributions involve simulated data and hence results will slightly change on repeated runs. Setting the seed of the random number generator (with \code{\link{set.seed}}) ensures reproducibility.
 }
 \value{
    If the \code{data} argument was not specified or \code{append=FALSE}, a data frame with two variables called \code{var.names[1]} (by default \code{"mean"}) and \code{var.names[2]} (by default \code{"sd"}) with the estimated means and SDs.
@@ -70,10 +75,10 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 
    When missing values in \code{var.names[1]} are replaced, an attribute called \code{"est"} is added to the variable, which is a logical vector that is \code{TRUE} for values that were estimated. The same is done when missing values in \code{var.names[2]} are replaced.
 
-   Attributes called \code{"tval"}, \code{"crit"}, and \code{"sig"} are also added to \code{var.names[1]} and \code{var.names[2]} corresponding to the test statistic and critical value for the test of skewness and whether the test was significant.
+   Attributes called \code{"tval"}, \code{"crit"}, \code{"sig"}, and \code{"dist"} are also added to \code{var.names[1]} corresponding to the test statistic and critical value for the test of skewness, whether the test was significant, and the assumed distribution (for the quantile estimation method, this is the distribution that provides the best fit to the given values).
 }
 \note{
-   \bold{A word of caution:} Under the given distributional assumptions, the estimated means and SDs are approximately unbiased and hence so are any effect size measures computed based on them (assuming a measure is unbiased to begin with when computed with directly reported means and SDs). However, the estimated means and SDs are less precise (i.e., are more variable) than directly reported means and SDs (especially under case 1) and hence computing the sampling variance of a measure with equations that assume that directly reported means and SDs are available will tend to underestimate the actual sampling variance of the measure, giving too much weight to estimates computed based on estimated means and SDs. The actual degree of inflation in the sampling variance depends on various factors and there is currently no general solution for addressing this issue. It would therefore be prudent to treat effect size estimates computed from estimated means and SDs with caution (e.g., by examining in a moderator analysis whether there are systematic differences between studies directly reporting means and SDs and those where the means and SDs needed to be estimated and/or as part of a sensitivity analysis).
+   \bold{A word of caution:} Under the given distributional assumptions, the estimated means and SDs are approximately unbiased and hence so are any effect size measures computed based on them (assuming a measure is unbiased to begin with when computed with directly reported means and SDs). However, the estimated means and SDs are less precise (i.e., are more variable) than directly reported means and SDs (especially under case 1) and hence computing the sampling variance of a measure with equations that assume that directly reported means and SDs are available will tend to underestimate the actual sampling variance of the measure, giving too much weight to estimates computed based on estimated means and SDs (see also McGrath et al., 2023). It would therefore be prudent to treat effect size estimates computed from estimated means and SDs with caution (e.g., by examining in a moderator analysis whether there are systematic differences between studies directly reporting means and SDs and those where the means and SDs needed to be estimated and/or as part of a sensitivity analysis). McGrath et al. (2023) also suggest to use bootstrapping to estimate the sampling variance of effect size measures computed based on estimated means and SDs.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
@@ -81,9 +86,15 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 \references{
    Bland, M. (2015). Estimating mean and standard deviation from the sample size, three quartiles, minimum, and maximum. \emph{International Journal of Statistics in Medical Research}, \bold{4}(1), 57--64. \verb{https://doi.org/10.6000/1929-6029.2015.04.01.6}
 
+   Cai, S., Zhou, J., & Pan, J. (2021). Estimating the sample mean and standard deviation from order statistics and sample size in meta-analysis. \emph{Statistical Methods in Medical Research}, \bold{30}(12), 2701--2719. \verb{https://doi.org/10.1177/09622802211047348}
+
    Hozo, S. P., Djulbegovic, B. & Hozo, I. (2005). Estimating the mean and variance from the median, range, and the size of a sample. \emph{BMC Medical Research Methodology}, \bold{5}, 13. \verb{https://doi.org/10.1186/1471-2288-5-13}
 
    Luo, D., Wan, X., Liu, J. & Tong, T. (2016). Optimally estimating the sample mean from the sample size, median, mid-range, and/or mid-quartile range. \emph{Statistical Methods in Medical Research}, \bold{27}(6), 1785--1805. \verb{https://doi.org/10.1177/0962280216669183}
+
+   McGrath, S., Zhao, X., Steele, R., Thombs, B. D., Benedetti, A., & the DEPRESsion Screening Data (DEPRESSD) Collaboration (2020). Estimating the sample mean and standard deviation from commonly reported quantiles in meta-analysis. \emph{Statistical Methods in Medical Research}, \bold{29}(9), 2520--2537. \verb{https://doi.org/10.1177/0962280219889080}
+
+   McGrath, S., Katzenschlager, S., Zimmer, A. J., Seitel, A., Steele, R., & Benedetti, A. (2023). Standard error estimation in meta-analysis of studies reporting medians. \emph{Statistical Methods in Medical Research}, \bold{32}(2), 373--388. \verb{https://doi.org/10.1177/09622802221139233}
 
    Shi, J., Luo, D., Weng, H., Zeng, X.-T., Lin, L., Chu, H. & Tong, T. (2020a). Optimally estimating the sample standard deviation from the five-number summary. \emph{Research Synthesis Methods}, \bold{11}(5), 641--654. \verb{https://doi.org/https://doi.org/10.1002/jrsm.1429}
 
@@ -134,6 +145,20 @@ predict(res, transf=exp, digits=2)
 
 # example data frame
 dat <- data.frame(case=c(1:3,NA), min=c(2,NA,2,NA), q1=c(NA,4,4,NA),
+                  median=c(6,6,6,NA), q3=c(NA,10,10,NA), max=c(14,NA,14,NA),
+                  mean=c(NA,NA,NA,7.0), sd=c(NA,NA,NA,4.2), n=c(20,20,20,20))
+dat
+
+# try out different methods
+conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat)
+conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat, method="qe")
+conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat, method="bc")
+conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat, method="mln")
+
+############################################################################
+
+# example data frame
+dat <- data.frame(case=c(1:3,NA), min=c(2,NA,2,NA), q1=c(NA,4,4,NA),
                   median=c(6,6,6,NA), q3=c(NA,10,14,NA), max=c(14,NA,20,NA),
                   mean=c(NA,NA,NA,7.0), sd=c(NA,NA,NA,4.2), n=c(20,20,20,20))
 dat
@@ -149,10 +174,10 @@ dat
 # test for skewness is significant for this study
 dfround(as.data.frame(attributes(dat$mean)), digits=3)
 
-# estimate means/SDs, but assume that the data for study 3 come from a log-normal distribution and
-# back-transform the estimated mean/SD of the log-transformed data back to the raw data
+# estimate means/SDs, but assume that the data for study 3 come from a log-normal distribution
+# and back-transform the estimated mean/SD of the log-transformed data back to the raw data
 dat <- conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat,
-                    dist=c("norm","norm","lnorm","norm"), transf=TRUE, replace="all")
+                    dist=c("norm","norm","lnorm","norm"), replace="all")
 dat
 
 # this works now because the test for skewness of the log-transformed data is not significant

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-29</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-30</span>
       </span>
     </div>
 
@@ -96,17 +96,18 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="3.9-29" id="metafor-39-29-2023-03-08">metafor 3.9-29 (2023-03-08)<a class="anchor" aria-label="anchor" href="#metafor-39-29-2023-03-08"></a></h2>
-<ul><li><p><code><a href="../reference/model.matrix.rma.html">model.matrix.rma()</a></code> gains <code>asdf</code> argument</p></li>
-<li><p><code><a href="../reference/emmprep.html">emmprep()</a></code> function added to create a reference grid for use with the <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans()</a></code> function from the package of the same name</p></li>
-<li><p>improved efficiency of <code><a href="../reference/vif.html">vif()</a></code> when <code>sim=TRUE</code> by reshuffling only the data needed in the model matrix; due to some edge cases, the simulation approach cannot be used when some redundant predictors were dropped from the original model; and when redundancies occur after reshuffling the data, the simulated (G)VIF value(s) are now set to <code>Inf</code> instead of <code>NA</code></p></li>
-<li><p>exposed formatter functions <code><a href="../reference/formatters.html">fmtp()</a></code>, <code><a href="../reference/formatters.html">fmtx()</a></code>, and <code><a href="../reference/formatters.html">fmtt()</a></code></p></li>
-<li><p><code><a href="../reference/selmodel.html">selmodel()</a></code> gains <code>type='trunc'</code> and <code>type='truncest'</code> models (the latter should be considered experimental)</p></li>
-<li><p>package <code>numDeriv</code> moved from <code>Suggests</code> to <code>Depends</code></p></li>
-<li><p>added <code><a href="../reference/conv.2x2.html">conv.2x2()</a></code> function for reconstructing the cell frequencies in 2x2 tables based on other summary statistics</p></li>
+<h2 class="page-header" data-toc-text="3.9-30" id="metafor-39-30-2023-03-10">metafor 3.9-30 (2023-03-10)<a class="anchor" aria-label="anchor" href="#metafor-39-30-2023-03-10"></a></h2>
+<ul><li><p>added <code><a href="../reference/conv.2x2.html">conv.2x2()</a></code> function for reconstructing the cell frequencies in 2x2 tables based on other summary statistics</p></li>
 <li><p>added <code><a href="../reference/conv.wald.html">conv.wald()</a></code> function for converting Wald-type confidence intervals and test statistics to sampling variances</p></li>
 <li><p>added <code><a href="../reference/conv.fivenum.html">conv.fivenum()</a></code> function for estimating means and standard deviations from five-number summary values</p></li>
 <li><p>added <code><a href="../reference/conv.delta.html">conv.delta()</a></code> function for transforming observed effect sizes or outcomes and their sampling variances using the delta method</p></li>
+<li><p>added <code><a href="../reference/emmprep.html">emmprep()</a></code> function to create a reference grid for use with the <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans()</a></code> function from the package of the same name</p></li>
+<li><p>exposed formatter functions <code><a href="../reference/formatters.html">fmtp()</a></code>, <code><a href="../reference/formatters.html">fmtx()</a></code>, and <code><a href="../reference/formatters.html">fmtt()</a></code></p></li>
+<li><p>package <code>numDeriv</code> moved from <code>Suggests</code> to <code>Depends</code></p></li>
+<li><p><code><a href="../reference/model.matrix.rma.html">model.matrix.rma()</a></code> gains <code>asdf</code> argument</p></li>
+<li><p>corrected bug in <code><a href="../reference/vcalc.html">vcalc()</a></code> (values for <code>obs</code> and <code>type</code> were taken directly as indices instead of using them as identifiers)</p></li>
+<li><p>improved efficiency of <code><a href="../reference/vif.html">vif()</a></code> when <code>sim=TRUE</code> by reshuffling only the data needed in the model matrix; due to some edge cases, the simulation approach cannot be used when some redundant predictors were dropped from the original model; and when redundancies occur after reshuffling the data, the simulated (G)VIF value(s) are now set to <code>Inf</code> instead of <code>NA</code></p></li>
+<li><p><code><a href="../reference/selmodel.html">selmodel()</a></code> gains <code>type='trunc'</code> and <code>type='truncest'</code> models (the latter should be considered experimental)</p></li>
 <li><p>added <code>exact="i"</code> option in <code><a href="../reference/permutest.html">permutest()</a></code> (to just return the number of iterations required for an exact permutation test)</p></li>
 <li><p><code><a href="../reference/escalc.html">escalc()</a></code> now provides more informative error messages when not specifying all required arguments to compute a particular measure</p></li>
 <li><p>added measures <code>"ZPHI"</code>, <code>"ZTET"</code>, <code>"ZPB"</code>, <code>"ZBIS"</code>, and <code>"ZSPCOR"</code> to <code><a href="../reference/escalc.html">escalc()</a></code> (but note that Fisher’s r-to-z transformation is not a variance-stabilizing transformation for these measures)</p></li>

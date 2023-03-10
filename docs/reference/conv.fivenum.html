@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-29</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-30</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">conv.fivenum</span><span class="op">(</span><span class="va">min</span>, <span class="va">q1</span>, <span class="va">median</span>, <span class="va">q3</span>, <span class="va">max</span>, <span class="va">n</span>, <span class="va">data</span>, <span class="va">include</span>,</span>
-<span>             dist<span class="op">=</span><span class="st">"norm"</span>, transf<span class="op">=</span><span class="cn">FALSE</span>, test<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>             method<span class="op">=</span><span class="st">"default"</span>, dist<span class="op">=</span><span class="st">"norm"</span>, transf<span class="op">=</span><span class="cn">TRUE</span>, test<span class="op">=</span><span class="cn">TRUE</span>,</span>
 <span>             var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>,<span class="st">"sd"</span><span class="op">)</span>, append<span class="op">=</span><span class="cn">TRUE</span>, replace<span class="op">=</span><span class="st">"ifna"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -132,11 +132,14 @@
    <dt>include</dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies for which means and standard deviations should be estimated.</p></dd>
 
+   <dt>method</dt>
+<dd><p>character string indicating the method to use. See below for details.</p></dd>
+
    <dt>dist</dt>
-<dd><p>character string indicating the distribution assumed for the underlying data (either <code>"norm"</code> for a normal distribution or <code>"lnorm"</code> for a log-normal distribution). Can also be a string vector if different distributions are assumed for different studies.</p></dd>
+<dd><p>character string indicating the distribution assumed for the underlying data (either <code>"norm"</code> for a normal distribution or <code>"lnorm"</code> for a log-normal distribution). Can also be a string vector if different distributions are assumed for different studies. Only relevant when <code>method="default"</code>.</p></dd>
 
    <dt>transf</dt>
-<dd><p>logical to specify whether the estimated means and standard deviations of the log-transformed data should be back-transformed as described by Shi et al. (2020c) (the default is <code>FALSE</code>). Only relevant when <code>dist="lnorm"</code>.</p></dd>
+<dd><p>logical to specify whether the estimated means and standard deviations of the log-transformed data should be back-transformed as described by Shi et al. (2020c) (the default is <code>TRUE</code>). Only relevant when <code>dist="lnorm"</code> and when <code>method="default"</code>.</p></dd>
 
    <dt>test</dt>
 <dd><p>logical to specify whether a study should be excluded from the estimation if the test for skewness is significant (the default is <code>TRUE</code>).</p></dd>
@@ -157,8 +160,8 @@
     <div id="details">
     <h2>Details</h2>
     <p>Various effect size measures require means and standard deviations (SDs) as input (e.g., raw or standardized mean differences, ratios of means / response ratios; see <code><a href="escalc.html">escalc</a></code> for further details). For some studies, authors may not report means and SDs, but other statistics, such as the so-called ‘five-number summary’, consisting of the minimum, lower/first quartile, median, upper/third quartile, and the maximum of the sample values (plus the sample sizes). Occasionally, only a subset of these values are reported.</p>
-<p>The present function can be used to estimate means and standard deviations from five-number summary values based on methods described in the literature (Hozo et al., 2005; Wan et al., 2014; Bland, 2015; Luo et al., 2016; Shi et al., 2020a; Walter &amp; Yao, 2007). The methods used by the function (see below) are those that have been found to be the most accurate (see references).</p>
-<p>We can distinguish three cases:</p>
+<p>The present function can be used to estimate means and standard deviations from five-number summary values based on various methods described in the literature (Bland, 2015; Cai et al. 2021; Hozo et al., 2005; Luo et al., 2016; McGrath et al., 2020; Shi et al., 2020a; Walter &amp; Yao, 2007; Wan et al., 2014).</p>
+<p>When <code>method="default"</code>, the following methods are used:</p>
 <p></p><div class="section">
 <h3 id="case-min-median-max">Case 1: Min, Median, Max<a class="anchor" aria-label="anchor" href="#case-min-median-max"></a></h3>
 
@@ -186,8 +189,10 @@
 <hr style="width:25%;text-align:left;margin-left:0">
 <p>The median is not actually needed in the methods by Wan et al. (2014) and Shi et al. (2020a) and hence it is possible to estimate the SD even if the median is unavailable (this can be useful if a study reports the mean directly, but instead of the SD, it reports the minimum/maximum and/or first/third quartile values).</p>
 <p>Note that the sample size must be at least 5 to apply these methods. Studies where the sample size is smaller are not included in the estimation. The function also checks that <code>min &lt;= q1 &lt;= median &lt;= q3 &lt;= max</code> and throws an error if any studies are found where this is not the case.</p>
-<p>The methods described above were derived under the assumption that the data are normally distributed. Testing this assumption would require access to the raw data, but based on the three cases above, Shi et al. (2020b; under review) derived tests of skewness that are automatically carried out. When <code>test=TRUE</code> (which is the default), a study is automatically excluded from the estimation if the test is significant. If all studies should be considered for estimation, set <code>test=FALSE</code>, but note that the accuracy of the methods will tend to be poorer when the data come from an apparently skewed distribution.</p>
-<p>Alternatively, when setting <code>dist="lnorm"</code>, the raw data are assumed to follow a log-normal distribution. In this case, the methods as described by Shi et al. (2020c) are used to estimate the mean and SD of the log transformed data for the three cases above. When setting <code>transf=TRUE</code> (note that this is not the default), the estimated mean and SD of the log transformed data are back-transformed to the estimated mean and SD of the raw data (using the bias-corrected back-transformation as described by Shi et al., 2020c).</p>
+<p>The methods described above were derived under the assumption that the data are normally distributed. Testing this assumption would require access to the raw data, but based on the three cases above, Shi et al. (2020b; under review) derived tests of skewness that only require the reported quantile values and that are automatically carried out. When <code>test=TRUE</code> (which is the default), a study is automatically excluded from the estimation if the test is significant. If all studies should be considered for estimation, set <code>test=FALSE</code>, but note that the accuracy of the methods will tend to be poorer when the data come from an apparently skewed distribution.</p>
+<p>Alternatively, when setting <code>dist="lnorm"</code>, the raw data are assumed to follow a log-normal distribution. In this case, the methods as described by Shi et al. (2020c) are used to estimate the mean and SD of the log transformed data for the three cases above. When <code>transf=TRUE</code> (the default), the estimated mean and SD of the log transformed data are back-transformed to the estimated mean and SD of the raw data (using the bias-corrected back-transformation as described by Shi et al., 2020c).</p>
+<hr style="width:25%;text-align:left;margin-left:0">
+<p>Finally, as an alternative to the methods above, one can make use of the methods implemented in the <a href="https://cran.r-project.org/package=estmeansd" class="external-link">estmeansd</a> package to estimate means and SDs based on the three cases above. Available are the quantile estimation method (<code>method="qe"</code>; using the <code><a href="https://rdrr.io/pkg/estmeansd/man/qe.mean.sd.html" class="external-link">qe.mean.sd</a></code> function), the Box-Cox method (<code>method="bc"</code>; using the <code><a href="https://rdrr.io/pkg/estmeansd/man/bc.mean.sd.html" class="external-link">bc.mean.sd</a></code> function), and the method for unknown non-normal distributions (<code>method="mln"</code>; using the <code><a href="https://rdrr.io/pkg/estmeansd/man/mln.mean.sd.html" class="external-link">mln.mean.sd</a></code> function). The advantage of these methods is that they do not assume that the data underlying the reported values are normally distributed (and hence the <code>test</code> argument is ignored), but they can only be used when the values are positive (except for the quantile estimation method, which can also be used when one or more of the values are negative, but in this case the method does assume that the data are normally distributed and hence the test of skewness is applied when <code>test=TRUE</code>). Note that all of these methods may struggle to provide sensible estimates when some of the values are equal to each other (which can happen when the data include a lot of ties and/or the reported values are rounded). Also, the Box-Cox method and the method for unknown non-normal distributions involve simulated data and hence results will slightly change on repeated runs. Setting the seed of the random number generator (with <code><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></code>) ensures reproducibility.</p>
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -205,11 +210,11 @@
 <p>When missing values in <code>var.names[1]</code> are replaced, an attribute called <code>"est"</code> is added to the variable, which is a logical vector that is <code>TRUE</code> for values that were estimated. The same is done when missing values in <code>var.names[2]</code> are replaced.</p>
 
 
-<p>Attributes called <code>"tval"</code>, <code>"crit"</code>, and <code>"sig"</code> are also added to <code>var.names[1]</code> and <code>var.names[2]</code> corresponding to the test statistic and critical value for the test of skewness and whether the test was significant.</p>
+<p>Attributes called <code>"tval"</code>, <code>"crit"</code>, <code>"sig"</code>, and <code>"dist"</code> are also added to <code>var.names[1]</code> corresponding to the test statistic and critical value for the test of skewness, whether the test was significant, and the assumed distribution (for the quantile estimation method, this is the distribution that provides the best fit to the given values).</p>
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p><b>A word of caution:</b> Under the given distributional assumptions, the estimated means and SDs are approximately unbiased and hence so are any effect size measures computed based on them (assuming a measure is unbiased to begin with when computed with directly reported means and SDs). However, the estimated means and SDs are less precise (i.e., are more variable) than directly reported means and SDs (especially under case 1) and hence computing the sampling variance of a measure with equations that assume that directly reported means and SDs are available will tend to underestimate the actual sampling variance of the measure, giving too much weight to estimates computed based on estimated means and SDs. The actual degree of inflation in the sampling variance depends on various factors and there is currently no general solution for addressing this issue. It would therefore be prudent to treat effect size estimates computed from estimated means and SDs with caution (e.g., by examining in a moderator analysis whether there are systematic differences between studies directly reporting means and SDs and those where the means and SDs needed to be estimated and/or as part of a sensitivity analysis).</p>
+    <p><b>A word of caution:</b> Under the given distributional assumptions, the estimated means and SDs are approximately unbiased and hence so are any effect size measures computed based on them (assuming a measure is unbiased to begin with when computed with directly reported means and SDs). However, the estimated means and SDs are less precise (i.e., are more variable) than directly reported means and SDs (especially under case 1) and hence computing the sampling variance of a measure with equations that assume that directly reported means and SDs are available will tend to underestimate the actual sampling variance of the measure, giving too much weight to estimates computed based on estimated means and SDs (see also McGrath et al., 2023). It would therefore be prudent to treat effect size estimates computed from estimated means and SDs with caution (e.g., by examining in a moderator analysis whether there are systematic differences between studies directly reporting means and SDs and those where the means and SDs needed to be estimated and/or as part of a sensitivity analysis). McGrath et al. (2023) also suggest to use bootstrapping to estimate the sampling variance of effect size measures computed based on estimated means and SDs.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -218,8 +223,11 @@
     <div id="references">
     <h2>References</h2>
     <p>Bland, M. (2015). Estimating mean and standard deviation from the sample size, three quartiles, minimum, and maximum. <em>International Journal of Statistics in Medical Research</em>, <b>4</b>(1), 57–64. <a href="https://doi.org/10.6000/1929-6029.2015.04.01.6" class="external-link">https://doi.org/10.6000/1929-6029.2015.04.01.6</a></p>
+<p>Cai, S., Zhou, J., &amp; Pan, J. (2021). Estimating the sample mean and standard deviation from order statistics and sample size in meta-analysis. <em>Statistical Methods in Medical Research</em>, <b>30</b>(12), 2701–2719. <a href="https://doi.org/10.1177/09622802211047348" class="external-link">https://doi.org/10.1177/09622802211047348</a></p>
 <p>Hozo, S. P., Djulbegovic, B. &amp; Hozo, I. (2005). Estimating the mean and variance from the median, range, and the size of a sample. <em>BMC Medical Research Methodology</em>, <b>5</b>, 13. <a href="https://doi.org/10.1186/1471-2288-5-13" class="external-link">https://doi.org/10.1186/1471-2288-5-13</a></p>
 <p>Luo, D., Wan, X., Liu, J. &amp; Tong, T. (2016). Optimally estimating the sample mean from the sample size, median, mid-range, and/or mid-quartile range. <em>Statistical Methods in Medical Research</em>, <b>27</b>(6), 1785–1805. <a href="https://doi.org/10.1177/0962280216669183" class="external-link">https://doi.org/10.1177/0962280216669183</a></p>
+<p>McGrath, S., Zhao, X., Steele, R., Thombs, B. D., Benedetti, A., &amp; the DEPRESsion Screening Data (DEPRESSD) Collaboration (2020). Estimating the sample mean and standard deviation from commonly reported quantiles in meta-analysis. <em>Statistical Methods in Medical Research</em>, <b>29</b>(9), 2520–2537. <a href="https://doi.org/10.1177/0962280219889080" class="external-link">https://doi.org/10.1177/0962280219889080</a></p>
+<p>McGrath, S., Katzenschlager, S., Zimmer, A. J., Seitel, A., Steele, R., &amp; Benedetti, A. (2023). Standard error estimation in meta-analysis of studies reporting medians. <em>Statistical Methods in Medical Research</em>, <b>32</b>(2), 373–388. <a href="https://doi.org/10.1177/09622802221139233" class="external-link">https://doi.org/10.1177/09622802221139233</a></p>
 <p>Shi, J., Luo, D., Weng, H., Zeng, X.-T., Lin, L., Chu, H. &amp; Tong, T. (2020a). Optimally estimating the sample standard deviation from the five-number summary. <em>Research Synthesis Methods</em>, <b>11</b>(5), 641–654. <a href="https://doi.org/https://doi.org/10.1002/jrsm.1429" class="external-link">https://doi.org/https://doi.org/10.1002/jrsm.1429</a></p>
 <p>Shi, J., Luo, D., Wan, X., Liu, Y., Liu, J., Bian, Z. &amp; Tong, T. (2020b). Detecting the skewness of data from the sample size and the five-number summary. <em>arXiv</em>, 2010.05749. <a href="https://doi.org/10.48550/arxiv.2010.05749" class="external-link">https://doi.org/10.48550/arxiv.2010.05749</a></p>
 <p>Shi, J., Tong, T., Wang, Y. &amp; Genton, M. G. (2020c). Estimating the mean and variance from the five-number summary of a log-normal distribution. Statistics and Its Interface, 13(4), 519-531. https://doi.org/10.4310/sii.2020.v13.n4.a9</p>
@@ -260,11 +268,11 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># check attributes (none of the tests are significant, so means/SDs are estimated for studies 1-3)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="dfround.html">dfround</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     est  tval  crit   sig</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  TRUE 0.333 0.416 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  TRUE 0.333 0.578 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  TRUE 0.491 0.666 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 FALSE    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     est  tval  crit   sig dist</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  TRUE 0.333 0.416 FALSE norm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  TRUE 0.333 0.578 FALSE norm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  TRUE 0.491 0.666 FALSE norm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 FALSE    NA    NA    NA norm</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># calculate the log transformed coefficient of variation and corresponding sampling variance</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"CVLN"</span>, mi<span class="op">=</span><span class="va">mean</span>, sdi<span class="op">=</span><span class="va">sd</span>, ni<span class="op">=</span><span class="va">n</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
@@ -309,6 +317,45 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># example data frame</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>case<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="cn">NA</span><span class="op">)</span>, min<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="cn">NA</span>,<span class="fl">2</span>,<span class="cn">NA</span><span class="op">)</span>, q1<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">4</span>,<span class="fl">4</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                  median<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">6</span>,<span class="fl">6</span>,<span class="cn">NA</span><span class="op">)</span>, q3<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">10</span>,<span class="fl">10</span>,<span class="cn">NA</span><span class="op">)</span>, max<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">14</span>,<span class="cn">NA</span>,<span class="fl">14</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                  mean<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">7.0</span><span class="op">)</span>, sd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">4.2</span><span class="op">)</span>, n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">20</span>,<span class="fl">20</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   case min q1 median q3 max mean  sd  n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1   2 NA      6 NA  14   NA  NA 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2  NA  4      6 10  NA   NA  NA 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3   2  4      6 10  14   NA  NA 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   NA  NA NA     NA NA  NA    7 4.2 20</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># try out different methods</span></span></span>
+<span class="r-in"><span><span class="fu">conv.fivenum</span><span class="op">(</span>min<span class="op">=</span><span class="va">min</span>, q1<span class="op">=</span><span class="va">q1</span>, median<span class="op">=</span><span class="va">median</span>, q3<span class="op">=</span><span class="va">q3</span>, max<span class="op">=</span><span class="va">max</span>, n<span class="op">=</span><span class="va">n</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   case min q1 median q3 max     mean       sd  n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1   2 NA      6 NA  14 6.594468 3.211576 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2  NA  4      6 10  NA 6.719500 4.787076 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3   2  4      6 10  14 6.938841 3.679435 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   NA  NA NA     NA NA  NA 7.000000 4.200000 20</span>
+<span class="r-in"><span><span class="fu">conv.fivenum</span><span class="op">(</span>min<span class="op">=</span><span class="va">min</span>, q1<span class="op">=</span><span class="va">q1</span>, median<span class="op">=</span><span class="va">median</span>, q3<span class="op">=</span><span class="va">q3</span>, max<span class="op">=</span><span class="va">max</span>, n<span class="op">=</span><span class="va">n</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"qe"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   case min q1 median q3 max     mean       sd  n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1   2 NA      6 NA  14 6.762910 3.803302 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2  NA  4      6 10  NA 7.922472 6.337109 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3   2  4      6 10  14 7.043956 3.852243 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   NA  NA NA     NA NA  NA 7.000000 4.200000 20</span>
+<span class="r-in"><span><span class="fu">conv.fivenum</span><span class="op">(</span>min<span class="op">=</span><span class="va">min</span>, q1<span class="op">=</span><span class="va">q1</span>, median<span class="op">=</span><span class="va">median</span>, q3<span class="op">=</span><span class="va">q3</span>, max<span class="op">=</span><span class="va">max</span>, n<span class="op">=</span><span class="va">n</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"bc"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   case min q1 median q3 max     mean       sd  n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1   2 NA      6 NA  14 6.563826 3.288935 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2  NA  4      6 10  NA 8.081292 6.824528 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3   2  4      6 10  14 7.185897 4.749693 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   NA  NA NA     NA NA  NA 7.000000 4.200000 20</span>
+<span class="r-in"><span><span class="fu">conv.fivenum</span><span class="op">(</span>min<span class="op">=</span><span class="va">min</span>, q1<span class="op">=</span><span class="va">q1</span>, median<span class="op">=</span><span class="va">median</span>, q3<span class="op">=</span><span class="va">q3</span>, max<span class="op">=</span><span class="va">max</span>, n<span class="op">=</span><span class="va">n</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"mln"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   case min q1 median q3 max     mean       sd  n</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    1   2 NA      6 NA  14 6.381336 3.464734 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    2  NA  4      6 10  NA 7.267582 5.030988 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    3   2  4      6 10  14 6.737517 3.944400 20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   NA  NA NA     NA NA  NA 7.000000 4.200000 20</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># example data frame</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>case<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,<span class="cn">NA</span><span class="op">)</span>, min<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="cn">NA</span>,<span class="fl">2</span>,<span class="cn">NA</span><span class="op">)</span>, q1<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">4</span>,<span class="fl">4</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  median<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6</span>,<span class="fl">6</span>,<span class="fl">6</span>,<span class="cn">NA</span><span class="op">)</span>, q3<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="fl">10</span>,<span class="fl">14</span>,<span class="cn">NA</span><span class="op">)</span>, max<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">14</span>,<span class="cn">NA</span>,<span class="fl">20</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  mean<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">7.0</span><span class="op">)</span>, sd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">4.2</span><span class="op">)</span>, n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>,<span class="fl">20</span>,<span class="fl">20</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
@@ -333,16 +380,16 @@
 <span class="r-in"><span><span class="co"># note that the mean and SD are not estimated for study 3; this is because the</span></span></span>
 <span class="r-in"><span><span class="co"># test for skewness is significant for this study</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="dfround.html">dfround</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     est  tval  crit   sig</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  TRUE 0.333 0.416 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  TRUE 0.333 0.578 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 FALSE 0.818 0.666  TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 FALSE    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     est  tval  crit   sig dist</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  TRUE 0.333 0.416 FALSE norm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  TRUE 0.333 0.578 FALSE norm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 FALSE 0.818 0.666  TRUE norm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 FALSE    NA    NA    NA norm</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># estimate means/SDs, but assume that the data for study 3 come from a log-normal distribution and</span></span></span>
-<span class="r-in"><span><span class="co"># back-transform the estimated mean/SD of the log-transformed data back to the raw data</span></span></span>
+<span class="r-in"><span><span class="co"># estimate means/SDs, but assume that the data for study 3 come from a log-normal distribution</span></span></span>
+<span class="r-in"><span><span class="co"># and back-transform the estimated mean/SD of the log-transformed data back to the raw data</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">conv.fivenum</span><span class="op">(</span>min<span class="op">=</span><span class="va">min</span>, q1<span class="op">=</span><span class="va">q1</span>, median<span class="op">=</span><span class="va">median</span>, q3<span class="op">=</span><span class="va">q3</span>, max<span class="op">=</span><span class="va">max</span>, n<span class="op">=</span><span class="va">n</span>, data<span class="op">=</span><span class="va">dat</span>,</span></span>
-<span class="r-in"><span>                    dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"norm"</span>,<span class="st">"norm"</span>,<span class="st">"lnorm"</span>,<span class="st">"norm"</span><span class="op">)</span>, transf<span class="op">=</span><span class="cn">TRUE</span>, replace<span class="op">=</span><span class="st">"all"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                    dist<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"norm"</span>,<span class="st">"norm"</span>,<span class="st">"lnorm"</span>,<span class="st">"norm"</span><span class="op">)</span>, replace<span class="op">=</span><span class="st">"all"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   case min q1 median q3 max     mean       sd  n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    1   2 NA      6 NA  14 6.594468 3.211576 20</span>
@@ -352,11 +399,11 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># this works now because the test for skewness of the log-transformed data is not significant</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="dfround.html">dfround</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     est  tval  crit   sig</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  TRUE 0.333 0.416 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  TRUE 0.333 0.578 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  TRUE 0.353 0.666 FALSE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 FALSE    NA    NA    NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     est  tval  crit   sig  dist</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  TRUE 0.333 0.416 FALSE  norm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  TRUE 0.333 0.578 FALSE  norm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  TRUE 0.353 0.666 FALSE lnorm</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 FALSE    NA    NA    NA  norm</span>
 </code></pre></div>
     </div>
   </div>

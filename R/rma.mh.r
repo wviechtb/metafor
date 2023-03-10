@@ -319,10 +319,10 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
 
       ai <- bi <- ci <- di <- NA_real_
 
-      x1i <- .getx("x1i", mf=mf, data=data)
-      x2i <- .getx("x2i", mf=mf, data=data)
-      t1i <- .getx("t1i", mf=mf, data=data)
-      t2i <- .getx("t2i", mf=mf, data=data)
+      x1i <- .getx("x1i", mf=mf, data=data, checknumeric=TRUE)
+      x2i <- .getx("x2i", mf=mf, data=data, checknumeric=TRUE)
+      t1i <- .getx("t1i", mf=mf, data=data, checknumeric=TRUE)
+      t2i <- .getx("t2i", mf=mf, data=data, checknumeric=TRUE)
 
       ni  <- t1i + t2i
 

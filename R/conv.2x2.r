@@ -39,11 +39,8 @@ conv.2x2 <- function(ori, ri, x2i, ni, n1i, n2i, correct=TRUE, data, include,
    ni      <- .getx("ni",      mf=mf, data=data, checknumeric=TRUE)
    n1i     <- .getx("n1i",     mf=mf, data=data, checknumeric=TRUE)
    n2i     <- .getx("n2i",     mf=mf, data=data, checknumeric=TRUE)
-   correct <- .getx("correct", mf=mf, data=data)
+   correct <- .getx("correct", mf=mf, data=data, default=TRUE)
    include <- .getx("include", mf=mf, data=data)
-
-   if (is.null(correct)) # if 'correct' is not specified, it is NULL
-      correct <- TRUE
 
    if (!.equal.length(ori, ri, x2i, ni, n1i, n2i))
       stop(mstyle$stop("Supplied data vectors are not all of the same length."))

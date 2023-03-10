@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-29</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-30</span>
       </span>
     </div>
 
@@ -121,26 +121,7 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">metafor.news</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.9-29 (2023-03-08)                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - model.matrix.rma() gains asdf argument</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - emmprep() function added to create a reference grid for use with the</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     emmeans() function from the package of the same name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - improved efficiency of vif() when sim=TRUE by reshuffling only the</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     data needed in the model matrix; due to some edge cases, the</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     simulation approach cannot be used when some redundant predictors</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     were dropped from the original model; and when redundancies occur</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     after reshuffling the data, the simulated (G)VIF value(s) are now</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     set to Inf instead of NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - exposed formatter functions fmtp(), fmtx(), and fmtt()</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - selmodel() gains type='trunc' and type='truncest' models (the latter</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     should be considered experimental)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - package numDeriv moved from Suggests to Depends</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 3.9-30 (2023-03-10)                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added conv.2x2() function for reconstructing the cell frequencies</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     in 2x2 tables based on other summary statistics</span>
@@ -153,6 +134,28 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added conv.delta() function for transforming observed effect sizes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     or outcomes and their sampling variances using the delta method</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - added emmprep() function to create a reference grid for use with the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     emmeans() function from the package of the same name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - exposed formatter functions fmtp(), fmtx(), and fmtt()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - package numDeriv moved from Suggests to Depends</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - model.matrix.rma() gains asdf argument</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - corrected bug in vcalc() (values for obs and type were taken</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     directly as indices instead of using them as identifiers)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - improved efficiency of vif() when sim=TRUE by reshuffling only the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     data needed in the model matrix; due to some edge cases, the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     simulation approach cannot be used when some redundant predictors</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     were dropped from the original model; and when redundancies occur</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     after reshuffling the data, the simulated (G)VIF value(s) are now</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     set to Inf instead of NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - selmodel() gains type='trunc' and type='truncest' models (the latter</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     should be considered experimental)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added exact="i" option in permutest() (to just return the number of</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     iterations required for an exact permutation test)</span>

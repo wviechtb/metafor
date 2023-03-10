@@ -1,16 +1,4 @@
-# metafor 3.9-29 (2023-03-08)
-
-- `model.matrix.rma()` gains `asdf` argument
-
-- `emmprep()` function added to create a reference grid for use with the `emmeans()` function from the package of the same name
-
-- improved efficiency of `vif()` when `sim=TRUE` by reshuffling only the data needed in the model matrix; due to some edge cases, the simulation approach cannot be used when some redundant predictors were dropped from the original model; and when redundancies occur after reshuffling the data, the simulated (G)VIF value(s) are now set to `Inf` instead of `NA`
-
-- exposed formatter functions `fmtp()`, `fmtx()`, and `fmtt()`
-
-- `selmodel()` gains `type='trunc'` and `type='truncest'` models (the latter should be considered experimental)
-
-- package `numDeriv` moved from `Suggests` to `Depends`
+# metafor 3.9-30 (2023-03-10)
 
 - added `conv.2x2()` function for reconstructing the cell frequencies in 2x2 tables based on other summary statistics
 
@@ -19,6 +7,20 @@
 - added `conv.fivenum()` function for estimating means and standard deviations from five-number summary values
 
 - added `conv.delta()` function for transforming observed effect sizes or outcomes and their sampling variances using the delta method
+
+- added `emmprep()` function to create a reference grid for use with the `emmeans()` function from the package of the same name
+
+- exposed formatter functions `fmtp()`, `fmtx()`, and `fmtt()`
+
+- package `numDeriv` moved from `Suggests` to `Depends`
+
+- `model.matrix.rma()` gains `asdf` argument
+
+- corrected bug in `vcalc()` (values for `obs` and `type` were taken directly as indices instead of using them as identifiers)
+
+- improved efficiency of `vif()` when `sim=TRUE` by reshuffling only the data needed in the model matrix; due to some edge cases, the simulation approach cannot be used when some redundant predictors were dropped from the original model; and when redundancies occur after reshuffling the data, the simulated (G)VIF value(s) are now set to `Inf` instead of `NA`
+
+- `selmodel()` gains `type='trunc'` and `type='truncest'` models (the latter should be considered experimental)
 
 - added `exact="i"` option in `permutest()` (to just return the number of iterations required for an exact permutation test)
 

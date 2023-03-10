@@ -386,21 +386,30 @@
 
 ############################################################################
 
-.getx <- function(x, mf, data, enclos=sys.frame(sys.parent(n=2)), checknull=TRUE, checknumeric=FALSE) {
+.getx <- function(x, mf, data, enclos=sys.frame(sys.parent(n=2)), checknull=TRUE, checknumeric=FALSE, default) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    mf.x <- mf[[match(x, names(mf))]]
-   out <- try(eval(mf.x, data, enclos), silent=TRUE) # NULL if x was not specifified
+   out <- try(eval(mf.x, data, enclos), silent=TRUE) # NULL if x was not specified
 
    if (inherits(out, "try-error") || is.function(out))
       stop(mstyle$stop(paste0("Cannot find the object/variable ('", deparse(mf.x), "') specified for the '", x, "' argument.")), call.=FALSE)
 
    # note: is.function() check catches case where 'vi' is the utils::vi() function and other shenanigans
 
+   # check if x is actually one of the elements in the call
+
+   spec <- x %in% names(mf)
+
+   # out could be NULL if it is not a specified argument; if so, apply default if there is one
+
+   if (is.null(out) && !spec && !missing(default))
+      out <- default
+
    if (checknull) {
 
-      spec <- x %in% names(mf)
+      # when using something like fun(dat$blah) and blah doesn't exist in dat, then get NULL
 
       if (spec && is.null(out)) {
          mf.txt <- deparse(mf.x)
