@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-30</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-31</span>
       </span>
     </div>
 
@@ -546,7 +546,7 @@
     <div id="note">
     <h2>Note</h2>
     <p>The variable names specified under <code>var.names</code> should be syntactically valid variable names. If necessary, they are adjusted so that they are.</p>
-<p>Although the default value for <code>add</code> is <code>1/2</code>, for certain measures the use of such a bias correction makes little sense and for these measures, the function internally sets <code>add=0</code>. This applies to the following measures: <code>"AS"</code>, <code>"PHI"</code>, <code>"RTET"</code>, <code>"IRSD"</code>, <code>"PAS"</code>, <code>"PFT"</code>, <code>"IRS"</code>, and <code>"IRFT"</code>. One can still force the use of the bias correction by explicitly setting the <code>add</code> argument to some non-zero value when calling the function.</p>
+<p>Although the default value for <code>add</code> is <code>1/2</code>, for certain measures the use of such a bias correction makes little sense and for these measures, the function internally sets <code>add=0</code>. This applies to the following measures: <code>"AS"</code>, <code>"PHI"</code>, <code>"ZPHI"</code>, <code>"RTET"</code>, <code>"ZTET"</code>, <code>"IRSD"</code>, <code>"PAS"</code>, <code>"PFT"</code>, <code>"IRS"</code>, and <code>"IRFT"</code>. One can still force the use of the bias correction by explicitly setting the <code>add</code> argument to some non-zero value when calling the function.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -616,6 +616,7 @@
 <p><code><a href="conv.wald.html">conv.wald</a></code> for a function to convert Wald-type confidence intervals and test statistics to sampling variances.</p>
 <p><code><a href="conv.delta.html">conv.delta</a></code> for a function to transform observed effect sizes or outcomes and their sampling variances using the delta method.</p>
 <p><code><a href="vcalc.html">vcalc</a></code> for a function to construct or approximate the variance-covariance matrix of dependent effect sizes or outcomes.</p>
+<p><code><a href="rcalc.html">rcalc</a></code> for a function to construct the variance-covariance matrix of dependent correlation coefficients.</p>
 <p><code><a href="rma.uni.html">rma.uni</a></code> and <code><a href="rma.mv.html">rma.mv</a></code> for model fitting functions that can take the calculated effect sizes or outcomes (and the corresponding sampling variances) as input.</p>
 <p><code><a href="rma.mh.html">rma.mh</a></code>, <code><a href="rma.peto.html">rma.peto</a></code>, and <code><a href="rma.glmm.html">rma.glmm</a></code> for model fitting functions that take similar inputs.</p></div>
     </div>

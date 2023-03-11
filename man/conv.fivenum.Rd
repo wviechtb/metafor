@@ -18,7 +18,7 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
    \item{n}{vector with the sample sizes.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{include}{optional (logical or numeric) vector to specify the subset of studies for which means and standard deviations should be estimated.}
-   \item{method}{character string indicating the method to use. See below for details.}
+   \item{method}{character string indicating the method to use. Either \code{"default"} (the default), \code{"qe"}, \code{"bc"}, \code{"mln"}, or \code{"blue"}. See below for details.}
    \item{dist}{character string indicating the distribution assumed for the underlying data (either \code{"norm"} for a normal distribution or \code{"lnorm"} for a log-normal distribution). Can also be a string vector if different distributions are assumed for different studies. Only relevant when \code{method="default"}.}
    \item{transf}{logical to specify whether the estimated means and standard deviations of the log-transformed data should be back-transformed as described by Shi et al. (2020c) (the default is \code{TRUE}). Only relevant when \code{dist="lnorm"} and when \code{method="default"}.}
    \item{test}{logical to specify whether a study should be excluded from the estimation if the test for skewness is significant (the default is \code{TRUE}).}
@@ -30,7 +30,7 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 \details{
    Various effect size measures require means and standard deviations (SDs) as input (e.g., raw or standardized mean differences, ratios of means / response ratios; see \code{\link{escalc}} for further details). For some studies, authors may not report means and SDs, but other statistics, such as the so-called \sQuote{five-number summary}, consisting of the minimum, lower/first quartile, median, upper/third quartile, and the maximum of the sample values (plus the sample sizes). Occasionally, only a subset of these values are reported.
 
-   The present function can be used to estimate means and standard deviations from five-number summary values based on various methods described in the literature (Bland, 2015; Cai et al. 2021; Hozo et al., 2005; Luo et al., 2016; McGrath et al., 2020; Shi et al., 2020a; Walter & Yao, 2007; Wan et al., 2014).
+   The present function can be used to estimate means and standard deviations from five-number summary values based on various methods described in the literature (Bland, 2015; Cai et al. 2021; Hozo et al., 2005; Luo et al., 2016; McGrath et al., 2020; Shi et al., 2020a; Walter & Yao, 2007; Wan et al., 2014; Yang et al., 2022).
 
    When \code{method="default"}, the following methods are used:
 
@@ -64,7 +64,11 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 
    ---------
 
-   Finally, as an alternative to the methods above, one can make use of the methods implemented in the \href{https://cran.r-project.org/package=estmeansd}{estmeansd} package to estimate means and SDs based on the three cases above. Available are the quantile estimation method (\code{method="qe"}; using the \code{\link[estmeansd]{qe.mean.sd}} function), the Box-Cox method (\code{method="bc"}; using the \code{\link[estmeansd]{bc.mean.sd}} function), and the method for unknown non-normal distributions (\code{method="mln"}; using the \code{\link[estmeansd]{mln.mean.sd}} function). The advantage of these methods is that they do not assume that the data underlying the reported values are normally distributed (and hence the \code{test} argument is ignored), but they can only be used when the values are positive (except for the quantile estimation method, which can also be used when one or more of the values are negative, but in this case the method does assume that the data are normally distributed and hence the test of skewness is applied when \code{test=TRUE}). Note that all of these methods may struggle to provide sensible estimates when some of the values are equal to each other (which can happen when the data include a lot of ties and/or the reported values are rounded). Also, the Box-Cox method and the method for unknown non-normal distributions involve simulated data and hence results will slightly change on repeated runs. Setting the seed of the random number generator (with \code{\link{set.seed}}) ensures reproducibility.
+   As an alternative to the methods above, one can make use of the methods implemented in the \href{https://cran.r-project.org/package=estmeansd}{estmeansd} package to estimate means and SDs based on the three cases above. Available are the quantile estimation method (\code{method="qe"}; using the \code{\link[estmeansd]{qe.mean.sd}} function; McGrath et al., 2020), the Box-Cox method (\code{method="bc"}; using the \code{\link[estmeansd]{bc.mean.sd}} function; McGrath et al., 2020), and the method for unknown non-normal distributions (\code{method="mln"}; using the \code{\link[estmeansd]{mln.mean.sd}} function; Cai et al. 2021). The advantage of these methods is that they do not assume that the data underlying the reported values are normally distributed (and hence the \code{test} argument is ignored), but they can only be used when the values are positive (except for the quantile estimation method, which can also be used when one or more of the values are negative, but in this case the method does assume that the data are normally distributed and hence the test of skewness is applied when \code{test=TRUE}). Note that all of these methods may struggle to provide sensible estimates when some of the values are equal to each other (which can happen when the data include a lot of ties and/or the reported values are rounded). Also, the Box-Cox method and the method for unknown non-normal distributions involve simulated data and hence results will slightly change on repeated runs. Setting the seed of the random number generator (with \code{\link{set.seed}}) ensures reproducibility.
+
+   ---------
+
+   Finally, by setting \code{method="blue"}, one can make use of the \code{\link[metaBLUE]{BLUE_s}} function from the \href{https://cran.r-project.org/package=metaBLUE}{metaBLUE} package to estimate means and SDs based on the three cases above (Yang et al., 2022). The method assumes that the underlying data are normally distributed (and hence the test of skewness is applied when \code{test=TRUE}).
 }
 \value{
    If the \code{data} argument was not specified or \code{append=FALSE}, a data frame with two variables called \code{var.names[1]} (by default \code{"mean"}) and \code{var.names[2]} (by default \code{"sd"}) with the estimated means and SDs.
@@ -107,6 +111,8 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
    Walter, S. D. & Yao, X. (2007). Effect sizes can be calculated for studies reporting ranges for outcome variables in systematic reviews. \emph{Journal of Clinical Epidemiology}, \bold{60}(8), 849-852. \verb{https://doi.org/10.1016/j.jclinepi.2006.11.003}
 
    Wan, X., Wang, W., Liu, J. & Tong, T. (2014). Estimating the sample mean and standard deviation from the sample size, median, range and/or interquartile range. \emph{BMC Medical Research Methodology}, \bold{14}, 135. \verb{https://doi.org/10.1186/1471-2288-14-135}
+
+   Yang, X., Hutson, A. D., & Wang, D. (2022). A generalized BLUE approach for combining location and scale information in a meta-analysis. \emph{Journal of Applied Statistics}, \bold{49}(15), 3846--3867. \verb{https://doi.org/10.1080/02664763.2021.1967890}
 
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
@@ -154,6 +160,7 @@ conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat)
 conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat, method="qe")
 conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat, method="bc")
 conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat, method="mln")
+conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat, method="blue")
 
 ############################################################################
 

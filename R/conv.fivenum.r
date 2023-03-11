@@ -24,6 +24,8 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
    if (!is.null(ddd$seed))
       set.seed(ddd$seed)
 
+   testarg <- test
+
    #########################################################################
 
    if (missing(data))
@@ -129,8 +131,8 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
    if (length(method) == 1L)
       method <- c(method, method)
 
-   method1.options <- c("default", "qe", "bc", "mln", "hozo2005", "wan2014", "bland2015", "luo2016", "walter2007")
-   method2.options <- c("default", "qe", "bc", "mln", "hozo2005", "wan2014", "bland2015", "shi2020", "walter2007")
+   method1.options <- c("default", "qe", "bc", "mln", "blue", "hozo2005", "wan2014", "bland2015", "luo2016", "walter2007")
+   method2.options <- c("default", "qe", "bc", "mln", "blue", "hozo2005", "wan2014", "bland2015", "shi2020", "walter2007")
 
    method[1] <- method1.options[pmatch(method[1], method1.options)]
 
@@ -154,8 +156,14 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
          stop(mstyle$stop("Must use the same 'method' for estimating means and SDs."))
       if (!requireNamespace("estmeansd", quietly=TRUE))
          stop(mstyle$stop("Please install the 'estmeansd' package to use this method."))
-      testarg <- test
       test <- FALSE
+   }
+
+   if (method[1]  == "blue") {
+      if (method[1] != method[2])
+         stop(mstyle$stop("Must use the same 'method' for estimating means and SDs."))
+      if (!requireNamespace("metaBLUE", quietly=TRUE))
+         stop(mstyle$stop("Please install the 'metaBLUE' package to use this method."))
    }
 
    #########################################################################
@@ -271,6 +279,10 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
             if (!inherits(tmp, "try-error"))
                means[i] <- tmp$est.mean
          }
+         if (method[1] == "blue") {
+            tmp <- metaBLUE::BLUE_s(c(min[i], median[i], max[i]), n=n[i], "S1")
+            means[i] <- tmp$muhat
+         }
 
          # sd estimation
 
@@ -308,6 +320,8 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
             sds[i] <- tmp$est.sd
          if (method[2] == "mln" && !inherits(tmp, "try-error"))
             sds[i] <- tmp$est.sd
+         if (method[2] == "blue")
+            sds[i] <- tmp$sigmahat
 
          if (dist[i] == "lnorm" && transf) {
             s41 <- ((max[i] - min[i]) / xi)^4 / (1 + 2.23 / log(n[i])^2)
@@ -377,12 +391,16 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
             if (!inherits(tmp, "try-error"))
                means[i] <- tmp$est.mean
          }
+         if (method[1] == "blue") {
+            tmp <- metaBLUE::BLUE_s(c(q1[i], median[i], q3[i]), n=n[i], "S2")
+            means[i] <- tmp$muhat
+         }
 
          # sd estimation
 
          if (is.element(method[2], c("default", "wan2014"))) {
             # Wan et al. (2014), equation (16)
-            eta <- 2 * qnorm((0.75*n[i] - 0.125) / (n[i] + 0.25))
+            eta <- 2 * qnorm((0.75 * n[i] - 0.125) / (n[i] + 0.25))
             z2 <- ifelse(dist[i] == "norm", 1, 1 + 1.58 / n[i])
             #z2 <- 1
             sds[i] <- (q3[i] - q1[i]) / eta * (1/sqrt(z2))
@@ -393,6 +411,8 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
             sds[i] <- tmp$est.sd
          if (method[2] == "mln" && !inherits(tmp, "try-error"))
             sds[i] <- tmp$est.sd
+         if (method[2] == "blue")
+            sds[i] <- tmp$sigmahat
 
          if (dist[i] == "lnorm" && transf) {
             s42 <- ((q3[i] - q1[i]) / eta)^4 / (1 + 19.2 / n[i]^1.2)
@@ -462,6 +482,10 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
             if (!inherits(tmp, "try-error"))
                means[i] <- tmp$est.mean
          }
+         if (method[1] == "blue") {
+            tmp <- metaBLUE::BLUE_s(c(min[i], q1[i], median[i], q3[i], max[i]), n=n[i], "S3")
+            means[i] <- tmp$muhat
+         }
 
          # sd estimation
 
@@ -486,6 +510,8 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
             sds[i] <- tmp$est.sd
          if (method[2] == "mln" && !inherits(tmp, "try-error"))
             sds[i] <- tmp$est.sd
+         if (method[2] == "blue")
+            sds[i] <- tmp$sigmahat
 
          if (dist[i] == "lnorm" && transf) {
             s43 <- (weight * (max[i] - min[i]) / xi + (1 - weight) * (q3[i] - q1[i]) / eta)^4 / (1 + 3.93 / n[i])

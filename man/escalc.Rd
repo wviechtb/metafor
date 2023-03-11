@@ -478,7 +478,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 \note{
    The variable names specified under \code{var.names} should be syntactically valid variable names. If necessary, they are adjusted so that they are.
 
-   Although the default value for \code{add} is \code{1/2}, for certain measures the use of such a bias correction makes little sense and for these measures, the function internally sets \code{add=0}. This applies to the following measures: \code{"AS"}, \code{"PHI"}, \code{"RTET"}, \code{"IRSD"}, \code{"PAS"}, \code{"PFT"}, \code{"IRS"}, and \code{"IRFT"}. One can still force the use of the bias correction by explicitly setting the \code{add} argument to some non-zero value when calling the function.
+   Although the default value for \code{add} is \code{1/2}, for certain measures the use of such a bias correction makes little sense and for these measures, the function internally sets \code{add=0}. This applies to the following measures: \code{"AS"}, \code{"PHI"}, \code{"ZPHI"}, \code{"RTET"}, \code{"ZTET"}, \code{"IRSD"}, \code{"PAS"}, \code{"PFT"}, \code{"IRS"}, and \code{"IRFT"}. One can still force the use of the bias correction by explicitly setting the \code{add} argument to some non-zero value when calling the function.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
@@ -602,6 +602,8 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \code{\link{conv.delta}} for a function to transform observed effect sizes or outcomes and their sampling variances using the delta method.
 
    \code{\link{vcalc}} for a function to construct or approximate the variance-covariance matrix of dependent effect sizes or outcomes.
+
+   \code{\link{rcalc}} for a function to construct the variance-covariance matrix of dependent correlation coefficients.
 
    \code{\link{rma.uni}} and \code{\link{rma.mv}} for model fitting functions that can take the calculated effect sizes or outcomes (and the corresponding sampling variances) as input.
 
