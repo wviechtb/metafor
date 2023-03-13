@@ -18,10 +18,10 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
    \item{n}{vector with the sample sizes.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{include}{optional (logical or numeric) vector to specify the subset of studies for which means and standard deviations should be estimated.}
-   \item{method}{character string indicating the method to use. Either \code{"default"} (the default), \code{"qe"}, \code{"bc"}, \code{"mln"}, or \code{"blue"}. See below for details.}
+   \item{method}{character string indicating the method to use. Either \code{"default"} (same as \code{"luo/wan/shi"} which is the current default), \code{"qe"}, \code{"bc"}, \code{"mln"}, or \code{"blue"}. Can be abbreviated. See \sQuote{Details}.}
    \item{dist}{character string indicating the distribution assumed for the underlying data (either \code{"norm"} for a normal distribution or \code{"lnorm"} for a log-normal distribution). Can also be a string vector if different distributions are assumed for different studies. Only relevant when \code{method="default"}.}
    \item{transf}{logical to specify whether the estimated means and standard deviations of the log-transformed data should be back-transformed as described by Shi et al. (2020c) (the default is \code{TRUE}). Only relevant when \code{dist="lnorm"} and when \code{method="default"}.}
-   \item{test}{logical to specify whether a study should be excluded from the estimation if the test for skewness is significant (the default is \code{TRUE}).}
+   \item{test}{logical to specify whether a study should be excluded from the estimation if the test for skewness is significant (the default is \code{TRUE}, but whether this is applicable depends on the method; see \sQuote{Details}).}
    \item{var.names}{character vector with two elements to specify the name of the variable for the estimated means and the name of the variable for the estimated standard deviations (the defaults are \code{"mean"} and \code{"sd"}).}
    \item{append}{logical to specify whether the data frame provided via the \code{data} argument should be returned together with the estimated values (the default is \code{TRUE}).}
    \item{replace}{character string to specify how values in \code{var.names} should be replaced (only relevant when using the \code{data} argument and if variables in \code{var.names} already exist in the data frame). See the \sQuote{Value} section for more details.}
@@ -32,7 +32,7 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 
    The present function can be used to estimate means and standard deviations from five-number summary values based on various methods described in the literature (Bland, 2015; Cai et al. 2021; Hozo et al., 2005; Luo et al., 2016; McGrath et al., 2020; Shi et al., 2020a; Walter & Yao, 2007; Wan et al., 2014; Yang et al., 2022).
 
-   When \code{method="default"}, the following methods are used:
+   When \code{method="default"} (which is the same as \code{"luo/wan/shi"}), the following methods are used:
 
    \subsection{Case 1: Min, Median, Max}{
 
@@ -58,17 +58,25 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 
    Note that the sample size must be at least 5 to apply these methods. Studies where the sample size is smaller are not included in the estimation. The function also checks that \code{min <= q1 <= median <= q3 <= max} and throws an error if any studies are found where this is not the case.
 
-   The methods described above were derived under the assumption that the data are normally distributed. Testing this assumption would require access to the raw data, but based on the three cases above, Shi et al. (2020b; under review) derived tests of skewness that only require the reported quantile values and that are automatically carried out. When \code{test=TRUE} (which is the default), a study is automatically excluded from the estimation if the test is significant. If all studies should be considered for estimation, set \code{test=FALSE}, but note that the accuracy of the methods will tend to be poorer when the data come from an apparently skewed distribution.
+   \subsection{Test for Skewness}{
 
-   Alternatively, when setting \code{dist="lnorm"}, the raw data are assumed to follow a log-normal distribution. In this case, the methods as described by Shi et al. (2020c) are used to estimate the mean and SD of the log transformed data for the three cases above. When \code{transf=TRUE} (the default), the estimated mean and SD of the log transformed data are back-transformed to the estimated mean and SD of the raw data (using the bias-corrected back-transformation as described by Shi et al., 2020c).
+      The methods described above were derived under the assumption that the data are normally distributed. Testing this assumption would require access to the raw data, but based on the three cases above, Shi et al. (2020b; under review) derived tests for skewness that only require the reported quantile values and the sample sizes. These tests are automatically carried out. When \code{test=TRUE} (which is the default), a study is automatically excluded from the estimation if the test is significant. If all studies should be included, set \code{test=FALSE}, but note that the accuracy of the methods will tend to be poorer when the data come from an apparently skewed (and hence non-normal) distribution.
 
-   ---------
+   }
 
-   As an alternative to the methods above, one can make use of the methods implemented in the \href{https://cran.r-project.org/package=estmeansd}{estmeansd} package to estimate means and SDs based on the three cases above. Available are the quantile estimation method (\code{method="qe"}; using the \code{\link[estmeansd]{qe.mean.sd}} function; McGrath et al., 2020), the Box-Cox method (\code{method="bc"}; using the \code{\link[estmeansd]{bc.mean.sd}} function; McGrath et al., 2020), and the method for unknown non-normal distributions (\code{method="mln"}; using the \code{\link[estmeansd]{mln.mean.sd}} function; Cai et al. 2021). The advantage of these methods is that they do not assume that the data underlying the reported values are normally distributed (and hence the \code{test} argument is ignored), but they can only be used when the values are positive (except for the quantile estimation method, which can also be used when one or more of the values are negative, but in this case the method does assume that the data are normally distributed and hence the test of skewness is applied when \code{test=TRUE}). Note that all of these methods may struggle to provide sensible estimates when some of the values are equal to each other (which can happen when the data include a lot of ties and/or the reported values are rounded). Also, the Box-Cox method and the method for unknown non-normal distributions involve simulated data and hence results will slightly change on repeated runs. Setting the seed of the random number generator (with \code{\link{set.seed}}) ensures reproducibility.
+   \subsection{Log-Normal Distribution}{
 
-   ---------
+      When setting \code{dist="lnorm"}, the raw data are assumed to follow a log-normal distribution. In this case, the methods as described by Shi et al. (2020c) are used to estimate the mean and SD of the log transformed data for the three cases above. When \code{transf=TRUE} (the default), the estimated mean and SD of the log transformed data are back-transformed to the estimated mean and SD of the raw data (using the bias-corrected back-transformation as described by Shi et al., 2020c). Note that the test for skewness is also carried out when \code{dist="lnorm"}, but now testing if the log transformed data exhibit skewness.
 
-   Finally, by setting \code{method="blue"}, one can make use of the \code{\link[metaBLUE]{BLUE_s}} function from the \href{https://cran.r-project.org/package=metaBLUE}{metaBLUE} package to estimate means and SDs based on the three cases above (Yang et al., 2022). The method assumes that the underlying data are normally distributed (and hence the test of skewness is applied when \code{test=TRUE}).
+   }
+
+   \subsection{Alternative Methods}{
+
+      As an alternative to the methods above, one can make use of the methods implemented in the \href{https://cran.r-project.org/package=estmeansd}{estmeansd} package to estimate means and SDs based on the three cases above. Available are the quantile estimation method (\code{method="qe"}; using the \code{\link[estmeansd]{qe.mean.sd}} function; McGrath et al., 2020), the Box-Cox method (\code{method="bc"}; using the \code{\link[estmeansd]{bc.mean.sd}} function; McGrath et al., 2020), and the method for unknown non-normal distributions (\code{method="mln"}; using the \code{\link[estmeansd]{mln.mean.sd}} function; Cai et al. 2021). The advantage of these methods is that they do not assume that the data underlying the reported values are normally distributed (and hence the \code{test} argument is ignored), but they can only be used when the values are positive (except for the quantile estimation method, which can also be used when one or more of the values are negative, but in this case the method does assume that the data are normally distributed and hence the test for skewness is applied when \code{test=TRUE}). Note that all of these methods may struggle to provide sensible estimates when some of the values are equal to each other (which can happen when the data include a lot of ties and/or the reported values are rounded). Also, the Box-Cox method and the method for unknown non-normal distributions involve simulated data and hence results will slightly change on repeated runs. Setting the seed of the random number generator (with \code{\link{set.seed}}) ensures reproducibility.
+
+      Finally, by setting \code{method="blue"}, one can make use of the \code{\link[metaBLUE]{BLUE_s}} function from the \href{https://cran.r-project.org/package=metaBLUE}{metaBLUE} package to estimate means and SDs based on the three cases above (Yang et al., 2022). The method assumes that the underlying data are normally distributed (and hence the test for skewness is applied when \code{test=TRUE}).
+
+   }
 }
 \value{
    If the \code{data} argument was not specified or \code{append=FALSE}, a data frame with two variables called \code{var.names[1]} (by default \code{"mean"}) and \code{var.names[2]} (by default \code{"sd"}) with the estimated means and SDs.
@@ -79,10 +87,12 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 
    When missing values in \code{var.names[1]} are replaced, an attribute called \code{"est"} is added to the variable, which is a logical vector that is \code{TRUE} for values that were estimated. The same is done when missing values in \code{var.names[2]} are replaced.
 
-   Attributes called \code{"tval"}, \code{"crit"}, \code{"sig"}, and \code{"dist"} are also added to \code{var.names[1]} corresponding to the test statistic and critical value for the test of skewness, whether the test was significant, and the assumed distribution (for the quantile estimation method, this is the distribution that provides the best fit to the given values).
+   Attributes called \code{"tval"}, \code{"crit"}, \code{"sig"}, and \code{"dist"} are also added to \code{var.names[1]} corresponding to the test statistic and critical value for the test for skewness, whether the test was significant, and the assumed distribution (for the quantile estimation method, this is the distribution that provides the best fit to the given values).
 }
 \note{
    \bold{A word of caution:} Under the given distributional assumptions, the estimated means and SDs are approximately unbiased and hence so are any effect size measures computed based on them (assuming a measure is unbiased to begin with when computed with directly reported means and SDs). However, the estimated means and SDs are less precise (i.e., are more variable) than directly reported means and SDs (especially under case 1) and hence computing the sampling variance of a measure with equations that assume that directly reported means and SDs are available will tend to underestimate the actual sampling variance of the measure, giving too much weight to estimates computed based on estimated means and SDs (see also McGrath et al., 2023). It would therefore be prudent to treat effect size estimates computed from estimated means and SDs with caution (e.g., by examining in a moderator analysis whether there are systematic differences between studies directly reporting means and SDs and those where the means and SDs needed to be estimated and/or as part of a sensitivity analysis). McGrath et al. (2023) also suggest to use bootstrapping to estimate the sampling variance of effect size measures computed based on estimated means and SDs.
+
+   Also note that the development of methods for estimating means and SDs based on five-number summary values is an active area of research. Currently, when \code{method="default"}, then this is identical to \code{method="luo/wan/shi"}, but this might change in the future. For reproducibility, it is therefore recommended to explicitly set \code{method="luo/wan/shi"} (or one of the other methods) when running this function.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
@@ -157,6 +167,7 @@ dat
 
 # try out different methods
 conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat)
+set.seed(1234)
 conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat, method="qe")
 conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat, method="bc")
 conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat, method="mln")

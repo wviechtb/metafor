@@ -131,23 +131,30 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
    if (length(method) == 1L)
       method <- c(method, method)
 
-   method1.options <- c("default", "qe", "bc", "mln", "blue", "hozo2005", "wan2014", "bland2015", "luo2016", "walter2007")
-   method2.options <- c("default", "qe", "bc", "mln", "blue", "hozo2005", "wan2014", "bland2015", "shi2020", "walter2007")
+   method1.options <- c("default", "luo/wan/shi", "qe", "bc", "mln", "blue", "hozo2005", "wan2014", "bland2015", "luo2016", "walter2007")
+   method2.options <- c("default", "luo/wan/shi", "qe", "bc", "mln", "blue", "hozo2005", "wan2014", "bland2015", "shi2020", "walter2007")
 
-   method[1] <- method1.options[pmatch(method[1], method1.options)]
+   #method[1] <- method1.options[pmatch(method[1], method1.options)]
+   method[1] <- method1.options[grep(paste0("^", method[1]), method1.options)[1]]
 
    if (is.na(method[1]))
       stop(mstyle$stop("Unknown 'method' specified."))
 
-   method[2] <- method2.options[pmatch(method[2], method2.options)]
+   #method[2] <- method2.options[pmatch(method[2], method2.options)]
+   method[2] <- method2.options[grep(paste0("^", method[2]), method2.options)[1]]
 
    if (is.na(method[2]))
       stop(mstyle$stop("Unknown 'method' specified."))
 
-   if (any(dist == "lnorm")) { # if any dist value is 'lnorm', force use of 'default' method
-      if (!(method[1] == "default" && method[2] == "default")) {
-         method <- c("default", "default")
-         warning(mstyle$warning("Switching to method='default' (since dist='lnorm' for one or more studies)."), call.=FALSE)
+   if (method[1] == "default")
+      method[1] <- "luo/wan/shi"
+   if (method[2] == "default")
+      method[2] <- "luo/wan/shi"
+
+   if (any(dist == "lnorm")) { # if any dist value is 'lnorm', force use of 'luo/wan/shi' method
+      if (!(method[1] == "luo/wan/shi" && method[2] == "luo/wan/shi")) {
+         method <- c("luo/wan/shi", "luo/wan/shi")
+         warning(mstyle$warning("Switching to method='luo/wan/shi' (since dist='lnorm' for one or more studies)."), call.=FALSE)
       }
    }
 
@@ -230,7 +237,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
 
          # mean estimation
 
-         if (is.element(method[1], c("default", "luo2016"))) {
+         if (is.element(method[1], c("luo/wan/shi", "luo2016"))) {
             # Luo et al. (2016), equation (7)
             weight <- 4 / (4 + n[i]^0.75)
             means[i] <- weight * (min[i] + max[i]) / 2 + (1 - weight) * median[i]
@@ -286,7 +293,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
 
          # sd estimation
 
-         if (is.element(method[2], c("default", "wan2014"))) {
+         if (is.element(method[2], c("luo/wan/shi", "wan2014"))) {
             # Wan et al. (2014), equation (9)
             xi <- 2 * qnorm((n[i] - 0.375) / (n[i] + 0.25))
             z1 <- ifelse(dist[i] == "norm", 1, 1.01 + 0.25 / log(n[i])^2)
@@ -309,7 +316,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
                alpha <- pnorm(x)
                1 - (1-alpha)^n - alpha^n
             }
-            f <- try(integrate(intfun, lower=-Inf, upper=Inf, n=n)$value, silent=TRUE)
+            f <- try(integrate(intfun, lower=-Inf, upper=Inf, n=n[i])$value, silent=TRUE)
             if (inherits(f, "try-error"))
                next
             sds[i] <- (max[i] - min[i]) / f
@@ -352,7 +359,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
 
          # mean estimation
 
-         if (is.element(method[1], c("default", "luo2016"))) {
+         if (is.element(method[1], c("luo/wan/shi", "luo2016"))) {
             # Luo et al. (2016), equation (11)
             weight <- 0.7 + 0.39 / n[i]
             #weight <- 0.699 + 0.4 / n[i]
@@ -398,7 +405,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
 
          # sd estimation
 
-         if (is.element(method[2], c("default", "wan2014"))) {
+         if (is.element(method[2], c("luo/wan/shi", "wan2014"))) {
             # Wan et al. (2014), equation (16)
             eta <- 2 * qnorm((0.75 * n[i] - 0.125) / (n[i] + 0.25))
             z2 <- ifelse(dist[i] == "norm", 1, 1 + 1.58 / n[i])
@@ -443,7 +450,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
 
          # mean estimation
 
-         if (is.element(method[1], c("default", "luo2016"))) {
+         if (is.element(method[1], c("luo/wan/shi", "luo2016"))) {
             # Luo et al. (2016), equation (15)
             weight1 <- 2.2 / (2.2 + n[i]^0.75)
             weight2 <- 0.7 - 0.72 / n[i]^0.55
@@ -489,11 +496,11 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
 
          # sd estimation
 
-         if (is.element(method[2], c("default", "shi2020", "wan2014"))) {
+         if (is.element(method[2], c("luo/wan/shi", "shi2020", "wan2014"))) {
             xi <- 2 * qnorm((n[i] - 0.375) / (n[i] + 0.25))
             eta <- 2 * qnorm((0.75*n[i] - 0.125) / (n[i] + 0.25))
          }
-         if (is.element(method[2], c("default", "shi2020"))) {
+         if (is.element(method[2], c("luo/wan/shi", "shi2020"))) {
             # Shi et al. (2020), equation (10)
             weight <- 1 / (1 + 0.07 * n[i]^0.6)
             z3 <- ifelse(dist[i] == "norm", 1, 1 + 0.28 / log(n[i])^2)
