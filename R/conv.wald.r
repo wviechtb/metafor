@@ -90,11 +90,8 @@ conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
    zval    <- .getx("zval",    mf=mf, data=x, checknumeric=TRUE)
    pval    <- .getx("pval",    mf=mf, data=x, checknumeric=TRUE)
    n       <- .getx("n",       mf=mf, data=x, checknumeric=TRUE)
-   level   <- .getx("level",   mf=mf, data=x, checknumeric=TRUE)
+   level   <- .getx("level",   mf=mf, data=x, checknumeric=TRUE, default=95)
    include <- .getx("include", mf=mf, data=x)
-
-   if (is.null(level))
-      level <- 95
 
    if (!.equal.length(out, ci.lb, ci.ub, zval, pval, n))
       stop(mstyle$stop("Supplied data vectors are not all of the same length."))
@@ -173,10 +170,14 @@ conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
       x[[yi.name]][!is.na(out)] <- out[!is.na(out)]
    }
 
-   ### replace missing ni attribute values
+   ### replace missing ni attribute values (or add 'ni' attribute if at least one value is not missing)
 
-   if (!is.null(attributes(x[[yi.name]])$ni))
+   if (!is.null(attributes(x[[yi.name]])$ni)) {
       attributes(x[[yi.name]])$ni <- replmiss(attributes(x[[yi.name]])$ni, n)
+   } else {
+      if (any(!is.na(n)))
+         attr(x[[yi.name]], "ni") <- n
+   }
 
    #########################################################################
 
@@ -235,8 +236,12 @@ conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
 
    #########################################################################
 
-   #if (!inherits(x, "escalc"))
-   x <- escalc(data=x, yi=x[[yi.name]], vi=x[[vi.name]], ni=n, var.names=c(yi.name,vi.name))
+   measure <- attr(x[[yi.name]], "measure")
+
+   if (is.null(measure))
+      measure <- "GEN"
+
+   x <- escalc(measure=measure, data=x, yi=x[[yi.name]], vi=x[[vi.name]], var.names=c(yi.name,vi.name))
 
    if (!append)
       x <- x[,c(yi.name, vi.name)]

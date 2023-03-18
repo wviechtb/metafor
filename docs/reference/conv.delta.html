@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-32</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.9-33</span>
       </span>
     </div>
 
@@ -101,7 +101,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">conv.delta</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, <span class="va">data</span>, <span class="va">include</span>, <span class="va">transf</span>, <span class="va">var.names</span>, append<span class="op">=</span><span class="cn">TRUE</span>, replace<span class="op">=</span><span class="st">"ifna"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">conv.delta</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, <span class="va">ni</span>, <span class="va">data</span>, <span class="va">include</span>, <span class="va">transf</span>, <span class="va">var.names</span>, append<span class="op">=</span><span class="cn">TRUE</span>, replace<span class="op">=</span><span class="st">"ifna"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -111,6 +111,9 @@
 
    <dt>vi</dt>
 <dd><p>vector with the corresponding sampling variances.</p></dd>
+
+   <dt>ni</dt>
+<dd><p>vector with the total sample sizes of the studies.</p></dd>
 
    <dt>data</dt>
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
@@ -139,6 +142,7 @@
     <p>The <code><a href="escalc.html">escalc</a></code> function can be used to compute a wide variety of effect sizes or ‘outcome measures’. In some cases, it may be necessary to transform one type of measure to another. The present function provides a general method for doing so via the <a href="https://en.wikipedia.org/wiki/Delta_method" class="external-link">delta method</a>, which briefly works as follows.</p>
 <p>Let <em></em>\(y_i\) denote the observed effect size or outcome for a particular study and <em></em>\(v_i\) the corresponding sampling variance. Then <em></em>\(f(y_i)\) will be the transformed effect size or outcome, where <em></em>\(f(\cdot)\) is the function specified via the <code>transf</code> argument. The sampling variance of the transformed effect size or outcome is then computed with <em></em>\(v_i \times f'(y_i)^2\), where <em></em>\(f'(y_i)\) denotes the derivative of <em></em>\(f(\cdot)\) evaluated at <em></em>\(y_i\). The present function computes the derivative numerically using the <code><a href="https://rdrr.io/pkg/numDeriv/man/grad.html" class="external-link">grad</a></code> function from the <code>numDeriv</code> package.</p>
 <p>The value of the observed effect size or outcome should be the first argument of the function specified via <code>transf</code>. The function can have additional arguments, which can be specified via the ... argument. However, due to the manner in which these additional arguments are evaluated, they cannot have names that match one of the arguments of the <code><a href="https://rdrr.io/pkg/numDeriv/man/grad.html" class="external-link">grad</a></code> function (an error will be issued if such a naming clash is detected).</p>
+<p>Optionally, one can use the <code>ni</code> argument to supply the total sample sizes of the studies. This has no relevance for the calculations done by the present function, but some other functions may use this information (e.g., when drawing a funnel plot with the <code><a href="funnel.html">funnel</a></code> function and one adjusts the <code>yaxis</code> argument to one of the options that puts the sample sizes or some transformation thereof on the y-axis).</p>
     </div>
     <div id="value">
     <h2>Value</h2>

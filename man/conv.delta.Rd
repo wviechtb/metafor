@@ -5,11 +5,12 @@
    Function to transform observed effect sizes or outcomes and their sampling variances using the delta method. \loadmathjax
 }
 \usage{
-conv.delta(yi, vi, data, include, transf, var.names, append=TRUE, replace="ifna", \dots)
+conv.delta(yi, vi, ni, data, include, transf, var.names, append=TRUE, replace="ifna", \dots)
 }
 \arguments{
    \item{yi}{vector with the observed effect sizes or outcomes.}
    \item{vi}{vector with the corresponding sampling variances.}
+   \item{ni}{vector with the total sample sizes of the studies.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{include}{optional (logical or numeric) vector to specify the subset of studies for which the transformation should be carried out.}
    \item{transf}{a function which should be used for the transformation.}
@@ -24,6 +25,8 @@ conv.delta(yi, vi, data, include, transf, var.names, append=TRUE, replace="ifna"
    Let \mjseqn{y_i} denote the observed effect size or outcome for a particular study and \mjseqn{v_i} the corresponding sampling variance. Then \mjseqn{f(y_i)} will be the transformed effect size or outcome, where \mjeqn{f(\cdot)}{f(.)} is the function specified via the \code{transf} argument. The sampling variance of the transformed effect size or outcome is then computed with \mjseqn{v_i \times f'(y_i)^2}, where \mjseqn{f'(y_i)} denotes the derivative of \mjeqn{f(\cdot)}{f(.)} evaluated at \mjseqn{y_i}. The present function computes the derivative numerically using the \code{\link[numDeriv]{grad}} function from the \code{numDeriv} package.
 
    The value of the observed effect size or outcome should be the first argument of the function specified via \code{transf}. The function can have additional arguments, which can be specified via the \dots argument. However, due to the manner in which these additional arguments are evaluated, they cannot have names that match one of the arguments of the \code{\link[numDeriv]{grad}} function (an error will be issued if such a naming clash is detected).
+
+   Optionally, one can use the \code{ni} argument to supply the total sample sizes of the studies. This has no relevance for the calculations done by the present function, but some other functions may use this information (e.g., when drawing a funnel plot with the \code{\link{funnel}} function and one adjusts the \code{yaxis} argument to one of the options that puts the sample sizes or some transformation thereof on the y-axis).
 }
 \value{
    If the \code{data} argument was not specified or \code{append=FALSE}, a data frame of class \code{c("escalc","data.frame")} with two variables called \code{var.names[1]} (by default \code{"yi"}) and \code{var.names[2]} (by default \code{"vi"}) with the transformed observed effect sizes or outcomes and the corresponding sampling variances (computed as described above).

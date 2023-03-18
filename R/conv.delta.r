@@ -1,6 +1,4 @@
-conv.delta <- function(yi, vi, data, include, transf, var.names, append=TRUE, replace="ifna", ...) {
-
-   # TODO: be able to specify ni to be added to ni attribute
+conv.delta <- function(yi, vi, ni, data, include, transf, var.names, append=TRUE, replace="ifna", ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -77,12 +75,16 @@ conv.delta <- function(yi, vi, data, include, transf, var.names, append=TRUE, re
 
    yi      <- .getx("yi",      mf=mf, data=x, checknumeric=TRUE)
    vi      <- .getx("vi",      mf=mf, data=x, checknumeric=TRUE)
+   ni      <- .getx("ni",      mf=mf, data=x, checknumeric=TRUE)
    include <- .getx("include", mf=mf, data=x)
 
-   ### check length of yi and vi
+   ### check length of yi and vi (and ni)
 
    if (length(yi) != length(vi))
       stop(mstyle$stop("Length of 'yi' and 'vi' is not the same."))
+
+   if (!.equal.length(yi, vi, ni)) # a bit redundant with the above, but keep
+      stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
    ### check 'vi' argument for potential misuse
 
@@ -90,7 +92,10 @@ conv.delta <- function(yi, vi, data, include, transf, var.names, append=TRUE, re
 
    k <- length(yi)
 
-   ### if include is NULL, set to TRUE vector
+   ### if ni/include is NULL, set to TRUE vector
+
+   if (is.null(ni))
+      ni <- rep(NA_real_, k)
 
    if (is.null(include))
       include <- rep(TRUE, k)
@@ -103,6 +108,7 @@ conv.delta <- function(yi, vi, data, include, transf, var.names, append=TRUE, re
 
    yi[!include] <- NA_real_
    vi[!include] <- NA_real_
+   ni[!include] <- NA_real_
 
    ### get names of arguments to transf (except the first and ... in case that is there)
 
@@ -205,6 +211,16 @@ conv.delta <- function(yi, vi, data, include, transf, var.names, append=TRUE, re
       x[[yi.name]][!is.na(yi.t)] <- yi.t[!is.na(yi.t)]
    }
 
+   ### replace missing ni values with ni attributes values from the source and target variables
+   ### and then add ni attribute to target variable (if at least one value is not missing)
+   ### note: values specified via 'ni' argument in conv.delta() overrule existing attribute values
+
+   ni <- replmiss(ni, attributes(yi)$ni)
+   ni <- replmiss(ni, attributes(x[[yi.name]])$ni)
+
+   if (any(!is.na(ni)))
+      attr(x[[yi.name]], "ni") <- ni
+
    ### replace missing x$vi values
 
    if (replace=="ifna") {
@@ -213,7 +229,6 @@ conv.delta <- function(yi, vi, data, include, transf, var.names, append=TRUE, re
       x[[vi.name]][!is.na(vi.t)] <- vi.t[!is.na(vi.t)]
    }
 
-   #if (!inherits(x, "escalc"))
    x <- escalc(data=x, yi=x[[yi.name]], vi=x[[vi.name]], var.names=c(yi.name,vi.name))
 
    if (!append)
