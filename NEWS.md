@@ -1,3 +1,7 @@
+# metafor 4.1-0 (2023-03-20)
+
+- version bump for development version
+
 # metafor 4.0-0 (2023-03-19)
 
 - added `conv.2x2()` function for reconstructing the cell frequencies in 2x2 tables based on other summary statistics
