@@ -1093,8 +1093,8 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       ### constrain a negative tau2.min value to -min(vi) (to ensure that the marginal variance is always >= 0)
 
-      if (con$tau2.min < 0 && (-con$tau2.min > min(vi))) {
-         con$tau2.min <- -min(vi)
+      if (con$tau2.min < 0 && (con$tau2.min < -min(vi))) {
+         con$tau2.min <- -min(vi) # + .Machine$double.eps^0.25 # to force tau2.min just above -min(vi)
          warning(mstyle$warning(paste0("Value of 'tau2.min' constrained to -min(vi) = ", fmtx(-min(vi), digits[["est"]]), ".")), call.=FALSE)
       }
 

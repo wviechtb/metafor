@@ -100,6 +100,9 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
       ### note: default tau2.min is smaller of 0 or tau2, since tau2 could in principle be negative
       ### note: default tau2.max must be larger than tau2 and tau2.min and really should be much larger (at least 100)
 
+      if (x$control$tau2.min == -min(x$vi))
+         x$control$tau2.min <- x$control$tau2.min + 0.0001 # push tau2.min just a bit above -min(vi) to avoid division by zero
+
       tau2.min <- ifelse(is.null(x$control$tau2.min), min(0, x$tau2), x$control$tau2.min)
       tau2.max <- ifelse(is.null(x$control$tau2.max), max(100, x$tau2*10, tau2.min*10), x$control$tau2.max)
 
@@ -138,11 +141,11 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
          if (!x$allvipos)
             stop(mstyle$stop("Cannot compute CI for tau^2 when there are non-positive sampling variances in the data."))
 
-         crit.u <- qchisq(level/2, k-p, lower.tail=FALSE) ### upper critical chi^2 value for df = k-p
-         crit.l <- qchisq(level/2, k-p, lower.tail=TRUE)  ### lower critical chi^2 value for df = k-p
+         crit.u <- qchisq(level/2, k-p, lower.tail=FALSE) # upper critical chi^2 value for df = k-p
+         crit.l <- qchisq(level/2, k-p, lower.tail=TRUE)  # lower critical chi^2 value for df = k-p
 
          QE.tau2.max <- .QE.func(con$tau2.max, Y=Y, vi=vi, X=X, k=k, objective=0)
-         QE.tau2.min <- .QE.func(con$tau2.min, Y=Y, vi=vi, X=X, k=k, objective=0)
+         QE.tau2.min <- try(.QE.func(con$tau2.min, Y=Y, vi=vi, X=X, k=k, objective=0), silent=TRUE)
 
          #dfs <- 12; curve(dchisq(x, df=dfs), from=0, to=40, ylim=c(0,.1), xlab="", ylab=""); abline(v=qchisq(c(.025, .975), df=dfs)); text(qchisq(c(.025, .975), df=dfs)+1.6, .1, c("crit.l", "crit.u"))
 

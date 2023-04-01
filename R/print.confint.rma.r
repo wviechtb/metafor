@@ -30,7 +30,7 @@ print.confint.rma <- function(x, digits=x$digits, ...) {
       ### this can only (currently) happen for 'rma.uni' models
 
       if (x$ci.null)
-         message(mstyle$message(paste0("\nThe upper and lower CI bounds for tau^2 both fall below ", x$tau2.min, ".\nThe CIs are therefore equal to the null/empty set.")))
+         message(mstyle$message(paste0("\nThe upper and lower CI bounds for tau^2 both fall below ", round(x$tau2.min,4), ".\nThe CIs are therefore equal to the null/empty set.")))
 
    }
 
