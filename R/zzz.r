@@ -44,11 +44,11 @@
          installed.ver <- 100000 * installed.ver[1] + 1000 * installed.ver[2] + installed.ver[3]
          available.ver <- 100000 * available.ver[1] + 1000 * available.ver[2] + available.ver[3]
          if (isTRUE(installed.ver < available.ver)) {
-            paste0(loadmsg, "\nAn updated version of the package (version ", save.ver, ") is available!\nTo update to this version type: ")
-            if (verchk  == "devel") {
-               loadmsg <- paste0(loadmsg, "install.packages(\"metafor\")\n")
-            } else {
+            loadmsg <- paste0(loadmsg, "\nAn updated version of the package (version ", save.ver, ") is available!\nTo update to this version type: ")
+            if (verchk == "devel") {
                loadmsg <- paste0(loadmsg, "remotes::install_github(\"wviechtb/metafor\")\n")
+            } else {
+               loadmsg <- paste0(loadmsg, "install.packages(\"metafor\")\n")
             }
          }
       }

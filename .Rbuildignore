@@ -8,3 +8,4 @@
 ^data-raw$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^CITATION.cff$

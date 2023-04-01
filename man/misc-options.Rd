@@ -23,7 +23,7 @@ This page documents some miscellaneous options and features that do not fit very
    \item \code{het} for heterogeneity statistics.
    }
 
-   Instead of setting this argument in each function call (which would be tedious), one can also create a vector named \code{.digits} in the workspace (at the beginning of an analysis script) with:
+   Instead of setting this argument in each function call (which would be tedious), one can also create a vector named \code{.digits} in the workspace (e.g., at the beginning of an analysis script) with:
    \preformatted{.digits <- c(est=2, se=3, test=2, pval=3, ci=2, var=3, sevar=3, fit=3, het=3)}
    which then controls the displayed output. The values for the elements shown above could be a sensible choice when analyzing various types of standardized effect size measures.
 

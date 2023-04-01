@@ -1606,7 +1606,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    ### set default control parameters
 
    con <- list(verbose = FALSE,
-               optimizer = "nlminb",      # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel")
+               optimizer = "nlminb",      # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","Rcgmin","Rvmmin")
                optmethod = "BFGS",        # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),         # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,                 # arguments for optimParallel()
@@ -2451,15 +2451,19 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    #########################################################################
 
-   ### replace interaction() notation with : notation for nicer output
+   ### replace interaction() notation with : notation for nicer output (also for paste() and paste0())
 
    replfun <- function(x) {
-      if (grepl("interaction(", x, fixed=TRUE)) {
+      if (grepl("interaction(", x, fixed=TRUE) || grepl("paste(", x, fixed=TRUE) || grepl("paste0(", x, fixed=TRUE)) {
          #x <- gsub("^interaction\\(", "", x)
          #x <- gsub(", ", ":", x, fixed=TRUE)
          #x <- gsub("\\)$", "", x, fixed=FALSE)
          #x <- gsub("(.*)interaction\\(\\s*(.*)\\s*,\\s*(.*)\\s*\\)(.*)", "\\1(\\2:\\3)\\4", x)
-         x <- gsub("interaction\\((.*),\\s*(.*)\\)", "(\\1:\\2)", x)
+         #x <- gsub("interaction\\((.*)\\s*,\\s*(.*)\\)", "(\\1:\\2)", x)
+         x <- gsub("interaction\\((.*)\\)", "(\\1)", x)
+         x <- gsub("paste[0]?\\((.*)\\)", "(\\1)", x)
+         x <- gsub(",", ":", x, fixed=TRUE)
+         x <- gsub(" ", "", x, fixed=TRUE)
          x <- gsub("^\\((.*)\\)$", "\\1", x) # if a name is "(...)", then can remove the ()
       }
       return(x)

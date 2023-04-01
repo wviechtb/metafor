@@ -192,15 +192,15 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    if (!is.null(ddd$transf))
       warning("Function does not have a 'transf' argument (use 'atransf' instead).", call.=FALSE, immediate.=TRUE)
 
-   lplot     <- function(..., refline2, level2, lty2, transf, ci.res) plot(...)
-   labline   <- function(..., refline2, level2, lty2, transf, ci.res) abline(...)
-   lsegments <- function(..., refline2, level2, lty2, transf, ci.res) segments(...)
-   laxis     <- function(..., refline2, level2, lty2, transf, ci.res) axis(...)
-   lpolygon  <- function(..., refline2, level2, lty2, transf, ci.res) polygon(...)
-   llines    <- function(..., refline2, level2, lty2, transf, ci.res) lines(...)
-   lpoints   <- function(..., refline2, level2, lty2, transf, ci.res) points(...)
-   lrect     <- function(..., refline2, level2, lty2, transf, ci.res) rect(...)
-   ltext     <- function(..., refline2, level2, lty2, transf, ci.res) text(...)
+   lplot     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) plot(...)
+   labline   <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) abline(...)
+   lsegments <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) segments(...)
+   laxis     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) axis(...)
+   lpolygon  <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) polygon(...)
+   llines    <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) lines(...)
+   lpoints   <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) points(...)
+   lrect     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) rect(...)
+   ltext     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) text(...)
 
    ### refline2, level2, and lty2 for adding a second reference line / funnel
 
@@ -228,6 +228,26 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       ci.res <- ddd$ci.res
    } else {
       ci.res <- 1000
+   }
+
+   ### to adjust color of reference line, region bounds, and the L box
+
+   if (!is.null(ddd$colref)) {
+      colref <- ddd$colref
+   } else {
+      colref <- "black"
+   }
+
+   if (!is.null(ddd$colci)) {
+      colci <- ddd$colci
+   } else {
+      colci <- "black"
+   }
+
+   if (!is.null(ddd$colbox)) {
+      colbox <- ddd$colbox
+   } else {
+      colbox <- "black"
    }
 
    #########################################################################
@@ -513,8 +533,8 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
          ci.right <- refline + qnorm(level[m]/2, lower.tail=FALSE) * sqrt(vi.vals + tau2)
 
          lpolygon(c(ci.left,ci.right[ci.res:1]), c(yi.vals,yi.vals[ci.res:1]), border=NA, col=shade[m], ...)
-         llines(ci.left,  yi.vals, lty=lty[1], ...)
-         llines(ci.right, yi.vals, lty=lty[1], ...)
+         llines(ci.left,  yi.vals, lty=lty[1], col=colci, ...)
+         llines(ci.right, yi.vals, lty=lty[1], col=colci, ...)
 
       }
 
@@ -522,8 +542,8 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
          ci.left  <- refline2 - qnorm(level2/2, lower.tail=FALSE) * sqrt(vi.vals + tau2)
          ci.right <- refline2 + qnorm(level2/2, lower.tail=FALSE) * sqrt(vi.vals + tau2)
-         llines(ci.left,  yi.vals, lty=lty2, ...)
-         llines(ci.right, yi.vals, lty=lty2, ...)
+         llines(ci.left,  yi.vals, lty=lty2, col=colci, ...)
+         llines(ci.right, yi.vals, lty=lty2, col=colci, ...)
 
       }
 
@@ -533,18 +553,18 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    ### use segments so that line does not extent beyond tip of CI region
 
    if (is.element(yaxis, c("sei", "vi", "seinv", "vinv")))
-      lsegments(refline, ylim[1], refline, ylim[2], lty=lty[2], ...)
+      lsegments(refline, ylim[1], refline, ylim[2], lty=lty[2], col=colref, ...)
 
    if (is.element(yaxis, c("ni", "ninv", "sqrtni", "sqrtninv", "lni", "wi")))
-      labline(v=refline, lty=lty[2], ...)
+      labline(v=refline, lty=lty[2], col=colref, ...)
 
    if (!is.null(refline2)) {
 
       if (is.element(yaxis, c("sei", "vi", "seinv", "vinv")))
-         lsegments(refline2, ylim[1], refline2, ylim[2], lty=lty2, ...)
+         lsegments(refline2, ylim[1], refline2, ylim[2], lty=lty2, col=colref, ...)
 
       if (is.element(yaxis, c("ni", "ninv", "sqrtni", "sqrtninv", "lni", "wi")))
-         labline(v=refline2, lty=lty2, ...)
+         labline(v=refline2, lty=lty2, col=colref, ...)
 
    }
 
@@ -599,7 +619,8 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    ### add L-shaped box around plot
 
-   box(bty="l")
+   if (!is.na(colbox))
+      box(bty="l", col=colbox)
 
    ### generate x-axis positions if none are specified
 
