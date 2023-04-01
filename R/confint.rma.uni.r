@@ -100,7 +100,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
       ### note: default tau2.min is smaller of 0 or tau2, since tau2 could in principle be negative
       ### note: default tau2.max must be larger than tau2 and tau2.min and really should be much larger (at least 100)
 
-      if (x$control$tau2.min == -min(x$vi))
+      if (!is.null(x$control$tau2.min) && x$control$tau2.min == -min(x$vi))
          x$control$tau2.min <- x$control$tau2.min + 0.0001 # push tau2.min just a bit above -min(vi) to avoid division by zero
 
       tau2.min <- ifelse(is.null(x$control$tau2.min), min(0, x$tau2), x$control$tau2.min)
