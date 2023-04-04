@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-2</span>
       </span>
     </div>
 
@@ -422,7 +422,6 @@
 <span class="r-plt img"><img src="selmodel-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># fit beta selection model</span></span></span>
-<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">sel</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"beta"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sel</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -455,7 +454,6 @@
 <span class="r-in"><span><span class="co"># plot selection function</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">40</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="selmodel-2.png" alt="" width="864" height="768"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># fit mixed-effects meta-regression model with 'blind' dummy variable as moderator</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">smd</span>, <span class="va">se</span><span class="op">^</span><span class="fl">2</span>, data<span class="op">=</span><span class="va">dat</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">blind</span>, method<span class="op">=</span><span class="st">"ML"</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
@@ -494,7 +492,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># fit beta selection model</span></span></span>
-<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">sel</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"beta"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sel</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -533,7 +530,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  0.134 0.171 -0.200 0.469 -0.200 0.469 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 -0.002 0.199 -0.392 0.388 -0.392 0.388 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">############################################################################</span></span></span>
 <span class="r-in"><span></span></span>
@@ -618,7 +614,6 @@
 <span class="r-plt img"><img src="selmodel-3.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># fit half-normal, negative-exponential, logistic, and power selection models</span></span></span>
-<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">sel1</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"halfnorm"</span>, alternative<span class="op">=</span><span class="st">"less"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sel2</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"negexp"</span>,   alternative<span class="op">=</span><span class="st">"less"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sel3</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"logistic"</span>, alternative<span class="op">=</span><span class="st">"less"</span><span class="op">)</span></span></span>
@@ -672,11 +667,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  pred ci.lb ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.74  0.49  1.12 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># fit selection models including standard error as precision measure (note: using</span></span></span>
 <span class="r-in"><span><span class="co"># scaleprec=FALSE here since Preston et al. (2004) did not use the rescaling)</span></span></span>
-<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">sel1</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"halfnorm"</span>, prec<span class="op">=</span><span class="st">"sei"</span>, alternative<span class="op">=</span><span class="st">"less"</span>, scaleprec<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sel2</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"negexp"</span>,   prec<span class="op">=</span><span class="st">"sei"</span>, alternative<span class="op">=</span><span class="st">"less"</span>, scaleprec<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sel3</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"logistic"</span>, prec<span class="op">=</span><span class="st">"sei"</span>, alternative<span class="op">=</span><span class="st">"less"</span>, scaleprec<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
@@ -719,7 +712,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  pred ci.lb ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.69  0.50  0.96 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">############################################################################</span></span></span>
 <span class="r-in"><span></span></span>
@@ -797,7 +789,6 @@
 <span class="r-plt img"><img src="selmodel-5.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># step function selection model</span></span></span>
-<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">sel</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"stepfun"</span>, alternative<span class="op">=</span><span class="st">"greater"</span>, steps<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.025</span>,<span class="fl">.10</span>,<span class="fl">.50</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sel</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -861,7 +852,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">############################################################################</span></span></span>
 <span class="r-in"><span></span></span>
@@ -962,7 +952,6 @@
 <span class="r-in"><span>   delta.sev.2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.99</span>, <span class="fl">0.90</span>, <span class="fl">0.75</span>, <span class="fl">0.60</span>, <span class="fl">0.50</span>, <span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.50</span>, <span class="fl">0.60</span>, <span class="fl">0.75</span>, <span class="fl">0.90</span>, <span class="fl">0.99</span>, <span class="fl">1.00</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># apply step function model with a priori chosen selection weights</span></span></span>
-<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">sel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">tab</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>, <span class="kw">function</span><span class="op">(</span><span class="va">delta</span><span class="op">)</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"stepfun"</span>, steps<span class="op">=</span><span class="va">tab</span><span class="op">$</span><span class="va">steps</span>, delta<span class="op">=</span><span class="va">delta</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># estimates (transformed correlation) and tau^2 values</span></span></span>
@@ -975,7 +964,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta.sev.1     0.32   0.010</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta.mod.2     0.36   0.003</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> delta.sev.2     0.33   0.006</span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">############################################################################</span></span></span>
 </code></pre></div>

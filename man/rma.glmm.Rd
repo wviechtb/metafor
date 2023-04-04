@@ -162,11 +162,11 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    The results of the fitted model are formatted and printed with the \code{\link[=print.rma.glmm]{print}} function. If fit statistics should also be given, use \code{\link[=summary.rma]{summary}} (or use the \code{\link[=fitstats.rma]{fitstats}} function to extract them).
 }
 \note{
-   When \code{measure="OR"} or \code{measure="IRR"}, \code{model="UM.FS"} or \code{model="UM.RS"}, and \code{method="ML"}, one has to choose a coding scheme for the group variable in the random effects structure. When \code{code=1/2} (the default), the two groups are coded with \code{+1/2} and \code{-1/2} (i.e., contrast coding), which is invariant under group label switching.
+   When \code{measure="OR"} or \code{measure="IRR"}, \code{model="UM.FS"} or \code{model="UM.RS"}, and \code{method="ML"}, one has to choose a coding scheme for the group variable in the random effects structure. When \code{coding=1/2} (the default), the two groups are coded with \code{+1/2} and \code{-1/2} (i.e., contrast coding), which is invariant under group label switching.
 
-   When \code{code=1}, the first group is coded with \code{1} and the second group with \code{0}. Finally, when \code{code=0}, the first group is coded with \code{0} and the second group with \code{1}. Note that these coding schemes are not invariant under group label switching.
+   When \code{coding=1}, the first group is coded with \code{1} and the second group with \code{0}. Finally, when \code{coding=0}, the first group is coded with \code{0} and the second group with \code{1}. Note that these coding schemes are not invariant under group label switching.
 
-   When \code{model="UM.RS"} and \code{method="ML"}, one has to decide whether the random study effects are allowed to be correlated with the random group effects. By default (i.e., when \code{cor=FALSE}), no such correlation is allowed (which is typically an appropriate assumption when \code{code=1/2}). When using a different coding scheme for the group variable (i.e., \code{code=1} or \code{code=0}), allowing the random study and group effects to be correlated (i.e., using \code{cor=TRUE}) is usually recommended.
+   When \code{model="UM.RS"} and \code{method="ML"}, one has to decide whether the random study effects are allowed to be correlated with the random group effects. By default (i.e., when \code{cor=FALSE}), no such correlation is allowed (which is typically an appropriate assumption when \code{coding=1/2}). When using a different coding scheme for the group variable (i.e., \code{coding=1} or \code{coding=0}), allowing the random study and group effects to be correlated (i.e., using \code{cor=TRUE}) is usually recommended.
 
    Fitting the various types of models requires several different iterative algorithms:
    \itemize{
@@ -199,6 +199,8 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \item \code{measure="PLN"} for log transformed proportions,
    \item \code{measure="PR"} for raw proportions,
    } (the first two only for models \code{"UM.FS"} and \code{"UM.RS"}) by using log and identity links for the binomial models. However, model fitting with these measures is often going to lead to numerical problems.
+
+   Via the (undocumented) \code{link} argument, one can also directly adjust the link function that is used (by default measures \code{"OR"} and \code{"PLO"} use a \code{"logit"} link, measures \code{"RR"} and \code{"PLN"} use a \code{"log"} link, measures \code{"RD"} and \code{"PR"} use an \code{"identity"} link, and measures \code{"IRR"} and \code{"IRLN"} use a \code{"log"} link). See \code{\link{family}} for alternative options. Changing these defaults is only recommended for users familiar with the consequences and the interpretation of the resulting estimates (when misused, the results could be meaningless).
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
@@ -230,30 +232,67 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \code{\link[metadat]{dat.nielweise2007}}, \code{\link[metadat]{dat.nielweise2008}}, \code{\link[metadat]{dat.collins1985a}}, and \code{\link[metadat]{dat.pritz1997}} for further examples of the use of the \code{rma.glmm} function.
 }
 \examples{
+############################################################################
+
 ### random-effects model using rma.uni() (standard RE model analysis)
 rma(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, method="ML")
 
-### random-effects models using rma.glmm() (require 'lme4' package)
+### random-effects models using rma.glmm() (requires 'lme4' package)
 
-### unconditional model with fixed study effects
 \dontrun{
+### unconditional model with fixed study effects (the default)
 rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, model="UM.FS")
-}
 
 ### unconditional model with random study effects
-\dontrun{
 rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, model="UM.RS")
-}
 
 ### conditional model with approximate likelihood
-\dontrun{
 rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, model="CM.AL")
-}
 
 ### conditional model with exact likelihood
 ### note: fitting this model may take a bit of time, so be patient
-\dontrun{
 rma.glmm(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, model="CM.EL")
 }
+
+############################################################################
+
+### try some alternative measures
+
+\dontrun{
+rma.glmm(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+rma.glmm(measure="RD", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+}
+
+############################################################################
+
+### meta-analysis of proportions
+
+\dontrun{
+dat <- dat.debruin2009
+
+### binomial-normal model (with logit link) = mixed-effects logistic model
+res <- rma.glmm(measure="PLO", xi=xi, ni=ni, data=dat)
+predict(res, transf=transf.ilogit)
+
+### binomial-normal model with measure="PLN" (uses a log link)
+res <- rma.glmm(measure="PLN", xi=xi, ni=ni, data=dat)
+predict(res, transf=exp)
+
+### binomial-normal model with measure="PR" (uses an identity link)
+res <- rma.glmm(measure="PR", xi=xi, ni=ni, data=dat)
+predict(res)
+
+### binomial-normal model (with probit link) = mixed-effects probit model
+res <- rma.glmm(measure="PLO", xi=xi, ni=ni, data=dat, link="probit")
+predict(res, transf=pnorm)
+
+### further link functions that one could consider here
+res <- rma.glmm(measure="PLO", xi=xi, ni=ni, data=dat, link="cauchit")
+predict(res, transf=pcauchy)
+res <- rma.glmm(measure="PLO", xi=xi, ni=ni, data=dat, link="cloglog")
+predict(res, transf=\(x) 1-exp(-exp(x)))
+}
+
+############################################################################
 }
 \keyword{models}

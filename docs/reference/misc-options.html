@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-2</span>
       </span>
     </div>
 
@@ -118,7 +118,7 @@
 <li><p><code>sevar</code> for standard errors thereof,</p></li>
 <li><p><code>fit</code> for fit statistics,</p></li>
 <li><p><code>het</code> for heterogeneity statistics.</p></li>
-</ul><p>Instead of setting this argument in each function call (which would be tedious), one can also create a vector named <code>.digits</code> in the workspace (at the beginning of an analysis script) with:</p><div class="sourceCode"><pre><code><span><span class="va">.digits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>est<span class="op">=</span><span class="fl">2</span>, se<span class="op">=</span><span class="fl">3</span>, test<span class="op">=</span><span class="fl">2</span>, pval<span class="op">=</span><span class="fl">3</span>, ci<span class="op">=</span><span class="fl">2</span>, var<span class="op">=</span><span class="fl">3</span>, sevar<span class="op">=</span><span class="fl">3</span>, fit<span class="op">=</span><span class="fl">3</span>, het<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div><p>which then controls the displayed output. The values for the elements shown above could be a sensible choice when analyzing various types of standardized effect size measures.</p>
+</ul><p>Instead of setting this argument in each function call (which would be tedious), one can also create a vector named <code>.digits</code> in the workspace (e.g., at the beginning of an analysis script) with:</p><div class="sourceCode"><pre><code><span><span class="va">.digits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>est<span class="op">=</span><span class="fl">2</span>, se<span class="op">=</span><span class="fl">3</span>, test<span class="op">=</span><span class="fl">2</span>, pval<span class="op">=</span><span class="fl">3</span>, ci<span class="op">=</span><span class="fl">2</span>, var<span class="op">=</span><span class="fl">3</span>, sevar<span class="op">=</span><span class="fl">3</span>, fit<span class="op">=</span><span class="fl">3</span>, het<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div><p>which then controls the displayed output. The values for the elements shown above could be a sensible choice when analyzing various types of standardized effect size measures.</p>
 <p></p>
 </div>
 

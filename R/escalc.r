@@ -345,11 +345,11 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             vi <- rep(NA_real_, k)
 
             if (addvi) {
-               mnwp1i <- .wmean(p1i, n1i, na.rm=TRUE) ### sample size weighted average of proportions
-               mnwp2i <- .wmean(p2i, n2i, na.rm=TRUE) ### sample size weighted average of proportions
+               mnwp1i <- .wmean(p1i, n1i, na.rm=TRUE) # sample size weighted average of proportions
+               mnwp2i <- .wmean(p2i, n2i, na.rm=TRUE) # sample size weighted average of proportions
             } else {
-               mnwp1i.u <- .wmean(p1i.u, n1i.u, na.rm=TRUE) ### sample size weighted average of proportions
-               mnwp2i.u <- .wmean(p2i.u, n2i.u, na.rm=TRUE) ### sample size weighted average of proportions
+               mnwp1i.u <- .wmean(p1i.u, n1i.u, na.rm=TRUE) # sample size weighted average of proportions
+               mnwp2i.u <- .wmean(p2i.u, n2i.u, na.rm=TRUE) # sample size weighted average of proportions
             }
 
             if (!all(is.element(vtype, c("UB","LS","AV"))))
@@ -375,7 +375,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                   }
                }
 
-               ### estimator assuming homogeneity (using the average proportions)
+               ### estimate assuming homogeneity (using the average proportions)
                if (vtype[i] == "AV") {
                   if (addvi) {
                      vi[i] <- mnwp1i*(1-mnwp1i)/n1i[i] + mnwp2i*(1-mnwp2i)/n2i[i]
@@ -847,7 +847,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             npi  <- n2i
          } else {
             mi   <- ni - 2
-            sdpi <- sqrt(((n1i-1)*sd1i^2 + (n2i-1)*sd2i^2)/mi)
+            sdpi <- sqrt(((n1i-1)*sd1i^2 + (n2i-1)*sd2i^2) / mi)
             npi  <- ni
          }
 
@@ -874,7 +874,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                if (vtype[i] == "UB" || vtype[i] == "LS")
                   vi[i] <- sd1i[i]^2/n1i[i] + sd2i[i]^2/n2i[i]
 
-               ### estimator assuming homoscedasticity
+               ### estimate assuming homoscedasticity of the two variances within studies
                if (vtype[i] == "HO")
                   vi[i] <- sdpi[i]^2 * (1/n1i[i] + 1/n2i[i])
 
@@ -896,7 +896,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             vi <- rep(NA_real_, k)
 
-            mnwyi <- .wmean(yi, ni, na.rm=TRUE) ### sample size weighted average of yi's
+            mnwyi <- .wmean(yi, ni, na.rm=TRUE) # sample size weighted average of yi's
 
             if (!all(is.element(vtype, c("UB","LS","LS2","AV"))))
                stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'UB', 'LS', 'LS2', or 'AV'."))
@@ -911,7 +911,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                if (vtype[i] == "LS")
                   vi[i] <- 1/n1i[i] + 1/n2i[i] + yi[i]^2/(2*npi[i])
 
-               ### estimator assuming homogeneity (using sample size weighted average of the yi's)
+               ### estimate assuming homogeneity (using sample size weighted average of the yi's)
                if (vtype[i] == "AV")
                   vi[i] <- 1/n1i[i] + 1/n2i[i] + mnwyi^2/(2*npi[i])
 
@@ -961,10 +961,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             vi <- rep(NA_real_, k)
 
-            mn1wcvi <- .wmean(sd1i/m1i, n1i, na.rm=TRUE) ### sample size weighted average of the coefficient of variation in group 1
-            mn2wcvi <- .wmean(sd2i/m2i, n2i, na.rm=TRUE) ### sample size weighted average of the coefficient of variation in group 2
+            mn1wcvi <- .wmean(sd1i/m1i, n1i, na.rm=TRUE) # sample size weighted average of the coefficient of variation in group 1
+            mn2wcvi <- .wmean(sd2i/m2i, n2i, na.rm=TRUE) # sample size weighted average of the coefficient of variation in group 2
             not.na  <- !(is.na(n1i) | is.na(n2i) | is.na(sd1i/m1i) | is.na(sd2i/m2i))
-            mnwcvi  <- (sum(n1i[not.na]*(sd1i/m1i)[not.na]) + sum(n2i[not.na]*(sd2i/m2i)[not.na])) / sum((n1i+n2i)[not.na]) ### sample size weighted average of the two CV values
+            mnwcvi  <- (sum(n1i[not.na]*(sd1i/m1i)[not.na]) + sum(n2i[not.na]*(sd2i/m2i)[not.na])) / sum((n1i+n2i)[not.na]) # sample size weighted average of the two CV values
 
             if (!all(is.element(vtype, c("LS","HO","AV","AVHO"))))
                stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS', 'HO', 'AV', or 'AVHO'."))
@@ -975,15 +975,15 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                if (vtype[i] == "LS")
                   vi[i] <- sd1i[i]^2/(n1i[i]*m1i[i]^2) + sd2i[i]^2/(n2i[i]*m2i[i]^2)
 
-               ### estimator assuming homoscedasticity
+               ### estimate assuming homoscedasticity of the two variances within studies
                if (vtype[i] == "HO")
                   vi[i] <- sdpi[i]^2/(n1i[i]*m1i[i]^2) + sdpi[i]^2/(n2i[i]*m2i[i]^2)
 
-               ### estimator using the weighted averages of the CV values
+               ### estimate using the weighted averages of the CV values
                if (vtype[i] == "AV")
                   vi[i] <- mn1wcvi^2/n1i[i] + mn2wcvi^2/n2i[i]
 
-               ### estimator using the weighted average of two weighted averages of the CV values
+               ### estimate using the weighted average of two weighted averages of the CV values
                if (vtype[i] == "AVHO")
                   vi[i] <- mnwcvi^2 * (1/n1i[i] + 1/n2i[i])
 
@@ -1153,7 +1153,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             vi <- rep(NA_real_, k)
 
-            mnwyi <- .wmean(yi, ni, na.rm=TRUE) ### sample size weighted average of yi's
+            mnwyi <- .wmean(yi, ni, na.rm=TRUE) # sample size weighted average of yi's
 
             if (!all(is.element(vtype, c("UB","LS","AV"))))
                stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'UB', 'LS', or 'AV'."))
@@ -1170,7 +1170,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                if (vtype[i] == "LS")
                   vi[i] <- (1-yi[i]^2)^2/(ni[i]-1)
 
-               ### estimator assuming homogeneity (using sample size weighted average of the yi's)
+               ### estimate assuming homogeneity (using sample size weighted average of the yi's)
                if (vtype[i] == "AV")
                   vi[i] <- (1-mnwyi^2)^2/(ni[i]-1)
 
@@ -1263,7 +1263,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             vi <- rep(NA_real_, k)
 
-            mnwyi <- .wmean(yi, ni, na.rm=TRUE) ### sample size weighted average of yi's
+            mnwyi <- .wmean(yi, ni, na.rm=TRUE) # sample size weighted average of yi's
 
             if (!all(is.element(vtype, c("LS","AV"))))
                stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS' or 'AV'."))
@@ -1274,7 +1274,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                if (vtype[i] == "LS")
                   vi[i] <- (1 - yi[i]^2)^2 / (ni[i] - mi[i] - 1)
 
-               ### estimator assuming homogeneity (using sample size weighted average of the yi's)
+               ### estimate assuming homogeneity (using sample size weighted average of the yi's)
                if (vtype[i] == "AV")
                   vi[i] <- (1 - mnwyi^2)^2 / (ni[i] - mi[i] - 1)
 
@@ -1300,7 +1300,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             vi <- rep(NA_real_, k)
 
-            mnwyi <- .wmean(yi, ni, na.rm=TRUE) ### sample size weighted average of yi's
+            mnwyi <- .wmean(yi, ni, na.rm=TRUE) # sample size weighted average of yi's
 
             if (!all(is.element(vtype, c("LS","AV"))))
                stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS' or 'AV'."))
@@ -1311,7 +1311,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                if (vtype[i] == "LS")
                   vi[i] <- (r2i[i]^2 - 2*r2i[i] + (r2i[i] - yi[i]^2) + 1 - (r2i[i] - yi[i]^2)^2) / ni[i]
 
-               ### estimator assuming homogeneity (using sample size weighted average of the yi's)
+               ### estimate assuming homogeneity (using sample size weighted average of the yi's)
                if (vtype[i] == "AV")
                   vi[i] <- (r2i[i]^2 - 2*r2i[i] + (r2i[i] - mnwyi^2) + 1 - (r2i[i] - mnwyi^2)^2) / ni[i]
 
@@ -1442,9 +1442,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             vi <- rep(NA_real_, k)
 
             if (addvi) {
-               mnwpri <- .wmean(pri, ni, na.rm=TRUE) ### sample size weighted average of proportions
+               mnwpri <- .wmean(pri, ni, na.rm=TRUE) # sample size weighted average of proportions
             } else {
-               mnwpri.u <- .wmean(pri.u, ni.u, na.rm=TRUE) ### sample size weighted average of proportions
+               mnwpri.u <- .wmean(pri.u, ni.u, na.rm=TRUE) # sample size weighted average of proportions
             }
 
             if (!all(is.element(vtype, c("UB","LS","AV"))))
@@ -1470,7 +1470,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                   }
                }
 
-               ### estimator assuming homogeneity (using the average proportion)
+               ### estimate assuming homogeneity (using the average proportion)
                if (vtype[i] == "AV") {
                   if (addvi) {
                      vi[i] <- mnwpri*(1-mnwpri)/ni[i]
@@ -1499,10 +1499,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             vi <- rep(NA_real_, k)
 
             if (addvi) {
-               mnwpri <- .wmean(pri, ni, na.rm=TRUE) ### sample size weighted average of proportions
-               #mnwpri <- exp(.wmean(yi, ni, na.rm=TRUE)) ### alternative strategy (exp of the sample size weighted average of the log proportions)
+               mnwpri <- .wmean(pri, ni, na.rm=TRUE) # sample size weighted average of proportions
+               #mnwpri <- exp(.wmean(yi, ni, na.rm=TRUE)) # alternative strategy (exp of the sample size weighted average of the log proportions)
             } else {
-               mnwpri.u <- .wmean(pri.u, ni.u, na.rm=TRUE) ### sample size weighted average of proportions
+               mnwpri.u <- .wmean(pri.u, ni.u, na.rm=TRUE) # sample size weighted average of proportions
             }
 
             if (!all(is.element(vtype, c("LS","AV"))))
@@ -1519,7 +1519,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                   }
                }
 
-               ### estimator assuming homogeneity (using the average proportion)
+               ### estimate assuming homogeneity (using the average proportion)
                if (vtype[i] == "AV") {
                   if (addvi) {
                      vi[i] <- 1/(mnwpri*ni[i]) - 1/ni[i]
@@ -1548,10 +1548,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             vi <- rep(NA_real_, k)
 
             if (addvi) {
-               mnwpri <- .wmean(pri, ni, na.rm=TRUE) ### sample size weighted average of proportions
-               #mnwpri <- transf.ilogit(.wmean(yi, ni, na.rm=TRUE)) ### alternative strategy (inverse logit of the sample size weighted average of the logit transformed proportions)
+               mnwpri <- .wmean(pri, ni, na.rm=TRUE) # sample size weighted average of proportions
+               #mnwpri <- transf.ilogit(.wmean(yi, ni, na.rm=TRUE)) # alternative strategy (inverse logit of the sample size weighted average of the logit transformed proportions)
             } else {
-               mnwpri.u <- .wmean(pri.u, ni.u, na.rm=TRUE) ### sample size weighted average of proportions
+               mnwpri.u <- .wmean(pri.u, ni.u, na.rm=TRUE) # sample size weighted average of proportions
             }
 
             if (!all(is.element(vtype, c("LS","AV"))))
@@ -1568,7 +1568,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                   }
                }
 
-               ### estimator assuming homogeneity (using the average proportion)
+               ### estimate assuming homogeneity (using the average proportion)
                if (vtype[i] == "AV") {
                   if (addvi) {
                      vi[i] <- 1/(mnwpri*ni[i]) + 1/((1-mnwpri)*ni[i])
@@ -1783,8 +1783,30 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### (raw) mean
 
          if (measure == "MN") {
+
             yi <- mi
-            vi <- sdi^2 / ni
+            sdpi <- sqrt(.wmean(sdi^2, ni-1, na.rm=TRUE))
+
+            if (length(vtype) == 1L)
+               vtype <- rep(vtype, k)
+
+            vi <- rep(NA_real_, k)
+
+            if (!all(is.element(vtype, c("LS","HO"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either ''LS' or 'HO'."))
+
+            for (i in seq_len(k)) {
+
+               ### compute the sampling variance per study
+               if (vtype[i] == "LS")
+                  vi[i] <- sdi[i]^2 / ni[i]
+
+               ### compute the sampling variance assuming homoscedasticity of variances across studies
+               if (vtype[i] == "HO")
+                  vi[i] <- sdpi^2 / ni[i]
+
+            }
+
          }
 
          ### log(mean)

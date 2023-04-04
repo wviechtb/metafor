@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-2</span>
       </span>
     </div>
 
@@ -390,9 +390,9 @@
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>When <code>measure="OR"</code> or <code>measure="IRR"</code>, <code>model="UM.FS"</code> or <code>model="UM.RS"</code>, and <code>method="ML"</code>, one has to choose a coding scheme for the group variable in the random effects structure. When <code>code=1/2</code> (the default), the two groups are coded with <code>+1/2</code> and <code>-1/2</code> (i.e., contrast coding), which is invariant under group label switching.</p>
-<p>When <code>code=1</code>, the first group is coded with <code>1</code> and the second group with <code>0</code>. Finally, when <code>code=0</code>, the first group is coded with <code>0</code> and the second group with <code>1</code>. Note that these coding schemes are not invariant under group label switching.</p>
-<p>When <code>model="UM.RS"</code> and <code>method="ML"</code>, one has to decide whether the random study effects are allowed to be correlated with the random group effects. By default (i.e., when <code>cor=FALSE</code>), no such correlation is allowed (which is typically an appropriate assumption when <code>code=1/2</code>). When using a different coding scheme for the group variable (i.e., <code>code=1</code> or <code>code=0</code>), allowing the random study and group effects to be correlated (i.e., using <code>cor=TRUE</code>) is usually recommended.</p>
+    <p>When <code>measure="OR"</code> or <code>measure="IRR"</code>, <code>model="UM.FS"</code> or <code>model="UM.RS"</code>, and <code>method="ML"</code>, one has to choose a coding scheme for the group variable in the random effects structure. When <code>coding=1/2</code> (the default), the two groups are coded with <code>+1/2</code> and <code>-1/2</code> (i.e., contrast coding), which is invariant under group label switching.</p>
+<p>When <code>coding=1</code>, the first group is coded with <code>1</code> and the second group with <code>0</code>. Finally, when <code>coding=0</code>, the first group is coded with <code>0</code> and the second group with <code>1</code>. Note that these coding schemes are not invariant under group label switching.</p>
+<p>When <code>model="UM.RS"</code> and <code>method="ML"</code>, one has to decide whether the random study effects are allowed to be correlated with the random group effects. By default (i.e., when <code>cor=FALSE</code>), no such correlation is allowed (which is typically an appropriate assumption when <code>coding=1/2</code>). When using a different coding scheme for the group variable (i.e., <code>coding=1</code> or <code>coding=0</code>), allowing the random study and group effects to be correlated (i.e., using <code>cor=TRUE</code>) is usually recommended.</p>
 <p>Fitting the various types of models requires several different iterative algorithms:</p><ul><li><p>For <code>model="UM.FS"</code> and <code>model="CM.AL"</code>, iteratively reweighted least squares (IWLS) as implemented in the <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></code> function is used for fitting the equal-effects and the saturated models. For <code>method="ML"</code>, adaptive Gauss-Hermite quadrature as implemented in the <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">glmer</a></code> function is used. The same applies when <code>model="CM.EL"</code> is used in combination with <code>measure="IRR"</code> or when <code>measure="PLO"</code> or <code>measure="IRLN"</code> (regardless of the model type).</p></li>
 <li><p>For <code>model="UM.RS"</code>, adaptive Gauss-Hermite quadrature as implemented in the <code><a href="https://rdrr.io/pkg/lme4/man/glmer.html" class="external-link">glmer</a></code> function is used to fit all of the models.</p></li>
 <li><p>For <code>model="CM.EL"</code> and <code>measure="OR"</code>, the quasi-Newton method optimizer as implemented in the <code><a href="https://rdrr.io/r/stats/nlminb.html" class="external-link">nlminb</a></code> function is used by default for fitting the equal-effects and the saturated models. For <code>method="ML"</code>, the same algorithm is used, together with adaptive quadrature as implemented in the <code><a href="https://rdrr.io/r/stats/integrate.html" class="external-link">integrate</a></code> function (for the integration over the density of the non-central hypergeometric distribution). Standard errors of the parameter estimates are obtained by inverting the Hessian, which is numerically approximated using the <code><a href="https://rdrr.io/pkg/numDeriv/man/hessian.html" class="external-link">hessian</a></code> function from the <code>numDeriv</code> package.</p>
@@ -412,6 +412,7 @@
 <li><p><code>measure="PLN"</code> for log transformed proportions,</p></li>
 <li><p><code>measure="PR"</code> for raw proportions,</p></li>
 </ul><p>(the first two only for models <code>"UM.FS"</code> and <code>"UM.RS"</code>) by using log and identity links for the binomial models. However, model fitting with these measures is often going to lead to numerical problems.</p>
+<p>Via the (undocumented) <code>link</code> argument, one can also directly adjust the link function that is used (by default measures <code>"OR"</code> and <code>"PLO"</code> use a <code>"logit"</code> link, measures <code>"RR"</code> and <code>"PLN"</code> use a <code>"log"</code> link, measures <code>"RD"</code> and <code>"PR"</code> use an <code>"identity"</code> link, and measures <code>"IRR"</code> and <code>"IRLN"</code> use a <code>"log"</code> link). See <code><a href="https://rdrr.io/r/stats/family.html" class="external-link">family</a></code> for alternative options. Changing these defaults is only recommended for users familiar with the consequences and the interpretation of the resulting estimates (when misused, the results could be meaningless).</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -438,7 +439,9 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### random-effects model using rma.uni() (standard RE model analysis)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### random-effects model using rma.uni() (standard RE model analysis)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, method<span class="op">=</span><span class="st">"ML"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 13; tau^2 estimator: ML)</span>
@@ -460,10 +463,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### random-effects models using rma.glmm() (require 'lme4' package)</span></span></span>
+<span class="r-in"><span><span class="co">### random-effects models using rma.glmm() (requires 'lme4' package)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### unconditional model with fixed study effects</span></span></span>
-<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co">### unconditional model with fixed study effects (the default)</span></span></span>
 <span class="r-in"><span><span class="fu">rma.glmm</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, model<span class="op">=</span><span class="st">"UM.FS"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 13; tau^2 estimator: ML)</span>
@@ -486,10 +488,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### unconditional model with random study effects</span></span></span>
-<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">rma.glmm</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, model<span class="op">=</span><span class="st">"UM.RS"</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Not possible to fit RE/ME model='UM.RS' with nAGQ &gt; 1 with glmer(). nAGQ automatically set to 1.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -516,10 +516,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### conditional model with approximate likelihood</span></span></span>
-<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">rma.glmm</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, model<span class="op">=</span><span class="st">"CM.AL"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 13; tau^2 estimator: ML)</span>
@@ -542,11 +540,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### conditional model with exact likelihood</span></span></span>
 <span class="r-in"><span><span class="co">### note: fitting this model may take a bit of time, so be patient</span></span></span>
-<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">rma.glmm</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, model<span class="op">=</span><span class="st">"CM.EL"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 13; tau^2 estimator: ML)</span>
@@ -569,7 +565,116 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### try some alternative measures</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">rma.glmm</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The use of this 'measure' is experimental - treat results with caution.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Model failed to converge with max|grad| = 0.00461408 (tol = 0.002, component 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 13; tau^2 estimator: ML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of total heterogeneity): 0.2711</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):      0.5207</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (total heterogeneity / total variability):   91.12%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (total variability / sampling variability):  11.26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tests for Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Wld(df = 12) = 152.2330, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LRT(df = 12) = 166.3203, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se     zval    pval    ci.lb    ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  -0.7139  0.1691  -4.2223  &lt;.0001  -1.0453  -0.3825  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">rma.glmm</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RD"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The use of this 'measure' is experimental - treat results with caution.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>variance-covariance matrix computed from finite-difference Hessian is</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> not positive definite or contains NA values: falling back to var-cov estimated from RX</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 13; tau^2 estimator: ML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of total heterogeneity): 0.0013</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):      0.0355</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (total heterogeneity / total variability):   99.93%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (total variability / sampling variability):  1482.28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tests for Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Wld(df = 12) = 276.4737, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LRT(df = 12) = 294.2395, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se     zval    pval    ci.lb    ci.ub    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  -0.0249  0.0102  -2.4401  0.0147  -0.0450  -0.0049  * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### meta-analysis of proportions</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.debruin2009.html" class="external-link">dat.debruin2009</a></span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### binomial-normal model (with logit link) = mixed-effects logistic model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma.glmm</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"PLO"</span>, xi<span class="op">=</span><span class="va">xi</span>, ni<span class="op">=</span><span class="va">ni</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">transf.ilogit</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pred  ci.lb  ci.ub  pi.lb  pi.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.4721 0.3822 0.5638 0.2021 0.7594 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### binomial-normal model with measure="PLN" (uses a log link)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma.glmm</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"PLN"</span>, xi<span class="op">=</span><span class="va">xi</span>, ni<span class="op">=</span><span class="va">ni</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The use of this 'measure' is experimental - treat results with caution.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>variance-covariance matrix computed from finite-difference Hessian is</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> not positive definite or contains NA values: falling back to var-cov estimated from RX</span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pred  ci.lb  ci.ub  pi.lb  pi.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.4606 0.3806 0.5575 0.2381 0.8911 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### binomial-normal model with measure="PR" (uses an identity link)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma.glmm</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"PR"</span>, xi<span class="op">=</span><span class="va">xi</span>, ni<span class="op">=</span><span class="va">ni</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The use of this 'measure' is experimental - treat results with caution.</span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pred     se  ci.lb  ci.ub  pi.lb  pi.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.4741 0.0427 0.3904 0.5578 0.1880 0.7602 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### binomial-normal model (with probit link) = mixed-effects probit model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma.glmm</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"PLO"</span>, xi<span class="op">=</span><span class="va">xi</span>, ni<span class="op">=</span><span class="va">ni</span>, data<span class="op">=</span><span class="va">dat</span>, link<span class="op">=</span><span class="st">"probit"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">pnorm</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pred  ci.lb  ci.ub  pi.lb  pi.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.4725 0.3839 0.5625 0.1996 0.7597 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### further link functions that one could consider here</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma.glmm</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"PLO"</span>, xi<span class="op">=</span><span class="va">xi</span>, ni<span class="op">=</span><span class="va">ni</span>, data<span class="op">=</span><span class="va">dat</span>, link<span class="op">=</span><span class="st">"cauchit"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">pcauchy</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pred  ci.lb  ci.ub  pi.lb  pi.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.4688 0.3706 0.5731 0.2167 0.7559 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">rma.glmm</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"PLO"</span>, xi<span class="op">=</span><span class="va">xi</span>, ni<span class="op">=</span><span class="va">ni</span>, data<span class="op">=</span><span class="va">dat</span>, link<span class="op">=</span><span class="st">"cloglog"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fl">1</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    pred  ci.lb  ci.ub  pi.lb  pi.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.4625 0.3775 0.5566 0.2174 0.7924 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
 </code></pre></div>
     </div>
   </div>

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-2</span>
       </span>
     </div>
 
@@ -278,7 +278,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### use the simulation approach to analyze the size of the VIFs</span></span></span>
-<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">vif</span><span class="op">(</span><span class="va">res</span>, sim<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              vif  prop </span>
@@ -290,7 +289,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> imag      1.1554  0.50 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> meta      4.5333  1.00 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### get variance inflation factors using the re-estimation approach</span></span></span>
 <span class="r-in"><span><span class="fu">vif</span><span class="op">(</span><span class="va">res</span>, reestimate<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
@@ -356,7 +354,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### can also specify a list for the 'btt' argument (and use the simulation approach)</span></span></span>
-<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">vif</span><span class="op">(</span><span class="va">res</span>, btt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span>, sim<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   coefs m    vif    sif prop </span>
@@ -364,7 +361,6 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   3:4 2 1.2339 1.0540 0.24 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3     5 1 1.9148 1.3838 0.88 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>

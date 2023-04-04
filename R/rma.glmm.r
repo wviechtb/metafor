@@ -17,7 +17,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    if (missing(measure))
       stop(mstyle$stop("Must specify 'measure' argument."))
 
-   if (!is.element(measure, c("OR","RR","RD","IRR","PLO","PR","PLN","IRLN")))
+   if (!is.element(measure, c("OR","IRR","PLO","IRLN", "PR","RR","RD","PLN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
    if (!is.element(method, c("FE","EE","CE","ML")))
@@ -50,7 +50,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    ### check if user changed model for measures where this is not relevant; if so, issue a warning
 
-   if (is.element(measure, c("PLO","PR","PLN","IRLN")) && model != "UM.FS")
+   if (is.element(measure, c("PLO","PR","PLN","IRLN")) && !is.null(match.call()$model))
       warning(mstyle$warning("Argument 'model' not relevant for this outcome measure."), call.=FALSE)
 
    ### warning about experimental measures
@@ -76,7 +76,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi", "time", "retdat", "family", "retfit", "skiphet", "i2def"))
+   .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi", "time", "retdat", "family", "retfit", "skiphet", "i2def", "link"))
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 
@@ -115,6 +115,19 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    if (verbose > 2) {
       opwarn <- options(warn=1)
       on.exit(options(warn=opwarn$warn), add=TRUE)
+   }
+
+   if (is.null(ddd$link)) {
+      if (measure=="OR" || measure=="PLO")
+         link <- "logit"
+      if (measure=="RR" || measure=="PLN")
+         link <- "log"
+      if (measure=="RD" || measure=="PR")
+         link <- "identity"
+      if (measure=="IRR" || measure=="IRLN")
+         link <- "log"
+   } else {
+      link <- ddd$link
    }
 
    #########################################################################
@@ -896,11 +909,12 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                                                                      #                           ci   di   i       0       1       -1/2     NULL    0        0
             if (is.null(ddd$family)) {
                if (measure == "OR")
-                  dat.fam <- binomial
+                  dat.fam <- binomial(link=link)
                if (measure == "RR")
-                  dat.fam <- binomial(link=log)
+                  dat.fam <- binomial(link=link)
                if (measure == "RD")
-                  dat.fam <- eval(parse(text="binomial(link=\"identity\")"))
+                  #dat.fam <- eval(parse(text="binomial(link=\"identity\")"))
+                  dat.fam <- binomial(link=link)
             } else {
                dat.fam <- ddd$family
             }
@@ -911,7 +925,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             dat.grp <- c(rbind(x1i,x2i))                             # grp-level outcome data    x1i  t1i  i       1       0       +1/2     t1i     1        x1i
                                                                      # log(ti) for offset        x2i  t2i  i       0       1       -1/2     t2i     0        0
             if (is.null(ddd$family)) {
-               dat.fam <- poisson
+               dat.fam <- poisson(link=link)
             } else {
                dat.fam <- ddd$family
             }
@@ -2186,11 +2200,13 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
          dat.grp <- cbind(xi=xi,mi=mi)
          if (is.null(ddd$family)) {
             if (measure == "PLO")
-               dat.fam <- binomial
+               dat.fam <- binomial(link=link)
+               #dat.fam <- binomial(link="probit")
             if (measure == "PR")
-               dat.fam <- eval(parse(text="binomial(link=\"identity\")"))
+               #dat.fam <- eval(parse(text="binomial(link=\"identity\")"))
+               dat.fam <- binomial(link=link)
             if (measure == "PLN")
-               dat.fam <- binomial(link=log)
+               dat.fam <- binomial(link=link)
          } else {
             dat.fam <- ddd$family
          }
@@ -2200,7 +2216,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
       if (is.element(measure, c("IRLN"))) {
          dat.grp <- xi
          if (is.null(ddd$family)) {
-            dat.fam <- poisson
+            dat.fam <- poisson(link=link)
          } else {
             dat.fam <- ddd$family
          }

@@ -2157,12 +2157,12 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       if (is.element(test, c("knha","adhoc","t"))) {
          QS         <- QS / m.alpha
-         QSdf       <- c(m.alpha, k-q)
+         QSdf       <- c(m.alpha, ddf.alpha)
          QSp        <- if (QSdf[2] > 0) pf(QS, df1=QSdf[1], df2=QSdf[2], lower.tail=FALSE) else NA_real_
          pval.alpha <- if (ddf.alpha > 0) 2*pt(abs(zval.alpha), df=ddf.alpha, lower.tail=FALSE) else rep(NA_real_,q)
          crit.alpha <- if (ddf.alpha > 0) qt(level/2, df=ddf.alpha, lower.tail=FALSE) else NA_real_
       } else {
-         QSdf       <- c(m.alpha, NA_integer_)
+         QSdf       <- c(m.alpha, ddf.alpha)
          QSp        <- pchisq(QS, df=QSdf[1], lower.tail=FALSE)
          pval.alpha <- 2*pnorm(abs(zval.alpha), lower.tail=FALSE)
          crit.alpha <- qnorm(level/2, lower.tail=FALSE)
@@ -2357,12 +2357,12 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    if (is.element(test, c("knha","adhoc","t"))) {
       QM   <- QM / m
-      QMdf <- c(m, k-p)
+      QMdf <- c(m, ddf)
       QMp  <- if (QMdf[2] > 0) pf(QM, df1=QMdf[1], df2=QMdf[2], lower.tail=FALSE) else NA_real_
       pval <- if (ddf > 0) 2*pt(abs(zval), df=ddf, lower.tail=FALSE) else rep(NA_real_,p)
       crit <- if (ddf > 0) qt(level/2, df=ddf, lower.tail=FALSE) else NA_real_
    } else {
-      QMdf <- c(m, NA_integer_)
+      QMdf <- c(m, ddf)
       QMp  <- pchisq(QM, df=QMdf[1], lower.tail=FALSE)
       pval <- 2*pnorm(abs(zval), lower.tail=FALSE)
       crit <- qnorm(level/2, lower.tail=FALSE)

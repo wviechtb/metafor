@@ -121,13 +121,11 @@ permutest(res, exact=TRUE)
 res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
 res
 
-# number of iterations required for an exact permutation test
+### number of iterations required for an exact permutation test
 permutest(res, exact="i")
 
-### permutation test (approximate only; exact not feasible)
 \dontrun{
-
-### permutation test (approximate)
+### permutation test (approximate only; exact not feasible)
 set.seed(1234) # for reproducibility
 permres <- permutest(res, iter=10000)
 permres

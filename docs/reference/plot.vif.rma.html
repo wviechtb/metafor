@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-2</span>
       </span>
     </div>
 
@@ -177,7 +177,6 @@
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Studies with NAs omitted from model fitting.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### use the simulation approach to analyze the size of the VIFs</span></span></span>
-<span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="va">vifs</span> <span class="op">&lt;-</span> <span class="fu"><a href="vif.html">vif</a></span><span class="op">(</span><span class="va">res</span>, sim<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">vifs</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -197,7 +196,6 @@
 <span class="r-in"><span><span class="co">### add densities, trim away some extremes, and set break points</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vifs</span>, lwd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>, trim<span class="op">=</span><span class="fl">.01</span>, breaks<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2.2</span>,by<span class="op">=</span><span class="fl">.05</span><span class="op">)</span>, adjust<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.vif.rma-1.png" alt="" width="864" height="768"></span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-plt img"><img src="plot.vif.rma-2.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>

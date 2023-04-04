@@ -108,7 +108,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (is.character(dfs))
       dfs <- match.arg(dfs, c("residual", "contain"))
 
-   if (dfs == "contain" && test == "z")
+   if (is.numeric(dfs) || (dfs == "contain" && test == "z"))
       test <- "t"
 
    ### handle Rscale argument (either character, logical, or integer)
@@ -523,6 +523,13 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
       if (any(has.colon))
          stop(mstyle$stop("Cannot use ':' notation in formulas in the 'random' argument (use 'interaction()' instead)."))
+
+      ### check if any formula have a %in%
+
+      has.in <- sapply(random, function(f) grepl("%in%", paste0(f, collapse=""), fixed=TRUE))
+
+      if (any(has.in))
+         stop(mstyle$stop("Cannot use '%in%' notation in formulas in the 'random' argument (use 'interaction()' instead)."))
 
       ### check which formulas have a ||
 

@@ -1,4 +1,4 @@
-# metafor 4.1-0 (2023-03-20)
+# metafor 4.1-2 (2023-04-04)
 
 - version bump for development version
 

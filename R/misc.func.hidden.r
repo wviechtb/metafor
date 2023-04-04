@@ -1419,7 +1419,7 @@
 
 .wmean <- function (x, w, na.rm=FALSE) {
    if (na.rm) {
-      i <- !(is.na(x) | is.na(w))
+      i <- !(is.na(x) | is.na(w)) # only include x if x and w are not missing
       x <- x[i]
       w <- w[i]
    }
