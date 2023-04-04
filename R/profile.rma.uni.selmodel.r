@@ -68,7 +68,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
 
       if (plot) {
          if (dev.cur() == 1) {
-            par(mfrow=c(comps, 1))
+            par(mfrow=n2mfrow(comps))
             #on.exit(par(mfrow=c(1,1)), add=TRUE)
          }
       }

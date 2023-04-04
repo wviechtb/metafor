@@ -434,7 +434,7 @@ col.na="lightgray", ...) {
          }
       }
 
-      par(mfrow=c(length(which.dfbs),1))
+      par(mfrow=n2mfrow(length(which.dfbs)))
 
       for (i in seq_along(which.dfbs)) {
 

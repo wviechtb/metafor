@@ -7,7 +7,7 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
    .chkclass(class(x), must="profile.rma")
 
    if (dev.cur() == 1) {
-      par(mfrow=c(x$comps, 1))
+      par(mfrow=n2mfrow(x$comps))
       #on.exit(par(mfrow=c(1,1)), add=TRUE)
    }
 
