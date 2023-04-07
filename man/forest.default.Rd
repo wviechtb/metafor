@@ -12,7 +12,7 @@
        xlab, slab, ilab, ilab.xpos, ilab.pos,
        order, subset, transf, atransf, targs, rows,
        efac=1, pch, psize, plim=c(0.5,1.5), col,
-       lty, fonts, cex, cex.lab, cex.axis, \dots)
+       shade, colshade, lty, fonts, cex, cex.lab, cex.axis, \dots)
 }
 \arguments{
    \item{x}{vector of length \mjseqn{k} with the observed effect sizes or outcomes.}
@@ -33,7 +33,7 @@
    \item{refline}{numeric value to specify the location of the vertical \sQuote{reference} line (the default is 0). The line can be suppressed by setting this argument to \code{NA}.}
    \item{digits}{integer to specify the number of decimal places to which the tick mark labels of the x-axis and the annotations should be rounded (the default is \code{2L}). Can also be a vector of two integers, the first to specify the number of decimal places for the annotations, the second for the x-axis labels (when \code{showweights=TRUE}, can also specify a third value for the weights). When specifying an integer (e.g., \code{2L}), trailing zeros after the decimal mark are dropped for the x-axis labels. When specifying a numeric value (e.g., \code{2}), trailing zeros are retained.}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations (either a single integer or a vector of the same length as the number of annotation columns).}
-   \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
+   \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title. Can also be a vector of three/two values (to also/only add labels at the end points of the x-axis limits).}
    \item{slab}{optional vector with labels for the \mjseqn{k} studies. If unspecified, the function tries to extract study labels from \code{x} and otherwise simple labels are created within the function. To suppress labels, set this argument to \code{NA}.}
    \item{ilab}{optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.}
    \item{ilab.xpos}{numeric vector to specify the horizontal position(s) of the variable(s) given via \code{ilab} (must be specified if \code{ilab} is specified).}
@@ -49,6 +49,8 @@
    \item{psize}{optional numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the precision of the estimates. Can also be a vector of values.}
    \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
    \item{col}{optional character string to specify the color to use for plotting the observed outcomes (\code{"black"} is used by default if not specified). Can also be a vector.}
+   \item{shade}{optional (logical or numeric) vector or character string for shading rows of the plot. See \sQuote{Details}.}
+   \item{colshade}{optional argument to specify the color for the shading. If unspecified, \code{"lightgray"} is used.}
    \item{lty}{optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to \code{"solid"} by default.}
    \item{fonts}{optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via \code{ilab}). If unspecified, the default font is used.}
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}

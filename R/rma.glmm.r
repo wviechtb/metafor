@@ -332,7 +332,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
       if (verbose > 1)
          message(mstyle$message("Subsetting ..."))
 
-      mods <- .getsubset(mods, subset, col=TRUE)
+      mods <- .getsubset(mods, subset)
       slab <- .getsubset(slab, subset)
       ids  <- .getsubset(ids,  subset)
 

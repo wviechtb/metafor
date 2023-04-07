@@ -1345,11 +1345,11 @@
    argname <- deparse(substitute(x))
 
    if (length(x) == 0L)
-      stop(mstyle$stop(paste0("Specified '", argname, "' argument is of length 0.")), call.=FALSE)
+      stop(mstyle$stop(paste0("Argument '", argname, "' is of length 0.")), call.=FALSE)
 
    if (is.logical(x)) {
       if (length(x) != k)
-         stop(mstyle$stop(paste0("Length of the specified '", argname, "' argument (", length(x), ") is not of length k = ", k, ".")), call.=FALSE)
+         stop(mstyle$stop(paste0("Length of the '", argname, "' argument (", length(x), ") is not of length k = ", k, ".")), call.=FALSE)
       #x <- x[seq_len(k)]     # keep only elements 1:k from x
       if (anyNA(x))           # if x includes any NA elements
          x[is.na(x)] <- FALSE # set NA elements to FALSE
@@ -1364,11 +1364,11 @@
          stop(mstyle$stop(paste0("Cannot mix positive and negative values in '", argname, "' argument.")), call.=FALSE)
       if (all(x > 0L)) {
          if (any(x > k))
-            stop(mstyle$stop(paste0("Specified '", argname, "' argument includes values larger than k = ", k, ".")), call.=FALSE)
+            stop(mstyle$stop(paste0("Argument '", argname, "' includes values larger than k = ", k, ".")), call.=FALSE)
          x <- is.element(seq_len(k), x)
       } else {
          if (any(x < -k))
-            stop(mstyle$stop(paste0("Specified '", argname, "' argument includes values larger than k = ", k, ".")), call.=FALSE)
+            stop(mstyle$stop(paste0("Argument '", argname, "' includes values larger than k = ", k, ".")), call.=FALSE)
          x <- !is.element(seq_len(k), abs(x))
       }
    }

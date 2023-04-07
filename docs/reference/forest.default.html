@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-3</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@
 <span>       <span class="va">xlab</span>, <span class="va">slab</span>, <span class="va">ilab</span>, <span class="va">ilab.xpos</span>, <span class="va">ilab.pos</span>,</span>
 <span>       <span class="va">order</span>, <span class="va">subset</span>, <span class="va">transf</span>, <span class="va">atransf</span>, <span class="va">targs</span>, <span class="va">rows</span>,</span>
 <span>       efac<span class="op">=</span><span class="fl">1</span>, <span class="va">pch</span>, <span class="va">psize</span>, plim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>,<span class="fl">1.5</span><span class="op">)</span>, <span class="va">col</span>,</span>
-<span>       <span class="va">lty</span>, <span class="va">fonts</span>, <span class="va">cex</span>, <span class="va">cex.lab</span>, <span class="va">cex.axis</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>       <span class="va">shade</span>, <span class="va">colshade</span>, <span class="va">lty</span>, <span class="va">fonts</span>, <span class="va">cex</span>, <span class="va">cex.lab</span>, <span class="va">cex.axis</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -169,7 +169,7 @@
 <dd><p>optional integer to manually adjust the width of the columns for the annotations (either a single integer or a vector of the same length as the number of annotation columns).</p></dd>
 
    <dt>xlab</dt>
-<dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title. Can also be a vector of three/two values (to also/only add labels at the end points of the x-axis limits).</p></dd>
 
    <dt>slab</dt>
 <dd><p>optional vector with labels for the <em></em>\(k\) studies. If unspecified, the function tries to extract study labels from <code>x</code> and otherwise simple labels are created within the function. To suppress labels, set this argument to <code>NA</code>.</p></dd>
@@ -215,6 +215,12 @@
 
    <dt>col</dt>
 <dd><p>optional character string to specify the color to use for plotting the observed outcomes (<code>"black"</code> is used by default if not specified). Can also be a vector.</p></dd>
+
+   <dt>shade</dt>
+<dd><p>optional (logical or numeric) vector or character string for shading rows of the plot. See ‘Details’.</p></dd>
+
+   <dt>colshade</dt>
+<dd><p>optional argument to specify the color for the shading. If unspecified, <code>"lightgray"</code> is used.</p></dd>
 
    <dt>lty</dt>
 <dd><p>optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to <code>"solid"</code> by default.</p></dd>

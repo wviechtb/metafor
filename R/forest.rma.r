@@ -3,7 +3,7 @@ annotate=TRUE, addfit=TRUE, addpred=FALSE, showweights=FALSE, header=FALSE,
 xlim, alim, olim, ylim, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab, slab, mlab, ilab, ilab.xpos, ilab.pos, order,
 transf, atransf, targs, rows,
-efac=1, pch, psize, plim=c(0.5,1.5), colout, col, border,
+efac=1, pch, psize, plim=c(0.5,1.5), colout, col, border, shade, colshade,
 lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    #########################################################################
@@ -61,6 +61,15 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    } else {
       colout <- .getx("colout", mf=mf, data=x$data)
    }
+
+   if (missing(shade)) {
+      shade <- NULL
+   } else {
+      shade <- .getx("shade", mf=mf, data=x$data)
+   }
+
+   if (missing(colshade))
+      colshade <- "lightgray"
 
    if (missing(pch)) {
       pch <- 15
@@ -224,14 +233,28 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       top <- ddd$top
    }
 
-   lplot     <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top) plot(...)
-   labline   <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top) abline(...)
-   lsegments <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top) segments(...)
-   laxis     <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top) axis(...)
-   lmtext    <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top) mtext(...)
-   lpolygon  <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top) polygon(...)
-   ltext     <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top) text(...)
-   lpoints   <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top) points(...)
+   if (is.null(ddd$xlabadj)) {
+      xlabadj <- c(NA,NA)
+   } else {
+      xlabadj <- ddd$xlabadj
+      if (length(xlabadj) == 1L)
+         xlabadj <- c(xlabadj, 1-xlabadj)
+   }
+
+   if (is.null(ddd$xlabfont)) {
+      xlabfont <- 1
+   } else {
+      xlabfont <- ddd$xlabfont
+   }
+
+   lplot     <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top, xlabadj, xlabfont) plot(...)
+   labline   <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top, xlabadj, xlabfont) abline(...)
+   lsegments <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top, xlabadj, xlabfont) segments(...)
+   laxis     <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top, xlabadj, xlabfont) axis(...)
+   lmtext    <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top, xlabadj, xlabfont) mtext(...)
+   lpolygon  <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top, xlabadj, xlabfont) polygon(...)
+   ltext     <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top, xlabadj, xlabfont) text(...)
+   lpoints   <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, top, xlabadj, xlabfont) points(...)
 
    if (is.character(showweights)) {
       weighttype  <- match.arg(showweights, c("diagonal", "rowsum"))
@@ -335,6 +358,29 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    colout <- .getsubset(colout, x$subset)
 
+   shade.type <- "none"
+
+   if (is.character(shade)) {
+
+      shade.type <- "character"
+      shade <- shade[1]
+
+      if (!is.element(shade, c("zebra", "zebra1", "zebra2", "all")))
+         stop(mstyle$stop("Unknown option specified for 'shade' argument."))
+
+   }
+
+   if (is.logical(shade)) {
+
+      shade.type <- "logical"
+      shade <- .chksubset(shade, x$k.all, stoponk0=FALSE)
+      shade <- .getsubset(shade, x$subset)
+
+   }
+
+   if (is.numeric(shade))
+      shade.type <- "numeric"
+
    ### extract fitted values
 
    options(na.action = "na.pass") # using na.pass to get the entire vector (length of yi.f)
@@ -411,6 +457,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       pch        <- pch[sort.vec]
       psize      <- psize[sort.vec]             # if NULL, remains NULL
       colout     <- colout[sort.vec]
+      if (shade.type == "logical")
+         shade <- shade[sort.vec]
 
    }
 
@@ -446,6 +494,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    psize      <- psize[k:1]                     # if NULL, remains NULL
    colout     <- colout[k:1]
    rows       <- rows[k:1]
+   if (shade.type == "logical")
+      shade <- shade[k:1]
 
    ### check for NAs in yi/vi/X and act accordingly
 
@@ -475,6 +525,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
             rows.new[rows >= rows.na[j]] <- rows.new[rows >= rows.na[j]] - 1
          }
          rows <- rows.new[not.na]
+
+         if (shade.type == "logical")
+            shade <- shade[not.na]
 
       }
 
@@ -708,9 +761,37 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    par(mar = par.mar.adj)
    on.exit(par(mar = par.mar), add=TRUE)
 
+   #if (identical(par("mar"), c(5.1,4.1,4.1,2.1)))
+   #   par(mar = c(5.1,1.1,3.1,1.1))
+
    ### start plot
 
    lplot(NA, NA, xlim=xlim, ylim=ylim, xlab="", ylab="", yaxt="n", xaxt="n", xaxs="i", bty="n", ...)
+
+   ### add shading
+
+   if (shade.type == "character") {
+      if (shade == "zebra" || shade == "zebra1")
+         tmp <- rep_len(c(TRUE,FALSE), k)
+      if (shade == "zebra2")
+         tmp <- rep_len(c(FALSE,TRUE), k)
+      if (shade == "all")
+         tmp <- rep_len(TRUE, k)
+      shade <- tmp
+   }
+
+   if (shade.type %in% c("character","logical")) {
+      for (i in seq_len(k)) {
+         if (shade[i])
+            rect(xlim[1], rows[i]-0.5, xlim[2], rows[i]+0.5, border=colshade, col=colshade)
+      }
+   }
+
+   if (shade.type == "numeric") {
+      for (i in seq_along(shade)) {
+         rect(xlim[1], shade[i]-0.5, xlim[2], shade[i]+0.5, border=colshade, col=colshade)
+      }
+   }
 
    ### horizontal title line
 
@@ -890,7 +971,20 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (missing(xlab))
       xlab <- .setlab(measure, transf.char, atransf.char, gentype=1)
 
-   lmtext(xlab, side=1, at=min(at) + (max(at)-min(at))/2, line=par("mgp")[1]-0.5, cex=cex.lab, ...)
+   if (!is.element(length(xlab), 1:3))
+      stop(mstyle$stop("Argument 'xlab' argument must be of length 1, 2, or 3."))
+
+   if (length(xlab) == 1L)
+      lmtext(xlab, side=1, at=min(at) + (max(at)-min(at))/2, line=par("mgp")[1]-0.5, cex=cex.lab, col="black", font=xlabfont[1], ...)
+   if (length(xlab) == 2L) {
+      lmtext(xlab[1], side=1, at=min(at), line=par("mgp")[1]-0.5, cex=cex.lab, col="black", adj=xlabadj[1], font=xlabfont[1], ...)
+      lmtext(xlab[2], side=1, at=max(at), line=par("mgp")[1]-0.5, cex=cex.lab, col="black", adj=xlabadj[2], font=xlabfont[1], ...)
+   }
+   if (length(xlab) == 3L) {
+      lmtext(xlab[1], side=1, at=min(at), line=par("mgp")[1]-0.5, cex=cex.lab, col="black", adj=xlabadj[1], font=xlabfont[1], ...)
+      lmtext(xlab[2], side=1, at=min(at) + (max(at)-min(at))/2, line=par("mgp")[1]-0.5, cex=cex.lab, col="black", font=xlabfont[2], ...)
+      lmtext(xlab[3], side=1, at=max(at), line=par("mgp")[1]-0.5, cex=cex.lab, col="black", adj=xlabadj[2], font=xlabfont[1], ...)
+   }
 
    ### add CI ends (either | or <> if outside of axis limits)
 

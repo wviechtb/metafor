@@ -10,7 +10,7 @@
        level=x$level, refline=0, digits=2L, width,
        xlab, ilab, ilab.xpos, ilab.pos,
        transf, atransf, targs, rows,
-       efac=1, pch, psize, col,
+       efac=1, pch, psize, col, shade, colshade,
        lty, fonts, cex, cex.lab, cex.axis, \dots)
 }
 \arguments{
@@ -27,7 +27,7 @@
    \item{refline}{numeric value to specify the location of the vertical \sQuote{reference} line (the default is 0). The line can be suppressed by setting this argument to \code{NA}.}
    \item{digits}{integer to specify the number of decimal places to which the tick mark labels of the x-axis and the annotations should be rounded (the default is \code{2L}). Can also be a vector of two integers, the first to specify the number of decimal places for the annotations, the second for the x-axis labels. When specifying an integer (e.g., \code{2L}), trailing zeros after the decimal mark are dropped for the x-axis labels. When specifying a numeric value (e.g., \code{2}), trailing zeros are retained.}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations (either a single integer or a vector of the same length as the number of annotation columns).}
-   \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
+   \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title. Can also be a vector of three/two values (to also/only add labels at the end points of the x-axis limits).}
    \item{ilab}{optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.}
    \item{ilab.xpos}{numeric vector to specify the horizontal position(s) of the variable(s) given via \code{ilab} (must be specified if \code{ilab} is specified).}
    \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via \code{ilab} (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.}
@@ -39,6 +39,8 @@
    \item{pch}{plotting symbol to use for the estimates. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
    \item{psize}{numeric value to specify the point sizes for the estimates (the default is 1). Can also be a vector of values.}
    \item{col}{optional character string to specify the color to use for plotting (\code{"black"} is used by default if not specified). Can also be a vector.}
+   \item{shade}{optional (logical or numeric) vector or character string for shading rows of the plot. See \sQuote{Details}.}
+   \item{colshade}{optional argument to specify the color for the shading. If unspecified, \code{"lightgray"} is used.}
    \item{lty}{optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to \code{"solid"} by default.}
    \item{fonts}{optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via \code{ilab}). If unspecified, the default font is used.}
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
