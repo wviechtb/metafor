@@ -304,7 +304,7 @@ plot(sel3, add=TRUE, col="red")
 plot(sel4, add=TRUE, col="green")
 
 # add legend
-legend("topright", inset=.02, lty="solid", lwd=2, col=c("black","blue","red","green"),
+legend("topright", inset=0.02, lty="solid", lwd=2, col=c("black","blue","red","green"),
        legend=c("Half-normal", "Negative-exponential", "Logistic", "Power"))
 
 # show estimates of delta (and corresponding SEs)

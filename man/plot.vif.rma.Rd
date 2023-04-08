@@ -27,7 +27,7 @@
 
    Arguments \code{breaks}, \code{freq}, \code{col}, and \code{border} are passed on to the \code{\link{hist}} function for the plotting.
 
-   Argument \code{trim} can be used to trim away a certain fraction of observations from the upper tail of each distribution before its histogram is plotted. By setting this to a value above 0, one can quickly remove some of the extreme values that might lead to the bulk of the distribution getting squished together at the left (typically, a small value such as \code{trim=.01} is sufficient for this purpose).
+   Argument \code{trim} can be used to trim away a certain fraction of observations from the upper tail of each distribution before its histogram is plotted. By setting this to a value above 0, one can quickly remove some of the extreme values that might lead to the bulk of the distribution getting squished together at the left (typically, a small value such as \code{trim=0.01} is sufficient for this purpose).
 
    The observed (G)VIF value is indicated as a vertical dashed line. If the observed exceeds the upper plot limit, then this is indicated by an arrow pointing to the line.
 
@@ -60,7 +60,7 @@ vifs
 plot(vifs)
 
 ### add densities, trim away some extremes, and set break points
-plot(vifs, lwd=c(2,2), trim=.01, breaks=seq(1,2.2,by=.05), adjust=1.5)
+plot(vifs, lwd=c(2,2), trim=0.01, breaks=seq(1,2.2,by=0.05), adjust=1.5)
 }
 }
 \keyword{hplot}

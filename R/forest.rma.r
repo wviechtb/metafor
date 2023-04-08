@@ -69,7 +69,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    }
 
    if (missing(colshade))
-      colshade <- "lightgray"
+      colshade <- "gray90"
 
    if (missing(pch)) {
       pch <- 15
@@ -975,15 +975,15 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       stop(mstyle$stop("Argument 'xlab' argument must be of length 1, 2, or 3."))
 
    if (length(xlab) == 1L)
-      lmtext(xlab, side=1, at=min(at) + (max(at)-min(at))/2, line=par("mgp")[1]-0.5, cex=cex.lab, col="black", font=xlabfont[1], ...)
+      lmtext(xlab, side=1, at=min(at) + (max(at)-min(at))/2, line=par("mgp")[1]-0.5, cex=cex.lab, font=xlabfont[1], ...)
    if (length(xlab) == 2L) {
-      lmtext(xlab[1], side=1, at=min(at), line=par("mgp")[1]-0.5, cex=cex.lab, col="black", adj=xlabadj[1], font=xlabfont[1], ...)
-      lmtext(xlab[2], side=1, at=max(at), line=par("mgp")[1]-0.5, cex=cex.lab, col="black", adj=xlabadj[2], font=xlabfont[1], ...)
+      lmtext(xlab[1], side=1, at=min(at), line=par("mgp")[1]-0.5, cex=cex.lab, adj=xlabadj[1], font=xlabfont[1], ...)
+      lmtext(xlab[2], side=1, at=max(at), line=par("mgp")[1]-0.5, cex=cex.lab, adj=xlabadj[2], font=xlabfont[1], ...)
    }
    if (length(xlab) == 3L) {
-      lmtext(xlab[1], side=1, at=min(at), line=par("mgp")[1]-0.5, cex=cex.lab, col="black", adj=xlabadj[1], font=xlabfont[1], ...)
-      lmtext(xlab[2], side=1, at=min(at) + (max(at)-min(at))/2, line=par("mgp")[1]-0.5, cex=cex.lab, col="black", font=xlabfont[2], ...)
-      lmtext(xlab[3], side=1, at=max(at), line=par("mgp")[1]-0.5, cex=cex.lab, col="black", adj=xlabadj[2], font=xlabfont[1], ...)
+      lmtext(xlab[1], side=1, at=min(at), line=par("mgp")[1]-0.5, cex=cex.lab, adj=xlabadj[1], font=xlabfont[1], ...)
+      lmtext(xlab[2], side=1, at=min(at) + (max(at)-min(at))/2, line=par("mgp")[1]-0.5, cex=cex.lab, font=xlabfont[2], ...)
+      lmtext(xlab[3], side=1, at=max(at), line=par("mgp")[1]-0.5, cex=cex.lab, adj=xlabadj[2], font=xlabfont[1], ...)
    }
 
    ### add CI ends (either | or <> if outside of axis limits)

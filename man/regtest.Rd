@@ -152,7 +152,7 @@ reg <- regtest(res, predictor="vi")
 lines(coef(reg$fit)[1] + coef(reg$fit)[2]*se^2, se, lwd=3, lty="dotted")
 
 ### add legend
-legend("bottomright", inset=.02, lty=c("solid","dotted"), lwd=3, cex=0.9, bg="white",
+legend("bottomright", inset=0.02, lty=c("solid","dotted"), lwd=3, cex=0.9, bg="white",
        legend=c("Standard Errors as Predictor",
                 "Sampling Variances as Predictor"))
 

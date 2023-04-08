@@ -49,8 +49,8 @@
    \item{psize}{optional numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the precision of the estimates. Can also be a vector of values.}
    \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
    \item{col}{optional character string to specify the color to use for plotting the observed outcomes (\code{"black"} is used by default if not specified). Can also be a vector.}
-   \item{shade}{optional (logical or numeric) vector or character string for shading rows of the plot. See \sQuote{Details}.}
-   \item{colshade}{optional argument to specify the color for the shading. If unspecified, \code{"lightgray"} is used.}
+   \item{shade}{optional character string or a (logical or numeric) vector for shading rows of the plot. See \sQuote{Details}.}
+   \item{colshade}{optional argument to specify the color for the shading. If unspecified, a light shade of gray is used.}
    \item{lty}{optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to \code{"solid"} by default.}
    \item{fonts}{optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via \code{ilab}). If unspecified, the default font is used.}
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
@@ -74,6 +74,8 @@
    Summary estimates can be added to the plot with the \code{\link{addpoly}} function. See the documentation for that function for examples.
 
    By default (i.e., when \code{psize} is not specified), the point sizes are a function of the precision (i.e., inverse standard errors) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard errors of the estimates, their areas are proportional to the inverse sampling variances, which corresponds to the weights they would receive in an equal-effects model. However, the point sizes are rescaled so that the smallest point size is \code{plim[1]} and the largest point size is \code{plim[2]}. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set \code{plim[2]} to \code{NA}, in which case the points are rescaled so that the smallest point size corresponds to \code{plim[1]} and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set \code{plim[1]} to \code{NA}, in which case the points are rescaled so that the largest point size corresponds to \code{plim[2]} and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set \code{plim[3]}, which enforces a minimal point size.
+
+   With the \code{shade} argument, one can shade rows of the plot. The argument can be set to one of the following character strings: \code{"zebra"} or \code{"zebra2"} to use zebra-style shading (starting either at the first or second study) or to \code{"all"} in which case all rows are shaded. Alternatively, the argument can be set to a logical vector to indicates for which studies the rows should be shaded. Finally, the argument can also be a numeric vector to indicate which rows to shade.
 }
 \section{Note}{
    The function tries to set some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.
@@ -112,7 +114,8 @@
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances
-dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
+              data=dat.bcg, slab=paste(author, year, sep=", "))
 
 ### default forest plot of the observed log risk ratios
 forest(dat$yi, dat$vi)
@@ -121,20 +124,20 @@ forest(dat$yi, dat$vi)
 with(dat, forest(yi, vi))
 
 ### forest plot of the observed risk ratios (transform outcomes)
-with(dat, forest(yi, vi, slab=paste(author, year, sep=", "), transf=exp,
-                 alim=c(0,2), steps=5, xlim=c(-2.5,4), refline=1, cex=.9, header=TRUE))
+with(dat, forest(yi, vi, transf=exp, alim=c(0,2), steps=5,
+                 xlim=c(-2.5,4), refline=1, cex=0.9, header=TRUE))
 
 ### forest plot of the observed risk ratios (transformed x-axis)
-with(dat, forest(yi, vi, slab=paste(author, year, sep=", "), atransf=exp,
-                 at=log(c(.05,.25,1,4,20)), xlim=c(-10,8), cex=.9, header=TRUE))
+with(dat, forest(yi, vi, atransf=exp, at=log(c(0.05,0.25,1,4,20)),
+                 xlim=c(-10,8), cex=0.9, header=TRUE))
 
 ### forest plot of the observed risk ratios with studies ordered by the RRs
-with(dat, forest(yi, vi, slab=paste(author, year, sep=", "), atransf=exp,
-                 at=log(c(.05,.25,1,4,20)), xlim=c(-10,8), cex=.9, header=TRUE, order="obs"))
+with(dat, forest(yi, vi, atransf=exp, at=log(c(0.05,0.25,1,4,20)),
+                 xlim=c(-10,8), cex=0.9, header=TRUE, order="obs"))
 
 ### forest plot of the observed risk ratios with studies ordered by absolute latitude
-with(dat, forest(yi, vi, slab=paste(author, year, sep=", "), atransf=exp,
-                 at=log(c(.05,.25,1,4,20)), xlim=c(-10,8), cex=.9, header=TRUE, order=ablat))
+with(dat, forest(yi, vi, atransf=exp, at=log(c(0.05,0.25,1,4,20)),
+                 xlim=c(-10,8), cex=0.9, header=TRUE, order=ablat))
 
 ### see also examples for the forest.rma function
 }

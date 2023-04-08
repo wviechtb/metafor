@@ -164,7 +164,7 @@ res
 par(mfrow=c(2,2))
 profile(res, tau2=1)
 profile(res, tau2=2)
-profile(res, rho=1, xlim=c(.90, .98))
+profile(res, rho=1, xlim=c(0.90, 0.98))
 }
 
 ### an example where the peak is at 0

@@ -51,7 +51,7 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
 
 ### forest plot of the observed risk ratios
 with(dat, forest(yi, vi, atransf=exp, xlim=c(-8,4), ylim=c(-4.5,16),
-                 at=log(c(.05, .25, 1, 4)), cex=.8, order=alloc,
+                 at=log(c(0.05, 0.25, 1, 4)), cex=0.8, order=alloc,
                  ilab=alloc, ilab.xpos=-4, header="Author(s) and Year"))
 
 ### fit mixed-effects model with allocation method as a moderator
@@ -64,7 +64,7 @@ x <- predict(res, newmods=diag(3))
 addpoly(x, efac=1.4, col="gray", addpred=TRUE,
         mlab=c("Alternate Allocation", "Random Allocation", "Systematic Allocation"))
 abline(h=0)
-text(-8, -1, "Model-Based Estimates:", pos=4, cex=.8)
-text(-4, res$k+2, "Allocation", cex=.8, font=2)
+text(-8, -1, "Model-Based Estimates:", pos=4, cex=0.8)
+text(-4, res$k+2, "Allocation", cex=0.8, font=2)
 }
 \keyword{aplot}

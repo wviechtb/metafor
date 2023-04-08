@@ -189,10 +189,10 @@
 <dd><p>optional character string to specify the color to use for plotting (<code>"black"</code> is used by default if not specified). Can also be a vector.</p></dd>
 
    <dt>shade</dt>
-<dd><p>optional (logical or numeric) vector or character string for shading rows of the plot. See ‘Details’.</p></dd>
+<dd><p>optional character string or a (logical or numeric) vector for shading rows of the plot. See ‘Details’.</p></dd>
 
    <dt>colshade</dt>
-<dd><p>optional argument to specify the color for the shading. If unspecified, <code>"lightgray"</code> is used.</p></dd>
+<dd><p>optional argument to specify the color for the shading. If unspecified, a light shade of gray is used.</p></dd>
 
    <dt>lty</dt>
 <dd><p>optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to <code>"solid"</code> by default.</p></dd>
@@ -246,16 +246,17 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span></span>
-<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>,</span></span>
+<span class="r-in"><span>              data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, slab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">author</span>, <span class="va">year</span>, sep<span class="op">=</span><span class="st">", "</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit random-effects model</span></span></span>
-<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, slab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">author</span>, <span class="va">year</span>, sep<span class="op">=</span><span class="st">", "</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### draw cumulative forest plots</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="cumul.html">cumul</a></span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">x</span>, cex<span class="op">=</span><span class="fl">.8</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">x</span>, cex<span class="op">=</span><span class="fl">0.8</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="forest.cumul.rma-1.png" alt="" width="864" height="768"></span>
-<span class="r-in"><span><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">x</span>, alim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>, cex<span class="op">=</span><span class="fl">.8</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">x</span>, alim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>, cex<span class="op">=</span><span class="fl">0.8</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="forest.cumul.rma-2.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method</span></span></span>
@@ -264,7 +265,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### draw cumulative forest plot</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="cumul.html">cumul</a></span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">x</span>, alim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>, cex<span class="op">=</span><span class="fl">.8</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">x</span>, alim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>, cex<span class="op">=</span><span class="fl">0.8</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="forest.cumul.rma-3.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>

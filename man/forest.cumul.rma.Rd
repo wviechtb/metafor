@@ -39,8 +39,8 @@
    \item{pch}{plotting symbol to use for the estimates. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
    \item{psize}{numeric value to specify the point sizes for the estimates (the default is 1). Can also be a vector of values.}
    \item{col}{optional character string to specify the color to use for plotting (\code{"black"} is used by default if not specified). Can also be a vector.}
-   \item{shade}{optional (logical or numeric) vector or character string for shading rows of the plot. See \sQuote{Details}.}
-   \item{colshade}{optional argument to specify the color for the shading. If unspecified, \code{"lightgray"} is used.}
+   \item{shade}{optional character string or a (logical or numeric) vector for shading rows of the plot. See \sQuote{Details}.}
+   \item{colshade}{optional argument to specify the color for the shading. If unspecified, a light shade of gray is used.}
    \item{lty}{optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to \code{"solid"} by default.}
    \item{fonts}{optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via \code{ilab}). If unspecified, the default font is used.}
    \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
@@ -83,15 +83,16 @@
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances
-dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
+              data=dat.bcg, slab=paste(author, year, sep=", "))
 
 ### fit random-effects model
-res <- rma(yi, vi, data=dat, slab=paste(author, year, sep=", "))
+res <- rma(yi, vi, data=dat)
 
 ### draw cumulative forest plots
 x <- cumul(res, order=year)
-forest(x, cex=.8, header=TRUE)
-forest(x, alim=c(-2,1), cex=.8, header=TRUE)
+forest(x, cex=0.8, header=TRUE)
+forest(x, alim=c(-2,1), cex=0.8, header=TRUE)
 
 ### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method
 res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
@@ -99,6 +100,6 @@ res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
 
 ### draw cumulative forest plot
 x <- cumul(res, order=year)
-forest(x, alim=c(-2,1), cex=.8, header=TRUE)
+forest(x, alim=c(-2,1), cex=0.8, header=TRUE)
 }
 \keyword{hplot}

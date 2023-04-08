@@ -36,7 +36,7 @@
 
    Arguments \code{breaks}, \code{freq}, \code{col}, and \code{border} are passed on to the \code{\link{hist}} function for the plotting.
 
-   Argument \code{trim} can be used to trim away a certain fraction of observations from the tails of each permutation distribution before its histogram is plotted. By setting this to a value above 0, one can quickly remove some of the extreme values that might lead to the bulk of the distribution getting squished together at the center (typically, a small value such as \code{trim=.01} is sufficient for this purpose).
+   Argument \code{trim} can be used to trim away a certain fraction of observations from the tails of each permutation distribution before its histogram is plotted. By setting this to a value above 0, one can quickly remove some of the extreme values that might lead to the bulk of the distribution getting squished together at the center (typically, a small value such as \code{trim=0.01} is sufficient for this purpose).
 
    The observed test statistic is indicated as a vertical dashed line (in both tails for a two-sided test).
 
