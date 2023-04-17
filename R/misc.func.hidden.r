@@ -1046,9 +1046,9 @@
             lab <- ifelse(short, lab, "Transformed Log Relative Excess Heterozygosity")
             funlist <- lapply(list(exp, transf.exp.int), deparse)
             if (any(sapply(funlist, identical, atransf.char)))
-               lab <- ifelse(short, "Relative Excess Heterozygosity", "Relative Excess Heterozygosity (log scale)")
+               lab <- ifelse(short, "REH", "Relative Excess Heterozygosity (log scale)")
             if (any(sapply(funlist, identical, transf.char)))
-               lab <- ifelse(short, "Relative Excess Heterozygosity", "Relative Excess Heterozygosity")
+               lab <- ifelse(short, "REH", "Relative Excess Heterozygosity")
          }
       }
       ######################################################################

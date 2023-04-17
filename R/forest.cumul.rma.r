@@ -226,9 +226,11 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (x$slab.null) {
       slab    <- paste("+ Study", x$ids)  # cumul() removes the studies with NAs when na.action="na.omit"
       slab[1] <- paste("Study", x$ids[1])
+      slab.null <- TRUE
    } else {
       slab    <- paste("+", x$slab)       # cumul() removes the studies with NAs when na.action="na.omit"
       slab[1] <- paste(x$slab[1])
+      slab.null <- FALSE
    }
 
    if (!is.null(ilab)) {
@@ -379,19 +381,40 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    #########################################################################
 
-   ### total range of CI bounds
+   ### set plot limits (xlim)
+
+   ncol.ilab <- ifelse(is.null(ilab), 0, ncol(ilab))
+
+   if (slab.null) {
+      area.slab <- 25
+   } else {
+      area.slab <- 40
+   }
+
+   if (annotate) {
+      area.anno <- 25
+   } else {
+      area.anno <- 10
+   }
+
+   iadd <- 5
+
+   area.slab   <- area.slab + iadd*ncol.ilab
+   #area.anno  <- area.anno
+   area.forest <- 100 + iadd*ncol.ilab - area.slab - area.anno
+
+   area.slab   <- area.slab   / (100 + iadd*ncol.ilab)
+   area.anno   <- area.anno   / (100 + iadd*ncol.ilab)
+   area.forest <- area.forest / (100 + iadd*ncol.ilab)
+
+   plot.multp.l <- area.slab / area.forest
+   plot.multp.r <- area.anno / area.forest
 
    rng <- max(ci.ub, na.rm=TRUE) - min(ci.lb, na.rm=TRUE)
 
-   if (annotate) {
-      plot.multp.l <- 1.20
-      plot.multp.r <- 1.20
-   } else {
-      plot.multp.l <- 1.20
-      plot.multp.r <- 0.40
-   }
+   ### total range of CI bounds
 
-   ### set plot limits
+   rng <- max(ci.ub, na.rm=TRUE) - min(ci.lb, na.rm=TRUE)
 
    if (missing(xlim)) {
       xlim <- c(min(ci.lb, na.rm=TRUE) - rng * plot.multp.l, max(ci.ub, na.rm=TRUE) + rng * plot.multp.r)
@@ -555,7 +578,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### set cex, cex.lab, and cex.axis sizes as a function of the height of the figure
 
-   height  <- par.usr[4] - par.usr[3]
+   height <- par.usr[4] - par.usr[3]
 
    if (is.null(cex)) {
       lheight <- strheight("O")
@@ -642,8 +665,18 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    ### add info labels
 
    if (!is.null(ilab)) {
-      if (is.null(ilab.xpos))
-         stop(mstyle$stop("Must specify 'ilab.xpos' argument when adding information with 'ilab'."))
+      if (is.null(ilab.xpos)) {
+         #stop(mstyle$stop("Must specify 'ilab.xpos' argument when adding information with 'ilab'."))
+         dist <- min(ci.lb, na.rm=TRUE) - xlim[1]
+         if (ncol.ilab == 1L)
+            ilab.xpos <- xlim[1] + dist*0.75
+         if (ncol.ilab == 2L)
+            ilab.xpos <- xlim[1] + dist*c(0.65, 0.85)
+         if (ncol.ilab == 3L)
+            ilab.xpos <- xlim[1] + dist*c(0.60, 0.75, 0.90)
+         if (ncol.ilab >= 4L)
+            ilab.xpos <- seq(xlim[1] + dist*0.5, xlim[1] + dist*0.9, length.out=ncol.ilab)
+      }
       if (length(ilab.xpos) != ncol(ilab))
          stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol(ilab), ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ").")))
       if (!is.null(ilab.pos) && length(ilab.pos) == 1L)

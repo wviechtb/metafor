@@ -36,7 +36,7 @@
    \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title. Can also be a vector of three/two values (to also/only add labels at the end points of the x-axis limits).}
    \item{slab}{optional vector with labels for the \mjseqn{k} studies. If unspecified, the function tries to extract study labels from \code{x} and otherwise simple labels are created within the function. To suppress labels, set this argument to \code{NA}.}
    \item{ilab}{optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.}
-   \item{ilab.xpos}{numeric vector to specify the horizontal position(s) of the variable(s) given via \code{ilab} (must be specified if \code{ilab} is specified).}
+   \item{ilab.xpos}{numeric vector to specify the horizontal position(s) of the variable(s) given via \code{ilab}.}
    \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via \code{ilab} (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.}
    \item{order}{optional character string to specify how the studies should be ordered. Can also be a variable based on which the studies will be ordered. See \sQuote{Details}.}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the plot.}
@@ -69,7 +69,7 @@
    \item \code{order="prec"}: the studies are ordered by their sampling variances.
    } Alternatively, it is also possible to set \code{order} equal to a variable based on which the studies will be ordered (see \sQuote{Examples}).
 
-   Additional columns with information about the studies can be added to the plot via the \code{ilab} argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The \code{ilab.xpos} argument must then also be specified to indicate the horizontal position of the variables specified via \code{ilab}.
+   Additional columns with information about the studies can be added to the plot via the \code{ilab} argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The \code{ilab.xpos} argument can then also be specified to indicate the horizontal position of the variables specified via \code{ilab}.
 
    Summary estimates can be added to the plot with the \code{\link{addpoly}} function. See the documentation for that function for examples.
 
@@ -125,19 +125,19 @@ with(dat, forest(yi, vi))
 
 ### forest plot of the observed risk ratios (transform outcomes)
 with(dat, forest(yi, vi, transf=exp, alim=c(0,2), steps=5,
-                 xlim=c(-2.5,4), refline=1, cex=0.9, header=TRUE))
+                 xlim=c(-2.5,4), refline=1, cex=0.9, header=TRUE, top=2))
 
 ### forest plot of the observed risk ratios (transformed x-axis)
 with(dat, forest(yi, vi, atransf=exp, at=log(c(0.05,0.25,1,4,20)),
-                 xlim=c(-10,8), cex=0.9, header=TRUE))
+                 xlim=c(-10,8), cex=0.9, header=TRUE, top=2))
 
 ### forest plot of the observed risk ratios with studies ordered by the RRs
 with(dat, forest(yi, vi, atransf=exp, at=log(c(0.05,0.25,1,4,20)),
-                 xlim=c(-10,8), cex=0.9, header=TRUE, order="obs"))
+                 xlim=c(-10,8), cex=0.9, header=TRUE, top=2, order="obs"))
 
 ### forest plot of the observed risk ratios with studies ordered by absolute latitude
 with(dat, forest(yi, vi, atransf=exp, at=log(c(0.05,0.25,1,4,20)),
-                 xlim=c(-10,8), cex=0.9, header=TRUE, order=ablat))
+                 xlim=c(-10,8), cex=0.9, header=TRUE, top=2, order=ablat))
 
 ### see also examples for the forest.rma function
 }

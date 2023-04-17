@@ -29,7 +29,7 @@
    \item{width}{optional integer to manually adjust the width of the columns for the annotations (either a single integer or a vector of the same length as the number of annotation columns).}
    \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title. Can also be a vector of three/two values (to also/only add labels at the end points of the x-axis limits).}
    \item{ilab}{optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.}
-   \item{ilab.xpos}{numeric vector to specify the horizontal position(s) of the variable(s) given via \code{ilab} (must be specified if \code{ilab} is specified).}
+   \item{ilab.xpos}{numeric vector to specify the horizontal position(s) of the variable(s) given via \code{ilab}.}
    \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via \code{ilab} (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.}
    \item{transf}{optional argument to specify a function to transform the estimates and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument to specify a function to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
@@ -39,7 +39,7 @@
    \item{pch}{plotting symbol to use for the estimates. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
    \item{psize}{numeric value to specify the point sizes for the estimates (the default is 1). Can also be a vector of values.}
    \item{col}{optional character string to specify the color to use for plotting (\code{"black"} is used by default if not specified). Can also be a vector.}
-   \item{shade}{optional character string or a (logical or numeric) vector for shading rows of the plot. See \sQuote{Details}.}
+   \item{shade}{optional character string or a (logical or numeric) vector for shading rows of the plot.}
    \item{colshade}{optional argument to specify the color for the shading. If unspecified, a light shade of gray is used.}
    \item{lty}{optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to \code{"solid"} by default.}
    \item{fonts}{optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via \code{ilab}). If unspecified, the default font is used.}
@@ -50,6 +50,8 @@
 }
 \details{
    The plot shows the estimated (average) outcome with corresponding confidence interval as one study at a time is added to the analysis.
+
+   See \code{\link{forest.default}} and \code{\link{forest.rma}} for further details on the purpose of the various arguments.
 }
 \section{Note}{
    The function tries to set some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.
@@ -91,8 +93,8 @@ res <- rma(yi, vi, data=dat)
 
 ### draw cumulative forest plots
 x <- cumul(res, order=year)
-forest(x, cex=0.8, header=TRUE)
-forest(x, alim=c(-2,1), cex=0.8, header=TRUE)
+forest(x, cex=0.8, header=TRUE, top=2)
+forest(x, xlim=c(-4,2), alim=c(-2,1), cex=0.8, header=TRUE, top=2)
 
 ### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method
 res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
@@ -100,6 +102,6 @@ res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
 
 ### draw cumulative forest plot
 x <- cumul(res, order=year)
-forest(x, alim=c(-2,1), cex=0.8, header=TRUE)
+forest(x, xlim=c(-4,2), alim=c(-2,1), cex=0.8, header=TRUE, top=2)
 }
 \keyword{hplot}

@@ -50,9 +50,10 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
               data=dat.bcg, slab=paste(author, year, sep=", "))
 
 ### forest plot of the observed risk ratios
-with(dat, forest(yi, vi, atransf=exp, xlim=c(-8,4), ylim=c(-4.5,16),
-                 at=log(c(0.05, 0.25, 1, 4)), cex=0.8, order=alloc,
-                 ilab=alloc, ilab.xpos=-4, header="Author(s) and Year"))
+with(dat, forest(yi, vi, atransf=exp, xlim=c(-9,5), ylim=c(-4.5,15),
+                 at=log(c(0.05, 0.25, 1, 4)), cex=0.9, order=alloc,
+                 ilab=alloc, ilab.xpos=-4.5,
+                 header="Author(s) and Year", top=2))
 
 ### fit mixed-effects model with allocation method as a moderator
 res <- rma(yi, vi, mods = ~ 0 + alloc, data=dat)
@@ -61,10 +62,10 @@ res <- rma(yi, vi, mods = ~ 0 + alloc, data=dat)
 x <- predict(res, newmods=diag(3))
 
 ### add predicted average risk ratios to forest plot
-addpoly(x, efac=1.4, col="gray", addpred=TRUE,
+addpoly(x, efac=1.3, col="gray", addpred=TRUE,
         mlab=c("Alternate Allocation", "Random Allocation", "Systematic Allocation"))
 abline(h=0)
-text(-8, -1, "Model-Based Estimates:", pos=4, cex=0.8)
-text(-4, res$k+2, "Allocation", cex=0.8, font=2)
+text(-9, -1, "Model-Based Estimates:", pos=4, cex=0.9)
+text(-4.5, res$k+2, "Allocation", cex=0.9, font=2)
 }
 \keyword{aplot}

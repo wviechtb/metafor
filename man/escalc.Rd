@@ -649,7 +649,7 @@ dat
 dat$yi
 
 ### this information can then be used by other functions; for example in a forest plot
-forest(dat$yi, dat$vi, header=TRUE)
+forest(dat$yi, dat$vi, header=TRUE, top=2)
 
 ############################################################################
 

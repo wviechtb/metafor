@@ -49,7 +49,7 @@ res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
               slab=paste(author, year, sep=", "))
 
 ### forest plot of the observed risk ratios with summary estimate
-forest(res, atransf=exp, xlim=c(-8,6), ylim=c(-2.5,16), header=TRUE)
+forest(res, atransf=exp, xlim=c(-8,6), ylim=c(-2.5,15), header=TRUE, top=2)
 
 ### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
