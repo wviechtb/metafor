@@ -2,9 +2,15 @@
 \alias{misc-options}
 \title{Miscellaneous Options and Features}
 \description{
-This page documents some miscellaneous options and features that do not fit very well elsewhere.
+This page documents some miscellaneous options and features that do not fit very well elsewhere. \loadmathjax
 }
 \details{
+
+   \subsection{Specifying the Confidence Level}{
+
+   Several functions in the \pkg{metafor} package have a \code{level} argument for specifying the confidence level when calculating confidence (and prediction) intervals. The default is to use a 95\% level throughout the package by convention. Note that values \mjseqn{>=1} are treated as coverage percentages, values between 0.5 and 1 as coverage proportions, and values below 0.5 as (two-sided) alpha values, so \code{level=95} is the same as \code{level=.95} and \code{level=.05} (but \code{level=0} is always treated as a 0\% confidence level).
+
+   }
 
    \subsection{Controlling the Number of Digits in the Output}{
 

@@ -36,7 +36,7 @@ regplot(x, \dots)
    \item{transf}{optional argument to specify a function to transform the observed outcomes, predicted values, and confidence/prediction interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument to specify a function to transform the y-axis labels (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
-   \item{level}{numeric value between 0 and 100 to specify the confidence/prediction interval level (the default is to take the value from the object).}
+   \item{level}{numeric value between 0 and 100 to specify the confidence/prediction interval level (see \link[=misc-options]{here} for details). The default is to take the value from the object.}
    \item{pch}{plotting symbol to use for the observed outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
    \item{psize}{optional numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values. Can also be a character string (either \code{"seinv"} or \code{"vinv"}) to make the point sizes proportional to the inverse standard errors or inverse sampling variances.}
    \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when a numeric value or vector is specified for \code{psize}). See \sQuote{Details}.}

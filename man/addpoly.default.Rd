@@ -18,7 +18,7 @@
    \item{pi.lb}{optional vector with the corresponding lower prediction interval bounds.}
    \item{pi.ub}{optional vector with the corresponding upper prediction interval bounds.}
    \item{rows}{vector to specify the rows (or more generally, the horizontal positions) for plotting the polygons (defaults is \code{-1}). Can also be a single value to specify the row (horizontal position) of the first polygon (the remaining polygons are then plotted below this starting row).}
-   \item{level}{optional numeric value between 0 and 100 to specify the confidence interval level.}
+   \item{level}{optional numeric value between 0 and 100 to specify the confidence interval level (see \link[=misc-options]{here} for details).}
    \item{annotate}{optional logical to specify whether annotations should be added to the plot for the polygons that are drawn.}
    \item{digits}{optional integer to specify the number of decimal places to which the annotations should be rounded.}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}

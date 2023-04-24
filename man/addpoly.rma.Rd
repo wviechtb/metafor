@@ -12,7 +12,7 @@
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
    \item{row}{numeric value to specify the row (or more generally, the horizontal position) for plotting the polygon (the default is \code{-2}).}
-   \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is to take the value from the object).}
+   \item{level}{numeric value between 0 and 100 to specify the confidence interval level (see \link[=misc-options]{here} for details). The default is to take the value from the object.}
    \item{annotate}{optional logical to specify whether annotations for the summary estimate should be added to the plot.}
    \item{addpred}{logical to specify whether the bounds of the prediction interval should be added to the plot (the default is \code{FALSE}).}
    \item{digits}{optional integer to specify the number of decimal places to which the annotations should be rounded.}

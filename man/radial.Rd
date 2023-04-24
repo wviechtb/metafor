@@ -24,7 +24,7 @@ galbraith(x, \dots)
    \item{atz}{position for the z-axis tick marks and labels. If unspecified, these values are set by the function.}
    \item{aty}{position for the y-axis tick marks and labels. If unspecified, these values are set by the function.}
    \item{steps}{the number of tick marks for the y-axis (the default is 7). Ignored when argument \code{aty} is used.}
-   \item{level}{numeric value between 0 and 100 to specify the level of the z-axis error region (the default is to take the value from the object).}
+   \item{level}{numeric value between 0 and 100 to specify the level of the z-axis error region (see \link[=misc-options]{here} for details). The default is to take the value from the object.}
    \item{digits}{integer to specify the number of decimal places to which the tick mark labels of the y-axis should be rounded (the default is 2).}
    \item{back}{color of the z-axis error region. Set to \code{NA} to suppress shading of the region.}
    \item{transf}{optional argument to specify a function to transform the y-axis labels (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}

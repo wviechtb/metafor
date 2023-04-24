@@ -23,7 +23,7 @@
    \item{type}{character string (either \code{"rstandard"} (default) or \code{"rstudent"}) to specify whether standardized residuals or studentized deleted residuals should be used in creating the plot. See \sQuote{Details}.}
    \item{pch}{plotting symbol to use for the observed outcomes. By default, a filled circle is used. See \code{\link{points}} for other options.}
    \item{envelope}{logical to specify whether a pseudo confidence envelope should be simulated and added to the plot (the default is \code{TRUE})). Only for objects of class \code{"rma.uni"}. See \sQuote{Details}.}
-   \item{level}{numeric value between 0 and 100 to specify the level of the pseudo confidence envelope (the default is to take the value from the object).}
+   \item{level}{numeric value between 0 and 100 to specify the level of the pseudo confidence envelope (see \link[=misc-options]{here} for details). The default is to take the value from the object.}
    \item{bonferroni}{logical to specify whether the bounds of the envelope should be Bonferroni corrected.}
    \item{reps}{numeric value to specify the number of iterations to use for simulating the pseudo confidence envelope (the default is 1000).}
    \item{smooth}{logical to specify whether the results from the simulation should be smoothed (the default is \code{TRUE}).}

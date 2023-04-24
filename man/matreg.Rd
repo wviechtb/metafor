@@ -18,7 +18,7 @@ matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE,
    \item{means}{optional vector to specify the means of the variables (only relevant when \code{cov=TRUE}).}
    \item{ztor}{logical to specify whether \code{R} is a matrix of r-to-z transformed correlations and hence should be back-transformed to raw correlations (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{nearpd}{logical to specify whether the \code{\link[Matrix]{nearPD}} function from the \href{https://cran.r-project.org/package=Matrix}{Matrix} package should be used when the \mjeqn{R_{x,x}}{R[x,x]} matrix cannot be inverted. See \sQuote{Note}.}
-   \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95).}
+   \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95; see \link[=misc-options]{here} for details).}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded.}
    \item{\dots}{other arguments.}
 }

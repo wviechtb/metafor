@@ -17,7 +17,7 @@ conv.wald(out, ci.lb, ci.ub, zval, pval, n, data, include,
    \item{n}{vector with the total sample sizes of the studies.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{include}{optional (logical or numeric) vector to specify the subset of studies for which the conversion should be carried out.}
-   \item{level}{numeric value (or vector) to specify the confidence interval level(s) (the default is 95).}
+   \item{level}{numeric value (or vector) to specify the confidence interval level(s) (the default is 95; see \link[=misc-options]{here} for details).}
    \item{transf}{optional argument to specify a function to transform \code{out}, \code{ci.lb}, and \code{ci.ub} (e.g., \code{transf=log}). If unspecified, no transformation is used.}
    \item{check}{logical to specify whether the function should carry out a check to examine if the point estimates fall (approximately) halfway between the CI bounds (the default is \code{TRUE}).}
    \item{var.names}{character vector with two elements to specify the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (if \code{data} is an object of class \code{"escalc"}, the \code{var.names} are taken from the object; otherwise the defaults are \code{"yi"} and \code{"vi"}).}
