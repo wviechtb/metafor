@@ -903,7 +903,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          mods    <- mods[not.na,,drop=FALSE]
          Z       <- Z[not.na,,drop=FALSE]
          k       <- length(yi)
-         warning(mstyle$warning("Studies with NAs omitted from model fitting."), call.=FALSE)
+         warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted from model fitting.")), call.=FALSE)
 
          attr(yi, "measure") <- measure ### add measure attribute back
          attr(yi, "ni")      <- ni      ### add ni attribute back

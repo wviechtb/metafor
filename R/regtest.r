@@ -194,7 +194,7 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
             yi <- yi[not.na]
             vi <- vi[not.na]
             ni <- ni[not.na]
-            warning(mstyle$warning("Studies with NAs omitted from test."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted from test.")), call.=FALSE)
 
          }
 

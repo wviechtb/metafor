@@ -206,7 +206,7 @@ level=95, verbose=FALSE, digits, ...) {
          ci   <- ci[not.na]
          di   <- di[not.na]
          k    <- length(ai)
-         warning(mstyle$warning("Tables with NAs omitted from model fitting."), call.=FALSE)
+         warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted from model fitting.")), call.=FALSE)
       }
 
       if (na.act == "na.fail")

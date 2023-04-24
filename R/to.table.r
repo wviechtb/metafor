@@ -651,7 +651,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             ci   <- ci[not.na]
             di   <- di[not.na]
             slab <- slab[not.na]
-            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "tables", "table"), "with NAs omitted.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -709,7 +709,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             ci   <- ci[not.na]
             di   <- di[not.na]
             slab <- slab[not.na]
-            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "tables", "table"), "with NAs omitted.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -767,7 +767,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             ci   <- ci[not.na]
             di   <- di[not.na]
             slab <- slab[not.na]
-            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "tables", "table"), "with NAs omitted.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -825,7 +825,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             t1i  <- t1i[not.na]
             t2i  <- t2i[not.na]
             slab <- slab[not.na]
-            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "tables", "table"), "with NAs omitted.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -885,7 +885,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             n1i  <- n1i[not.na]
             n2i  <- n2i[not.na]
             slab <- slab[not.na]
-            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "tables", "table"), "with NAs omitted.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -941,7 +941,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             ri   <- ri[not.na]
             ni   <- ni[not.na]
             slab <- slab[not.na]
-            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "tables", "table"), "with NAs omitted.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -997,7 +997,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             xi   <- xi[not.na]
             mi   <- mi[not.na]
             slab <- slab[not.na]
-            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "tables", "table"), "with NAs omitted.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -1053,7 +1053,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             xi   <- xi[not.na]
             ti   <- ti[not.na]
             slab <- slab[not.na]
-            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "tables", "table"), "with NAs omitted.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -1110,7 +1110,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             sdi  <- sdi[not.na]
             ni   <- ni[not.na]
             slab <- slab[not.na]
-            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "tables", "table"), "with NAs omitted.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -1175,7 +1175,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             ni   <- ni[not.na]
             ri   <- ri[not.na]
             slab <- slab[not.na]
-            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "tables", "table"), "with NAs omitted.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -1254,7 +1254,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
             mi   <- mi[not.na]
             ni   <- ni[not.na]
             slab <- slab[not.na]
-            warning(mstyle$warning("Tables with NAs omitted."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "tables", "table"), "with NAs omitted.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")

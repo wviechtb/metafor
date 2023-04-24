@@ -219,7 +219,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
             ci <- ci[not.na]
             di <- di[not.na]
             k  <- length(ai)
-            warning(mstyle$warning("Tables with NAs omitted from model fitting."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted from model fitting.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -423,7 +423,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
             t1i  <- t1i[not.na]
             t2i  <- t2i[not.na]
             k    <- length(x1i)
-            warning(mstyle$warning("Tables with NAs omitted from model fitting."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted from model fitting.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")

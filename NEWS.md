@@ -10,6 +10,8 @@
 
 - for measure `SMCC`, can specify d-values, t-test statistics, and/or p-values via arguments `di`, `ti`, and `pi`
 
+- functions that issue a warning when omitting studies due to NAs now indicate how many were omitted
+
 - properly document `level` argument
 
 - small bug fixes

@@ -1191,7 +1191,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
          }
          Z.H2 <- Z.H2[not.na,,drop=FALSE]
          k    <- length(yi)
-         warning(mstyle$warning("Rows with NAs omitted from model fitting."), call.=FALSE)
+         warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "rows", "row"), "with NAs omitted from model fitting.")), call.=FALSE)
 
          attr(yi, "measure") <- measure ### add measure attribute back
          attr(yi, "ni")      <- ni      ### add ni attribute back

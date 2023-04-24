@@ -401,7 +401,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             di   <- di[not.na]
             mods <- mods[not.na,,drop=FALSE]
             k    <- length(ai)
-            warning(mstyle$warning("Studies with NAs omitted from model fitting."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted from model fitting.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -428,7 +428,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             t2i  <- t2i[not.na]
             mods <- mods[not.na,,drop=FALSE]
             k    <- length(x1i)
-            warning(mstyle$warning("Studies with NAs omitted from model fitting."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted from model fitting.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -453,7 +453,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             mi   <- mi[not.na]
             mods <- mods[not.na,,drop=FALSE]
             k    <- length(xi)
-            warning(mstyle$warning("Studies with NAs omitted from model fitting."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted from model fitting.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")
@@ -478,7 +478,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             ti   <- ti[not.na]
             mods <- mods[not.na,,drop=FALSE]
             k    <- length(xi)
-            warning(mstyle$warning("Studies with NAs omitted from model fitting."), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted from model fitting.")), call.=FALSE)
          }
 
          if (na.act == "na.fail")
