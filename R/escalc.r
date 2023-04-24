@@ -754,7 +754,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
          pi   <- .getx("pi",   mf=mf, data=data, checknumeric=TRUE)
 
-         ### for these measures, need m1i, m2i, sd1i, sd2i, n1i, and n2i (and can also specify di and/or ti)
+         ### for these measures, need m1i, m2i, sd1i, sd2i, n1i, and n2i (and can also specify di/ti/pi)
 
          if (is.element(measure, c("SMD","RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL"))) {
 
@@ -1220,7 +1220,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (is.element(measure, c("PCOR","ZPCOR")) && !.all.specified(ri, mi, ni))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ri, ti, mi, ni (and pi))."))
 
-         if (is.element(measure, c("SPCOR","ZSPCOR")) && !.all.specified(ri, ni, mi, r2i))
+         if (is.element(measure, c("SPCOR","ZSPCOR")) && !.all.specified(ri, mi, ni, r2i))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ri, ti, mi, ni, r2i (and pi))."))
 
          k.all <- length(ri)
@@ -1860,16 +1860,47 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          sd2i <- .getx("sd2i", mf=mf, data=data, checknumeric=TRUE) ### for SMCR, do not need to supply this
          ri   <- .getx("ri",   mf=mf, data=data, checknumeric=TRUE)
          ni   <- .getx("ni",   mf=mf, data=data, checknumeric=TRUE)
+         di   <- .getx("di",   mf=mf, data=data, checknumeric=TRUE)
+         ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
+         pi   <- .getx("pi",   mf=mf, data=data, checknumeric=TRUE)
 
-         if (is.element(measure, c("MC","SMCC","SMCRH","ROMC","CVRC"))) {
+         if (is.element(measure, c("MC","SMCRH","ROMC","CVRC"))) {
 
             ### for these measures, need m1i, m2i, sd1i, sd2i, ni, and ri
 
-            if (!.all.specified(m1i, m2i, sd1i, sd2i, ni, ri))
+            if (!.all.specified(m1i, m2i, sd1i, sd2i, ri, ni))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd1i, sd2i, ni, ri)."))
 
-            if (!.equal.length(m1i, m2i, sd1i, sd2i, ni, ri))
+            if (!.equal.length(m1i, m2i, sd1i, sd2i, ri, ni))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+         }
+
+         if (measure == "SMCC") {
+
+            ### for this measures, need m1i, m2i, sd1i, sd2i, ni, and ri (and can also specify di/ti/pi)
+
+            if (!.equal.length(m1i, m2i, sd1i, sd2i, ri, ni, di, ti, pi))
+               stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+            ### convert pi to ti values
+
+            ti <- replmiss(ti, .convp2t(pi, df=ni-1))
+
+            ### convert ti to di values
+
+            di <- replmiss(di, ti * sqrt(1/ni))
+
+            ### when di is available, set m1i, m2i, sd1i, sd2i, and ri values accordingly
+
+            m1i[!is.na(di)]  <- di[!is.na(di)]
+            m2i[!is.na(di)]  <- 0
+            sd1i[!is.na(di)] <- 1
+            sd2i[!is.na(di)] <- 1
+            ri[!is.na(di)]   <- 0.5
+
+            if (!.all.specified(m1i, m2i, sd1i, sd2i, ri, ni))
+               stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd1i, sd2i, ni, ri (and di, ti, pi))."))
 
          }
 
@@ -1877,10 +1908,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             ### for this measure, need m1i, m2i, sd1i, ni, and ri (do not need sd2i)
 
-            if (!.all.specified(m1i, m2i, sd1i, ni, ri))
+            if (!.all.specified(m1i, m2i, sd1i, ri, ni))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd1i, ni, ri)."))
 
-            if (!.equal.length(m1i, m2i, sd1i, ni, ri))
+            if (!.equal.length(m1i, m2i, sd1i, ri, ni))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          }
@@ -1889,10 +1920,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             ### for this measure, need sd1i, sd2i, ni, and ri
 
-            if (!.all.specified(sd1i, sd2i, ni, ri))
+            if (!.all.specified(sd1i, sd2i, ri, ni))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., sd1i, sd2i, ni, ri)."))
 
-            if (!.equal.length(sd1i, sd2i, ni, ri))
+            if (!.equal.length(sd1i, sd2i, ri, ni))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          }

@@ -1,4 +1,4 @@
-# metafor 4.1-5 (2023-04-24)
+# metafor 4.1-6 (2023-04-24)
 
 - also allow two or three values for `xlab` in the various `forest()` functions (for adding labels at the ends of the x-axis limits)
 
@@ -7,6 +7,10 @@
 - added `shade` and `colshade` arguments to the various `forest()` functions
 
 - added `link` argument to `rma.glmm()`
+
+- for measure `SMCC`, can specify d-values, t-test statistics, and/or p-values via arguments `di`, `ti`, and `pi`
+
+- properly document `level` argument
 
 - small bug fixes
 

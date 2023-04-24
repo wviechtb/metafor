@@ -629,6 +629,25 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          sd2i <- .getx("sd2i", mf=mf, data=data, checknumeric=TRUE)
          ri   <- .getx("ri",   mf=mf, data=data, checknumeric=TRUE)
          ni   <- .getx("ni",   mf=mf, data=data, checknumeric=TRUE)
+         di   <- .getx("di",   mf=mf, data=data, checknumeric=TRUE)
+         ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
+         pi   <- .getx("pi",   mf=mf, data=data, checknumeric=TRUE)
+
+         if (measure == "SMCC") {
+
+            if (!.equal.length(m1i, m2i, sd1i, sd2i, ri, ni, di, ti, pi))
+               stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+            ti <- replmiss(ti, .convp2t(pi, df=ni-1))
+            di <- replmiss(di, ti * sqrt(1/ni))
+
+            m1i[!is.na(di)]  <- di[!is.na(di)]
+            m2i[!is.na(di)]  <- 0
+            sd1i[!is.na(di)] <- 1
+            sd2i[!is.na(di)] <- 1
+            ri[!is.na(di)]   <- 0.5
+
+         }
 
          k <- length(m1i) ### number of outcomes before subsetting
          k.all <- k
