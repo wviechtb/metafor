@@ -107,7 +107,7 @@ test_that("rma.glmm() works correctly for 'CM.EL' model.", {
    skip_on_cran()
 
    expect_warning(res1  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL"))
-   expect_warning(res2  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="Nelder-Mead", hessianCtrl=list(r=4))))
+   expect_warning(res2  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="Nelder-Mead", hessianCtrl=list(d=0.00001))))
    expect_warning(res3  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="BFGS")))
    expect_warning(res4  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="bobyqa")))
    expect_warning(res5  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="nloptr")))
@@ -133,7 +133,7 @@ test_that("rma.glmm() works correctly for 'CM.EL' model.", {
    expect_equivalent(coef(res12), -1.3532, tolerance=.tol[["coef"]])
 
    expect_equivalent(c(vcov(res1)),  0.1232, tolerance=.tol[["var"]])
-   expect_equivalent(c(vcov(res2)),  0.0405, tolerance=.tol[["var"]]) # :(
+   expect_equivalent(c(vcov(res2)),  0.1228, tolerance=.tol[["var"]])
    expect_equivalent(c(vcov(res3)),  0.1232, tolerance=.tol[["var"]])
    expect_equivalent(c(vcov(res4)),  0.1232, tolerance=.tol[["var"]])
    expect_equivalent(c(vcov(res5)),  0.1231, tolerance=.tol[["var"]])

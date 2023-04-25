@@ -636,7 +636,8 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                evtol = 1e-07,              # lower bound for eigenvalues to determine if model matrix is positive definite
                dnchgcalc = "dFNCHypergeo", # method for calculating dnchg ("dFNCHypergeo" from BiasedUrn package or "dnoncenhypergeom")
                dnchgprec = 1e-10,          # precision for dFNCHypergeo()
-               hesspack = "numDeriv")      # package for computing the Hessian (numDeriv or pracma)
+               hesspack = "numDeriv",      # package for computing the Hessian (numDeriv or pracma)
+               tau2tol = 1e-04)            # for "CM.EL" + "ML", threshold for treating tau^2 values as effectively equal to 0
 
    ### replace defaults with any user-defined values
 
@@ -868,6 +869,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    #########################################################################
 
    se.tau2 <- I2 <- H2 <- QE <- QEp <- NA_real_
+   se.warn <- FALSE
 
    rho <- NA_real_
 
@@ -1523,7 +1525,11 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                if (is.na(ll.QE)) {
                   ll.ML <- c(logLik(res.ML))
                } else {
-                  ll.ML <- ll.QE - 1/2 * deviance(res.ML) # this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
+                  if (verbose) {
+                     ll.ML <- ll.QE - 1/2 * deviance(res.ML) # this makes ll.ML comparable to ll.FE (same as ll.FE when tau^2=0)
+                  } else {
+                     ll.ML <- ll.QE - 1/2 * suppressWarnings(deviance(res.ML)) # suppressWarnings() to suppress 'Warning in sqrt(object$devResid()) : NaNs produced'
+                  }
                }
             } else {
                ll.ML <- c(logLik(res.ML)) # not 100% sure how comparable this is to ll.FE when tau^2 = 0 (seems correct for glmmTMB)
@@ -1909,7 +1915,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                h.C      <- hessian[-seq_len(p),seq_len(p),drop=FALSE]  # lower left part of hessian
                h.D      <- hessian[-seq_len(p),-seq_len(p),drop=FALSE] # lower right part of hessian (of which we need the inverse)
                chol.h.A <- try(chol(h.A), silent=!verbose)             # see if h.A can be inverted with chol()
-               if (inherits(chol.h.A, "try-error")) {
+               if (inherits(chol.h.A, "try-error") || anyNA(chol.h.A)) {
                   warning(mstyle$warning("Cannot invert Hessian for saturated model."), call.=FALSE)
                   QE.Wld <- NA_real_
                } else {
@@ -2092,10 +2098,15 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             if (verbose > 1)
                message(mstyle$message("Computing Hessian ..."))
 
+            tau2eff0 <- exp(res.ML$par[p+1]) < con$tau2tol
+
+            if (tau2eff0)
+               method <- "T0"
+
             if (con$hesspack == "numDeriv")
-               h.ML <- numDeriv::hessian(.dnchg, x=res.ML$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
+               h.ML <- numDeriv::hessian(.dnchg, x=res.ML$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=!tau2eff0, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
             if (con$hesspack == "pracma")
-               h.ML <- pracma::hessian(.dnchg, x0=res.ML$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
+               h.ML <- pracma::hessian(.dnchg, x0=res.ML$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=!tau2eff0, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
             #return(list(res.ML, h.ML))
 
             ### log-likelihood
@@ -2114,12 +2125,14 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
          #return(list(res.FE, res.QE, res.ML, ll.FE=ll.FE, ll.QE=ll.QE, ll.ML=ll.ML))
          #res.FE <- res[[1]]; res.QE <- res[[2]]; res.ML <- res[[3]]
 
-         if (is.element(method, c("FE","EE","CE"))) {
+         if (is.element(method, c("FE","EE","CE","T0"))) {
 
             if (!is.element(optimizer, c("clogit","clogistic"))) {
                beta <- cbind(res.FE$par[seq_len(p)])
                chol.h <- try(chol(h.FE[seq_len(p),seq_len(p)]), silent=!verbose)    # see if Hessian can be inverted with chol()
-               if (inherits(chol.h, "try-error")) {
+               if (inherits(chol.h, "try-error") || anyNA(chol.h)) {
+                  if (anyNA(chol.h))
+                     stop(mstyle$stop(paste0("Cannot invert Hessian for the ", method, " model.")))
                   warning(mstyle$warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition."), call.=FALSE)
                   vb <- try(qr.solve(h.FE[seq_len(p),seq_len(p)]), silent=!verbose) # see if Hessian can be inverted with qr.solve()
                   if (inherits(vb, "try-error"))
@@ -2144,7 +2157,9 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
             beta <- cbind(res.ML$par[seq_len(p)])
             chol.h <- try(chol(h.ML), silent=!verbose)      # see if Hessian can be inverted with chol()
-            if (inherits(chol.h, "try-error")) {
+            if (inherits(chol.h, "try-error") || anyNA(chol.h)) {
+               if (anyNA(chol.h))
+                  stop(mstyle$stop("Cannot invert Hessian for the ML model."))
                warning(mstyle$warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition."), call.=FALSE)
                vb.f <- try(qr.solve(h.ML), silent=!verbose) # see if Hessian can be inverted with qr.solve()
                if (inherits(vb.f, "try-error"))
@@ -2172,12 +2187,23 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                gvar1 <- det(vcov(tmp))
                gvar2 <- det(vb)
                ratio <- (gvar1 / gvar2)^(1/(2*m))
-               if (!is.na(ratio) && ratio >= 100)
+               if (!is.na(ratio) && ratio >= 100) {
                   warning(mstyle$warning("Standard errors of fixed effects appear to be unusually small. Treat results with caution."), call.=FALSE)
-               if (!is.na(ratio) && ratio <= 1/100)
+                  se.warn <- TRUE
+               }
+               if (!is.na(ratio) && ratio <= 1/100) {
                   warning(mstyle$warning("Standard errors of fixed effects appear to be unusually large. Treat results with caution."), call.=FALSE)
+                  se.warn <- TRUE
+               }
             }
 
+         }
+
+         if (method == "T0") {
+            tau2    <- exp(res.ML$par[p+1])
+            parms   <- p + 1
+            se.tau2 <- 0
+            method  <- "ML"
          }
 
          #return(list(beta=beta, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
@@ -2408,7 +2434,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
             chol.h <- try(chol(vb2.QE), silent=!verbose) # see if Hessian can be inverted with chol()
 
-            if (inherits(chol.h, "try-error")) {
+            if (inherits(chol.h, "try-error") || anyNA(chol.h)) {
                warning(mstyle$warning("Cannot invert Hessian for saturated model."), call.=FALSE)
                QE.Wld <- NA_real_
             } else {
@@ -2473,7 +2499,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    chol.h <- try(chol(vb[btt,btt]), silent=!verbose) # see if Hessian can be inverted with chol()
 
-   if (inherits(chol.h, "try-error")) {
+   if (inherits(chol.h, "try-error") || anyNA(chol.h)) {
       warning(mstyle$warning("Cannot invert Hessian for QM test."), call.=FALSE)
       QM <- NA_real_
    } else {
@@ -2587,7 +2613,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                   test=test, dfs=ddf, ddf=ddf, btt=btt, m=m,
                   digits=digits, level=level, control=control, verbose=verbose,
                   add=add, to=to, drop00=drop00,
-                  fit.stats=fit.stats,
+                  fit.stats=fit.stats, se.warn=se.warn,
                   formula.yi=NULL, formula.mods=formula.mods, version=packageVersion("metafor"), call=mf)
 
       if (is.null(ddd$outlist))

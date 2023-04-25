@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-7</span>
       </span>
     </div>
 
@@ -96,11 +96,12 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.1-6" id="metafor-41-6-2023-04-24">metafor 4.1-6 (2023-04-24)<a class="anchor" aria-label="anchor" href="#metafor-41-6-2023-04-24"></a></h2>
+<h2 class="page-header" data-toc-text="4.1-7" id="metafor-41-7-2023-04-25">metafor 4.1-7 (2023-04-25)<a class="anchor" aria-label="anchor" href="#metafor-41-7-2023-04-25"></a></h2>
 <ul><li><p>also allow two or three values for <code>xlab</code> in the various <code><a href="../reference/forest.html">forest()</a></code> functions (for adding labels at the ends of the x-axis limits)</p></li>
 <li><p>better default choices for <code>xlim</code> in the various <code><a href="../reference/forest.html">forest()</a></code> functions; also, argument <code>ilab.xpos</code> is now optional when using the <code>ilab</code> argument</p></li>
 <li><p>added <code>shade</code> and <code>colshade</code> arguments to the various <code><a href="../reference/forest.html">forest()</a></code> functions</p></li>
 <li><p>added <code>link</code> argument to <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code></p></li>
+<li><p><code>rma.glmm(measure="OR", ..., model="CM.EL", method="ML")</code> now treats tau^2 values below 1e-04 effectively as zero before computing the standard errors of the fixed effects; this helps to avoid numerical problems in approximating the Hessian</p></li>
 <li><p>for measure <code>SMCC</code>, can specify d-values, t-test statistics, and/or p-values via arguments <code>di</code>, <code>ti</code>, and <code>pi</code></p></li>
 <li><p>functions that issue a warning when omitting studies due to NAs now indicate how many were omitted</p></li>
 <li><p>properly document <code>level</code> argument</p></li>

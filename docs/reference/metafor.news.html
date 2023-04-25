@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-7</span>
       </span>
     </div>
 
@@ -121,7 +121,7 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">metafor.news</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 4.1-6 (2023-04-24)                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 4.1-7 (2023-04-25)                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - also allow two or three values for xlab in the various forest()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     functions (for adding labels at the ends of the x-axis limits)</span>
@@ -133,6 +133,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added shade and colshade arguments to the various forest() functions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added link argument to rma.glmm()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - rma.glmm(measure="OR", ..., model="CM.EL", method="ML") now treats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     tau^2 values below 1e-04 effectively as zero before computing the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     standard errors of the fixed effects; this helps to avoid numerical</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     problems in approximating the Hessian</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - for measure SMCC, can specify d-values, t-test statistics, and/or</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     p-values via arguments di, ti, and pi</span>

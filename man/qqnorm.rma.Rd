@@ -37,7 +37,7 @@
 \details{
    The plot shows the theoretical quantiles of a normal distribution on the horizontal axis against the observed quantiles for either the standardized residuals (\code{type="rstandard"}, the default) or the externally standardized residuals (\code{type="rstudent"}) on the vertical axis (see \code{\link[=residuals.rma]{residuals}} for details on the definition of these residual types).
 
-   For reference, a line is added to the plot with slope of 1, going through the (0,0) point.
+   For reference, a line is added to the plot with a slope of 1, going through the (0,0) point.
 
    For objects of class \code{"rma.uni"}, it is also possible to add a pseudo confidence envelope to the plot. The envelope is created based on the quantiles of sets of pseudo residuals simulated from the given model (for details, see Cook & Weisberg, 1982). The number of sets simulated can be controlled with the \code{reps} argument. When \code{smooth=TRUE}, the simulated bounds are smoothed with Friedman's SuperSmoother (see \code{\link{supsmu}}). The \code{bass} argument can be set to a number between 0 and 10, with higher numbers indicating increasing smoothness. If \code{bonferroni=TRUE}, the envelope bounds are Bonferroni corrected, so that the envelope can be regarded as a confidence region for all \mjseqn{k} residuals simultaneously. The default however is \code{bonferroni=FALSE}, which makes the plot more sensitive to deviations from normality.
 
