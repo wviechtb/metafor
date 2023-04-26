@@ -187,6 +187,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
                delta.min = NULL,      # min possible value(s) for selection model parameter(s)
                delta.max = NULL,      # max possible value(s) for selection model parameter(s)
                tau2.max = Inf,        # max possible value for tau^2
+               tau2tol = min(vi/10, 1e-04), # threshold for treating tau^2 values as effectively equal to 0
                pval.min = NULL,       # minimum p-value to intergrate over (for selection models where this matters)
                optimizer = "optim",   # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel")
                optmethod = "BFGS",    # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
@@ -196,7 +197,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
                beta.fix = FALSE,      # fix beta in Hessian computation
                tau2.fix = FALSE,      # fix tau2 in Hessian computation
                delta.fix = FALSE,     # fix delta in Hessian computation
-               htransf = FALSE,       # FALSE/TRUE: Hessian is computed for the untransformed/transformed delta and tau^2 estimates
+               htransf = FALSE,       # when FALSE, Hessian is computed directly for the delta and tau^2 estimates (e.g., we get Var(tau^2)); when TRUE, Hessian is computed for the transformed estimates (e.g., we get Var(log(tau2)))
                hessianCtrl=list(r=6), # arguments passed on to 'method.args' of hessian()
                hesspack = "numDeriv", # package for computing the Hessian (numDeriv or pracma)
                scaleX = !betaspec)    # whether non-dummy variables in the X matrix should be rescaled before model fitting
@@ -861,7 +862,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       beta.hes <- beta.val
    }
 
-   if (con$tau2.fix) {
+   if (con$tau2.fix || tau2 < con$tau2tol) {
       tau2.hes <- tau2
    } else {
       tau2.hes <- tau2.val
@@ -883,7 +884,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       if (verbose > 3)
          cat("\n")
 
-      if (con$htransf) {
+      if (con$htransf) { # TODO: document these two possibilities?
 
          if (con$hesspack == "numDeriv")
             hescall <- paste("numDeriv::hessian(", .selmodel.ll, ", x=opt.res$par, method.args=con$hessianCtrl,
@@ -1027,9 +1028,9 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    ### inference for tau^2 parameter
 
    if (con$htransf) {
-      ci.lb.tau2 <- exp(tau2.transf - crit * se.tau2)
+      ci.lb.tau2 <- exp(tau2.transf - crit * se.tau2) # tau2.transf = log(tau^2) and se.tau2 = SE[log(tau^2)]
       ci.ub.tau2 <- exp(tau2.transf + crit * se.tau2)
-      se.tau2 <- NA_real_
+      se.tau2 <- se.tau2 * exp(tau2.transf) # delta method
    } else {
       ci.lb.tau2 <- tau2 - crit * se.tau2
       ci.ub.tau2 <- tau2 + crit * se.tau2

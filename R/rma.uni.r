@@ -1067,7 +1067,6 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       con <- c(con,
           list(beta.init = NULL,               # initial values for location parameters (only relevant when optbeta=TRUE)
                hesspack = "numDeriv",          # package for computing the Hessian (numDeriv or pracma)
-               htransf = FALSE,                # FALSE/TRUE: Hessian is computed for the untransformed/transformed parameter estimates
                optimizer = "nlminb",           # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","solnp","constrOptim.nl","Rcgmin","Rvmmin")
                optmethod = "BFGS",             # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),              # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')

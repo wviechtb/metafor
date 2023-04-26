@@ -1628,7 +1628,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
                cholesky = ifelse(is.element(struct, c("UN","UNR","GEN")), TRUE, FALSE), # by default, use Cholesky factorization for G and H matrix for "UN", "UNR", and "GEN" structures
                nearpd = FALSE,            # to force G and H matrix to become positive definite
                hessianCtrl = list(r=8),   # arguments passed on to 'method.args' of hessian()
-               hessian0 = .Machine$double.eps^0.5, # threshold for detecting fixed elements in Hessian
+               hesstol = .Machine$double.eps^0.5, # threshold for detecting fixed elements in Hessian
                hesspack = "numDeriv")     # package for computing the Hessian (numDeriv or pracma)
 
    ### replace defaults with any user-defined values
@@ -2395,7 +2395,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
          ### detect rows/columns that are essentially all equal to 0 (fixed elements) and filter them out
 
-         hest <- !apply(hessian, 1, function(x) all(abs(x) <= con$hessian0))
+         hest <- !apply(hessian, 1, function(x) all(abs(x) <= con$hesstol))
          hessian <- hessian[hest, hest, drop=FALSE]
 
          ### try to invert Hessian

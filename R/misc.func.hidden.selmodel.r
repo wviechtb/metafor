@@ -20,7 +20,7 @@
 
 .mapfun <- function(x, lb, ub, fun=NA) {
    if (is.na(fun)) {
-      lb + (ub-lb) / (1 + exp(-x))
+      lb + (ub-lb) / (1 + exp(-x)) # map (-inf,inf) to (lb,ub)
    } else {
       x <- sapply(x, fun)
       pmin(pmax(x, lb), ub)
@@ -44,7 +44,11 @@
    wi.fun(pval, delta, yi, vi, preci, alternative, steps) * dnorm(yvals, yhat, sqrt(vi+tau2))
 }
 
-.selmodel.ll.cont <- function(par, yi, vi, X, preci, k, pX, pvals, deltas, delta.val, delta.transf, mapfun, delta.min, delta.max, tau2.val, tau2.transf, tau2.max, beta.val, wi.fun, steps, pgrp, alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
+.selmodel.ll.cont <- function(par, yi, vi, X, preci, k, pX, pvals,
+                              deltas, delta.val, delta.transf, mapfun, delta.min, delta.max,
+                              tau2.val, tau2.transf, tau2.max, beta.val,
+                              wi.fun, steps, pgrp,
+                              alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -103,7 +107,11 @@
 
 ############################################################################
 
-.selmodel.ll.stepfun <- function(par, yi, vi, X, preci, k, pX, pvals, deltas, delta.val, delta.transf, mapfun, delta.min, delta.max, tau2.val, tau2.transf, tau2.max, beta.val, wi.fun, steps, pgrp, alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
+.selmodel.ll.stepfun <- function(par, yi, vi, X, preci, k, pX, pvals,
+                                 deltas, delta.val, delta.transf, mapfun, delta.min, delta.max,
+                                 tau2.val, tau2.transf, tau2.max, beta.val,
+                                 wi.fun, steps, pgrp,
+                                 alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -197,7 +205,11 @@
 
 ############################################################################
 
-.selmodel.ll.trunc <- function(par, yi, vi, X, preci, k, pX, pvals, deltas, delta.val, delta.transf, mapfun, delta.min, delta.max, tau2.val, tau2.transf, tau2.max, beta.val, wi.fun, steps, pgrp, alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
+.selmodel.ll.trunc <- function(par, yi, vi, X, preci, k, pX, pvals,
+                               deltas, delta.val, delta.transf, mapfun, delta.min, delta.max,
+                               tau2.val, tau2.transf, tau2.max, beta.val,
+                               wi.fun, steps, pgrp,
+                               alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 

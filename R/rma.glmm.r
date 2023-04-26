@@ -868,7 +868,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    #########################################################################
    #########################################################################
 
-   se.tau2 <- I2 <- H2 <- QE <- QEp <- NA_real_
+   se.tau2 <- ci.lb.tau2 <- ci.ub.tau2 <- I2 <- H2 <- QE <- QEp <- NA_real_
    se.warn <- FALSE
 
    rho <- NA_real_
@@ -2132,11 +2132,11 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                chol.h <- try(chol(h.FE[seq_len(p),seq_len(p)]), silent=!verbose)    # see if Hessian can be inverted with chol()
                if (inherits(chol.h, "try-error") || anyNA(chol.h)) {
                   if (anyNA(chol.h))
-                     stop(mstyle$stop(paste0("Cannot invert Hessian for the ", method, " model.")))
+                     stop(mstyle$stop(paste0("Cannot invert Hessian for the ", ifelse(method == "T0", "ML", method), " model.")))
                   warning(mstyle$warning("Choleski factorization of Hessian failed. Trying inversion via QR decomposition."), call.=FALSE)
                   vb <- try(qr.solve(h.FE[seq_len(p),seq_len(p)]), silent=!verbose) # see if Hessian can be inverted with qr.solve()
                   if (inherits(vb, "try-error"))
-                     stop(mstyle$stop(paste0("Cannot invert Hessian for the ", method, " model.")))
+                     stop(mstyle$stop(paste0("Cannot invert Hessian for the ", ifelse(method == "T0", "ML", method), " model.")))
                } else {
                   vb <- chol2inv(chol.h)
                }
@@ -2177,9 +2177,14 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             k.eff  <- k
             if (vb.f[p+1,p+1] >= 0) {
                se.tau2 <- sqrt(vb.f[p+1,p+1]) * tau2 # delta rule: vb[p+1,p+1] is the variance of log(tau2), so vb[p+1,p+1] * tau2^2 is the variance of exp(log(tau2))
-            } else {
-               se.tau2 <- NA_real_
+               crit <- qnorm(level/2, lower.tail=FALSE)
+               ci.lb.tau2 <- exp(res.ML$par[p+1] - crit * sqrt(vb.f[p+1,p+1]))
+               ci.ub.tau2 <- exp(res.ML$par[p+1] + crit * sqrt(vb.f[p+1,p+1]))
             }
+
+         }
+
+         if (is.element(method, c("ML","T0"))) {
 
             tmp <- try(rma.uni(measure="PETO", ai=ai, bi=bi, ci=ci, di=di, add=0, mods=X.fit, intercept=FALSE, skipr2=TRUE), silent=TRUE)
 
@@ -2200,10 +2205,12 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
          }
 
          if (method == "T0") {
+
             tau2    <- exp(res.ML$par[p+1])
             parms   <- p + 1
             se.tau2 <- 0
             method  <- "ML"
+
          }
 
          #return(list(beta=beta, vb=vb, tau2=tau2, sigma2=sigma2, parms=parms, p.eff=p.eff, k.eff=k.eff, b2.QE=b2.QE, vb2.QE=vb2.QE))
@@ -2601,7 +2608,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
       outdat <- list(ai=ai, bi=bi, ci=ci, di=di, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, xi=xi, mi=mi, ti=ti)
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
-                  tau2=tau2, se.tau2=se.tau2, sigma2=sigma2, rho=rho,
+                  tau2=tau2, se.tau2=se.tau2, sigma2=sigma2, rho=rho, ci.lb.tau2=ci.lb.tau2, ci.ub.tau2=ci.ub.tau2,
                   I2=I2, H2=H2, vt=vt,
                   QE.Wld=QE.Wld, QEp.Wld=QEp.Wld, QE.LRT=QE.LRT, QEp.LRT=QEp.LRT, QE.df=QE.df, QM=QM, QMdf=QMdf, QMp=QMp,
                   k=k, k.f=k.f, k.yi=k.yi, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,

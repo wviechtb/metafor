@@ -155,7 +155,7 @@
    if (is.infinite(lb) || is.infinite(ub)) {
       x
    } else {
-      lb + (ub-lb) / (1 + exp(-x))
+      lb + (ub-lb) / (1 + exp(-x)) # map (-inf,inf) to (lb,ub)
    }
 }
 
@@ -169,7 +169,10 @@
 
 ### -1 times the log likelihood (regular or restricted) for location-scale model
 
-.ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX, alpha.val, beta.val, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, tau2.min, tau2.max, optbeta) {
+.ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX,
+                       alpha.val, beta.val, verbose, digits,
+                       REMLf, link, mZ, alpha.min, alpha.max, alpha.transf,
+                       tau2.min, tau2.max, optbeta) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 

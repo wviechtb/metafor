@@ -222,6 +222,8 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
       ### Profile Likelihood method
 
+      # TODO: could also provide Wald-type CIs (ci.lb.tau2, ci.ub.tau2) and (ci.lb.delta, ci.ub.delta)
+
       if (type == "PL") {
 
          if (con$vc.min > vc)

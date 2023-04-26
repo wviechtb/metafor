@@ -42,7 +42,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
       cat(mstyle$section("Location-Scale Model"))
       cat(mstyle$section(paste0(" (k = ", x$k, "; ")))
-      if (x$tau2.fix) {
+      if (isTRUE(x$tau2.fix)) {
          cat(mstyle$section("user-specified tau^2 value)"))
       } else {
          cat(mstyle$section(paste0("tau^2 estimator: ", x$method, ")")))
@@ -67,7 +67,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          if (inherits(x, "rma.gen")) {
             cat(mstyle$section(paste0("estimation method: ", x$method, ")")))
          } else {
-            if (!is.null(x$tau2.fix) && x$tau2.fix) {
+            if (isTRUE(x$tau2.fix)) {
                cat(mstyle$section("user-specified tau^2 value)"))
             } else {
                cat(mstyle$section(paste0("tau^2 estimator: ", x$method, ")")))
@@ -98,24 +98,24 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
       if (!is.element(x$method, c("FE","EE","CE"))) {
          if (x$int.only) {
-            cat(mstyle$text("tau^2 (estimated amount of total heterogeneity): "))
+            cat(mstyle$text(paste0("tau^2 (", ifelse(isTRUE(x$tau2.fix), "specified", "estimated"), " amount of total heterogeneity): ")))
             cat(mstyle$result(paste0(fmtx(x$tau2, digits[["var"]], thresh=.Machine$double.eps*10), ifelse(is.na(x$se.tau2), "", paste0(" (SE = " , fmtx(x$se.tau2, digits[["sevar"]]), ")")))))
             cat("\n")
-            cat(mstyle$text("tau (square root of estimated tau^2 value):      "))
+            cat(mstyle$text(paste0("tau (square root of ", ifelse(isTRUE(x$tau2.fix), "specified", "estimated"), " tau^2 value):      ")))
             cat(mstyle$result(fmtx(.sqrt(x$tau2), digits[["var"]], thresh=.Machine$double.eps*10)))
             cat("\n")
          } else {
             if (!is.na(x$I2) || !is.na(x$H2)) {
-               cat(mstyle$text("tau^2 (estimated amount of residual heterogeneity):     "))
+               cat(mstyle$text(paste0("tau^2 (", ifelse(isTRUE(x$tau2.fix), "specified", "estimated"), " amount of residual heterogeneity):     ")))
             } else {
-               cat(mstyle$text("tau^2 (estimated amount of residual heterogeneity): "))
+               cat(mstyle$text(paste0("tau^2 (", ifelse(isTRUE(x$tau2.fix), "specified", "estimated"), " amount of residual heterogeneity): ")))
             }
             cat(mstyle$result(paste0(fmtx(x$tau2, digits[["var"]], thresh=.Machine$double.eps*10), ifelse(is.na(x$se.tau2), "", paste0(" (SE = " , fmtx(x$se.tau2, digits[["sevar"]]), ")")))))
             cat("\n")
             if (!is.na(x$I2) || !is.na(x$H2)) {
-               cat(mstyle$text("tau (square root of estimated tau^2 value):             "))
+               cat(mstyle$text(paste0("tau (square root of ", ifelse(isTRUE(x$tau2.fix), "specified", "estimated"), " tau^2 value):             ")))
             } else {
-               cat(mstyle$text("tau (square root of estimated tau^2 value):         "))
+               cat(mstyle$text(paste0("tau (square root of ", ifelse(isTRUE(x$tau2.fix), "specified", "estimated"), " tau^2 value):         ")))
             }
             cat(mstyle$result(fmtx(.sqrt(x$tau2), digits[["var"]], thresh=.Machine$double.eps*10)))
             cat("\n")

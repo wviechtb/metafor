@@ -1282,6 +1282,8 @@
 .isFALSE <- function(x)
    !is.null(x) && is.logical(x) && !is.na(x) && !x
 
+# not sure anymore why I implemented these; c(isTRUE(NULL), isTRUE(NA), isFALSE(NULL), isFALSE(NA)) are all FALSE
+
 ############################################################################
 
 ### shorten a character vector so that elements remain distinguishable

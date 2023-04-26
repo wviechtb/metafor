@@ -1,4 +1,4 @@
-# metafor 4.1-7 (2023-04-25)
+# metafor 4.1-8 (2023-04-26)
 
 - also allow two or three values for `xlab` in the various `forest()` functions (for adding labels at the ends of the x-axis limits)
 
@@ -8,7 +8,7 @@
 
 - added `link` argument to `rma.glmm()`
 
-- `rma.glmm(measure="OR", ..., model="CM.EL", method="ML")` now treats tau^2 values below 1e-04 effectively as zero before computing the standard errors of the fixed effects; this helps to avoid numerical problems in approximating the Hessian
+- `rma.glmm()` with `measure="OR", model="CM.EL", method="ML"` now treats tau^2 values below 1e-04 effectively as zero before computing the standard errors of the fixed effects; this helps to avoid numerical problems in approximating the Hessian; similarly, `selmodel()` now treats tau^2 values below 1e-04 or min(vi/10) effectively as zero before computing the standard errors
 
 - for measure `SMCC`, can specify d-values, t-test statistics, and/or p-values via arguments `di`, `ti`, and `pi`
 
@@ -1041,7 +1041,7 @@
 
 # metafor 1.5-0 (2010-12-16)
 
-- the `metafor` package now has its own project website at: https://www.metafor-project.org/
+- the `metafor` package now has its own project website at: https://www.metafor-project.org
 
 - added `labbe()` function to create L'Abbe plots
 
