@@ -229,6 +229,8 @@ conv.delta <- function(yi, vi, ni, data, include, transf, var.names, append=TRUE
       x[[vi.name]][!is.na(vi.t)] <- vi.t[!is.na(vi.t)]
    }
 
+   #escall <- paste0("escalc(data=x, yi=", yi.name, ", vi=", vi.name, ", var.names=c('", yi.name, "','", vi.name, "'))")
+   #x <- eval(str2lang(escall))
    x <- escalc(data=x, yi=x[[yi.name]], vi=x[[vi.name]], var.names=c(yi.name,vi.name))
 
    if (!append)

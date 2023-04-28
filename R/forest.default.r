@@ -519,6 +519,31 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    #########################################################################
 
+   if (!is.null(at)) {
+      if (anyNA(at))
+         stop(mstyle$stop("Argument 'at' cannot contain NAs."))
+      if (any(is.infinite(at)))
+         stop(mstyle$stop("Argument 'at' cannot contain +-Inf values."))
+   }
+
+   ### set x-axis limits (at argument overrides alim argument)
+
+   alim.spec <- TRUE
+
+   if (missing(alim)) {
+      if (is.null(at)) {
+         alim <- range(pretty(x=c(min(ci.lb, na.rm=TRUE), max(ci.ub, na.rm=TRUE)), n=steps-1))
+         alim.spec <- FALSE
+      } else {
+         alim <- range(at)
+      }
+   }
+
+   alim <- sort(alim)[1:2]
+
+   if (anyNA(alim))
+      stop(mstyle$stop("Argument 'alim' cannot contain NAs."))
+
    ### set plot limits (xlim)
 
    ncol.ilab <- ifelse(is.null(ilab), 0, ncol(ilab))
@@ -555,44 +580,30 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    rng <- max(ci.ub, na.rm=TRUE) - min(ci.lb, na.rm=TRUE)
 
    if (missing(xlim)) {
-      xlim <- c(min(ci.lb, na.rm=TRUE) - rng * plot.multp.l, max(ci.ub, na.rm=TRUE) + rng * plot.multp.r)
-      xlim <- round(xlim, digits[[2]])
+      f.1 <- max(min(ci.lb, na.rm=TRUE), alim[1])
+      f.2 <- min(max(ci.ub, na.rm=TRUE), alim[2])
+      rng <- f.2 - f.1
+      xlim <- c(f.1 - rng * plot.multp.l, f.2 + rng * plot.multp.r)
       #xlim[1] <- xlim[1]*max(1, digits[[2]]/2)
       #xlim[2] <- xlim[2]*max(1, digits[[2]]/2)
    }
 
-   ### set x-axis limits (at argument overrides alim argument)
-
-   alim.spec <- TRUE
-
-   if (missing(alim)) {
-      if (is.null(at)) {
-         alim <- range(pretty(x=c(min(ci.lb, na.rm=TRUE), max(ci.ub, na.rm=TRUE)), n=steps-1))
-         alim.spec <- FALSE
-      } else {
-         alim <- range(at)
-      }
-   }
-
-   ### make sure the plot and x-axis limits are sorted
-
-   alim <- sort(alim)
    xlim <- sort(xlim)
 
-   ### plot limits must always encompass the yi values
+   ### plot limits must always encompass the yi values (no longer done)
 
-   if (xlim[1] > min(yi, na.rm=TRUE)) { xlim[1] <- min(yi, na.rm=TRUE) }
-   if (xlim[2] < max(yi, na.rm=TRUE)) { xlim[2] <- max(yi, na.rm=TRUE) }
+   #if (xlim[1] > min(yi, na.rm=TRUE)) { xlim[1] <- min(yi, na.rm=TRUE) }
+   #if (xlim[2] < max(yi, na.rm=TRUE)) { xlim[2] <- max(yi, na.rm=TRUE) }
 
-   ### x-axis limits must always encompass the yi values (no longer required)
+   ### x-axis limits must always encompass the yi values (no longer done)
 
    #if (alim[1] > min(yi, na.rm=TRUE)) { alim[1] <- min(yi, na.rm=TRUE) }
    #if (alim[2] < max(yi, na.rm=TRUE)) { alim[2] <- max(yi, na.rm=TRUE) }
 
-   ### plot limits must always encompass the x-axis limits
+   ### plot limits must always encompass the x-axis limits (no longer done)
 
-   if (alim[1] < xlim[1]) { xlim[1] <- alim[1] }
-   if (alim[2] > xlim[2]) { xlim[2] <- alim[2] }
+   #if (alim[1] < xlim[1]) { xlim[1] <- alim[1] }
+   #if (alim[2] > xlim[2]) { xlim[2] <- alim[2] }
 
    ### allow adjustment of position of study labels and annotations via textpos argument
 

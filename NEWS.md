@@ -1,10 +1,12 @@
-# metafor 4.1-8 (2023-04-26)
+# metafor 4.1-9 (2023-04-28)
 
 - also allow two or three values for `xlab` in the various `forest()` functions (for adding labels at the ends of the x-axis limits)
 
 - better default choices for `xlim` in the various `forest()` functions; also, argument `ilab.xpos` is now optional when using the `ilab` argument
 
 - added `shade` and `colshade` arguments to the various `forest()` functions
+
+- the various `forest()` functions no longer enforce that `xlim` must be at least as wide as `alim`
 
 - added `link` argument to `rma.glmm()`
 

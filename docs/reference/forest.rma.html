@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-9</span>
       </span>
     </div>
 
@@ -278,7 +278,6 @@
 <p>The function actually returns some information about the chosen values invisibly. Printing this information is useful as a starting point to make adjustments to the plot (see ‘Examples’).</p>
 <p>Arguments <code>slab</code> and <code>ilab</code> and when specifying vectors for arguments <code>pch</code>, <code>psize</code>, <code>order</code>, and/or <code>colout</code> (and when <code>shade</code> is a logical vector), the variables specified are assumed to be of the same length as the data originally passed to the model fitting function (and if the <code>data</code> argument was used in the original model fit, then the variables will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.</p>
 <p>If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the <code>cex</code>, <code>cex.lab</code>, and <code>cex.axis</code> arguments are then useful to adjust the symbol and text sizes.</p>
-<p>If the horizontal plot and/or x-axis limits are set manually, then the horizontal plot limits (<code>xlim</code>) must be at least as wide as the x-axis limits (<code>alim</code>). This restriction is enforced inside the function.</p>
 <p>If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those limits (the observed outcomes and confidence/prediction intervals cannot exceed those bounds then).</p>
 <p>The models without moderators, the <code>col</code> argument can also be a vector of two elements, the first for specifying the color of the summary polygon, the second for specifying the color of the line for the prediction interval.</p>
 <p>The <code>lty</code> argument can also be a vector of up to three elements, the first for specifying the line type of the individual CIs (<code>"solid"</code> by default), the second for the line type of the prediction interval (<code>"dotted"</code> by default), the third for the line type of the horizontal lines that are automatically added to the plot (<code>"solid"</code> by default; set to <code>"blank"</code> to remove them).</p>
