@@ -2208,6 +2208,14 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       k.all <- length(yi)
 
+      ### if slab is NULL, see if we can get it from yi (subsetting is done further below; see [a])
+
+      if (is.null(slab)) {
+         slab <- attributes(yi)$slab
+         if (length(slab) != k.all)
+            slab <- NULL
+      }
+
       if (!is.null(subset)) {
          subset <- .chksubset(subset, k.all)
          yi <- .getsubset(yi, subset)
@@ -2264,7 +2272,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          slab <- as.character(slab)
 
       if (!is.null(subset))
-         slab <- .getsubset(slab, subset)
+         slab <- .getsubset(slab, subset) # [a]
 
       if (anyNA(slab))
          stop(mstyle$stop("NAs in study labels."))
@@ -2358,7 +2366,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
       dat[[var.names[3]]][is.na(dat[[var.names[3]]])] <- ""
 
    ### add slab attribute to the yi vector
-   attr(dat[[var.names[1]]], "slab") <- slab
+   if (!is.null(slab))
+      attr(dat[[var.names[1]]], "slab") <- slab
 
    ### add measure attribute to the yi vector
    attr(dat[[var.names[1]]], "measure") <- measure
