@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-11</span>
       </span>
     </div>
 
@@ -299,10 +299,10 @@
 <span class="r-in"><span>              data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, slab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">author</span>, <span class="va">year</span>, sep<span class="op">=</span><span class="st">", "</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### default forest plot of the observed log risk ratios</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span>, <span class="va">dat</span><span class="op">$</span><span class="va">vi</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span>, <span class="va">dat</span><span class="op">$</span><span class="va">vi</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### the with() function can be used to avoid having to retype dat$... over and over</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="forest.default-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### forest plot of the observed risk ratios (transform outcomes)</span></span></span>

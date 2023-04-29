@@ -167,7 +167,7 @@ forest(res, header=TRUE)
 ### lines in rows 0 and k+1; two extra lines of space at the top for headings,
 ### and other annotations; headings (if requested) in line k+2
 op <- par(xpd=TRUE)
-text(x=-8.4, y=-1:16, -1:16, pos=4, cex=0.6, col="red")
+text(x=-9, y=-1:16, -1:16, pos=4, cex=0.6, col="red")
 par(op)
 
 ### can also inspect defaults chosen
@@ -180,7 +180,7 @@ forest(res, cex=0.8, addpred=TRUE)
 forest(res, cex=0.8, alim=c(-3,3))
 forest(res, cex=0.8, alim=c(-3,3), order="prec")
 forest(res, cex=0.8, alim=c(-3,3), order="obs")
-forest(res, cex=0.8, alim=c(-3,3), order=ablat, addpred=TRUE)
+forest(res, cex=0.8, alim=c(-3,3), order=ablat)
 
 ### adjust xlim values to see how that changes the plot
 forest(res)

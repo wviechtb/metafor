@@ -116,10 +116,10 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
               data=dat.bcg, slab=paste(author, year, sep=", "))
 
 ### default forest plot of the observed log risk ratios
-forest(dat$yi, dat$vi)
+forest(dat$yi, dat$vi, header=TRUE)
 
 ### the with() function can be used to avoid having to retype dat$... over and over
-with(dat, forest(yi, vi))
+with(dat, forest(yi, vi, header=TRUE))
 
 ### forest plot of the observed risk ratios (transform outcomes)
 with(dat, forest(yi, vi, transf=exp, alim=c(0,2), steps=5,

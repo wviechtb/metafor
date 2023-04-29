@@ -648,6 +648,34 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (anyNA(alim))
       stop(mstyle$stop("Argument 'alim' cannot contain NAs."))
 
+   ### generate x-axis positions if none are specified
+
+   if (is.null(at)) {
+      if (alim.spec) {
+         at <- seq(from=alim[1], to=alim[2], length.out=steps)
+      } else {
+         at <- pretty(x=c(min(ci.lb, na.rm=TRUE), max(ci.ub, na.rm=TRUE)), n=steps-1)
+      }
+   } else {
+      at[at < alim[1]] <- alim[1] # remove at values that are below or above the axis limits
+      at[at > alim[2]] <- alim[2]
+      at <- unique(at)
+   }
+
+   ### x-axis labels (apply transformation to axis labels if requested)
+
+   at.lab <- at
+
+   if (is.function(atransf)) {
+      if (is.null(targs)) {
+         at.lab <- fmtx(sapply(at.lab, atransf), digits[[2]], drop0ifint=TRUE)
+      } else {
+         at.lab <- fmtx(sapply(at.lab, atransf, targs), digits[[2]], drop0ifint=TRUE)
+      }
+   } else {
+      at.lab <- fmtx(at.lab, digits[[2]], drop0ifint=TRUE)
+   }
+
    ### set plot limits (xlim)
 
    ncol.ilab <- ifelse(is.null(ilab), 0, ncol(ilab))
@@ -682,8 +710,16 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    plot.multp.r <- area.anno / area.forest
 
    if (missing(xlim)) {
-      f.1 <- max(min(ci.lb, na.rm=TRUE), alim[1])
-      f.2 <- min(max(ci.ub, na.rm=TRUE), alim[2])
+      if (min(ci.ub, na.rm=TRUE) < alim[1]) {
+         f.1 <- alim[1]
+      } else {
+         f.1 <- min(ci.lb, na.rm=TRUE)
+      }
+      if (max(ci.ub, na.rm=TRUE) > alim[2]) {
+         f.2 <- alim[2]
+      } else {
+         f.2 <- max(ci.ub, na.rm=TRUE)
+      }
       rng <- f.2 - f.1
       xlim <- c(f.1 - rng * plot.multp.l, f.2 + rng * plot.multp.r)
       xlim <- round(xlim, digits[[2]])
@@ -693,7 +729,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    xlim <- sort(xlim)
 
-   ### plot limits must always encompass the yi values
+   ### plot limits must always encompass the yi values (no longer done)
 
    #if (xlim[1] > min(yi, na.rm=TRUE)) { xlim[1] <- min(yi, na.rm=TRUE) }
    #if (xlim[2] < max(yi, na.rm=TRUE)) { xlim[2] <- max(yi, na.rm=TRUE) }
@@ -703,7 +739,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    #if (alim[1] > min(yi, na.rm=TRUE)) { alim[1] <- min(yi, na.rm=TRUE) }
    #if (alim[2] < max(yi, na.rm=TRUE)) { alim[2] <- max(yi, na.rm=TRUE) }
 
-   ### plot limits must always encompass the x-axis limits
+   ### plot limits must always encompass the x-axis limits (no longer done)
 
    #if (alim[1] < xlim[1]) { xlim[1] <- alim[1] }
    #if (alim[2] > xlim[2]) { xlim[2] <- alim[2] }
@@ -735,34 +771,6 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       }
    } else {
       ylim <- sort(ylim)
-   }
-
-   ### generate x-axis positions if none are specified
-
-   if (is.null(at)) {
-      if (alim.spec) {
-         at <- seq(from=alim[1], to=alim[2], length.out=steps)
-      } else {
-         at <- pretty(x=c(min(ci.lb, na.rm=TRUE), max(ci.ub, na.rm=TRUE)), n=steps-1)
-      }
-   } else {
-      at[at < alim[1]] <- alim[1] # remove at values that are below or above the axis limits
-      at[at > alim[2]] <- alim[2]
-      at <- unique(at)
-   }
-
-   ### x-axis labels (apply transformation to axis labels if requested)
-
-   at.lab <- at
-
-   if (is.function(atransf)) {
-      if (is.null(targs)) {
-         at.lab <- fmtx(sapply(at.lab, atransf), digits[[2]], drop0ifint=TRUE)
-      } else {
-         at.lab <- fmtx(sapply(at.lab, atransf, targs), digits[[2]], drop0ifint=TRUE)
-      }
-   } else {
-      at.lab <- fmtx(at.lab, digits[[2]], drop0ifint=TRUE)
    }
 
    #########################################################################
