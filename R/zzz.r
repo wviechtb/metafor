@@ -1,6 +1,6 @@
 .onAttach <- function(libname, pkgname) {
 
-   ver <- "4.1-11"
+   ver <- "4.1-12"
 
    loadmsg <- paste0("\nLoading the 'metafor' package (version ", ver, "). For an\nintroduction to the package please type: help(metafor)\n")
 
@@ -18,10 +18,10 @@
 
          tmp <- suppressWarnings(try(readLines("https://raw.githubusercontent.com/wviechtb/metafor/master/DESCRIPTION", n=2), silent=TRUE))
 
-         if (!inherits(tmp, "try-error")) {
+         if (!inherits(tmp, "try-error") && length(tmp) == 2L) {
             available.ver <- tmp[2]
             if (!is.na(available.ver) && length(available.ver) != 0L)
-               available.ver <- substr(available.ver, 10, nchar(available.ver))
+               available.ver <- substr(available.ver, 10, nchar(available.ver)) # strip 'Version: ' part
          }
 
       } else {

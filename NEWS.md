@@ -1,4 +1,4 @@
-# metafor 4.1-11 (2023-04-29)
+# metafor 4.1-12 (2023-05-01)
 
 - also allow two or three values for `xlab` in the various `forest()` functions (for adding labels at the ends of the x-axis limits)
 
