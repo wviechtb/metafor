@@ -13,14 +13,14 @@ funnel(x, \dots)
        xlim, ylim, xlab, ylab, slab,
        steps=5, at, atransf, targs, digits, level=x$level,
        addtau2=FALSE, type="rstandard",
-       back="lightgray", shade="white", hlines="white",
+       back, shade, hlines,
        refline, lty=3, pch, pch.fill, col, bg,
        label=FALSE, offset=0.4, legend=FALSE, \dots)
 
 \method{funnel}{default}(x, vi, sei, ni, subset, yaxis="sei",
        xlim, ylim, xlab, ylab, slab,
        steps=5, at, atransf, targs, digits, level=95,
-       back="lightgray", shade="white", hlines="white",
+       back, shade, hlines,
        refline=0, lty=3, pch, col, bg,
        label=FALSE, offset=0.4, legend=FALSE, \dots)
 }
@@ -31,10 +31,10 @@ funnel(x, \dots)
    \item{ni}{vector with the corresponding sample sizes. Only relevant when passing a vector via \code{x}.}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the plot. Only relevant when passing a vector via \code{x}.}
    \item{yaxis}{either \code{"sei"}, \code{"vi"}, \code{"seinv"}, \code{"vinv"}, \code{"ni"}, \code{"ninv"}, \code{"sqrtni"}, \code{"sqrtninv"}, \code{"lni"}, or \code{"wi"} to indicate what values should be placed on the y-axis. See \sQuote{Details}.}
-   \item{xlim}{x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
-   \item{ylim}{y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.}
-   \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
-   \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
+   \item{xlim}{x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.}
+   \item{ylim}{y-axis limits. If unspecified, the function sets the y-axis limits to some sensible values.}
+   \item{xlab}{title for the x-axis. If unspecified, the function sets an appropriate axis title.}
+   \item{ylab}{title for the y-axis. If unspecified, the function sets an appropriate axis title.}
    \item{slab}{optional vector with labels for the \mjseqn{k} studies. If unspecified, the function tries to extract study labels from \code{x}.}
    \item{steps}{the number of tick marks for the y-axis (the default is 5).}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.}
@@ -44,15 +44,15 @@ funnel(x, \dots)
    \item{level}{numeric value between 0 and 100 to specify the level of the pseudo confidence interval region (see \link[=misc-options]{here} for details). For \code{"rma"} objects, the default is to take the value from the object. May also be a vector of values to obtain multiple regions. See \sQuote{Examples}.}
    \item{addtau2}{logical to indicate whether the amount of heterogeneity should be accounted for when drawing the pseudo confidence interval region (the default is \code{FALSE}). Ignored when \code{x} is a meta-regression model and residuals are plotted. See \sQuote{Details}.}
    \item{type}{either \code{"rstandard"} (default) or \code{"rstudent"} to specify whether the usual or deleted residuals should be used in creating the funnel plot when \code{x} is a meta-regression model. See \sQuote{Details}.}
-   \item{back}{color to use for the background of the plotting region (default is \code{"lightgray"}).}
-   \item{shade}{color to use for shading the pseudo confidence interval region (default is \code{"white"}). When \code{level} is a vector of values, different shading colors can be specified for each region.}
-   \item{hlines}{color of the horizontal reference lines (default is \code{"white"}).}
+   \item{back}{optional character string to specify the color of the plotting region background. If unspecified, a gray is used.}
+   \item{shade}{optional character string to specify the color of the pseudo confidence interval region. If unspecified, white is used. When \code{level} is a vector of values, different shading colors can be specified for each region.}
+   \item{hlines}{optional character string to specify the color of the horizontal reference lines. If unspecified, the default is white.}
    \item{refline}{numeric value to specify the location of the vertical \sQuote{reference} line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the equal- or random-effects model estimate and at zero for meta-regression models (in which case the residuals are plotted) or when directly plotting observed outcomes.}
    \item{lty}{line type for the pseudo confidence interval region and the reference line. The default is to draw dotted lines (see \code{\link{par}} for other options). Can also be a vector to specify the two line types separately.}
    \item{pch}{plotting symbol to use for the observed outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
-   \item{pch.fill}{plotting symbol to use for the outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the \code{\link{trimfill}} function.}
-   \item{col}{optional character string to specify the color to use for the points (\code{"black"} is used by default if not specified). Can also be a vector.}
-   \item{bg}{optional character string to specify the background color for open plot symbols (\code{"white"} is used by default if not specified). Can also be a vector.}
+   \item{pch.fill}{plotting symbol to use for the outcomes filled in by the trim and fill method. By default, an open circle is used. Only relevant when plotting an object created by the \code{\link{trimfill}} function.}
+   \item{col}{optional character string to specify the (border) color of the points. If unspecified, black is used by default. Can also be a vector.}
+   \item{bg}{optional character string to specify the background color of open plot symbols. If unspecified, white is used by default. Can also be a vector.}
    \item{label}{argument to control the labeling of the points (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{offset}{argument to control the distance between the points and the corresponding labels.}
    \item{legend}{logical to indicate whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to indicate the position of the legend (see \code{\link{legend}}).}
@@ -78,7 +78,7 @@ funnel(x, \dots)
    \item \code{yaxis="wi"} for the weights.
    } However, only when \code{yaxis="sei"} (the default) will the pseudo confidence region have the expected (upside-down) funnel shape with straight lines. Also, when placing (a function of) the sample sizes on the y-axis or the weights, then the pseudo confidence region cannot be drawn. See Sterne and Egger (2001) for more details on the choice of the y-axis.
 
-   If the object passed to the function comes from the \code{\link{trimfill}} function, the outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in values can be specified via the \code{pch.fill} argument.
+   If the object passed to the function comes from the \code{\link{trimfill}} function, the outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in outcomes can be specified via the \code{pch.fill} argument. Arguments \code{col} and \code{bg} can then be of length 2 to specify the (border) color and background color of the observed and filled in outcomes.
 
    One can also directly pass a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances (via \code{vi}), standard errors (via \code{sei}), and/or sample sizes (via \code{ni}) to the function. By default, the vertical reference line is then drawn at zero.
 

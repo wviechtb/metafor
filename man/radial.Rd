@@ -11,35 +11,48 @@ radial(x, \dots)
 galbraith(x, \dots)
 
 \method{radial}{rma}(x, center=FALSE, xlim, zlim, xlab, zlab,
-       atz, aty, steps=7, level=x$level, digits=2, back="lightgray",
-       transf, targs, pch=19, arc.res=100, cex, \dots)
+       atz, aty, steps=7, level=x$level, digits=2,
+       transf, targs, pch=21, col, bg, back, arc.res=100,
+       cex, cex.lab, cex.axis, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
    \item{center}{logical to indicate whether the plot should be centered horizontally at the model estimate (the default is \code{FALSE}).}
-   \item{xlim}{x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
-   \item{zlim}{z-axis limits. If unspecified, the function tries to set the z-axis limits to some sensible values (note that the z-axis limits are the actual vertical limit of the plotting region).}
-   \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
-   \item{zlab}{title for the z-axis. If unspecified, the function tries to set an appropriate axis title.}
+   \item{xlim}{x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.}
+   \item{zlim}{z-axis limits. If unspecified, the function sets the z-axis limits to some sensible values (note that the z-axis limits are the actual vertical limit of the plotting region).}
+   \item{xlab}{title for the x-axis. If unspecified, the function sets an appropriate axis title.}
+   \item{zlab}{title for the z-axis. If unspecified, the function sets an appropriate axis title.}
    \item{atz}{position for the z-axis tick marks and labels. If unspecified, these values are set by the function.}
    \item{aty}{position for the y-axis tick marks and labels. If unspecified, these values are set by the function.}
    \item{steps}{the number of tick marks for the y-axis (the default is 7). Ignored when argument \code{aty} is used.}
-   \item{level}{numeric value between 0 and 100 to specify the level of the z-axis error region (see \link[=misc-options]{here} for details). The default is to take the value from the object.}
+   \item{level}{numeric value between 0 and 100 to specify the level of the z-axis error region. The default is to take the value from the object.}
    \item{digits}{integer to specify the number of decimal places to which the tick mark labels of the y-axis should be rounded (the default is 2).}
-   \item{back}{color of the z-axis error region. Set to \code{NA} to suppress shading of the region.}
-   \item{transf}{optional argument to specify a function to transform the y-axis labels (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{argument to specify a function to transform the y-axis labels (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf}.}
-   \item{pch}{plotting symbol. By default, a filled circle is used. See \code{\link{points}} for other options.}
-   \item{arc.res}{integer to specify the number of line segments to use when drawing the y-axis and confidence interval arcs (the default is 100).}
-   \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
+   \item{pch}{plotting symbol. By default, an open circle is used. See \code{\link{points}} for other options.}
+   \item{col}{character string to specify the (border) color of the points. If unspecified, black is used by default.}
+   \item{bg}{character string to specify the background color of open plot symbols. If unspecified, gray is used by default.}
+   \item{back}{character string to specify the background color of the z-axis error region. If unspecified, a shade of gray is used. Set to \code{NA} to suppress shading of the region.}
+   \item{arc.res}{integer to specify the number of line segments (i.e., the resolution) when drawing the y-axis and confidence interval arcs (the default is 100).}
+   \item{cex}{symbol expansion factor.}
+   \item{cex.lab}{character expansion factor for axis labels.}
+   \item{cex.axis}{character expansion factor for axis annotations.}
    \item{\dots}{other arguments.}
 }
 \details{
-   For an equal-effects model, the plot shows the inverse of the standard errors on the horizontal axis against the observed effect sizes or outcomes standardized by their corresponding standard errors on the vertical axis. Since the vertical axis corresponds to standardized values, it is referred to as the z-axis within this function. On the right hand side of the plot, an arc is drawn (referred to as the y-axis within this function) corresponding to the observed effect sizes or outcomes. A line projected from (0,0) through a particular point within the plot onto this arc indicates the value of the observed effect size or outcome for that point.
+   For an equal-effects model, the plot shows the inverse of the standard errors on the horizontal axis (i.e., \mjeqn{1/\sqrt{v_i}}{1/\sqrt(v_i)}, where \mjseqn{v_i} is the sampling variance of the observed effect size or outcome) against the observed effect sizes or outcomes standardized by their corresponding standard errors on the vertical axis (i.e., \mjeqn{y_i/\sqrt{v_i}}{y_i/\sqrt(v_i)}). Since the vertical axis corresponds to standardized values, it is referred to as the z-axis within this function. On the right hand side of the plot, an arc is drawn (referred to as the y-axis within this function) corresponding to the observed effect sizes or outcomes. A line projected from (0,0) through a particular point within the plot onto this arc indicates the value of the observed effect size or outcome for that point.
 
-   For a random-effects model, the function uses \mjeqn{1/\sqrt{v_i + \tau^2}}{1/\sqrt(v_i + \tau^2)} for the horizontal axis, where \mjseqn{v_i} is the sampling variance of the observed effect size or outcome and \mjseqn{\tau^2} is the amount of heterogeneity as estimated based on the model. For the z-axis, \mjeqn{\sqrt{v_i + \tau^2}}{\sqrt(v_i + \tau^2)} is used to standardize the observed effect sizes or outcomes.
+   For a random-effects model, the function uses \mjeqn{1/\sqrt{v_i + \tau^2}}{1/\sqrt(v_i + \tau^2)} for the horizontal axis, where \mjseqn{\tau^2} is the amount of heterogeneity as estimated based on the model. For the z-axis, \mjeqn{y_i/\sqrt{v_i + \tau^2}}{y_i/\sqrt(v_i + \tau^2)} is used to compute standardized values of the observed effect sizes or outcomes.
 
-   If the model contains moderators, the function returns an error.
+   The second (inner/smaller) arc that is drawn on the right hand side indicates the model estimate (in the middle of the arc) and the corresponding confidence interval (at the ends of the arc).
+
+   The shaded region in the plot is the z-axis error region. For \code{level=95} (or if this was the \code{level} value when the model was fitted), this corresponds to z-axis values equal to \mjeqn{\pm 1.96}{+-1.96}. Under the assumptions of the equal/random-effects models, approximately 95\% of the points should fall within this region.
+
+   When \code{center=TRUE}, the values on the y-axis are centered around the model estimate. As a result, the plot is centered horizontally at the model estimate.
+
+   If the z-axis label on the left is too close to the actual z-axis and/or the arc on the right is clipped, then this can be solved by increasing the margins on the right and/or left (see \code{\link{par}} and in particular the \code{mar} argument).
+
+   Note that radial plots cannot be drawn for models that contain moderators.
 }
 \value{
    A data frame with components:
@@ -75,13 +88,21 @@ res <- rma(yi, vi, data=dat, method="EE")
 ### draw radial plot
 radial(res)
 
-### line from (0,0) with slope equal to the log risk ratio from the 4th study
+### the line from (0,0) with a slope equal to the log risk ratio from the 4th study points
+### to the corresponding effect size value on the arc (i.e., -1.44)
 abline(a=0, b=dat$yi[4], lty="dotted")
+dat$yi[4]
 
 ### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(yi, vi, data=dat)
 
 ### draw radial plot
 radial(res)
+
+### center the values around the model estimate
+radial(res, center=TRUE)
+
+### show risk ratio values on the y-axis arc
+radial(res, transf=exp)
 }
 \keyword{hplot}

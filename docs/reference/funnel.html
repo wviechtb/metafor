@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-13</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
 <span>       <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>, <span class="va">slab</span>,</span>
 <span>       steps<span class="op">=</span><span class="fl">5</span>, <span class="va">at</span>, <span class="va">atransf</span>, <span class="va">targs</span>, <span class="va">digits</span>, level<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">level</span>,</span>
 <span>       addtau2<span class="op">=</span><span class="cn">FALSE</span>, type<span class="op">=</span><span class="st">"rstandard"</span>,</span>
-<span>       back<span class="op">=</span><span class="st">"lightgray"</span>, shade<span class="op">=</span><span class="st">"white"</span>, hlines<span class="op">=</span><span class="st">"white"</span>,</span>
+<span>       <span class="va">back</span>, <span class="va">shade</span>, <span class="va">hlines</span>,</span>
 <span>       <span class="va">refline</span>, lty<span class="op">=</span><span class="fl">3</span>, <span class="va">pch</span>, <span class="va">pch.fill</span>, <span class="va">col</span>, <span class="va">bg</span>,</span>
 <span>       label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.4</span>, legend<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
@@ -116,7 +116,7 @@
 <span><span class="fu">funnel</span><span class="op">(</span><span class="va">x</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">ni</span>, <span class="va">subset</span>, yaxis<span class="op">=</span><span class="st">"sei"</span>,</span>
 <span>       <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>, <span class="va">slab</span>,</span>
 <span>       steps<span class="op">=</span><span class="fl">5</span>, <span class="va">at</span>, <span class="va">atransf</span>, <span class="va">targs</span>, <span class="va">digits</span>, level<span class="op">=</span><span class="fl">95</span>,</span>
-<span>       back<span class="op">=</span><span class="st">"lightgray"</span>, shade<span class="op">=</span><span class="st">"white"</span>, hlines<span class="op">=</span><span class="st">"white"</span>,</span>
+<span>       <span class="va">back</span>, <span class="va">shade</span>, <span class="va">hlines</span>,</span>
 <span>       refline<span class="op">=</span><span class="fl">0</span>, lty<span class="op">=</span><span class="fl">3</span>, <span class="va">pch</span>, <span class="va">col</span>, <span class="va">bg</span>,</span>
 <span>       label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.4</span>, legend<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -142,16 +142,16 @@
 <dd><p>either <code>"sei"</code>, <code>"vi"</code>, <code>"seinv"</code>, <code>"vinv"</code>, <code>"ni"</code>, <code>"ninv"</code>, <code>"sqrtni"</code>, <code>"sqrtninv"</code>, <code>"lni"</code>, or <code>"wi"</code> to indicate what values should be placed on the y-axis. See ‘Details’.</p></dd>
 
    <dt>xlim</dt>
-<dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
+<dd><p>x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.</p></dd>
 
    <dt>ylim</dt>
-<dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
+<dd><p>y-axis limits. If unspecified, the function sets the y-axis limits to some sensible values.</p></dd>
 
    <dt>xlab</dt>
-<dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dd><p>title for the x-axis. If unspecified, the function sets an appropriate axis title.</p></dd>
 
    <dt>ylab</dt>
-<dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dd><p>title for the y-axis. If unspecified, the function sets an appropriate axis title.</p></dd>
 
    <dt>slab</dt>
 <dd><p>optional vector with labels for the <em></em>\(k\) studies. If unspecified, the function tries to extract study labels from <code>x</code>.</p></dd>
@@ -181,13 +181,13 @@
 <dd><p>either <code>"rstandard"</code> (default) or <code>"rstudent"</code> to specify whether the usual or deleted residuals should be used in creating the funnel plot when <code>x</code> is a meta-regression model. See ‘Details’.</p></dd>
 
    <dt>back</dt>
-<dd><p>color to use for the background of the plotting region (default is <code>"lightgray"</code>).</p></dd>
+<dd><p>optional character string to specify the color of the plotting region background. If unspecified, a gray is used.</p></dd>
 
    <dt>shade</dt>
-<dd><p>color to use for shading the pseudo confidence interval region (default is <code>"white"</code>). When <code>level</code> is a vector of values, different shading colors can be specified for each region.</p></dd>
+<dd><p>optional character string to specify the color of the pseudo confidence interval region. If unspecified, white is used. When <code>level</code> is a vector of values, different shading colors can be specified for each region.</p></dd>
 
    <dt>hlines</dt>
-<dd><p>color of the horizontal reference lines (default is <code>"white"</code>).</p></dd>
+<dd><p>optional character string to specify the color of the horizontal reference lines. If unspecified, the default is white.</p></dd>
 
    <dt>refline</dt>
 <dd><p>numeric value to specify the location of the vertical ‘reference’ line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the equal- or random-effects model estimate and at zero for meta-regression models (in which case the residuals are plotted) or when directly plotting observed outcomes.</p></dd>
@@ -199,13 +199,13 @@
 <dd><p>plotting symbol to use for the observed outcomes. By default, a filled circle is used. Can also be a vector of values. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
 
    <dt>pch.fill</dt>
-<dd><p>plotting symbol to use for the outcomes filled in by the trim and fill method. By default, a circle is used. Only relevant when plotting an object created by the <code><a href="trimfill.html">trimfill</a></code> function.</p></dd>
+<dd><p>plotting symbol to use for the outcomes filled in by the trim and fill method. By default, an open circle is used. Only relevant when plotting an object created by the <code><a href="trimfill.html">trimfill</a></code> function.</p></dd>
 
    <dt>col</dt>
-<dd><p>optional character string to specify the color to use for the points (<code>"black"</code> is used by default if not specified). Can also be a vector.</p></dd>
+<dd><p>optional character string to specify the (border) color of the points. If unspecified, black is used by default. Can also be a vector.</p></dd>
 
    <dt>bg</dt>
-<dd><p>optional character string to specify the background color for open plot symbols (<code>"white"</code> is used by default if not specified). Can also be a vector.</p></dd>
+<dd><p>optional character string to specify the background color of open plot symbols. If unspecified, white is used by default. Can also be a vector.</p></dd>
 
    <dt>label</dt>
 <dd><p>argument to control the labeling of the points (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
@@ -235,7 +235,7 @@
 <li><p><code>yaxis="lni"</code> for the log of the sample sizes,</p></li>
 <li><p><code>yaxis="wi"</code> for the weights.</p></li>
 </ul><p>However, only when <code>yaxis="sei"</code> (the default) will the pseudo confidence region have the expected (upside-down) funnel shape with straight lines. Also, when placing (a function of) the sample sizes on the y-axis or the weights, then the pseudo confidence region cannot be drawn. See Sterne and Egger (2001) for more details on the choice of the y-axis.</p>
-<p>If the object passed to the function comes from the <code><a href="trimfill.html">trimfill</a></code> function, the outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in values can be specified via the <code>pch.fill</code> argument.</p>
+<p>If the object passed to the function comes from the <code><a href="trimfill.html">trimfill</a></code> function, the outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in outcomes can be specified via the <code>pch.fill</code> argument. Arguments <code>col</code> and <code>bg</code> can then be of length 2 to specify the (border) color and background color of the observed and filled in outcomes.</p>
 <p>One can also directly pass a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances (via <code>vi</code>), standard errors (via <code>sei</code>), and/or sample sizes (via <code>ni</code>) to the function. By default, the vertical reference line is then drawn at zero.</p>
 <p>The arguments <code>back</code>, <code>shade</code>, and <code>hlines</code> can be set to <code>NULL</code> to suppress the shading and the horizontal reference line.</p>
 <p>With the <code>label</code> argument, one can control whether points in the plot will be labeled. If <code>label="all"</code> (or <code>label=TRUE</code>), all points in the plot will be labeled. If <code>label="out"</code>, points falling outside of the pseudo confidence region will be labeled. Finally, one can also set this argument to a numeric value (between 1 and <em></em>\(k\)) to specify how many of the most extreme points should be labeled (e.g., with <code>label=1</code> only the most extreme point are labeled, while with <code>label=3</code>, the most extreme, and the second and third most extreme points are labeled). With the <code>offset</code> argument, one can adjust the distance between the labels and the corresponding points.</p>

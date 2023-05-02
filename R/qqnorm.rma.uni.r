@@ -1,5 +1,5 @@
-qqnorm.rma.uni <- function(y, type="rstandard", pch=19, envelope=TRUE,
-level=y$level, bonferroni=FALSE, reps=1000, smooth=TRUE, bass=0,
+qqnorm.rma.uni <- function(y, type="rstandard", pch=21, col, bg,
+envelope=TRUE, level=y$level, bonferroni=FALSE, reps=1000, smooth=TRUE, bass=0,
 label=FALSE, offset=0.3, pos=13, lty, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
@@ -26,6 +26,17 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
    if (length(label) != 1L)
       stop(mstyle$stop("Argument 'label' should be of length 1."))
 
+   if (missing(col))
+      col <- par("fg")
+
+   if (missing(bg)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         bg <- "gray40"
+      } else {
+         bg <- "gray70"
+      }
+   }
+
    if (missing(lty)) {
       lty <- c("solid", "dotted") ### 1st value = diagonal line, 2nd value = pseudo confidence envelope
    } else {
@@ -36,6 +47,7 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
    ddd <- list(...)
 
    lqqnorm <- function(..., seed) qqnorm(...)
+   lpoints <- function(..., seed) points(...)
    labline <- function(..., seed) abline(...)
    llines  <- function(..., seed) lines(...)
    ltext   <- function(..., seed) text(...)
@@ -58,7 +70,7 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
       slab   <- slab[ord]
    }
 
-   sav <- lqqnorm(zi, pch=pch, bty="l", ...)
+   sav <- lqqnorm(zi, pch=pch, col=col, bg=bg, bty="l", ...)
    labline(a=0, b=1, lty=lty[1], ...)
    #qqline(zi, ...)
    #abline(h=0, lty="dotted", ...)
@@ -106,6 +118,8 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
          #llines(temp.ub$x, temp.ub$y, lty="12", lwd=1.5, , ...)
 
    }
+
+   lpoints(sav$x, sav$y, pch=pch, col=col, bg=bg, ...)
 
    #########################################################################
 

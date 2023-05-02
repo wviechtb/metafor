@@ -14,20 +14,20 @@ labbe(x, \dots)
       col, bg, grid=FALSE, lty, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"rma"}. See \sQuote{Details}.}
-   \item{xlim}{x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
-   \item{ylim}{y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.}
-   \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
-   \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
-   \item{add}{See \sQuote{Details} and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{to}{See \sQuote{Details} and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{x}{an object of class \code{"rma"}.}
+   \item{xlim}{x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.}
+   \item{ylim}{y-axis limits. If unspecified, the function sets the y-axis limits to some sensible values.}
+   \item{xlab}{title for the x-axis. If unspecified, the function sets an appropriate axis title.}
+   \item{ylab}{title for the y-axis. If unspecified, the function sets an appropriate axis title.}
+   \item{add}{See the documentation of the \code{\link{escalc}} function for more details.}
+   \item{to}{See the documentation of the \code{\link{escalc}} function for more details.}
    \item{transf}{optional argument to specify a function to transform the outcomes (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
-   \item{pch}{plotting symbol to use for the outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
+   \item{pch}{plotting symbol to use for the outcomes. By default, an open circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
    \item{psize}{optional numeric vector to specify the point sizes for the outcomes. If unspecified, the point sizes are a function of the precision of the outcomes. Can also be a vector of values.}
    \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
-   \item{col}{optional character string to specify the color to use for the points (\code{"black"} is used by default if not specified). Can also be a vector.}
-   \item{bg}{optional character string to specify the background color for open plot symbols (\code{"gray"} is used by default if not specified). Can also be a vector. Set to \code{NA} to make the plotting symbols transparent.}
+   \item{col}{optional character string to specify the (border) color of the points. If unspecified, black is used by default. Can also be a vector.}
+   \item{bg}{optional character string to specify the background color of open plot symbols. If unspecified, gray is used by default. Can also be a vector. Set to \code{NA} to make the plotting symbols transparent.}
    \item{grid}{logical to specify whether a grid should be added to the plot. Can also be a color name.}
    \item{lty}{optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model. If unspecified, the function sets this to \code{c("solid","dashed")} by default (use \code{"blank"} to suppress a line).}
    \item{\dots}{other arguments.}

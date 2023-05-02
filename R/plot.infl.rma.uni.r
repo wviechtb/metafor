@@ -1,6 +1,5 @@
 plot.infl.rma.uni <- function(x, plotinf=TRUE, plotdfbs=FALSE, dfbsnew=FALSE, logcov=TRUE,
-layout, slab.style=1, las=0, pch=21, bg="black", bg.infl="red",
-col.na="lightgray", ...) {
+layout, slab.style=1, las=0, pch=21, bg, bg.infl, col.na, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -10,6 +9,25 @@ col.na="lightgray", ...) {
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
+
+   if (missing(bg)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         bg <- "gray40"
+      } else {
+         bg <- "gray70"
+      }
+   }
+
+   if (missing(bg.infl))
+      bg.infl <- "red"
+
+   if (missing(col.na)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         col.na <- "gray30"
+      } else {
+         col.na <- "gray70"
+      }
+   }
 
    #########################################################################
 
@@ -143,8 +161,8 @@ col.na="lightgray", ...) {
                lab.ids  <- ids
             }
             if (any(!is.na(zi))) {
-               zi.min <- min(zi,-2,na.rm=TRUE)
-               zi.max <- max(zi, 2,na.rm=TRUE)
+               zi.min <- min(min(zi,-2,na.rm=TRUE), qnorm(.025))*1.05
+               zi.max <- max(max(zi, 2,na.rm=TRUE), qnorm(.975))*1.05
                lplot(NA, NA, xlim=c(1,len.ids), ylim=c(zi.min,zi.max), xaxt="n", main="rstudent", xlab="", ylab="", las=las, ...)
                laxis(side=1, at=seq_len(len.ids), labels=lab.ids, xlab="", las=las, ...)
                labline(h=0, lty="dashed", ...)
@@ -179,8 +197,8 @@ col.na="lightgray", ...) {
                lab.ids  <- ids
             }
             if (any(!is.na(zi))) {
-               zi.min <- min(zi,na.rm=TRUE)
-               zi.max <- max(zi,na.rm=TRUE)
+               zi.min <- min(min(zi,na.rm=TRUE), -3*sqrt(x$p/(x$k-x$p)))*1.05
+               zi.max <- max(max(zi,na.rm=TRUE),  3*sqrt(x$p/(x$k-x$p)))*1.05
                lplot(NA, NA, xlim=c(1,len.ids), ylim=c(zi.min,zi.max), xaxt="n", main="dffits", xlab="", ylab="", las=las, ...)
                laxis(side=1, at=seq_len(len.ids), labels=lab.ids, xlab="", las=las, ...)
                labline(h= 0, lty="dashed", ...)
@@ -216,8 +234,8 @@ col.na="lightgray", ...) {
                lab.ids  <- ids
             }
             if (any(!is.na(zi))) {
-               zi.min <- min(zi,na.rm=TRUE)
-               zi.max <- max(zi,na.rm=TRUE)
+               zi.min <- 0
+               zi.max <- max(zi,na.rm=TRUE)*1.05
                lplot(NA, NA, xlim=c(1,len.ids), ylim=c(zi.min,zi.max), xaxt="n", main="cook.d", xlab="", ylab="", las=las, ...)
                laxis(side=1, at=seq_len(len.ids), labels=lab.ids, xlab="", las=las, ...)
                labline(h=qchisq(0.5, df=x$m), lty="dotted", ...)
@@ -360,7 +378,7 @@ col.na="lightgray", ...) {
             }
             if (any(!is.na(zi))) {
                zi.min <- 0
-               zi.max <- max(zi,na.rm=TRUE)
+               zi.max <- max(max(zi,na.rm=TRUE), 3*x$p/x$k)*1.05
                lplot(NA, NA, xlim=c(1,len.ids), ylim=c(zi.min,zi.max), xaxt="n", main="hat", xlab="", ylab="", las=las, ...)
                laxis(side=1, at=seq_len(len.ids), labels=lab.ids, xlab="", las=las, ...)
                labline(h=x$p/x$k, lty="dashed", ...)
@@ -394,7 +412,7 @@ col.na="lightgray", ...) {
             }
             if (any(!is.na(zi))) {
                zi.min <- 0
-               zi.max <- max(zi,na.rm=TRUE)
+               zi.max <- max(zi,na.rm=TRUE)*1.05
                lplot(NA, NA, xlim=c(1,len.ids), ylim=c(zi.min,zi.max), xaxt="n", main="weight", xlab="", ylab="", las=las, ...)
                laxis(side=1, at=seq_len(len.ids), labels=lab.ids, xlab="", las=las, ...)
                labline(h=100/x$k, lty="dashed", ...)
@@ -452,7 +470,9 @@ col.na="lightgray", ...) {
             ids.infl <- x$is.infl
             lab.ids  <- ids
          }
-         lplot(NA, NA, xlim=c(1,len.ids), ylim=range(zi,na.rm=TRUE), xaxt="n", main=paste("dfbs: ", names(x$dfbs)[which.dfbs[i]]), xlab="", ylab="", las=las, ...)
+         zi.min <- min(zi,na.rm=TRUE)*1.05
+         zi.max <- max(zi,na.rm=TRUE)*1.05
+         lplot(NA, NA, xlim=c(1,len.ids), ylim=c(zi.min,zi.max), xaxt="n", main=paste("dfbs: ", names(x$dfbs)[which.dfbs[i]]), xlab="", ylab="", las=las, ...)
          laxis(side=1, at=seq_len(len.ids), labels=lab.ids, xlab="", las=las, ...)
          labline(h= 0, lty="dashed", ...)
          labline(h= 1, lty="dotted", ...)

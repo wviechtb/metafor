@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-13</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for gosh.rma</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, het<span class="op">=</span><span class="st">"I2"</span>, pch<span class="op">=</span><span class="fl">16</span>, cex<span class="op">=</span><span class="fl">0.5</span>, <span class="va">out</span>, <span class="va">col</span>, <span class="va">alpha</span>, <span class="va">border</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, het<span class="op">=</span><span class="st">"I2"</span>, pch<span class="op">=</span><span class="fl">16</span>, <span class="va">cex</span>, <span class="va">out</span>, <span class="va">col</span>, <span class="va">alpha</span>, <span class="va">border</span>,</span>
 <span>     <span class="va">xlim</span>, <span class="va">ylim</span>, xhist<span class="op">=</span><span class="cn">TRUE</span>, yhist<span class="op">=</span><span class="cn">TRUE</span>, hh<span class="op">=</span><span class="fl">0.3</span>, <span class="va">breaks</span>,</span>
 <span>     <span class="va">adjust</span>, <span class="va">lwd</span>, <span class="va">labels</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -125,19 +125,19 @@
 <dd><p>optional integer to specify the number of a study that may be a potential outlier. If specified, subsets containing the specified study are drawn in a different color than those not containing the study.</p></dd>
 
    <dt>col</dt>
-<dd><p>optional character string to specify the color to use for the points (if not provided, points are drawn in black). When <code>out</code> is used, two colors should be specified (if not provided, red is used for subsets containing the specified study and blue otherwise).</p></dd>
+<dd><p>optional character string to specify the color of the points (if unspecified, points are drawn in black). When <code>out</code> is used, two colors should be specified (if unspecified, red is used for subsets containing the specified study and blue otherwise).</p></dd>
 
    <dt>alpha</dt>
 <dd><p>optional alpha transparency value for the points (0 means fully transparent and 1 means opaque). If unspecified, the function tries to set this to a sensible value.</p></dd>
 
    <dt>border</dt>
-<dd><p>optional character string to specify the color to use for the borders of the histogram (if not provided, borders are drawn in white). Set to <code>FALSE</code> to omit the borders.</p></dd>
+<dd><p>optional character string to specify the color of the borders of the histogram bars (if not provided, borders are drawn in white). Set to <code>FALSE</code> to omit the borders.</p></dd>
 
    <dt>xlim</dt>
-<dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
+<dd><p>x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.</p></dd>
 
    <dt>ylim</dt>
-<dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
+<dd><p>y-axis limits. If unspecified, the function sets the y-axis limits to some sensible values.</p></dd>
 
    <dt>xhist</dt>
 <dd><p>logical to specify whether a histogram should be drawn for the x-axis (the default is <code>TRUE</code>).</p></dd>
@@ -146,7 +146,7 @@
 <dd><p>logical to specify whether a histogram should be drawn for the y-axis (the default is <code>TRUE</code>).</p></dd>
 
    <dt>hh</dt>
-<dd><p>optional numeric value (or vector of two values) to adjust the height of the histogram(s). Must be between 0 and 1, but should not be too close to 0 or 1, as otherwise the plot cannot be drawn.</p></dd>
+<dd><p>numeric value (or vector of two values) to adjust the height of the histogram(s). Must be between 0 and 1, but should not be too close to 0 or 1, as otherwise the plot cannot be drawn.</p></dd>
 
    <dt>breaks</dt>
 <dd><p>optional argument passed on to <code><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></code> for choosing the (number of) breakpoints of the histogram(s).</p></dd>
@@ -167,7 +167,7 @@
     <div id="details">
     <h2>Details</h2>
     <p>For models without moderators, the function draws a scatter plot of the model estimates on the x-axis against the chosen measure of heterogeneity on the y-axis. Histograms of the respective distributions (with kernel density estimates superimposed) are shown in the margins (when <code>xhist=TRUE</code> and <code>yhist=TRUE</code>).</p>
-<p>For models with moderators, the function draws a scatter plot matrix (with the <code><a href="https://rdrr.io/r/graphics/pairs.html" class="external-link">pairs</a></code> function) of the chosen measure of heterogeneity and each of the model coefficients. Histograms of the variables plotted are shown along the diagonal, with kernel density estimates of the distributions superimposed. Arguments <code>xlim</code>, <code>ylim</code>, <code>xhist</code>, and <code>yhist</code> are then ignored (argument <code>hh</code> can then be used to compress/stretch the height of the distributions shown along the diagonal).</p>
+<p>For models with moderators, the function draws a scatter plot matrix (with the <code><a href="https://rdrr.io/r/graphics/pairs.html" class="external-link">pairs</a></code> function) of the chosen measure of heterogeneity and each of the model coefficients. Histograms of the variables plotted are shown along the diagonal, with kernel density estimates of the distributions superimposed. Arguments <code>xlim</code>, <code>ylim</code>, <code>xhist</code>, and <code>yhist</code> are then ignored, while argument <code>hh</code> can be used to compress/stretch the height of the distributions shown along the diagonal.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -181,7 +181,7 @@
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="gosh.html">gosh.rma</a></code> for the function to create the input to a GOSH plot.</p></div>
+    <div class="dont-index"><p><code><a href="gosh.html">gosh</a></code> for the function to create the input to a GOSH plot.</p></div>
     </div>
 
     <div id="ref-examples">

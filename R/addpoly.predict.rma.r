@@ -36,10 +36,10 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
       efac <- .getfromenv("forest", "efac", default=1)
 
    if (missing(col))
-      col <- "black"
+      col <- par("fg")
 
    if (missing(border))
-      border <- "black"
+      border <- par("fg")
 
    if (missing(lty))
       lty <- "dotted"

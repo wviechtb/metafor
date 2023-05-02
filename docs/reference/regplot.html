@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-13</span>
       </span>
     </div>
 
@@ -136,10 +136,10 @@
 <dd><p>logical to indicate whether the confidence/prediction interval regions should be shaded (the default is <code>TRUE</code>). Can also be a two-element character vector to specify the colors for shading the confidence and prediction interval regions (if shading only the former, a single color can also be specified).</p></dd>
 
    <dt>xlim</dt>
-<dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
+<dd><p>x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.</p></dd>
 
    <dt>ylim</dt>
-<dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
+<dd><p>y-axis limits. If unspecified, the function sets the y-axis limits to some sensible values.</p></dd>
 
    <dt>predlim</dt>
 <dd><p>optional argument to specify the limits of the (marginal) regression line. If unspecified, the limits are based on the range of the moderator variable.</p></dd>
@@ -148,10 +148,10 @@
 <dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
 
    <dt>xlab</dt>
-<dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dd><p>title for the x-axis. If unspecified, the function sets an appropriate axis title.</p></dd>
 
    <dt>ylab</dt>
-<dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dd><p>title for the y-axis. If unspecified, the function sets an appropriate axis title.</p></dd>
 
    <dt>at</dt>
 <dd><p>position of the y-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.</p></dd>
@@ -172,7 +172,7 @@
 <dd><p>numeric value between 0 and 100 to specify the confidence/prediction interval level (see <a href="misc-options.html">here</a> for details). The default is to take the value from the object.</p></dd>
 
    <dt>pch</dt>
-<dd><p>plotting symbol to use for the observed outcomes. By default, a filled circle is used. Can also be a vector of values. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
+<dd><p>plotting symbol to use for the observed outcomes. By default, an open circle is used. Can also be a vector of values. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
 
    <dt>psize</dt>
 <dd><p>optional numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values. Can also be a character string (either <code>"seinv"</code> or <code>"vinv"</code>) to make the point sizes proportional to the inverse standard errors or inverse sampling variances.</p></dd>
@@ -181,10 +181,10 @@
 <dd><p>numeric vector of length 2 to scale the point sizes (ignored when a numeric value or vector is specified for <code>psize</code>). See ‘Details’.</p></dd>
 
    <dt>col</dt>
-<dd><p>character string to specify the color to use for plotting the observed outcomes (<code>"black"</code> is used by default if not specified). Can also be a vector.</p></dd>
+<dd><p>character string to specify the (border) color of the points. If unspecified, black is used by default. Can also be a vector.</p></dd>
 
    <dt>bg</dt>
-<dd><p>character string to specify the background color for open plot symbols (<code>"darkgray"</code> is used by default if not specified). Can also be a vector.</p></dd>
+<dd><p>character string to specify the background color of open plot symbols. If unspecified, gray is used by default. Can also be a vector.</p></dd>
 
    <dt>slab</dt>
 <dd><p>optional vector with labels for the <em></em>\(k\) studies. If unspecified, the function tries to extract study labels from <code>x</code>.</p></dd>

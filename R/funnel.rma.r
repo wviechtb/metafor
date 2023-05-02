@@ -1,6 +1,6 @@
 funnel.rma <- function(x, yaxis="sei", xlim, ylim, xlab, ylab, slab,
 steps=5, at, atransf, targs, digits, level=x$level, addtau2=FALSE,
-type="rstandard", back="lightgray", shade="white", hlines="white",
+type="rstandard", back, shade, hlines,
 refline, lty=3, pch, pch.fill, col, bg,
 label=FALSE, offset=0.4, legend=FALSE, ...) {
 
@@ -22,6 +22,30 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    atransf.char <- deparse(atransf)
 
    mf <- match.call()
+
+   if (missing(back)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         back <- "gray20"
+      } else {
+         back <- "lightgray"
+      }
+   }
+
+   if (missing(shade)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         shade <- "gray30"
+      } else {
+         shade <- "white"
+      }
+   }
+
+   if (missing(hlines)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         hlines <- par("bg")
+      } else {
+         hlines <- "white"
+      }
+   }
 
    if (missing(pch)) {
       pch <- 19
@@ -96,14 +120,14 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       if (yaxis == "wi")
          digits <- c(2L,2L)
    } else {
-      if (length(digits) == 1L)     ### digits[1] for x-axis labels
-         digits <- c(digits,digits) ### digits[2] for y-axis labels
+      if (length(digits) == 1L)     # digits[1] for x-axis labels
+         digits <- c(digits,digits) # digits[2] for y-axis labels
    }
 
    ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for integers
 
    if (length(lty) == 1L)
-      lty <- rep(lty, 2L) ### 1st value = funnel lines, 2nd value = reference line
+      lty <- rep(lty, 2L) # 1st value = funnel lines, 2nd value = reference line
 
    ### note: slab, pch, col, and bg must be of the same length as the original data passed to rma()
    ###       so we have to apply the same subsetting (if necessary) and removing of NAs as was
@@ -133,7 +157,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    if (!inherits(x, "rma.uni.trimfill")) {
 
       if (missing(col)) {
-         col <- "black"
+         col <- par("fg")
       } else {
          col <- .getx("col", mf=mf, data=x$data)
       }
@@ -150,7 +174,11 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       col <- .getsubset(col, x$subset)
 
       if (missing(bg)) {
-         bg <- "white"
+         if (is.element(par("bg"), c("black", "gray10"))) {
+            bg <- "gray40"
+         } else {
+            bg <- "white"
+         }
       } else {
          bg <- .getx("bg", mf=mf, data=x$data)
       }
@@ -171,13 +199,18 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       ### for trimfill objects, 'col' and 'bg' are used to specify the colors of the observed and imputed data
 
       if (missing(col))
-         col <- c("black", "black")
+         col <- c(par("fg"), par("fg"))
       if (length(col) == 1L)
-         col <- c(col, "black")
+         col <- c(col, par("fg"))
       col.vec <- FALSE
 
-      if (missing(bg))
-         bg <- c("white", "white")
+      if (missing(bg)) {
+         if (is.element(par("bg"), c("black", "gray10"))) {
+            bg <- c("gray40", "gray10")
+         } else {
+            bg <- c("white", "white")
+         }
+      }
       if (length(bg) == 1L)
          bg <- c(bg, "white")
       bg.vec <- FALSE
@@ -235,19 +268,31 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    if (!is.null(ddd$colref)) {
       colref <- ddd$colref
    } else {
-      colref <- "black"
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         colref <- "gray80"
+      } else {
+         colref <- par("fg")
+      }
    }
 
    if (!is.null(ddd$colci)) {
       colci <- ddd$colci
    } else {
-      colci <- "black"
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         colci <- "gray80"
+      } else {
+         colci <- par("fg")
+      }
    }
 
    if (!is.null(ddd$colbox)) {
       colbox <- ddd$colbox
    } else {
-      colbox <- "black"
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         colbox <- "gray80"
+      } else {
+         colbox <- par("fg")
+      }
    }
 
    #########################################################################
@@ -265,14 +310,14 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
          addtau2 <- FALSE
       }
 
-      yi  <- x$yi              ### yi/vi/ni is already subsetted and NAs are removed
+      yi  <- x$yi              # yi/vi/ni is already subsetted and NAs are removed
       vi  <- x$vi
-      ni  <- x$ni              ### ni can be NULL (and there may be 'additional' NAs)
+      ni  <- x$ni              # ni can be NULL (and there may be 'additional' NAs)
       sei <- sqrt(vi)
       if (!is.null(x$not.na.yivi))
          x$not.na <- x$not.na.yivi
-      slab <- slab[x$not.na]   ### slab is subsetted but NAs are not removed, so still need to do this here
-      pch  <- pch[x$not.na]    ### same for pch
+      slab <- slab[x$not.na]   # slab is subsetted but NAs are not removed, so still need to do this here
+      pch  <- pch[x$not.na]    # same for pch
 
       if (!inherits(x, "rma.uni.trimfill")) {
          col <- col[x$not.na]
@@ -294,9 +339,9 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
          addtau2 <- FALSE
       }
 
-      options(na.action = "na.pass") ### note: subsetted but include the NAs (there may be more
-                                     ###       NAs than the ones in x$not.na (rstudent() can fail),
-      if (type == "rstandard") {     ###       so we don't use x$not.na below
+      options(na.action = "na.pass") # note: subsetted but include the NAs (there may be more
+                                     #       NAs than the ones in x$not.na (rstudent() can fail),
+      if (type == "rstandard") {     #       so we don't use x$not.na below
          res <- rstandard(x)
       } else {
          res <- rstudent(x)
@@ -306,10 +351,10 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
       ### need to check for missings here
 
-      not.na <- !is.na(res$resid) ### vector of residuals is of size k.f and can includes NAs
+      not.na <- !is.na(res$resid) # vector of residuals is of size k.f and can includes NAs
       yi     <- res$resid[not.na]
       sei    <- res$se[not.na]
-      ni     <- x$ni.f[not.na]    ### ni can be NULL and can still include NAs
+      ni     <- x$ni.f[not.na]    # ni can be NULL and can still include NAs
       vi     <- sei^2
       slab   <- slab[not.na]
       pch    <- pch[not.na]
@@ -408,8 +453,8 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
       level     <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
       level2    <- ifelse(level2 == 0, 1, ifelse(level2 >= 1, (100-level2)/100, ifelse(level2 > .5, 1-level2, level2)))
-      #level    <- ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)) ### note: there may be multiple level values
-      level.min <- min(level)                                                              ### note: smallest level is the widest CI
+      #level    <- ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)) # note: there may be multiple level values
+      level.min <- min(level)                                                              # note: smallest level is the widest CI
       lvals     <- length(level)
 
       ### calculate the CI bounds at the bottom of the figure (for the widest CI if there are multiple)
@@ -432,12 +477,12 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       }
 
       if (missing(xlim)) {
-         xlim    <- c(min(x.lb.bot,min(yi)), max(x.ub.bot,max(yi))) ### make sure x-axis not only includes widest CI, but also all yi values
-         rxlim   <- xlim[2] - xlim[1]        ### calculate range of the x-axis limits
-         xlim[1] <- xlim[1] - (rxlim * 0.10) ### subtract 10% of range from lower x-axis bound
-         xlim[2] <- xlim[2] + (rxlim * 0.10) ### add      10% of range to   upper x-axis bound
+         xlim    <- c(min(x.lb.bot,min(yi)), max(x.ub.bot,max(yi))) # make sure x-axis not only includes widest CI, but also all yi values
+         rxlim   <- xlim[2] - xlim[1]        # calculate range of the x-axis limits
+         xlim[1] <- xlim[1] - (rxlim * 0.10) # subtract 10% of range from lower x-axis bound
+         xlim[2] <- xlim[2] + (rxlim * 0.10) # add      10% of range to   upper x-axis bound
       } else {
-         xlim <- sort(xlim) ### just in case the user supplies the limits in the wrong order
+         xlim <- sort(xlim) # just in case the user supplies the limits in the wrong order
       }
 
    }
@@ -446,11 +491,11 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
       if (missing(xlim)) {
          xlim    <- c(min(yi), max(yi))
-         rxlim   <- xlim[2] - xlim[1]        ### calculate range of the x-axis limits
-         xlim[1] <- xlim[1] - (rxlim * 0.10) ### subtract 10% of range from lower x-axis bound
-         xlim[2] <- xlim[2] + (rxlim * 0.10) ### add      10% of range to   upper x-axis bound
+         rxlim   <- xlim[2] - xlim[1]        # calculate range of the x-axis limits
+         xlim[1] <- xlim[1] - (rxlim * 0.10) # subtract 10% of range from lower x-axis bound
+         xlim[2] <- xlim[2] + (rxlim * 0.10) # add      10% of range to   upper x-axis bound
       } else {
-         xlim <- sort(xlim) ### just in case the user supplies the limits in the wrong order
+         xlim <- sort(xlim) # just in case the user supplies the limits in the wrong order
       }
 
    }
@@ -503,13 +548,13 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
       if (yaxis == "seinv") {
          rylim   <- ylim[2] - ylim[1]
-         #ylim[1] <- max(.0001, ylim[1] - (rylim * 0.10)) ### not clear how much to add to bottom
+         #ylim[1] <- max(.0001, ylim[1] - (rylim * 0.10)) # not clear how much to add to bottom
          ylim[2] <- ylim[2] + (rylim * 0.10)
       }
 
       if (yaxis == "vinv") {
          rylim   <- ylim[2] - ylim[1]
-         #ylim[1] <- max(.0001, ylim[1] - (rylim * 0.10)) ### not clear how much to add to bottom
+         #ylim[1] <- max(.0001, ylim[1] - (rylim * 0.10)) # not clear how much to add to bottom
          ylim[2] <- ylim[2] + (rylim * 0.10)
       }
 
@@ -744,7 +789,11 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
          pt.bg  <- c(pt.bg, bg[2])
       }
 
-      legend(lpos, inset=.01, bg="white", pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         legend(lpos, inset=.01, bg="gray10", pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
+      } else {
+         legend(lpos, inset=.01, bg="white", pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
+      }
 
    }
 

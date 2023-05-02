@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-13</span>
       </span>
     </div>
 
@@ -132,7 +132,7 @@
 <dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
 
    <dt>ylim</dt>
-<dd><p>the y-axis limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
+<dd><p>the y-axis limits of the plot. If unspecified, the function sets the y-axis limits to some sensible values.</p></dd>
 
    <dt>at</dt>
 <dd><p>position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.</p></dd>
@@ -153,7 +153,7 @@
 <dd><p>optional integer to manually adjust the width of the columns for the annotations (either a single integer or a vector of the same length as the number of annotation columns).</p></dd>
 
    <dt>xlab</dt>
-<dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title. Can also be a vector of three/two values (to also/only add labels at the end points of the x-axis limits).</p></dd>
+<dd><p>title for the x-axis. If unspecified, the function sets an appropriate axis title. Can also be a vector of three/two values (to also/only add labels at the end points of the x-axis limits).</p></dd>
 
    <dt>ilab</dt>
 <dd><p>optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.</p></dd>
@@ -186,7 +186,7 @@
 <dd><p>numeric value to specify the point sizes for the estimates (the default is 1). Can also be a vector of values.</p></dd>
 
    <dt>col</dt>
-<dd><p>optional character string to specify the color to use for plotting (<code>"black"</code> is used by default if not specified). Can also be a vector.</p></dd>
+<dd><p>optional character string to specify the color of the estimates. If unspecified, black is used by default. Can also be a vector.</p></dd>
 
    <dt>shade</dt>
 <dd><p>optional character string or a (logical or numeric) vector for shading rows of the plot.</p></dd>
@@ -198,7 +198,7 @@
 <dd><p>optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to <code>"solid"</code> by default.</p></dd>
 
    <dt>fonts</dt>
-<dd><p>optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via <code>ilab</code>). If unspecified, the default font is used.</p></dd>
+<dd><p>optional character string to specify the font for the study labels, annotations, and the extra information (if specified via <code>ilab</code>). If unspecified, the default font is used.</p></dd>
 
    <dt>cex</dt>
 <dd><p>optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.</p></dd>

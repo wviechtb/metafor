@@ -1,4 +1,6 @@
-# metafor 4.1-12 (2023-05-01)
+# metafor 4.1-13 (2023-05-02)
+
+- improved the various plotting functions so they respect `par("fg")`; as a result, one can now create plots with a dark background and light plotting colors
 
 - also allow two or three values for `xlab` in the various `forest()` functions (for adding labels at the ends of the x-axis limits)
 
@@ -12,13 +14,15 @@
 
 - `rma.glmm()` with `measure="OR", model="CM.EL", method="ML"` now treats tau^2 values below 1e-04 effectively as zero before computing the standard errors of the fixed effects; this helps to avoid numerical problems in approximating the Hessian; similarly, `selmodel()` now treats tau^2 values below 1e-04 or min(vi/10) effectively as zero before computing the standard errors
 
-- for measure `SMCC`, can specify d-values, t-test statistics, and/or p-values via arguments `di`, `ti`, and `pi`
+- for measure `SMCC`, can now specify d-values, t-test statistics, and p-values via arguments `di`, `ti`, and `pi`
 
 - functions that issue a warning when omitting studies due to NAs now indicate how many were omitted
 
-- properly document `level` argument
+- properly documented the `level` argument
 
 - small bug fixes
+
+- improved the documentation a bit
 
 # metafor 4.0-0 (2023-03-19)
 

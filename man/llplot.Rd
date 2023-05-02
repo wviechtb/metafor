@@ -24,10 +24,10 @@ llplot(measure, yi, vi, sei, ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the plot.}
    \item{drop00}{logical to specify whether studies with no cases (or only cases) in both groups should be dropped. See \sQuote{Details}.}
    \item{xvals}{integer to specify for how many distinct values the likelihood should be evaluated.}
-   \item{xlim}{x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
-   \item{ylim}{y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.}
-   \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
-   \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
+   \item{xlim}{x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.}
+   \item{ylim}{y-axis limits. If unspecified, the function sets the y-axis limits to some sensible values.}
+   \item{xlab}{title for the x-axis. If unspecified, the function sets an appropriate axis title.}
+   \item{ylab}{title for the y-axis. If unspecified, the function sets an appropriate axis title.}
    \item{scale}{logical to specify whether the likelihood values should be scaled, so that the total area under each curve is (approximately) equal to 1.}
    \item{lty}{the line types (either a single value or a vector of length \mjseqn{k}). If unspecified, the function sets the line types according to some characteristics of the likelihood function. See \sQuote{Details}.}
    \item{lwd}{the line widths (either a single value or a vector of length \mjseqn{k}). If unspecified, the function sets the widths according to the sampling variances (so that the line is thicker for more precise studies and vice-versa).}

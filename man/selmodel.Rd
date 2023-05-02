@@ -20,7 +20,7 @@ selmodel(x, \dots)
    \item{steps}{numeric vector of one or more values that can or must be specified for certain selection functions. See \sQuote{Details}.}
    \item{verbose}{logical to specify whether output should be generated on the progress of the model fitting (the default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
-   \item{control}{optional list of control values for the estimation algorithm. If unspecified, default values are defined inside the function. See \sQuote{Note}.}
+   \item{control}{optional list of control values for the estimation algorithm. See \sQuote{Note}.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -247,7 +247,7 @@ funnel(res, ylim=c(0,0.6), xlab="Standardized Mean Difference")
 sel <- selmodel(res, type="beta")
 sel
 
-# plot selection function
+# plot the selection function
 plot(sel, ylim=c(0,40))
 }
 
@@ -297,7 +297,7 @@ sel2 <- selmodel(res, type="negexp",   alternative="less")
 sel3 <- selmodel(res, type="logistic", alternative="less")
 sel4 <- selmodel(res, type="power",    alternative="less")
 
-# plot selection functions
+# plot the selection functions
 plot(sel1)
 plot(sel2, add=TRUE, col="blue")
 plot(sel3, add=TRUE, col="red")
@@ -363,7 +363,7 @@ funnel(res, atransf=exp, at=log(c(0.25,0.5,1,2,4,8)), ylim=c(0,0.8))
 sel <- selmodel(res, type="stepfun", alternative="greater", steps=c(.025,.10,.50,1))
 sel
 
-# plot selection function
+# plot the selection function
 plot(sel)
 
 # truncated distribution selection model (with steps=0 by default)

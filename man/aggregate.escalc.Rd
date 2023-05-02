@@ -15,7 +15,7 @@
    \item{cluster}{vector to specify the clustering variable (e.g., study).}
    \item{time}{optional vector to specify the time points (only relevant when \code{struct="CAR"}, \code{"CS+CAR"}, or \code{"CS*CAR"}).}
    \item{obs}{optional vector to distinguish different observed effect sizes or outcomes measured at the same time point (only relevant when \code{struct="CS*CAR"}).}
-   \item{V}{optional argument to specify the variance-covariance matrix of the sampling errors. If not specified, argument \code{struct} is used to specify the variance-covariance structure.}
+   \item{V}{optional argument to specify the variance-covariance matrix of the sampling errors. If unspecified, argument \code{struct} is used to specify the variance-covariance structure.}
    \item{struct}{character string to specify the variance-covariance structure of the sampling errors within the same cluster (either \code{"ID"}, \code{"CS"}, \code{"CAR"}, \code{"CS+CAR"}, or \code{"CS*CAR"}). See \sQuote{Details}.}
    \item{rho}{value of the correlation of the sampling errors within clusters (when \code{struct="CS"}, \code{"CS+CAR"}, or \code{"CS*CAR"}). Can also be a vector with the value of the correlation for each cluster.}
    \item{phi}{value of the autocorrelation of the sampling errors within clusters (when \code{struct="CAR"}, \code{"CS+CAR"}, or \code{"CS*CAR"}). Can also be a vector with the value of the autocorrelation for each cluster.}

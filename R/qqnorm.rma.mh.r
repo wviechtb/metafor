@@ -1,4 +1,4 @@
-qqnorm.rma.mh <- function(y, type="rstandard", pch=19, label=FALSE, offset=0.3, pos=13, ...) {
+qqnorm.rma.mh <- function(y, type="rstandard", pch=21, col, bg, label=FALSE, offset=0.3, pos=13, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -13,6 +13,17 @@ qqnorm.rma.mh <- function(y, type="rstandard", pch=19, label=FALSE, offset=0.3, 
 
    if (length(label) != 1L)
       stop(mstyle$stop("Argument 'label' should be of length 1."))
+
+   if (missing(col))
+      col <- par("fg")
+
+   if (missing(bg)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         bg <- "gray40"
+      } else {
+         bg <- "gray70"
+      }
+   }
 
    #########################################################################
 
@@ -32,11 +43,13 @@ qqnorm.rma.mh <- function(y, type="rstandard", pch=19, label=FALSE, offset=0.3, 
       slab   <- slab[ord]
    }
 
-   sav <- qqnorm(zi, pch=pch, bty="l", ...)
+   sav <- qqnorm(zi, pch=pch, col=col, bg=bg, bty="l", ...)
    abline(a=0, b=1, lty="solid", ...)
    #qqline(zi, ...)
    #abline(h=0, lty="dotted", ...)
    #abline(v=0, lty="dotted", ...)
+
+   points(sav$x, sav$y, pch=pch, col=col, bg=bg, ...)
 
    #########################################################################
 

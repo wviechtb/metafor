@@ -1,13 +1,44 @@
 plot.vif.rma <- function(x,
-   breaks="Scott", freq=FALSE, col="gray", border="white", trim=0,
-   col.out=rgb(1,0,0,0.5), col.density="blue", adjust=1,
-   lwd=c(2,0), layout, ...) {
+   breaks="Scott", freq=FALSE, col, border, col.out, col.density,
+   trim=0, adjust=1, lwd=c(2,0), layout, ...) {
 
    #########################################################################
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    .chkclass(class(x), must="vif.rma")
+
+   if (missing(col)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         col <- "gray50"
+      } else {
+         col <- "gray"
+      }
+   }
+
+   if (missing(border)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         border <- par("bg")
+      } else {
+         border <- "white"
+      }
+   }
+
+   if (missing(col.out)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         col.out <- rgb(1,0,0,0.4)
+      } else {
+         col.out <- rgb(1,0,0,0.5)
+      }
+   }
+
+   if (missing(col.density)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         col.density <- "dodgerblue"
+      } else {
+         col.density <- "blue"
+      }
+   }
 
    par.mfrow <- par("mfrow")
 

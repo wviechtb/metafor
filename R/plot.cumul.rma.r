@@ -1,5 +1,5 @@
 plot.cumul.rma <- function(x, yaxis, xlim, ylim, xlab, ylab, at, transf, atransf, targs,
-digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
+digits, cols, grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    #########################################################################
 
@@ -11,6 +11,14 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
+
+   if (missing(cols)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         cols <- c("gray30","gray80")
+      } else {
+         cols <- c("gray80","gray20")
+      }
+   }
 
    if (missing(yaxis)) {
       if (is.null(x$tau2)) {
@@ -70,8 +78,8 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
       if (yaxis == "H2")
          digits <- c(2L,1L)
    } else {
-      if (length(digits) == 1L)     ### digits[1] for x-axis labels
-         digits <- c(digits,digits) ### digits[2] for y-axis labels
+      if (length(digits) == 1L)     # digits[1] for x-axis labels
+         digits <- c(digits,digits) # digits[2] for y-axis labels
    }
 
    ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for integers
@@ -83,8 +91,13 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    ### grid argument can either be a logical or a color
 
-   if (is.logical(grid))
-      gridcol <- "lightgray"
+   if (is.logical(grid)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         gridcol <- "gray30"
+      } else {
+         gridcol <- "gray70"
+      }
+   }
    if (is.character(grid)) {
       gridcol <- grid
       grid <- TRUE
@@ -133,13 +146,13 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
    if (missing(xlim)) {
       xlim <- range(dat$estim, na.rm=TRUE)
    } else {
-      xlim <- sort(xlim) ### just in case the user supplies the limits in the wrong order
+      xlim <- sort(xlim) # just in case the user supplies the limits in the wrong order
    }
 
    if (missing(ylim)) {
       ylim <- range(dat$yval, na.rm=TRUE)
    } else {
-      ylim <- sort(ylim) ### just in case the user supplies the limits in the wrong order
+      ylim <- sort(ylim) # just in case the user supplies the limits in the wrong order
    }
 
    ### if user has specified 'at' argument, make sure xlim actually contains the min and max 'at' values
@@ -213,7 +226,7 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
       cols.lines <- colorRampPalette(c(cols.points[i], cols.points[i+1]))(50)
       #gray.vals.lines <- approx(c(gray.vals.points[i], gray.vals.points[i+1]), n=50)$y
       #cols.lines <- gray(gray.vals.lines)
-      segments(estims[-50], yvals[-50], estims[-1], yvals[-1], col=cols.lines, lwd=lwd)
+      segments(estims[-50], yvals[-50], estims[-1], yvals[-1], col=cols.lines, lwd=lwd, ...)
    }
 
    ### add lines (this does no interpolation)
@@ -221,7 +234,7 @@ digits, cols=c("gray80","gray10"), grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    ### add points
 
-   points(x=dat$estim, y=dat$yval, pch=pch, col=cols.points, cex=cex)
+   points(x=dat$estim, y=dat$yval, pch=pch, col=cols.points, cex=cex, ...)
 
    ### redraw box around plot
 

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-13</span>
       </span>
     </div>
 
@@ -142,7 +142,7 @@
 <dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
 
    <dt>ylim</dt>
-<dd><p>the y-axis limits of the plot. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
+<dd><p>the y-axis limits of the plot. If unspecified, the function sets the y-axis limits to some sensible values.</p></dd>
 
    <dt>at</dt>
 <dd><p>position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.</p></dd>
@@ -163,7 +163,7 @@
 <dd><p>optional integer to manually adjust the width of the columns for the annotations (either a single integer or a vector of the same length as the number of annotation columns).</p></dd>
 
    <dt>xlab</dt>
-<dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title. Can also be a vector of three/two values (to also/only add labels at the end points of the x-axis limits).</p></dd>
+<dd><p>title for the x-axis. If unspecified, the function sets an appropriate axis title. Can also be a vector of three/two values (to also/only add labels at the end points of the x-axis limits).</p></dd>
 
    <dt>slab</dt>
 <dd><p>optional vector with labels for the <em></em>\(k\) studies. If unspecified, the function tries to extract study labels from <code>x</code> or simple labels are created within the function. To suppress labels, set this argument to <code>NA</code>.</p></dd>
@@ -208,13 +208,13 @@
 <dd><p>numeric vector of length 2 to scale the point sizes (ignored when <code>psize</code> is specified). See ‘Details’.</p></dd>
 
    <dt>colout</dt>
-<dd><p>optional character string to specify the color to use for plotting the observed outcomes (<code>"black"</code> is used by default if not specified). Can also be a vector.</p></dd>
+<dd><p>optional character string to specify the color of the observed outcomes. If unspecified, black is used by default. Can also be a vector.</p></dd>
 
    <dt>col</dt>
-<dd><p>optional character string to specify the color to use for the summary polygon or fitted values. If unspecified, the function sets a default color.</p></dd>
+<dd><p>optional character string to specify the color of the summary polygon or fitted values. If unspecified, the function sets a default color.</p></dd>
 
    <dt>border</dt>
-<dd><p>optional character string to specify the color to use for the border of the summary polygon or fitted values. If unspecified, the function sets a default color.</p></dd>
+<dd><p>optional character string to specify the border color of the summary polygon or fitted values. If unspecified, the function sets a default color.</p></dd>
 
    <dt>shade</dt>
 <dd><p>optional character string or a (logical or numeric) vector for shading rows of the plot. See ‘Details’.</p></dd>
@@ -226,7 +226,7 @@
 <dd><p>optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to <code>"solid"</code> by default.</p></dd>
 
    <dt>fonts</dt>
-<dd><p>optional character string to specify the font to use for the study labels, annotations, and the extra information (if specified via <code>ilab</code>). If unspecified, the default font is used.</p></dd>
+<dd><p>optional character string to specify the font for the study labels, annotations, and the extra information (if specified via <code>ilab</code>). If unspecified, the default font is used.</p></dd>
 
    <dt>cex</dt>
 <dd><p>optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.</p></dd>
@@ -270,7 +270,7 @@
 <p>Additional summary estimates can be added to the plot with the <code><a href="addpoly.html">addpoly</a></code> function. See the documentation for that function for examples.</p>
 <p>When <code>showweights=TRUE</code>, the annotations will include information about the weights given to the observed outcomes during the model fitting. For simple models (such as those fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function), these weights correspond to the ‘inverse-variance weights’ (but are given in percent). For models fitted with the <code><a href="rma.mv.html">rma.mv</a></code> function, the weights are based on the diagonal of the weight matrix. Note that the weighting structure is typically more complex in such models (i.e., the weight matrix is usually not just a diagonal matrix) and the weights shown therefore do not reflect this complexity. See <code><a href="weights.rma.html">weights.rma</a></code> for more details (for the special case that <code>x</code> is an intercept-only <code>"rma.mv"</code> model, one can also set <code>showweights="rowsum"</code> to show the ‘row-sum weights’).</p>
 <p>By default (i.e., when <code>psize</code> is not specified), the point sizes are a function of the square root of the model weights. This way, their areas are proportional to the weights. However, the point sizes are rescaled so that the smallest point size is <code>plim[1]</code> and the largest point size is <code>plim[2]</code>. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights. If exactly relative point sizes are desired, one can set <code>plim[2]</code> to <code>NA</code>, in which case the points are rescaled so that the smallest point size corresponds to <code>plim[1]</code> and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set <code>plim[1]</code> to <code>NA</code>, in which case the points are rescaled so that the largest point size corresponds to <code>plim[2]</code> and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set <code>plim[3]</code>, which enforces a minimal point size.</p>
-<p>With the <code>shade</code> argument, one can shade rows of the plot. The argument can be set to one of the following character strings: <code>"zebra"</code> or <code>"zebra2"</code> to use zebra-style shading (starting either at the first or second study) or to <code>"all"</code> in which case all rows are shaded. Alternatively, the argument can be set to a logical vector to indicates for which studies the rows should be shaded. Finally, the argument can also be a numeric vector to indicate which rows to shade.</p>
+<p>With the <code>shade</code> argument, one can shade rows of the plot. The argument can be set to one of the following character strings: <code>"zebra"</code> (same as <code>shade=TRUE</code>) or <code>"zebra2"</code> to use zebra-style shading (starting either at the first or second study) or to <code>"all"</code> in which case all rows are shaded. Alternatively, the argument can be set to a logical vector to indicates for which studies the rows should be shaded. Finally, the argument can also be a numeric vector to indicate which rows to shade. The <code>colshade</code> argument can be used to set the color of shaded rows.</p>
     </div>
     <div id="note">
     <h2>Note</h2>

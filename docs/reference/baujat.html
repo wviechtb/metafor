@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-13</span>
       </span>
     </div>
 
@@ -113,19 +113,19 @@
 <dd><p>an object of class <code>"rma"</code>.</p></dd>
 
    <dt>xlim</dt>
-<dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
+<dd><p>x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.</p></dd>
 
    <dt>ylim</dt>
-<dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
+<dd><p>y-axis limits. If unspecified, the function sets the y-axis limits to some sensible values.</p></dd>
 
    <dt>xlab</dt>
-<dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dd><p>title for the x-axis. If unspecified, the function sets an appropriate axis title.</p></dd>
 
    <dt>ylab</dt>
-<dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dd><p>title for the y-axis. If unspecified, the function sets an appropriate axis title.</p></dd>
 
    <dt>cex</dt>
-<dd><p>optional character expansion factor. If unspecified, the function tries to set this to a sensible value.</p></dd>
+<dd><p>symbol/character expansion factor.</p></dd>
 
    <dt>symbol</dt>
 <dd><p>either an integer to specify the <code>pch</code> value (i.e., plotting symbol), or <code>"slab"</code> to plot the study labels, or <code>"ids"</code> (the default) to plot the study id numbers.</p></dd>
@@ -207,7 +207,7 @@
 <span class="r-in"><span><span class="co">### label only a selection of the more 'extreme' points</span></span></span>
 <span class="r-in"><span><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">baujat</span><span class="op">(</span><span class="va">res</span>, symbol<span class="op">=</span><span class="fl">19</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sav</span> <span class="op">&lt;-</span> <span class="va">sav</span><span class="op">[</span><span class="va">sav</span><span class="op">$</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">10</span> <span class="op">|</span> <span class="va">sav</span><span class="op">$</span><span class="va">y</span> <span class="op">&gt;=</span> <span class="fl">0.10</span>,<span class="op">]</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="va">sav</span><span class="op">$</span><span class="va">x</span>, <span class="va">sav</span><span class="op">$</span><span class="va">y</span>, <span class="va">sav</span><span class="op">$</span><span class="va">slab</span>, pos<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="va">sav</span><span class="op">$</span><span class="va">x</span>, <span class="va">sav</span><span class="op">$</span><span class="va">y</span>, <span class="va">sav</span><span class="op">$</span><span class="va">slab</span>, pos<span class="op">=</span><span class="fl">1</span>, cex<span class="op">=</span><span class="fl">0.8</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="baujat-4.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>

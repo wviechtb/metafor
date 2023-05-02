@@ -52,7 +52,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       ilab.pos <- NULL
 
    if (missing(col)) {
-      col <- "black"
+      col <- par("fg")
    } else {
       col <- .getx("col", mf=mf, data=x$data)
    }
@@ -75,8 +75,13 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       shade <- .getx("shade", mf=mf, data=x$data)
    }
 
-   if (missing(colshade))
-      colshade <- "gray90"
+   if (missing(colshade)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         colshade <- "gray20"
+      } else {
+         colshade <- "gray90"
+      }
+   }
 
    if (missing(cex))
       cex <- NULL
@@ -275,8 +280,13 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    if (is.logical(shade)) {
 
-      shade.type <- "logical"
-      shade <- .chksubset(shade, k, stoponk0=FALSE)
+      if (length(shade) == 1L) {
+         shade <- "zebra"
+         shade.type <- "character"
+      } else {
+         shade.type <- "logical"
+         shade <- .chksubset(shade, k, stoponk0=FALSE)
+      }
 
    }
 

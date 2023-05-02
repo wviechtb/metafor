@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-13</span>
       </span>
     </div>
 
@@ -103,8 +103,7 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for infl.rma.uni</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, plotinf<span class="op">=</span><span class="cn">TRUE</span>, plotdfbs<span class="op">=</span><span class="cn">FALSE</span>, dfbsnew<span class="op">=</span><span class="cn">FALSE</span>, logcov<span class="op">=</span><span class="cn">TRUE</span>,</span>
-<span>     <span class="va">layout</span>, slab.style<span class="op">=</span><span class="fl">1</span>, las<span class="op">=</span><span class="fl">0</span>, pch<span class="op">=</span><span class="fl">21</span>, bg<span class="op">=</span><span class="st">"black"</span>,</span>
-<span>     bg.infl<span class="op">=</span><span class="st">"red"</span>, col.na<span class="op">=</span><span class="st">"lightgray"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>     <span class="va">layout</span>, slab.style<span class="op">=</span><span class="fl">1</span>, las<span class="op">=</span><span class="fl">0</span>, pch<span class="op">=</span><span class="fl">21</span>, <span class="va">bg</span>, <span class="va">bg.infl</span>, <span class="va">col.na</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -134,16 +133,16 @@
 <dd><p>integer between 0 and 3 to specify the alignment of the axis labels (see <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></code>). The most useful alternative to 0 is 3, so that the x-axis labels are drawn vertical to the axis.</p></dd>
 
    <dt>pch</dt>
-<dd><p>plotting symbol to use. By default, a filled circle is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
+<dd><p>plotting symbol to use. By default, an open circle is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
 
    <dt>bg</dt>
-<dd><p>color to use for filling the plotting symbol (the default is <code>"black"</code>).</p></dd>
+<dd><p>optional character string to specify the background color of open plotting symbols. If unspecified, gray is used by default.</p></dd>
 
    <dt>bg.infl</dt>
-<dd><p>color to use for filling the plotting symbol when the point is considered influential (the default is <code>"red"</code>).</p></dd>
+<dd><p>optional character string to specify the background color when the point is considered influential. If unspecified, red is used by default.</p></dd>
 
    <dt>col.na</dt>
-<dd><p>color to use for lines connecting two points with <code>NA</code> values in between (the default is <code>"lightgray"</code>).</p></dd>
+<dd><p>optional character string to specify the color for lines connecting two points with <code>NA</code> values in between. If unspecified, a light shade of gray is used by default.</p></dd>
 
    <dt>...</dt>
 <dd><p>other arguments.</p></dd>

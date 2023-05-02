@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-13</span>
       </span>
     </div>
 
@@ -135,7 +135,7 @@
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
 
    <dt>control</dt>
-<dd><p>optional list of control values for the estimation algorithm. If unspecified, default values are defined inside the function. See ‘Note’.</p></dd>
+<dd><p>optional list of control values for the estimation algorithm. See ‘Note’.</p></dd>
 
    <dt>...</dt>
 <dd><p>other arguments.</p></dd>
@@ -451,7 +451,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># plot selection function</span></span></span>
+<span class="r-in"><span><span class="co"># plot the selection function</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">40</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="selmodel-2.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span></span></span>
@@ -619,7 +619,7 @@
 <span class="r-in"><span><span class="va">sel3</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"logistic"</span>, alternative<span class="op">=</span><span class="st">"less"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sel4</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"power"</span>,    alternative<span class="op">=</span><span class="st">"less"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># plot selection functions</span></span></span>
+<span class="r-in"><span><span class="co"># plot the selection functions</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel2</span>, add<span class="op">=</span><span class="cn">TRUE</span>, col<span class="op">=</span><span class="st">"blue"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel3</span>, add<span class="op">=</span><span class="cn">TRUE</span>, col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span></span>
@@ -820,7 +820,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># plot selection function</span></span></span>
+<span class="r-in"><span><span class="co"># plot the selection function</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="selmodel-6.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span></span></span>

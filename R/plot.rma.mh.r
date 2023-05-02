@@ -16,6 +16,14 @@ plot.rma.mh <- function(x, qqplot=FALSE, ...) {
    par(mfrow=c(2,2))
    on.exit(par(mfrow = par.mfrow), add=TRUE)
 
+   if (is.element(par("bg"), c("black", "gray10"))) {
+      col.na <- "gray30"
+      bg <- "gray30"
+   } else {
+      col.na <- "gray70"
+      bg <- "gray70"
+   }
+
    #########################################################################
 
    forest(x, ...)
@@ -57,9 +65,9 @@ plot.rma.mh <- function(x, qqplot=FALSE, ...) {
       k <- length(z)
 
       plot(NA, NA, xlim=c(1,k), ylim=c(min(z, -2, na.rm=TRUE), max(z, 2, na.rm=TRUE)), xaxt="n", xlab="Study", ylab="", bty="l", ...)
-      lines(seq_len(k)[not.na], z[not.na], col="lightgray", ...)
+      lines(seq_len(k)[not.na], z[not.na], col=col.na, ...)
       lines(seq_len(k), z, ...)
-      points(x=seq_len(k), y=z, pch=21, bg="black", ...)
+      points(x=seq_len(k), y=z, pch=21, bg=bg, ...)
       axis(side=1, at=seq_len(k), labels=ids, ...)
       abline(h=0, lty="dashed", ...)
       abline(h=c(qnorm(.025),qnorm(.975)), lty="dotted", ...)

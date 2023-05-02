@@ -5,18 +5,18 @@
    Plot method for objects of class \code{"vif.rma"}.
 }
 \usage{
-\method{plot}{vif.rma}(x, breaks="Scott", freq=FALSE, col="gray", border="white", trim=0,
-     col.out=rgb(1,0,0,0.5), col.density="blue", adjust=1, lwd=c(2,0), layout, \dots)
+\method{plot}{vif.rma}(x, breaks="Scott", freq=FALSE, col, border, col.out, col.density,
+     trim=0, adjust=1, lwd=c(2,0), layout, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"vif.rma"} obtained with \code{\link{vif}}.}
    \item{breaks}{argument to be passed on to the corresponding argument of \code{\link{hist}} to set (the method for determining) the (number of) breakpoints.}
    \item{freq}{logical to indicate whether frequencies or probability densities should be plotted (the default is \code{FALSE} to plot densities).}
-   \item{col}{character string to specify the color for the bars (the default is gray).}
-   \item{border}{character string to specify the color for the border around the bars (the default is white).}
+   \item{col}{optional character string to specify the color of the histogram bars.}
+   \item{border}{optional character string to specify the color of the borders around the bars.}
+   \item{col.out}{optional character string to specify the color of the bars that are more extreme than the observed (G)VIF value (the default is a semi-transparent shade of red).}
+   \item{col.density}{optional character string to specify the color of the kernel density estimate of the distribution that is superimposed on top of the histogram (the default is blue).}
    \item{trim}{the fraction (up to 0.5) of observations to be trimmed from the upper tail of each distribution before its histogram is plotted.}
-   \item{col.out}{character string to specify the color for the bars that are more extreme than the observed (G)VIF value (the default is a semi-transparent shade of red).}
-   \item{col.density}{character string to specify the color of the kernel density estimate of the distribution that is superimposed on top of the histogram (the default is blue).}
    \item{adjust}{numeric value to be passed on to the corresponding argument of \code{\link{density}} (for adjusting the bandwidth of the kernel density estimate).}
    \item{lwd}{numeric vector to specify the width of the vertical lines corresponding to the value of the observed (G)VIFs and of the density estimate (note: by default, the density estimate has a line width of 0 and is therefore not plotted).}
    \item{layout}{optional vector of two numbers to specify the number of rows and columns for the layout of the figure.}
@@ -53,7 +53,7 @@ res <- rma(yi, vi, mods = ~ length + wic + feedback + info + pers + imag + meta,
 
 ### use the simulation approach to analyze the size of the VIFs
 \dontrun{
-vifs <- vif(res, sim=TRUE)
+vifs <- vif(res, sim=TRUE, seed=1234)
 vifs
 
 ### plot the simulated distributions of the VIFs

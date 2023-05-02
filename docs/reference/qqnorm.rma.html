@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-13</span>
       </span>
     </div>
 
@@ -102,13 +102,13 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for rma.uni</span></span>
-<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">19</span>, envelope<span class="op">=</span><span class="cn">TRUE</span>,</span>
-<span>       level<span class="op">=</span><span class="va">y</span><span class="op">$</span><span class="va">level</span>, bonferroni<span class="op">=</span><span class="cn">FALSE</span>, reps<span class="op">=</span><span class="fl">1000</span>, smooth<span class="op">=</span><span class="cn">TRUE</span>, bass<span class="op">=</span><span class="fl">0</span>,</span>
+<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">21</span>, <span class="va">col</span>, <span class="va">bg</span>,</span>
+<span>       envelope<span class="op">=</span><span class="cn">TRUE</span>, level<span class="op">=</span><span class="va">y</span><span class="op">$</span><span class="va">level</span>, bonferroni<span class="op">=</span><span class="cn">FALSE</span>, reps<span class="op">=</span><span class="fl">1000</span>, smooth<span class="op">=</span><span class="cn">TRUE</span>, bass<span class="op">=</span><span class="fl">0</span>,</span>
 <span>       label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">lty</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="co"># S3 method for rma.mh</span></span>
-<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">19</span>, label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">21</span>, <span class="va">col</span>, <span class="va">bg</span>, label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="co"># S3 method for rma.peto</span></span>
-<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">19</span>, label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">21</span>, <span class="va">col</span>, <span class="va">bg</span>, label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="co"># S3 method for rma.glmm</span></span>
 <span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="co"># S3 method for rma.mv</span></span>
@@ -124,7 +124,13 @@
 <dd><p>character string (either <code>"rstandard"</code> (default) or <code>"rstudent"</code>) to specify whether standardized residuals or studentized deleted residuals should be used in creating the plot. See ‘Details’.</p></dd>
 
    <dt>pch</dt>
-<dd><p>plotting symbol to use for the observed outcomes. By default, a filled circle is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
+<dd><p>plotting symbol to use for the observed outcomes. By default, an open circle is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
+
+   <dt>col</dt>
+<dd><p>optional character string to specify the (border) color of the points. If unspecified, black is used by default.</p></dd>
+
+   <dt>bg</dt>
+<dd><p>optional character string to specify the background color of open plot symbols. If unspecified, gray is used by default.</p></dd>
 
    <dt>envelope</dt>
 <dd><p>logical to specify whether a pseudo confidence envelope should be simulated and added to the plot (the default is <code>TRUE</code>)). Only for objects of class <code>"rma.uni"</code>. See ‘Details’.</p></dd>
@@ -136,7 +142,7 @@
 <dd><p>logical to specify whether the bounds of the envelope should be Bonferroni corrected.</p></dd>
 
    <dt>reps</dt>
-<dd><p>numeric value to specify the number of iterations to use for simulating the pseudo confidence envelope (the default is 1000).</p></dd>
+<dd><p>numeric value to specify the number of iterations for simulating the pseudo confidence envelope (the default is 1000).</p></dd>
 
    <dt>smooth</dt>
 <dd><p>logical to specify whether the results from the simulation should be smoothed (the default is <code>TRUE</code>).</p></dd>

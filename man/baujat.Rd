@@ -12,11 +12,11 @@ baujat(x, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
-   \item{xlim}{x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
-   \item{ylim}{y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.}
-   \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
-   \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
-   \item{cex}{optional character expansion factor. If unspecified, the function tries to set this to a sensible value.}
+   \item{xlim}{x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.}
+   \item{ylim}{y-axis limits. If unspecified, the function sets the y-axis limits to some sensible values.}
+   \item{xlab}{title for the x-axis. If unspecified, the function sets an appropriate axis title.}
+   \item{ylab}{title for the y-axis. If unspecified, the function sets an appropriate axis title.}
+   \item{cex}{symbol/character expansion factor.}
    \item{symbol}{either an integer to specify the \code{pch} value (i.e., plotting symbol), or \code{"slab"} to plot the study labels, or \code{"ids"} (the default) to plot the study id numbers.}
    \item{grid}{logical to specify whether a grid should be added to the plot. Can also be a color name.}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{FALSE}).}
@@ -75,6 +75,6 @@ baujat(res, symbol="slab")
 ### label only a selection of the more 'extreme' points
 sav <- baujat(res, symbol=19, xlim=c(0,20))
 sav <- sav[sav$x >= 10 | sav$y >= 0.10,]
-text(sav$x, sav$y, sav$slab, pos=1)
+text(sav$x, sav$y, sav$slab, pos=1, cex=0.8)
 }
 \keyword{hplot}

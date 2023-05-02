@@ -9,7 +9,7 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
    .chkclass(class(x), must="rma.uni.selmodel")
 
    if (is.element(x$type, c("trunc","truncest")))
-      stop(mstyle$stop("Cannot draw selection function for this type of selection model at the moment."))
+      stop(mstyle$stop("Cannot draw the selection function for this type of selection model."))
 
    ddd <- list(...)
 

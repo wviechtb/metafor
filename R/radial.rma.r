@@ -1,12 +1,12 @@
 radial.rma <- function(x, center=FALSE, xlim=NULL, zlim,
 xlab, zlab, atz, aty, steps=7, level=x$level, digits=2,
-back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
+transf, targs, pch=21, col, bg, back, arc.res=100, cex, cex.lab, cex.axis, ...) {
 
    #########################################################################
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(x), must="rma", notav=c("robust.rma", "rma.ls", "rma.gen", "rma.uni.selmodel"))
+   .chkclass(class(x), must="rma", notav=c("robust.rma", "rma.mv", "rma.ls", "rma.gen", "rma.uni.selmodel"))
 
    if (missing(transf))
       transf <- FALSE
@@ -19,6 +19,25 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    if (missing(aty))
       aty <- NULL
+
+   if (missing(back)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         back <- "gray20"
+      } else {
+         back <- "lightgray"
+      }
+   }
+
+   if (missing(col))
+      col <- par("fg")
+
+   if (missing(bg)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         bg <- "gray40"
+      } else {
+         bg <- "gray70"
+      }
+   }
 
    #########################################################################
 
@@ -97,7 +116,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    ### adjust margins
 
    par.mar <- par("mar")
-   par.mar.adj <- par.mar - c(0,-3,0,-5)
+   par.mar.adj <- par.mar + c(0,4,0,6)
    par.mar.adj[par.mar.adj < 1] <- 1
    par(mar = par.mar.adj)
    on.exit(par(mar = par.mar), add=TRUE)
@@ -116,29 +135,44 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    par(pty="s")
    on.exit(par(pty = par.pty), add=TRUE)
 
-   plot(NA, NA, ylim=zlims, xlim=xlims, bty="n", xaxt="n", yaxt="n", xlab=xlab, ylab="", xaxs="i", yaxs="i", ...)
-
-   if (missing(cex))
+   if (missing(cex)) {
       cex <- par("cex")
+   } else {
+      cex <- par("cex") * cex
+   }
+
+   if (missing(cex.lab)) {
+      cex.lab <- par("cex")
+   } else {
+      cex.lab <- par("cex") * cex.lab
+   }
+
+   if (missing(cex.axis)) {
+      cex.axis <- par("cex")
+   } else {
+      cex.axis <- par("cex") * cex.axis
+   }
+
+   plot(NA, NA, ylim=zlims, xlim=xlims, bty="n", xaxt="n", yaxt="n", xlab=xlab, ylab="", xaxs="i", yaxs="i", cex.lab=cex.lab, ...)
 
    ### add polygon and +-zcrit lines
 
-   polygon(c(0,xaxismax,xaxismax,0), c(zcrit, zcrit+xaxismax*beta, -zcrit+xaxismax*beta, -zcrit), border=NA, col=back, ...)
+   polygon(c(0,xaxismax,xaxismax,0), c(zcrit, zcrit+xaxismax*beta, -zcrit+xaxismax*beta, -zcrit), border=NA, col=back)
    segments(0, 0, xaxismax, xaxismax*beta, lty="solid", ...)
    segments(0, -zcrit, xaxismax, -zcrit+xaxismax*beta, lty="dotted", ...)
    segments(0,  zcrit, xaxismax,  zcrit+xaxismax*beta, lty="dotted", ...)
 
    ### add x-axis
 
-   axis(side=1, ...)
+   axis(side=1, cex.axis=cex.axis, ...)
 
    ### add z-axis
 
    if (is.null(atz)) {
-      axis(side=2, at=seq(-4, 4, length.out=9), labels=NA, las=1, tcl=par("tcl")/2, ...)
-      axis(side=2, at=seq(-2, 2, length.out=3), las=1, ...)
+      axis(side=2, at=seq(-4, 4, length.out=9), labels=NA, las=1, tcl=par("tcl")/2, cex.axis=cex.axis, ...)
+      axis(side=2, at=seq(-2, 2, length.out=3), las=1, cex.axis=cex.axis, ...)
    } else {
-      axis(side=2, at=atz, labels=atz, las=1, ...)
+      axis(side=2, at=atz, labels=atz, las=1, cex.axis=cex.axis, ...)
    }
 
    ### add label for the z-axis
@@ -146,20 +180,20 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    if (missing(zlab)) {
       if (center) {
          if (is.element(x$method, c("FE","EE","CE"))) {
-            mtext(expression(z[i]==frac(y[i]-hat(theta),sqrt(v[i]))), side=2, line=par.mar.adj[2]-1, at=0, adj=0, las=1, cex=cex, ...)
+            mtext(expression(z[i]==frac(y[i]-hat(theta),sqrt(v[i]))), side=2, line=par.mar.adj[2]-1, at=0, adj=0, las=1, cex=cex.lab, ...)
          } else {
-            mtext(expression(z[i]==frac(y[i]-hat(mu),sqrt(v[i]+tau^2))), side=2, line=par.mar.adj[2]-1, adj=0, at=0, las=1, cex=cex, ...)
+            mtext(expression(z[i]==frac(y[i]-hat(mu),sqrt(v[i]+tau^2))), side=2, line=par.mar.adj[2]-1, adj=0, at=0, las=1, cex=cex.lab, ...)
          }
       } else {
          if (is.element(x$method, c("FE","EE","CE"))) {
-            mtext(expression(z[i]==frac(y[i],sqrt(v[i]))), side=2, line=par.mar.adj[2]-2, at=0, adj=0, las=1, cex=cex, ...)
+            mtext(expression(z[i]==frac(y[i],sqrt(v[i]))), side=2, line=par.mar.adj[2]-2, at=0, adj=0, las=1, cex=cex.lab, ...)
          } else {
-            mtext(expression(z[i]==frac(y[i],sqrt(v[i]+tau^2))), side=2, line=par.mar.adj[2]-1, at=0, adj=0, las=1, cex=cex, ...)
+            mtext(expression(z[i]==frac(y[i],sqrt(v[i]+tau^2))), side=2, line=par.mar.adj[2]-1, at=0, adj=0, las=1, cex=cex.lab, ...)
          }
 
       }
    } else {
-      mtext(zlab, side=2, line=par.mar.adj[2]-4, at=0, cex=cex, ...)
+      mtext(zlab, side=2, line=par.mar.adj[2]-4, at=0, cex=cex.lab, ...)
    }
 
 
@@ -250,7 +284,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
    valid <- zis > zlims[1] & zis < zlims[2]
 
    if (any(valid))
-      text(xis[valid], zis[valid], fmtx(atyis.lab[valid], digits), pos=4, cex=cex, ...)
+      text(xis[valid], zis[valid], fmtx(atyis.lab[valid], digits), pos=4, cex=cex.axis, ...)
 
    ### add CI arc
 
@@ -295,7 +329,7 @@ back="lightgray", transf, targs, pch=19, arc.res=100, cex, ...) {
 
    ### add points to the plot
 
-   points(x=xi, y=zi, pch=pch, cex=cex, ...)
+   points(x=xi, y=zi, pch=pch, cex=cex, col=col, bg=bg, ...)
 
    if (is.null(x$not.na.yivi)) {
       invisible(data.frame(x=xi, y=zi, ids=x$ids[x$not.na], slab=x$slab[x$not.na], stringsAsFactors=FALSE))

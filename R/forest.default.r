@@ -62,8 +62,13 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (missing(shade))
       shade <- NULL
 
-   if (missing(colshade))
-      colshade <- "gray90"
+   if (missing(colshade)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         colshade <- "gray20"
+      } else {
+         colshade <- "gray90"
+      }
+   }
 
    if (missing(cex))
       cex <- NULL
@@ -294,7 +299,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       if (length(col) != k)
          stop(mstyle$stop(paste0("Length of the 'col' argument (", length(col), ") does not correspond to the number of outcomes (", k, ").")))
    } else {
-      col <- rep("black", k)
+      col <- rep(par("fg"), k)
    }
 
    shade.type <- "none"
@@ -311,8 +316,13 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    if (is.logical(shade)) {
 
-      shade.type <- "logical"
-      shade <- .chksubset(shade, k, stoponk0=FALSE)
+      if (length(shade) == 1L) {
+         shade <- "zebra"
+         shade.type <- "character"
+      } else {
+         shade.type <- "logical"
+         shade <- .chksubset(shade, k, stoponk0=FALSE)
+      }
 
    }
 

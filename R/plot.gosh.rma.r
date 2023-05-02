@@ -1,4 +1,4 @@
-plot.gosh.rma <- function(x, het="I2", pch=16, cex=0.5, out, col, alpha, border,
+plot.gosh.rma <- function(x, het="I2", pch=16, cex, out, col, alpha, border,
 xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
@@ -9,6 +9,12 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
 
    if (het == "tau2" && is.element(x$method, c("FE","EE","CE")))
       stop(mstyle$stop("Cannot plot 'tau2' for equal/fixed-effects models."))
+
+   if (missing(cex)) {
+      cex <- par("cex") * 0.5
+   } else {
+      cex <- par("cex") * cex
+   }
 
    ddd <- list(...)
 
@@ -51,7 +57,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
    if (missout) {
 
       if (missing(col))
-         col <- "black"
+         col <- par("fg")
 
       col <- col2rgb(col) / 255
       col.pnts <- rgb(col[1], col[2], col[3], alpha[1])
@@ -63,14 +69,21 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
       if (length(out) != 1L)
          stop(mstyle$stop("Argument 'out' should only specify a single study."))
 
+      out <- round(out)
+
       if (out > x$k || out < 1)
          stop(mstyle$stop("Non-existing study chosen as potential outlier."))
 
-      if (missing(col))
-         col <- c("red", "blue")
+      if (missing(col)) {
+         if (is.element(par("bg"), c("black", "gray10"))) {
+            col <- c("firebrick", "dodgerblue")
+         } else {
+            col <- c("red", "blue")
+         }
+      }
 
       if (length(col) != 2L)
-         stop(mstyle$stop("Argument 'col' should specify two colors."))
+         stop(mstyle$stop("Argument 'col' should specify two colors when argument 'out' is used."))
 
       col.o <- col2rgb(col[1]) / 255
       col.i <- col2rgb(col[2]) / 255
@@ -84,8 +97,13 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
 
    }
 
-   if (missing(border))
-      border <- "white"
+   if (missing(border)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         border <- par("bg")
+      } else {
+         border <- "white"
+      }
+   }
 
    if (length(border) == 1L)
       border <- c(border, border)

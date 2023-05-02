@@ -1,6 +1,6 @@
 funnel.default <- function(x, vi, sei, ni, subset, yaxis="sei", xlim, ylim, xlab, ylab, slab,
 steps=5, at, atransf, targs, digits, level=95,
-back="lightgray", shade="white", hlines="white",
+back, shade, hlines,
 refline=0, lty=3, pch, col, bg,
 label=FALSE, offset=0.4, legend=FALSE, ...) {
 
@@ -22,6 +22,30 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       atransf <- FALSE
 
    atransf.char <- deparse(atransf)
+
+   if (missing(back)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         back <- "gray20"
+      } else {
+         back <- "lightgray"
+      }
+   }
+
+   if (missing(shade)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         shade <- "gray30"
+      } else {
+         shade <- "white"
+      }
+   }
+
+   if (missing(hlines)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         hlines <- par("bg")
+      } else {
+         hlines <- "white"
+      }
+   }
 
    if (missing(pch))
       pch <- 19
@@ -144,14 +168,14 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       if (yaxis == "wi")
          digits <- c(2L,2L)
    } else {
-      if (length(digits) == 1L)     ### digits[1] for x-axis labels
-         digits <- c(digits,digits) ### digits[2] for y-axis labels
+      if (length(digits) == 1L)     # digits[1] for x-axis labels
+         digits <- c(digits,digits) # digits[2] for y-axis labels
    }
 
    ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for integers
 
    if (length(lty) == 1L)
-      lty <- rep(lty, 2L) ### 1st value = funnel lines, 2nd value = reference line
+      lty <- rep(lty, 2L) # 1st value = funnel lines, 2nd value = reference line
 
    if (length(pch) == 1L) {
       pch.vec <- FALSE
@@ -163,7 +187,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       stop(mstyle$stop(paste0("Length of the 'pch' argument (", length(pch), ") does not correspond to the number of outcomes (", k, ").")))
 
    if (missing(col))
-      col <- "black"
+      col <- par("fg")
    if (length(col) == 1L) {
       col.vec <- FALSE
       col <- rep(col, k)
@@ -173,8 +197,13 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    if (length(col) != k)
       stop(mstyle$stop(paste0("Length of the 'col' argument (", length(col), ") does not correspond to the number of outcomes (", k, ").")))
 
-   if (missing(bg))
-      bg <- "white"
+   if (missing(bg)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         bg <- "gray40"
+      } else {
+         bg <- "white"
+      }
+   }
    if (length(bg) == 1L) {
       bg.vec <- FALSE
       bg <- rep(bg, k)
@@ -379,8 +408,8 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
       level     <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
       level2    <- ifelse(level2 == 0, 1, ifelse(level2 >= 1, (100-level2)/100, ifelse(level2 > .5, 1-level2, level2)))
-      #level    <- ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)) ### note: there may be multiple level values
-      level.min <- min(level)                                                              ### note: smallest level is the widest CI
+      #level    <- ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)) # note: there may be multiple level values
+      level.min <- min(level)                                                              # note: smallest level is the widest CI
       lvals     <- length(level)
 
       ### calculate the CI bounds at the bottom of the figure (for the widest CI if there are multiple)
@@ -403,12 +432,12 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       }
 
       if (missing(xlim)) {
-         xlim    <- c(min(x.lb.bot,min(yi)), max(x.ub.bot,max(yi))) ### make sure x-axis not only includes widest CI, but also all yi values
-         rxlim   <- xlim[2] - xlim[1]        ### calculate range of the x-axis limits
-         xlim[1] <- xlim[1] - (rxlim * 0.10) ### subtract 10% of range from lower x-axis bound
-         xlim[2] <- xlim[2] + (rxlim * 0.10) ### add      10% of range to   upper x-axis bound
+         xlim    <- c(min(x.lb.bot,min(yi)), max(x.ub.bot,max(yi))) # make sure x-axis not only includes widest CI, but also all yi values
+         rxlim   <- xlim[2] - xlim[1]        # calculate range of the x-axis limits
+         xlim[1] <- xlim[1] - (rxlim * 0.10) # subtract 10% of range from lower x-axis bound
+         xlim[2] <- xlim[2] + (rxlim * 0.10) # add      10% of range to   upper x-axis bound
       } else {
-         xlim <- sort(xlim) ### just in case the user supplies the limits in the wrong order
+         xlim <- sort(xlim) # just in case the user supplies the limits in the wrong order
       }
 
    }
@@ -417,11 +446,11 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
       if (missing(xlim)) {
          xlim    <- c(min(yi), max(yi))
-         rxlim   <- xlim[2] - xlim[1]        ### calculate range of the x-axis limits
-         xlim[1] <- xlim[1] - (rxlim * 0.10) ### subtract 10% of range from lower x-axis bound
-         xlim[2] <- xlim[2] + (rxlim * 0.10) ### add      10% of range to   upper x-axis bound
+         rxlim   <- xlim[2] - xlim[1]        # calculate range of the x-axis limits
+         xlim[1] <- xlim[1] - (rxlim * 0.10) # subtract 10% of range from lower x-axis bound
+         xlim[2] <- xlim[2] + (rxlim * 0.10) # add      10% of range to   upper x-axis bound
       } else {
-         xlim <- sort(xlim) ### just in case the user supplies the limits in the wrong order
+         xlim <- sort(xlim) # just in case the user supplies the limits in the wrong order
       }
 
    }
@@ -474,13 +503,13 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
       if (yaxis == "seinv") {
          rylim   <- ylim[2] - ylim[1]
-         #ylim[1] <- max(.0001, ylim[1] - (rylim * 0.10)) ### not clear how much to add to bottom
+         #ylim[1] <- max(.0001, ylim[1] - (rylim * 0.10)) # not clear how much to add to bottom
          ylim[2] <- ylim[2] + (rylim * 0.10)
       }
 
       if (yaxis == "vinv") {
          rylim   <- ylim[2] - ylim[1]
-         #ylim[1] <- max(.0001, ylim[1] - (rylim * 0.10)) ### not clear how much to add to bottom
+         #ylim[1] <- max(.0001, ylim[1] - (rylim * 0.10)) # not clear how much to add to bottom
          ylim[2] <- ylim[2] + (rylim * 0.10)
       }
 
@@ -688,7 +717,11 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
          pt.bg  <- c(pt.bg, bg[1])
       }
 
-      legend(lpos, inset=.01, bg="white", pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         legend(lpos, inset=.01, bg="gray10", pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
+      } else {
+         legend(lpos, inset=.01, bg="white", pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
+      }
 
    }
 

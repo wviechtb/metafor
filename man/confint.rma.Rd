@@ -35,7 +35,7 @@
    \item{parm}{this argument is here for compatibility with the generic function \code{\link{confint}}, but is (currently) ignored.}
    \item{fixed}{logical to specify whether confidence intervals for the model coefficients should be returned.}
    \item{random}{logical to specify whether a confidence interval for the amount of (residual) heterogeneity should be returned.}
-   \item{type}{optional character string to specify the method to use for computing the confidence interval for the amount of (residual) heterogeneity (either \code{"QP"}, \code{"GENQ"}, or \code{"PL"}).}
+   \item{type}{optional character string to specify the method for computing the confidence interval for the amount of (residual) heterogeneity (either \code{"QP"}, \code{"GENQ"}, or \code{"PL"}).}
    \item{sigma2}{integer to specify for which \mjseqn{\sigma^2} parameter a confidence interval should be obtained.}
    \item{tau2}{integer to specify for which \mjseqn{\tau^2} parameter a confidence interval should be obtained.}
    \item{rho}{integer to specify for which \mjseqn{\rho} parameter the confidence interval should be obtained.}

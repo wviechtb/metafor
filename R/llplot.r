@@ -249,17 +249,19 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
          yi   <- yi[not.na]
          vi   <- vi[not.na]
-         ai   <- ai[not.na]
-         bi   <- bi[not.na]
-         ci   <- ci[not.na]
-         di   <- di[not.na]
+         if (measure == "OR") {
+            ai   <- ai[not.na]
+            bi   <- bi[not.na]
+            ci   <- ci[not.na]
+            di   <- di[not.na]
+            id0  <- id0[not.na]
+            id00 <- id00[not.na]
+         }
+         k    <- length(yi)
          ids  <- ids[not.na]
          lty  <- lty[not.na]
          lwd  <- lwd[not.na]
          col  <- col[not.na]
-         id0  <- id0[not.na]
-         id00 <- id00[not.na]
-         k    <- length(ai)
          warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted from plotting.")), call.=FALSE)
       }
 
@@ -294,8 +296,13 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    ### set default line color (gray0 to gray60 according to the rank of vi)
 
-   if (is.null(col))
-      col <- paste0("gray", round(seq(from=0, to=60, length.out=k))[rank(vi)])
+   if (is.null(col)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         col <- paste0("gray", round(seq(from=70, to=30, length.out=k))[rank(vi)])
+      } else {
+         col <- paste0("gray", round(seq(from=0, to=70, length.out=k))[rank(vi)])
+      }
+   }
 
    ### set x-axis limits
 

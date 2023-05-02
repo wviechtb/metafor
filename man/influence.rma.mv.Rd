@@ -19,7 +19,7 @@
 \arguments{
    \item{model}{an object of class \code{"rma.mv"}.}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{FALSE}).}
-   \item{cluster}{optional vector to specify a clustering variable to use for computing the Cook's distances or DFBETAS values. If not specified, these measures are computed for the individual observed effect sizes or outcomes.}
+   \item{cluster}{optional vector to specify a clustering variable to use for computing the Cook's distances or DFBETAS values. If unspecified, these measures are computed for the individual observed effect sizes or outcomes.}
    \item{reestimate}{logical to specify whether variance/correlation components should be re-estimated after deletion of the \mjeqn{i\textrm{th}}{ith} case (the default is \code{TRUE}).}
    \item{parallel}{character string to specify whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Note}.}
    \item{ncpus}{integer to specify the number of processes to use in the parallel processing.}

@@ -17,10 +17,10 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
-   if (length(add) == 2L) ### for rma.mh and rma.peto objects (1st 'add' value applies to the individual outcomes)
+   if (length(add) == 2L) # for rma.mh and rma.peto objects (1st 'add' value applies to the individual outcomes)
       add <- add[1]
 
-   if (length(to) == 2L)  ### for rma.mh and rma.peto objects (1st 'to' value applies to the individual outcomes)
+   if (length(to) == 2L)  # for rma.mh and rma.peto objects (1st 'to' value applies to the individual outcomes)
       to <- to[1]
 
    if (!is.element(to, c("all","only0","if0all","none")))
@@ -38,7 +38,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
       psize <- NULL
 
    if (missing(lty)) {
-      lty <- c("solid", "dashed") ### 1st value = diagonal line, 2nd value = estimated effect line
+      lty <- c("solid", "dashed") # 1st value = diagonal line, 2nd value = estimated effect line
    } else {
       if (length(lty) == 1L)
          lty <- c(lty, lty)
@@ -55,8 +55,13 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    ### grid argument can either be a logical or a color
 
-   if (is.logical(grid))
-      gridcol <- "lightgray"
+   if (is.logical(grid)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         gridcol <- "gray30"
+      } else {
+         gridcol <- "gray70"
+      }
+   }
    if (is.character(grid)) {
       gridcol <- grid
       grid <- TRUE
@@ -87,7 +92,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    }
 
    if (missing(col))
-      col <- "black"
+      col <- par("fg")
 
    if (length(col) == 1L)
       col <- rep(col, x$k.all)
@@ -97,8 +102,13 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    col <- .getsubset(col, x$subset)
 
-   if (missing(bg))
-      bg <- "gray"
+   if (missing(bg)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         bg <- "gray40"
+      } else {
+         bg <- "gray"
+      }
+   }
 
    if (length(bg) == 1L)
       bg <- rep(bg, x$k.all)
@@ -305,6 +315,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    #########################################################################
 
    ### prepare data frame to return
+
    sav <- data.frame(x=dat.c$yi, y=dat.t$yi, cex=psize, pch=pch, col=col, bg=bg, ids=x$ids[not.na], slab=x$slab[not.na], stringsAsFactors=FALSE)
 
    invisible(sav)

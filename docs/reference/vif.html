@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-13</span>
       </span>
     </div>
 
@@ -278,15 +278,15 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### use the simulation approach to analyze the size of the VIFs</span></span></span>
-<span class="r-in"><span><span class="fu">vif</span><span class="op">(</span><span class="va">res</span>, sim<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">vif</span><span class="op">(</span><span class="va">res</span>, sim<span class="op">=</span><span class="cn">TRUE</span>, seed<span class="op">=</span><span class="fl">1234</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              vif  prop </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> length    1.5371  0.95 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> wic       1.3860  0.85 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> feedback  1.6490  0.97 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wic       1.3860  0.86 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> feedback  1.6490  0.98 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> info      1.8340  0.98 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pers      5.6780  1.00 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> imag      1.1554  0.50 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> imag      1.1554  0.47 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> meta      4.5333  1.00 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
@@ -354,12 +354,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### can also specify a list for the 'btt' argument (and use the simulation approach)</span></span></span>
-<span class="r-in"><span><span class="fu">vif</span><span class="op">(</span><span class="va">res</span>, btt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span>, sim<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">vif</span><span class="op">(</span><span class="va">res</span>, btt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">:</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span>, sim<span class="op">=</span><span class="cn">TRUE</span>, seed<span class="op">=</span><span class="fl">1234</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   coefs m    vif    sif prop </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     2 1 1.7697 1.3303 0.84 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   3:4 2 1.2339 1.0540 0.24 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3     5 1 1.9148 1.3838 0.88 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     2 1 1.7697 1.3303 0.83 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   3:4 2 1.2339 1.0540 0.23 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3     5 1 1.9148 1.3838 0.87 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

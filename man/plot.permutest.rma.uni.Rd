@@ -6,9 +6,8 @@
 }
 \usage{
 \method{plot}{permutest.rma.uni}(x, beta, alpha, QM=FALSE, QS=FALSE,
-     breaks="Scott", freq=FALSE, col="gray", border="white", trim=0,
-     col.out=rgb(1,0,0,0.5), col.ref="black", col.density="blue",
-     adjust=1, lwd=c(2,0,0,4), layout, \dots)
+     breaks="Scott", freq=FALSE, col, border, col.out, col.ref, col.density,
+     trim=0, adjust=1, lwd=c(2,0,0,4), layout, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"permutest.rma.uni"} obtained with \code{\link{permutest}}.}
@@ -18,12 +17,12 @@
    \item{QS}{logical to specify whether the permutation distribution of the omnibus test of the scale coefficients should be plotted (the default is \code{FALSE}). Only relevant for location-scale models (see \code{\link{rma.uni}}).}
    \item{breaks}{argument to be passed on to the corresponding argument of \code{\link{hist}} to set (the method for determining) the (number of) breakpoints.}
    \item{freq}{logical to indicate whether frequencies or probability densities should be plotted (the default is \code{FALSE} to plot densities).}
-   \item{col}{character string to specify the color for the bars (the default is gray).}
-   \item{border}{character string to specify the color for the border around the bars (the default is white).}
+   \item{col}{optional character string to specify the color of the histogram bars.}
+   \item{border}{optional character string to specify the color of the borders around the bars.}
+   \item{col.out}{optional character string to specify the color of the bars that are more extreme than the observed test statistic (the default is a semi-transparent shade of red).}
+   \item{col.ref}{optional character string to specify the color of the theoretical reference/null distribution that is superimposed on top of the histogram (the default is black).}
+   \item{col.density}{optional character string to specify the color of the kernel density estimate of the permutation distribution that is superimposed on top of the histogram (the default is blue).}
    \item{trim}{the fraction (up to 0.5) of observations to be trimmed from the tails of each permutation distribution before its histogram is plotted.}
-   \item{col.out}{character string to specify the color for the bars that are more extreme than the observed test statistic (the default is a semi-transparent shade of red).}
-   \item{col.ref}{character string to specify the color of the theoretical reference/null distribution that is superimposed on top of the histogram (the default is black).}
-   \item{col.density}{character string to specify the color of the kernel density estimate of the permutation distribution that is superimposed on top of the histogram (the default is blue).}
    \item{adjust}{numeric value to be passed on to the corresponding argument of \code{\link{density}} (for adjusting the bandwidth of the kernel density estimate).}
    \item{lwd}{numeric vector to specify the width of the vertical lines corresponding to the value of the observed test statistic, of the reference/null distribution, of the density estimate, and of the vertical line at 0 (note: by default, the reference/null distribution and the density estimate both have a line width of 0 and are therefore not plotted).}
    \item{layout}{optional vector of two numbers to specify the number of rows and columns for the layout of the figure.}
@@ -69,7 +68,6 @@ res
 
 \dontrun{
 ### permutation test (exact)
-set.seed(1234) # for reproducibility
 permres <- permutest(res, exact=TRUE)
 permres
 

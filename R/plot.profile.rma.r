@@ -19,7 +19,8 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
 
    ### filter out some arguments for the plot() function
 
-   lplot <- function(..., time, LB, startmethod, sub1) plot(...)
+   lplot   <- function(..., time, LB, startmethod, sub1) plot(...)
+   lpoints <- function(..., time, LB, startmethod, sub1, log) points(...)
 
    #########################################################################
 
@@ -46,7 +47,7 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
          x[[2]] <- c(x[[2]][seq_len(pos-1)], x$maxll, x[[2]][pos:length(x[[2]])])
       }
 
-      lplot(x[[1]], x[[2]], type="o", xlab=xlab, ylab=ylab, main=main, bty="l", pch=pch, xlim=xlim, ylim=ylim, ...)
+      lplot(x[[1]], x[[2]], type="n", xlab=xlab, ylab=ylab, main=main, bty="l", xlim=xlim, ylim=ylim, ...)
 
       if (refline) {
          abline(v=x$vc, lty="dotted")
@@ -55,6 +56,8 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
 
       if (cline)
          abline(h=x$maxll - qchisq(0.95, df=1)/2, lty="dotted")
+
+      lpoints(x[[1]], x[[2]], type="o", pch=pch, ...)
 
    } else {
 

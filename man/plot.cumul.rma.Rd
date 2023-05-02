@@ -6,22 +6,22 @@
 }
 \usage{
 \method{plot}{cumul.rma}(x, yaxis, xlim, ylim, xlab, ylab,
-     at, transf, atransf, targs, digits, cols=c("gray80","gray10"),
+     at, transf, atransf, targs, digits, cols,
      grid=TRUE, pch=19, cex=1, lwd=2, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"cumul.rma"} obtained with \code{\link{cumul}}.}
    \item{yaxis}{either \code{"tau2"}, \code{"I2"}, or \code{"H2"} to indicate what values should be placed on the y-axis. See \sQuote{Details}.}
-   \item{xlim}{x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
-   \item{ylim}{y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.}
-   \item{xlab}{title for the x-axis. If unspecified, the function tries to set an appropriate axis title.}
-   \item{ylab}{title for the y-axis. If unspecified, the function tries to set an appropriate axis title.}
+   \item{xlim}{x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.}
+   \item{ylim}{y-axis limits. If unspecified, the function sets the y-axis limits to some sensible values.}
+   \item{xlab}{title for the x-axis. If unspecified, the function sets an appropriate axis title.}
+   \item{ylab}{title for the y-axis. If unspecified, the function sets an appropriate axis title.}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.}
    \item{transf}{optional argument to specify a function to transform the summary estimates (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument to specify a function to transform the x-axis labels (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{digits}{optional integer to specify the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first to specify the number of decimal places for the x-axis, the second for the y-axis labels (e.g., \code{digits=c(2,3)}). If unspecified, the function tries to set the argument to some sensible values.}
-   \item{cols}{vector with two or more colors to use for visualizing the order of the cumulative results.}
+   \item{cols}{vector with two or more colors for visualizing the order of the cumulative results.}
    \item{grid}{logical to specify whether a grid should be added to the plot. Can also be a color name.}
    \item{pch}{plotting symbol to use. By default, a filled circle is used. See \code{\link{points}} for other options.}
    \item{cex}{symbol expansion factor.}

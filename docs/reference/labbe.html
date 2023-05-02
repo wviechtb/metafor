@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.1-13</span>
       </span>
     </div>
 
@@ -113,25 +113,25 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
-<dd><p>an object of class <code>"rma"</code>. See ‘Details’.</p></dd>
+<dd><p>an object of class <code>"rma"</code>.</p></dd>
 
    <dt>xlim</dt>
-<dd><p>x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
+<dd><p>x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.</p></dd>
 
    <dt>ylim</dt>
-<dd><p>y-axis limits. If unspecified, the function tries to set the y-axis limits to some sensible values.</p></dd>
+<dd><p>y-axis limits. If unspecified, the function sets the y-axis limits to some sensible values.</p></dd>
 
    <dt>xlab</dt>
-<dd><p>title for the x-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dd><p>title for the x-axis. If unspecified, the function sets an appropriate axis title.</p></dd>
 
    <dt>ylab</dt>
-<dd><p>title for the y-axis. If unspecified, the function tries to set an appropriate axis title.</p></dd>
+<dd><p>title for the y-axis. If unspecified, the function sets an appropriate axis title.</p></dd>
 
    <dt>add</dt>
-<dd><p>See ‘Details’ and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dd><p>See the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 
    <dt>to</dt>
-<dd><p>See ‘Details’ and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+<dd><p>See the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 
    <dt>transf</dt>
 <dd><p>optional argument to specify a function to transform the outcomes (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
@@ -140,7 +140,7 @@
 <dd><p>optional arguments needed by the function specified under <code>transf</code>.</p></dd>
 
    <dt>pch</dt>
-<dd><p>plotting symbol to use for the outcomes. By default, a filled circle is used. Can also be a vector of values. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
+<dd><p>plotting symbol to use for the outcomes. By default, an open circle is used. Can also be a vector of values. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
 
    <dt>psize</dt>
 <dd><p>optional numeric vector to specify the point sizes for the outcomes. If unspecified, the point sizes are a function of the precision of the outcomes. Can also be a vector of values.</p></dd>
@@ -149,10 +149,10 @@
 <dd><p>numeric vector of length 2 to scale the point sizes (ignored when <code>psize</code> is specified). See ‘Details’.</p></dd>
 
    <dt>col</dt>
-<dd><p>optional character string to specify the color to use for the points (<code>"black"</code> is used by default if not specified). Can also be a vector.</p></dd>
+<dd><p>optional character string to specify the (border) color of the points. If unspecified, black is used by default. Can also be a vector.</p></dd>
 
    <dt>bg</dt>
-<dd><p>optional character string to specify the background color for open plot symbols (<code>"gray"</code> is used by default if not specified). Can also be a vector. Set to <code>NA</code> to make the plotting symbols transparent.</p></dd>
+<dd><p>optional character string to specify the background color of open plot symbols. If unspecified, gray is used by default. Can also be a vector. Set to <code>NA</code> to make the plotting symbols transparent.</p></dd>
 
    <dt>grid</dt>
 <dd><p>logical to specify whether a grid should be added to the plot. Can also be a color name.</p></dd>

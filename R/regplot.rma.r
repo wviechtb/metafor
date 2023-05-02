@@ -47,13 +47,17 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    }
 
    if (missing(col)) {
-      col <- "black"
+      col <- par("fg")
    } else {
       col <- .getx("col", mf=mf, data=x$data)
    }
 
    if (missing(bg)) {
-      bg <- "darkgray"
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         bg <- "gray40"
+      } else {
+         bg <- "darkgray"
+      }
    } else {
       bg <- .getx("bg", mf=mf, data=x$data)
    }
@@ -84,17 +88,27 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    ### grid argument can either be a logical or a color
 
-   if (is.logical(grid))
-      gridcol <- "gray"
+   if (is.logical(grid)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         gridcol <- "gray30"
+      } else {
+         gridcol <- "gray70"
+      }
+   }
    if (is.character(grid)) {
       gridcol <- grid
       grid <- TRUE
    }
 
-   ### shade argument can either be a logical or a color
+   ### shade argument can either be a logical or a color (first for ci, second for pi)
 
-   if (is.logical(shade))
-      shadecol <- c("gray85", "gray95") # first for ci, second for pi
+   if (is.logical(shade)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         shadecol <- c("gray25", "gray15")
+      } else {
+         shadecol <- c("gray85", "gray95")
+      }
+   }
    if (is.character(shade)) {
       if (length(shade) == 1L)
          shade <- c(shade, shade)
@@ -122,14 +136,18 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    ### set lcol, lty, and lwd (1 = reg line, 2 = ci bounds, 3 = pi bounds, 4 = refline)
 
    if (missing(lcol)) {
-      lcol <- c("black", "black", "black", "gray40")
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         lcol <- c(rep("gray80", 3), "gray50")
+      } else {
+         lcol <- c(rep(par("fg"), 3), "gray50")
+      }
    } else {
       if (length(lcol) == 1L)
          lcol <- rep(lcol, 4L)
       if (length(lcol) == 2L)
-         lcol <- c(lcol[c(1,2,2)], "gray40")
+         lcol <- c(lcol[c(1,2,2)], "gray50")
       if (length(lcol) == 3L)
-         lcol <- c(lcol, "gray40")
+         lcol <- c(lcol, "gray50")
    }
 
    if (missing(lty)) {
@@ -745,7 +763,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          bg.l   <- NA
          lty.l  <- "blank"
          lwd.l  <- NA
-         tcol.l <- "white"
+         tcol.l <- "transparent"
          ltxt   <- "Studies"
       }
 
@@ -755,7 +773,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          bg.l   <- c(bg.l,  NA)
          lty.l  <- c(lty.l, NA)
          lwd.l  <- c(lwd.l, NA)
-         tcol.l <- c(tcol.l, "white")
+         tcol.l <- c(tcol.l, "transparent")
          ltxt   <- c(ltxt, "Regression Line")
       }
 
@@ -765,7 +783,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          bg.l   <- c(bg.l,  shadecol[1])
          lty.l  <- c(lty.l, NA)
          lwd.l  <- c(lwd.l, 1)
-         tcol.l <- c(tcol.l, "white")
+         tcol.l <- c(tcol.l, "transparent")
          ltxt   <- c(ltxt, paste0(round(100*(1-level), digits[[1]]), "% Confidence Interval"))
       }
 
@@ -775,12 +793,17 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          bg.l   <- c(bg.l,  shadecol[2])
          lty.l  <- c(lty.l, NA)
          lwd.l  <- c(lwd.l, 1)
-         tcol.l <- c(tcol.l, "white")
+         tcol.l <- c(tcol.l, "transparent")
          ltxt   <- c(ltxt, paste0(round(100*(1-level), digits[[1]]), "% Prediction Interval"))
       }
 
-      if (length(ltxt) >= 1L)
-         legend(lpos, inset=.01, bg="white", pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt)
+      if (length(ltxt) >= 1L) {
+         if (is.element(par("bg"), c("black", "gray10"))) {
+            legend(lpos, inset=.01, bg="gray10", pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt)
+         } else {
+            legend(lpos, inset=.01, bg="white", pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt)
+         }
+      }
 
       pch.l  <- NULL
       col.l  <- NULL
@@ -796,7 +819,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          bg.l   <- bg[1]
          lty.l  <- "blank"
          lwd.l  <- 1
-         tcol.l <- "black"
+         tcol.l <- par("fg")
          ltxt   <- "Studies"
       }
 
@@ -806,7 +829,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          bg.l   <- c(bg.l,  NA)
          lty.l  <- c(lty.l, lty[1])
          lwd.l  <- c(lwd.l, lwd[1])
-         tcol.l <- c(tcol.l, "black")
+         tcol.l <- c(tcol.l, par("fg"))
          ltxt   <- c(ltxt, "Regression Line")
       }
 
@@ -816,7 +839,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          bg.l   <- c(bg.l,  NA)
          lty.l  <- c(lty.l, lty[2])
          lwd.l  <- c(lwd.l, lwd[2])
-         tcol.l <- c(tcol.l, "black")
+         tcol.l <- c(tcol.l, par("fg"))
          ltxt   <- c(ltxt, paste0(round(100*(1-level), digits[[1]]), "% Confidence Interval"))
       }
 
@@ -826,7 +849,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          bg.l   <- c(bg.l,  NA)
          lty.l  <- c(lty.l, lty[3])
          lwd.l  <- c(lwd.l, lwd[3])
-         tcol.l <- c(tcol.l, "black")
+         tcol.l <- c(tcol.l, par("fg"))
          ltxt   <- c(ltxt, paste0(round(100*(1-level), digits[[1]]), "% Prediction Interval"))
       }
 

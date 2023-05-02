@@ -16,7 +16,7 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   The model specified via \code{object} must be a model fitted with either the \code{\link{rma.uni}} or \code{\link{rma.mv}} function.
+   The model specified via \code{object} must be a model fitted with either the \code{\link{rma.uni}} or \code{\link{rma.mv}} functions.
 }
 \value{
    A data frame with \code{nsim} columns with the simulated effect sizes or outcomes.

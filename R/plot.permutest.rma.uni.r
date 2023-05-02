@@ -1,13 +1,52 @@
 plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
-   breaks="Scott", freq=FALSE, col="gray", border="white", trim=0,
-   col.out=rgb(1,0,0,0.5), col.ref="black", col.density="blue", adjust=1,
-   lwd=c(2,0,0,4), layout, ...) {
+   breaks="Scott", freq=FALSE, col, border, col.out, col.ref, col.density,
+   trim=0, adjust=1, lwd=c(2,0,0,4), layout, ...) {
 
    #########################################################################
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
    .chkclass(class(x), must="permutest.rma.uni")
+
+   if (missing(col)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         col <- "gray50"
+      } else {
+         col <- "gray"
+      }
+   }
+
+   if (missing(border)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         border <- par("bg")
+      } else {
+         border <- "white"
+      }
+   }
+
+   if (missing(col.out)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         col.out <- rgb(1,0,0,0.4)
+      } else {
+         col.out <- rgb(1,0,0,0.5)
+      }
+   }
+
+   if (missing(col.ref)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         col.ref <- "gray70"
+      } else {
+         col.ref <- "black"
+      }
+   }
+
+   if (missing(col.density)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         col.density <- "dodgerblue"
+      } else {
+         col.density <- "blue"
+      }
+   }
 
    ddd <- list(...)
 

@@ -134,7 +134,7 @@ vif(res)
 
 ### use the simulation approach to analyze the size of the VIFs
 \dontrun{
-vif(res, sim=TRUE)
+vif(res, sim=TRUE, seed=1234)
 }
 
 ### get variance inflation factors using the re-estimation approach
@@ -166,7 +166,7 @@ vif(res, btt="alloc")
 
 ### can also specify a list for the 'btt' argument (and use the simulation approach)
 \dontrun{
-vif(res, btt=list(2,3:4,5), sim=TRUE)
+vif(res, btt=list(2,3:4,5), sim=TRUE, seed=1234)
 }
 }
 \keyword{models}

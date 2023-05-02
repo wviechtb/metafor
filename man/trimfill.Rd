@@ -13,8 +13,8 @@ trimfill(x, \dots)
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}.}
    \item{side}{optional character string (either \code{"left"} or \code{"right"}) to specify on which side of the funnel plot the missing studies should be imputed. If left unspecified, the side is chosen within the function depending on the results of Egger's regression test (see \code{\link{regtest}} for details on this test).}
-   \item{estimator}{character string (either \code{"L0"}, \code{"R0"}, or \code{"Q0"}) to specify the estimator to use for estimating the number of missing studies (the default is \code{"L0"}).}
-   \item{maxiter}{integer to specify the maximum number of iterations to use for the trim and fill method (the default is \code{100}).}
+   \item{estimator}{character string (either \code{"L0"}, \code{"R0"}, or \code{"Q0"}) to specify the estimator for the number of missing studies (the default is \code{"L0"}).}
+   \item{maxiter}{integer to specify the maximum number of iterations for the trim and fill method (the default is \code{100}).}
    \item{verbose}{logical to specify whether output should be generated on the progress of the iterative algorithm used as part of the trim and fill method (the default is \code{FALSE}).}
    \item{ilim}{limits for the imputed values. If unspecified, no limits are used.}
    \item{\dots}{other arguments.}

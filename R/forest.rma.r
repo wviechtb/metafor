@@ -57,7 +57,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    }
 
    if (missing(colout)) {
-      colout <- "black"
+      colout <- par("fg")
    } else {
       colout <- .getx("colout", mf=mf, data=x$data)
    }
@@ -68,8 +68,13 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       shade <- .getx("shade", mf=mf, data=x$data)
    }
 
-   if (missing(colshade))
-      colshade <- "gray90"
+   if (missing(colshade)) {
+      if (is.element(par("bg"), c("black", "gray10"))) {
+         colshade <- "gray20"
+      } else {
+         colshade <- "gray90"
+      }
+   }
 
    if (missing(pch)) {
       pch <- 15
@@ -113,22 +118,33 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (x$int.only) {
 
       if (missing(col)) {
-         col <- c("black", "gray50") # 1st color for summary polygon, 2nd color for prediction interval line
+         col <- c(par("fg"), "gray50") # 1st color for summary polygon, 2nd color for prediction interval line
       } else {
-         if (length(col) == 1L)      # if user only specified one value, assume it is for the summary polygon
+         if (length(col) == 1L)        # if user only specified one value, assume it is for the summary polygon
             col <- c(col, "gray50")
       }
 
       if (missing(border))
-         border <- "black"           # border color of summary polygon
+         border <- par("fg")           # border color of summary polygon
 
    } else {
 
-      if (missing(col))
-         col <- "gray"               # color of fitted values
+      if (missing(col)) {
+         if (is.element(par("bg"), c("black", "gray10"))) {
+            col <- "gray40"            # color of fitted values
+         } else {
+            col <- "gray"              # color of fitted values
+         }
+      }
 
-      if (missing(border))
-         border <- "gray"            # border color of fitted values
+      if (missing(border)) {
+         if (is.element(par("bg"), c("black", "gray10"))) {
+            border <- "gray30"         # border color of fitted values
+         } else {
+            border <- "gray"           # border color of fitted values
+         }
+
+      }
 
    }
 
@@ -377,9 +393,14 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    if (is.logical(shade)) {
 
-      shade.type <- "logical"
-      shade <- .chksubset(shade, x$k.all, stoponk0=FALSE)
-      shade <- .getsubset(shade, x$subset)
+      if (length(shade) == 1L) {
+         shade <- "zebra"
+         shade.type <- "character"
+      } else {
+         shade.type <- "logical"
+         shade <- .chksubset(shade, x$k.all, stoponk0=FALSE)
+         shade <- .getsubset(shade, x$subset)
+      }
 
    }
 

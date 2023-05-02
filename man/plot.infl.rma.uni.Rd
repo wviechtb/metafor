@@ -6,8 +6,7 @@
 }
 \usage{
 \method{plot}{infl.rma.uni}(x, plotinf=TRUE, plotdfbs=FALSE, dfbsnew=FALSE, logcov=TRUE,
-     layout, slab.style=1, las=0, pch=21, bg="black",
-     bg.infl="red", col.na="lightgray", \dots)
+     layout, slab.style=1, las=0, pch=21, bg, bg.infl, col.na, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"infl.rma.uni"} obtained with \code{\link[=influence.rma.uni]{influence}}.}
@@ -18,10 +17,10 @@
    \item{layout}{optional vector of two numbers to specify the number of rows and columns for the layout of the figure.}
    \item{slab.style}{integer to indicate the style of the x-axis labels: 1 = study number, 2 = study label, 3 = abbreviated study label. Note that study labels, even when abbreviated, may be too long to fit in the margins.)}
    \item{las}{integer between 0 and 3 to specify the alignment of the axis labels (see \code{\link{par}}). The most useful alternative to 0 is 3, so that the x-axis labels are drawn vertical to the axis.}
-   \item{pch}{plotting symbol to use. By default, a filled circle is used. See \code{\link{points}} for other options.}
-   \item{bg}{color to use for filling the plotting symbol (the default is \code{"black"}).}
-   \item{bg.infl}{color to use for filling the plotting symbol when the point is considered influential (the default is \code{"red"}).}
-   \item{col.na}{color to use for lines connecting two points with \code{NA} values in between (the default is \code{"lightgray"}).}
+   \item{pch}{plotting symbol to use. By default, an open circle is used. See \code{\link{points}} for other options.}
+   \item{bg}{optional character string to specify the background color of open plotting symbols. If unspecified, gray is used by default.}
+   \item{bg.infl}{optional character string to specify the background color when the point is considered influential. If unspecified, red is used by default.}
+   \item{col.na}{optional character string to specify the color for lines connecting two points with \code{NA} values in between. If unspecified, a light shade of gray is used by default.}
    \item{\dots}{other arguments.}
 }
 \details{
