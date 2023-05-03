@@ -100,7 +100,7 @@ permutest(x, \dots)
 \seealso{
    \code{\link{rma.uni}} for the function to fit models for which permutation tests can be conducted.
 
-   \code{\link{print.permutest.rma.uni}} and \code{\link{plot.permutest.rma.uni}} for the print and plot methods and \code{\link{coef.permutest.rma.uni}} for a method to extract the model results table.
+   \code{\link[=print.permutest.rma.uni]{print}} and \code{\link[=plot.permutest.rma.uni]{plot}} for the print and plot methods and \code{\link[=coef.permutest.rma.uni]{coef}} for a method to extract the model results table.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

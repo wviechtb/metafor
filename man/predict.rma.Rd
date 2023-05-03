@@ -86,7 +86,7 @@
    Viechtbauer, W., & \enc{López-López}{Lopez-Lopez}, J. A. (2022). Location-scale models for meta-analysis. \emph{Research Synthesis Methods}. \bold{13}(6), 697--715. \verb{https://doi.org/10.1002/jrsm.1562}
 }
 \seealso{
-   \code{\link{fitted.rma}} for a function to extract the fitted values, \code{\link{blup.rma.uni}} for a function to compute BLUPs that combine the fitted values and predicted random effects, and \code{\link{addpoly.predict.rma}} to add polygons based on predicted values to a forest plot.
+   \code{\link[=fitted.rma]{fitted}} for a function to extract the fitted values, \code{\link[=blup.rma.uni]{blup}} for a function to compute BLUPs that combine the fitted values and predicted random effects, and \code{\link[=addpoly.predict.rma]{addpoly}} to add polygons based on predicted values to a forest plot.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

@@ -14,11 +14,11 @@ addpoly(x, \dots)
 \details{
    Currently, methods exist for three types of situations.
 
-   In the first case, object \code{x} is a fitted model coming from the \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, or \code{\link{rma.mv}} functions. The model must either be an equal- or a random-effects model, that is, the model should not contain any moderators. The corresponding method is called \code{\link{addpoly.rma}}. It can be used to add a polygon to an existing forest plot (usually at the bottom), showing the summary estimate (with its confidence interval) based on the fitted model.
+   In the first case, object \code{x} is a fitted model coming from the \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, or \code{\link{rma.mv}} functions. The model must either be an equal- or a random-effects model, that is, the model should not contain any moderators. The corresponding method is \code{\link{addpoly.rma}}. It can be used to add a polygon to an existing forest plot (usually at the bottom), showing the summary estimate (with its confidence interval) based on the fitted model.
 
-   Alternatively, \code{x} can be an object of class \code{"predict.rma"} obtained with the \code{\link{predict.rma}} function. In this case, polygons based on the predicted values are drawn. The corresponding method is \code{\link{addpoly.predict.rma}}.
+   Alternatively, \code{x} can be an object of class \code{"predict.rma"} obtained with the \code{\link[=predict.rma]{predict}} function. In this case, polygons based on the predicted values are drawn. The corresponding method is \code{\link{addpoly.predict.rma}}.
 
-   Alternatively, object \code{x} can be a vector with values at which one or more polygons should be drawn. The corresponding method is then \code{\link{addpoly.default}}.
+   Alternatively, object \code{x} can be a vector with values at which one or more polygons should be drawn. The corresponding method is \code{\link{addpoly.default}}.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
@@ -29,6 +29,6 @@ addpoly(x, \dots)
 \seealso{
    \code{\link{addpoly.rma}}, \code{\link{addpoly.predict.rma}}, and \code{\link{addpoly.default}} for the specific method functions.
 
-   \code{\link{forest.rma}} and \code{\link{forest.default}} for functions to draw forest plots to which polygons can be added.
+   \code{\link{forest}} for functions to draw forest plots to which polygons can be added.
 }
 \keyword{aplot}

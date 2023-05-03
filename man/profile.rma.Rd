@@ -128,9 +128,9 @@
    Viechtbauer, W., & \enc{López-López}{Lopez-Lopez}, J. A. (2022). Location-scale models for meta-analysis. \emph{Research Synthesis Methods}. \bold{13}(6), 697--715. \verb{https://doi.org/10.1002/jrsm.1562}
 }
 \seealso{
-   \code{\link{rma.uni}}, \code{\link{rma.mv}}, and \code{\link{selmodel.rma.uni}} for functions to fit models for which profile likelihood plots can be drawn.
+   \code{\link{rma.uni}}, \code{\link{rma.mv}}, and \code{\link[=selmodel.rma.uni]{selmodel}} for functions to fit models for which profile likelihood plots can be drawn.
 
-   \code{\link{confint.rma.uni}}, \code{\link{confint.rma.mv}}, and \code{\link{confint.rma.uni.selmodel}} for functions to compute corresponding profile likelihood confidence intervals.
+   \code{\link[=confint.rma]{confint}} for functions to compute corresponding profile likelihood confidence intervals.
 }
 \examples{
 ### calculate log odds ratios and corresponding sampling variances

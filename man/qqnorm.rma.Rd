@@ -1,5 +1,6 @@
 \name{qqnorm.rma}
 \alias{qqnorm}
+\alias{qqnorm.rma}
 \alias{qqnorm.rma.uni}
 \alias{qqnorm.rma.mh}
 \alias{qqnorm.rma.peto}

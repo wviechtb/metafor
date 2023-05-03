@@ -47,7 +47,7 @@
    Viechtbauer, W., & Cheung, M. W.-L. (2010). Outlier and influence diagnostics for meta-analysis. \emph{Research Synthesis Methods}, \bold{1}(2), 112--125. \verb{https://doi.org/10.1002/jrsm.11}
 }
 \seealso{
-   \code{\link{influence.rma.uni}} for the function to compute the various model diagnostics.
+   \code{\link[=influence.rma.uni]{influence}} for the function to compute the various model diagnostics.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

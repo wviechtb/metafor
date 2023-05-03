@@ -58,7 +58,7 @@ blup(x, \dots)
 \seealso{
    \code{\link{rma.uni}} for the function to fit models for which BLUPs can be extracted.
 
-   \code{\link{predict.rma}} and \code{\link{fitted.rma}} for functions to compute the predicted/fitted values based only on the fixed effects and \code{\link{ranef.rma.uni}} for a function to compute the BLUPs based only on the random effects.
+   \code{\link[=predict.rma]{predict}} and \code{\link[=fitted.rma]{fitted}} for functions to compute the predicted/fitted values based only on the fixed effects and \code{\link{ranef}} for a function to compute the BLUPs based only on the random effects.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

@@ -69,7 +69,7 @@
    \item{X2}{cluster-level multivariate standardized residuals.}
    \item{k}{number of observed effect sizes or outcomes within the clusters.}
 
-   The object is formatted and printed with \code{\link{print.list.rma}}. To format the results as a data frame, one can use the \code{\link[=as.data.frame.list.rma]{as.data.frame}} function.
+   The object is formatted and printed with \code{\link[=print.list.rma]{print}}. To format the results as a data frame, one can use the \code{\link[=as.data.frame.list.rma]{as.data.frame}} function.
 }
 \note{
    The externally standardized residuals (obtained with \code{rstudent}) are calculated by refitting the model \mjseqn{k} times (where \mjseqn{k} denotes the number of cases). Depending on how large \mjseqn{k} is, it may take a few moments to finish the calculations. For complex models fitted with \code{\link{rma.mv}}, this can become computationally expensive.

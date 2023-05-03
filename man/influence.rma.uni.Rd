@@ -10,7 +10,7 @@
 \alias{hatvalues.rma.uni}
 \title{Model Diagnostics for 'rma.uni' Objects}
 \description{
-   The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case at a time on the model fit or the fitted/residual values) for objects of class \code{"rma.uni"}. For the corresponding documentation for \code{"rma.mv"} objects, see \code{\link{influence.rma.mv}}. \loadmathjax
+   The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case at a time on the model fit or the fitted/residual values) for objects of class \code{"rma.uni"}. For the corresponding documentation for \code{"rma.mv"} objects, see \code{\link[=influence.rma.mv]{influence}}. \loadmathjax
 }
 \usage{
 \method{influence}{rma.uni}(model, digits, progbar=FALSE, \dots)
@@ -44,7 +44,7 @@
    \item DFBETAS value(s).
    } The diagonal elements of the hat matrix and the weights (in \%) given to the observed effect sizes or outcomes during the model fitting are also provided (except for their scaling, the hat values and weights are the same for models without moderators, but will differ when moderators are included).
 
-   For details on externally standardized residuals, see \code{\link{rstudent.rma.uni}}.
+   For details on externally standardized residuals, see \code{\link[=rstudent.rma.uni]{rstudent}}.
 
    The DFFITS value essentially indicates how many standard deviations the predicted (average) effect or outcome for the \mjeqn{i\textrm{th}}{ith} case changes after excluding the \mjeqn{i\textrm{th}}{ith} case from the model fitting.
 
@@ -98,9 +98,9 @@
    Viechtbauer, W., & Cheung, M. W.-L. (2010). Outlier and influence diagnostics for meta-analysis. \emph{Research Synthesis Methods}, \bold{1}(2), 112--125. \verb{https://doi.org/10.1002/jrsm.11}
 }
 \seealso{
-   \code{\link{plot.infl.rma.uni}} for a method to plot the outlier and influential case diagnostics.
+   \code{\link[=plot.infl.rma.uni]{plot}} for a method to plot the outlier and influential case diagnostics.
 
-   \code{\link{rstudent.rma.uni}} for externally standardized residuals and \code{\link{weights.rma.uni}} for model fitting weights.
+   \code{\link[=rstudent.rma.uni]{rstudent}} for externally standardized residuals and \code{\link[=weights.rma.uni]{weights}} for model fitting weights.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

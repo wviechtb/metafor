@@ -593,7 +593,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    Zou, G. Y. (2007). One relative risk versus two odds ratios: Implications for meta-analyses involving paired and unpaired binary data. \emph{Clinical Trials}, \bold{4}(1), 25--31. \verb{https://doi.org/10.1177/1740774506075667}
 }
 \seealso{
-   \code{\link{print.escalc}} and \code{\link{summary.escalc}} for the print and summary methods.
+   \code{\link[=print.escalc]{print}} and \code{\link[=summary.escalc]{summary}} for the print and summary methods.
 
    \code{\link{conv.2x2}} for a function to reconstruct the cell frequencies of \mjeqn{2 \times 2}{2x2} tables based on other summary statistics.
 

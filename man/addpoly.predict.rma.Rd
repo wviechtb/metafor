@@ -42,7 +42,7 @@
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{forest.rma}} and \code{\link{forest.default}} for functions to draw forest plots to which polygons can be added.
+   \code{\link{forest}} for functions to draw forest plots to which polygons can be added.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances
@@ -65,7 +65,7 @@ x <- predict(res, newmods=diag(3))
 addpoly(x, efac=1.3, col="gray", addpred=TRUE,
         mlab=c("Alternate Allocation", "Random Allocation", "Systematic Allocation"))
 abline(h=0)
-text(-9, -1, "Model-Based Estimates:", pos=4, cex=0.9)
+text(-9, -1, "Model-Based Estimates:", pos=4, cex=0.9, font=2)
 text(-4.5, res$k+2, "Allocation", cex=0.9, font=2)
 }
 \keyword{aplot}

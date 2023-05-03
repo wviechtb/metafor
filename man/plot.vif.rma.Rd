@@ -9,7 +9,7 @@
      trim=0, adjust=1, lwd=c(2,0), layout, \dots)
 }
 \arguments{
-   \item{x}{an object of class \code{"vif.rma"} obtained with \code{\link{vif}}.}
+   \item{x}{an object of class \code{"vif.rma"} obtained with \code{\link[=vif.rma]{vif}}.}
    \item{breaks}{argument to be passed on to the corresponding argument of \code{\link{hist}} to set (the method for determining) the (number of) breakpoints.}
    \item{freq}{logical to indicate whether frequencies or probability densities should be plotted (the default is \code{FALSE} to plot densities).}
    \item{col}{optional character string to specify the color of the histogram bars.}
@@ -42,7 +42,7 @@
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{vif.rma}} for the function to create \code{vif.rma} objects.
+   \code{\link[=vif.rma]{vif}} for the function to create \code{vif.rma} objects.
 }
 \examples{
 ### copy data from Bangert-Drowns et al. (2004) into 'dat'

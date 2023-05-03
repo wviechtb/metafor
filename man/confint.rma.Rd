@@ -1,5 +1,6 @@
 \name{confint.rma}
 \alias{confint}
+\alias{confint.rma}
 \alias{confint.rma.uni}
 \alias{confint.rma.mh}
 \alias{confint.rma.peto}
@@ -111,9 +112,9 @@
    Viechtbauer, W., & \enc{López-López}{Lopez-Lopez}, J. A. (2022). Location-scale models for meta-analysis. \emph{Research Synthesis Methods}. \bold{13}(6), 697--715. \verb{https://doi.org/10.1002/jrsm.1562}
 }
 \seealso{
-   \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}, and \code{\link{selmodel.rma.uni}} for functions to fit models for which confidence intervals can be computed.
+   \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}, and \code{\link[=selmodel.rma.uni]{selmodel}} for functions to fit models for which confidence intervals can be computed.
 
-   \code{\link{profile.rma.uni}}, \code{\link{profile.rma.mv}}, and \code{\link{profile.rma.uni.selmodel}} for functions to create profile likelihood plots corresponding to profile likelihood confidence intervals.
+   \code{\link[=profile.rma]{profile}} for functions to create profile likelihood plots corresponding to profile likelihood confidence intervals.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

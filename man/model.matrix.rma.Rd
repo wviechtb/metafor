@@ -25,7 +25,7 @@
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.glmm}}, and \code{\link{rma.mv}} for functions to fit models for which a model matrix can be extracted.
 
-   \code{\link{fitted.rma}} for a function to extract the fitted values.
+   \code{\link[=fitted.rma]{fitted}} for a function to extract the fitted values.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

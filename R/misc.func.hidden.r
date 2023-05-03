@@ -390,9 +390,11 @@
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   mf.x <- mf[[match(x, names(mf))]]
+   mf.getx <- match.call()
+   dname <- deparse1(mf.getx[[match("data", names(mf.getx))]])
+   dname <- deparse1(mf[[match(dname, names(mf))]])
 
-   dname <- deparse1(mf[[match("data", names(mf))]])
+   mf.x <- mf[[match(x, names(mf))]]
 
    if (!is.null(dname) && dname %in% names(data) && grepl("$", deparse1(mf.x), fixed=TRUE) || grepl("[[", deparse1(mf.x), fixed=TRUE))
       data <- NULL

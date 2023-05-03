@@ -50,7 +50,7 @@ fitstats(object, \dots)
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, and \code{\link{rma.mv}} for functions to fit models for which fit statistics and information criteria can be extracted.
 
-   \code{\link{anova.rma}} for a function to conduct likelihood ratio tests.
+   \code{\link[=anova.rma]{anova}} for a function to conduct likelihood ratio tests.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

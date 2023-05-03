@@ -52,7 +52,7 @@ baujat(x, \dots)
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.mh}} and \code{\link{rma.peto}} for functions to fit models for which Baujat plots can be created.
 
-   \code{\link{influence.rma.uni}} for other model diagnostics.
+   \code{\link[=influence.rma.uni]{influence}} for other model diagnostics.
 }
 \examples{
 ### copy data from Pignon et al. (2000) into 'dat'

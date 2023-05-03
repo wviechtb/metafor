@@ -32,7 +32,7 @@
    For objects of class \code{"rma.mv"}, a list of data frames with the same components as described above.
 }
 \note{
-   For best linear unbiased predictions that combine the fitted values based on the fixed effects and the estimated contributions of the random effects, see \code{\link{blup}}.
+   For best linear unbiased predictions that combine the fitted values based on the fixed effects and the estimated contributions of the random effects, see \code{\link[=blup.rma.uni]{blup}}.
 
    For predicted/fitted values that are based only on the fixed effects of the model, see \code{\link[=fitted.rma]{fitted}} and \code{\link[=predict.rma]{predict}}.
 
@@ -61,7 +61,7 @@
 \seealso{
    \code{\link{rma.uni}} and \code{\link{rma.mv}} for functions to fit models for which BLUPs of the random effects can be computed.
 
-   \code{\link{predict.rma}} and \code{\link{fitted.rma}} for functions to compute the predicted/fitted values based only on the fixed effects and \code{\link{blup.rma.uni}} for a function to compute BLUPs that combine the fitted values and predicted random effects.
+   \code{\link[=predict.rma]{predict}} and \code{\link[=fitted.rma]{fitted}} for functions to compute the predicted/fitted values based only on the fixed effects and \code{\link[=blup.rma.uni]{blup}} for a function to compute BLUPs that combine the fitted values and predicted random effects.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

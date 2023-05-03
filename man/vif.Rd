@@ -120,7 +120,7 @@ vif(x, \dots)
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.glmm}}, and \code{\link{rma.mv}} for functions to fit models for which variance inflation factors can be computed.
 
-   \code{\link{plot.vif.rma}} for the plot method and \code{\link{as.data.frame.vif.rma}} for the method to format the results as a data frame.
+   \code{\link[=plot.vif.rma]{plot}} for the plot method and \code{\link[=as.data.frame.vif.rma]{as.data.frame}} for the method to format the results as a data frame.
 }
 \examples{
 ### copy data from Bangert-Drowns et al. (2004) into 'dat'
