@@ -309,6 +309,41 @@ transf.dtomd <- function(xi, targs=NULL) {
    return(xi * sd)
 }
 
+transf.rtorpb <- function(xi, pi) {
+   if (missing(pi)) {
+      pi <- 0.5
+   } else {
+      if (length(pi) == 1L)
+         pi <- rep(pi, length(xi))
+      if (length(xi) != length(pi))
+         stop("Length of 'xi' does not match length of 'pi'.", call.=FALSE)
+   }
+   if (any(pi < 0 | pi > 1, na.rm=TRUE))
+      stop("One or more 'pi' values are < 0 or > 1.", call.=FALSE)
+   return(xi * dnorm(qnorm(pi)) / sqrt(pi*(1-pi)))
+}
+
+transf.rtod <- function(xi, n1i, n2i) {
+   if (missing(n1i) || missing(n2i)) {
+      hi <- 4
+      pi <- 0.5
+      n1i <- 1
+      n2i <- 1
+   } else {
+      if (length(n1i) != length(n2i))
+         stop("Length of 'n1i' does not match length of 'n2i'.", call.=FALSE)
+      if (length(n1i) != length(xi))
+         stop("Length of 'n1i' and 'n2i' does not match length of 'xi'.", call.=FALSE)
+      mi <- n1i + n2i - 2
+      hi <- mi / n1i + mi / n2i
+      pi <- n1i / (n1i + n2i)
+   }
+   if (any(c(n1i < 0, n2i < 0), na.rm=TRUE))
+      stop("One or more values specified via the 'n1i' or 'n2i' arguments are negative.")
+   rpbi <- xi * dnorm(qnorm(pi)) / sqrt(pi*(1-pi))
+   return(sqrt(hi) * rpbi / sqrt(1 - rpbi^2))
+}
+
 transf.lnortord <- function(xi, pc) {
    if (length(pc) == 1L)
       pc <- rep(pc, length(xi))

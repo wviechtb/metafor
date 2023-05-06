@@ -92,21 +92,21 @@ escalc(measure="RPB", m1i=m1i, sd1i=sd1i, n1i=n1i,
 ### then apply the same transformation to the standardized mean differences
 dat <- escalc(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i,
                              m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat.normand1999, correct=FALSE)
-conv.delta(yi, vi, data=dat,
-           transf=function(di, n1i, n2i) di / sqrt(di^2 + (n1i+n2i-2)/n1i + (n1i+n2i-2)/n2i),
-           n1i=n1i, n2i=n2i, replace="all")
+conv.delta(yi, vi, data=dat, transf=transf.dtorpb, n1i=n1i, n2i=n2i, replace="all")
 
 ############################################################################
 
 ### a more elaborate example showing how this function could be used in the data
 ### preparation steps for a meta-analysis of standardized mean differences (SMDs)
 
-dat <- data.frame(study=1:5,
-         m1i=c(2.03,NA,NA,NA,NA), sd1i=c(0.95,NA,NA,NA,NA), n1i=c(32,95,145,NA,NA),
-         m2i=c(1.25,NA,NA,NA,NA), sd2i=c(1.04,NA,NA,NA,NA), n2i=c(30,99,155,NA,NA),
-         tval=c(NA,2.12,NA,NA,NA), dval=c(NA,NA,0.37,NA,NA),
-         ai=c(NA,NA,NA,26,NA), bi=c(NA,NA,NA,58,NA), ci=c(NA,NA,NA,11,NA), di=c(NA,NA,NA,74,NA),
-         or=c(NA,NA,NA,NA,2.56), lower=c(NA,NA,NA,NA,1.23), upper=c(NA,NA,NA,NA,5.30))
+dat <- data.frame(study=1:6,
+         m1i=c(2.03,NA,NA,NA,NA,NA), sd1i=c(0.95,NA,NA,NA,NA,NA), n1i=c(32,95,145,NA,NA,NA),
+         m2i=c(1.25,NA,NA,NA,NA,NA), sd2i=c(1.04,NA,NA,NA,NA,NA), n2i=c(30,99,155,NA,NA,NA),
+         tval=c(NA,2.12,NA,NA,NA,NA), dval=c(NA,NA,0.37,NA,NA,NA),
+         ai=c(NA,NA,NA,26,NA,NA), bi=c(NA,NA,NA,58,NA,NA),
+         ci=c(NA,NA,NA,11,NA,NA), di=c(NA,NA,NA,74,NA,NA),
+         or=c(NA,NA,NA,NA,2.56,NA), lower=c(NA,NA,NA,NA,1.23,NA), upper=c(NA,NA,NA,NA,5.30,NA),
+         corr=c(NA,NA,NA,NA,NA,.32), ntot=c(NA,NA,NA,NA,NA,86))
 dat
 
 ### study types:
@@ -115,6 +115,7 @@ dat
 ### 3) reports the standardized mean difference directly (and group sizes)
 ### 4) dichotomized the continuous dependent variable and reports the resulting 2x2 table
 ### 5) dichotomized the continuous dependent variable and reports an odds ratio with 95% CI
+### 6) treated the group variable continuously and reports a Pearson product-moment correlation
 
 ### use escalc() to directly compute the SMD and its variance for studies 1, 2, and 3
 dat <- escalc(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i,
@@ -133,6 +134,25 @@ dat
 ### use conv.delta() to transform the log odds ratio into the SMD value for study 5
 dat <- conv.delta(lnor, vlnor, data=dat,
                   transf=transf.lnortod.norm, var.names=c("yi","vi"))
+dat
+
+### remove the lnor and vlnor variables (no longer needed)
+dat$lnor  <- NULL
+dat$vlnor <- NULL
+
+### use escalc() with measure COR to compute the sampling variance of ri for study 6
+dat <- escalc(measure="COR", ri=corr, ni=ntot, data=dat, var.names=c("ri","vri"))
+dat
+
+### use conv.delta() to transform the correlation into the SMD value for study 6
+dat <- conv.delta(ri, vri, data=dat, transf=transf.rtod, var.names=c("yi","vi"))
+dat
+
+### remove the ri and vri variables (no longer needed)
+dat$ri  <- NULL
+dat$vri <- NULL
+
+### now variable 'yi' is complete with the SMD values for all studies
 dat
 
 ### fit an equal-effects model to the SMD values
@@ -188,6 +208,13 @@ dat
 ### use conv.delta() to estimate the tetrachoric correlation from the log odds ratio for study 6
 dat <- conv.delta(lnor, vlnor, data=dat,
                   transf=transf.lnortortet.pearson, var.names=c("yi","vi"))
+dat
+
+### remove the lnor and vlnor variables (no longer needed)
+dat$lnor  <- NULL
+dat$vlnor <- NULL
+
+### now variable 'yi' is complete with the correlations for all studies
 dat
 
 ### fit an equal-effects model to the correlations

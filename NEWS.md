@@ -1,4 +1,4 @@
-# metafor 4.1-14 (2023-05-03)
+# metafor 4.1-15 (2023-05-06)
 
 - improved the various plotting functions so they respect `par("fg")`; as a result, one can now create plots with a dark background and light plotting colors
 
@@ -19,6 +19,8 @@
 - functions that issue a warning when omitting studies due to NAs now indicate how many were omitted
 
 - properly documented the `level` argument
+
+- added a few more transformation functions
 
 - small bug fixes
 

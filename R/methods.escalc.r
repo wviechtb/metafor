@@ -53,6 +53,24 @@
 
 }
 
+#"$<-.escalc" <- function(x, name, value) {
+#
+#   dat <- NextMethod("$<-")
+#
+#   all.names <- c("yi.names", "vi.names", "sei.names", "zi.names", "pval.names", "ci.lb.names", "ci.ub.names")
+#
+#   for (l in seq_along(all.names)) {
+#      if (!is.null(attr(dat, all.names[l]))) {
+#         attr(dat, all.names[l]) <- attr(dat, all.names[l])[is.element(attr(dat, all.names[l]), names(dat))]
+#         if (length(attr(dat, all.names[l])) == 0L)
+#            attr(dat, all.names[l]) <- NULL
+#      }
+#   }
+#
+#   return(dat)
+#
+#}
+
 ############################################################################
 
 cbind.escalc <- function (..., deparse.level=1) {

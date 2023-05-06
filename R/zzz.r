@@ -1,6 +1,6 @@
 .onAttach <- function(libname, pkgname) {
 
-   ver <- "4.1-14"
+   ver <- "4.1-15"
 
    loadmsg <- paste0("\nLoading the 'metafor' package (version ", ver, "). For an\nintroduction to the package please type: help(metafor)\n")
 
@@ -45,7 +45,7 @@
          available.ver <- 100000 * available.ver[1] + 1000 * available.ver[2] + available.ver[3]
          if (isTRUE(installed.ver < available.ver)) {
             loadmsg <- paste0(loadmsg, "\nAn updated version of the package (version ", save.ver, ") is available!\nTo update to this version type: ")
-            if (verchk == "devel") {
+            if (isTRUE(verchk == "devel")) {
                loadmsg <- paste0(loadmsg, "remotes::install_github(\"wviechtb/metafor\")\n")
             } else {
                loadmsg <- paste0(loadmsg, "install.packages(\"metafor\")\n")
