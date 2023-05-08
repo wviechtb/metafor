@@ -37,7 +37,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
    if (!is.element(to, c("all","only0","if0all","none")))
       stop(mstyle$stop("Unknown 'to' argument specified."))
 
-   if (any(!is.element(vtype, c("UB","LS","LS2","HO","ST","CS","AV","AVHO")), na.rm=TRUE)) ### vtype can be an entire vector, so use any() and na.rm=TRUE
+   if (any(!is.element(vtype, c("UB","LS","LS2","HO","ST","CS","AV","AVHO")), na.rm=TRUE)) # vtype can be an entire vector, so use any() and na.rm=TRUE
       stop(mstyle$stop("Unknown 'vtype' argument specified."))
 
    if (add.measure) {
@@ -203,7 +203,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (measure == "MPORM" && !is.null(pi) && any(pi < 0 | pi > 1, na.rm=TRUE))
             stop(mstyle$stop("One or more proportions are > 1 or < 0."))
 
-         ni.u <- ai + bi + ci + di ### unadjusted total sample sizes
+         ni.u <- ai + bi + ci + di # unadjusted total sample sizes
 
          if (measure == "MPORM")
             ni.u <- round(ni.u / 2)
@@ -288,7 +288,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          n1i <- ai + bi
          n2i <- ci + di
-         ni  <- n1i + n2i ### ni.u computed earlier is always the 'unadjusted' total sample size
+         ni  <- n1i + n2i # ni.u computed earlier is always the 'unadjusted' total sample size
 
          if (measure == "MPORM")
             ni <- round(ni / 2)
@@ -393,11 +393,11 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### log odds ratio (Peto's method)
 
          if (measure == "PETO") {
-            xt <- ai + ci ### frequency of outcome1 in both groups combined
-            yt <- bi + di ### frequency of outcome2 in both groups combined
+            xt <- ai + ci # frequency of outcome1 in both groups combined
+            yt <- bi + di # frequency of outcome2 in both groups combined
             Ei <- xt * n1i / ni
-            Vi <- xt * yt * (n1i/ni) * (n2i/ni) / (ni - 1) ### 0 when xt = 0 or yt = 0 in a table
-            yi <- (ai - Ei) / Vi                           ### then yi and vi is Inf (set to NA at end)
+            Vi <- xt * yt * (n1i/ni) * (n2i/ni) / (ni - 1) # 0 when xt = 0 or yt = 0 in a table
+            yi <- (ai - Ei) / Vi                           # then yi and vi is Inf (set to NA at end)
             vi <- 1 / Vi
          }
 
@@ -503,9 +503,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             z1i <- qnorm(p1i)
             z2i <- qnorm(p2i)
             yi <- z1i - z2i
-            vi <- 2*base::pi*p1i*(1-p1i)*exp(z1i^2)/n1i + 2*base::pi*p2i*(1-p2i)*exp(z2i^2)/n2i ### from Sanchez-Meca et al. (2003) and Rosenthal (1994; Handbook chapter)
-         }                                                                                      ### seems to be right for stratified and cross-sectional/multinomial sampling
-                                                                                                ### see code/probit_transformation directory
+            vi <- 2*base::pi*p1i*(1-p1i)*exp(z1i^2)/n1i + 2*base::pi*p2i*(1-p2i)*exp(z2i^2)/n2i # from Sanchez-Meca et al. (2003) and Rosenthal (1994; Handbook chapter)
+         }                                                                                      # seems to be right for stratified and cross-sectional/multinomial sampling
+                                                                                                # see code/probit_transformation directory
          ### log(OR) transformation to SMD based on logistic distribution
 
          if (is.element(measure, c("OR2D","OR2DL"))) {
@@ -632,7 +632,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(c(t1i, t2i) <= 0, na.rm=TRUE))
             stop(mstyle$stop("One or more person-times are <= 0."))
 
-         ni.u <- t1i + t2i ### unadjusted total sample sizes
+         ni.u <- t1i + t2i # unadjusted total sample sizes
 
          k <- length(x1i)
 
@@ -721,9 +721,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                yi <- ir1i.u - ir2i.u
             }
             if (addvi) {
-               vi <- ir1i/t1i + ir2i/t2i ### note: same as x1i/t1i^2 + x2i/t2i^2
+               vi <- ir1i/t1i + ir2i/t2i     # note: same as x1i/t1i^2 + x2i/t2i^2
             } else {
-               vi <- ir1i.u/t1i + ir2i.u/t2i ### note: same as x1i.u/t1i^2 + x2i.u/t2i^2
+               vi <- ir1i.u/t1i + ir2i.u/t2i # note: same as x1i.u/t1i^2 + x2i.u/t2i^2
             }
          }
 
@@ -744,9 +744,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("MD","SMD","SMDH","SMD1","SMD1H","ROM","RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL","CVR","VR"))) {
 
-         m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE) ### for VR, do not need to supply this
-         m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE) ### for VR, do not need to supply this
-         sd1i <- .getx("sd1i", mf=mf, data=data, checknumeric=TRUE) ### for SMD1, do not need to supply this
+         m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE) # for VR, do not need to supply this
+         m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE) # for VR, do not need to supply this
+         sd1i <- .getx("sd1i", mf=mf, data=data, checknumeric=TRUE) # for SMD1, do not need to supply this
          sd2i <- .getx("sd2i", mf=mf, data=data, checknumeric=TRUE)
          n1i  <- .getx("n1i",  mf=mf, data=data, checknumeric=TRUE)
          n2i  <- .getx("n2i",  mf=mf, data=data, checknumeric=TRUE)
@@ -835,7 +835,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(c(n1i, n2i) <= 0, na.rm=TRUE))
             stop(mstyle$stop("One or more group sizes are <= 0."))
 
-         ni.u <- n1i + n2i ### unadjusted total sample sizes
+         ni.u <- n1i + n2i # unadjusted total sample sizes
 
          k <- length(n1i)
 
@@ -999,9 +999,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (is.element(measure, c("RPB","RBIS","ZPB","ZBIS"))) {
 
             hi <- mi/n1i + mi/n2i
-            yi <- di / sqrt(di^2 + hi) ### need this also when measure="RBIS/ZBIS"
+            yi <- di / sqrt(di^2 + hi) # need this also when measure="RBIS/ZBIS"
 
-            if (is.element(measure, c("RPB","ZPB"))) { ### this only applies when measure="RPB/ZPB"
+            if (is.element(measure, c("RPB","ZPB"))) { # this only applies when measure="RPB/ZPB"
 
                if (length(vtype) == 1L)
                   vtype <- rep(vtype, k)
@@ -1019,7 +1019,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
                   ### estimate of the sampling variance for fixed ni but random n1i and n2i (i.e., cross-sectional/multinomial sampling)
                   if (vtype[i] == "CS")
-                     vi[i] <- (1-yi[i]^2)^2 * (ni[i]*yi[i]^2 / (4*n1i[i]*n2i[i]) + (2-3*yi[i]^2)/(2*ni[i])) ### from Tate (1954, 1955b)
+                     vi[i] <- (1-yi[i]^2)^2 * (ni[i]*yi[i]^2 / (4*n1i[i]*n2i[i]) + (2-3*yi[i]^2)/(2*ni[i])) # from Tate (1954, 1955b)
 
                }
 
@@ -1034,11 +1034,11 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             p2i <- n2i / ni
             zi  <- qnorm(p1i, lower.tail=FALSE)
             fzi <- dnorm(zi)
-            yi  <- sqrt(p1i*p2i) / fzi * yi ### yi on the right-hand side is the point-biserial correlation from above
-            #vi <- (p1i*p2i) / fzi^2 * vi   ### not correct (p1i, p2i, and fzi are random variables and vi from RBP is not correct for the bivariate normal case on which RBIS is based)
+            yi  <- sqrt(p1i*p2i) / fzi * yi # yi on the right-hand side is the point-biserial correlation from above
+            #vi <- (p1i*p2i) / fzi^2 * vi   # not correct (p1i, p2i, and fzi are random variables and vi from RBP is not correct for the bivariate normal case on which RBIS is based)
             yi.t <- ifelse(abs(yi) > 1, sign(yi), yi)
-            vi  <- 1/(ni-1) * (p1i*p2i/fzi^2 - (3/2 + (1 - p1i*zi/fzi)*(1 + p2i*zi/fzi)) * yi.t^2 + yi.t^4) ### from Soper (1914)
-            #vi <- 1/(ni-1) * (yi.t^4 + yi.t^2 * (p1i*p2i*zi^2/fzi^2 + (2*p1i-1)*zi/fzi - 5/2) + p1i*p2i/fzi^2) ### from Tate (1955) -- equivalent to eq. from Soper (1914)
+            vi  <- 1/(ni-1) * (p1i*p2i/fzi^2 - (3/2 + (1 - p1i*zi/fzi)*(1 + p2i*zi/fzi)) * yi.t^2 + yi.t^4)     # from Soper (1914)
+            #vi <- 1/(ni-1) * (yi.t^4 + yi.t^2 * (p1i*p2i*zi^2/fzi^2 + (2*p1i-1)*zi/fzi - 5/2) + p1i*p2i/fzi^2) # from Tate (1955) -- equivalent to eq. from Soper (1914)
             ### equation appears to work even if dichotomization is done based on a sample quantile value (so that p1i, p2i, and fzi are fixed by design)
          }
 
@@ -1127,7 +1127,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (measure == "ZCOR" && any(ni <= 3, na.rm=TRUE))
             warning(mstyle$warning("Cannot estimate the sampling variance when ni <= 3."), call.=FALSE)
 
-         ni.u <- ni ### unadjusted total sample sizes
+         ni.u <- ni # unadjusted total sample sizes
 
          k <- length(ri)
 
@@ -1139,8 +1139,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### raw correlation coefficient with bias correction
 
          if (measure == "UCOR") {
-            #yi <- ri + ri*(1-ri^2)/(2*(ni-4)) ### approximation
-            #yi[ni <= 4] <- NA_real_ ### set corrected correlations for ni <= 4 to NA_real_
+            #yi <- ri + ri*(1-ri^2)/(2*(ni-4)) # approximation
+            #yi[ni <= 4] <- NA_real_ # set corrected correlations for ni <= 4 to NA_real_
             yi <- ri * .Fcalc(1/2, 1/2, (ni-2)/2, 1-ri^2)
          }
 
@@ -1248,7 +1248,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(ni - mi - 1 <= 0, na.rm=TRUE))
             stop(mstyle$stop("One or more dfs are <= 0."))
 
-         ni.u <- ni ### unadjusted total sample sizes
+         ni.u <- ni # unadjusted total sample sizes
 
          k <- length(ri)
 
@@ -1368,7 +1368,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(ni <= 0, na.rm=TRUE))
             stop(mstyle$stop("One or more group sizes are <= 0."))
 
-         ni.u <- ni ### unadjusted total sample sizes
+         ni.u <- ni # unadjusted total sample sizes
 
          k <- length(xi)
 
@@ -1626,7 +1626,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(ti <= 0, na.rm=TRUE))
             stop(mstyle$stop("One or more person-times are <= 0."))
 
-         ni.u <- ti ### unadjusted total sample sizes
+         ni.u <- ti # unadjusted total sample sizes
 
          k <- length(xi)
 
@@ -1683,9 +1683,9 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                yi <- iri.u
             }
             if (addvi) {
-               vi <- iri / ti ### note: same as xi/ti^2
+               vi <- iri / ti # note: same as xi/ti^2
             } else {
-               vi <- iri.u / ti ### note: same as xi.u/ti^2
+               vi <- iri.u / ti # note: same as xi.u/ti^2
             }
          }
 
@@ -1730,7 +1730,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("MN","MNLN","CVLN","SDLN","SMN"))) {
 
-         mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE) ### for SDLN, do not need to supply this
+         mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE) # for SDLN, do not need to supply this
          sdi <- .getx("sdi", mf=mf, data=data, checknumeric=TRUE)
          ni  <- .getx("ni",  mf=mf, data=data, checknumeric=TRUE)
 
@@ -1776,7 +1776,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (is.element(measure, c("MNLN","CVLN")) && any(mi < 0, na.rm=TRUE))
             stop(mstyle$stop("One or more means are negative."))
 
-         ni.u <- ni ### unadjusted total sample sizes
+         ni.u <- ni # unadjusted total sample sizes
 
          k <- length(ni)
 
@@ -1854,10 +1854,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC"))) {
 
-         m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE) ### for VRC, do not need to supply this
-         m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE) ### for VRC, do not need to supply this
+         m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE) # for VRC, do not need to supply this
+         m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE) # for VRC, do not need to supply this
          sd1i <- .getx("sd1i", mf=mf, data=data, checknumeric=TRUE)
-         sd2i <- .getx("sd2i", mf=mf, data=data, checknumeric=TRUE) ### for SMCR, do not need to supply this
+         sd2i <- .getx("sd2i", mf=mf, data=data, checknumeric=TRUE) # for SMCR, do not need to supply this
          ri   <- .getx("ri",   mf=mf, data=data, checknumeric=TRUE)
          ni   <- .getx("ni",   mf=mf, data=data, checknumeric=TRUE)
          di   <- .getx("di",   mf=mf, data=data, checknumeric=TRUE)
@@ -1956,7 +1956,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(ni <= 0, na.rm=TRUE))
             stop(mstyle$stop("One or more sample sizes are <= 0."))
 
-         ni.u <- ni ### unadjusted total sample sizes
+         ni.u <- ni # unadjusted total sample sizes
 
          k <- length(ni)
 
@@ -2103,7 +2103,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(ni <= 0, na.rm=TRUE))
             stop(mstyle$stop("One or more sample sizes are <= 0."))
 
-         ni.u <- ni ### unadjusted total sample sizes
+         ni.u <- ni # unadjusted total sample sizes
 
          k <- length(ai)
 
@@ -2117,8 +2117,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### alphas transformed with Hakstian & Whalen (1976) transformation
 
          if (measure == "AHW") {
-            #yi <- (1-ai)^(1/3)    ### technically this is the Hakstian & Whalen (1976) transformation
-            yi <- 1 - (1-ai)^(1/3) ### but with this, yi remains a monotonically increasing function of ai
+            #yi <- (1-ai)^(1/3)    # technically this is the Hakstian & Whalen (1976) transformation
+            yi <- 1 - (1-ai)^(1/3) # but with this, yi remains a monotonically increasing function of ai
             vi <- 18*mi*(ni-1)*(1-ai)^(2/3) / ((mi-1)*(9*ni-11)^2)
          }
 
@@ -2126,8 +2126,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          if (measure == "ABT") {
             #yi <- log(1-ai) - log(ni/(ni-1))
-            #yi <- log(1-ai) ### technically this is the Bonett (2002) transformation
-            yi <- -log(1-ai) ### but with this, yi remains a monotonically increasing function of ai
+            #yi <- log(1-ai) # technically this is the Bonett (2002) transformation
+            yi <- -log(1-ai) # but with this, yi remains a monotonically increasing function of ai
             vi <- 2*mi / ((mi-1)*(ni-2))
          }
 
@@ -2161,7 +2161,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ni <- ai + bi + ci
 
-         ni.u <- ni ### unadjusted total sample sizes
+         ni.u <- ni # unadjusted total sample sizes
 
          k <- length(ai)
 
@@ -2223,7 +2223,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ni <- .getsubset(ni, subset)
       }
 
-      ni.u <- ni ### unadjusted total sample sizes
+      ni.u <- ni # unadjusted total sample sizes
 
       k <- length(yi)
 
@@ -2376,8 +2376,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
    attr(dat, "digits") <- digits
 
    ### add 'yi.names' and 'vi.names' to the first position of the corresponding attributes (so the first is always the last one calculated/added)
-   attr(dat, "yi.names") <- unique(c(var.names[1], attr(data, "yi.names"))) ### if 'yi.names' is not an attribute, attr() returns NULL, so this works fine
-   attr(dat, "vi.names") <- unique(c(var.names[2], attr(data, "vi.names"))) ### if 'vi.names' is not an attribute, attr() returns NULL, so this works fine
+   attr(dat, "yi.names") <- unique(c(var.names[1], attr(data, "yi.names"))) # if 'yi.names' is not an attribute, attr() returns NULL, so this works fine
+   attr(dat, "vi.names") <- unique(c(var.names[2], attr(data, "vi.names"))) # if 'vi.names' is not an attribute, attr() returns NULL, so this works fine
 
    ### add 'out.names' back to object in case these attributes exist (if summary() has been used on the object)
    attr(dat, "sei.names")   <- attr(data, "sei.names")

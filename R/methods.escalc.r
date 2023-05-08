@@ -16,22 +16,23 @@
 
    dat <- NextMethod("[")
 
-   ### add measure attribute back to each yi variable (if that variable is still part of dat)
+   ### find all 'yi' variables that are still part of the dataset
 
    yi.names <- attr(x, "yi.names")
    yi.names <- yi.names[is.element(yi.names, names(dat))]
 
    for (l in seq_along(yi.names)) {
 
-      #eval(str2lang(paste0("attr(dat$", yi.names[l], ", 'measure') <- attr(x$", yi.names[l], ", 'measure')")))
-      attr(dat[[yi.names[l]]], "measure") <- attr(x[[yi.names[l]]], "measure")
-
-      ### if selecting rows, also subset ni and slab attributes and add them back to each yi variable
+      ### if selecting rows, subset ni and slab attributes accordingly and add them back to each yi variable
 
       if (!missing(i) && nargs()-has.drop > 2L) {
          attr(dat[[yi.names[l]]], "ni")   <- attr(x[[yi.names[l]]], "ni")[i]
          attr(dat[[yi.names[l]]], "slab") <- attr(x[[yi.names[l]]], "slab")[i]
       }
+
+      ### add measure attribute back to each yi variable
+
+      attr(dat[[yi.names[l]]], "measure") <- attr(x[[yi.names[l]]], "measure")
 
    }
 
@@ -53,23 +54,26 @@
 
 }
 
-#"$<-.escalc" <- function(x, name, value) {
-#
-#   dat <- NextMethod("$<-")
-#
-#   all.names <- c("yi.names", "vi.names", "sei.names", "zi.names", "pval.names", "ci.lb.names", "ci.ub.names")
-#
-#   for (l in seq_along(all.names)) {
-#      if (!is.null(attr(dat, all.names[l]))) {
-#         attr(dat, all.names[l]) <- attr(dat, all.names[l])[is.element(attr(dat, all.names[l]), names(dat))]
-#         if (length(attr(dat, all.names[l])) == 0L)
-#            attr(dat, all.names[l]) <- NULL
-#      }
-#   }
-#
-#   return(dat)
-#
-#}
+"$<-.escalc" <- function(x, name, value) {
+
+   dat <- NextMethod("$<-")
+
+   ### for each attribute, only keep elements that are still part of the data frame (and remove empty attributes)
+   ### (this is relevant when 'value' is NULL, so when a particular variable is getting removed)
+
+   all.names <- c("yi.names", "vi.names", "sei.names", "zi.names", "pval.names", "ci.lb.names", "ci.ub.names")
+
+   for (l in seq_along(all.names)) {
+      if (!is.null(attr(dat, all.names[l]))) {
+         attr(dat, all.names[l]) <- attr(dat, all.names[l])[is.element(attr(dat, all.names[l]), names(dat))]
+         if (length(attr(dat, all.names[l])) == 0L)
+            attr(dat, all.names[l]) <- NULL
+      }
+   }
+
+   return(dat)
+
+}
 
 ############################################################################
 
@@ -110,6 +114,7 @@ cbind.escalc <- function (..., deparse.level=1) {
    attr(dat, "ci.ub.names") <- unique(ci.ub.names)
 
    ### add 'digits' attribute back (use the values from first element)
+
    attr(dat, "digits") <- attr(arg[1], "digits")
 
    class(dat) <- c("escalc", "data.frame")

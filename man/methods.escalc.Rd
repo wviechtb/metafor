@@ -1,6 +1,7 @@
 \name{methods.escalc}
 \alias{methods.escalc}
 \alias{[.escalc}
+\alias{$<-.escalc}
 \alias{cbind.escalc}
 \alias{rbind.escalc}
 \title{Methods for 'escalc' Objects}
@@ -9,6 +10,7 @@
 }
 \usage{
 \method{[}{escalc}(x, i, \dots)
+\method{$}{escalc}(x, name) <- value
 \method{cbind}{escalc}(\dots, deparse.level=1)
 \method{rbind}{escalc}(\dots, deparse.level=1)
 }
