@@ -1,4 +1,8 @@
-# metafor 4.1-16 (2023-05-08)
+# metafor 4.3-0 (2023-05-09)
+
+- version bump for development version
+
+# metafor 4.2-0 (2023-05-08)
 
 - improved the various plotting functions so they respect `par("fg")`; as a result, one can now create plots with a dark background and light plotting colors
 
