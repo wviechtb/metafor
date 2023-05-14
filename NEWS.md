@@ -1,6 +1,8 @@
-# metafor 4.3-0 (2023-05-09)
+# metafor 4.3-1 (2023-05-14)
 
-- version bump for development version
+- added a few more transformation functions
+
+- `replace` argument in `conv.2x2()`, `conv.delta()`, `conv.fivenum()`, and `conv.wald()` can now also be a logical
 
 # metafor 4.2-0 (2023-05-08)
 

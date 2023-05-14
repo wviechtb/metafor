@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-1</span>
       </span>
     </div>
 
@@ -151,7 +151,7 @@
 <dd><p>logical to specify whether the data frame provided via the <code>data</code> argument should be returned together with the estimated values (the default is <code>TRUE</code>).</p></dd>
 
    <dt>replace</dt>
-<dd><p>character string to specify how values in <code>var.names</code> should be replaced (only relevant when using the <code>data</code> argument and if variables in <code>var.names</code> already exist in the data frame). See the ‘Value’ section for more details.</p></dd>
+<dd><p>character string or logical to specify how values in <code>var.names</code> should be replaced (only relevant when using the <code>data</code> argument and if variables in <code>var.names</code> already exist in the data frame). See the ‘Value’ section for more details.</p></dd>
 
    <dt>...</dt>
 <dd><p>other arguments.</p></dd>
@@ -193,7 +193,7 @@
 <h3 id="test-for-skewness">Test for Skewness<a class="anchor" aria-label="anchor" href="#test-for-skewness"></a></h3>
 
 
-<p>The methods described above were derived under the assumption that the data are normally distributed. Testing this assumption would require access to the raw data, but based on the three cases above, Shi et al. (2020b; under review) derived tests for skewness that only require the reported quantile values and the sample sizes. These tests are automatically carried out. When <code>test=TRUE</code> (which is the default), a study is automatically excluded from the estimation if the test is significant. If all studies should be included, set <code>test=FALSE</code>, but note that the accuracy of the methods will tend to be poorer when the data come from an apparently skewed (and hence non-normal) distribution.</p>
+<p>The methods described above were derived under the assumption that the data are normally distributed. Testing this assumption would require access to the raw data, but based on the three cases above, Shi et al. (2020b; 2023) derived tests for skewness that only require the reported quantile values and the sample sizes. These tests are automatically carried out. When <code>test=TRUE</code> (which is the default), a study is automatically excluded from the estimation if the test is significant. If all studies should be included, set <code>test=FALSE</code>, but note that the accuracy of the methods will tend to be poorer when the data come from an apparently skewed (and hence non-normal) distribution.</p>
 <p></p>
 </div>
 
@@ -222,10 +222,10 @@
 <p>If the <code>data</code> argument was not specified or <code>append=FALSE</code>, a data frame with two variables called <code>var.names[1]</code> (by default <code>"mean"</code>) and <code>var.names[2]</code> (by default <code>"sd"</code>) with the estimated means and SDs.</p>
 
 
-<p>If <code>data</code> was specified and <code>append=TRUE</code>, then the original data frame is returned. If <code>var.names[1]</code> is a variable in <code>data</code> and <code>replace="ifna"</code>, then missing values in this variable are replaced with the estimated means (where possible) and otherwise a new variable called <code>var.names[1]</code> is added to the data frame. Similarly, if <code>var.names[2]</code> is a variable in <code>data</code> and <code>replace="ifna"</code>, then missing values in this variable are replaced with the estimated SDs (where possible) and otherwise a new variable called <code>var.names[2]</code> is added to the data frame.</p>
+<p>If <code>data</code> was specified and <code>append=TRUE</code>, then the original data frame is returned. If <code>var.names[1]</code> is a variable in <code>data</code> and <code>replace="ifna"</code> (or <code>replace=FALSE</code>), then only missing values in this variable are replaced with the estimated means (where possible) and otherwise a new variable called <code>var.names[1]</code> is added to the data frame. Similarly, if <code>var.names[2]</code> is a variable in <code>data</code> and <code>replace="ifna"</code> (or <code>replace=FALSE</code>), then only missing values in this variable are replaced with the estimated SDs (where possible) and otherwise a new variable called <code>var.names[2]</code> is added to the data frame.</p>
 
 
-<p>If <code>replace="all"</code>, then all values in <code>var.names[1]</code> and <code>var.names[2]</code> where an estimated mean and SD can be computed are replaced, even for cases where the value in <code>var.names[1]</code> and <code>var.names[2]</code> is not missing.</p>
+<p>If <code>replace="all"</code> (or <code>replace=TRUE</code>), then all values in <code>var.names[1]</code> and <code>var.names[2]</code> where an estimated mean and SD can be computed are replaced, even for cases where the value in <code>var.names[1]</code> and <code>var.names[2]</code> is not missing.</p>
 
 
 <p>When missing values in <code>var.names[1]</code> are replaced, an attribute called <code>"est"</code> is added to the variable, which is a logical vector that is <code>TRUE</code> for values that were estimated. The same is done when missing values in <code>var.names[2]</code> are replaced.</p>
@@ -253,7 +253,7 @@
 <p>Shi, J., Luo, D., Weng, H., Zeng, X.-T., Lin, L., Chu, H. &amp; Tong, T. (2020a). Optimally estimating the sample standard deviation from the five-number summary. <em>Research Synthesis Methods</em>, <b>11</b>(5), 641–654. <a href="https://doi.org/https://doi.org/10.1002/jrsm.1429" class="external-link">https://doi.org/https://doi.org/10.1002/jrsm.1429</a></p>
 <p>Shi, J., Luo, D., Wan, X., Liu, Y., Liu, J., Bian, Z. &amp; Tong, T. (2020b). Detecting the skewness of data from the sample size and the five-number summary. <em>arXiv</em>, 2010.05749. <a href="https://doi.org/10.48550/arxiv.2010.05749" class="external-link">https://doi.org/10.48550/arxiv.2010.05749</a></p>
 <p>Shi, J., Tong, T., Wang, Y. &amp; Genton, M. G. (2020c). Estimating the mean and variance from the five-number summary of a log-normal distribution. Statistics and Its Interface, 13(4), 519-531. https://doi.org/10.4310/sii.2020.v13.n4.a9</p>
-<p>Shi, J., Luo, D., Wan, X., Liu, Y., Liu, J., Bian, Z. &amp; Tong, T. (under review). Detecting the skewness of data from the five-number summary and its application to evidence-based medicine. <em>Statistical Methods in Medical Research</em>.</p>
+<p>Shi, J., Luo, D., Wan, X., Liu, Y., Liu, J., Bian, Z. &amp; Tong, T. (2023). Detecting the skewness of data from the five-number summary and its application in meta-analysis. <em>Statistical Methods in Medical Research</em>. <a href="https://doi.org/10.1177/09622802231172043" class="external-link">https://doi.org/10.1177/09622802231172043</a></p>
 <p>Walter, S. D. &amp; Yao, X. (2007). Effect sizes can be calculated for studies reporting ranges for outcome variables in systematic reviews. <em>Journal of Clinical Epidemiology</em>, <b>60</b>(8), 849-852. <a href="https://doi.org/10.1016/j.jclinepi.2006.11.003" class="external-link">https://doi.org/10.1016/j.jclinepi.2006.11.003</a></p>
 <p>Wan, X., Wang, W., Liu, J. &amp; Tong, T. (2014). Estimating the sample mean and standard deviation from the sample size, median, range and/or interquartile range. <em>BMC Medical Research Methodology</em>, <b>14</b>, 135. <a href="https://doi.org/10.1186/1471-2288-14-135" class="external-link">https://doi.org/10.1186/1471-2288-14-135</a></p>
 <p>Yang, X., Hutson, A. D., &amp; Wang, D. (2022). A generalized BLUE approach for combining location and scale information in a meta-analysis. <em>Journal of Applied Statistics</em>, <b>49</b>(15), 3846–3867. <a href="https://doi.org/10.1080/02664763.2021.1967890" class="external-link">https://doi.org/10.1080/02664763.2021.1967890</a></p>
@@ -395,8 +395,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3    3   2  4      6 14  20   NA  NA 20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4   NA  NA NA     NA NA  NA    7 4.2 20</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># note that the third quartile and maximum values for study 3 suggest a quite</span></span></span>
-<span class="r-in"><span><span class="co"># right skewed distribution of the data</span></span></span>
+<span class="r-in"><span><span class="co"># for study 3, the third quartile and maximum value suggest that the data have</span></span></span>
+<span class="r-in"><span><span class="co"># a right skewed distribution (they are much further away from the median than</span></span></span>
+<span class="r-in"><span><span class="co"># the minimum and first quartile)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># estimate means/SDs</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">conv.fivenum</span><span class="op">(</span>min<span class="op">=</span><span class="va">min</span>, q1<span class="op">=</span><span class="va">q1</span>, median<span class="op">=</span><span class="va">median</span>, q3<span class="op">=</span><span class="va">q3</span>, max<span class="op">=</span><span class="va">max</span>, n<span class="op">=</span><span class="va">n</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>

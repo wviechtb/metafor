@@ -7,6 +7,14 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
    if (missing(min) && missing(q1) && missing(median) && missing(q3) && missing(max))
       stop(mstyle$stop("Must specify at least some of these arguments: 'min', 'q1', 'median', 'q3', 'max'."))
 
+   if (is.logical(replace)) {
+      if (isTRUE(replace)) {
+         replace <- "all"
+      } else {
+         replace <- "ifna"
+      }
+   }
+
    replace <- match.arg(replace, c("ifna","all"))
 
    ### get ... argument and check for extra/superfluous arguments
@@ -229,7 +237,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
 
          tval[i] <- abs((min[i] + max[i] - 2*median[i]) / (max[i] - min[i]))
          #crit[i] <- 1.01 / log(n[i] + 9) + 2.43 / (n[i] + 1) # Shi et al. (2020b)
-         crit[i] <- 1 / log(n[i] + 9) + 2.5 / (n[i] + 1)      # Shi et al. (under review)
+         crit[i] <- 1 / log(n[i] + 9) + 2.5 / (n[i] + 1)      # Shi et al. (2023)
          sig[i]  <- isTRUE(tval[i] >= crit[i])
 
          if (test && sig[i])
@@ -351,7 +359,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
 
          tval[i] <- abs((q1[i] + q3[i] - 2*median[i]) / (q3[i] - q1[i]))
          #crit[i] <- 2.66 / sqrt(n[i]) - 5.92 / n[i]^2 # Shi et al. (2020b)
-         crit[i] <- 2.65 / sqrt(n[i]) - 6 / n[i]^2     # Shi et al. (under review)
+         crit[i] <- 2.65 / sqrt(n[i]) - 6 / n[i]^2     # Shi et al. (2023)
          sig[i] <- isTRUE(tval[i] >= crit[i])
 
          if (test && sig[i])
@@ -442,7 +450,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
 
          tval[i] <- max(2.65 * log(0.6 * n[i]) / sqrt(n[i]) * abs((min[i] + max[i] - 2*median[i]) / (max[i] - min[i])), abs((q1[i] + q3[i] - 2*median[i]) / (q3[i] - q1[i])))
          #crit[i] <- 2.97 / sqrt(n[i]) - 39.1 / n[i]^3 # Shi et al. (2020b)
-         crit[i] <- 3 / sqrt(n[i]) - 40 / n[i]^3       # Shi et al. (under review)
+         crit[i] <- 3 / sqrt(n[i]) - 40 / n[i]^3       # Shi et al. (2023)
          sig[i] <- isTRUE(tval[i] >= crit[i])
 
          if (test && sig[i])

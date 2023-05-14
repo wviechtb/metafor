@@ -3,6 +3,14 @@ conv.2x2 <- function(ori, ri, x2i, ni, n1i, n2i, correct=TRUE, data, include,
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
+   if (is.logical(replace)) {
+      if (isTRUE(replace)) {
+         replace <- "all"
+      } else {
+         replace <- "ifna"
+      }
+   }
+
    replace <- match.arg(replace, c("ifna","all"))
 
    #########################################################################

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-1</span>
       </span>
     </div>
 
@@ -131,7 +131,7 @@
 <dd><p>logical to specify whether the data frame provided via the <code>data</code> argument should be returned together with the estimated values (the default is <code>TRUE</code>).</p></dd>
 
    <dt>replace</dt>
-<dd><p>character string to specify how values in <code>var.names</code> should be replaced (only relevant when using the <code>data</code> argument and if variables in <code>var.names</code> already exist in the data frame). See the ‘Value’ section for more details.</p></dd>
+<dd><p>character string or logical to specify how values in <code>var.names</code> should be replaced (only relevant when using the <code>data</code> argument and if variables in <code>var.names</code> already exist in the data frame). See the ‘Value’ section for more details.</p></dd>
 
    <dt>...</dt>
 <dd><p>other arguments for the transformation function.</p></dd>
@@ -151,10 +151,10 @@
 <p>If the <code>data</code> argument was not specified or <code>append=FALSE</code>, a data frame of class <code>c("escalc","data.frame")</code> with two variables called <code>var.names[1]</code> (by default <code>"yi"</code>) and <code>var.names[2]</code> (by default <code>"vi"</code>) with the transformed observed effect sizes or outcomes and the corresponding sampling variances (computed as described above).</p>
 
 
-<p>If <code>data</code> was specified and <code>append=TRUE</code>, then the original data frame is returned. If <code>var.names[1]</code> is a variable in <code>data</code> and <code>replace="ifna"</code>, then missing values in this variable are replaced with the transformed observed effect sizes or outcomes (where possible) and otherwise a new variable called <code>var.names[1]</code> is added to the data frame. Similarly, if <code>var.names[2]</code> is a variable in <code>data</code> and <code>replace="ifna"</code>, then missing values in this variable are replaced with the sampling variances calculated as described above (where possible) and otherwise a new variable called <code>var.names[2]</code> is added to the data frame.</p>
+<p>If <code>data</code> was specified and <code>append=TRUE</code>, then the original data frame is returned. If <code>var.names[1]</code> is a variable in <code>data</code> and <code>replace="ifna"</code> (or <code>replace=FALSE</code>), then only missing values in this variable are replaced with the transformed observed effect sizes or outcomes (where possible) and otherwise a new variable called <code>var.names[1]</code> is added to the data frame. Similarly, if <code>var.names[2]</code> is a variable in <code>data</code> and <code>replace="ifna"</code> (or <code>replace=FALSE</code>), then only missing values in this variable are replaced with the sampling variances calculated as described above (where possible) and otherwise a new variable called <code>var.names[2]</code> is added to the data frame.</p>
 
 
-<p>If <code>replace="all"</code>, then all values in <code>var.names[1]</code> and <code>var.names[2]</code> are replaced, even for cases where the value in <code>var.names[1]</code> and <code>var.names[2]</code> is not missing.</p>
+<p>If <code>replace="all"</code> (or <code>replace=TRUE</code>), then all values in <code>var.names[1]</code> and <code>var.names[2]</code> are replaced, even for cases where the value in <code>var.names[1]</code> and <code>var.names[2]</code> is not missing.</p>
     </div>
     <div id="author">
     <h2>Author</h2>

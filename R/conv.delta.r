@@ -8,6 +8,14 @@ conv.delta <- function(yi, vi, ni, data, include, transf, var.names, append=TRUE
    if (missing(transf))
       stop(mstyle$stop("Must specify 'transf' argument."))
 
+   if (is.logical(replace)) {
+      if (isTRUE(replace)) {
+         replace <- "all"
+      } else {
+         replace <- "ifna"
+      }
+   }
+
    replace <- match.arg(replace, c("ifna","all"))
 
    #########################################################################
