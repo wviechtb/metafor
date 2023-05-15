@@ -139,7 +139,7 @@
 <dd><p>character string indicating the distribution assumed for the underlying data (either <code>"norm"</code> for a normal distribution or <code>"lnorm"</code> for a log-normal distribution). Can also be a string vector if different distributions are assumed for different studies. Only relevant when <code>method="default"</code>.</p></dd>
 
    <dt>transf</dt>
-<dd><p>logical to specify whether the estimated means and standard deviations of the log-transformed data should be back-transformed as described by Shi et al. (2020c) (the default is <code>TRUE</code>). Only relevant when <code>dist="lnorm"</code> and when <code>method="default"</code>.</p></dd>
+<dd><p>logical to specify whether the estimated means and standard deviations of the log-transformed data should be back-transformed as described by Shi et al. (2020b) (the default is <code>TRUE</code>). Only relevant when <code>dist="lnorm"</code> and when <code>method="default"</code>.</p></dd>
 
    <dt>test</dt>
 <dd><p>logical to specify whether a study should be excluded from the estimation if the test for skewness is significant (the default is <code>TRUE</code>, but whether this is applicable depends on the method; see ‘Details’).</p></dd>
@@ -193,7 +193,7 @@
 <h3 id="test-for-skewness">Test for Skewness<a class="anchor" aria-label="anchor" href="#test-for-skewness"></a></h3>
 
 
-<p>The methods described above were derived under the assumption that the data are normally distributed. Testing this assumption would require access to the raw data, but based on the three cases above, Shi et al. (2020b; 2023) derived tests for skewness that only require the reported quantile values and the sample sizes. These tests are automatically carried out. When <code>test=TRUE</code> (which is the default), a study is automatically excluded from the estimation if the test is significant. If all studies should be included, set <code>test=FALSE</code>, but note that the accuracy of the methods will tend to be poorer when the data come from an apparently skewed (and hence non-normal) distribution.</p>
+<p>The methods described above were derived under the assumption that the data are normally distributed. Testing this assumption would require access to the raw data, but based on the three cases above, Shi et al. (2023) derived tests for skewness that only require the reported quantile values and the sample sizes. These tests are automatically carried out. When <code>test=TRUE</code> (which is the default), a study is automatically excluded from the estimation if the test is significant. If all studies should be included, set <code>test=FALSE</code>, but note that the accuracy of the methods will tend to be poorer when the data come from an apparently skewed (and hence non-normal) distribution.</p>
 <p></p>
 </div>
 
@@ -201,7 +201,7 @@
 <h3 id="log-normal-distribution">Log-Normal Distribution<a class="anchor" aria-label="anchor" href="#log-normal-distribution"></a></h3>
 
 
-<p>When setting <code>dist="lnorm"</code>, the raw data are assumed to follow a log-normal distribution. In this case, the methods as described by Shi et al. (2020c) are used to estimate the mean and SD of the log transformed data for the three cases above. When <code>transf=TRUE</code> (the default), the estimated mean and SD of the log transformed data are back-transformed to the estimated mean and SD of the raw data (using the bias-corrected back-transformation as described by Shi et al., 2020c). Note that the test for skewness is also carried out when <code>dist="lnorm"</code>, but now testing if the log transformed data exhibit skewness.</p>
+<p>When setting <code>dist="lnorm"</code>, the raw data are assumed to follow a log-normal distribution. In this case, the methods as described by Shi et al. (2020b) are used to estimate the mean and SD of the log transformed data for the three cases above. When <code>transf=TRUE</code> (the default), the estimated mean and SD of the log transformed data are back-transformed to the estimated mean and SD of the raw data (using the bias-corrected back-transformation as described by Shi et al., 2020b). Note that the test for skewness is also carried out when <code>dist="lnorm"</code>, but now testing if the log transformed data exhibit skewness.</p>
 <p></p>
 </div>
 
@@ -251,8 +251,7 @@
 <p>McGrath, S., Zhao, X., Steele, R., Thombs, B. D., Benedetti, A., &amp; the DEPRESsion Screening Data (DEPRESSD) Collaboration (2020). Estimating the sample mean and standard deviation from commonly reported quantiles in meta-analysis. <em>Statistical Methods in Medical Research</em>, <b>29</b>(9), 2520–2537. <a href="https://doi.org/10.1177/0962280219889080" class="external-link">https://doi.org/10.1177/0962280219889080</a></p>
 <p>McGrath, S., Katzenschlager, S., Zimmer, A. J., Seitel, A., Steele, R., &amp; Benedetti, A. (2023). Standard error estimation in meta-analysis of studies reporting medians. <em>Statistical Methods in Medical Research</em>, <b>32</b>(2), 373–388. <a href="https://doi.org/10.1177/09622802221139233" class="external-link">https://doi.org/10.1177/09622802221139233</a></p>
 <p>Shi, J., Luo, D., Weng, H., Zeng, X.-T., Lin, L., Chu, H. &amp; Tong, T. (2020a). Optimally estimating the sample standard deviation from the five-number summary. <em>Research Synthesis Methods</em>, <b>11</b>(5), 641–654. <a href="https://doi.org/https://doi.org/10.1002/jrsm.1429" class="external-link">https://doi.org/https://doi.org/10.1002/jrsm.1429</a></p>
-<p>Shi, J., Luo, D., Wan, X., Liu, Y., Liu, J., Bian, Z. &amp; Tong, T. (2020b). Detecting the skewness of data from the sample size and the five-number summary. <em>arXiv</em>, 2010.05749. <a href="https://doi.org/10.48550/arxiv.2010.05749" class="external-link">https://doi.org/10.48550/arxiv.2010.05749</a></p>
-<p>Shi, J., Tong, T., Wang, Y. &amp; Genton, M. G. (2020c). Estimating the mean and variance from the five-number summary of a log-normal distribution. Statistics and Its Interface, 13(4), 519-531. https://doi.org/10.4310/sii.2020.v13.n4.a9</p>
+<p>Shi, J., Tong, T., Wang, Y. &amp; Genton, M. G. (2020b). Estimating the mean and variance from the five-number summary of a log-normal distribution. Statistics and Its Interface, 13(4), 519-531. https://doi.org/10.4310/sii.2020.v13.n4.a9</p>
 <p>Shi, J., Luo, D., Wan, X., Liu, Y., Liu, J., Bian, Z. &amp; Tong, T. (2023). Detecting the skewness of data from the five-number summary and its application in meta-analysis. <em>Statistical Methods in Medical Research</em>. <a href="https://doi.org/10.1177/09622802231172043" class="external-link">https://doi.org/10.1177/09622802231172043</a></p>
 <p>Walter, S. D. &amp; Yao, X. (2007). Effect sizes can be calculated for studies reporting ranges for outcome variables in systematic reviews. <em>Journal of Clinical Epidemiology</em>, <b>60</b>(8), 849-852. <a href="https://doi.org/10.1016/j.jclinepi.2006.11.003" class="external-link">https://doi.org/10.1016/j.jclinepi.2006.11.003</a></p>
 <p>Wan, X., Wang, W., Liu, J. &amp; Tong, T. (2014). Estimating the sample mean and standard deviation from the sample size, median, range and/or interquartile range. <em>BMC Medical Research Methodology</em>, <b>14</b>, 135. <a href="https://doi.org/10.1186/1471-2288-14-135" class="external-link">https://doi.org/10.1186/1471-2288-14-135</a></p>
