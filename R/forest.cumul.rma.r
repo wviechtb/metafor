@@ -76,7 +76,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    }
 
    if (missing(colshade)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          colshade <- "gray20"
       } else {
          colshade <- "gray90"

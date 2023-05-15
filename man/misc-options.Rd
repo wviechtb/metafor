@@ -130,7 +130,7 @@ res}
 
    \subsection{Dark Mode for Plots}{
 
-   By default, plots created in R have a white background and use black (and other darker colors) as the plotting color. Figures created with the \pkg{metafor} package also adhere to this standard. However, all plotting functions in the package are designed such that switching to a dark background is easily possible. For this, one should set the canvas/figure background to either \code{"black"} or \code{"gray10"} and the foreground color to some bright color (e.g., \code{"gray90"} or \code{"gray95"}). The following code will accomplish this:
+   By default, plots created in R have a white background and use black (and other darker colors) as the plotting color. Figures created with the \pkg{metafor} package also adhere to this standard. However, all plotting functions in the package are designed such that switching to a dark background is easily possible. For this, one should set the canvas/figure background to a dark color (e.g., \code{"black"} or \code{"gray10"}) and the foreground color to some bright color (e.g., \code{"gray90"} or \code{"gray95"}). The following code will accomplish this:
 
 \preformatted{bg <- "gray10"
 fg <- "gray95"

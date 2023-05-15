@@ -18,7 +18,7 @@ qqnorm.rma.mh <- function(y, type="rstandard", pch=21, col, bg, label=FALSE, off
       col <- par("fg")
 
    if (missing(bg)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          bg <- "gray40"
       } else {
          bg <- "gray70"

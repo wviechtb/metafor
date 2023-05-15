@@ -53,7 +53,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    }
 
    if (missing(bg)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          bg <- "gray40"
       } else {
          bg <- "darkgray"
@@ -89,7 +89,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    ### grid argument can either be a logical or a color
 
    if (is.logical(grid)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          gridcol <- "gray30"
       } else {
          gridcol <- "gray70"
@@ -103,7 +103,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    ### shade argument can either be a logical or a color (first for ci, second for pi)
 
    if (is.logical(shade)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          shadecol <- c("gray25", "gray15")
       } else {
          shadecol <- c("gray85", "gray95")
@@ -136,7 +136,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    ### set lcol, lty, and lwd (1 = reg line, 2 = ci bounds, 3 = pi bounds, 4 = refline)
 
    if (missing(lcol)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          lcol <- c(rep("gray80", 3), "gray50")
       } else {
          lcol <- c(rep(par("fg"), 3), "gray50")
@@ -798,7 +798,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       }
 
       if (length(ltxt) >= 1L) {
-         if (is.element(par("bg"), c("black", "gray10"))) {
+         if (.is.dark(par("bg"))) {
             legend(lpos, inset=.01, bg="gray10", pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt)
          } else {
             legend(lpos, inset=.01, bg="white", pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt)

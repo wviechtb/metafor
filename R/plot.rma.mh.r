@@ -16,7 +16,7 @@ plot.rma.mh <- function(x, qqplot=FALSE, ...) {
    par(mfrow=c(2,2))
    on.exit(par(mfrow = par.mfrow), add=TRUE)
 
-   if (is.element(par("bg"), c("black", "gray10"))) {
+   if (.is.dark(par("bg"))) {
       col.na <- "gray30"
       bg <- "gray30"
    } else {

@@ -24,7 +24,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    mf <- match.call()
 
    if (missing(back)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          back <- "gray20"
       } else {
          back <- "lightgray"
@@ -32,7 +32,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    }
 
    if (missing(shade)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          shade <- "gray30"
       } else {
          shade <- "white"
@@ -40,7 +40,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    }
 
    if (missing(hlines)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          hlines <- par("bg")
       } else {
          hlines <- "white"
@@ -174,7 +174,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       col <- .getsubset(col, x$subset)
 
       if (missing(bg)) {
-         if (is.element(par("bg"), c("black", "gray10"))) {
+         if (.is.dark(par("bg"))) {
             bg <- "gray40"
          } else {
             bg <- "white"

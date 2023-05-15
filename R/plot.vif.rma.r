@@ -9,7 +9,7 @@ plot.vif.rma <- function(x,
    .chkclass(class(x), must="vif.rma")
 
    if (missing(col)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          col <- "gray50"
       } else {
          col <- "gray"
@@ -17,7 +17,7 @@ plot.vif.rma <- function(x,
    }
 
    if (missing(border)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          border <- par("bg")
       } else {
          border <- "white"
@@ -25,7 +25,7 @@ plot.vif.rma <- function(x,
    }
 
    if (missing(col.out)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          col.out <- rgb(1,0,0,0.4)
       } else {
          col.out <- rgb(1,0,0,0.5)
@@ -33,7 +33,7 @@ plot.vif.rma <- function(x,
    }
 
    if (missing(col.density)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          col.density <- "dodgerblue"
       } else {
          col.density <- "blue"

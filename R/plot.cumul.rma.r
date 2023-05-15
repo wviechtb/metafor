@@ -13,7 +13,7 @@ digits, cols, grid=TRUE, pch=19, cex=1, lwd=2, ...) {
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (missing(cols)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          cols <- c("gray30","gray80")
       } else {
          cols <- c("gray80","gray20")
@@ -92,7 +92,7 @@ digits, cols, grid=TRUE, pch=19, cex=1, lwd=2, ...) {
    ### grid argument can either be a logical or a color
 
    if (is.logical(grid)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          gridcol <- "gray30"
       } else {
          gridcol <- "gray70"

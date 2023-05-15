@@ -21,7 +21,7 @@ transf, targs, pch=21, col, bg, back, arc.res=100, cex, cex.lab, cex.axis, ...) 
       aty <- NULL
 
    if (missing(back)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          back <- "gray20"
       } else {
          back <- "lightgray"
@@ -32,7 +32,7 @@ transf, targs, pch=21, col, bg, back, arc.res=100, cex, cex.lab, cex.axis, ...) 
       col <- par("fg")
 
    if (missing(bg)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          bg <- "gray40"
       } else {
          bg <- "gray70"

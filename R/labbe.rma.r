@@ -56,7 +56,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    ### grid argument can either be a logical or a color
 
    if (is.logical(grid)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          gridcol <- "gray30"
       } else {
          gridcol <- "gray70"
@@ -103,7 +103,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    col <- .getsubset(col, x$subset)
 
    if (missing(bg)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          bg <- "gray40"
       } else {
          bg <- "gray"

@@ -16,7 +16,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, 
    ### grid argument can either be a logical or a color
 
    if (is.logical(grid)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          gridcol <- "gray30"
       } else {
          gridcol <- "gray70"

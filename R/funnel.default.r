@@ -24,7 +24,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    atransf.char <- deparse(atransf)
 
    if (missing(back)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          back <- "gray20"
       } else {
          back <- "lightgray"
@@ -32,7 +32,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    }
 
    if (missing(shade)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          shade <- "gray30"
       } else {
          shade <- "white"
@@ -40,7 +40,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    }
 
    if (missing(hlines)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          hlines <- par("bg")
       } else {
          hlines <- "white"
@@ -198,7 +198,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       stop(mstyle$stop(paste0("Length of the 'col' argument (", length(col), ") does not correspond to the number of outcomes (", k, ").")))
 
    if (missing(bg)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          bg <- "gray40"
       } else {
          bg <- "white"
@@ -717,7 +717,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
          pt.bg  <- c(pt.bg, bg[1])
       }
 
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          legend(lpos, inset=.01, bg="gray10", pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
       } else {
          legend(lpos, inset=.01, bg="white", pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)

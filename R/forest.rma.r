@@ -69,7 +69,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    }
 
    if (missing(colshade)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          colshade <- "gray20"
       } else {
          colshade <- "gray90"
@@ -130,7 +130,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    } else {
 
       if (missing(col)) {
-         if (is.element(par("bg"), c("black", "gray10"))) {
+         if (.is.dark(par("bg"))) {
             col <- "gray40"            # color of fitted values
          } else {
             col <- "gray"              # color of fitted values
@@ -138,7 +138,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       }
 
       if (missing(border)) {
-         if (is.element(par("bg"), c("black", "gray10"))) {
+         if (.is.dark(par("bg"))) {
             border <- "gray30"         # border color of fitted values
          } else {
             border <- "gray"           # border color of fitted values

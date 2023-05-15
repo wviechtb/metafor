@@ -75,7 +75,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
          stop(mstyle$stop("Non-existing study chosen as potential outlier."))
 
       if (missing(col)) {
-         if (is.element(par("bg"), c("black", "gray10"))) {
+         if (.is.dark(par("bg"))) {
             col <- c("firebrick", "dodgerblue")
          } else {
             col <- c("red", "blue")
@@ -98,7 +98,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
    }
 
    if (missing(border)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          border <- par("bg")
       } else {
          border <- "white"

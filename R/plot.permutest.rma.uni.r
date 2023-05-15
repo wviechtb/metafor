@@ -9,7 +9,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
    .chkclass(class(x), must="permutest.rma.uni")
 
    if (missing(col)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          col <- "gray50"
       } else {
          col <- "gray"
@@ -17,7 +17,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
    }
 
    if (missing(border)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          border <- par("bg")
       } else {
          border <- "white"
@@ -25,7 +25,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
    }
 
    if (missing(col.out)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          col.out <- rgb(1,0,0,0.4)
       } else {
          col.out <- rgb(1,0,0,0.5)
@@ -33,7 +33,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
    }
 
    if (missing(col.ref)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          col.ref <- "gray70"
       } else {
          col.ref <- "black"
@@ -41,7 +41,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
    }
 
    if (missing(col.density)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          col.density <- "dodgerblue"
       } else {
          col.density <- "blue"

@@ -297,7 +297,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    ### set default line color (gray0 to gray60 according to the rank of vi)
 
    if (is.null(col)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          col <- paste0("gray", round(seq(from=70, to=30, length.out=k))[rank(vi)])
       } else {
          col <- paste0("gray", round(seq(from=0, to=70, length.out=k))[rank(vi)])

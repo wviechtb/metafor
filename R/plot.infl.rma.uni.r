@@ -11,7 +11,7 @@ layout, slab.style=1, las=0, pch=21, bg, bg.infl, col.na, ...) {
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    if (missing(bg)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          bg <- "gray40"
       } else {
          bg <- "gray70"
@@ -22,7 +22,7 @@ layout, slab.style=1, las=0, pch=21, bg, bg.infl, col.na, ...) {
       bg.infl <- "red"
 
    if (missing(col.na)) {
-      if (is.element(par("bg"), c("black", "gray10"))) {
+      if (.is.dark(par("bg"))) {
          col.na <- "gray30"
       } else {
          col.na <- "gray70"
