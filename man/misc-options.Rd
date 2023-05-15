@@ -148,6 +148,8 @@ par(fg=fg, bg=bg, col=fg, col.axis=fg, col.lab=fg, col.main=fg, col.sub=fg)
    \figure{plots-light.pdf}{options: width=5.5in}
    \figure{plots-dark.pdf}{options: width=5.5in}}
 
+   As a convenient feature, by creating an object in the workspace called \code{.darkplots} and setting it to \code{TRUE} (i.e., \code{.darkplots <- TRUE}), all plots created by the package will automatically use a dark mode.
+
    }
 
    \subsection{Version Check}{

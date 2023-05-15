@@ -29,6 +29,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (is.function(transf) && is.function(atransf))
       stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))
 
+   if (exists(".darkplots") && .isTRUE(.darkplots))
+      par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
+
    yi <- x$estimate
 
    if (missing(targs))

@@ -101,10 +101,10 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fmtp</span><span class="op">(</span><span class="va">p</span>, digits<span class="op">=</span><span class="fl">4</span>, pname<span class="op">=</span><span class="st">""</span>, equal<span class="op">=</span><span class="cn">FALSE</span>, sep<span class="op">=</span><span class="cn">FALSE</span>, add0<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu">fmtx</span><span class="op">(</span><span class="va">x</span>, digits<span class="op">=</span><span class="fl">4</span>, flag<span class="op">=</span><span class="st">""</span>, <span class="va">...</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fmtp</span><span class="op">(</span><span class="va">p</span>, digits<span class="op">=</span><span class="fl">4</span>, pname<span class="op">=</span><span class="st">""</span>, equal<span class="op">=</span><span class="cn">FALSE</span>, sep<span class="op">=</span><span class="cn">FALSE</span>, add0<span class="op">=</span><span class="cn">FALSE</span>, quote<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">fmtx</span><span class="op">(</span><span class="va">x</span>, digits<span class="op">=</span><span class="fl">4</span>, flag<span class="op">=</span><span class="st">""</span>, quote<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">fmtt</span><span class="op">(</span><span class="va">val</span>, <span class="va">tname</span>, <span class="va">df</span>, <span class="va">df1</span>, <span class="va">df2</span>, <span class="va">pval</span>, digits<span class="op">=</span><span class="fl">4</span>,</span>
-<span>     pname<span class="op">=</span><span class="st">"p-val"</span>, format<span class="op">=</span><span class="fl">1</span>, sep<span class="op">=</span><span class="cn">TRUE</span>, call<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>     pname<span class="op">=</span><span class="st">"p-val"</span>, format<span class="op">=</span><span class="fl">1</span>, sep<span class="op">=</span><span class="cn">TRUE</span>, quote<span class="op">=</span><span class="cn">FALSE</span>, call<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -128,6 +128,9 @@
 
    <dt>add0</dt>
 <dd><p>logical to specify whether a 0 should be shown before the decimal point when the p-value is below the rounding cutoff.</p></dd>
+
+   <dt>quote</dt>
+<dd><p>logical to specify whether formatted strings should be quoted when printed.</p></dd>
 
 
    </dl><p><em>Arguments specific for <code>fmtx</code>:</em></p>
@@ -177,7 +180,7 @@
     <h2>Value</h2>
     
 
-<p>A character vector with the formatted values.</p>
+<p>A character vector with the formatted values. By default (i.e., when <code>quote=FALSE</code>), formatted strings are not quoted when printed.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -195,44 +198,44 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># examples for fmtp()</span></span></span>
-<span class="r-in"><span><span class="fu">fmtp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.0002</span>, <span class="fl">.00008</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">fmtp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.0002</span>, <span class="fl">.00008</span><span class="op">)</span>, quote<span class="op">=</span><span class="cn">TRUE</span>, digits<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0.0002" "&lt;.0001"</span>
-<span class="r-in"><span><span class="fu">fmtp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.0002</span>, <span class="fl">.00008</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">4</span>, equal<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">fmtp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.0002</span>, <span class="fl">.00008</span><span class="op">)</span>, quote<span class="op">=</span><span class="cn">TRUE</span>, digits<span class="op">=</span><span class="fl">4</span>, equal<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "=0.0002" "&lt;.0001" </span>
-<span class="r-in"><span><span class="fu">fmtp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.0002</span>, <span class="fl">.00008</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">4</span>, equal<span class="op">=</span><span class="cn">TRUE</span>, sep<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">fmtp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.0002</span>, <span class="fl">.00008</span><span class="op">)</span>, quote<span class="op">=</span><span class="cn">TRUE</span>, digits<span class="op">=</span><span class="fl">4</span>, equal<span class="op">=</span><span class="cn">TRUE</span>, sep<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "= 0.0002" "&lt; .0001" </span>
-<span class="r-in"><span><span class="fu">fmtp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.0002</span>, <span class="fl">.00008</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">4</span>, equal<span class="op">=</span><span class="cn">TRUE</span>, sep<span class="op">=</span><span class="cn">TRUE</span>, add0<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">fmtp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.0002</span>, <span class="fl">.00008</span><span class="op">)</span>, quote<span class="op">=</span><span class="cn">TRUE</span>, digits<span class="op">=</span><span class="fl">4</span>, equal<span class="op">=</span><span class="cn">TRUE</span>, sep<span class="op">=</span><span class="cn">TRUE</span>, add0<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "= 0.0002" "&lt; 0.0001"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># examples for fmtx()</span></span></span>
 <span class="r-in"><span><span class="fu">fmtx</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.0002</span>, <span class="fl">2.00008</span>, <span class="fl">3.00004</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1.0002" "2.0001" "3.0000"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.0002 2.0001 3.0000</span>
 <span class="r-in"><span><span class="fu">fmtx</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "-1.0000" "1.0000" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.0000 1.0000 </span>
 <span class="r-in"><span><span class="fu">fmtx</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">4</span>, flag<span class="op">=</span><span class="st">" "</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "-1.0000" " 1.0000"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.0000  1.0000</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># examples for fmtt()</span></span></span>
 <span class="r-in"><span><span class="fu">fmtt</span><span class="op">(</span><span class="fl">2.45</span>, <span class="st">"z"</span>, pval<span class="op">=</span><span class="fl">0.01429</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "z = 2.45, p-val = 0.01"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] z = 2.45, p-val = 0.01</span>
 <span class="r-in"><span><span class="fu">fmtt</span><span class="op">(</span><span class="fl">3.45</span>, <span class="st">"z"</span>, pval<span class="op">=</span><span class="fl">0.00056</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "z = 3.45, p-val &lt; .01"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] z = 3.45, p-val &lt; .01</span>
 <span class="r-in"><span><span class="fu">fmtt</span><span class="op">(</span><span class="fl">2.45</span>, <span class="st">"t"</span>, df<span class="op">=</span><span class="fl">23</span>, pval<span class="op">=</span><span class="fl">0.02232</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "t(df = 23) = 2.45, p-val = 0.02"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] t(df = 23) = 2.45, p-val = 0.02</span>
 <span class="r-in"><span><span class="fu">fmtt</span><span class="op">(</span><span class="fl">3.45</span>, <span class="st">"t"</span>, df<span class="op">=</span><span class="fl">23</span>, pval<span class="op">=</span><span class="fl">0.00218</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "t(df = 23) = 3.45, p-val &lt; .01"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] t(df = 23) = 3.45, p-val &lt; .01</span>
 <span class="r-in"><span><span class="fu">fmtt</span><span class="op">(</span><span class="fl">3.45</span>, <span class="st">"t"</span>, df<span class="op">=</span><span class="fl">23</span>, pval<span class="op">=</span><span class="fl">0.00218</span>, digits<span class="op">=</span><span class="fl">2</span>, format<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "t = 3.45, df = 23, p-val &lt; .01"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] t = 3.45, df = 23, p-val &lt; .01</span>
 <span class="r-in"><span><span class="fu">fmtt</span><span class="op">(</span><span class="fl">46.23</span>, <span class="st">"Q"</span>, df<span class="op">=</span><span class="fl">29</span>, pval<span class="op">=</span><span class="fl">0.0226</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Q(df = 29) = 46.23, p-val = 0.02"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] Q(df = 29) = 46.23, p-val = 0.02</span>
 <span class="r-in"><span><span class="fu">fmtt</span><span class="op">(</span><span class="fl">46.23</span>, <span class="st">"Q"</span>, df<span class="op">=</span><span class="fl">29</span>, pval<span class="op">=</span><span class="fl">0.0226</span>, digits<span class="op">=</span><span class="fl">2</span>, format<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Q = 46.23, df = 29, p-val = 0.02"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] Q = 46.23, df = 29, p-val = 0.02</span>
 <span class="r-in"><span><span class="fu">fmtt</span><span class="op">(</span><span class="fl">8.75</span>, <span class="st">"F"</span>, df1<span class="op">=</span><span class="fl">2</span>, df2<span class="op">=</span><span class="fl">35</span>, pval<span class="op">=</span><span class="fl">0.00083</span>, digits<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "F(df1 = 2, df2 = 35) = 8.75, p-val &lt; .001"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] F(df1 = 2, df2 = 35) = 8.75, p-val &lt; .001</span>
 <span class="r-in"><span><span class="fu">fmtt</span><span class="op">(</span><span class="fl">8.75</span>, <span class="st">"F"</span>, df1<span class="op">=</span><span class="fl">2</span>, df2<span class="op">=</span><span class="fl">35</span>, pval<span class="op">=</span><span class="fl">0.00083</span>, digits<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, format<span class="op">=</span><span class="fl">2</span>, pname<span class="op">=</span><span class="st">"p"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "F = 8.75, df1 = 2, df2 = 35, p &lt; .001"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] F = 8.75, df1 = 2, df2 = 35, p &lt; .001</span>
 <span class="r-in"><span><span class="fu">fmtt</span><span class="op">(</span><span class="fl">8.75</span>, <span class="st">"F"</span>, df1<span class="op">=</span><span class="fl">2</span>, df2<span class="op">=</span><span class="fl">35</span>, pval<span class="op">=</span><span class="fl">0.00083</span>, digits<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, format<span class="op">=</span><span class="fl">2</span>, pname<span class="op">=</span><span class="st">"p"</span>, sep<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "F=8.75, df1=2, df2=35, p&lt;.001"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] F=8.75, df1=2, df2=35, p&lt;.001</span>
 </code></pre></div>
     </div>
   </div>

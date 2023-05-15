@@ -4,6 +4,8 @@
 
 - `replace` argument in `conv.2x2()`, `conv.delta()`, `conv.fivenum()`, and `conv.wald()` can now also be a logical
 
+- formatting functions `fmtp()`, `fmtx()`, and `fmtt()` gain a `quote` argument, which is set to `FALSE` by default
+
 # metafor 4.2-0 (2023-05-08)
 
 - improved the various plotting functions so they respect `par("fg")`; as a result, one can now create plots with a dark background and light plotting colors

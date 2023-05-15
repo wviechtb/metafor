@@ -1,6 +1,6 @@
 ############################################################################
 
-fmtp <- function(p, digits=4, pname="", equal=FALSE, sep=FALSE, add0=FALSE) {
+fmtp <- function(p, digits=4, pname="", equal=FALSE, sep=FALSE, add0=FALSE, quote=FALSE) {
 
    p[p < 0] <- 0
    p[p > 1] <- 1
@@ -19,13 +19,18 @@ fmtp <- function(p, digits=4, pname="", equal=FALSE, sep=FALSE, add0=FALSE) {
       sep <- ""
    }
 
-   ifelse(is.na(p),            paste0(pname, equal, sep, "NA"),
-          ifelse(p >= ncutoff, paste0(pname, equal, sep, formatC(p, digits=digits, format="f")),
-                               paste0(pname, "<",   sep, ifelse(add0, "0", ""), cutoff)))
+   out <- ifelse(is.na(p),            paste0(pname, equal, sep, "NA"),
+                 ifelse(p >= ncutoff, paste0(pname, equal, sep, formatC(p, digits=digits, format="f")),
+                                      paste0(pname, "<",   sep, ifelse(add0, "0", ""), cutoff)))
+
+   if (!quote)
+      out <- noquote(out)
+
+   return(out)
 
 }
 
-fmtx <- function(x, digits=4, flag="", ...) {
+fmtx <- function(x, digits=4, flag="", quote=FALSE, ...) {
 
    # in case x is a data frame / matrix with two dimensions
 
@@ -41,6 +46,9 @@ fmtx <- function(x, digits=4, flag="", ...) {
 
       for (j in seq_len(ncol(x)))
          out[,j] <- fmtx(x[,j], digits=digits[[j]], flag=flag, ...)
+
+      if (!quote)
+         out <- noquote(out)
 
       return(out)
 
@@ -79,7 +87,7 @@ fmtx <- function(x, digits=4, flag="", ...) {
       postfix <- ddd$postfix
    }
 
-   sapply(x, function(x) {
+   out <- sapply(x, function(x) {
       if (is.na(x))
          return(paste0("NA", postfix))
       out <- formatC(x, format="f", digits=digits, flag=flag, width=width, drop0trailing=drop0ifint && is.integer(digits))
@@ -89,11 +97,16 @@ fmtx <- function(x, digits=4, flag="", ...) {
       return(out)
    })
 
+   if (!quote)
+      out <- noquote(out)
+
+   return(out)
+
 }
 
 ############################################################################
 
-fmtt <- function(val, tname, df, df1, df2, pval, digits=4, pname="p-val", format=1, sep=TRUE, call=FALSE, ...) {
+fmtt <- function(val, tname, df, df1, df2, pval, digits=4, pname="p-val", format=1, sep=TRUE, quote=FALSE, call=FALSE, ...) {
 
    if (length(val) != 1L)
       stop("Argument 'val' must be a scalar.")
@@ -161,7 +174,10 @@ fmtt <- function(val, tname, df, df1, df2, pval, digits=4, pname="p-val", format
       out$sep <- NULL
       return(out)
    } else {
-      return(eval(out))
+      out <- eval(out)
+      if (!quote)
+         out <- noquote(out)
+      return(out)
    }
 
 }

@@ -12,6 +12,9 @@ plot.rma.mh <- function(x, qqplot=FALSE, ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
+   if (exists(".darkplots") && .isTRUE(.darkplots))
+      par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
+
    par.mfrow <- par("mfrow")
    par(mfrow=c(2,2))
    on.exit(par(mfrow = par.mfrow), add=TRUE)

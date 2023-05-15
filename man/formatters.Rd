@@ -8,10 +8,10 @@
    A set of formatter functions. \loadmathjax
 }
 \usage{
-fmtp(p, digits=4, pname="", equal=FALSE, sep=FALSE, add0=FALSE)
-fmtx(x, digits=4, flag="", \dots)
+fmtp(p, digits=4, pname="", equal=FALSE, sep=FALSE, add0=FALSE, quote=FALSE)
+fmtx(x, digits=4, flag="", quote=FALSE, \dots)
 fmtt(val, tname, df, df1, df2, pval, digits=4,
-     pname="p-val", format=1, sep=TRUE, call=FALSE, \dots)
+     pname="p-val", format=1, sep=TRUE, quote=FALSE, call=FALSE, \dots)
 }
 \arguments{
    \emph{Arguments for \code{fmtp}:}
@@ -22,6 +22,7 @@ fmtt(val, tname, df, df1, df2, pval, digits=4,
    \item{equal}{logical to specify whether an equal symbol should be shown before the p-value (when it is larger than the rounding cutoff).}
    \item{sep}{logical to specify whether a space should be added between \code{pname}, the equal/lesser symbol, and the p-value.}
    \item{add0}{logical to specify whether a 0 should be shown before the decimal point when the p-value is below the rounding cutoff.}
+   \item{quote}{logical to specify whether formatted strings should be quoted when printed.}
 
    \emph{Arguments specific for \code{fmtx}:}
 
@@ -48,7 +49,7 @@ fmtt(val, tname, df, df1, df2, pval, digits=4,
    The \code{fmtt} function takes a single test statistic value as input (and, if applicable, its degrees of freedom via argument \code{df} or its numerator and denominator degrees of freedom via arguments \code{df1} and \code{df2}) and the corresponding p-value and formats it for printing. Two different formats are available (chosen via the \code{format} argument), one giving the degrees of freedom before the test statistic (in parentheses) and one after the test statistic.
 }
 \value{
-   A character vector with the formatted values.
+   A character vector with the formatted values. By default (i.e., when \code{quote=FALSE}), formatted strings are not quoted when printed.
 }
 \note{
    The option in \code{fmtt} to return the formatted test result as a call can be useful when adding the output to a plot with \code{\link{text}} and one would like to use \code{\link{plotmath}} formatting for \code{tname}.
@@ -61,10 +62,10 @@ fmtt(val, tname, df, df1, df2, pval, digits=4,
 }
 \examples{
 # examples for fmtp()
-fmtp(c(.0002, .00008), digits=4)
-fmtp(c(.0002, .00008), digits=4, equal=TRUE)
-fmtp(c(.0002, .00008), digits=4, equal=TRUE, sep=TRUE)
-fmtp(c(.0002, .00008), digits=4, equal=TRUE, sep=TRUE, add0=TRUE)
+fmtp(c(.0002, .00008), quote=TRUE, digits=4)
+fmtp(c(.0002, .00008), quote=TRUE, digits=4, equal=TRUE)
+fmtp(c(.0002, .00008), quote=TRUE, digits=4, equal=TRUE, sep=TRUE)
+fmtp(c(.0002, .00008), quote=TRUE, digits=4, equal=TRUE, sep=TRUE, add0=TRUE)
 
 # examples for fmtx()
 fmtx(c(1.0002, 2.00008, 3.00004), digits=4)
