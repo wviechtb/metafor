@@ -48,6 +48,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       pi.type <- "default"
    } else {
       pi.type <- ddd$pi.type
+      pi.type <- tolower(pi.type)
    }
 
    if (!is.null(newmods) && x$int.only && !(x$int.only && identical(newmods, 1)))

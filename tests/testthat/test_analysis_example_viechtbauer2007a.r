@@ -10,15 +10,15 @@ source("settings.r")
 dat <- dat.collins1985b[,1:7]
 dat <- escalc(measure="OR", ai=pre.xti, n1i=pre.nti, ci=pre.xci, n2i=pre.nci, data=dat)
 
+### fit model with different tau^2 estimators
+res.DL   <- rma(yi, vi, data=dat, method="DL")
+res.ML   <- rma(yi, vi, data=dat, method="ML")
+res.REML <- rma(yi, vi, data=dat, method="REML")
+res.SJ   <- rma(yi, vi, data=dat, method="SJ")
+
 ### note: results are compared with those in Table II on page 44 (but without rounding)
 
 test_that("the heterogeneity estimates are correct.", {
-
-   ### fit model with different tau^2 estimators
-   res.DL   <- rma(yi, vi, data=dat, method="DL")
-   res.ML   <- rma(yi, vi, data=dat, method="ML")
-   res.REML <- rma(yi, vi, data=dat, method="REML")
-   res.SJ   <- rma(yi, vi, data=dat, method="SJ")
 
    sav <- c(DL=res.DL$tau2, ML=res.ML$tau2, REML=res.REML$tau2, SJ=res.SJ$tau2)
    expect_equivalent(sav, c(.2297, .2386, .3008, .4563), tolerance=.tol[["var"]])
@@ -27,7 +27,6 @@ test_that("the heterogeneity estimates are correct.", {
 
 test_that("CI is correct for the Q-profile method.", {
 
-   res.DL <- rma(yi, vi, data=dat, method="DL")
    sav <- confint(res.DL)
    sav <- c(sav$random["tau^2","ci.lb"], sav$random["tau^2","ci.ub"])
    expect_equivalent(sav, c(.0723, 2.2027), tolerance=.tol[["var"]])
@@ -35,8 +34,6 @@ test_that("CI is correct for the Q-profile method.", {
 })
 
 test_that("CI is correct for the Biggerstaff–Tweedie method.", {
-
-   res.DL <- rma(yi, vi, data=dat, method="DL")
 
    CI.D.func <- function(tau2val, s1, s2, Q, k, lower.tail) {
       expQ  <- (k-1) + s1*tau2val
@@ -60,14 +57,22 @@ test_that("CI is correct for the Biggerstaff–Tweedie method.", {
 
 test_that("CI is correct for the profile likelihood method.", {
 
-   res.ML <- rma.mv(yi, vi, random = ~ 1 | id, data=dat, method="ML", sparse=sparse)
-   res.REML <- rma.mv(yi, vi, random = ~ 1 | id, data=dat, method="REML", sparse=sparse)
+   sav <- confint(res.ML, type="PL")
+   sav <- c(sav$random["tau^2","ci.lb"], sav$random["tau^2","ci.ub"])
+   expect_equivalent(sav, c(.0266, 1.1308), tolerance=.tol[["var"]])
 
-   sav <- confint(res.ML)
+   sav <- confint(res.REML, type="PL")
+   sav <- c(sav$random["tau^2","ci.lb"], sav$random["tau^2","ci.ub"])
+   expect_equivalent(sav, c(.0427, 1.4747), tolerance=.tol[["var"]])
+
+   res.ML.mv   <- rma.mv(yi, vi, random = ~ 1 | id, data=dat, method="ML")
+   res.REML.mv <- rma.mv(yi, vi, random = ~ 1 | id, data=dat, method="REML")
+
+   sav <- confint(res.ML.mv)
    sav <- c(sav$random["sigma^2","ci.lb"], sav$random["sigma^2","ci.ub"])
    expect_equivalent(sav, c(.0266, 1.1308), tolerance=.tol[["var"]])
 
-   sav <- confint(res.REML)
+   sav <- confint(res.REML.mv)
    sav <- c(sav$random["sigma^2","ci.lb"], sav$random["sigma^2","ci.ub"])
    expect_equivalent(sav, c(.0427, 1.4747), tolerance=.tol[["var"]])
 
@@ -77,7 +82,7 @@ test_that("CI is correct for the profile likelihood method.", {
    abline(h=logLik(res.ML) - qchisq(.95,1)/2, lty="dotted")
    abline(v=c(0.027, 1.131), lty="dotted")
 
-   profile(res.REML, xlim=c(0,1.2), steps=50, progbar=FALSE)
+   profile(res.REML, xlim=c(0,1.6), steps=50, progbar=FALSE)
    abline(h=logLik(res.REML) - qchisq(.95,1)/2, lty="dotted")
    abline(v=c(0.043, 1.475), lty="dotted")
 
@@ -85,20 +90,17 @@ test_that("CI is correct for the profile likelihood method.", {
 
 test_that("CI is correct for the Wald-type method.", {
 
-   res.ML   <- rma(yi, vi, data=dat, method="ML")
-   res.REML <- rma(yi, vi, data=dat, method="REML")
+   sav <- confint(res.ML, type="Wald")
+   sav <- c(sav$random["tau^2","ci.lb"], sav$random["tau^2","ci.ub"])
+   expect_equivalent(sav, c(0, .5782), tolerance=.tol[["var"]])
 
-   sav <- c(ci.lb=res.ML$tau2 - 1.96*res.ML$se.tau2, ci.ub=res.ML$tau2 + 1.96*res.ML$se.tau2)
-   expect_equivalent(sav, c(-.1011, .5782), tolerance=.tol[["var"]])
-
-   sav <- c(ci.lb=res.REML$tau2 - 1.96*res.REML$se.tau2, ci.ub=res.REML$tau2 + 1.96*res.REML$se.tau2)
-   expect_equivalent(sav, c(-.1306, .7322), tolerance=.tol[["var"]])
+   sav <- confint(res.REML, type="Wald")
+   sav <- c(sav$random["tau^2","ci.lb"], sav$random["tau^2","ci.ub"])
+   expect_equivalent(sav, c(0, .7322), tolerance=.tol[["var"]])
 
 })
 
 test_that("CI is correct for the Sidik-Jonkman method.", {
-
-   res.SJ <- rma(yi, vi, data=dat, method="SJ")
 
    sav <- c(ci.lb=(res.SJ$k-1) * res.SJ$tau2 / qchisq(.975, df=res.SJ$k-1),
             ci.ub=(res.SJ$k-1) * res.SJ$tau2 / qchisq(.025, df=res.SJ$k-1))

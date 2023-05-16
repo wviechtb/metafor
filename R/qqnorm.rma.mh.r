@@ -14,7 +14,7 @@ qqnorm.rma.mh <- function(y, type="rstandard", pch=21, col, bg, label=FALSE, off
    if (length(label) != 1L)
       stop(mstyle$stop("Argument 'label' should be of length 1."))
 
-   if (exists(".darkplots") && .isTRUE(.darkplots))
+   if (exists(".darkplots"))
       par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
 
    if (missing(col))

@@ -96,7 +96,7 @@
       .selmodel.verbose(ll=llval, beta=beta, tau2=tau2, delta=delta, mstyle=mstyle, digits=digits)
 
    if (verbose > 2) {
-      xs <- seq(pval.min, 1-pval.min, length=101)
+      xs <- seq(pval.min, 1-pval.min, length=1001)
       ys <- wi.fun(xs, delta, yi, vi, preci=1, alternative, steps)
       plot(xs, ys, type="l", lwd=2, xlab="p-value", ylab="Relative Likelihood of Selection")
    }
@@ -194,7 +194,7 @@
       .selmodel.verbose(ll=llval, beta=beta, tau2=tau2, delta=delta, mstyle=mstyle, digits=digits)
 
    if (verbose > 2) {
-      xs <- seq(0, 1, length=101)
+      xs <- seq(0, 1, length=1001)
       ys <- wi.fun(xs, delta, yi, vi, preci=1, alternative, steps)
       plot(xs, ys, type="l", lwd=2, xlab="p-value", ylab="Relative Likelihood of Selection")
    }

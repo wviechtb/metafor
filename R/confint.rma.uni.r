@@ -65,13 +65,13 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
    if (missing(type)) {
       if (x$method == "GENQ" || x$method == "GENQM") {
-         type <- "GENQ"
+         type <- "genq"
       } else {
-         type <- "QP"
+         type <- "qp"
       }
    } else {
-      #type <- match.arg(type, c("QP","GENQ","PL"))
-      if (!is.element(type, c("QP","GENQ","PL","Wald","Wald.log","Wald.sqrt")))
+      type <- tolower(type)
+      if (!is.element(type, c("qp","genq","pl","ht","wald","wald.log","wald.sqrt")))
          stop(mstyle$stop("Unknown 'type' specified."))
    }
 
@@ -90,7 +90,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
       if (x$tau2.fix)
          stop(mstyle$stop("Model does not contain an estimated random-effects component."))
 
-      if (type == "GENQ" && !(is.element(x$method, c("GENQ","GENQM"))))
+      if (type == "genq" && !(is.element(x$method, c("GENQ","GENQM"))))
          stop(mstyle$stop("Model must be fitted with method=\"GENQ\" or method=\"GENQM\" to use this option."))
 
       ######################################################################
@@ -136,7 +136,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
       ### Q-profile method ###
       ########################
 
-      if (type == "QP") {
+      if (type == "qp") {
 
          if (!x$allvipos)
             stop(mstyle$stop("Cannot compute CI for tau^2 when there are non-positive sampling variances in the data."))
@@ -254,7 +254,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
       ### GENQ method ###
       ###################
 
-      if (type == "GENQ") {
+      if (type == "genq") {
 
          if (!requireNamespace("CompQuadForm", quietly=TRUE))
             stop(mstyle$stop("Please install the 'CompQuadForm' package when method='QGEN'."))
@@ -375,7 +375,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
       ### PL method ###
       #################
 
-      if (type == "PL") {
+      if (type == "pl") {
 
          if (con$tau2.min > x$tau2)
             stop(mstyle$stop("Lower bound of interval to be searched must be <= actual value of component."))
@@ -468,8 +468,44 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
       ######################################################################
 
-      if (is.element(type, c("Wald","Wald.log","Wald.sqrt"))) {
-         crit    <- qnorm(level/2, lower.tail=FALSE)
+      #################
+      ### HT method ###
+      #################
+
+      if (type == "ht") {
+
+         if (!x$int.only)
+            stop(mstyle$stop("Method only applicable to models without moderators."))
+         if (x$method != "DL")
+            stop(mstyle$stop("Method only applicable when 'method=DL'."))
+         if (x$k <= 2)
+            stop(mstyle$stop("Method only applicable when k > 2."))
+
+         if (x$QE > x$k) {
+            se.lnH <- 1/2 * (log(x$QE) - log(x$k-1)) / (sqrt(2*x$QE) - sqrt(2*x$k-3))
+         } else {
+            se.lnH <- sqrt(1 / (2*(x$k-2)) * (1 - 1/(3*(x$k-2)^2))) # as in Higgins and Thompson (2002), p. 1549
+            #se.lnH <- sqrt(1 / ((2*(x$k-2)) * (1 - 1/(3*(x$k-2)^2)))) # as in Borenstein et al. (2009), eq. 16.21
+         }
+
+         crit <- qnorm(level/2, lower.tail=FALSE)
+         lb.conv <- TRUE
+         ub.conv <- TRUE
+         #H2.lb <- exp(log(sqrt(x$H2)) - crit * se.lnH)^2
+         #H2.ub <- exp(log(sqrt(x$H2)) + crit * se.lnH)^2
+         H2.lb <- exp(log(x$H2) - crit * 2*se.lnH) # note: SE[log(H^2)] = 2*SE[log(H)]
+         H2.ub <- exp(log(x$H2) + crit * 2*se.lnH)
+         I2.lb <- (H2.lb - 1) / H2.lb
+         I2.ub <- (H2.ub - 1) / H2.ub
+         tau2.lb <- max(0, I2.lb * x$vt / (1 - I2.lb))
+         tau2.ub <- I2.ub * x$vt / (1 - I2.ub)
+
+      }
+
+      ######################################################################
+
+      if (is.element(type, c("wald","wald.log","wald.sqrt"))) {
+         crit <- qnorm(level/2, lower.tail=FALSE)
          lb.conv <- TRUE
          ub.conv <- TRUE
       }
@@ -478,7 +514,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
       ### Wald method ###
       ###################
 
-      if (type == "Wald") {
+      if (type == "wald") {
 
          tau2.lb <- x$tau2 - crit * x$se.tau2
          tau2.ub <- x$tau2 + crit * x$se.tau2
@@ -490,7 +526,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
       ### Wald.log method ###
       #######################
 
-      if (type == "Wald.log") {
+      if (type == "wald.log") {
 
          if (x$tau2 >= 0) {
             tau2.lb <- exp(log(x$tau2) - crit * x$se.tau2 / x$tau2)
@@ -504,7 +540,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
       ### Wald.sqrt method ###
       ########################
 
-      if (type == "Wald.sqrt") {
+      if (type == "wald.sqrt") {
 
          if (x$tau2 >= 0) {
             tau2.lb <- (max(0, sqrt(x$tau2) - crit * x$se.tau2 / (2 * sqrt(x$tau2))))^2

@@ -156,7 +156,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
    if (random) {
 
-      type <- "PL"
+      type <- "pl"
 
       ######################################################################
 
@@ -363,7 +363,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
       ### Profile Likelihood method
 
-      if (type == "PL") {
+      if (type == "pl") {
 
          if (con$vc.min > vc)
             stop(mstyle$stop("Lower bound of interval to be searched must be <= estimated value of component."))

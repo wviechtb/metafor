@@ -51,7 +51,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    addyi  <- ifelse(is.null(ddd$addyi),  TRUE,  ddd$addyi)
    addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
 
-   if (exists(".darkplots") && .isTRUE(.darkplots))
+   if (exists(".darkplots"))
       par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
 
    #########################################################################

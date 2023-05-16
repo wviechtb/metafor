@@ -8,7 +8,7 @@ plot.vif.rma <- function(x,
 
    .chkclass(class(x), must="vif.rma")
 
-   if (exists(".darkplots") && .isTRUE(.darkplots))
+   if (exists(".darkplots"))
       par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
 
    if (missing(col)) {

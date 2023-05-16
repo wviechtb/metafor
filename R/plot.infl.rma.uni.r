@@ -10,7 +10,7 @@ layout, slab.style=1, las=0, pch=21, bg, bg.infl, col.na, ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
-   if (exists(".darkplots") && .isTRUE(.darkplots))
+   if (exists(".darkplots"))
       par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
 
    if (missing(bg)) {

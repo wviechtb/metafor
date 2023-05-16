@@ -114,7 +114,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
    if (random) {
 
-      type <- "PL"
+      type <- "pl"
 
       ######################################################################
 
@@ -224,7 +224,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
       # TODO: could also provide Wald-type CIs (ci.lb.tau2, ci.ub.tau2) and (ci.lb.delta, ci.ub.delta)
 
-      if (type == "PL") {
+      if (type == "pl") {
 
          if (con$vc.min > vc)
             stop(mstyle$stop("Lower bound of interval to be searched must be <= estimated value of component."))

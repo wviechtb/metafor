@@ -800,6 +800,9 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    #return(optcall)
 
+   if (exists(".darkplots") && verbose > 2)
+      par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
+
    if (verbose) {
       opt.res <- try(eval(str2lang(optcall)), silent=!verbose)
    } else {
