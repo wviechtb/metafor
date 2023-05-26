@@ -1,8 +1,8 @@
-summary.rma <- function(object, digits, ...) {
+summary.matreg <- function(object, digits, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   .chkclass(class(object), must="rma")
+   .chkclass(class(object), must="matreg")
 
    if (missing(digits)) {
       digits <- .get.digits(xdigits=object$digits, dmiss=TRUE)
@@ -12,7 +12,7 @@ summary.rma <- function(object, digits, ...) {
 
    object$digits <- digits
 
-   class(object) <- c("summary.rma", class(object))
+   class(object) <- c("summary.matreg", class(object))
    return(object)
 
 }

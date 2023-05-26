@@ -192,6 +192,8 @@ reference:
       - vcov.rma
       - model.matrix.rma
       - formula.rma
+      - coef.matreg
+      - vcov.matreg
   - title: "Convenience Functions"
     desc: >
       Some miscellaneous convenience functions.

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-4</span>
       </span>
     </div>
 
@@ -167,7 +167,7 @@
 <dd><p>some additional elements/values.</p></dd>
 
 
-</dl><p>The results are formatted and printed with the <code><a href="print.matreg.html">print</a></code> function.</p>
+</dl><p>The results are formatted and printed with the <code><a href="print.matreg.html">print</a></code> function. Extractor functions include <code><a href="methods.matreg.html">coef</a></code> and <code><a href="methods.matreg.html">vcov</a></code>.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -229,7 +229,7 @@
 <span class="r-in"><span><span class="co">### fit the same regression model using matreg()</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">matreg</span><span class="op">(</span>y<span class="op">=</span><span class="st">"mpg"</span>, x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hp"</span>,<span class="st">"wt"</span>,<span class="st">"am"</span><span class="op">)</span>, R<span class="op">=</span><span class="va">S</span>, cov<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>              means<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>, n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="print.rma.html">summary</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          estimate      se     tval  df    pval    ci.lb    ci.ub      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt   34.0029  2.6427  12.8669  28  &lt;.0001  28.5896  39.4161  *** </span>
@@ -239,6 +239,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 2.5375 on 28 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared: 0.8399,  Adjusted R-squared: 0.8227</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 48.9600 on 3 and 28 DF,  p-value: &lt;.0001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### copy the 'mtcars' dataset to 'dat' and standardize all variables</span></span></span>
@@ -274,7 +278,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit the same regression model using matreg()</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">matreg</span><span class="op">(</span>y<span class="op">=</span><span class="st">"mpg"</span>, x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hp"</span>,<span class="st">"wt"</span>,<span class="st">"am"</span><span class="op">)</span>, R<span class="op">=</span><span class="va">R</span>, n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="print.rma.html">summary</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     estimate      se     tval  df    pval    ci.lb    ci.ub      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hp   -0.4264  0.1074  -3.9709  29  0.0004  -0.6460  -0.2068  *** </span>
@@ -283,6 +287,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 0.4137 on 29 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared: 0.8399,  Adjusted R-squared: 0.8233</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 50.7086 on 3 and 29 DF,  p-value: &lt;.0001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### note: the standard errors of the betas should not be used to construct CIs</span></span></span>
@@ -293,7 +301,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit the same regression model using matreg() but now supply V</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">matreg</span><span class="op">(</span>y<span class="op">=</span><span class="st">"mpg"</span>, x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hp"</span>,<span class="st">"wt"</span>,<span class="st">"am"</span><span class="op">)</span>, R<span class="op">=</span><span class="va">R</span>, V<span class="op">=</span><span class="va">V</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="print.rma.html">summary</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     estimate      se     zval    pval    ci.lb    ci.ub      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> hp   -0.4264  0.1060  -4.0218  &lt;.0001  -0.6341  -0.2186  *** </span>
@@ -302,6 +310,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R^2: 0.8399, QM(df = 3) = 758.2210, p-val &lt; .0001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### the standard errors computed in this way can now be used to construct</span></span></span>

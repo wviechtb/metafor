@@ -39,7 +39,7 @@ matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE,
    \item{vb}{the variance-covariance matrix of the estimated model coefficients.}
    \item{\dots}{some additional elements/values.}
 
-   The results are formatted and printed with the \code{\link[=print.matreg]{print}} function.
+   The results are formatted and printed with the \code{\link[=print.matreg]{print}} function. Extractor functions include \code{\link[=coef.matreg]{coef}} and \code{\link[=vcov.matreg]{vcov}}.
 }
 \note{
    Only the lower triangular part of \code{R} (and \code{V} if it is specified) is used in the computations.
@@ -79,7 +79,7 @@ S <- cov(mtcars)
 ### fit the same regression model using matreg()
 res <- matreg(y="mpg", x=c("hp","wt","am"), R=S, cov=TRUE,
               means=colMeans(mtcars), n=nrow(mtcars))
-res
+summary(res)
 
 ### copy the 'mtcars' dataset to 'dat' and standardize all variables
 dat <- mtcars
@@ -94,7 +94,7 @@ R <- cor(mtcars)
 
 ### fit the same regression model using matreg()
 res <- matreg(y="mpg", x=c("hp","wt","am"), R=R, n=nrow(mtcars))
-res
+summary(res)
 
 ### note: the standard errors of the betas should not be used to construct CIs
 ### as they assume that the null hypothesis (H0: beta_j = 0) is true
@@ -104,7 +104,7 @@ V <- rcalc(R, ni=nrow(mtcars))$V
 
 ### fit the same regression model using matreg() but now supply V
 res <- matreg(y="mpg", x=c("hp","wt","am"), R=R, V=V)
-res
+summary(res)
 
 ### the standard errors computed in this way can now be used to construct
 ### CIs for the betas (here, the difference is relatively small)

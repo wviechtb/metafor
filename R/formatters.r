@@ -48,7 +48,7 @@ fmtx <- function(x, digits=4, flag="", quote=FALSE, ...) {
          out[,j] <- fmtx(x[,j], digits=digits[[j]], flag=flag, ...)
 
       if (!quote)
-         out <- noquote(out)
+         out <- noquote(out, right=TRUE)
 
       return(out)
 
@@ -98,7 +98,7 @@ fmtx <- function(x, digits=4, flag="", quote=FALSE, ...) {
    })
 
    if (!quote)
-      out <- noquote(out)
+      out <- noquote(out, right=TRUE)
 
    return(out)
 

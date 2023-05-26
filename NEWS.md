@@ -1,8 +1,10 @@
-# metafor 4.3-3 (2023-05-26)
+# metafor 4.3-4 (2023-05-26)
 
 - added a few more transformation functions
 
 - `replace` argument in `conv.2x2()`, `conv.delta()`, `conv.fivenum()`, and `conv.wald()` can now also be a logical
+
+- added `summary.matreg()` and `print.summary.matreg()` methods for including additional statistics in the output (R^2 and the omnibus test) and added `coef.matreg()` and `vcov.matreg()` extractor functions
 
 - formatting functions `fmtp()`, `fmtx()`, and `fmtt()` gain a `quote` argument, which is set to `FALSE` by default
 

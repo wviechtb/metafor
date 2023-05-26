@@ -164,6 +164,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
          stop(mstyle$stop("Argument 'R' must be a correlation matrix, but contains values outside [-1,1]."))
 
       diag(R) <- 1
+      sdy <- 1
 
    }
 
@@ -236,17 +237,16 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
       vb  <- mse * invRxx
 
       R2    <- 1 - sse
-      R2adj <- 1 - (1 - R2) * ((n-1) / df)
+      R2adj <- 1 - (1 - R2) * ((n-ifelse(cov, 1, 0)) / df)
 
       F  <- c(value = (R2 / m) / mse, df1=m, df2=df)
       Fp <- pf(F[[1]], df1=m, df2=df, lower.tail=FALSE)
 
+      mse <- sdy^2 * (n-1) * (1 - R2) / df
+
       if (cov) {
 
-         mult <- sdy / sdx
-         b    <- b * mult
-         mse  <- sdy^2 * (n-1) * (1 - R2) / df
-
+         b <- b * sdy / sdx
          b <- rbind(means[y] - means[x] %*% b, b)
          rownames(b)[1] <- "intrcpt"
 
@@ -257,8 +257,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
             vb <- matrix(NA_real_, nrow=(m+1), ncol=(m+1))
             warning(mstyle$warning("Cannot obtain var-cov matrix of the regression coefficients."), call.=FALSE)
          } else {
-            mse <- sdy^2 * (n-1) * (1 - R2) / df
-            vb  <- mse * invXtX
+            vb <- mse * invXtX
          }
 
          if (!has.means) {
@@ -278,7 +277,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
       ci.lb <- c(b - crit * se)
       ci.ub <- c(b + crit * se)
 
-      res <- list(tab = data.frame(beta=b, se=se, tval=tval, df=df, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, R2adj=R2adj, F=F, Fdf=c(m,df), Fp=Fp, digits=digits, test="t")
+      res <- list(tab = data.frame(beta=b, se=se, tval=tval, df=df, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, R2adj=R2adj, F=F, Fdf=c(m,df), Fp=Fp, mse=mse, digits=digits, test="t")
 
    } else {
 
@@ -288,8 +287,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
 
       if (cov) {
 
-         mult <- sdy / sdx
-         b    <- b * mult
+         b <- b * sdy / sdx
 
          Rxy <- S[x, y, drop=FALSE]
          invRxx <- diag(1/sdx, nrow=m, ncol=m) %*% invRxx %*% diag(1/sdx, nrow=m, ncol=m)

@@ -10,15 +10,15 @@ test_that("matreg() works correctly for the 'mtcars' dataset.", {
    res1 <- lm(mpg ~ hp + wt + am, data=dat)
    S <- cov(dat)
    res2 <- matreg(y="mpg", x=c("hp","wt","am"), R=S, cov=TRUE, means=colMeans(dat), n=nrow(dat))
-   expect_equivalent(coef(res1), res2$tab$beta, tolerance=.tol[["coef"]])
-   expect_equivalent(vcov(res1), res2$vb, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res1), coef(res2), tolerance=.tol[["coef"]])
+   expect_equivalent(vcov(res1), vcov(res2), tolerance=.tol[["coef"]])
 
    dat[] <- scale(dat)
    res1 <- lm(mpg ~ 0 + hp + wt + am, data=dat)
    R <- cor(dat)
    res2 <- matreg(y="mpg", x=c("hp","wt","am"), R=R, n=nrow(dat))
-   expect_equivalent(coef(res1), res2$tab$beta, tolerance=.tol[["coef"]])
-   expect_equivalent(vcov(res1), res2$vb, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res1), coef(res2), tolerance=.tol[["coef"]])
+   expect_equivalent(vcov(res1), vcov(res2), tolerance=.tol[["coef"]])
 
 })
 

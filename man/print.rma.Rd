@@ -26,7 +26,7 @@
 \method{print}{rma.mv}(x, digits, showfit=FALSE, signif.stars=getOption("show.signif.stars"),
       signif.legend=signif.stars, \dots)
 
-\method{summary}{rma}(object, digits, showfit=TRUE, \dots)
+\method{summary}{rma}(object, digits, \dots)
 
 \method{print}{summary.rma}(x, digits, showfit=TRUE, signif.stars=getOption("show.signif.stars"),
       signif.legend=signif.stars, \dots)
