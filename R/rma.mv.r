@@ -1002,7 +1002,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             ### check for R being positive definite
             ### skipped: even if R is not positive definite, the marginal var-cov matrix can still be; so just check for pd during optimization
 
-            #if (any(sapply(R[Rfix], function(x) any(eigen(x, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)))) ### any eigenvalue below double.eps is essentially 0
+            #if (any(sapply(R[Rfix], !.chkpd)))
             #   stop(mstyle$stop("Matrix in R is not positive definite."))
 
             for (j in seq_along(R)) {
@@ -1231,7 +1231,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    ### skipped: even if V is not positive definite, the marginal var-cov matrix can still be; so just check for pd during the optimization
    ### but at least issue a warning, since a fixed-effects model can then not be fitted and there is otherwise no indication why this is the case
 
-   if (!V0 && any(eigen(V, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)) ### any eigenvalue below double.eps is essentially 0
+   if (!V0 && !.chkpd(V))
       warning(mstyle$warning("'V' appears to be not positive definite."), call.=FALSE)
 
    ### check ratio of largest to smallest sampling variance
@@ -1813,7 +1813,6 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       optmethod <- optimizer
       optimizer <- "optim"
    }
-   evtol      <- con$evtol
    nearpd     <- con$nearpd
    cholesky   <- con$cholesky
    parallel   <- con$parallel
@@ -1878,7 +1877,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ### check whether model matrix is of full rank
 
-   if (any(eigen(crossprod(X), symmetric=TRUE, only.values=TRUE)$values <= evtol))
+   if (!.chkpd(crossprod(X), tol=con$evtol))
       stop(mstyle$stop("Model matrix not of full rank. Cannot fit model."))
 
    ### which variance components are fixed? (TRUE/FALSE or NA if not applicable = not included)

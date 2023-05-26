@@ -428,14 +428,14 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, ...) {
 
          Ri <- R[cluster == ucluster[i], cluster == ucluster[i]]
 
-         if (!anyNA(Ri) && any(eigen(Ri, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps)) {
+         if (!anyNA(Ri) && !.chkpd(Ri)) {
 
             if (nearpd) {
                Ri <- try(as.matrix(nearPD(Ri, corr=TRUE)$mat), silent=TRUE)
                if (inherits(Ri, "try-error")) {
                   warning(mstyle$warning(paste0("Using nearPD() failed in cluster ", ucluster[i], ".")), call.=FALSE)
                } else {
-                  if (!anyNA(Ri) && any(eigen(Ri, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps))
+                  if (!anyNA(Ri) && !.chkpd(Ri))
                      warning(mstyle$warning(paste0("The var-cov matrix still appears to be not positive definite in cluster ", ucluster[i], " even after nearPD().")), call.=FALSE)
                   R[cluster == ucluster[i], cluster == ucluster[i]] <- Ri
                }

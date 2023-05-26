@@ -99,7 +99,7 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
 
          vei <- as.matrix(ve[incl,incl,drop=FALSE])
 
-         if (any(eigen(vei, symmetric=TRUE, only.values=TRUE)$values <= .Machine$double.eps))
+         if (!.chkpd(crossprod(vei)))
             next
 
          sve <- try(chol2inv(chol(vei)), silent=TRUE)

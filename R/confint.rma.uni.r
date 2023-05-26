@@ -4,7 +4,7 @@
 # if method='GENQ/GENQM': generalized Q-statistic (GENQ) CI (which also covers method='DL/HE' as special cases)
 # if method='SJ':         method by Sidik & Jonkman (2005) (but this performs poorly, except if tau^2 is very large)
 # if method='HS':         not sure since this is an ad-hoc estimator with no obvious underlying statistical principle
-# Also could in principle compute Wald-type CIs (but those perform poorly except when k is very large).
+# Also can compute Wald-type CIs (but those perform poorly except when k is very large).
 # Too late to change how the function works (right now, type="GENQ" if method="GENQ/GENQM" and type="QP" otherwise).
 
 confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type, digits, transf, targs, verbose=FALSE, control, ...) {
@@ -476,8 +476,8 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
          if (!x$int.only)
             stop(mstyle$stop("Method only applicable to models without moderators."))
-         if (x$method != "DL")
-            stop(mstyle$stop("Method only applicable when 'method=DL'."))
+         #if (x$method != "DL")
+         #   stop(mstyle$stop("Method only applicable when 'method=DL'."))
          if (x$k <= 2)
             stop(mstyle$stop("Method only applicable when k > 2."))
 

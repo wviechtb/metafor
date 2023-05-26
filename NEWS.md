@@ -1,4 +1,4 @@
-# metafor 4.3-2 (2023-05-15)
+# metafor 4.3-3 (2023-05-26)
 
 - added a few more transformation functions
 

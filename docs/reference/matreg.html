@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-3</span>
       </span>
     </div>
 
@@ -193,7 +193,123 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### copy data into 'dat'</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### first an example unrelated to meta-analysis, simply demonstrating that</span></span></span>
+<span class="r-in"><span><span class="co">### one can obtain the same results from lm() and matreg()</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit a regression model with lm() to the 'mtcars' dataset</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">hp</span> <span class="op">+</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">am</span>, data<span class="op">=</span><span class="va">mtcars</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="print.rma.html">summary</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = mpg ~ hp + wt + am, data = mtcars)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Min      1Q  Median      3Q     Max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -3.4221 -1.7924 -0.3788  1.2249  5.5317 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 34.002875   2.642659  12.867 2.82e-13 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp          -0.037479   0.009605  -3.902 0.000546 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt          -2.878575   0.904971  -3.181 0.003574 ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> am           2.083710   1.376420   1.514 0.141268    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 2.538 on 28 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.8399,	Adjusted R-squared:  0.8227 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 48.96 on 3 and 28 DF,  p-value: 2.908e-11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### covariance matrix of the dataset</span></span></span>
+<span class="r-in"><span><span class="va">S</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit the same regression model using matreg()</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">matreg</span><span class="op">(</span>y<span class="op">=</span><span class="st">"mpg"</span>, x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hp"</span>,<span class="st">"wt"</span>,<span class="st">"am"</span><span class="op">)</span>, R<span class="op">=</span><span class="va">S</span>, cov<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>              means<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>, n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate      se     tval  df    pval    ci.lb    ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt   34.0029  2.6427  12.8669  28  &lt;.0001  28.5896  39.4161  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp        -0.0375  0.0096  -3.9018  28  0.0005  -0.0572  -0.0178  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt        -2.8786  0.9050  -3.1808  28  0.0036  -4.7323  -1.0248   ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> am         2.0837  1.3764   1.5139  28  0.1413  -0.7358   4.9032      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### copy the 'mtcars' dataset to 'dat' and standardize all variables</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">mtcars</span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">[</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit a regression model with lm() to obtain standardized regression coefficients ('betas')</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="va">hp</span> <span class="op">+</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">am</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="print.rma.html">summary</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = mpg ~ 0 + hp + wt + am, data = dat)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      Min       1Q   Median       3Q      Max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -0.56779 -0.29739 -0.06285  0.20324  0.91783 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Estimate Std. Error t value Pr(&gt;|t|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp  -0.4264     0.1074  -3.971 0.000433 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt  -0.4673     0.1444  -3.237 0.003017 ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> am   0.1725     0.1120   1.541 0.134242    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 0.4137 on 29 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared:  0.8399,	Adjusted R-squared:  0.8233 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 50.71 on 3 and 29 DF,  p-value: 1.183e-11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### correlation matrix of the dataset</span></span></span>
+<span class="r-in"><span><span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cor</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit the same regression model using matreg()</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">matreg</span><span class="op">(</span>y<span class="op">=</span><span class="st">"mpg"</span>, x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hp"</span>,<span class="st">"wt"</span>,<span class="st">"am"</span><span class="op">)</span>, R<span class="op">=</span><span class="va">R</span>, n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     estimate      se     tval  df    pval    ci.lb    ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp   -0.4264  0.1074  -3.9709  29  0.0004  -0.6460  -0.2068  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt   -0.4673  0.1444  -3.2372  29  0.0030  -0.7626  -0.1721   ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> am    0.1725  0.1120   1.5407  29  0.1342  -0.0565   0.4015      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### note: the standard errors of the betas should not be used to construct CIs</span></span></span>
+<span class="r-in"><span><span class="co">### as they assume that the null hypothesis (H0: beta_j = 0) is true</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### construct the var-cov matrix of correlations in R</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="rcalc.html">rcalc</a></span><span class="op">(</span><span class="va">R</span>, ni<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">V</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit the same regression model using matreg() but now supply V</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">matreg</span><span class="op">(</span>y<span class="op">=</span><span class="st">"mpg"</span>, x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hp"</span>,<span class="st">"wt"</span>,<span class="st">"am"</span><span class="op">)</span>, R<span class="op">=</span><span class="va">R</span>, V<span class="op">=</span><span class="va">V</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     estimate      se     zval    pval    ci.lb    ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp   -0.4264  0.1060  -4.0218  &lt;.0001  -0.6341  -0.2186  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt   -0.4673  0.1378  -3.3920  0.0007  -0.7374  -0.1973  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> am    0.1725  0.1097   1.5724  0.1158  -0.0425   0.3876      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### the standard errors computed in this way can now be used to construct</span></span></span>
+<span class="r-in"><span><span class="co">### CIs for the betas (here, the difference is relatively small)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### copy data into 'dat'</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.craft2003.html" class="external-link">dat.craft2003</a></span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### construct dataset and var-cov matrix of the correlations</span></span></span>

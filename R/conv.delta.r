@@ -166,7 +166,7 @@ conv.delta <- function(yi, vi, ni, data, include, transf, var.names, append=TRUE
 
    for (i in 1:k) {
 
-      args <- c(yi[i], as.list(sapply(dotarglist, `[`, i)))
+      args <- c(yi[[i]], as.list(sapply(dotarglist, `[[`, i))) # use [[]] in case yi is a named vector
       #print(args)
 
       tmp <- try(suppressWarnings(do.call(transf, args)), silent=TRUE)

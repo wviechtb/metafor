@@ -64,6 +64,53 @@ matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE,
    \code{\link{rcalc}} for a function to construct the variance-covariance matrix of dependent correlation coefficients.
 }
 \examples{
+############################################################################
+
+### first an example unrelated to meta-analysis, simply demonstrating that
+### one can obtain the same results from lm() and matreg()
+
+### fit a regression model with lm() to the 'mtcars' dataset
+res <- lm(mpg ~ hp + wt + am, data=mtcars)
+summary(res)
+
+### covariance matrix of the dataset
+S <- cov(mtcars)
+
+### fit the same regression model using matreg()
+res <- matreg(y="mpg", x=c("hp","wt","am"), R=S, cov=TRUE,
+              means=colMeans(mtcars), n=nrow(mtcars))
+res
+
+### copy the 'mtcars' dataset to 'dat' and standardize all variables
+dat <- mtcars
+dat[] <- scale(dat)
+
+### fit a regression model with lm() to obtain standardized regression coefficients ('betas')
+res <- lm(mpg ~ 0 + hp + wt + am, data=dat)
+summary(res)
+
+### correlation matrix of the dataset
+R <- cor(mtcars)
+
+### fit the same regression model using matreg()
+res <- matreg(y="mpg", x=c("hp","wt","am"), R=R, n=nrow(mtcars))
+res
+
+### note: the standard errors of the betas should not be used to construct CIs
+### as they assume that the null hypothesis (H0: beta_j = 0) is true
+
+### construct the var-cov matrix of correlations in R
+V <- rcalc(R, ni=nrow(mtcars))$V
+
+### fit the same regression model using matreg() but now supply V
+res <- matreg(y="mpg", x=c("hp","wt","am"), R=R, V=V)
+res
+
+### the standard errors computed in this way can now be used to construct
+### CIs for the betas (here, the difference is relatively small)
+
+############################################################################
+
 ### copy data into 'dat'
 dat <- dat.craft2003
 

@@ -1127,7 +1127,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    ### check whether model matrix is of full rank
 
-   if (any(eigen(crossprod(X), symmetric=TRUE, only.values=TRUE)$values <= con$evtol))
+   if (!.chkpd(crossprod(X), tol=con$evtol))
       stop(mstyle$stop("Model matrix not of full rank. Cannot fit model."))
 
    ### check ratio of largest to smallest sampling variance
@@ -1766,7 +1766,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       ### check whether model matrix is of full rank
 
-      if (any(eigen(crossprod(Z), symmetric=TRUE, only.values=TRUE)$values <= con$evtol))
+      if (!.chkpd(crossprod(Z), tol=con$evtol))
          stop(mstyle$stop("Model matrix for scale part of the model not of full rank. Cannot fit model."))
 
       ### check whether this is an intercept-only model
