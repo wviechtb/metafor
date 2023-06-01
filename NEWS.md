@@ -1,12 +1,20 @@
-# metafor 4.3-4 (2023-05-26)
-
-- added a few more transformation functions
+# metafor 4.3-5 (2023-06-01)
 
 - `replace` argument in `conv.2x2()`, `conv.delta()`, `conv.fivenum()`, and `conv.wald()` can now also be a logical
 
 - added `summary.matreg()` and `print.summary.matreg()` methods for including additional statistics in the output (R^2 and the omnibus test) and added `coef.matreg()` and `vcov.matreg()` extractor functions
 
 - formatting functions `fmtp()`, `fmtx()`, and `fmtt()` gain a `quote` argument, which is set to `FALSE` by default
+
+- for measures `"PCOR"`, `"ZPCOR"`, `"SPCOR"`, and `"ZSPCOR"`, argument `mi` in `escalc()` now refers to the total number of predictors in the regression models (i.e., also counting the focal predictor of interest)
+
+- added measures `"R2"` and "`ZR2"` to `escalc()`
+
+- added a few more transformation functions
+
+- small bug fixes
+
+- improved the documentation a bit
 
 # metafor 4.2-0 (2023-05-08)
 

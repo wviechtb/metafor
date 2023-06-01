@@ -1,4 +1,4 @@
-escalc <- function(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, pi, sdi, r2i, ni, yi, vi, sei,
+escalc <- function(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, fi, pi, sdi, r2i, ni, yi, vi, sei,
 data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), add.measure=FALSE, append=TRUE, replace=TRUE, digits, ...) {
 
    ### check argument specifications
@@ -23,6 +23,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                               "RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL",    # - transformations to r_PB, r_BIS, and log(OR)
                               "COR","UCOR","ZCOR",                                 # correlations (raw and r-to-z transformed)
                               "PCOR","ZPCOR","SPCOR","ZSPCOR",                     # partial and semi-partial correlations
+                              "R2","ZR2",                                          # coefficient of determination (raw and r-to-z transformed)
                               "PR","PLN","PLO","PAS","PFT",                        # single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            # single-group person-time data (and transformations thereof)
                               "MN","MNLN","CVLN","SDLN","SMN",                     # mean, log(mean), log(CV), log(SD), standardized mean
@@ -37,7 +38,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
    if (!is.element(to, c("all","only0","if0all","none")))
       stop(mstyle$stop("Unknown 'to' argument specified."))
 
-   if (any(!is.element(vtype, c("UB","LS","LS2","HO","ST","CS","AV","AVHO")), na.rm=TRUE)) # vtype can be an entire vector, so use any() and na.rm=TRUE
+   if (any(!is.element(vtype, c("UB","LS","LS2","HO","ST","CS","AV","AV2","AVHO")), na.rm=TRUE)) # vtype can be an entire vector, so use any() and na.rm=TRUE
       stop(mstyle$stop("Unknown 'vtype' argument specified."))
 
    if (add.measure) {
@@ -1099,7 +1100,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ### convert ti to ri values
 
-         ri <- replmiss(ri, ti / sqrt(ni - 2 + ti^2))
+         ri <- replmiss(ri, ti / sqrt(ti^2 + ni-2))
 
          if (!.all.specified(ri, ni))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ri, ni (and ti, pi))."))
@@ -1162,17 +1163,17 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
                ### unbiased estimate of the sampling variance of the bias-corrected correlation coefficient
                if (vtype[i] == "UB") {
-                  #vi[i] <- yi[i]^2 - 1 + (ni[i]-3)/(ni[i]-2) * ((1-ri[i]^2) + 2*(1-ri[i]^2)^2/ni[i] + 8*(1-ri[i]^2)^3/(ni[i]*(ni[i]+2)) + 48*(1-ri[i]^2)^4/(ni[i]*(ni[i]+2)*(ni[i]+4)))
-                  vi[i] <- yi[i]^2 - (1 - (ni[i]-3)/(ni[i]-2) * (1-ri[i]^2) * .Fcalc(1, 1, ni[i]/2, 1-ri[i]^2))
+                  #vi[i] <- yi[i]^2 - 1 + (ni[i]-3) / (ni[i]-2) * ((1-ri[i]^2) + 2*(1-ri[i]^2)^2/ni[i] + 8*(1-ri[i]^2)^3/(ni[i]*(ni[i]+2)) + 48*(1-ri[i]^2)^4/(ni[i]*(ni[i]+2)*(ni[i]+4)))
+                  vi[i] <- yi[i]^2 - (1 - (ni[i]-3) / (ni[i]-2) * (1-ri[i]^2) * .Fcalc(1, 1, ni[i]/2, 1-ri[i]^2))
                }
 
                ### large sample approximation to the sampling variance
                if (vtype[i] == "LS")
-                  vi[i] <- (1-yi[i]^2)^2/(ni[i]-1)
+                  vi[i] <- (1-yi[i]^2)^2 / (ni[i]-1)
 
                ### estimate assuming homogeneity (using sample size weighted average of the yi's)
                if (vtype[i] == "AV")
-                  vi[i] <- (1-mnwyi^2)^2/(ni[i]-1)
+                  vi[i] <- (1-mnwyi^2)^2 / (ni[i]-1)
 
             }
 
@@ -1212,10 +1213,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ### convert ti to ri values
 
          if (is.element(measure, c("PCOR","ZPCOR")))
-            ri <- replmiss(ri, ti / sqrt(ti^2 + (ni - mi - 1)))
+            ri <- replmiss(ri, ti / sqrt(ti^2 + ni-mi-1))
 
          if (is.element(measure, c("SPCOR","ZSPCOR")))
-            ri <- replmiss(ri, ti * sqrt(1 - r2i) / sqrt(ni - mi - 1))
+            ri <- replmiss(ri, ti * sqrt(1-r2i) / sqrt(ni-mi-1))
 
          if (is.element(measure, c("PCOR","ZPCOR")) && !.all.specified(ri, mi, ni))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ri, ti, mi, ni (and pi))."))
@@ -1242,10 +1243,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (any(ni <= 0, na.rm=TRUE))
             stop(mstyle$stop("One or more sample sizes are <= 0."))
 
-         if (any(mi < 0, na.rm=TRUE))
-            stop(mstyle$stop("One or more mi values are negative."))
+         if (any(mi <= 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more mi values are <= 0."))
 
-         if (any(ni - mi - 1 <= 0, na.rm=TRUE))
+         if (any(ni-mi-1 <= 0, na.rm=TRUE))
             stop(mstyle$stop("One or more dfs are <= 0."))
 
          ni.u <- ni # unadjusted total sample sizes
@@ -1272,11 +1273,11 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
                ### large sample approximation to the sampling variance
                if (vtype[i] == "LS")
-                  vi[i] <- (1 - yi[i]^2)^2 / (ni[i] - mi[i] - 1)
+                  vi[i] <- (1 - yi[i]^2)^2 / (ni[i] - mi[i])
 
                ### estimate assuming homogeneity (using sample size weighted average of the yi's)
                if (vtype[i] == "AV")
-                  vi[i] <- (1 - mnwyi^2)^2 / (ni[i] - mi[i] - 1)
+                  vi[i] <- (1 - mnwyi^2)^2 / (ni[i] - mi[i])
 
             }
 
@@ -1286,7 +1287,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          if (measure == "ZPCOR") {
             yi <- transf.rtoz(ri)
-            vi <- 1 / (ni-mi-3)
+            vi <- 1 / (ni-mi-2)
          }
 
          ### semi-partial correlation coefficient
@@ -1324,6 +1325,102 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (measure == "ZSPCOR") {
             vi <- vi / (1 - ifelse(yi^2 > 1, 1, yi^2))^2
             yi <- transf.rtoz(yi)
+         }
+
+      }
+
+      ######################################################################
+
+      if (is.element(measure, c("R2","ZR2"))) {
+
+         r2i <- .getx("r2i", mf=mf, data=data, checknumeric=TRUE)
+         mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE)
+         ni  <- .getx("ni",  mf=mf, data=data, checknumeric=TRUE)
+         fi  <- .getx("fi",  mf=mf, data=data, checknumeric=TRUE)
+         pi  <- .getx("pi",  mf=mf, data=data, checknumeric=TRUE)
+
+         if (!.equal.length(r2i, mi, ni))
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+         ### convert pi to fi values
+
+         fi <- replmiss(fi, .convp2f(pi, df1=mi, df2=ni-mi-1))
+
+         ### convert fi to r2i values
+
+         r2i <- replmiss(r2i, mi*fi / (mi*fi + (ni-mi-1)))
+
+         if (!.all.specified(r2i, mi, ni))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., r2i, mi, ni (and fi, pi))."))
+
+         k.all <- length(r2i)
+
+         if (!is.null(subset)) {
+            subset <- .chksubset(subset, k.all)
+            r2i <- .getsubset(r2i, subset)
+            mi  <- .getsubset(mi,  subset)
+            ni  <- .getsubset(ni,  subset)
+         }
+
+         if (any(r2i > 1 | r2i < 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more R^2 values are > 1 or < 0."))
+
+         if (any(ni <= 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more sample sizes are <= 0."))
+
+         if (any(mi <= 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more mi values are <= 0."))
+
+         if (any(ni-mi- 1 <= 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more dfs are <= 0."))
+
+         ni.u <- ni # unadjusted total sample sizes
+
+         k <- length(r2i)
+
+         ### partial correlation coefficient
+
+         if (measure == "R2") {
+
+            yi <- r2i
+
+            if (length(vtype) == 1L)
+               vtype <- rep(vtype, k)
+
+            vi <- rep(NA_real_, k)
+
+            mnwyi <- .wmean(yi, ni, na.rm=TRUE) # sample size weighted average of yi's
+
+            if (!all(is.element(vtype, c("LS","LS2","AV"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS' or 'AV'."))
+
+            for (i in seq_len(k)) {
+
+               ### large sample approximation to the sampling variance (simplified equation)
+               if (vtype[i] == "LS")
+                  vi[i] <- 4 * yi[i] * (1 - yi[i])^2 / ni[i]
+
+               ### estimate assuming homogeneity (using sample size weighted average of the yi's)
+               if (vtype[i] == "AV")
+                  vi[i] <- 4 * mnwyi[i] * (1 - mnwyi[i])^2 / ni[i]
+
+               ### large sample approximation to the sampling variance (full equation)
+               if (vtype[i] == "LS2")
+                  vi[i] <- 4 * yi[i] * (1 - yi[i])^2 * (ni[i] - mi[i] - 1)^2 / ((ni[i]^2 - 1) * (ni[i] + 3))
+
+               ### estimate assuming homogeneity (using sample size weighted average of the yi's)
+               if (vtype[i] == "AV2")
+                  vi[i] <- 4 * mnwyi[i] * (1 - mnwyi[i])^2 * (ni[i] - mi[i] - 1)^2 / ((ni[i]^2 - 1) * (ni[i] + 3))
+
+            }
+
+         }
+
+         ### r-to-z transformed partial correlation
+
+         if (measure == "ZR2") {
+            yi <- transf.rtoz(sqrt(r2i))
+            vi <- 1 / ni
          }
 
       }

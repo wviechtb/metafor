@@ -303,8 +303,8 @@
 
 ############################################################################
 
-### function to convert p-value to t-statistic (need this to catch NULL since
-### sign(NULL) and qt(NULL) throw errors)
+### function to convert p-values to t-statistics (need this to catch NULL
+### since sign(NULL) and qt(NULL) throw errors)
 
 .convp2t <- function(pval, df) {
 
@@ -315,6 +315,23 @@
    pval <- ifelse(abs(pval) > 1, NA, pval)
 
    sign(pval) * qt(abs(pval)/2, df=df, lower.tail=FALSE)
+
+}
+
+### function to convert p-values to F-statistics (need this to catch NULL
+### since qf(NULL) throws an error)
+
+.convp2f <- function(pval, df1, df2) {
+
+   if (is.null(pval))
+      return(NULL)
+
+   df1 <- ifelse(df1 < 1, NA, df1)
+   df2 <- ifelse(df2 < 1, NA, df2)
+   pval <- ifelse(pval < 0, NA, pval)
+   pval <- ifelse(pval > 1, NA, pval)
+
+   qf(pval, df1=df1, df2=df2, lower.tail=FALSE)
 
 }
 

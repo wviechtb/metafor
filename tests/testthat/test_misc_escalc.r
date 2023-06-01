@@ -141,23 +141,23 @@ test_that("escalc() works correctly for measure='COR/UCOR/ZCOR'", {
 
 test_that("escalc() works correctly for measure='PCOR/ZPCOR/SPCOR'", {
 
-   ### data from Aloe and Thompson (2013)
-   dat <- data.frame(ti = c(4.61, 6.19, 4.07, -0.77, 1.16),
-                     ni = c(218, 232, 156, 382, 259),
-                     mi = c(4, 7, 6, 19, 15),
-                     r2i = c(.240, .455, .500, .327, .117))
+   dat <- dat.aloe2013
 
-   dat <- escalc(measure="PCOR", ti=ti, ni=ni, mi=mi, data=dat)
+   dat <- escalc(measure="PCOR", ti=tval, ni=n, mi=preds, data=dat)
    expect_equivalent(dat$yi[1], 0.3012, tolerance=.tol[["est"]])
    expect_equivalent(dat$vi[1], 0.0039, tolerance=.tol[["var"]])
 
-   dat <- escalc(measure="ZPCOR", ti=ti, ni=ni, mi=mi, data=dat)
+   dat <- escalc(measure="ZPCOR", ti=tval, ni=n, mi=preds, data=dat)
    expect_equivalent(dat$yi[1], 0.3108, tolerance=.tol[["est"]])
    expect_equivalent(dat$vi[1], 0.0047, tolerance=.tol[["var"]])
 
-   dat <- escalc(measure="SPCOR", ti=ti, ni=ni, mi=mi, r2i=r2i, data=dat)
+   dat <- escalc(measure="SPCOR", ti=tval, ni=n, mi=preds, r2i=R2, data=dat)
    expect_equivalent(dat$yi[1], 0.2754, tolerance=.tol[["est"]])
    expect_equivalent(dat$vi[1], 0.0033, tolerance=.tol[["var"]])
+
+   dat <- escalc(measure="ZSPCOR", ti=tval, ni=n, mi=preds, r2i=R2, data=dat)
+   expect_equivalent(dat$yi[1], 0.2827, tolerance=.tol[["est"]])
+   expect_equivalent(dat$vi[1], 0.0038, tolerance=.tol[["var"]])
 
 })
 

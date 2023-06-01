@@ -16,6 +16,8 @@
 \alias{transf.iahw}
 \alias{transf.abt}
 \alias{transf.iabt}
+\alias{transf.r2toz}
+\alias{transf.ztor2}
 \alias{transf.ztor.int}
 \alias{transf.exp.int}
 \alias{transf.ilogit.int}
@@ -60,6 +62,8 @@ transf.ahw(xi)
 transf.iahw(xi)
 transf.abt(xi)
 transf.iabt(xi)
+transf.r2toz(xi)
+transf.ztor2(xi)
 transf.ztor.int(xi, targs)
 transf.exp.int(xi, targs)
 transf.ilogit.int(xi, targs)
@@ -112,6 +116,8 @@ transf.lnortortet.digby(xi)
    \item \code{transf.iahw}: inverse of the former.
    \item \code{transf.abt}: transformation of coefficient alpha as suggested by Bonett (2002), except that \mjeqn{-\ln(1-\alpha)}{-ln(1-\alpha)} is used (so that the transformed values are a monotonically increasing function of the \mjseqn{\alpha} values).
    \item \code{transf.iabt}: inverse of the former.
+   \item \code{transf.r2toz}: variance stabilizing transformation for the coefficient of determination, given by \mjeqn{z_i = \frac{1}{2} \log \left[\frac{1+\sqrt{R_i^2}}{1-\sqrt{R_i^2}}\right]}{z_i = 1/2 log[(1+\sqrt(R_i^2))/(1-\sqrt(R_i^2))]} (see Olkin & Finn, 1995, but with the additional \mjseqn{\frac{1}{2}} factor).
+   \item \code{transf.ztor2}: inverse of the former.
    \item \code{transf.ztor.int}: integral transformation method for the z-to-r transformation.
    \item \code{transf.exp.int}: integral transformation method for the exponential transformation.
    \item \code{transf.ilogit.int}: integral transformation method for the inverse logit transformation.
@@ -168,6 +174,8 @@ transf.lnortortet.digby(xi)
    McGraw, K. O., & Wong, S. P. (1992). A common language effect size statistic. \emph{Psychological Bulletin}, \bold{111}(2), 361--365. \verb{https://doi.org/10.1037/0033-2909.111.2.361}
 
    Miller, J. J. (1978). The inverse of the Freeman-Tukey double arcsine transformation. \emph{American Statistician}, \bold{32}(4), 138. \verb{https://doi.org/10.1080/00031305.1978.10479283}
+
+   Olkin, I., & Finn, J. D. (1995). Correlations redux. \emph{Psychological Bulletin}, \bold{118}(1), 155--164. \verb{https://doi.org/10.1037/0033-2909.118.1.155}
 
    Pearson, K. (1900). Mathematical contributions to the theory of evolution. VII. On the correlation of characters not quantitatively measurable. \emph{Philosophical Transactions of the Royal Society of London, Series A}, \bold{195}, 1--47. \verb{https://doi.org/10.1098/rsta.1900.0022}
 

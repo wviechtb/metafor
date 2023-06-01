@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-5</span>
       </span>
     </div>
 
@@ -117,6 +117,8 @@
 <span><span class="fu">transf.iahw</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.abt</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.iabt</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
+<span><span class="fu">transf.r2toz</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
+<span><span class="fu">transf.ztor2</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.ztor.int</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
 <span><span class="fu">transf.exp.int</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
 <span><span class="fu">transf.ilogit.int</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
@@ -186,6 +188,8 @@
 <li><p><code>transf.iahw</code>: inverse of the former.</p></li>
 <li><p><code>transf.abt</code>: transformation of coefficient alpha as suggested by Bonett (2002), except that <em></em>\(-\ln(1-\alpha)\) is used (so that the transformed values are a monotonically increasing function of the <em></em>\(\alpha\) values).</p></li>
 <li><p><code>transf.iabt</code>: inverse of the former.</p></li>
+<li><p><code>transf.r2toz</code>: variance stabilizing transformation for the coefficient of determination, given by <em></em>\(z_i = \frac{1}{2} \log \left[\frac{1+\sqrt{R_i^2}}{1-\sqrt{R_i^2}}\right]\) (see Olkin &amp; Finn, 1995, but with the additional <em></em>\(\frac{1}{2}\) factor).</p></li>
+<li><p><code>transf.ztor2</code>: inverse of the former.</p></li>
 <li><p><code>transf.ztor.int</code>: integral transformation method for the z-to-r transformation.</p></li>
 <li><p><code>transf.exp.int</code>: integral transformation method for the exponential transformation.</p></li>
 <li><p><code>transf.ilogit.int</code>: integral transformation method for the inverse logit transformation.</p></li>
@@ -237,6 +241,7 @@
 <p>Jacobs, P., &amp; Viechtbauer, W. (2017). Estimation of the biserial correlation and its sampling variance for use in meta-analysis. <em>Research Synthesis Methods</em>, <b>8</b>(2), 161–180. <a href="https://doi.org/10.1002/jrsm.1218" class="external-link">https://doi.org/10.1002/jrsm.1218</a></p>
 <p>McGraw, K. O., &amp; Wong, S. P. (1992). A common language effect size statistic. <em>Psychological Bulletin</em>, <b>111</b>(2), 361–365. <a href="https://doi.org/10.1037/0033-2909.111.2.361" class="external-link">https://doi.org/10.1037/0033-2909.111.2.361</a></p>
 <p>Miller, J. J. (1978). The inverse of the Freeman-Tukey double arcsine transformation. <em>American Statistician</em>, <b>32</b>(4), 138. <a href="https://doi.org/10.1080/00031305.1978.10479283" class="external-link">https://doi.org/10.1080/00031305.1978.10479283</a></p>
+<p>Olkin, I., &amp; Finn, J. D. (1995). Correlations redux. <em>Psychological Bulletin</em>, <b>118</b>(1), 155–164. <a href="https://doi.org/10.1037/0033-2909.118.1.155" class="external-link">https://doi.org/10.1037/0033-2909.118.1.155</a></p>
 <p>Pearson, K. (1900). Mathematical contributions to the theory of evolution. VII. On the correlation of characters not quantitatively measurable. <em>Philosophical Transactions of the Royal Society of London, Series A</em>, <b>195</b>, 1–47. <a href="https://doi.org/10.1098/rsta.1900.0022" class="external-link">https://doi.org/10.1098/rsta.1900.0022</a></p>
 <p>Rosenthal, R., &amp; Rubin, D. B. (1982). A simple, general purpose display of magnitude of experimental effect. <em>Journal of Educational Psychology</em>, <b>74</b>(2), 166–169. <a href="https://doi.org/10.1037/0022-0663.74.2.166" class="external-link">https://doi.org/10.1037/0022-0663.74.2.166</a></p>
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1–48. <a href="https://doi.org/10.18637/jss.v036.i03" class="external-link">https://doi.org/10.18637/jss.v036.i03</a></p>

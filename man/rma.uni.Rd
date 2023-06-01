@@ -7,13 +7,13 @@
 }
 \usage{
 rma.uni(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
-        m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, pi, sdi, r2i, ni, mods, scale,
+        m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, fi, pi, sdi, r2i, ni, mods, scale,
         measure="GEN", intercept=TRUE, data, slab, subset,
         add=1/2, to="only0", drop00=FALSE, vtype="LS",
         method="REML", weighted=TRUE, test="z",
         level=95, btt, att, tau2, verbose=FALSE, digits, control, \dots)
 rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
-        m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, pi, sdi, r2i, ni, mods, scale,
+        m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, fi, pi, sdi, r2i, ni, mods, scale,
         measure="GEN", intercept=TRUE, data, slab, subset,
         add=1/2, to="only0", drop00=FALSE, vtype="LS",
         method="REML", weighted=TRUE, test="z",
@@ -42,13 +42,14 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{mi}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{ri}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{ti}{see below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{fi}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{pi}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{sdi}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{r2i}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{ni}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{mods}{optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \mjseqn{k} specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \mjseqn{k} rows and as many columns as there are moderator variables. Alternatively, a model \code{\link{formula}} can be used to specify the model. See \sQuote{Details}.}
    \item{scale}{optional argument to include one or more predictors for the scale part in a location-scale model. See \sQuote{Details}.}
-   \item{measure}{character string to specify the type of data supplied to the function. When \code{measure="GEN"} (default), the observed effect sizes or outcomes and corresponding sampling variances (or standard errors) should be supplied to the function via the \code{yi}, \code{vi}, and \code{sei} arguments (only one of the two, \code{vi} or \code{sei}, needs to be specified). Alternatively, one can set \code{measure} to one of the effect sizes or outcome measures described under the documentation for the \code{\link{escalc}} function in which case one must specify the required data via the appropriate arguments.}
+   \item{measure}{character string to specify the type of data supplied to the function. When \code{measure="GEN"} (default), the observed effect sizes or outcomes and corresponding sampling variances should be supplied to the function via the \code{yi} and \code{vi} arguments, respectively (instead of the sampling variances, one can supply the standard errors via the \code{sei} argument). Alternatively, one can set \code{measure} to one of the effect sizes or outcome measures described under the documentation for the \code{\link{escalc}} function in which case one must specify the required data via the appropriate arguments (see \code{\link{escalc}}).}
    \item{intercept}{logical to specify whether an intercept should be added to the model (the default is \code{TRUE}). Ignored when \code{mods} is a formula.}
    \item{data}{optional data frame containing the data supplied to the function.}
    \item{slab}{optional vector with labels for the \mjseqn{k} studies.}

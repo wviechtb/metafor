@@ -813,6 +813,26 @@
          }
       }
       ######################################################################
+      if (measure == "R2") {
+         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
+            lab <- ifelse(short, expression(R^2), "Coefficient of Determination")
+         } else {
+            lab <- ifelse(short, lab, "Transformed Coefficient of Determination")
+         }
+      }
+      if (measure == "ZR2") {
+         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
+            lab <- ifelse(short, expression(z[R^2]), "z Transformed Coefficient of Determination")
+         } else {
+            lab <- ifelse(short, lab, "Transformed z Transformed Coefficient of Determination")
+            funlist <- lapply(list(transf.ztor2), deparse)
+            if (any(sapply(funlist, identical, atransf.char)))
+               lab <- ifelse(short, expression(R^2), "Coefficient of Determination")
+            if (any(sapply(funlist, identical, transf.char)))
+               lab <- ifelse(short, expression(R^2), "Coefficient of Determination")
+         }
+      }
+      ######################################################################
       if (measure == "PR") {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, "Proportion", "Proportion")

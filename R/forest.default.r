@@ -619,15 +619,15 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    plot.multp.r <- area.anno / area.forest
 
    if (missing(xlim)) {
-      if (min(ci.ub, na.rm=TRUE) < alim[1]) {
-         f.1 <- alim[1]
-      } else {
+      if (min(ci.lb, na.rm=TRUE) < alim[1]) {
          f.1 <- min(ci.lb, na.rm=TRUE)
+      } else {
+         f.1 <- alim[1]
       }
       if (max(ci.ub, na.rm=TRUE) > alim[2]) {
-         f.2 <- alim[2]
-      } else {
          f.2 <- max(ci.ub, na.rm=TRUE)
+      } else {
+         f.2 <- alim[2]
       }
       rng <- f.2 - f.1
       xlim <- c(f.1 - rng * plot.multp.l, f.2 + rng * plot.multp.r)

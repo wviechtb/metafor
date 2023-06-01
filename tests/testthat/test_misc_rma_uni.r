@@ -45,17 +45,14 @@ test_that("rma() works directly with input for measure='SMD'", {
 
 test_that("rma() works directly with input for measure='PCOR'", {
 
-   ### data from Aloe and Thompson (2013)
-   dat <- data.frame(ti = c(4.61, 6.19, 4.07, -0.77, 1.16),
-                     ni = c(218, 232, 156, 382, 259),
-                     mi = c(4, 7, 6, 19, 15),
-                     r2i = c(.240, .455, .500, .327, .117))
-   dat <- escalc(measure="PCOR", ti=ti, ni=ni, mi=mi, data=dat)
-   res1 <- rma(yi, vi, data=dat)
-   res2 <- rma(measure="PCOR", ti=ti, ni=ni, mi=mi, data=dat)
+   dat <- dat.aloe2013
 
-   expect_equivalent(res1$tau2, 0.0297, tolerance=.tol[["var"]])
-   expect_equivalent(res2$tau2, 0.0297, tolerance=.tol[["var"]])
+   dat <- escalc(measure="PCOR", ti=tval, ni=n, mi=preds, data=dat)
+   res1 <- rma(yi, vi, data=dat)
+   res2 <- rma(measure="PCOR", ti=tval, ni=n, mi=preds, data=dat)
+
+   expect_equivalent(res1$tau2, 0.0298, tolerance=.tol[["var"]])
+   expect_equivalent(res2$tau2, 0.0298, tolerance=.tol[["var"]])
 
 })
 

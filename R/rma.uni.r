@@ -1,4 +1,4 @@
-rma <- rma.uni <- function(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, pi, sdi, r2i, ni, mods, scale,
+rma <- rma.uni <- function(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, fi, pi, sdi, r2i, ni, mods, scale,
 measure="GEN", intercept=TRUE,
 data, slab, subset,
 add=1/2, to="only0", drop00=FALSE, vtype="LS",
@@ -23,6 +23,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                               "RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL",    # - transformations to r_PB, r_BIS, and log(OR)
                               "COR","UCOR","ZCOR",                                 # correlations (raw and r-to-z transformed)
                               "PCOR","ZPCOR","SPCOR","ZSPCOR",                     # partial and semi-partial correlations
+                              "R2","ZR2",                                          # coefficient of determination (raw and r-to-z transformed)
                               "PR","PLN","PLO","PAS","PFT",                        # single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            # single-group person-time data (and transformations thereof)
                               "MN","MNLN","CVLN","SDLN","SMN",                     # mean, log(mean), log(CV), log(SD), standardized mean
@@ -512,7 +513,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          ti <- replmiss(ti, .convp2t(pi, df=ni-2))
-         ri <- replmiss(ri, ti / sqrt(ni - 2 + ti^2))
+         ri <- replmiss(ri, ti / sqrt(ti^2 + ni-2))
 
          k <- length(ri) ### number of outcomes before subsetting
          k.all <- k
@@ -542,10 +543,10 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          ti <- replmiss(ti, .convp2t(pi, df=ni-mi-1))
 
          if (is.element(measure, c("PCOR","ZPCOR")))
-            ri <- replmiss(ri, ti / sqrt(ti^2 + (ni - mi - 1)))
+            ri <- replmiss(ri, ti / sqrt(ti^2 + ni-mi-1))
 
          if (is.element(measure, c("SPCOR","ZSPCOR")))
-            ri <- replmiss(ri, ti * sqrt(1 - r2i) / sqrt(ni - mi - 1))
+            ri <- replmiss(ri, ti * sqrt(1-r2i) / sqrt(ni-mi-1))
 
          k <- length(ri) ### number of outcomes before subsetting
          k.all <- k
@@ -559,6 +560,34 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          }
 
          args <- list(measure=measure, ri=ri, mi=mi, ni=ni, r2i=r2i, vtype=vtype)
+
+      }
+
+      if (is.element(measure, c("R2","ZR2"))) {
+
+         r2i <- .getx("r2i", mf=mf, data=data, checknumeric=TRUE)
+         mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE)
+         ni  <- .getx("ni",  mf=mf, data=data, checknumeric=TRUE)
+         fi  <- .getx("fi",  mf=mf, data=data, checknumeric=TRUE)
+         pi  <- .getx("pi",  mf=mf, data=data, checknumeric=TRUE)
+
+         if (!.equal.length(r2i, mi, ni))
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+         fi  <- replmiss(fi, .convp2f(pi, df1=mi, df2=ni-mi-1))
+         r2i <- replmiss(r2i, mi*fi / (mi*fi + (ni-mi-1)))
+
+         k <- length(r2i) ### number of outcomes before subsetting
+         k.all <- k
+
+         if (!is.null(subset)) {
+            subset <- .chksubset(subset, k)
+            r2i <- .getsubset(r2i,  subset)
+            mi  <- .getsubset(mi,  subset)
+            ni  <- .getsubset(ni,  subset)
+         }
+
+         args <- list(measure=measure, r2i=r2i, mi=mi, ni=ni, vtype=vtype)
 
       }
 
