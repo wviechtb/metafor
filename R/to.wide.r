@@ -164,7 +164,7 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    ### and make sure that grp.pos is always in the first position of grpvars.pos
 
-   grpvars.pos <- unique(c(grp.pos, grpvars.pos))
+   grpvars.pos <- union(grp.pos, grpvars.pos)
 
    ############################################################################
 

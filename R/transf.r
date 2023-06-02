@@ -30,11 +30,11 @@
 transf.rtoz <- function(xi) { # resulting value between -Inf (for -1) and +Inf (for +1)
    xi[xi >  1] <-  1
    xi[xi < -1] <- -1
-   atanh(xi)
+   atanh(xi) # same as 1/2 * log((1+xi)/(1-xi))
 }
 
 transf.ztor <- function(xi)
-   tanh(xi)
+   tanh(xi) # same as (exp(2*xi)-1)/(exp(2*xi)+1)
 
 transf.ztor.int <- function(xi, targs=NULL) {
 

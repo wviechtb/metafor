@@ -113,7 +113,7 @@ emmprep <- function(x, verbose=FALSE, ...) {
 
    if (is.null(ddd$tran)) {
 
-      if (is.element(x$measure, c("RR","OR","PETO","IRR","ROM","D2OR","D2ORL","D2ORN","CVR","VR","PLN","IRLN","SDLN","MNLN","CVLN","ROMC","CVRC","VRC","REH"))) {
+      if (is.element(x$measure, c("RR","OR","MPORM","PETO","MPRR","MPOR","MPORC","MPPETO","IRR","ROM","D2OR","D2ORL","D2ORN","CVR","VR","PLN","IRLN","SDLN","MNLN","CVLN","ROMC","CVRC","VRC","REH"))) {
          out@misc$tran <- "log"
          #out@misc$tran <- emmeans::make.tran("genlog", 0)
          #out <- update(out, emmeans::make.tran("genlog", 0))
@@ -135,20 +135,41 @@ emmprep <- function(x, verbose=FALSE, ...) {
          if (verbose) cat("Transformation:     sqrt\n")
       }
 
-      if (is.element(x$measure, c("ZCOR","ZPCOR"))) {
+      if (is.element(x$measure, c("ZPHI","ZTET","ZPB","ZBIS","ZCOR","ZPCOR","ZSPCOR"))) {
          out@misc$tran$linkfun  <- transf.rtoz
          out@misc$tran$linkinv  <- transf.ztor
-         out@misc$tran$mu.eta   <- function(eta) 1/cosh(eta)^2
+         out@misc$tran$mu.eta   <- function(eta) 1/cosh(eta)^2 # derivative of transf.ztor(eta) (= tanh(eta))
          out@misc$tran$valideta <- function(eta) all(is.finite(eta)) && all(abs(eta) <= 1)
          out@misc$tran$name     <- "r-to-z"
          if (verbose) cat("Transformation:     r-to-z\n")
       }
 
-      #if (is.element(x$measure, c("AHW")))
-      #   out@misc$tran <- "???"
+      if (is.element(x$measure, c("ZR2"))) {
+         out@misc$tran$linkfun  <- transf.r2toz
+         out@misc$tran$linkinv  <- transf.ztor2
+         out@misc$tran$mu.eta   <- function(eta) 2*sinh(eta)/cosh(eta)^3 # derivative of transf.ztor2(eta) (= tanh(eta)^2)
+         out@misc$tran$valideta <- function(eta) all(is.finite(eta)) && all(eta <= 1) && all(eta >= 0)
+         out@misc$tran$name     <- "r-to-z"
+         if (verbose) cat("Transformation:     r-to-z\n")
+      }
 
-      #if (is.element(x$measure, c("ABT")))
-      #   out@misc$tran <- "???"
+      if (is.element(x$measure, c("AHW"))) {
+         out@misc$tran$linkfun  <- transf.ahw
+         out@misc$tran$linkinv  <- transf.iahw
+         out@misc$tran$mu.eta   <- function(eta) 3*(1-eta)^2
+         out@misc$tran$valideta <- function(eta) all(is.finite(eta)) && all(eta <= 1) && all(eta >= 0)
+         out@misc$tran$name     <- "ahw"
+         if (verbose) cat("Transformation:     ahw\n")
+      }
+
+      if (is.element(x$measure, c("ABT"))) {
+         out@misc$tran$linkfun  <- transf.abt
+         out@misc$tran$linkinv  <- transf.iabt
+         out@misc$tran$mu.eta   <- function(eta) 1/(1-eta)
+         out@misc$tran$valideta <- function(eta) all(is.finite(eta)) && all(eta <= 1) && all(eta >= 0)
+         out@misc$tran$name     <- "abt"
+         if (verbose) cat("Transformation:     abt\n")
+      }
 
    } else {
 

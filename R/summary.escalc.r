@@ -203,25 +203,25 @@ H0=0, append=TRUE, replace=TRUE, level=95, olim, digits, transf, ...) {
    ### and make sure all other yi.names and vi.names are added back in
 
    if (!missing(var.names)) {
-      attr(dat, "yi.names") <- unique(c(var.names[1], attr(object, "yi.names")))
+      attr(dat, "yi.names") <- union(var.names[1], attr(object, "yi.names"))
    } else {
-      attr(dat, "yi.names") <- unique(c(yi.name, attr(object, "yi.names")))
+      attr(dat, "yi.names") <- union(yi.name, attr(object, "yi.names"))
    }
 
    if (!missing(var.names)) {
-      attr(dat, "vi.names") <- unique(c(var.names[2], attr(object, "vi.names")))
+      attr(dat, "vi.names") <- union(var.names[2], attr(object, "vi.names"))
    } else {
-      attr(dat, "vi.names") <- unique(c(vi.name, attr(object, "vi.names")))
+      attr(dat, "vi.names") <- union(vi.name, attr(object, "vi.names"))
    }
 
    ### add 'sei.names', 'zi.names', 'pval.names', 'ci.lb.names', and 'ci.ub.names' to the first position of the corresponding attributes
    ### note: if "xyz" is not an attribute of the object, attr(object, "xyz") returns NULL, so this works fine
 
-   attr(dat, "sei.names")   <- unique(c(out.names[1], attr(object, "sei.names")))
-   attr(dat, "zi.names")    <- unique(c(out.names[2], attr(object, "zi.names")))
-   attr(dat, "pval.names")  <- unique(c(out.names[3], attr(object, "pval.names")))
-   attr(dat, "ci.lb.names") <- unique(c(out.names[4], attr(object, "ci.lb.names")))
-   attr(dat, "ci.ub.names") <- unique(c(out.names[5], attr(object, "ci.ub.names")))
+   attr(dat, "sei.names")   <- union(out.names[1], attr(object, "sei.names"))
+   attr(dat, "zi.names")    <- union(out.names[2], attr(object, "zi.names"))
+   attr(dat, "pval.names")  <- union(out.names[3], attr(object, "pval.names"))
+   attr(dat, "ci.lb.names") <- union(out.names[4], attr(object, "ci.lb.names"))
+   attr(dat, "ci.ub.names") <- union(out.names[5], attr(object, "ci.ub.names"))
 
    ### TODO: clean up attribute elements that are no longer actually part of the object
 

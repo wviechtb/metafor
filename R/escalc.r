@@ -2473,8 +2473,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
    attr(dat, "digits") <- digits
 
    ### add 'yi.names' and 'vi.names' to the first position of the corresponding attributes (so the first is always the last one calculated/added)
-   attr(dat, "yi.names") <- unique(c(var.names[1], attr(data, "yi.names"))) # if 'yi.names' is not an attribute, attr() returns NULL, so this works fine
-   attr(dat, "vi.names") <- unique(c(var.names[2], attr(data, "vi.names"))) # if 'vi.names' is not an attribute, attr() returns NULL, so this works fine
+   attr(dat, "yi.names") <- union(var.names[1], attr(data, "yi.names")) # if 'yi.names' is not an attribute, attr() returns NULL, so this works fine
+   attr(dat, "vi.names") <- union(var.names[2], attr(data, "vi.names")) # if 'vi.names' is not an attribute, attr() returns NULL, so this works fine
 
    ### add 'out.names' back to object in case these attributes exist (if summary() has been used on the object)
    attr(dat, "sei.names")   <- attr(data, "sei.names")

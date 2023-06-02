@@ -90,7 +90,7 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE
    if (is.factor(grp1) && is.factor(grp2) && identical(levels(grp1), levels(grp2))) {
       lvls <- levels(grp1)
    } else {
-      lvls <- sort(unique(c(levels(factor(grp1)), levels(factor(grp2)))))
+      lvls <- sort(union(levels(factor(grp1)), levels(factor(grp2))))
    }
 
    ############################################################################

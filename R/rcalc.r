@@ -133,7 +133,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
          if (any(abs(ri) > 1, na.rm=TRUE))
             stop(mstyle$stop(paste0("One or more correlations are > 1 or < -1 in study ", dat[[i]][[4]][[1]], ".")))
 
-         vars <- sort(unique(c(var1, var2)))
+         vars <- sort(union(var1, var2))
 
          Ri <- matrix(NA_real_, nrow=length(vars), ncol=length(vars))
          diag(Ri) <- 1
