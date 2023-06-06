@@ -1,4 +1,4 @@
-# metafor 4.3-5 (2023-06-01)
+# metafor 4.3-6 (2023-06-06)
 
 - `replace` argument in `conv.2x2()`, `conv.delta()`, `conv.fivenum()`, and `conv.wald()` can now also be a logical
 

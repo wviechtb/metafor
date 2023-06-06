@@ -685,7 +685,7 @@
          }
          if (!is.element(struct, c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")) && !vccov) {
             r[r < -1] <- -1
-            r[r > 1] <- 1
+            r[r >  1] <-  1
          }
       }
       v <- ifelse(v <= .Machine$double.eps*10, 0, v) ### don't do this with Cholesky factorization, since values can be negative
@@ -831,7 +831,7 @@
                        sigma2s, tau2s, rhos, gamma2s, phis,
                        withS, withG, withH,
                        struct, g.levels.r, h.levels.r, g.values, h.values,
-                       sparse, cholesky, nearpd, vctransf, vccov,
+                       sparse, cholesky, nearpd, vctransf, vccov, vccon,
                        verbose, digits, REMLf, dofit=FALSE, hessian=FALSE) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
@@ -840,10 +840,12 @@
 
    if (withS) {
 
+      vars <- par[seq_len(sigma2s)]
+
       if (vctransf) {
-         sigma2 <- ifelse(is.na(sigma2.val), exp(par[seq_len(sigma2s)]), sigma2.val) ### sigma2 is optimized in log space, so exponentiate
+         sigma2 <- ifelse(is.na(sigma2.val), exp(vars), sigma2.val) ### sigma2 is optimized in log space, so exponentiate
       } else {
-         sigma2 <- ifelse(is.na(sigma2.val), par[seq_len(sigma2s)], sigma2.val)      ### for Hessian computation, can choose to leave as is
+         sigma2 <- ifelse(is.na(sigma2.val), vars, sigma2.val)      ### for Hessian computation, can choose to leave as is
          sigma2[sigma2 < 0] <- 0
       }
 
@@ -852,6 +854,13 @@
 
       ### set really small sigma2 values equal to 0 (anything below .Machine$double.eps*10 is essentially 0)
       sigma2 <- ifelse(sigma2 <= .Machine$double.eps*10, 0, sigma2)
+
+      if (!is.null(vccon) && !is.null(vccon$sigma2)) {
+         if (length(vccon$sigma2) != length(sigma2))
+            stop(mstyle$stop(paste0("Length of 'vccon$sigma2' (", length(vccon$sigma2), ") does not match length of sigma2 (", length(sigma2), ").")), call.=FALSE)
+         for (l in unique(vccon$sigma2))
+            sigma2[vccon$sigma2 == l] <- mean(sigma2[vccon$sigma2 == l])
+      }
 
       for (j in seq_len(sigma2s)) {
          M <- M + sigma2[j] * D.S[[j]]
@@ -871,6 +880,33 @@
       rho  <- resG$r
       G    <- resG$E
 
+      if (!is.null(vccon)) {
+
+         if (!is.null(vccon$tau2)) {
+            if (length(vccon$tau2) != length(tau2))
+               stop(mstyle$stop(paste0("Length of 'vccon$tau2' (", length(vccon$tau2), ") does not match length of tau2 (", length(tau2), ").")), call.=FALSE)
+            for (l in unique(vccon$tau2)) {
+               tau2[vccon$tau2 == l] <- mean(tau2[vccon$tau2 == l])
+            }
+         }
+
+         if (!is.null(vccon$rho)) {
+            if (length(vccon$rho) != length(rho))
+               stop(mstyle$stop(paste0("Length of 'vccon$rho' (", length(vccon$rho), ") does not match length of rho (", length(rho), ").")), call.=FALSE)
+            for (l in unique(vccon$rho)) {
+               rho[vccon$rho == l] <- mean(rho[vccon$rho == l])
+            }
+         }
+
+         resG <- .con.E(v=tau2, r=rho,
+                        v.val=tau2.val, r.val=rho.val, Z1=Z.G1, Z2=Z.G2, levels.r=g.levels.r, values=g.values, Dmat=g.Dmat,
+                        struct=struct[1], cholesky=FALSE, vctransf=FALSE, vccov=vccov, nearpd=nearpd, sparse=sparse)
+         tau2 <- resG$v
+         rho  <- resG$r
+         G    <- resG$E
+
+      }
+
       M <- M + (Z.G1 %*% G %*% t(Z.G1)) * tcrossprod(Z.G2)
 
    }
@@ -886,6 +922,33 @@
       gamma2 <- resH$v
       phi    <- resH$r
       H      <- resH$E
+
+      if (!is.null(vccon)) {
+
+         if (!is.null(vccon$gamma2)) {
+            if (length(vccon$gamma2) != length(gamma2))
+               stop(mstyle$stop(paste0("Length of 'vccon$gamma2' (", length(vccon$gamma2), ") does not match length of gamma2 (", length(gamma2), ").")), call.=FALSE)
+            for (l in unique(vccon$gamma2)) {
+               gamma2[vccon$gamma2 == l] <- mean(gamma2[vccon$gamma2 == l])
+            }
+         }
+
+         if (!is.null(vccon$phi)) {
+            if (length(vccon$phi) != length(phi))
+               stop(mstyle$stop(paste0("Length of 'vccon$phi' (", length(vccon$phi), ") does not match length of phi (", length(phi), ").")), call.=FALSE)
+            for (l in unique(vccon$phi)) {
+               phi[vccon$phi == l] <- mean(phi[vccon$phi == l])
+            }
+         }
+
+         resH <- .con.E(v=gamma2, r=phi,
+                        v.val=gamma2.val, r.val=phi.val, Z1=Z.H1, Z2=Z.H2, levels.r=h.levels.r, values=h.values, Dmat=h.Dmat,
+                        struct=struct[2], cholesky=FALSE, vctransf=FALSE, vccov=vccov, nearpd=nearpd, sparse=sparse)
+         gamma2 <- resH$v
+         phi    <- resH$r
+         H      <- resH$E
+
+      }
 
       M <- M + (Z.H1 %*% H %*% t(Z.H1)) * tcrossprod(Z.H2)
 
