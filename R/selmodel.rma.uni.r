@@ -46,7 +46,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       #x <- try(update(x, method="ML"), silent=TRUE)
       #x <- suppressWarnings(update(x, method="ML"))
       #x <- try(suppressWarnings(rma.uni(x$yi, x$vi, weights=x$weights, mods=x$X, intercept=FALSE, method="ML", weighted=x$weighted, test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE)), silent=TRUE)
-      args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, method="ML", weighted=x$weighted, test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE)
+      args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, method="ML", weighted=x$weighted,
+                   test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE)
       x <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
       if (inherits(x, "try-error"))
          stop(mstyle$stop("Could not refit input model using method='ML'."))

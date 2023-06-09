@@ -52,13 +52,13 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 res <- rma(yi, vi, data=dat)
 
 ### cumulative meta-analysis (in the order of publication year)
-sav <- cumul(res, transf=exp, order=year)
+sav <- cumul(res, order=year)
 
 ### plot of model estimate and tau^2 over time
 plot(sav)
 
 ### illustrate some other plot options
-plot(sav, yaxis="I2", ylim=c(0,100), atransf=exp, at=log(seq(1.3, 1.6, by=.1)),
+plot(sav, yaxis="I2", ylim=c(0,100), transf=exp, xlim=c(0.25,0.55),
      lwd=5, cex=1.5, cols=c("green","blue","red"))
 }
 \keyword{hplot}

@@ -512,7 +512,8 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
             #message(mstyle$message("Refitting models with ML (instead of REML) estimation ..."))
             if (inherits(model.f, "rma.uni") && model.f$model == "rma.uni") {
                #model.f <- try(update(model.f, method="ML", data=model.f$data), silent=TRUE)
-               args <- list(yi=model.f$yi, vi=model.f$vi, weights=model.f$weights, mods=model.f$X, intercept=FALSE, method="ML", weighted=model.f$weighted, test=model.f$test, level=model.f$level, tau2=ifelse(model.f$tau2.fix, model.f$tau2, NA), control=model.f$control, skipr2=TRUE)
+               args <- list(yi=model.f$yi, vi=model.f$vi, weights=model.f$weights, mods=model.f$X, intercept=FALSE, method="ML", weighted=model.f$weighted,
+                            test=model.f$test, level=model.f$level, tau2=ifelse(model.f$tau2.fix, model.f$tau2, NA), control=model.f$control, skipr2=TRUE)
                model.f <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
             } else {
                # note: this fails when building the docs with pkgdown; not sure why; the approach above at least works for 'rma.uni' objects and is more efficient as it skips the R^2 calculation
@@ -522,7 +523,8 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                stop(mstyle$stop("Refitting the full model with ML estimation failed."))
             if (inherits(model.r, "rma.uni") && model.r$model == "rma.uni") {
                #model.r <- try(update(model.r, method="ML", data=model.r$data), silent=TRUE)
-               args <- list(yi=model.r$yi, vi=model.r$vi, weights=model.r$weights, mods=model.r$X, intercept=FALSE, method="ML", weighted=model.r$weighted, test=model.r$test, level=model.r$level, tau2=ifelse(model.r$tau2.fix, model.r$tau2, NA), control=model.r$control, skipr2=TRUE)
+               args <- list(yi=model.r$yi, vi=model.r$vi, weights=model.r$weights, mods=model.r$X, intercept=FALSE, method="ML", weighted=model.r$weighted,
+                            test=model.r$test, level=model.r$level, tau2=ifelse(model.r$tau2.fix, model.r$tau2, NA), control=model.r$control, skipr2=TRUE)
                model.r <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
             } else {
                model.r <- try(update(model.r, method="ML"), silent=TRUE)

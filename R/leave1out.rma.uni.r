@@ -66,7 +66,8 @@ leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
       if (!x$not.na[i])
          next
 
-      args <- list(yi=x$yi.f, vi=x$vi.f, weights=x$weights.f, intercept=TRUE, method=x$method, weighted=x$weighted, test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i, skipr2=TRUE, outlist=outlist)
+      args <- list(yi=x$yi.f, vi=x$vi.f, weights=x$weights.f, intercept=TRUE, method=x$method, weighted=x$weighted,
+                   test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i, skipr2=TRUE, outlist=outlist)
       res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
 
       if (inherits(res, "try-error"))

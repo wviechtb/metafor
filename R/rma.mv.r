@@ -170,6 +170,11 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       vccon <- NULL
    } else {
       vccon <- ddd$vccon
+      sigma2 <- .chkvccon(vccon$sigma2, sigma2)
+      tau2   <- .chkvccon(vccon$tau2,   tau2)
+      rho    <- .chkvccon(vccon$rho,    rho)
+      gamma2 <- .chkvccon(vccon$gamma2, gamma2)
+      phi    <- .chkvccon(vccon$phi,    phi)
    }
 
    ### set defaults for formulas
@@ -2432,14 +2437,23 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    p <- sum(beta.est)
 
-   parms <- p + ifelse(withS, sum(ifelse(sigma2.fix,0,1)), 0) +
-                ifelse(withG, sum(ifelse(tau2.fix,0,1)), 0) +
-                ifelse(withG, sum(ifelse(rho.fix,0,1)), 0) +
-                ifelse(withH, sum(ifelse(gamma2.fix,0,1)), 0) +
-                ifelse(withH, sum(ifelse(phi.fix,0,1)), 0)
+   if (is.null(vccon)) {
 
-   ### note: this counts all variance components and correlations for the total number of parameters, even if they were fixed by the user or function
-   #parms <- p + ifelse(withS, sigma2s, 0) + ifelse(withG, tau2s, 0) + ifelse(withG, rhos, 0) + ifelse(withH, gamma2s, 0) + ifelse(withH, phis, 0)
+      parms <- p + ifelse(withS, sum(ifelse(sigma2.fix, 0, 1)), 0) +
+                   ifelse(withG, sum(ifelse(tau2.fix,   0, 1)), 0) +
+                   ifelse(withG, sum(ifelse(rho.fix,    0, 1)), 0) +
+                   ifelse(withH, sum(ifelse(gamma2.fix, 0, 1)), 0) +
+                   ifelse(withH, sum(ifelse(phi.fix,    0, 1)), 0)
+
+   } else {
+
+      parms <- p + ifelse(withS && !is.null(vccon$sigma2), length(unique(vccon$sigma2)) - sum(sigma2.fix), 0) +
+                   ifelse(withG && !is.null(vccon$tau2),   length(unique(vccon$tau2))   - sum(tau2.fix),   0) +
+                   ifelse(withG && !is.null(vccon$rho),    length(unique(vccon$rho))    - sum(rho.fix),    0) +
+                   ifelse(withH && !is.null(vccon$gamma2), length(unique(vccon$gamma2)) - sum(gamma2.fix), 0) +
+                   ifelse(withH && !is.null(vccon$phi),    length(unique(vccon$phi))    - sum(phi.fix),    0)
+
+   }
 
    ll.ML   <- fitcall$llvals[1]
    ll.REML <- fitcall$llvals[2]
@@ -2452,7 +2466,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    AIC.ML    <- -2 * ll.ML   + 2*parms
    BIC.ML    <- -2 * ll.ML   +   parms * log(k)
    AICc.ML   <- -2 * ll.ML   + 2*parms * max(k, parms+2) / (max(k, parms+2) - parms - 1)
-   dev.REML  <- -2 * (ll.REML - 0) ### saturated model has ll = 0 when using the full REML likelihood
+   dev.REML  <- -2 * (ll.REML - 0) # saturated model has ll = 0 when using the full REML likelihood
    AIC.REML  <- -2 * ll.REML + 2*parms
    BIC.REML  <- -2 * ll.REML +   parms * log(k-p)
    AICc.REML <- -2 * ll.REML + 2*parms * max(k-p, parms+2) / (max(k-p, parms+2) - parms - 1)
@@ -2504,7 +2518,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
                   QE=QE, QEdf=QEdf, QEp=QEp, QM=QM, QMdf=QMdf, QMp=QMp,
                   k=k, k.f=k.f, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,
                   int.only=int.only, int.incl=int.incl, intercept=intercept, allvipos=allvipos, coef.na=coef.na,
-                  yi=yi, vi=vi, V=V, W=A, X=X, yi.f=yi.f, vi.f=vi.f, V.f=V.f, X.f=X.f, W.f=W.f, ni=ni, ni.f=ni.f, M=M, G=G, H=H, hessian=hessian, vvc=vvc,
+                  yi=yi, vi=vi, V=V, W=A, X=X, yi.f=yi.f, vi.f=vi.f, V.f=V.f, X.f=X.f, W.f=W.f, ni=ni, ni.f=ni.f,
+                  M=M, G=G, H=H, hessian=hessian, vvc=vvc, vccon=vccon,
                   ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
                   measure=measure, method=method, weighted=weighted,
                   test=test, dfs=dfs, ddf=ddf, s2w=s2w, btt=btt, m=m,

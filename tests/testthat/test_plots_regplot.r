@@ -4,7 +4,7 @@
 
 source("settings.r")
 
-context("Checking plots example: Scatter/bubble plot")
+context("Checking plots example: scatter/bubble plot")
 
 test_that("plot can be drawn.", {
 

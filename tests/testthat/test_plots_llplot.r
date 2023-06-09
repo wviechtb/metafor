@@ -4,7 +4,7 @@
 
 source("settings.r")
 
-context("Checking plots example: Likelihood plot")
+context("Checking plots example: likelihood plot")
 
 test_that("plot can be drawn.", {
 

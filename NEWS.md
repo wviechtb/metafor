@@ -1,4 +1,6 @@
-# metafor 4.3-6 (2023-06-06)
+# metafor 4.3-7 (2023-06-09)
+
+- added (for now undocumented) `vccon` argument to `rma.mv()`
 
 - `replace` argument in `conv.2x2()`, `conv.delta()`, `conv.fivenum()`, and `conv.wald()` can now also be a logical
 

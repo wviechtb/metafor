@@ -43,7 +43,8 @@
       if (inherits(x, "rma.uni")) {
          if (inherits(x, "rma.ls")) {
             args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=Xbtt, intercept=FALSE, scale=Zbtt, link=x$link, method=x$method, weighted=x$weighted,
-                         test=x$test, level=x$level, alpha=ifelse(x$alpha.fix, x$alpha, NA), optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA), control=x$control, skiphes=FALSE, outlist=outlist)
+                         test=x$test, level=x$level, alpha=ifelse(x$alpha.fix, x$alpha, NA), optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA),
+                         control=x$control, skiphes=FALSE, outlist=outlist)
          } else {
             args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=Xbtt, intercept=FALSE, method=x$method, weighted=x$weighted,
                          test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE, outlist=outlist)
@@ -52,9 +53,11 @@
       }
 
       if (inherits(x, "rma.mv")) {
-         args <- list(yi=x$yi, V=x$V, W=x$W, mods=Xbtt, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, dfs=x$dfs, level=x$level, R=x$R, Rscale=x$Rscale,
-                      sigma2=ifelse(x$vc.fix$sigma2, x$sigma2, NA), tau2=ifelse(x$vc.fix$tau2, x$tau2, NA), rho=ifelse(x$vc.fix$rho, x$rho, NA), gamma2=ifelse(x$vc.fix$gamma2, x$gamma2, NA), phi=ifelse(x$vc.fix$phi, x$phi, NA),
-                      sparse=x$sparse, dist=x$dist, control=x$control, outlist=outlist)
+         args <- list(yi=x$yi, V=x$V, W=x$W, mods=Xbtt, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method,
+                      test=x$test, dfs=x$dfs, level=x$level, R=x$R, Rscale=x$Rscale,
+                      sigma2=ifelse(x$vc.fix$sigma2, x$sigma2, NA), tau2=ifelse(x$vc.fix$tau2, x$tau2, NA), rho=ifelse(x$vc.fix$rho, x$rho, NA),
+                      gamma2=ifelse(x$vc.fix$gamma2, x$gamma2, NA), phi=ifelse(x$vc.fix$phi, x$phi, NA),
+                      sparse=x$sparse, dist=x$dist, vccon=obj$vccon, control=x$control, outlist=outlist)
          tmp <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
       }
 
@@ -143,7 +146,8 @@
       if (inherits(x, "rma.uni")) {
          if (inherits(x, "rma.ls")) {
             args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=Xperm, intercept=FALSE, scale=x$Z, link=x$link, method=x$method, weighted=x$weighted,
-                         test=x$test, level=x$level, alpha=ifelse(x$alpha.fix, x$alpha, NA), optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA), control=x$control, skiphes=FALSE, outlist=outlist)
+                         test=x$test, level=x$level, alpha=ifelse(x$alpha.fix, x$alpha, NA), optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA),
+                         control=x$control, skiphes=FALSE, outlist=outlist)
          } else {
             args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=Xperm, intercept=FALSE, method=x$method, weighted=x$weighted,
                          test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE, outlist=outlist)
@@ -153,9 +157,11 @@
       }
 
       if (inherits(x, "rma.mv")) {
-         args <- list(yi=x$yi, V=x$V, W=x$W, mods=Xperm, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method, test=x$test, dfs=x$dfs, level=x$level, R=x$R, Rscale=x$Rscale,
-                      sigma2=ifelse(x$vc.fix$sigma2, x$sigma2, NA), tau2=ifelse(x$vc.fix$tau2, x$tau2, NA), rho=ifelse(x$vc.fix$rho, x$rho, NA), gamma2=ifelse(x$vc.fix$gamma2, x$gamma2, NA), phi=ifelse(x$vc.fix$phi, x$phi, NA),
-                      sparse=x$sparse, dist=x$dist, control=x$control, outlist=outlist)
+         args <- list(yi=x$yi, V=x$V, W=x$W, mods=Xperm, random=x$random, struct=x$struct, intercept=FALSE, data=x$mf.r, method=x$method,
+                      test=x$test, dfs=x$dfs, level=x$level, R=x$R, Rscale=x$Rscale,
+                      sigma2=ifelse(x$vc.fix$sigma2, x$sigma2, NA), tau2=ifelse(x$vc.fix$tau2, x$tau2, NA), rho=ifelse(x$vc.fix$rho, x$rho, NA),
+                      gamma2=ifelse(x$vc.fix$gamma2, x$gamma2, NA), phi=ifelse(x$vc.fix$phi, x$phi, NA),
+                      sparse=x$sparse, dist=x$dist, vccon=obj$vccon, control=x$control, outlist=outlist)
          tmp <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
       }
 
@@ -196,7 +202,8 @@
       }
 
       args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, scale=Zperm, link=x$link, method=x$method, weighted=x$weighted,
-                   test=x$test, level=x$level, alpha=ifelse(x$alpha.fix, x$alpha, NA), optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA), control=x$control, skiphes=FALSE, outlist=outlist)
+                   test=x$test, level=x$level, alpha=ifelse(x$alpha.fix, x$alpha, NA), optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA),
+                   control=x$control, skiphes=FALSE, outlist=outlist)
       tmp <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
       #tmp <- try(.do.call(rma.uni, args))
 

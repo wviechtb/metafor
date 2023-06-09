@@ -1642,7 +1642,7 @@
    ### convergence checks
 
    if (inherits(opt.res, "try-error"))
-      stop(mstyle$stop(paste0("Error during the optimization. Use verbose=TRUE and see help(", fun, ") for more details on the optimization routines.")), call.=FALSE)
+      stop(mstyle$stop(paste0("Error during the optimization. Use verbose=TRUE and see\n       help(", fun, ") for more details on the optimization routines.")), call.=FALSE)
 
    if (optimizer == "lbfgsb3c::lbfgsb3c" && is.null(opt.res$convergence)) # special provision for lbfgsb3c in case 'convergence' is missing
       opt.res$convergence <- -99

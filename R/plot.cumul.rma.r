@@ -241,7 +241,7 @@ digits, cols, grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    ### redraw box around plot
 
-   box()
+   box(...)
 
    ### return data frame invisibly
 

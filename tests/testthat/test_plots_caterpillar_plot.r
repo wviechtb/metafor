@@ -4,7 +4,7 @@
 
 source("settings.r")
 
-context("Checking plots example: Caterpillar plot")
+context("Checking plots example: caterpillar plot")
 
 test_that("plot can be drawn.", {
 

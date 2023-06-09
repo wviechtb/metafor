@@ -25,6 +25,35 @@
 
 ############################################################################
 
+### function to check vccon elements
+
+.chkvccon <- function(ids, vcvals) {
+
+   # get name of vcvals
+
+   vcname <- as.character(match.call()[[3]])
+
+   if (is.null(ids) || is.null(vcvals))
+      return(vcvals)
+
+   if (length(ids) != length(vcvals)) {
+      mstyle <- .get.mstyle("crayon" %in% .packages())
+      stop(mstyle$stop(paste0("Length of 'vccon$", vcname, "' (", length(ids), ") does not match length of ", vcname, " (", length(vcvals), ").")), call.=FALSE)
+   }
+
+   for (id in unique(ids))
+      vcvals[ids == id] <- mean(vcvals[ids == id], na.rm=TRUE)
+
+   # if all elements are NA, then the mean will be NaN, so fix this back to NA
+
+   vcvals[is.nan(vcvals)] <- NA_real_
+
+   return(vcvals)
+
+}
+
+############################################################################
+
 .process.G.aftersub <- function(mf.g, struct, formula, tau2, rho, isG, k, sparse, verbose) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
@@ -856,10 +885,8 @@
       sigma2 <- ifelse(sigma2 <= .Machine$double.eps*10, 0, sigma2)
 
       if (!is.null(vccon) && !is.null(vccon$sigma2)) {
-         if (length(vccon$sigma2) != length(sigma2))
-            stop(mstyle$stop(paste0("Length of 'vccon$sigma2' (", length(vccon$sigma2), ") does not match length of sigma2 (", length(sigma2), ").")), call.=FALSE)
-         for (l in unique(vccon$sigma2))
-            sigma2[vccon$sigma2 == l] <- mean(sigma2[vccon$sigma2 == l])
+         for (id in unique(vccon$sigma2))
+            sigma2[vccon$sigma2 == id] <- mean(sigma2[vccon$sigma2 == id])
       }
 
       for (j in seq_len(sigma2s)) {
@@ -883,18 +910,13 @@
       if (!is.null(vccon)) {
 
          if (!is.null(vccon$tau2)) {
-            if (length(vccon$tau2) != length(tau2))
-               stop(mstyle$stop(paste0("Length of 'vccon$tau2' (", length(vccon$tau2), ") does not match length of tau2 (", length(tau2), ").")), call.=FALSE)
-            for (l in unique(vccon$tau2)) {
-               tau2[vccon$tau2 == l] <- mean(tau2[vccon$tau2 == l])
-            }
+            for (id in unique(vccon$tau2))
+               tau2[vccon$tau2 == id] <- mean(tau2[vccon$tau2 == id])
          }
 
          if (!is.null(vccon$rho)) {
-            if (length(vccon$rho) != length(rho))
-               stop(mstyle$stop(paste0("Length of 'vccon$rho' (", length(vccon$rho), ") does not match length of rho (", length(rho), ").")), call.=FALSE)
-            for (l in unique(vccon$rho)) {
-               rho[vccon$rho == l] <- mean(rho[vccon$rho == l])
+            for (id in unique(vccon$rho)) {
+               rho[vccon$rho == id] <- mean(rho[vccon$rho == id])
             }
          }
 
@@ -926,18 +948,14 @@
       if (!is.null(vccon)) {
 
          if (!is.null(vccon$gamma2)) {
-            if (length(vccon$gamma2) != length(gamma2))
-               stop(mstyle$stop(paste0("Length of 'vccon$gamma2' (", length(vccon$gamma2), ") does not match length of gamma2 (", length(gamma2), ").")), call.=FALSE)
-            for (l in unique(vccon$gamma2)) {
-               gamma2[vccon$gamma2 == l] <- mean(gamma2[vccon$gamma2 == l])
+            for (id in unique(vccon$gamma2)) {
+               gamma2[vccon$gamma2 == id] <- mean(gamma2[vccon$gamma2 == id])
             }
          }
 
          if (!is.null(vccon$phi)) {
-            if (length(vccon$phi) != length(phi))
-               stop(mstyle$stop(paste0("Length of 'vccon$phi' (", length(vccon$phi), ") does not match length of phi (", length(phi), ").")), call.=FALSE)
-            for (l in unique(vccon$phi)) {
-               phi[vccon$phi == l] <- mean(phi[vccon$phi == l])
+            for (id in unique(vccon$phi)) {
+               phi[vccon$phi == id] <- mean(phi[vccon$phi == id])
             }
          }
 
@@ -1133,14 +1151,21 @@
 
       ### fit model without data from ith cluster
 
-      args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, dist=obj$dist, control=control, subset=!incl, outlist=outlist)
+      args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method,
+                   test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale,
+                   sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA),
+                   gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA),
+                   sparse=obj$sparse, dist=obj$dist, vccon=obj$vccon, control=control, subset=!incl, outlist=outlist)
       res <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    } else {
 
       ### set values of variance/correlation components to those from the 'full' model
 
-      args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control, subset=!incl, outlist=outlist)
+      args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method,
+                   test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale,
+                   sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi,
+                   sparse=obj$sparse, dist=obj$dist, vccon=obj$vccon, control=obj$control, subset=!incl, outlist=outlist)
       res <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    }
@@ -1189,14 +1214,21 @@
 
       ### fit model without data from ith cluster
 
-      args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, dist=obj$dist, control=control, subset=!incl, outlist=outlist)
+      args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method,
+                   test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale,
+                   sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA),
+                   gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA),
+                   sparse=obj$sparse, dist=obj$dist, vccon=obj$vccon, control=control, subset=!incl, outlist=outlist)
       res <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    } else {
 
       ### set values of variance/correlation components to those from the 'full' model
 
-      args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control, subset=!incl, outlist=outlist)
+      args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method,
+                   test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale,
+                   sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi,
+                   sparse=obj$sparse, dist=obj$dist, vccon=obj$vccon, control=obj$control, subset=!incl, outlist=outlist)
       res <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    }
@@ -1215,7 +1247,10 @@
 
    ### fit model based on all data but with var/cor components fixed to those from res
 
-   args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control, outlist=outlist)
+   args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method,
+                test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale,
+                sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi,
+                sparse=obj$sparse, dist=obj$dist, vccon=obj$vccon, control=obj$control, outlist=outlist)
    tmp <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    Xi <- obj$X[incl,,drop=FALSE]
@@ -1263,14 +1298,21 @@
 
       ### fit model without data from ith cluster
 
-      args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA), gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA), sparse=obj$sparse, dist=obj$dist, control=control, subset=!incl, outlist=outlist)
+      args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method,
+                   test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale,
+                   sigma2=ifelse(obj$vc.fix$sigma2, obj$sigma2, NA), tau2=ifelse(obj$vc.fix$tau2, obj$tau2, NA), rho=ifelse(obj$vc.fix$rho, obj$rho, NA),
+                   gamma2=ifelse(obj$vc.fix$gamma2, obj$gamma2, NA), phi=ifelse(obj$vc.fix$phi, obj$phi, NA),
+                   sparse=obj$sparse, dist=obj$dist, vccon=obj$vccon, control=control, subset=!incl, outlist=outlist)
       res <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    } else {
 
       ### set values of variance/correlation components to those from the 'full' model
 
-      args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control, subset=!incl, outlist=outlist)
+      args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method,
+                   test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale,
+                   sigma2=obj$sigma2, tau2=obj$tau2, rho=obj$rho, gamma2=obj$gamma2, phi=obj$phi,
+                   sparse=obj$sparse, dist=obj$dist, vccon=obj$vccon, control=obj$control, subset=!incl, outlist=outlist)
       res <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    }
@@ -1289,7 +1331,10 @@
 
    ### fit model based on all data but with var/cor components fixed to those from res
 
-   args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method, test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale, sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi, sparse=obj$sparse, dist=obj$dist, control=obj$control, outlist=outlist)
+   args <- list(yi=obj$yi, V=obj$V, W=obj$W, mods=obj$X, random=obj$random, struct=obj$struct, intercept=FALSE, data=obj$mf.r, method=obj$method,
+                test=obj$test, dfs=obj$dfs, level=obj$level, R=obj$R, Rscale=obj$Rscale,
+                sigma2=res$sigma2, tau2=res$tau2, rho=res$rho, gamma2=res$gamma2, phi=res$phi,
+                sparse=obj$sparse, dist=obj$dist, vccon=obj$vccon, control=obj$control, outlist=outlist)
    tmp <- try(suppressWarnings(.do.call(rma.mv, args)), silent=TRUE)
 
    ### compute dfbeta value(s)
