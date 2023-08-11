@@ -37,15 +37,15 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
 
    if (is.element(x$test, c("knha","adhoc","t"))) {
       res.table <- data.frame(estimate=fmtx(c(x$beta), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), tval=fmtx(x$zval, digits[["test"]]), df=round(x$ddf,2), "pval"=fmtp(x$pval, digits[["pval"]]), ci.lb=fmtx(x$ci.lb, digits[["ci"]]), ci.ub=fmtx(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
-      if (!x$skip.beta)
+      if (!x$skip.beta && footsym[1] != "")
          res.table <- .addfootsym(res.table, 5, footsym[1])
-      if (x$permci)
+      if (x$permci && footsym[1] != "")
          res.table <- .addfootsym(res.table, 6:7, footsym[1])
    } else {
       res.table <- data.frame(estimate=fmtx(c(x$beta), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), zval=fmtx(x$zval, digits[["test"]]), "pval"=fmtp(x$pval, digits[["pval"]]), ci.lb=fmtx(x$ci.lb, digits[["ci"]]), ci.ub=fmtx(x$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
-      if (!x$skip.beta)
+      if (!x$skip.beta && footsym[1] != "")
          res.table <- .addfootsym(res.table, 4, footsym[1])
-      if (x$permci)
+      if (x$permci && footsym[1] != "")
          res.table <- .addfootsym(res.table, 5:6, footsym[1])
    }
    rownames(res.table) <- rownames(x$beta)
@@ -92,11 +92,11 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
          res.table <- data.frame(estimate=fmtx(c(x$alpha), digits[["est"]]), se=fmtx(x$se.alpha, digits[["se"]]), tval=fmtx(x$zval.alpha, digits[["test"]]), df=round(x$ddf.alpha,2), "pval"=fmtp(x$pval.alpha, digits[["pval"]]), ci.lb=fmtx(x$ci.lb.alpha, digits[["ci"]]), ci.ub=fmtx(x$ci.ub.alpha, digits[["ci"]]), stringsAsFactors=FALSE)
-         if (!x$skip.alpha)
+         if (!x$skip.alpha && footsym[1] != "")
             res.table <- .addfootsym(res.table, 5, footsym[1])
       } else {
          res.table <- data.frame(estimate=fmtx(c(x$alpha), digits[["est"]]), se=fmtx(x$se.alpha, digits[["se"]]), zval=fmtx(x$zval.alpha, digits[["test"]]), "pval"=fmtp(x$pval.alpha, digits[["pval"]]), ci.lb=fmtx(x$ci.lb.alpha, digits[["ci"]]), ci.ub=fmtx(x$ci.ub.alpha, digits[["ci"]]), stringsAsFactors=FALSE)
-         if (!x$skip.alpha)
+         if (!x$skip.alpha && footsym[1] != "")
             res.table <- .addfootsym(res.table, 4, footsym[1])
       }
       rownames(res.table) <- rownames(x$alpha)

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-8</span>
       </span>
     </div>
 
@@ -160,7 +160,7 @@
 <h3 id="permutation-based-confidence-intervals">Permutation-Based Confidence Intervals<a class="anchor" aria-label="anchor" href="#permutation-based-confidence-intervals"></a></h3>
 
 
-<p>When <code>permci=TRUE</code>, the function also tries to obtain permutation-based confidence intervals (CIs) of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes by some amount and finding the most extreme values for this amount for which the permutation-based test would just lead to non-rejection. This is computationally expensive and may take a long time to complete. For models with moderators, one can also set <code>permci</code> to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as <code>NA</code> in the output.</p>
+<p>When <code>permci=TRUE</code>, the function also tries to obtain permutation-based confidence intervals (CIs) of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes by some amount and finding the most extreme values for this amount for which the permutation-based test would just lead to non-rejection. The calculation of such CIs is computationally expensive and may take a long time to complete. For models with moderators, one can also set <code>permci</code> to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as <code>NA</code> in the output.</p>
 <p></p>
 </div>
 

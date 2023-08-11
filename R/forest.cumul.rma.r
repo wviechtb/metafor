@@ -29,8 +29,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (is.function(transf) && is.function(atransf))
       stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))
 
-   if (exists(".darkplots"))
-      par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
+   .start.plot()
 
    yi <- x$estimate
 
@@ -78,13 +77,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       shade <- .getx("shade", mf=mf, data=x$data)
    }
 
-   if (missing(colshade)) {
-      if (.is.dark(par("bg"))) {
-         colshade <- "gray20"
-      } else {
-         colshade <- "gray90"
-      }
-   }
+   if (missing(colshade))
+      colshade <- .coladj(par("bg","fg"), dark=0.1, light=-0.1)
 
    if (missing(cex))
       cex <- NULL
@@ -111,7 +105,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    ### set default line types if user has not specified 'lty' argument
 
    if (missing(lty)) {
-      lty <- c("solid", "solid") # 1st value = CIs, 2nd value = horizontal line(s)
+      lty <- c("solid", "solid") # 1st = CIs, 2nd = horizontal line(s)
    } else {
       if (length(lty) == 1L)
          lty <- c(lty, "solid")

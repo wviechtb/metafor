@@ -62,7 +62,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("knha", "onlyo1", "addyi", "addvi", "i2def", "r2def", "skipr2", "abbrev", "dfs", "time", "outlist", "link", "optbeta", "alpha", "beta", "skiphes"))
+   .chkdots(ddd, c("knha", "onlyo1", "addyi", "addvi", "i2def", "r2def", "skipr2", "abbrev", "dfs", "time", "outlist", "link", "optbeta", "alpha", "beta", "skiphes", "pleasedonotreportI2thankyouverymuch"))
 
    ### handle 'knha' argument from ... (note: overrides test argument)
 
@@ -2647,6 +2647,11 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       R2 <- NULL
 
+   }
+
+   if (.isTRUE(ddd$pleasedonotreportI2thankyouverymuch)) {
+      I2 <- NA
+      H2 <- NA
    }
 
    #########################################################################

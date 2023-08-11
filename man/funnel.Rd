@@ -37,22 +37,22 @@ funnel(x, \dots)
    \item{ylab}{title for the y-axis. If unspecified, the function sets an appropriate axis title.}
    \item{slab}{optional vector with labels for the \mjseqn{k} studies. If unspecified, the function tries to extract study labels from \code{x}.}
    \item{steps}{the number of tick marks for the y-axis (the default is 5).}
-   \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.}
+   \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function sets the tick mark positions/labels to some sensible values.}
    \item{atransf}{optional argument to specify a function to transform the x-axis labels (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{atransf}.}
    \item{digits}{optional integer to specify the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first to specify the number of decimal places for the x-axis, the second for the y-axis labels (e.g., \code{digits=c(2,3)}). If unspecified, the function tries to set the argument to some sensible values.}
    \item{level}{numeric value between 0 and 100 to specify the level of the pseudo confidence interval region (see \link[=misc-options]{here} for details). For \code{"rma"} objects, the default is to take the value from the object. May also be a vector of values to obtain multiple regions. See \sQuote{Examples}.}
    \item{addtau2}{logical to indicate whether the amount of heterogeneity should be accounted for when drawing the pseudo confidence interval region (the default is \code{FALSE}). Ignored when \code{x} is a meta-regression model and residuals are plotted. See \sQuote{Details}.}
    \item{type}{either \code{"rstandard"} (default) or \code{"rstudent"} to specify whether the usual or deleted residuals should be used in creating the funnel plot when \code{x} is a meta-regression model. See \sQuote{Details}.}
-   \item{back}{optional character string to specify the color of the plotting region background. If unspecified, a gray is used.}
-   \item{shade}{optional character string to specify the color of the pseudo confidence interval region. If unspecified, white is used. When \code{level} is a vector of values, different shading colors can be specified for each region.}
-   \item{hlines}{optional character string to specify the color of the horizontal reference lines. If unspecified, the default is white.}
+   \item{back}{optional character string to specify the color of the plotting region background.}
+   \item{shade}{optional character string to specify the color of the pseudo confidence interval region. When \code{level} is a vector of values, different shading colors can be specified for each region.}
+   \item{hlines}{optional character string to specify the color of the horizontal reference lines.}
    \item{refline}{numeric value to specify the location of the vertical \sQuote{reference} line and where the pseudo confidence interval should be centered. If unspecified, the reference line is drawn at the equal- or random-effects model estimate and at zero for meta-regression models (in which case the residuals are plotted) or when directly plotting observed outcomes.}
    \item{lty}{line type for the pseudo confidence interval region and the reference line. The default is to draw dotted lines (see \code{\link{par}} for other options). Can also be a vector to specify the two line types separately.}
    \item{pch}{plotting symbol to use for the observed outcomes. By default, a filled circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
    \item{pch.fill}{plotting symbol to use for the outcomes filled in by the trim and fill method. By default, an open circle is used. Only relevant when plotting an object created by the \code{\link{trimfill}} function.}
-   \item{col}{optional character string to specify the (border) color of the points. If unspecified, black is used by default. Can also be a vector.}
-   \item{bg}{optional character string to specify the background color of open plot symbols. If unspecified, white is used by default. Can also be a vector.}
+   \item{col}{optional character string to specify the (border) color of the points. Can also be a vector.}
+   \item{bg}{optional character string to specify the background color of open plot symbols. Can also be a vector.}
    \item{label}{argument to control the labeling of the points (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{offset}{argument to control the distance between the points and the corresponding labels.}
    \item{legend}{logical to indicate whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to indicate the position of the legend (see \code{\link{legend}}).}

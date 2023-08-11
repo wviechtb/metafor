@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-8</span>
       </span>
     </div>
 
@@ -123,10 +123,10 @@
 <dd><p>logical to specify whether column headings should be added to the plot (the default is <code>FALSE</code>). Can also be a character vector to specify the left and right headings (or only the left one).</p></dd>
 
    <dt>xlim</dt>
-<dd><p>horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.</p></dd>
+<dd><p>horizontal limits of the plot region. If unspecified, the function sets the horizontal plot limits to some sensible values.</p></dd>
 
    <dt>alim</dt>
-<dd><p>the x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.</p></dd>
+<dd><p>the x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.</p></dd>
 
    <dt>olim</dt>
 <dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
@@ -135,7 +135,7 @@
 <dd><p>the y-axis limits of the plot. If unspecified, the function sets the y-axis limits to some sensible values.</p></dd>
 
    <dt>at</dt>
-<dd><p>position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.</p></dd>
+<dd><p>position of the x-axis tick marks and corresponding labels. If unspecified, the function sets the tick mark positions/labels to some sensible values.</p></dd>
 
    <dt>steps</dt>
 <dd><p>the number of tick marks for the x-axis (the default is 5). Ignored when the positions are specified via the <code>at</code> argument.</p></dd>
@@ -174,7 +174,7 @@
 <dd><p>optional arguments needed by the function specified via <code>transf</code> or <code>atransf</code>.</p></dd>
 
    <dt>rows</dt>
-<dd><p>optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row). If unspecified, the function sets this value automatically.</p></dd>
+<dd><p>optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row).</p></dd>
 
    <dt>efac</dt>
 <dd><p>vertical expansion factor for confidence interval limits and arrows. The default value of 1 should usually work okay. Can also be a vector of two numbers, the first for CI limits, the second for arrows.</p></dd>
@@ -186,13 +186,13 @@
 <dd><p>numeric value to specify the point sizes for the estimates (the default is 1). Can also be a vector of values.</p></dd>
 
    <dt>col</dt>
-<dd><p>optional character string to specify the color of the estimates. If unspecified, black is used by default. Can also be a vector.</p></dd>
+<dd><p>optional character string to specify the color of the estimates. Can also be a vector.</p></dd>
 
    <dt>shade</dt>
 <dd><p>optional character string or a (logical or numeric) vector for shading rows of the plot.</p></dd>
 
    <dt>colshade</dt>
-<dd><p>optional argument to specify the color for the shading. If unspecified, a light shade of gray is used.</p></dd>
+<dd><p>optional argument to specify the color for the shading.</p></dd>
 
    <dt>lty</dt>
 <dd><p>optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to <code>"solid"</code> by default.</p></dd>
@@ -201,13 +201,13 @@
 <dd><p>optional character string to specify the font for the study labels, annotations, and the extra information (if specified via <code>ilab</code>). If unspecified, the default font is used.</p></dd>
 
    <dt>cex</dt>
-<dd><p>optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.</p></dd>
+<dd><p>optional character and symbol expansion factor. If unspecified, the function sets this to a sensible value.</p></dd>
 
    <dt>cex.lab</dt>
-<dd><p>optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.</p></dd>
+<dd><p>optional expansion factor for the x-axis title. If unspecified, the function sets this to a sensible value.</p></dd>
 
    <dt>cex.axis</dt>
-<dd><p>optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.</p></dd>
+<dd><p>optional expansion factor for the x-axis labels. If unspecified, the function sets this to a sensible value.</p></dd>
 
    <dt>...</dt>
 <dd><p>other arguments.</p></dd>
@@ -220,7 +220,7 @@
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>The function tries to set some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.</p>
+    <p>The function sets some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.</p>
 <p>The function actually returns some information about the chosen values invisibly. Printing this information is useful as a starting point to make adjustments to the plot.</p>
 <p>If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the <code>cex</code>, <code>cex.lab</code>, and <code>cex.axis</code> arguments are then useful to adjust the symbol and text sizes.</p>
 <p>If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those limits (the observed outcomes and confidence intervals cannot exceed those bounds then).</p>

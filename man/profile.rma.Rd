@@ -44,7 +44,7 @@
    \item{phi}{optional integer to specify for which \mjseqn{\phi} value the likelihood should be profiled.}
    \item{delta}{optional integer to specify for which \mjseqn{\delta} value the likelihood should be profiled.}
    \item{alpha}{optional integer to specify for which \mjseqn{\alpha} value the likelihood should be profiled.}
-   \item{xlim}{optional vector to specify the lower and upper limit of the parameter over which the profiling should be done. If unspecified, the function tries to set these limits automatically.}
+   \item{xlim}{optional vector to specify the lower and upper limit of the parameter over which the profiling should be done. If unspecified, the function sets these limits automatically.}
    \item{ylim}{optional vector to specify the y-axis limits when plotting the profiled likelihood. If unspecified, the function sets these limits automatically.}
    \item{steps}{number of points between \code{xlim[1]} and \code{xlim[2]} (inclusive) for which the likelihood should be evaluated (the default is 20).}
    \item{lltol}{numerical tolerance used when comparing values of the profiled log-likelihood with the log-likelihood of the fitted model (the default is 1e-03).}

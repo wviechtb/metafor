@@ -15,13 +15,13 @@ hc(object, \dots)
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{transf}{optional argument to specify a function to transform the estimate and the corresponding interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
-   \item{control}{list of control values for the iterative algorithm. If unspecified, default values are defined inside the function. See \sQuote{Note}.}
+   \item{control}{list of control values for the iterative algorithm. If unspecified, default values are used. See \sQuote{Note}.}
    \item{\dots}{other arguments.}
 }
 \details{
    The model specified via \code{object} must be a model without moderators (i.e., either an equal- or a random-effects model).
 
-   When using the usual method for fitting a random-effects model (i.e., weighted estimation with inverse-variance weights), the weights assigned to smaller and larger studies become more uniform as the amount of heterogeneity increases. As a consequence, the estimated average outcome could become increasingly biased under certain forms of publication bias (where smaller studies on one side of the funnel plot are missing). The method by Henmi and Copas (2010) tries to counteract this problem by providing an estimate of the average true outcome that is based on inverse-variance weights as used under an equal-effects model (which do not take the amount of heterogeneity into consideration). The amount of heterogeneity is still estimated (with the DerSimonian-Laird estimator) and incorporated into the standard error of the estimated average outcome and the corresponding confidence interval.
+   When using the usual method for fitting a random-effects model (i.e., weighted estimation with inverse-variance weights), the weights assigned to smaller and larger studies become more uniform as the amount of heterogeneity increases. As a consequence, the estimated average outcome could become increasingly biased under certain forms of publication bias (where smaller studies on one side of the funnel plot are missing). The method by Henmi and Copas (2010) counteracts this problem by providing an estimate of the average true outcome that is based on inverse-variance weights as used under an equal-effects model, which are not affected by the amount of heterogeneity. The amount of heterogeneity is still estimated (with the DerSimonian-Laird estimator) and incorporated into the standard error of the estimated average outcome and the corresponding confidence interval.
 
    Currently, there is only a method for handling objects of class \code{"rma.uni"} with the \code{hc} function. It therefore provides a method for conducting a sensitivity analysis after the model has been fitted with the \code{\link{rma.uni}} function.
 }

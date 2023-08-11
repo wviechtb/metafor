@@ -198,6 +198,7 @@ reference:
     desc: >
       Some miscellaneous convenience functions.
     contents:
+      - mfopt
       - bldiag
       - blsplit
       - dfround

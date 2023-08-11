@@ -8,48 +8,22 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
    .chkclass(class(x), must="permutest.rma.uni")
 
-   if (exists(".darkplots"))
-      par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
+   .start.plot()
 
-   if (missing(col)) {
-      if (.is.dark(par("bg"))) {
-         col <- "gray50"
-      } else {
-         col <- "gray"
-      }
-   }
+   if (missing(col))
+      col <- .coladj(par("bg","fg"), dark=0.3, light=-0.3)
 
-   if (missing(border)) {
-      if (.is.dark(par("bg"))) {
-         border <- par("bg")
-      } else {
-         border <- "white"
-      }
-   }
+   if (missing(border))
+      border <- .coladj(par("bg"), dark=0.1, light=-0.1)
 
-   if (missing(col.out)) {
-      if (.is.dark(par("bg"))) {
-         col.out <- rgb(1,0,0,0.4)
-      } else {
-         col.out <- rgb(1,0,0,0.5)
-      }
-   }
+   if (missing(col.out))
+      col.out <- rgb(1,0,0,0.5)
 
-   if (missing(col.ref)) {
-      if (.is.dark(par("bg"))) {
-         col.ref <- "gray70"
-      } else {
-         col.ref <- "black"
-      }
-   }
+   if (missing(col.ref))
+      col.ref <- .coladj(par("fg"), dark=-0.3, light=0.3)
 
-   if (missing(col.density)) {
-      if (.is.dark(par("bg"))) {
-         col.density <- "dodgerblue"
-      } else {
-         col.density <- "blue"
-      }
-   }
+   if (missing(col.density))
+      col.density <- ifelse(.is.dark(), "dodgerblue", "blue")
 
    ddd <- list(...)
 
@@ -245,9 +219,12 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
       }
 
       .coltail(tmp, val=x$QM, tail="upper", col=col.out, border=border, freq=freq, ...)
-      labline(v=x$QM, lwd=lwd[1], lty="dashed", ...)
-      llines(xs, ys, lwd=lwd[2], col=col.ref, ...)
-      llines(den, lwd=lwd[3], col=col.density, ...)
+      if (lwd[1] > 0)
+         labline(v=x$QM, lwd=lwd[1], lty="dashed", ...)
+      if (lwd[2] > 0)
+         llines(xs, ys, lwd=lwd[2], col=col.ref, ...)
+      if (lwd[3] > 0)
+         llines(den, lwd=lwd[3], col=col.density, ...)
 
    }
 
@@ -296,19 +273,22 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
             .coltail(tmp, val=-abs(obs1[i]), tail="lower", col=col.out, border=border, freq=freq, ...)
             .coltail(tmp, val= abs(obs1[i]), tail="upper", col=col.out, border=border, freq=freq, ...)
-            labline(v=c(-obs1[i],obs1[i]), lwd=lwd[1], lty="dashed", ...)
+            if (lwd[1] > 0)
+               labline(v=c(-obs1[i],obs1[i]), lwd=lwd[1], lty="dashed", ...)
 
          } else {
 
             if (obs1[i] > median(pdist, na.rm=TRUE)) {
 
                .coltail(tmp, val= abs(obs1[i]), tail="upper", mult=2, col=col.out, border=border, freq=freq, ...)
-               labline(v=obs1[i], lwd=lwd[1], lty="dashed", ...)
+               if (lwd[1] > 0)
+                  labline(v=obs1[i], lwd=lwd[1], lty="dashed", ...)
 
             } else {
 
                .coltail(tmp, val=-abs(obs1[i]), tail="lower", mult=2, col=col.out, border=border, freq=freq, ...)
-               labline(v=-abs(obs1[i]), lwd=lwd[1], lty="dashed", ...)
+               if (lwd[1] > 0)
+                  labline(v=-abs(obs1[i]), lwd=lwd[1], lty="dashed", ...)
 
             }
 
@@ -318,21 +298,26 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
       if (alternative == "less") {
 
          .coltail(tmp, val=obs1[i], tail="lower", col=col.out, border=border, freq=freq, ...)
-         labline(v=obs1[i], lwd=lwd[1], lty="dashed", ...)
+         if (lwd[1] > 0)
+            labline(v=obs1[i], lwd=lwd[1], lty="dashed", ...)
 
       }
 
       if (alternative == "greater") {
 
          .coltail(tmp, val=obs1[i], tail="upper", col=col.out, border=border, freq=freq, ...)
-         labline(v=obs1[i], lwd=lwd[1], lty="dashed", ...)
+         if (lwd[1] > 0)
+            labline(v=obs1[i], lwd=lwd[1], lty="dashed", ...)
 
       }
 
-      llines(xs, ys, lwd=lwd[2], col=col.ref, ...)
-      llines(den, lwd=lwd[3], col=col.density, ...)
+      if (lwd[2] > 0)
+         llines(xs, ys, lwd=lwd[2], col=col.ref, ...)
+      if (lwd[3] > 0)
+         llines(den, lwd=lwd[3], col=col.density, ...)
 
-      labline(v=0, lwd=lwd[4], ...)
+      if (lwd[4] > 0)
+         labline(v=0, lwd=lwd[4], ...)
 
    }
 
@@ -378,9 +363,12 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
          }
 
          .coltail(tmp, val=x$QS, tail="upper", col=col.out, border=border, freq=freq, ...)
-         labline(v=x$QS, lwd=lwd[1], lty="dashed", ...)
-         llines(xs, ys, lwd=lwd[2], col=col.ref, ...)
-         llines(den, lwd=lwd[3], col=col.density, ...)
+         if (lwd[1] > 0)
+            labline(v=x$QS, lwd=lwd[1], lty="dashed", ...)
+         if (lwd[2] > 0)
+            llines(xs, ys, lwd=lwd[2], col=col.ref, ...)
+         if (lwd[3] > 0)
+            llines(den, lwd=lwd[3], col=col.density, ...)
 
       }
 
@@ -429,19 +417,22 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
                .coltail(tmp, val=-abs(obs2[i]), tail="lower", col=col.out, border=border, freq=freq, ...)
                .coltail(tmp, val= abs(obs2[i]), tail="upper", col=col.out, border=border, freq=freq, ...)
-               labline(v=c(-obs2[i],obs2[i]), lwd=lwd[1], lty="dashed", ...)
+               if (lwd[1] > 0)
+                  labline(v=c(-obs2[i],obs2[i]), lwd=lwd[1], lty="dashed", ...)
 
             } else {
 
                if (obs2[i] > median(pdist, na.rm=TRUE)) {
 
                   .coltail(tmp, val= abs(obs2[i]), tail="upper", mult=2, col=col.out, border=border, freq=freq, ...)
-                  labline(v=obs2[i], lwd=lwd[1], lty="dashed", ...)
+                  if (lwd[1] > 0)
+                     labline(v=obs2[i], lwd=lwd[1], lty="dashed", ...)
 
                } else {
 
                   .coltail(tmp, val=-abs(obs2[i]), tail="lower", mult=2, col=col.out, border=border, freq=freq, ...)
-                  labline(v=-abs(obs2[i]), lwd=lwd[1], lty="dashed", ...)
+                  if (lwd[1] > 0)
+                     labline(v=-abs(obs2[i]), lwd=lwd[1], lty="dashed", ...)
 
                }
 
@@ -451,21 +442,25 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
          if (alternative == "less") {
 
             .coltail(tmp, val=obs2[i], tail="lower", col=col.out, border=border, freq=freq, ...)
-            labline(v=obs2[i], lwd=lwd[1], lty="dashed", ...)
+            if (lwd[1] > 0)
+               labline(v=obs2[i], lwd=lwd[1], lty="dashed", ...)
 
          }
 
          if (alternative == "greater") {
 
             .coltail(tmp, val=obs2[i], tail="upper", col=col.out, border=border, freq=freq, ...)
-            labline(v=obs2[i], lwd=lwd[1], lty="dashed", ...)
+            if (lwd[1] > 0)
+               labline(v=obs2[i], lwd=lwd[1], lty="dashed", ...)
 
          }
 
-         llines(xs, ys, lwd=lwd[2], col=col.ref, ...)
-         llines(den, lwd=lwd[3], col=col.density, ...)
-
-         labline(v=0, lwd=lwd[4], ...)
+         if (lwd[2] > 0)
+            llines(xs, ys, lwd=lwd[2], col=col.ref, ...)
+         if (lwd[3] > 0)
+            llines(den, lwd=lwd[3], col=col.density, ...)
+         if (lwd[4] > 0)
+            labline(v=0, lwd=lwd[4], ...)
 
       }
 

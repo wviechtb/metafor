@@ -48,7 +48,7 @@ permutest(x, \dots)
 
    \subsection{Permutation-Based Confidence Intervals}{
 
-      When \code{permci=TRUE}, the function also tries to obtain permutation-based confidence intervals (CIs) of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes by some amount and finding the most extreme values for this amount for which the permutation-based test would just lead to non-rejection. This is computationally expensive and may take a long time to complete. For models with moderators, one can also set \code{permci} to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as \code{NA} in the output.
+      When \code{permci=TRUE}, the function also tries to obtain permutation-based confidence intervals (CIs) of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes by some amount and finding the most extreme values for this amount for which the permutation-based test would just lead to non-rejection. The calculation of such CIs is computationally expensive and may take a long time to complete. For models with moderators, one can also set \code{permci} to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as \code{NA} in the output.
 
    }
 

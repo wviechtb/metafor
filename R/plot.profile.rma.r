@@ -6,8 +6,7 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
 
    .chkclass(class(x), must="profile.rma")
 
-   if (exists(".darkplots"))
-      par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
+   .start.plot()
 
    if (dev.cur() == 1) {
       par(mfrow=n2mfrow(x$comps))

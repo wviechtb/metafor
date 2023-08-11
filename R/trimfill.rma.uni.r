@@ -27,7 +27,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
    ### determine side (if none is specified)
 
    if (is.null(side)) {
-      args <- list(yi=yi, vi=vi, weights=wi, mods=sqrt(vi), method=x$method, weighted=x$weighted, outlist="beta=beta", ...)
+      args <- list(yi=yi, vi=vi, weights=wi, mods=sqrt(vi), method=x$method, weighted=x$weighted, control=x$control, outlist="beta=beta", ...)
       res <- suppressWarnings(.do.call(rma.uni, args))
       ### TODO: add check in case there are problems with fitting the model
       if (res$beta[2] < 0) {
@@ -78,7 +78,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
       vi.t <- vi[seq_len(k-k0)]
       wi.t <- wi[seq_len(k-k0)]
 
-      args <- list(yi=yi.t, vi=vi.t, weights=wi.t, method=x$method, weighted=x$weighted, outlist="beta=beta", ...)
+      args <- list(yi=yi.t, vi=vi.t, weights=wi.t, method=x$method, weighted=x$weighted, control=x$control, outlist="beta=beta", ...)
       res <- suppressWarnings(.do.call(rma.uni, args))
 
       ### intercept estimate based on truncated data

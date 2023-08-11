@@ -8,14 +8,17 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
 
    .chkclass(class(x), must="rma.uni.selmodel")
 
+   .start.plot()
+
    if (is.element(x$type, c("trunc","truncest")))
       stop(mstyle$stop("Cannot draw the selection function for this type of selection model."))
 
    ddd <- list(...)
 
-   lplot  <- function(..., seed) plot(...)
-   llines <- function(..., seed) lines(...)
-   lrug   <- function(..., seed) rug(...)
+   lplot    <- function(..., seed) plot(...)
+   llines   <- function(..., seed) lines(...)
+   lrug     <- function(..., seed) rug(...)
+   lpolygon <- function(..., seed) polygon(...)
 
    if (is.logical(ci))
       citype <- "boot"
@@ -193,8 +196,10 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
    }
 
    if (ci) {
-      llines(ps, ys.lb, type=plot.type, lty=lty[2], lwd=lwd[2], ...)
+      #lpolygon(c(ps,rev(ps)), c(ys.lb,rev(ys.ub)), col="gray15", border=NA)
+      #llines(ps, ys.lb, type=plot.type, lty=lty[2], lwd=lwd[2], ...)
       llines(ps, ys.ub, type=plot.type, lty=lty[2], lwd=lwd[2], ...)
+      llines(ps, ys, type=plot.type, lty=lty[1], lwd=lwd[1], ...)
    }
 
    if (rug && !add)

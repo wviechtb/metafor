@@ -40,8 +40,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
 
    }
 
-   if (exists(".darkplots"))
-      par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
+   .start.plot()
 
    lplot  <- function(..., trim) plot(...)
    lpairs <- function(..., trim) pairs(...)
@@ -50,12 +49,12 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
       alpha <- nrow(x$res)^(-0.2)
 
    if (length(alpha) == 1L)
-      alpha <- c(alpha, 0.5, 0.9) ### 1st for points, 2nd for histograms, 3rd for density lines
+      alpha <- c(alpha, 0.5, 0.9) # 1st for points, 2nd for histograms, 3rd for density lines
 
    if (length(alpha) == 2L)
       alpha <- c(alpha[1], alpha[2], 0.9)
 
-   missout <- ifelse(missing(out), TRUE, FALSE) ### need this for panel.hist()
+   missout <- ifelse(missing(out), TRUE, FALSE) # need this for panel.hist()
 
    if (missout) {
 
@@ -78,7 +77,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
          stop(mstyle$stop("Non-existing study chosen as potential outlier."))
 
       if (missing(col)) {
-         if (.is.dark(par("bg"))) {
+         if (.is.dark()) {
             col <- c("firebrick", "dodgerblue")
          } else {
             col <- c("red", "blue")
@@ -100,13 +99,8 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
 
    }
 
-   if (missing(border)) {
-      if (.is.dark(par("bg"))) {
-         border <- par("bg")
-      } else {
-         border <- "white"
-      }
-   }
+   if (missing(border))
+      border <- .coladj(par("bg"), dark=0.1, light=-0.1)
 
    if (length(border) == 1L)
       border <- c(border, border)

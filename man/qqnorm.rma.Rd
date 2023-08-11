@@ -23,8 +23,8 @@
    \item{y}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, or \code{"rma.peto"}. The method is not yet implemented for objects of class \code{"rma.glmm"} or \code{"rma.mv"}.}
    \item{type}{character string (either \code{"rstandard"} (default) or \code{"rstudent"}) to specify whether standardized residuals or studentized deleted residuals should be used in creating the plot. See \sQuote{Details}.}
    \item{pch}{plotting symbol to use for the observed outcomes. By default, an open circle is used. See \code{\link{points}} for other options.}
-   \item{col}{optional character string to specify the (border) color of the points. If unspecified, black is used by default.}
-   \item{bg}{optional character string to specify the background color of open plot symbols. If unspecified, gray is used by default.}
+   \item{col}{optional character string to specify the (border) color of the points.}
+   \item{bg}{optional character string to specify the background color of open plot symbols.}
    \item{envelope}{logical to specify whether a pseudo confidence envelope should be simulated and added to the plot (the default is \code{TRUE})). Only for objects of class \code{"rma.uni"}. See \sQuote{Details}.}
    \item{level}{numeric value between 0 and 100 to specify the level of the pseudo confidence envelope (see \link[=misc-options]{here} for details). The default is to take the value from the object.}
    \item{bonferroni}{logical to specify whether the bounds of the envelope should be Bonferroni corrected.}

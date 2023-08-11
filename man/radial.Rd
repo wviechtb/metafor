@@ -30,8 +30,8 @@ galbraith(x, \dots)
    \item{transf}{argument to specify a function to transform the y-axis labels (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf}.}
    \item{pch}{plotting symbol. By default, an open circle is used. See \code{\link{points}} for other options.}
-   \item{col}{character string to specify the (border) color of the points. If unspecified, black is used by default.}
-   \item{bg}{character string to specify the background color of open plot symbols. If unspecified, gray is used by default.}
+   \item{col}{character string to specify the (border) color of the points.}
+   \item{bg}{character string to specify the background color of open plot symbols.}
    \item{back}{character string to specify the background color of the z-axis error region. If unspecified, a shade of gray is used. Set to \code{NA} to suppress shading of the region.}
    \item{arc.res}{integer to specify the number of line segments (i.e., the resolution) when drawing the y-axis and confidence interval arcs (the default is 100).}
    \item{cex}{symbol expansion factor.}

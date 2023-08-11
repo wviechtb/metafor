@@ -23,11 +23,11 @@
    \item{annotate}{logical to specify whether annotations should be added to the plot (the default is \code{TRUE}).}
    \item{showweights}{logical to specify whether the annotations should also include the inverse variance weights (the default is \code{FALSE}).}
    \item{header}{logical to specify whether column headings should be added to the plot (the default is \code{FALSE}). Can also be a character vector to specify the left and right headings  (or only the left one).}
-   \item{xlim}{horizontal limits of the plot region. If unspecified, the function tries to set the horizontal plot limits to some sensible values.}
-   \item{alim}{the x-axis limits. If unspecified, the function tries to set the x-axis limits to some sensible values.}
+   \item{xlim}{horizontal limits of the plot region. If unspecified, the function sets the horizontal plot limits to some sensible values.}
+   \item{alim}{the x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.}
    \item{olim}{optional argument to specify observation/outcome limits. If unspecified, no limits are used.}
    \item{ylim}{the y-axis limits of the plot. If unspecified, the function sets the y-axis limits to some sensible values.}
-   \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.}
+   \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function sets the tick mark positions/labels to some sensible values.}
    \item{steps}{the number of tick marks for the x-axis (the default is 5). Ignored when the positions are specified via the \code{at} argument.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95; see \link[=misc-options]{here} for details).}
    \item{refline}{numeric value to specify the location of the vertical \sQuote{reference} line (the default is 0). The line can be suppressed by setting this argument to \code{NA}.}
@@ -43,19 +43,19 @@
    \item{transf}{optional argument to specify a function to transform the observed outcomes and corresponding confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument to specify a function to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
-   \item{rows}{optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row). If unspecified, the function sets this value automatically.}
+   \item{rows}{optional vector to specify the rows (or more generally, the horizontal positions) for plotting the outcomes. Can also be a single value to specify the row (horizontal position) of the first outcome (the remaining outcomes are then plotted below this starting row).}
    \item{efac}{vertical expansion factor for confidence interval limits and arrows. The default value of 1 should usually work okay. Can also be a vector of two numbers, the first for CI limits, the second for arrows.}
    \item{pch}{plotting symbol to use for the observed outcomes. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
    \item{psize}{optional numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the precision of the estimates. Can also be a vector of values.}
    \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
-   \item{col}{optional character string to specify the color of the observed outcomes. If unspecified, black is used by default. Can also be a vector.}
+   \item{col}{optional character string to specify the color of the observed outcomes. Can also be a vector.}
    \item{shade}{optional character string or a (logical or numeric) vector for shading rows of the plot. See \sQuote{Details}.}
-   \item{colshade}{optional argument to specify the color for the shading. If unspecified, a light shade of gray is used.}
+   \item{colshade}{optional argument to specify the color for the shading.}
    \item{lty}{optional character string to specify the line type for the confidence intervals. If unspecified, the function sets this to \code{"solid"} by default.}
    \item{fonts}{optional character string to specify the font for the study labels, annotations, and the extra information (if specified via \code{ilab}). If unspecified, the default font is used.}
-   \item{cex}{optional character and symbol expansion factor. If unspecified, the function tries to set this to a sensible value.}
-   \item{cex.lab}{optional expansion factor for the x-axis title. If unspecified, the function tries to set this to a sensible value.}
-   \item{cex.axis}{optional expansion factor for the x-axis labels. If unspecified, the function tries to set this to a sensible value.}
+   \item{cex}{optional character and symbol expansion factor. If unspecified, the function sets this to a sensible value.}
+   \item{cex.lab}{optional expansion factor for the x-axis title. If unspecified, the function sets this to a sensible value.}
+   \item{cex.axis}{optional expansion factor for the x-axis labels. If unspecified, the function sets this to a sensible value.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -78,7 +78,7 @@
    With the \code{shade} argument, one can shade rows of the plot. The argument can be set to one of the following character strings: \code{"zebra"} (same as \code{shade=TRUE}) or \code{"zebra2"} to use zebra-style shading (starting either at the first or second study) or to \code{"all"} in which case all rows are shaded. Alternatively, the argument can be set to a logical vector to indicates for which studies the rows should be shaded. Finally, the argument can also be a numeric vector to indicate which rows to shade. The \code{colshade} argument can be used to set the color of shaded rows.
 }
 \section{Note}{
-   The function tries to set some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.
+   The function sets some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.
 
    The function actually returns some information about the chosen values invisibly. Printing this information is useful as a starting point to make adjustments to the plot.
 

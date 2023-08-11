@@ -23,32 +23,16 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    atransf.char <- deparse(atransf)
 
-   if (exists(".darkplots"))
-      par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
+   .start.plot()
 
-   if (missing(back)) {
-      if (.is.dark(par("bg"))) {
-         back <- "gray20"
-      } else {
-         back <- "lightgray"
-      }
-   }
+   if (missing(back))
+      back <- .coladj(par("bg","fg"), dark=0.1, light=-0.2)
 
-   if (missing(shade)) {
-      if (.is.dark(par("bg"))) {
-         shade <- "gray30"
-      } else {
-         shade <- "white"
-      }
-   }
+   if (missing(shade))
+      shade <- .coladj(par("bg","fg"), dark=c(0.2,-0.8), light=c(0,1))
 
-   if (missing(hlines)) {
-      if (.is.dark(par("bg"))) {
-         hlines <- par("bg")
-      } else {
-         hlines <- "white"
-      }
-   }
+   if (missing(hlines))
+      hlines <- par("bg")
 
    if (missing(pch))
       pch <- 19
@@ -200,13 +184,9 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    if (length(col) != k)
       stop(mstyle$stop(paste0("Length of the 'col' argument (", length(col), ") does not correspond to the number of outcomes (", k, ").")))
 
-   if (missing(bg)) {
-      if (.is.dark(par("bg"))) {
-         bg <- "gray40"
-      } else {
-         bg <- "white"
-      }
-   }
+   if (missing(bg))
+      bg <- .coladj(par("bg","fg"), dark=0.1, light=-0.1)
+
    if (length(bg) == 1L) {
       bg.vec <- FALSE
       bg <- rep(bg, k)
@@ -262,22 +242,24 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       ci.res <- 1000
    }
 
+   ### to adjust color of reference line, region bounds, and the L box
+
    if (!is.null(ddd$colref)) {
       colref <- ddd$colref
    } else {
-      colref <- "black"
+      colref <- .coladj(par("bg","fg"), dark=0.6, light=-0.6)
    }
 
    if (!is.null(ddd$colci)) {
       colci <- ddd$colci
    } else {
-      colci <- "black"
+      colci <- .coladj(par("bg","fg"), dark=0.6, light=-0.6)
    }
 
    if (!is.null(ddd$colbox)) {
       colbox <- ddd$colbox
    } else {
-      colbox <- "black"
+      colbox <- .coladj(par("bg","fg"), dark=0.6, light=-0.6)
    }
 
    #########################################################################
@@ -708,7 +690,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       })
 
       pch.l  <- rep(22, lvals)
-      col.l  <- rep("black", lvals)
+      col.l  <- rep(colci, lvals)
       pt.cex <- rep(2, lvals)
       pt.bg  <- c(shade, back)
 
@@ -720,11 +702,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
          pt.bg  <- c(pt.bg, bg[1])
       }
 
-      if (.is.dark(par("bg"))) {
-         legend(lpos, inset=.01, bg="gray10", pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
-      } else {
-         legend(lpos, inset=.01, bg="white", pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
-      }
+      legend(lpos, inset=.01, bg=.coladj(par("bg","fg"), dark=0.05, light=-0.05), pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
 
    }
 

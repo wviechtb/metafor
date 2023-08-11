@@ -30,8 +30,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (is.function(transf) && is.function(atransf))
       stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))
 
-   if (exists(".darkplots"))
-      par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
+   .start.plot()
 
    if (missing(targs))
       targs <- NULL
@@ -71,13 +70,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       shade <- .getx("shade", mf=mf, data=x$data)
    }
 
-   if (missing(colshade)) {
-      if (.is.dark(par("bg"))) {
-         colshade <- "gray20"
-      } else {
-         colshade <- "gray90"
-      }
-   }
+   if (missing(colshade))
+      colshade <- .coladj(par("bg","fg"), dark=0.1, light=-0.1)
 
    if (missing(pch)) {
       pch <- 15
@@ -121,40 +115,29 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (x$int.only) {
 
       if (missing(col)) {
-         col <- c(par("fg"), "gray50") # 1st color for summary polygon, 2nd color for prediction interval line
+         col <- c(par("fg"), .coladj(par("fg"), dark=-0.3, light=0.3)) # 1st = summary polygon, 2nd = PI
       } else {
-         if (length(col) == 1L)        # if user only specified one value, assume it is for the summary polygon
-            col <- c(col, "gray50")
+         if (length(col) == 1L) # if user only specified one value, assume it is for the summary polygon
+            col <- c(col, .coladj(col, dark=-0.3, light=0.3))
       }
 
       if (missing(border))
-         border <- par("fg")           # border color of summary polygon
+         border <- par("fg") # border color of summary polygon
 
    } else {
 
-      if (missing(col)) {
-         if (.is.dark(par("bg"))) {
-            col <- "gray40"            # color of fitted values
-         } else {
-            col <- "gray"              # color of fitted values
-         }
-      }
+      if (missing(col))
+         col <- .coladj(par("bg","fg"), dark=0.2, light=-0.2) # color for fitted value polygons
 
-      if (missing(border)) {
-         if (.is.dark(par("bg"))) {
-            border <- "gray30"         # border color of fitted values
-         } else {
-            border <- "gray"           # border color of fitted values
-         }
-
-      }
+      if (missing(border))
+         border <- .coladj(par("bg","fg"), dark=0.3, light=-0.3)
 
    }
 
    ### set default line types if user has not specified 'lty' argument
 
    if (missing(lty)) {
-      lty <- c("solid", "dotted", "solid") # 1st value = CIs, 2nd value = prediction interval, 3rd = horizontal line(s)
+      lty <- c("solid", "dotted", "solid") # 1st = CIs, 2nd = PI, 3rd = horizontal line(s)
    } else {
       if (length(lty) == 1L)
          lty <- c(lty, "dotted", "solid")
@@ -921,7 +904,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       if (inherits(x, "rma.mv") && x$withG && x$tau2s > 1) {
 
          if (!is.logical(addpred)) {
-            ### for multiple tau^2 (and gamma^2) values, need to specify level(s) of the inner factor(s) to compute the prediction interval
+            ### for multiple tau^2 (and gamma^2) values, need to specify level(s) of the inner factor(s) to compute the PI
             ### this can be done via the addpred argument (i.e., instead of using a logical, one specifies the level(s))
             if (length(addpred) == 1L)
                addpred <- c(addpred, addpred)

@@ -64,14 +64,13 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
    ### DL estimate of tau^2
    tau2 <- max(0, (Q - (k-1)) / (W1 - W2))
 
-   vb  <- (tau2 * W2 + 1) / W1 ### estimated Var of b
-   se  <- sqrt(vb)             ### estimated SE of b
-   VR  <- 1 + tau2 * W2        ### estimated Var of R
-   SDR <- sqrt(VR)             ### estimated SD of R
+   vb  <- (tau2 * W2 + 1) / W1 # estimated Var of b
+   se  <- sqrt(vb)             # estimated SE of b
+   VR  <- 1 + tau2 * W2        # estimated Var of R
+   SDR <- sqrt(VR)             # estimated SD of R
 
    ### conditional mean of Q given R=r
-   EQ <- function(r)
-      (k - 1) + tau2 * (W1 - W2) + (tau2^2)*((1/VR^2) * (r^2) - 1/VR) * (W3 - W2^2)
+   EQ <- function(r) (k - 1) + tau2 * (W1 - W2) + (tau2^2)*((1/VR^2) * (r^2) - 1/VR) * (W3 - W2^2)
 
    ### conditional variance of Q given R=r
    VQ <- function(r) {
@@ -84,12 +83,11 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
       2 * tau2^4 * (recipvr2 - 2 * (1/VR^3) * rsq) * (W3 - W2^2)^2
    }
 
-   scale <- function(r){VQ(r)/EQ(r)}   ### scale parameter of the gamma distribution
-   shape <- function(r){EQ(r)^2/VQ(r)} ### shape parameter of the gamma distribution
+   scale <- function(r) VQ(r) / EQ(r)   # scale parameter of the gamma distribution
+   shape <- function(r) EQ(r)^2 / VQ(r) # shape parameter of the gamma distribution
 
    ### inverse of f
-   finv <- function(f)
-      (W1/W2 - 1) * ((f^2) - 1) + (k - 1)
+   finv <- function(f) (W1/W2 - 1) * ((f^2) - 1) + (k - 1)
 
    ### equation to be solved
    eqn <- function(x) {
@@ -108,12 +106,12 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
       stop(mstyle$stop("Error in uniroot()."))
 
    t0 <- t0$root
-   u0 <- SDR * t0 ### (approximate) percentage point for the distribution of U
+   u0 <- SDR * t0 # (approximate) percentage point for the distribution of U
 
    #########################################################################
 
-   ci.lb <- beta - u0 * se ### lower CI bound
-   ci.ub <- beta + u0 * se ### upper CI bound
+   ci.lb <- beta - u0 * se # lower CI bound
+   ci.ub <- beta + u0 * se # upper CI bound
 
    beta.rma  <- x$beta
    se.rma    <- x$se

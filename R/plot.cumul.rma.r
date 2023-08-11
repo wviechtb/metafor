@@ -12,16 +12,10 @@ digits, cols, grid=TRUE, pch=19, cex=1, lwd=2, ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
-   if (exists(".darkplots"))
-      par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
+   .start.plot()
 
-   if (missing(cols)) {
-      if (.is.dark(par("bg"))) {
-         cols <- c("gray30","gray80")
-      } else {
-         cols <- c("gray80","gray20")
-      }
-   }
+   if (missing(cols))
+      cols <- c(.coladj(par("bg","fg"), dark=0.2, light=-0.2), .coladj(par("bg","fg"), dark=0.8, light=-0.8))
 
    if (missing(yaxis)) {
       if (is.null(x$tau2)) {
@@ -94,13 +88,9 @@ digits, cols, grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    ### grid argument can either be a logical or a color
 
-   if (is.logical(grid)) {
-      if (.is.dark(par("bg"))) {
-         gridcol <- "gray30"
-      } else {
-         gridcol <- "gray70"
-      }
-   }
+   if (is.logical(grid))
+      gridcol <- .coladj(par("bg","fg"), dark=0.2, light=-0.2)
+
    if (is.character(grid)) {
       gridcol <- grid
       grid <- TRUE

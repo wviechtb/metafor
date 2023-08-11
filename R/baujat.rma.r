@@ -13,18 +13,13 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, 
    if (x$k == 1)
       stop(mstyle$stop("Stopped because k = 1."))
 
-   if (exists(".darkplots"))
-      par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
+   .start.plot()
 
    ### grid argument can either be a logical or a color
 
-   if (is.logical(grid)) {
-      if (.is.dark(par("bg"))) {
-         gridcol <- "gray30"
-      } else {
-         gridcol <- "gray70"
-      }
-   }
+   if (is.logical(grid))
+      gridcol <- .coladj(par("bg","fg"), dark=0.2, light=-0.2)
+
    if (is.character(grid)) {
       gridcol <- grid
       grid <- TRUE

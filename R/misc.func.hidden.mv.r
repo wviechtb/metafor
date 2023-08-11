@@ -84,7 +84,7 @@
    if (is.element(struct, c("CAR"))) {
       if (!is.numeric(mf.g[[1]]))
          stop(mstyle$stop("Inner variable in '~ inner | outer' term must be numeric for 'struct=\"CAR\"'."), call.=FALSE)
-      g.values <- sort(unique(round(mf.g[[1]], digits=8))) ### aweful hack to avoid floating points issues
+      g.values <- sort(unique(round(mf.g[[1]], digits=8L))) # aweful hack to avoid floating points issues
    } else {
       g.values <- NULL
    }

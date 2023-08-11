@@ -1,18 +1,47 @@
 .onAttach <- function(libname, pkgname) {
 
-   ver <- "4.3-7"
+   ver <- "4.3-8"
 
    loadmsg <- paste0("\nLoading the 'metafor' package (version ", ver, "). For an\nintroduction to the package please type: help(metafor)\n")
 
    installed.ver <- as.numeric(strsplit(gsub("-", ".", ver, fixed=TRUE), ".", fixed=TRUE)[[1]])
 
+   # set default options
+
+   mfopts <- getOption("metafor")
+
+   if (is.null(mfopts) || !is.list(mfopts)) {
+      options("metafor" = list(check=TRUE, silent=FALSE, space=TRUE, theme="default"))
+   } else {
+      if (is.null(mfopts$check))
+         mfopts$check <- TRUE
+      if (is.null(mfopts$silent))
+         mfopts$silent <- FALSE
+      if (is.null(mfopts$space))
+         mfopts$space <- TRUE
+      if (is.null(mfopts$theme))
+         mfopts$theme <- "default"
+      options("metafor" = mfopts)
+   }
+
    # only run version check in an interactive session and if METAFOR_VERSION_CHECK is not FALSE
 
-   verchk <- tolower(Sys.getenv("METAFOR_VERSION_CHECK"))
+   verchk <- tolower(Sys.getenv("METAFOR_VERSION_CHECK")) # "" if unset
+
+   checkopt <- getOption("metafor")$check
+
+   if (!is.null(checkopt)) {
+      if (is.logical(checkopt) && isFALSE(checkopt))
+         verchk <- "false"
+      if (is.character(checkopt) && isTRUE(checkopt == "devel"))
+         verchk <- "devel"
+   }
 
    if (interactive() && verchk != "false") {
 
-      if (isTRUE(verchk  == "devel")) {
+      #print("Version check ...")
+
+      if (isTRUE(verchk == "devel")) {
 
          # pull version number from GitHub
 
@@ -68,7 +97,8 @@
       min_time = 2,
       use_lb = FALSE))
 
-   packageStartupMessage(loadmsg, domain=NULL, appendLF=TRUE)
+   if (isFALSE(getOption("metafor")$silent))
+      packageStartupMessage(loadmsg, domain=NULL, appendLF=TRUE)
 
 }
 

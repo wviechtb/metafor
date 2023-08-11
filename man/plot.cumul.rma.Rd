@@ -16,7 +16,7 @@
    \item{ylim}{y-axis limits. If unspecified, the function sets the y-axis limits to some sensible values.}
    \item{xlab}{title for the x-axis. If unspecified, the function sets an appropriate axis title.}
    \item{ylab}{title for the y-axis. If unspecified, the function sets an appropriate axis title.}
-   \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function tries to set the tick mark positions/labels to some sensible values.}
+   \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function sets the tick mark positions/labels to some sensible values.}
    \item{transf}{optional argument to specify a function to transform the summary estimates (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument to specify a function to transform the x-axis labels (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}

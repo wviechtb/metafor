@@ -1,4 +1,8 @@
-# metafor 4.3-7 (2023-06-09)
+# metafor 4.3-8 (2023-08-11)
+
+- added `getmfopt()` and `setmfopt()` functions for getting and setting package options and made some of the options more flexible
+
+- further improved the theming of all plots based on the foreground and background colors; within RStudio, plot colors can also be automatically chosen based on the theme
 
 - added (for now undocumented) `vccon` argument to `rma.mv()`
 

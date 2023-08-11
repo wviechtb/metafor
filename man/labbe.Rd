@@ -26,8 +26,8 @@ labbe(x, \dots)
    \item{pch}{plotting symbol to use for the outcomes. By default, an open circle is used. Can also be a vector of values. See \code{\link{points}} for other options.}
    \item{psize}{optional numeric vector to specify the point sizes for the outcomes. If unspecified, the point sizes are a function of the precision of the outcomes. Can also be a vector of values.}
    \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
-   \item{col}{optional character string to specify the (border) color of the points. If unspecified, black is used by default. Can also be a vector.}
-   \item{bg}{optional character string to specify the background color of open plot symbols. If unspecified, gray is used by default. Can also be a vector. Set to \code{NA} to make the plotting symbols transparent.}
+   \item{col}{optional character string to specify the (border) color of the points. Can also be a vector.}
+   \item{bg}{optional character string to specify the background color of open plot symbols. Can also be a vector. Set to \code{NA} to make the plotting symbols transparent.}
    \item{grid}{logical to specify whether a grid should be added to the plot. Can also be a color name.}
    \item{lty}{optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model. If unspecified, the function sets this to \code{c("solid","dashed")} by default (use \code{"blank"} to suppress a line).}
    \item{\dots}{other arguments.}

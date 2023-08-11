@@ -5,7 +5,7 @@ metafor: A Meta-Analysis Package for R
 [![R build status](https://github.com/wviechtb/metafor/workflows/R-CMD-check/badge.svg)](https://github.com/wviechtb/metafor/actions)
 [![Code Coverage](https://codecov.io/gh/wviechtb/metafor/branch/master/graph/badge.svg)](https://app.codecov.io/gh/wviechtb/metafor)
 [![CRAN Version](https://www.r-pkg.org/badges/version/metafor)](https://cran.r-project.org/package=metafor)
-[![devel Version](https://img.shields.io/badge/devel-4.3--7-brightgreen.svg)](https://www.metafor-project.org/doku.php/installation#development_version)
+[![devel Version](https://img.shields.io/badge/devel-4.3--8-brightgreen.svg)](https://www.metafor-project.org/doku.php/installation#development_version)
 [![Monthly Downloads](https://cranlogs.r-pkg.org/badges/metafor)](https://cranlogs.r-pkg.org/badges/metafor)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/metafor)](https://cranlogs.r-pkg.org/badges/grand-total/metafor)
 
@@ -161,7 +161,7 @@ predict(res, transf=exp, digits=2)
 # forest plot
 forest(res, atransf=exp, at=log(c(.05, .25, 1, 4)), xlim=c(-16,6),
        ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
-       header="Author(s) and Year")
+       header="Author(s) and Year", shade="zebra")
 text(c(-9.5,-8,-6,-4.5), 15, c("TB+", "TB-", "TB+", "TB-"), font=2)
 text(c(-8.75,-5.25),     16, c("Vaccinated", "Control"), font=2)
 ```

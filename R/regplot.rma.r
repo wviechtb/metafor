@@ -32,8 +32,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    if (is.function(transf) && is.function(atransf))
       stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))
 
-   if (exists(".darkplots"))
-      par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
+   .start.plot()
 
    mf <- match.call()
 
@@ -56,11 +55,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    }
 
    if (missing(bg)) {
-      if (.is.dark(par("bg"))) {
-         bg <- "gray40"
-      } else {
-         bg <- "darkgray"
-      }
+      bg <- .coladj(par("bg","fg"), dark=0.35, light=-0.35)
    } else {
       bg <- .getx("bg", mf=mf, data=x$data)
    }
@@ -91,13 +86,9 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    ### grid argument can either be a logical or a color
 
-   if (is.logical(grid)) {
-      if (.is.dark(par("bg"))) {
-         gridcol <- "gray30"
-      } else {
-         gridcol <- "gray70"
-      }
-   }
+   if (is.logical(grid))
+      gridcol <- .coladj(par("bg","fg"), dark=0.2, light=-0.2)
+
    if (is.character(grid)) {
       gridcol <- grid
       grid <- TRUE
@@ -106,11 +97,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    ### shade argument can either be a logical or a color (first for ci, second for pi)
 
    if (is.logical(shade)) {
-      if (.is.dark(par("bg"))) {
-         shadecol <- c("gray25", "gray15")
-      } else {
-         shadecol <- c("gray85", "gray95")
-      }
+      shadecol <- c(.coladj(par("bg","fg"), dark=0.15, light=-0.15), .coladj(par("bg","fg"), dark=0.05, light=-0.05))
    }
    if (is.character(shade)) {
       if (length(shade) == 1L)
@@ -139,18 +126,14 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    ### set lcol, lty, and lwd (1 = reg line, 2 = ci bounds, 3 = pi bounds, 4 = refline)
 
    if (missing(lcol)) {
-      if (.is.dark(par("bg"))) {
-         lcol <- c(rep("gray80", 3), "gray50")
-      } else {
-         lcol <- c(rep(par("fg"), 3), "gray50")
-      }
+      lcol <- c(rep(.coladj(par("fg"), dark=-0.1, light=0.1), 3), .coladj(par("fg"), dark=-0.5, light=0.5))
    } else {
       if (length(lcol) == 1L)
          lcol <- rep(lcol, 4L)
       if (length(lcol) == 2L)
-         lcol <- c(lcol[c(1,2,2)], "gray50")
+         lcol <- c(lcol[c(1,2,2)], .coladj(par("fg"), dark=-0.5, light=0.5))
       if (length(lcol) == 3L)
-         lcol <- c(lcol, "gray50")
+         lcol <- c(lcol, .coladj(par("fg"), dark=-0.5, light=0.5))
    }
 
    if (missing(lty)) {
@@ -179,14 +162,14 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    ddd <- list(...)
 
-   lplot    <- function(..., grep, fixed) plot(...)
-   laxis    <- function(..., grep, fixed) axis(...)
-   lpolygon <- function(..., grep, fixed) polygon(...)
-   llines   <- function(..., grep, fixed) lines(...)
-   lpoints  <- function(..., grep, fixed) points(...)
-   labline  <- function(..., grep, fixed) abline(...)
-   lbox     <- function(..., grep, fixed) box(...)
-   ltext    <- function(..., grep, fixed) text(...)
+   lplot    <- function(..., grep, fixed, box.lty) plot(...)
+   laxis    <- function(..., grep, fixed, box.lty) axis(...)
+   lpolygon <- function(..., grep, fixed, box.lty) polygon(...)
+   llines   <- function(..., grep, fixed, box.lty) lines(...)
+   lpoints  <- function(..., grep, fixed, box.lty) points(...)
+   labline  <- function(..., grep, fixed, box.lty) abline(...)
+   lbox     <- function(..., grep, fixed, box.lty) box(...)
+   ltext    <- function(..., grep, fixed, box.lty) text(...)
 
    if (is.null(ddd$fixed)) {
       fixed <- FALSE
@@ -198,6 +181,12 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       grep <- FALSE
    } else {
       grep <- .isTRUE(ddd$grep)
+   }
+
+   if (is.null(ddd$box.lty)) {
+      box.lty <- par("lty")
+   } else {
+      box.lty <- ddd$box.lty
    }
 
    ############################################################################
@@ -800,13 +789,8 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          ltxt   <- c(ltxt, paste0(round(100*(1-level), digits[[1]]), "% Prediction Interval"))
       }
 
-      if (length(ltxt) >= 1L) {
-         if (.is.dark(par("bg"))) {
-            legend(lpos, inset=.01, bg="gray10", pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt)
-         } else {
-            legend(lpos, inset=.01, bg="white", pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt)
-         }
-      }
+      if (length(ltxt) >= 1L)
+         legend(lpos, inset=.01, bg=par("bg"), pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt, box.lty=box.lty)
 
       pch.l  <- NULL
       col.l  <- NULL
@@ -857,7 +841,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       }
 
       if (length(ltxt) >= 1L)
-         legend(lpos, inset=.01, bg=NA, pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt)
+         legend(lpos, inset=.01, bg=NA, pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt, box.lty=box.lty)
 
    }
 

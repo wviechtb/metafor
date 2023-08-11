@@ -21,9 +21,9 @@
    \item{atransf}{optional argument to specify a function to transform the annotations (e.g., \code{atransf=exp}; see also \link{transf}).}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{efac}{optional vertical expansion factor for the polygons.}
-   \item{col}{optional character string to specify the color of the polygons. If unspecified, the function sets a default color.}
-   \item{border}{optional character string to specify the border color of the polygons. If unspecified, the function sets a default color.}
-   \item{lty}{optional character string to specify the line type for the prediction interval. If unspecified, a dotted line is used by default.}
+   \item{col}{optional character string to specify the color of the polygons.}
+   \item{border}{optional character string to specify the border color of the polygons.}
+   \item{lty}{optional character string to specify the line type for the prediction interval.}
    \item{fonts}{optional character string to specify the font for the labels and annotations.}
    \item{cex}{optional symbol expansion factor.}
    \item{\dots}{other arguments.}

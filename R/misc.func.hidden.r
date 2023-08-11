@@ -304,26 +304,29 @@
 ############################################################################
 
 .space <- function(x=TRUE) {
-   no.rmspace <- !exists(".rmspace")
-   if (no.rmspace && x)
+   if (exists(".rmspace")) {
+      addspace <- FALSE
+   } else {
+      addspace <- isTRUE(getmfopt("space", default=TRUE))
+   }
+   if (addspace && x)
       cat("\n")
-   if (!no.rmspace && !x)
+   if (!addspace && !x)
       cat("\n")
 }
 
 .get.footsym <- function() {
 
-   if (exists(".footsym")) {
-      fs <- get(".footsym")
-   } else {
+   fs <- getmfopt("footsym")
+
+   if (is.null(fs) || length(fs) != 6L)
       fs <- c("\u00b9", "1)", "\u00b2", "2)", "\u00b3", "3)")
-   }
 
    return(fs)
 
 }
 
-# .footsym <- c("\u00b9", "\u00b9\u207e", "\u00b2", "\u00b2\u207e", "\u00b3", "\u00b3\u207e")
+# setmfopt(footsym = c("\u00b9", "\u00b9\u207e", "\u00b2", "\u00b2\u207e", "\u00b3", "\u00b3\u207e"))
 
 ############################################################################
 
@@ -1097,11 +1100,17 @@
 
       if (exists(".mstyle")) {
          .mstyle <- get(".mstyle")
-         if (!is.list(.mstyle))
-            .mstyle <- list(.mstyle)
       } else {
          .mstyle <- list()
       }
+
+      styleopt <- getmfopt("style")
+
+      if (!is.null(styleopt))
+         .mstyle <- styleopt
+
+      if (!is.list(.mstyle))
+         .mstyle <- list(.mstyle)
 
       if (is.null(.mstyle$section)) {
          section <- crayon::bold
@@ -1168,6 +1177,7 @@
    } else {
 
       tmp <- function(...) paste0(...)
+
       section <- tmp
       header  <- tmp
       body1   <- tmp
@@ -1275,6 +1285,14 @@
 
    if (exists(".digits")) {
       .digits <- get(".digits")
+      pos <- pmatch(names(.digits), names(res))
+      res[c(na.omit(pos))] <- .digits[!is.na(pos)]
+   }
+
+   if (!is.null(getmfopt("digits"))) {
+      .digits <- getmfopt("digits")
+      if (length(.digits) == 1L)
+         .digits <- c(est=.digits[[1]], se=.digits[[1]], test=.digits[[1]], pval=.digits[[1]], ci=.digits[[1]], var=.digits[[1]], sevar=.digits[[1]], fit=.digits[[1]], het=.digits[[1]])
       pos <- pmatch(names(.digits), names(res))
       res[c(na.omit(pos))] <- .digits[!is.na(pos)]
    }
@@ -1727,11 +1745,96 @@
 
 ############################################################################
 
-.is.dark <- function(x) {
+# theme="light"   - forces par(fg="black",  bg="white", ...)
+# theme="dark"    - forces par(fg="gray95", bg="gray10", ...)
+# theme="default" - doesn't do anything - just uses whatever par() the user has set
+# theme="auto"    - in RStudio, picks fg/bg based on theme that is set (outside RStudio, same as "default")
 
-   rgb <- c(col2rgb(x))
+.start.plot <- function(x=TRUE) {
+
+   if (!x)
+      return()
+
+   themeopt <- getmfopt("theme", default="default")
+
+   if (is.element(themeopt, c("default", "light", "dark", "auto"))) {
+      theme <- themeopt
+   } else {
+      theme <- "default"
+   }
+
+   if (exists(".darkplots"))
+      theme <- "dark"
+
+   rsapi <- try(rstudioapi::isAvailable(), silent=TRUE)
+
+   if (inherits(rsapi, "try-error"))
+      rsapi <- FALSE
+
+   if (rsapi && isTRUE(theme == "auto")) {
+      fg <- .rsapicol2rgb(rstudioapi::getThemeInfo()$foreground)
+      bg <- .rsapicol2rgb(rstudioapi::getThemeInfo()$background)
+      par(fg=fg, bg=bg, col=fg, col.axis=fg, col.lab=fg, col.main=fg, col.sub=fg)
+   } else {
+      if (isTRUE(theme == "light"))
+         par(fg="black", bg="white", col="black", col.axis="black", col.lab="black", col.main="black", col.sub="black")
+         #par(fg="gray5", bg="gray95", col="gray5", col.axis="gray5", col.lab="gray5", col.main="gray5", col.sub="gray5")
+      if (isTRUE(theme == "dark"))
+         par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
+   }
+
+   invisible()
+
+}
+
+# convert the string "rgb(val1, val2, val3)" into rgb(val1, val2, val3, maxColorValue=255)
+
+.rsapicol2rgb <- function(col) {
+
+   col  <- strsplit(col, ",")[[1]]
+   col  <- trimws(col)
+   col1 <- as.numeric(sub("rgb(", "", col[1], fixed=TRUE))
+   col2 <- as.numeric(col[2])
+   col3 <- as.numeric(trimws(sub(")", "", col[3], fixed=TRUE)))
+   col  <- rgb(col1, col2, col3, maxColorValue=255)
+   return(col)
+
+}
+
+.is.dark <- function() {
+
+   rgb <- col2rgb(par("bg"))
    res <- sum(rgb) <= 384 # note: sum(col2rgb(rgb(0.5,0.5,0.5))) == 384
    return(res)
+
+}
+
+.coladj <- function(col, dark, light) {
+
+   themeopt <- getmfopt("theme", default="default")
+
+   if (length(col) == 2L && substr(themeopt, nchar(themeopt), nchar(themeopt)) == "2") {
+      pos <- 2
+      if (length(dark) == 1L)
+         dark <- c(dark, ifelse(dark > 0, dark-1, dark+1))
+      if (length(light) == 1L)
+         light <- c(light, ifelse(light > 0, light-1, light+1))
+   } else {
+      pos <- 1
+   }
+
+   col <- c(col2rgb(col[[pos]]))
+
+   if (.is.dark()) {
+      col <- col + round(dark*255)[[pos]]
+   } else {
+      col <- col + round(light*255)[[pos]]
+   }
+   col[col < 0] <- 0
+   col[col > 255] <- 255
+
+   col <- rgb(col[1], col[2], col[3], maxColorValue=255)
+   return(col)
 
 }
 

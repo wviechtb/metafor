@@ -1,5 +1,6 @@
 \name{misc-models}
 \alias{misc-models}
+\alias{misc_models}
 \title{Fixed-Effects and Random-Effects Models in Meta-Analysis \loadmathjax}
 \description{
 Books and articles about meta-analysis often describe and discuss the difference between the so-called \sQuote{fixed-effects model} and the \sQuote{random-effects model} (e.g., Cooper et al., 2009). The former term is (mostly) avoided throughout the documentation of the \pkg{metafor} package. The term \sQuote{equal-effects model} is used instead, since it more concretely describes the main assumption underlying this model (i.e., that the underlying true effects/outcomes are homogeneous, or in other words, that they are all equal to each other). The terms \sQuote{common-effect(s) model} or \sQuote{homogenous-effect(s) model} have also sometimes been used in the literature to describe this model and are equally descriptive.

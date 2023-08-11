@@ -26,19 +26,13 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
    if (length(label) != 1L)
       stop(mstyle$stop("Argument 'label' should be of length 1."))
 
-   if (exists(".darkplots"))
-      par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
+   .start.plot()
 
    if (missing(col))
       col <- par("fg")
 
-   if (missing(bg)) {
-      if (.is.dark(par("bg"))) {
-         bg <- "gray40"
-      } else {
-         bg <- "gray70"
-      }
-   }
+   if (missing(bg))
+      bg <- .coladj(par("bg","fg"), dark=0.35, light=-0.35)
 
    if (missing(lty)) {
       lty <- c("solid", "dotted") ### 1st value = diagonal line, 2nd value = pseudo confidence envelope

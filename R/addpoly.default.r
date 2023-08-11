@@ -104,10 +104,10 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
    if (length(annosym) != 4L)
       stop(mstyle$stop("Argument 'annosym' must be a vector of length 3 (or 4)."))
 
-   if (!is.null(ddd$lcol)) {
-      lcol <- ddd$lcol
+   if (is.null(ddd$lcol)) {
+      lcol <- .coladj(par("fg"), dark=-0.3, light=0.3)
    } else {
-      lcol <- "gray50"
+      lcol <- ddd$lcol
    }
 
    lsegments <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym, textpos) segments(...)

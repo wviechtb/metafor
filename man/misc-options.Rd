@@ -1,5 +1,6 @@
 \name{misc-options}
 \alias{misc-options}
+\alias{misc_options}
 \title{Miscellaneous Options and Features}
 \description{
 This page documents some miscellaneous options and features that do not fit very well elsewhere. \loadmathjax
@@ -29,17 +30,15 @@ This page documents some miscellaneous options and features that do not fit very
    \item \code{het} for heterogeneity statistics.
    }
 
-   Instead of setting this argument in each function call (which would be tedious), one can also create a vector named \code{.digits} in the workspace (e.g., at the beginning of an analysis script) with:
-   \preformatted{.digits <- c(est=2, se=3, test=2, pval=3, ci=2, var=3, sevar=3, fit=3, het=3)}
-   which then controls the displayed output. The values for the elements shown above could be a sensible choice when analyzing various types of standardized effect size measures.
+   Instead of setting this argument in each function call, one can use \code{setmfopt(digits = ...)} to set the desired number of digits for the various elements (see \code{\link{mfopt}} for getting and setting package options). For example, \code{setmfopt(digits = c(est=2, se=3, test=2, pval=3, ci=2, var=3, sevar=3, fit=3, het=3))} could be a sensible choice when analyzing various types of standardized effect size measures.
 
    }
 
-   \subsection{Styled Output with the \pkg{crayon} Package}{
+   \subsection{Styled Output with the crayon Package}{
 
-   The \href{https://cran.r-project.org/package=crayon}{crayon} package provides a way to create colored output. The \pkg{metafor} package is designed to automatically make use of this feature when the \pkg{crayon} package is installed (\code{install.packages("crayon")}) and loaded (\code{library(crayon)}). Note that this only works on terminals that support \sQuote{ANSI} color and highlight codes (e.g., not under RGui on Windows or R.app on macOS, but the RStudio console and all modern terminals should support this).
+   The \href{https://cran.r-project.org/package=crayon}{crayon} package provides a way to create colored output. The \pkg{metafor} package is designed to automatically make use of this feature when the \code{crayon} package is installed (\code{install.packages("crayon")}) and loaded (\code{library(crayon)}). Note that this only works on terminals that support \sQuote{ANSI} color/highlight codes (e.g., not under RGui on Windows or R.app on macOS, but the RStudio console and all modern terminals should support this).
 
-   The default color theme that is used is quite plain, but should work with a light or dark colored background. One can modify the color theme by creating an object in the workspace named \code{.mtheme}, which should be a list whose elements specify the styles for various parts of the output (see below for some examples and the documentation of the \pkg{crayon} package for the syntax to specify styles). The following elements are recognized:
+   The default color theme that is used is quite plain, but should work with a light or dark colored background. One can modify the color theme with \code{setmfopt(style = ...)}, where \code{...} is a list whose elements specify the styles for various parts of the output (see below for some examples and the documentation of the \code{crayon} package for the syntax to specify styles). The following elements are recognized:
    \itemize{
    \item \code{header} for the header of tables (underlined by default),
    \item \code{body1} for odd numbered rows in the body of tables,
@@ -56,37 +55,41 @@ This page documents some miscellaneous options and features that do not fit very
    }
 
    Elements not specified are styled according to their defaults. For example, one could use:
-\preformatted{.mstyle <- list(header=combine_styles("gray20", "underline"),
-                body1=make_style("gray40"),
-                body2=make_style("gray40"),
-                na=bold,
-                section=combine_styles("gray15", "bold"),
-                text=make_style("gray50"),
-                result=make_style("gray30"))}
+\preformatted{setmfopt(style = list(header  = combine_styles("gray20", "underline"),
+                      body1   = make_style("gray40"),
+                      body2   = make_style("gray40"),
+                      na      = bold,
+                      section = combine_styles("gray15", "bold"),
+                      text    = make_style("gray50"),
+                      result  = make_style("gray30"),
+                      legend  = make_style("gray70")))}
    or
-\preformatted{.mstyle <- list(header=combine_styles("gray80", "underline"),
-                body1=make_style("gray60"),
-                body2=make_style("gray60"),
-                na=bold,
-                section=combine_styles("gray85", "bold"),
-                text=make_style("gray50"),
-                result=make_style("gray70"))}
+\preformatted{setmfopt(style = list(header  = combine_styles("gray80", "underline"),
+                      body1   = make_style("gray60"),
+                      body2   = make_style("gray60"),
+                      na      = bold,
+                      section = combine_styles("gray85", "bold"),
+                      text    = make_style("gray50"),
+                      result  = make_style("gray70"),
+                      legend  = make_style("gray30")))}
    for a light or dark colored background, respectively. A slightly more colorful theme could be:
-\preformatted{.mstyle <- list(header=combine_styles("snow", make_style("royalblue4", bg=TRUE)),
-                body1=combine_styles("gray20", make_style("gray95", bg=TRUE)),
-                body2=combine_styles("gray20", make_style("gray85", bg=TRUE)),
-                na=combine_styles("red4", "bold"),
-                section=combine_styles("black", "bold", make_style("lightskyblue", bg=TRUE)),
-                text=make_style("gray50"),
-                result=make_style("blue"))}
+\preformatted{setmfopt(style = list(header  = combine_styles("snow", make_style("royalblue4", bg=TRUE)),
+                      body1   = combine_styles("gray10", make_style("gray95", bg=TRUE)),
+                      body2   = combine_styles("gray10", make_style("gray85", bg=TRUE)),
+                      na      = combine_styles("orange4", "bold"),
+                      section = combine_styles("black", "bold", make_style("gray90", bg=TRUE)),
+                      text    = make_style("gray40"),
+                      result  = make_style("blue"),
+                      legend  = make_style("gray70")))}
    or
-\preformatted{.mstyle <- list(header=combine_styles("snow", make_style("royalblue4", bg=TRUE)),
-                body1=combine_styles("gray95", make_style("gray20", bg=TRUE)),
-                body2=combine_styles("gray95", make_style("gray30", bg=TRUE)),
-                na=combine_styles("orange1", "bold"),
-                section=combine_styles("white", "bold", make_style("blue", bg=TRUE)),
-                text=make_style("steelblue4"),
-                result=make_style("steelblue1"))}
+\preformatted{setmfopt(style = list(header  = combine_styles("snow", make_style("royalblue4", bg=TRUE)),
+                      body1   = combine_styles("gray90", make_style("gray10", bg=TRUE)),
+                      body2   = combine_styles("gray90", make_style("gray15", bg=TRUE)),
+                      na      = combine_styles("orange1", "bold"),
+                      section = combine_styles("snow", "bold", make_style("gray10", bg=TRUE)),
+                      text    = make_style("gray60"),
+                      result  = make_style("steelblue1"),
+                      legend  = make_style("gray30")))}
    for a light and dark colored background, respectively.
 
    The following code snippet includes all output elements (except for an error) and can be used to test out a chosen color theme:
@@ -111,17 +114,17 @@ summary(res)}
 
    \subsection{Removing Empty Lines Before and After the Output}{
 
-   When printing output, an empty line is usually added before and after the output. For more compact output, this can be suppressed by creating an object named \code{.rmspace} in the workspace. For example, running the following code:
+   When printing output, an empty line is usually added before and after the output. For more compact output, this can be suppressed with \code{setmfopt(space=FALSE)} (see \code{\link{mfopt}} for getting and setting package options). For example, running the following code:
 
 \preformatted{# calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg,
                             ci=cpos, di=cneg, data=dat.bcg)
 
-# fit random-effects model
+# fit a random-effects model
 res <- rma(yi, vi, data=dat)
 res
 
-.rmspace <- TRUE
+setmfopt(space=FALSE)
 res}
 
    shows the difference.
@@ -130,7 +133,7 @@ res}
 
    \subsection{Dark Mode for Plots}{
 
-   By default, plots created in R have a white background and use black (and other darker colors) as the plotting color. Figures created with the \pkg{metafor} package also adhere to this standard. However, all plotting functions in the package are designed such that switching to a dark background is easily possible. For this, one should set the canvas/figure background to a dark color (e.g., \code{"black"} or \code{"gray10"}) and the foreground color to some bright color (e.g., \code{"gray90"} or \code{"gray95"}). The following code will accomplish this:
+   By default, plots created in \R have a white background and use black (and other darker colors) as the plotting color. Figures created with the \pkg{metafor} package also adhere to this standard. However, all plotting functions in the package are designed such that switching to a dark background is easily possible. For this, one should set the canvas/figure background to a dark color (e.g., \code{"black"} or \code{"gray10"}) and the foreground color to some bright color (e.g., \code{"gray90"}, \code{"gray95"}, or \code{"white"}). The following code will accomplish this:
 
 \preformatted{bg <- "gray10"
 fg <- "gray95"
@@ -148,27 +151,27 @@ par(fg=fg, bg=bg, col=fg, col.axis=fg, col.lab=fg, col.main=fg, col.sub=fg)
    \figure{plots-light.pdf}{options: width=5.5in}
    \figure{plots-dark.pdf}{options: width=5.5in}}
 
-   As a convenience feature, by creating an object in the workspace called \code{.darkplots} (e.g., \code{.darkplots <- TRUE}), all plots created by the package will automatically use a dark mode.
+   By setting \code{setmfopt(theme="dark")} (see \code{\link{mfopt}} for getting and setting package options), all plots created by the package will automatically use a dark mode. RStudio users can also set \code{setmfopt(theme="auto")}, in which case plotting colors are chosen depending on the theme used (for some themes, setting this to \code{"auto2"} might be aesthetically more pleasing).
 
    }
 
    \subsection{Version Check}{
 
-   When loading the \pkg{metafor} package in an \code{\link{interactive}} session, an automatic check is run to compare the version number of the installed package with the one available on \href{https://cran.r-project.org/package=metafor}{CRAN}. If the installed version is older than the one available at CRAN, the user is notified that a new version is available. This check can be suppressed by setting the environment variable \env{METAFOR_VERSION_CHECK} to \code{FALSE} (e.g., with \code{Sys.setenv(METAFOR_VERSION_CHECK=FALSE)}).
+   When loading the \pkg{metafor} package in an \code{\link{interactive}} session, an automatic check is carried out to compare the version number of the installed package with the one available on \href{https://cran.r-project.org/package=metafor}{CRAN}. If the installed version is older than the one available on CRAN, the user is notified that a new version is available. This check can be suppressed by setting the environment variable \env{METAFOR_VERSION_CHECK} to \code{FALSE} (e.g., with \code{Sys.setenv(METAFOR_VERSION_CHECK=FALSE)}) or with \code{options(metafor=list(check=FALSE))} before loading the package (see \code{\link{mfopt}} for getting and setting package options).
 
-   By setting the environment variable to \code{"devel"} (e.g., with \code{Sys.setenv(METAFOR_VERSION_CHECK="devel")}), the version check is run against the \sQuote{development version} available on \href{https://github.com/wviechtb/metafor}{GitHub}.
+   By setting the environment variable to \code{"devel"} (e.g., with \code{Sys.setenv(METAFOR_VERSION_CHECK="devel")}) or with \code{options(metafor=list(check="devel"))}, the version check is run against the \sQuote{development version} of the package available on \href{https://github.com/wviechtb/metafor}{GitHub}.
 
    }
 
    \subsection{Model Fitting / Processing Time}{
 
    The various model fitting functions (i.e., \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, \code{\link{rma.mv}}, and \code{\link{selmodel}}) and various other functions (e.g., \code{\link[=confint.rma.mv]{confint}}, \code{\link{cumul}}, \code{\link{leave1out}}, \code{\link[=profile.rma.mv]{profile}}, \code{\link[=residuals.rma]{rstudent}}) automatically keep track of the model fitting / processing time. This information is stored as element \code{time} (in seconds) in the object that is returned. One can also use argument \code{time=TRUE} to nicely print this information. For example:
-\preformatted{# fit multilevel mixed-effects meta-regression model and print processing time
+\preformatted{# fit multilevel mixed-effects meta-regression model and print the processing time
 res <- rma.mv(yi, vi, mods = ~ condition,
               random = list(~ 1 | article/experiment/sample/id, ~ 1 | pairing),
               data=dat.mccurdy2020, sparse=TRUE, digits=3, time=TRUE)
 
-# extract processing time (should take somewhere around 10-20 seconds on a modern CPU)
+# extract the processing time (should take somewhere around 10-20 seconds on a modern CPU)
 res$time}
 
    }

@@ -20,7 +20,7 @@
    \item{col}{optional character string to specify the color of the histogram bars.}
    \item{border}{optional character string to specify the color of the borders around the bars.}
    \item{col.out}{optional character string to specify the color of the bars that are more extreme than the observed test statistic (the default is a semi-transparent shade of red).}
-   \item{col.ref}{optional character string to specify the color of the theoretical reference/null distribution that is superimposed on top of the histogram (the default is black).}
+   \item{col.ref}{optional character string to specify the color of the theoretical reference/null distribution that is superimposed on top of the histogram (the default is a dark shade of gray).}
    \item{col.density}{optional character string to specify the color of the kernel density estimate of the permutation distribution that is superimposed on top of the histogram (the default is blue).}
    \item{trim}{the fraction (up to 0.5) of observations to be trimmed from the tails of each permutation distribution before its histogram is plotted.}
    \item{adjust}{numeric value to be passed on to the corresponding argument of \code{\link{density}} (for adjusting the bandwidth of the kernel density estimate).}

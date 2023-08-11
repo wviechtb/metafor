@@ -180,6 +180,7 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
       class(out[[2]]) <- "list.rma"
       attr(out[[1]], ".rmspace") <- TRUE
       attr(out[[2]], ".rmspace") <- TRUE
+
       return(out)
 
    }
