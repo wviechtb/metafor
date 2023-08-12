@@ -126,7 +126,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    ### set lcol, lty, and lwd (1 = reg line, 2 = ci bounds, 3 = pi bounds, 4 = refline)
 
    if (missing(lcol)) {
-      lcol <- c(rep(.coladj(par("fg"), dark=-0.1, light=0.1), 3), .coladj(par("fg"), dark=-0.5, light=0.5))
+      lcol <- c(rep(par("fg"), 3), .coladj(par("bg"), dark=0.4, light=-0.4))
    } else {
       if (length(lcol) == 1L)
          lcol <- rep(lcol, 4L)
