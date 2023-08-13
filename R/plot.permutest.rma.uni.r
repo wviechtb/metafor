@@ -165,19 +165,19 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
          legend <- TRUE
       }
 
-      if (legend && any(lwd[1:3] > 0)) {
+      if (legend && any(lwd[2:3] > 0)) {
 
-         ltxt  <- c("Kernel Density Estimate of\nthe Permutation Distribution", "Theoretical Null Distribution", "Observed Test Statistic")
-         lwds  <- lwd[c(2,3,1)]
-         lcols <- c(col.density, col.ref, par("fg"))
-         ltys  <- c("solid", "solid", "blank")
-         pchs  <- c("","","\u2506") # \u250a
+         ltxt  <- c("Kernel Density Estimate of\nthe Permutation Distribution", "Theoretical Null Distribution")
+         lwds  <- lwd[2:3]
+         lcols <- c(col.density, col.ref)
+         ltys  <- c("solid", "solid")
+         #pchs  <- c("","","\u2506") # \u250a
          ltxt  <- ltxt[lwds > 0]
          lcols <- lcols[lwds > 0]
          ltys  <- ltys[lwds > 0]
-         pchs  <- pchs[lwds > 0]
+         #pchs  <- pchs[lwds > 0]
          lwds  <- lwds[lwds > 0]
-         legend(lpos, inset=.01, bg=par("bg"), lwd=lwds, col=lcols, pch=pchs, lty=ltys, legend=ltxt)
+         legend(lpos, inset=.01, bg=par("bg"), lwd=lwds, col=lcols, lty=ltys, legend=ltxt)
 
       }
 
