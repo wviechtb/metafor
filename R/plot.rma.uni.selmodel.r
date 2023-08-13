@@ -1,5 +1,5 @@
 plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE,
-   ci=FALSE, reps=1000, rug=TRUE, add=FALSE,
+   ci=FALSE, reps=1000, shade=TRUE, rug=TRUE, add=FALSE,
    lty=c("solid","dotted"), lwd=c(2,1), ...) {
 
    #########################################################################
@@ -8,10 +8,21 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
 
    .chkclass(class(x), must="rma.uni.selmodel")
 
-   .start.plot()
+   .start.plot(!add)
 
    if (is.element(x$type, c("trunc","truncest")))
       stop(mstyle$stop("Cannot draw the selection function for this type of selection model."))
+
+   ### shade argument can either be a logical or a color
+
+   if (is.logical(shade)) {
+      shadecol <- .coladj(par("bg","fg"), dark=0.10, light=-0.10)
+   }
+
+   if (is.character(shade)) {
+      shadecol <- shade
+      shade <- TRUE
+   }
 
    ddd <- list(...)
 
@@ -189,21 +200,28 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
 
    }
 
-   if (add) {
-      llines(ps, ys, type=plot.type, lty=lty[1], lwd=lwd[1], ...)
-   } else {
-      lplot(ps, ys, ylim=ylim, type=plot.type, lwd=lwd, xlab="p-value", ylab="Relative Likelihood of Selection", ...)
-   }
+   if (!add)
+      lplot(ps, ys, ylim=ylim, type="n", lwd=lwd, xlab="p-value", ylab="Relative Likelihood of Selection", ...)
 
    if (ci) {
-      #lpolygon(c(ps,rev(ps)), c(ys.lb,rev(ys.ub)), col="gray15", border=NA)
-      #llines(ps, ys.lb, type=plot.type, lty=lty[2], lwd=lwd[2], ...)
+      if (shade) {
+         tmp <- approx(ps, ys.lb, n=10000, method="constant", f=1)
+         ps.int.lb <- tmp$x
+         ys.lb.int.lb <- tmp$y
+         tmp <- approx(ps, ys.ub, n=10000, method="constant", f=1)
+         ps.int.ub <- tmp$x
+         ys.lb.int.ub <- tmp$y
+         lpolygon(c(ps.int.lb,rev(ps.int.ub)), c(ys.lb.int.lb,rev(ys.lb.int.ub)), col=shadecol, border=NA)
+         #lpolygon(c(ps,rev(ps)), c(ys.lb,rev(ys.ub)), col=shadecol, border=NA)
+      }
+      llines(ps, ys.lb, type=plot.type, lty=lty[2], lwd=lwd[2], ...)
       llines(ps, ys.ub, type=plot.type, lty=lty[2], lwd=lwd[2], ...)
-      llines(ps, ys, type=plot.type, lty=lty[1], lwd=lwd[1], ...)
    }
 
    if (rug && !add)
       lrug(x$pvals, quiet=TRUE)
+
+   llines(ps, ys, type=plot.type, lty=lty[1], lwd=lwd[1], ...)
 
    sav <- data.frame(xs=ps, ys=ys, ys.lb=ys.lb, ys.ub=ys.ub)
 

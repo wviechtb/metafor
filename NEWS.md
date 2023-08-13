@@ -1,4 +1,4 @@
-# metafor 4.3-8 (2023-08-11)
+# metafor 4.3-9 (2023-08-13)
 
 - added `getmfopt()` and `setmfopt()` functions for getting and setting package options and made some of the options more flexible
 
@@ -15,6 +15,10 @@
 - for measures `"PCOR"`, `"ZPCOR"`, `"SPCOR"`, and `"ZSPCOR"`, argument `mi` in `escalc()` now refers to the total number of predictors in the regression models (i.e., also counting the focal predictor of interest)
 
 - added measures `"R2"` and "`ZR2"` to `escalc()`
+
+- `plot.rma.uni.selmodel()` gains a `shade` argument (for shading the confidence interval region)
+
+- `plot.permutest.rma.uni()` gains a `legend` argument
 
 - added a few more transformation functions
 

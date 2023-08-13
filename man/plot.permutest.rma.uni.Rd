@@ -7,7 +7,7 @@
 \usage{
 \method{plot}{permutest.rma.uni}(x, beta, alpha, QM=FALSE, QS=FALSE,
      breaks="Scott", freq=FALSE, col, border, col.out, col.ref, col.density,
-     trim=0, adjust=1, lwd=c(2,0,0,4), layout, \dots)
+     trim=0, adjust=1, lwd=c(2,0,0,4), layout, legend=FALSE, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"permutest.rma.uni"} obtained with \code{\link{permutest}}.}
@@ -24,8 +24,9 @@
    \item{col.density}{optional character string to specify the color of the kernel density estimate of the permutation distribution that is superimposed on top of the histogram (the default is blue).}
    \item{trim}{the fraction (up to 0.5) of observations to be trimmed from the tails of each permutation distribution before its histogram is plotted.}
    \item{adjust}{numeric value to be passed on to the corresponding argument of \code{\link{density}} (for adjusting the bandwidth of the kernel density estimate).}
-   \item{lwd}{numeric vector to specify the width of the vertical lines corresponding to the value of the observed test statistic, of the reference/null distribution, of the density estimate, and of the vertical line at 0 (note: by default, the reference/null distribution and the density estimate both have a line width of 0 and are therefore not plotted).}
+   \item{lwd}{numeric vector to specify the width of the vertical lines corresponding to the value of the observed test statistic, of the theoretical reference/null distribution, of the density estimate, and of the vertical line at 0 (note: by default, the theoretical reference/null distribution and the density estimate both have a line width of 0 and are therefore not plotted).}
    \item{layout}{optional vector of two numbers to specify the number of rows and columns for the layout of the figure.}
+   \item{legend}{logical to indicate whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to indicate the position of the legend (see \code{\link{legend}}).}
    \item{\dots}{other arguments.}
 }
 \details{

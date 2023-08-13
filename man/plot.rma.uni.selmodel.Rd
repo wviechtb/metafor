@@ -6,7 +6,7 @@
 }
 \usage{
 \method{plot}{rma.uni.selmodel}(x, xlim, ylim, n=1000, prec="max", scale=FALSE,
-      ci=FALSE, reps=1000, rug=TRUE, add=FALSE,
+      ci=FALSE, reps=1000, shade=TRUE, rug=TRUE, add=FALSE,
       lty=c("solid","dotted"), lwd=c(2,1), \dots)
 }
 \arguments{
@@ -18,6 +18,7 @@
    \item{scale}{logical to specify whether the function values should be rescaled to a 0 to 1 range (the default is \code{FALSE}).}
    \item{ci}{logical to specify whether a confidence interval should be drawn around the selection function (the default is \code{FALSE}). Can also be a string (with options \code{"boot"} or \code{"wald"}). See \sQuote{Details}.}
    \item{reps}{numeric value to specify the number of bootstrap samples to draw for generating the confidence interval bounds (the default is 1000).}
+   \item{shade}{logical to indicate whether the confidence interval region should be shaded (the default is \code{TRUE}). Can also be a character vector to specify the color for the shading.}
    \item{rug}{logical to specify whether the observed p-values should be added as tick marks on the x-axis (the default is \code{TRUE}).}
    \item{add}{logical to specify whether the function should be added to an existing plot (the default is \code{FALSE}).}
    \item{lty}{the line types for the selection function and the confidence interval bounds.}
@@ -64,5 +65,8 @@ plot(sel2, add=TRUE, col="blue")
 
 ### plot selection function with CI
 plot(sel1, ci="wald")
+
+### plot selection function with CI
+plot(sel2, ci="wald")
 }
 \keyword{hplot}

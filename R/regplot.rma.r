@@ -99,6 +99,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    if (is.logical(shade)) {
       shadecol <- c(.coladj(par("bg","fg"), dark=0.15, light=-0.15), .coladj(par("bg","fg"), dark=0.05, light=-0.05))
    }
+
    if (is.character(shade)) {
       if (length(shade) == 1L)
          shade <- c(shade, shade)

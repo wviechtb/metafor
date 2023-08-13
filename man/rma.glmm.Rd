@@ -230,6 +230,8 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, and \code{\link{rma.mv}} for other model fitting functions.
 
    \code{\link[metadat]{dat.nielweise2007}}, \code{\link[metadat]{dat.nielweise2008}}, \code{\link[metadat]{dat.collins1985a}}, and \code{\link[metadat]{dat.pritz1997}} for further examples of the use of the \code{rma.glmm} function.
+
+   For rare event data, see also the \href{https://cran.r-project.org/package=rema}{rema} package for a version of the conditional logistic model that uses a permutation approach for making inferences.
 }
 \examples{
 ############################################################################

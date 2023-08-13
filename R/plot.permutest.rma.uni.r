@@ -1,6 +1,6 @@
 plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
    breaks="Scott", freq=FALSE, col, border, col.out, col.ref, col.density,
-   trim=0, adjust=1, lwd=c(2,0,0,4), layout, ...) {
+   trim=0, adjust=1, lwd=c(2,0,0,4), layout, legend=FALSE, ...) {
 
    #########################################################################
 
@@ -153,6 +153,40 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
    ############################################################################
 
+   ### function to add legend
+
+   addlegend <- function(legend) {
+
+      if (is.logical(legend) && isTRUE(legend))
+         lpos <- "topright"
+
+      if (is.character(legend)) {
+         lpos <- legend
+         legend <- TRUE
+      }
+
+      if (legend && any(lwd[1:3] > 0)) {
+
+         ltxt  <- c("Kernel Density Estimate of\nthe Permutation Distribution", "Theoretical Null Distribution", "Observed Test Statistic")
+         lwds  <- lwd[c(2,3,1)]
+         lcols <- c(col.density, col.ref, par("fg"))
+         ltys  <- c("solid", "solid", "blank")
+         pchs  <- c("","","\u2506") # \u250a
+         ltxt  <- ltxt[lwds > 0]
+         lcols <- lcols[lwds > 0]
+         ltys  <- ltys[lwds > 0]
+         pchs  <- pchs[lwds > 0]
+         lwds  <- lwds[lwds > 0]
+         legend(lpos, inset=.01, bg=par("bg"), lwd=lwds, col=lcols, pch=pchs, lty=ltys, legend=ltxt)
+
+      }
+
+      return(FALSE)
+
+   }
+
+   ############################################################################
+
    # number of plots
 
    np <- length(beta) + length(alpha) + ifelse(is.null(QM.perm), 0L, 1L) + ifelse(is.null(QS.perm), 0L, 1L)
@@ -191,7 +225,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
          ys <- df(xs, df1=length(x$btt), df2=x$ddf)
       }
 
-      den <- density(pdist, adjust=adjust, na.rm=TRUE)
+      den <- density(pdist, adjust=adjust, na.rm=TRUE, n=8192)
 
       if (trim > 0) {
          bound <- quantile(pdist, probs=1-trim, na.rm=TRUE)
@@ -219,12 +253,15 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
       }
 
       .coltail(tmp, val=x$QM, tail="upper", col=col.out, border=border, freq=freq, ...)
+
       if (lwd[1] > 0)
          labline(v=x$QM, lwd=lwd[1], lty="dashed", ...)
       if (lwd[2] > 0)
          llines(xs, ys, lwd=lwd[2], col=col.ref, ...)
       if (lwd[3] > 0)
          llines(den, lwd=lwd[3], col=col.density, ...)
+
+      legend <- addlegend(legend)
 
    }
 
@@ -240,7 +277,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
          ys <- dt(xs, df=x$ddf)
       }
 
-      den <- density(pdist, adjust=adjust, na.rm=TRUE)
+      den <- density(pdist, adjust=adjust, na.rm=TRUE, n=8192)
 
       if (trim > 0) {
          bounds <- quantile(pdist, probs=c(trim/2, 1-trim/2), na.rm=TRUE)
@@ -273,6 +310,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
             .coltail(tmp, val=-abs(obs1[i]), tail="lower", col=col.out, border=border, freq=freq, ...)
             .coltail(tmp, val= abs(obs1[i]), tail="upper", col=col.out, border=border, freq=freq, ...)
+
             if (lwd[1] > 0)
                labline(v=c(-obs1[i],obs1[i]), lwd=lwd[1], lty="dashed", ...)
 
@@ -281,12 +319,14 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
             if (obs1[i] > median(pdist, na.rm=TRUE)) {
 
                .coltail(tmp, val= abs(obs1[i]), tail="upper", mult=2, col=col.out, border=border, freq=freq, ...)
+
                if (lwd[1] > 0)
                   labline(v=obs1[i], lwd=lwd[1], lty="dashed", ...)
 
             } else {
 
                .coltail(tmp, val=-abs(obs1[i]), tail="lower", mult=2, col=col.out, border=border, freq=freq, ...)
+
                if (lwd[1] > 0)
                   labline(v=-abs(obs1[i]), lwd=lwd[1], lty="dashed", ...)
 
@@ -298,6 +338,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
       if (alternative == "less") {
 
          .coltail(tmp, val=obs1[i], tail="lower", col=col.out, border=border, freq=freq, ...)
+
          if (lwd[1] > 0)
             labline(v=obs1[i], lwd=lwd[1], lty="dashed", ...)
 
@@ -306,6 +347,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
       if (alternative == "greater") {
 
          .coltail(tmp, val=obs1[i], tail="upper", col=col.out, border=border, freq=freq, ...)
+
          if (lwd[1] > 0)
             labline(v=obs1[i], lwd=lwd[1], lty="dashed", ...)
 
@@ -318,6 +360,8 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
       if (lwd[4] > 0)
          labline(v=0, lwd=lwd[4], ...)
+
+      legend <- addlegend(legend)
 
    }
 
@@ -335,7 +379,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
             ys <- df(xs, df1=length(x$att), df2=x$ddf.alpha)
          }
 
-         den <- density(pdist, adjust=adjust, na.rm=TRUE)
+         den <- density(pdist, adjust=adjust, na.rm=TRUE, n=8192)
 
          if (trim > 0) {
             bound <- quantile(pdist, probs=1-trim, na.rm=TRUE)
@@ -363,12 +407,15 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
          }
 
          .coltail(tmp, val=x$QS, tail="upper", col=col.out, border=border, freq=freq, ...)
+
          if (lwd[1] > 0)
             labline(v=x$QS, lwd=lwd[1], lty="dashed", ...)
          if (lwd[2] > 0)
             llines(xs, ys, lwd=lwd[2], col=col.ref, ...)
          if (lwd[3] > 0)
             llines(den, lwd=lwd[3], col=col.density, ...)
+
+         legend <- addlegend(legend)
 
       }
 
@@ -384,7 +431,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
             ys <- dt(xs, df=x$ddf.alpha)
          }
 
-         den <- density(pdist, adjust=adjust, na.rm=TRUE)
+         den <- density(pdist, adjust=adjust, na.rm=TRUE, n=8192)
 
          if (trim > 0) {
             bounds <- quantile(pdist, probs=c(trim/2, 1-trim/2), na.rm=TRUE)
@@ -417,6 +464,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
                .coltail(tmp, val=-abs(obs2[i]), tail="lower", col=col.out, border=border, freq=freq, ...)
                .coltail(tmp, val= abs(obs2[i]), tail="upper", col=col.out, border=border, freq=freq, ...)
+
                if (lwd[1] > 0)
                   labline(v=c(-obs2[i],obs2[i]), lwd=lwd[1], lty="dashed", ...)
 
@@ -425,12 +473,14 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
                if (obs2[i] > median(pdist, na.rm=TRUE)) {
 
                   .coltail(tmp, val= abs(obs2[i]), tail="upper", mult=2, col=col.out, border=border, freq=freq, ...)
+
                   if (lwd[1] > 0)
                      labline(v=obs2[i], lwd=lwd[1], lty="dashed", ...)
 
                } else {
 
                   .coltail(tmp, val=-abs(obs2[i]), tail="lower", mult=2, col=col.out, border=border, freq=freq, ...)
+
                   if (lwd[1] > 0)
                      labline(v=-abs(obs2[i]), lwd=lwd[1], lty="dashed", ...)
 
@@ -442,6 +492,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
          if (alternative == "less") {
 
             .coltail(tmp, val=obs2[i], tail="lower", col=col.out, border=border, freq=freq, ...)
+
             if (lwd[1] > 0)
                labline(v=obs2[i], lwd=lwd[1], lty="dashed", ...)
 
@@ -450,6 +501,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
          if (alternative == "greater") {
 
             .coltail(tmp, val=obs2[i], tail="upper", col=col.out, border=border, freq=freq, ...)
+
             if (lwd[1] > 0)
                labline(v=obs2[i], lwd=lwd[1], lty="dashed", ...)
 
@@ -461,6 +513,8 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
             llines(den, lwd=lwd[3], col=col.density, ...)
          if (lwd[4] > 0)
             labline(v=0, lwd=lwd[4], ...)
+
+         legend <- addlegend(legend)
 
       }
 

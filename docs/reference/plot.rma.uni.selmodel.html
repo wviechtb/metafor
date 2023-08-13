@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-9</span>
       </span>
     </div>
 
@@ -103,7 +103,7 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for rma.uni.selmodel</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, n<span class="op">=</span><span class="fl">1000</span>, prec<span class="op">=</span><span class="st">"max"</span>, scale<span class="op">=</span><span class="cn">FALSE</span>,</span>
-<span>      ci<span class="op">=</span><span class="cn">FALSE</span>, reps<span class="op">=</span><span class="fl">1000</span>, rug<span class="op">=</span><span class="cn">TRUE</span>, add<span class="op">=</span><span class="cn">FALSE</span>,</span>
+<span>      ci<span class="op">=</span><span class="cn">FALSE</span>, reps<span class="op">=</span><span class="fl">1000</span>, shade<span class="op">=</span><span class="cn">TRUE</span>, rug<span class="op">=</span><span class="cn">TRUE</span>, add<span class="op">=</span><span class="cn">FALSE</span>,</span>
 <span>      lty<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"solid"</span>,<span class="st">"dotted"</span><span class="op">)</span>, lwd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -132,6 +132,9 @@
 
    <dt>reps</dt>
 <dd><p>numeric value to specify the number of bootstrap samples to draw for generating the confidence interval bounds (the default is 1000).</p></dd>
+
+   <dt>shade</dt>
+<dd><p>logical to indicate whether the confidence interval region should be shaded (the default is <code>TRUE</code>). Can also be a character vector to specify the color for the shading.</p></dd>
 
    <dt>rug</dt>
 <dd><p>logical to specify whether the observed p-values should be added as tick marks on the x-axis (the default is <code>TRUE</code>).</p></dd>
@@ -213,6 +216,10 @@
 <span class="r-in"><span><span class="co">### plot selection function with CI</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel1</span>, ci<span class="op">=</span><span class="st">"wald"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.rma.uni.selmodel-2.png" alt="" width="864" height="768"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### plot selection function with CI</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel2</span>, ci<span class="op">=</span><span class="st">"wald"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot.rma.uni.selmodel-3.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>
