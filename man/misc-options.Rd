@@ -151,7 +151,7 @@ par(fg=fg, bg=bg, col=fg, col.axis=fg, col.lab=fg, col.main=fg, col.sub=fg)
    \figure{plots-light.pdf}{options: width=5.5in}
    \figure{plots-dark.pdf}{options: width=5.5in}}
 
-   By setting \code{setmfopt(theme="dark")} (see \code{\link{mfopt}} for getting and setting package options), all plots created by the package will automatically use a dark mode. RStudio users can also set \code{setmfopt(theme="auto")}, in which case plotting colors are chosen depending on the theme used (for some themes, setting this to \code{"auto2"} might be aesthetically more pleasing).
+   By setting \code{setmfopt(theme="dark")} (see \code{\link{mfopt}} for getting and setting package options), all plots created by the package will automatically use a dark mode. RStudio users can also set \code{setmfopt(theme="auto")}, in which case plotting colors are chosen depending on the RStudio theme used (for some themes, setting this to \code{"auto2"} might be aesthetically more pleasing).
 
    }
 

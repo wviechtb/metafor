@@ -16,7 +16,7 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
    ### shade argument can either be a logical or a color
 
    if (is.logical(shade)) {
-      shadecol <- .coladj(par("bg","fg"), dark=0.10, light=-0.10)
+      shadecol <- .coladj(par("bg","fg"), dark=0.1, light=-0.1)
    }
 
    if (is.character(shade)) {

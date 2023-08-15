@@ -702,7 +702,8 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
          pt.bg  <- c(pt.bg, bg[1])
       }
 
-      legend(lpos, inset=.01, bg=.coladj(par("bg","fg"), dark=0.05, light=-0.05), pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
+      legend(lpos, inset=.01, bg=par("bg"), pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
+      #legend(lpos, inset=.01, bg=.coladj(par("bg","fg"), dark=0.05, light=-0.05), pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
 
    }
 

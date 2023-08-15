@@ -18,8 +18,12 @@ setmfopt <- function(...) {
          stop(mstyle$stop("'digits' must be a numeric vector."))
       if (opt == "style" && !is.null(newopts[[opt]]) && !is.list(newopts[[opt]]))
          stop(mstyle$stop("'style' must be a list."))
-      if (opt == "theme" && !is.null(newopts[[opt]]) && !is.element(newopts[[opt]], c("default", "light", "dark", "auto", "default2", "light2", "dark2", "auto2")))
-         stop(mstyle$stop("'theme' must be either 'default(2)', 'light(2)', 'dark(2)', or 'auto(2)'."))
+      if (opt == "theme" && !is.null(newopts[[opt]]) && !is.element(newopts[[opt]], c("default", "light", "dark", "auto", "custom", "default2", "light2", "dark2", "auto2", "custom2")))
+         stop(mstyle$stop("'theme' must be either 'default(2)', 'light(2)', 'dark(2)', 'auto(2)', or 'custom(2)'."))
+      if (opt == "fg" && !is.character(newopts[[opt]]))
+         stop(mstyle$stop("'fg' must be a character string."))
+      if (opt == "bg" && !is.character(newopts[[opt]]))
+         stop(mstyle$stop("'bg' must be a character string."))
       mfopts[[opt]] <- newopts[[opt]]
    }
 

@@ -87,7 +87,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    ### grid argument can either be a logical or a color
 
    if (is.logical(grid))
-      gridcol <- .coladj(par("bg","fg"), dark=0.2, light=-0.2)
+      gridcol <- .coladj(par("bg","fg"), dark=c(0.2,-0.6), light=c(-0.2,0.6))
 
    if (is.character(grid)) {
       gridcol <- grid
@@ -127,14 +127,14 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    ### set lcol, lty, and lwd (1 = reg line, 2 = ci bounds, 3 = pi bounds, 4 = refline)
 
    if (missing(lcol)) {
-      lcol <- c(rep(par("fg"), 3), .coladj(par("bg"), dark=0.4, light=-0.4))
+      lcol <- c(rep(par("fg"), 3), .coladj(par("bg","fg"), dark=0.5, light=-0.5))
    } else {
       if (length(lcol) == 1L)
          lcol <- rep(lcol, 4L)
       if (length(lcol) == 2L)
-         lcol <- c(lcol[c(1,2,2)], .coladj(par("fg"), dark=-0.5, light=0.5))
+         lcol <- c(lcol[c(1,2,2)], .coladj(par("bg","fg"), dark=0.5, light=-0.5))
       if (length(lcol) == 3L)
-         lcol <- c(lcol, .coladj(par("fg"), dark=-0.5, light=0.5))
+         lcol <- c(lcol, .coladj(par("bg","fg"), dark=0.5, light=-0.5))
    }
 
    if (missing(lty)) {

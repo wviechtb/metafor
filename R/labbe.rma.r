@@ -58,7 +58,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    ### grid argument can either be a logical or a color
 
    if (is.logical(grid))
-      gridcol <- .coladj(par("bg","fg"), dark=0.2, light=-0.2)
+      gridcol <- .coladj(par("bg","fg"), dark=c(0.2,-0.6), light=c(-0.2,0.6))
 
    if (is.character(grid)) {
       gridcol <- grid

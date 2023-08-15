@@ -1745,43 +1745,67 @@
 
 ############################################################################
 
+# theme="default" - uses the default par() of the plotting device
 # theme="light"   - forces par(fg="black",  bg="white", ...)
 # theme="dark"    - forces par(fg="gray95", bg="gray10", ...)
-# theme="default" - doesn't do anything - just uses whatever par() the user has set
 # theme="auto"    - in RStudio, picks fg/bg based on theme that is set (outside RStudio, same as "default")
+# theme="custom"  - uses getmfopt("fg") and getmfopt("bg")
 
 .start.plot <- function(x=TRUE) {
 
    if (!x)
       return()
 
-   themeopt <- getmfopt("theme", default="default")
+   themeopt <- getmfopt("theme", default="default")[[1]]
+   themeopt <- sub("2", "", themeopt, fixed=TRUE)
 
-   if (is.element(themeopt, c("default", "light", "dark", "auto"))) {
-      theme <- themeopt
-   } else {
-      theme <- "default"
-   }
+   if (!is.element(themeopt, c("default", "light", "dark", "auto", "custom")))
+      themeopt <- "default"
 
    if (exists(".darkplots"))
-      theme <- "dark"
+      themeopt <- "dark"
 
-   rsapi <- try(rstudioapi::isAvailable(), silent=TRUE)
-
-   if (inherits(rsapi, "try-error"))
-      rsapi <- FALSE
-
-   if (rsapi && isTRUE(theme == "auto")) {
-      fg <- .rsapicol2rgb(rstudioapi::getThemeInfo()$foreground)
-      bg <- .rsapicol2rgb(rstudioapi::getThemeInfo()$background)
-      par(fg=fg, bg=bg, col=fg, col.axis=fg, col.lab=fg, col.main=fg, col.sub=fg)
-   } else {
-      if (isTRUE(theme == "light"))
-         par(fg="black", bg="white", col="black", col.axis="black", col.lab="black", col.main="black", col.sub="black")
-         #par(fg="gray5", bg="gray95", col="gray5", col.axis="gray5", col.lab="gray5", col.main="gray5", col.sub="gray5")
-      if (isTRUE(theme == "dark"))
-         par(fg="gray95", bg="gray10", col="gray95", col.axis="gray95", col.lab="gray95", col.main="gray95", col.sub="gray95")
+   if (isTRUE(themeopt == "light")) {
+      fg <- "black"
+      bg <- "white"
+      #fg <- "gray5"
+      #bg <- "gray95"
    }
+
+   if (isTRUE(themeopt == "dark")) {
+      fg <- "gray95"
+      bg <- "gray10"
+   }
+
+   if (isTRUE(themeopt == "auto")) {
+
+      rsapi <- try(rstudioapi::isAvailable(), silent=TRUE)
+
+      if (inherits(rsapi, "try-error") || isFALSE(rsapi)) {
+         themeopt <- "default"
+      } else {
+         fg <- .rsapicol2rgb(rstudioapi::getThemeInfo()$foreground)
+         bg <- .rsapicol2rgb(rstudioapi::getThemeInfo()$background)
+      }
+
+   }
+
+   if (isTRUE(themeopt == "custom")) {
+
+      fgopt <- getmfopt("fg")
+      bgopt <- getmfopt("bg")
+
+      if (is.null(fgopt) || is.null(bgopt)) {
+         themeopt <- "default"
+      } else {
+         fg <- fgopt
+         bg <- bgopt
+      }
+
+   }
+
+   if (themeopt != "default")
+      par(fg=fg, bg=bg, col=fg, col.axis=fg, col.lab=fg, col.main=fg, col.sub=fg)
 
    invisible()
 
