@@ -1,4 +1,4 @@
-# metafor 4.3-10 (2023-08-15)
+# metafor 4.3-11 (2023-08-16)
 
 - added `getmfopt()` and `setmfopt()` functions for getting and setting package options and made some of the options more flexible
 
@@ -19,6 +19,8 @@
 - `plot.rma.uni.selmodel()` gains a `shade` argument (for shading the confidence interval region)
 
 - `plot.permutest.rma.uni()` gains a `legend` argument
+
+- `vcalc()` gains a `sparse` argument
 
 - added a few more transformation functions
 

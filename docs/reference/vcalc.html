@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-11</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">vcalc</span><span class="op">(</span><span class="va">vi</span>, <span class="va">cluster</span>, <span class="va">subgroup</span>, <span class="va">obs</span>, <span class="va">type</span>, <span class="va">time1</span>, <span class="va">time2</span>, <span class="va">grp1</span>, <span class="va">grp2</span>, <span class="va">w1</span>, <span class="va">w2</span>,</span>
-<span>      <span class="va">data</span>, <span class="va">rho</span>, <span class="va">phi</span>, <span class="va">rvars</span>, checkpd<span class="op">=</span><span class="cn">TRUE</span>, nearpd<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>      <span class="va">data</span>, <span class="va">rho</span>, <span class="va">phi</span>, <span class="va">rvars</span>, checkpd<span class="op">=</span><span class="cn">TRUE</span>, nearpd<span class="op">=</span><span class="cn">FALSE</span>, sparse<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -157,6 +157,9 @@
 
    <dt>nearpd</dt>
 <dd><p>logical to specify whether the <code><a href="https://rdrr.io/pkg/Matrix/man/nearPD.html" class="external-link">nearPD</a></code> function from the <a href="https://cran.r-project.org/package=Matrix" class="external-link">Matrix</a> package should be used on variance-covariance matrices that are not positive definite. See ‘Note’.</p></dd>
+
+   <dt>sparse</dt>
+<dd><p>logical to specify whether the variance-covariance matrix should be returned as a sparse matrix (the default is <code>FALSE</code>).</p></dd>
 
    <dt>...</dt>
 <dd><p>other arguments.</p></dd>
@@ -214,7 +217,7 @@
     <h2>Value</h2>
     
 
-<p>A <em></em>\(k \times k\) variance-covariance matrix, where <em></em>\(k\) denotes the length of the <code>vi</code> variable (i.e., the number of rows in the dataset).</p>
+<p>A <em></em>\(k \times k\) variance-covariance matrix (given as a sparse matrix when <code>sparse=TRUE</code>), where <em></em>\(k\) denotes the length of the <code>vi</code> variable (i.e., the number of rows in the dataset).</p>
     </div>
     <div id="note">
     <h2>Note</h2>

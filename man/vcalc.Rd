@@ -6,7 +6,7 @@
 }
 \usage{
 vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
-      data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, \dots)
+      data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, \dots)
 }
 \arguments{
    \item{vi}{numeric vector to specify the sampling variances of the observed effect sizes or outcomes.}
@@ -26,6 +26,7 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
    \item{rvars}{optional argument for specifying the variables that correspond to the correlation matrices of the studies (if this is specified, all arguments above except for \code{cluster} and \code{subgroup} are ignored). See \sQuote{Details}.}
    \item{checkpd}{logical to specify whether to check that the variance-covariance matrices within clusters are positive definite (the default is \code{TRUE}). See \sQuote{Note}.}
    \item{nearpd}{logical to specify whether the \code{\link[Matrix]{nearPD}} function from the \href{https://cran.r-project.org/package=Matrix}{Matrix} package should be used on variance-covariance matrices that are not positive definite. See \sQuote{Note}.}
+   \item{sparse}{logical to specify whether the variance-covariance matrix should be returned as a sparse matrix (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -99,7 +100,7 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
 
 }
 \value{
-   A \mjseqn{k \times k} variance-covariance matrix, where \mjseqn{k} denotes the length of the \code{vi} variable (i.e., the number of rows in the dataset).
+   A \mjseqn{k \times k} variance-covariance matrix (given as a sparse matrix when \code{sparse=TRUE}), where \mjseqn{k} denotes the length of the \code{vi} variable (i.e., the number of rows in the dataset).
 }
 \note{
    Depending on the data structure, the specified variables, and the specified values for \code{rho} and/or \code{phi}, it is possible that the constructed variance-covariance matrix is not positive definite within one or more clusters (this is checked when \code{checkpd=TRUE}, which is the default). If such non-positive definite submatrices are found, the reasons for this should be carefully checked since this might indicate misapplication of the function and/or the specification of implausible values for \code{rho} and/or \code{phi}.

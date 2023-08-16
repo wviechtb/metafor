@@ -1,5 +1,5 @@
 vcalc <- function(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
-data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, ...) {
+data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -69,7 +69,7 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, ...) {
    k <- length(vi)
 
    if (k == 1L)
-      stop(mstyle$stop("Processing terminated since k = 1."))
+      stop(mstyle$stop("Processing terminated since k = 1.")) # could also do: return(matrix(vi, nrow=1, ncol=1))
 
    #########################################################################
 
@@ -340,7 +340,12 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, ...) {
 
       ### construct R matrix
 
-      R <- matrix(0, nrow=k, ncol=k)
+      if (sparse) {
+         R <- Matrix(0, nrow=k, ncol=k)
+      } else {
+         R <- matrix(0, nrow=k, ncol=k)
+      }
+
       diag(R) <- 1
 
       for (i in 2:k) {
@@ -414,6 +419,9 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, ...) {
 
       R <- bldiag(R, order=cluster)
 
+      if (sparse)
+         R <- Matrix(R, sparse=TRUE)
+
    }
 
    #return(R)
@@ -453,7 +461,12 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, ...) {
 
    ### turn R into V
 
-   S <- diag(sqrt(as.vector(vi)), nrow=k, ncol=k)
+   if (sparse) {
+      S <- Diagonal(k, sqrt(as.vector(vi)))
+   } else {
+      S <- diag(sqrt(as.vector(vi)), nrow=k, ncol=k)
+   }
+
    V <- S %*% R %*% S
 
    if (.isTRUE(ddd$retdat))
