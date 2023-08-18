@@ -142,7 +142,7 @@ dat <- conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat
 dat
 
 # check attributes (none of the tests are significant, so means/SDs are estimated for studies 1-3)
-dfround(as.data.frame(attributes(dat$mean)), digits=3)
+dfround(data.frame(attributes(dat$mean)), digits=3)
 
 # calculate the log transformed coefficient of variation and corresponding sampling variance
 dat <- escalc(measure="CVLN", mi=mean, sdi=sd, ni=n, data=dat)
@@ -189,7 +189,7 @@ dat
 
 # note that the mean and SD are not estimated for study 3; this is because the
 # test for skewness is significant for this study
-dfround(as.data.frame(attributes(dat$mean)), digits=3)
+dfround(data.frame(attributes(dat$mean)), digits=3)
 
 # estimate means/SDs, but assume that the data for study 3 come from a log-normal distribution
 # and back-transform the estimated mean/SD of the log-transformed data back to the raw data
@@ -198,6 +198,6 @@ dat <- conv.fivenum(min=min, q1=q1, median=median, q3=q3, max=max, n=n, data=dat
 dat
 
 # this works now because the test for skewness of the log-transformed data is not significant
-dfround(as.data.frame(attributes(dat$mean)), digits=3)
+dfround(data.frame(attributes(dat$mean)), digits=3)
 }
 \keyword{manip}

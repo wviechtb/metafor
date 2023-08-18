@@ -1,6 +1,6 @@
 aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
                              weighted=TRUE, checkpd=TRUE, fun, na.rm=TRUE,
-                             addk=FALSE, subset, select, digits, ...) {
+                             addk=FALSE, subset, select, digits, var.names, ...) {
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
@@ -44,26 +44,53 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
 
    #########################################################################
 
-   ### get vi variable
+   if (missing(var.names)) {
 
-   if (!is.null(attr(x, "vi.names"))) { # if vi.names attributes is available
-      vi.name <- attr(x, "vi.names")[1] # take the first entry to be the vi variable
-   } else {                             # if not, see if 'vi' is in the object and assume that is the vi variable
-      if (!is.element("vi", names(x)))
-         stop(mstyle$stop("Cannot determine name of the 'vi' variable."))
-      vi.name <- "vi"
+      if (!is.null(attr(x, "yi.names"))) { # if yi.names attributes is available
+         yi.name <- attr(x, "yi.names")[1] # take the first entry to be the yi variable
+      } else {                             # if not, see if 'yi' is in the object and assume that is the yi variable
+         if (!is.element("yi", names(x)))
+            stop(mstyle$stop("Cannot determine name of the 'yi' variable."))
+         yi.name <- "yi"
+      }
+
+      if (!is.null(attr(x, "vi.names"))) { # if vi.names attributes is available
+         vi.name <- attr(x, "vi.names")[1] # take the first entry to be the vi variable
+      } else {                             # if not, see if 'vi' is in the object and assume that is the vi variable
+         if (!is.element("vi", names(x)))
+            stop(mstyle$stop("Cannot determine name of the 'vi' variable."))
+         vi.name <- "vi"
+      }
+
+   } else {
+
+      if (length(var.names) != 2L)
+         stop(mstyle$stop("Argument 'var.names' must be of length 2."))
+
+      yi.name <- var.names[1]
+      vi.name <- var.names[2]
+
    }
 
-   if (is.null(x[[vi.name]]))
+   yi <- as.vector(x[[yi.name]]) # as.vector() to strip attributes
+   vi <- x[[vi.name]]
+
+   if (is.null(yi))
+      stop(mstyle$stop(paste0("Cannot find variable '", yi.name, "' in the data frame.")))
+   if (is.null(vi))
       stop(mstyle$stop(paste0("Cannot find variable '", vi.name, "' in the data frame.")))
+
+   if (!is.numeric(yi))
+      stop(mstyle$stop(paste0("Variable '", yi.name, "' is not numeric.")))
+
+   if (!is.numeric(vi))
+      stop(mstyle$stop(paste0("Variable '", vi.name, "' is not numeric.")))
 
    #########################################################################
 
    if (is.null(V)) {
 
       ### if V is not specified
-
-      vi <- x[[vi.name]]
 
       ### construct V matrix based on the specified structure
 
@@ -202,21 +229,6 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
       }
 
    }
-
-   if (!is.null(attr(x, "yi.names"))) { # if yi.names attributes is available
-      yi.name <- attr(x, "yi.names")[1] # take the first entry to be the yi variable
-   } else {                             # if not, see if 'yi' is in the object and assume that is the yi variable
-      if (!is.element("yi", names(x)))
-         stop(mstyle$stop("Cannot determine name of the 'yi' variable."))
-      yi.name <- "yi"
-   }
-
-   if (is.null(x[[yi.name]]))
-      stop(mstyle$stop(paste0("Cannot find variable '", yi.name, "' in the data frame.")))
-
-   ### note: there may be multiple yi/vi pairs; only first will be used
-
-   yi <- as.vector(x[[yi.name]])
 
    ### if 'subset' is not null, apply subset
 

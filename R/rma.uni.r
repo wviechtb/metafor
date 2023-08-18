@@ -224,6 +224,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                stop(mstyle$stop("Cannot determine name of the 'yi' variable."))
             yi.name <- "yi"
          }
+
          if (!is.null(attr(yi, "vi.names"))) { # if vi.names attributes is available
             vi.name <- attr(yi, "vi.names")[1] # take the first entry to be the vi variable
          } else {                              # if not, see if 'vi' is in the object and assume that is the vi variable

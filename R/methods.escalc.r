@@ -175,3 +175,38 @@ rbind.escalc <- function (..., deparse.level=1) {
 }
 
 ############################################################################
+
+#as.data.frame.escalc <- function(x, row.names=NULL, optional=FALSE, ...) {
+#
+#   ### strip measure, ni, and slab attributes from any yi elements
+#
+#   yi.names <- attr(x, "yi.names")
+#   yi.names <- yi.names[is.element(yi.names, names(x))]
+#
+#   for (l in seq_along(yi.names)) {
+#
+#      attr(x[[yi.names[l]]], "measure") <- NULL
+#      attr(x[[yi.names[l]]], "ni")      <- NULL
+#      attr(x[[yi.names[l]]], "slab")    <- NULL
+#
+#   }
+#
+#   ### strip other attributes that may be part of an 'escalc' object
+#
+#   attr(x, "digits")      <- NULL
+#
+#   attr(x, "yi.names")    <- NULL
+#   attr(x, "vi.names")    <- NULL
+#   attr(x, "sei.names")   <- NULL
+#   attr(x, "zi.names")    <- NULL
+#   attr(x, "pval.names")  <- NULL
+#   attr(x, "ci.lb.names") <- NULL
+#   attr(x, "ci.ub.names") <- NULL
+#
+#   class(x) <- "data.frame"
+#
+#   return(x)
+#
+#}
+
+############################################################################

@@ -55,6 +55,7 @@ conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
                stop(mstyle$stop("Cannot determine name of the 'yi' variable."))
             yi.name <- "yi"
          }
+
          if (!is.null(attr(x, "vi.names"))) { # if vi.names attributes is available
             vi.name <- attr(x, "vi.names")[1] # take the first entry to be the vi variable
          } else {                             # if not, see if 'vi' is in the object and assume that is the vi variable

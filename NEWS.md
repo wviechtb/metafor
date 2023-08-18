@@ -1,4 +1,4 @@
-# metafor 4.3-11 (2023-08-16)
+# metafor 4.3-12 (2023-08-18)
 
 - added `getmfopt()` and `setmfopt()` functions for getting and setting package options and made some of the options more flexible
 
@@ -21,6 +21,8 @@
 - `plot.permutest.rma.uni()` gains a `legend` argument
 
 - `vcalc()` gains a `sparse` argument
+
+- `aggregate.escalc` gains `var.names` argument
 
 - added a few more transformation functions
 

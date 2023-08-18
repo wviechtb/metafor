@@ -8,7 +8,7 @@
 \usage{
 \method{aggregate}{escalc}(x, cluster, time, obs, V, struct="CS", rho, phi,
           weighted=TRUE, checkpd=TRUE, fun, na.rm=TRUE,
-          addk=FALSE, subset, select, digits, \dots)
+          addk=FALSE, subset, select, digits, var.names, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"escalc"}.}
@@ -22,11 +22,12 @@
    \item{weighted}{logical to specify whether estimates within clusters should be aggregated using inverse-variance weighting (the default is \code{TRUE}). If set to \code{FALSE}, unweighted averages are computed.}
    \item{checkpd}{logical to specify whether to check that the variance-covariance matrices of the sampling errors within clusters are positive definite (the default is \code{TRUE}).}
    \item{fun}{optional list with three functions for aggregating other variables besides the effect sizes or outcomes within clusters (for numeric/integer variables, for logicals, and for all other types, respectively).}
-   \item{na.rm}{logical to specify whether \code{NA} values should be removed before aggregating values within clusters. Can also be a vector with two logicals (the first pertaining to the effect sizes or outcomes, the second to all other variables).}
+   \item{na.rm}{logical to specify whether \code{NA} values should be removed before aggregating values within clusters (the default is \code{TRUE}). Can also be a vector with two logicals (the first pertaining to the effect sizes or outcomes, the second to all other variables).}
    \item{addk}{logical to specify whether to add the cluster size as a new variable (called \code{ki}) to the dataset (the default is \code{FALSE}).}
    \item{subset}{optional (logical or numeric) vector to specify the subset of rows to include when aggregating the effect sizes or outcomes.}
    \item{select}{optional vector to specify the names of the variables to include in the aggregated dataset.}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).}
+   \item{var.names}{optional character vector with two elements to specify the name of the variable that contains the observed effect sizes or outcomes and the name of the variable with the corresponding sampling variances (when unspecified, the function attempts to set these automatically based on the object).}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -82,11 +83,15 @@ agg
 dat <- dat.assink2016
 head(dat, 19)
 
-### note: 'dat' is a regular data frame
+### note: 'dat' is an 'escalc' object
+class(dat)
+
+### turn 'dat' into a regular data frame
+dat <- as.data.frame(dat)
 class(dat)
 
 ### turn data frame into an 'escalc' object
-dat <- escalc(yi=yi, vi=vi, data=dat)
+dat <- escalc(measure="SMD", yi=yi, vi=vi, data=dat)
 class(dat)
 
 ### aggregate the estimates to the study level, assuming a CS structure for

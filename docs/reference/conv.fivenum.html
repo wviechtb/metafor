@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-12</span>
       </span>
     </div>
 
@@ -289,7 +289,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4   NA  NA NA     NA NA  NA 7.000000 4.200000 20</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># check attributes (none of the tests are significant, so means/SDs are estimated for studies 1-3)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="dfround.html">dfround</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="dfround.html">dfround</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     est  tval  crit   sig dist</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  TRUE 0.333 0.416 FALSE norm</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  TRUE 0.333 0.578 FALSE norm</span>
@@ -409,7 +409,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># note that the mean and SD are not estimated for study 3; this is because the</span></span></span>
 <span class="r-in"><span><span class="co"># test for skewness is significant for this study</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="dfround.html">dfround</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="dfround.html">dfround</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     est  tval  crit   sig dist</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  TRUE 0.333 0.416 FALSE norm</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  TRUE 0.333 0.578 FALSE norm</span>
@@ -428,7 +428,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4   NA  NA NA     NA NA  NA 7.000000 4.200000 20</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># this works now because the test for skewness of the log-transformed data is not significant</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="dfround.html">dfround</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="dfround.html">dfround</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     est  tval  crit   sig  dist</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  TRUE 0.333 0.416 FALSE  norm</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  TRUE 0.333 0.578 FALSE  norm</span>
