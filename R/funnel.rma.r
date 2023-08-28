@@ -34,6 +34,8 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    if (missing(hlines))
       hlines <- par("bg")
 
+   #print(c(back=back, shade=shade, hlines=hlines))
+
    if (missing(pch)) {
       pch <- 19
    } else {
@@ -203,15 +205,15 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    if (!is.null(ddd$transf))
       warning("Function does not have a 'transf' argument (use 'atransf' instead).", call.=FALSE, immediate.=TRUE)
 
-   lplot     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) plot(...)
-   labline   <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) abline(...)
-   lsegments <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) segments(...)
-   laxis     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) axis(...)
-   lpolygon  <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) polygon(...)
-   llines    <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) lines(...)
-   lpoints   <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) points(...)
-   lrect     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) rect(...)
-   ltext     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) text(...)
+   lplot     <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) plot(...)
+   labline   <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) abline(...)
+   lsegments <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) segments(...)
+   laxis     <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) axis(...)
+   lpolygon  <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) polygon(...)
+   llines    <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) lines(...)
+   lpoints   <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) points(...)
+   lrect     <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) rect(...)
+   ltext     <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) text(...)
 
    ### refline2, level2, and lty2 for adding a second reference line / funnel
 
@@ -259,6 +261,13 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       colbox <- ddd$colbox
    } else {
       colbox <- .coladj(par("bg","fg"), dark=0.6, light=-0.6)
+   }
+
+   if (!is.null(ddd$lgndbg)) {
+      lgndbg <- ddd$lgndbg
+   } else {
+      #lgndbg <- par("bg")
+      lgndbg <- .coladj(par("bg","fg"), dark=0.01, light=-0.01) # need to adjust slightly to avoid a transparent background
    }
 
    #########################################################################
@@ -755,7 +764,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
          pt.bg  <- c(pt.bg, bg[2])
       }
 
-      legend(lpos, inset=.01, bg=par("bg"), pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
+      legend(lpos, inset=.01, bg=lgndbg, pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
       #legend(lpos, inset=.01, bg=.coladj(par("bg","fg"), dark=0.05, light=-0.05), pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
 
    }
