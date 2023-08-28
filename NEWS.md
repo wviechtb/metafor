@@ -1,4 +1,4 @@
-# metafor 4.3-12 (2023-08-28)
+# metafor 4.3-13 (2023-08-28)
 
 - added `getmfopt()` and `setmfopt()` functions for getting and setting package options and made some of the options more flexible
 

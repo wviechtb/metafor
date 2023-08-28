@@ -19,7 +19,12 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
    if (is.null(ddd$legend)) {
       legend <- ifelse(inherits(x, "robust.rma"), TRUE, FALSE)
    } else {
-      legend <- .isTRUE(ddd$legend)
+      if (is.na(ddd$legend)) { # can suppress legend and legend symbols with legend=NA
+         legend <- FALSE
+         footsym <- rep("", 6)
+      } else {
+         legend <- .isTRUE(ddd$legend)
+      }
    }
 
    if (inherits(x, "rma.uni.trimfill")) {

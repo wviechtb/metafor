@@ -15,7 +15,12 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
    if (is.null(ddd$legend)) {
       legend <- TRUE
    } else {
-      legend <- .isTRUE(ddd$legend)
+      if (is.na(ddd$legend)) { # can suppress legend and legend symbols with legend=NA
+         legend <- FALSE
+         footsym <- rep("", 6)
+      } else {
+         legend <- .isTRUE(ddd$legend)
+      }
    }
 
    footsym <- .get.footsym()
