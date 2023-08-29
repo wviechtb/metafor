@@ -23,6 +23,9 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    atransf.char <- deparse(atransf)
 
+   if (anyNA(level) || is.null(level))
+      stop(mstyle$stop("Argument 'level' cannot be NA or NULL."))
+
    .start.plot()
 
    if (missing(back))
@@ -31,8 +34,14 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    if (missing(shade))
       shade <- .coladj(par("bg","fg"), dark=c(0.2,-0.8), light=c(0,1))
 
+   if (length(level) > 1L && length(shade) == 1L)
+      shade <- rep(shade, length(level))
+
    if (missing(hlines))
       hlines <- par("bg")
+
+   if (is.null(refline))
+      refline <- NA
 
    if (missing(pch))
       pch <- 19
@@ -50,7 +59,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       if (is.null(ni))
          ni <- attr(yi, "ni")
       if (!is.null(ni) && length(ni) != k)
-      stop(mstyle$stop(paste0("Length of the 'ni' argument (", length(ni), ") does not correspond to the number of outcomes (", k, ").")))
+         stop(mstyle$stop(paste0("Length of the 'ni' argument (", length(ni), ") does not correspond to the number of outcomes (", k, ").")))
       if (is.null(ni))
          stop(mstyle$stop("No sample size information available."))
    }
@@ -204,15 +213,15 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    if (!is.null(ddd$transf))
       warning("Function does not have a 'transf' argument (use 'atransf' instead).", call.=FALSE, immediate.=TRUE)
 
-   lplot     <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) plot(...)
-   labline   <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) abline(...)
-   lsegments <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) segments(...)
-   laxis     <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) axis(...)
-   lpolygon  <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) polygon(...)
-   llines    <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) lines(...)
-   lpoints   <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) points(...)
-   lrect     <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) rect(...)
-   ltext     <- function(..., refline2, level2, lty2, colci, colref, colbox, lgndbg, transf, ci.res) text(...)
+   lplot     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) plot(...)
+   labline   <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) abline(...)
+   lsegments <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) segments(...)
+   laxis     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) axis(...)
+   lpolygon  <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) polygon(...)
+   llines    <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) lines(...)
+   lpoints   <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) points(...)
+   lrect     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) rect(...)
+   ltext     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) text(...)
 
    ### refline2, level2, and lty2 for adding a second reference line / funnel
 
@@ -260,13 +269,6 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       colbox <- ddd$colbox
    } else {
       colbox <- .coladj(par("bg","fg"), dark=0.6, light=-0.6)
-   }
-
-   if (!is.null(ddd$lgndbg)) {
-      lgndbg <- ddd$lgndbg
-   } else {
-      #lgndbg <- par("bg")
-      lgndbg <- .coladj(par("bg","fg"), dark=0.01, light=-0.01) # need to adjust slightly to avoid a transparent background
    }
 
    #########################################################################
@@ -424,7 +426,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       }
 
       if (missing(xlim)) {
-         xlim    <- c(min(x.lb.bot,min(yi)), max(x.ub.bot,max(yi))) # make sure x-axis not only includes widest CI, but also all yi values
+         xlim    <- c(min(x.lb.bot,min(yi),na.rm=TRUE), max(x.ub.bot,max(yi),na.rm=TRUE)) # make sure x-axis not only includes widest CI, but also all yi values
          rxlim   <- xlim[2] - xlim[1]        # calculate range of the x-axis limits
          xlim[1] <- xlim[1] - (rxlim * 0.10) # subtract 10% of range from lower x-axis bound
          xlim[2] <- xlim[2] + (rxlim * 0.10) # add      10% of range to   upper x-axis bound
@@ -630,6 +632,9 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    if (is.numeric(label) || is.character(label) || .isTRUE(label)) {
 
+      if (is.na(refline))
+         refline <- mean(yi, na.rm=TRUE)
+
       if (is.numeric(label)) {
          label <- round(label)
          if (label < 0)
@@ -658,61 +663,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    ### add legend (if requested)
 
-   if (is.logical(legend) && isTRUE(legend))
-      lpos <- "topright"
-
-   if (is.character(legend)) {
-      lpos <- legend
-      legend <- TRUE
-   }
-
-   if (legend && !is.element(yaxis, c("sei", "vi", "seinv", "vinv"))) {
-      legend <- FALSE
-      warning(mstyle$warning("Argument 'legend' only applicable if 'yaxis' is 'sei', 'vi', 'seinv', or 'vinv'."), call.=FALSE)
-   }
-
-   if (legend) {
-
-      level <- c(level, 0)
-      lvals <- length(level)
-
-      add.studies <- !pch.vec && !col.vec && !bg.vec # only add 'Studies' to legend if pch, col, and bg were not vectors to begin with
-
-      scipen <- options(scipen=100)
-      lchars <- max(nchar(level))-2
-      options(scipen=scipen$scipen)
-
-      pval1 <- NULL
-      pval2 <- NULL
-      phantom <- NULL
-
-      ltxt <- sapply(seq_len(lvals), function(i) {
-         if (i == 1)
-            return(as.expression(bquote(paste(.(pval1) < p, phantom() <= .(pval2)), list(pval1=fmtx(level[i], lchars), pval2=fmtx(1, lchars)))))
-            #return(as.expression(bquote(p > .(pval), list(pval=fmtx(level[i], lchars)))))
-         if (i > 1 && i < lvals)
-            return(as.expression(bquote(paste(.(pval1) < p, phantom() <= .(pval2)), list(pval1=fmtx(level[i], lchars), pval2=fmtx(level[i-1], lchars)))))
-         if (i == lvals)
-            return(as.expression(bquote(paste(.(pval1) < p, phantom() <= .(pval2)), list(pval1=fmtx(0, lchars), pval2=fmtx(level[i-1], lchars)))))
-      })
-
-      pch.l  <- rep(22, lvals)
-      col.l  <- rep(colci, lvals)
-      pt.cex <- rep(2, lvals)
-      pt.bg  <- c(shade, back)
-
-      if (add.studies) {
-         ltxt   <- c(ltxt, expression(plain(Studies)))
-         pch.l  <- c(pch.l, pch[1])
-         col.l  <- c(col.l, col[1])
-         pt.cex <- c(pt.cex, 1)
-         pt.bg  <- c(pt.bg, bg[1])
-      }
-
-      legend(lpos, inset=.01, bg=lgndbg, pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
-      #legend(lpos, inset=.01, bg=.coladj(par("bg","fg"), dark=0.05, light=-0.05), pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
-
-   }
+   .funnel.legend(legend, level, shade, back, yaxis, trimfill=FALSE, pch, col, bg, pch.fill=NA, pch.vec, col.vec, bg.vec, colci)
 
    ############################################################################
 

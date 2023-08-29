@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-14</span>
       </span>
     </div>
 
@@ -113,7 +113,7 @@
 <dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
 
    <dt>side</dt>
-<dd><p>optional character string (either <code>"left"</code> or <code>"right"</code>) to specify on which side of the funnel plot the missing studies should be imputed. If left unspecified, the side is chosen within the function depending on the results of Egger's regression test (see <code><a href="regtest.html">regtest</a></code> for details on this test).</p></dd>
+<dd><p>optional character string (either <code>"left"</code> or <code>"right"</code>) to specify on which side of the funnel plot the missing studies should be imputed. If left unspecified, the side is chosen within the function depending on the results of the regression test (see <code><a href="regtest.html">regtest</a></code> for details on this test).</p></dd>
 
    <dt>estimator</dt>
 <dd><p>character string (either <code>"L0"</code>, <code>"R0"</code>, or <code>"Q0"</code>) to specify the estimator for the number of missing studies (the default is <code>"L0"</code>).</p></dd>
@@ -153,16 +153,16 @@
 <dd><p>p-value for the test of <em></em>\(\mbox{H}_0\): no missing studies on the chosen side (only when <code>estimator="R0"</code>; <code>NA</code> otherwise).</p></dd>
 
    <dt>yi</dt>
-<dd><p>the observed effect sizes or outcomes plus the augmented values (if there are any).</p></dd>
+<dd><p>the observed effect sizes or outcomes plus the imputed values (if there are any).</p></dd>
 
    <dt>vi</dt>
 <dd><p>the corresponding sampling variances</p></dd>
 
    <dt>fill</dt>
-<dd><p>a logical vector indicating which of the values in <code>yi</code> are the observed (<code>FALSE</code>) and the augmented (<code>TRUE</code>) data.</p></dd>
+<dd><p>a logical vector indicating which of the values in <code>yi</code> are the observed (<code>FALSE</code>) and the imputed (<code>TRUE</code>) data.</p></dd>
 
 
-</dl><p>The results of the fitted model after the data augmentation are printed with the <code><a href="print.rma.html">print</a></code> function. Calling <code><a href="funnel.html">funnel</a></code> on the object provides a funnel plot of the observed and augmented data.</p>
+</dl><p>The results of the fitted model after the data augmentation are printed with the <code><a href="print.rma.html">print</a></code> function. Calling <code><a href="funnel.html">funnel</a></code> on the object provides a funnel plot of the observed and imputed data.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -194,8 +194,8 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### meta-analysis of the log risk ratios using an equal-effects model</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"EE"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">res.tf</span> <span class="op">&lt;-</span> <span class="fu">trimfill</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">res.tf</span></span></span>
+<span class="r-in"><span><span class="va">taf</span> <span class="op">&lt;-</span> <span class="fu">trimfill</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">taf</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimated number of missing studies on the right side: 4 (SE = 2.3853)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -215,12 +215,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res.tf</span>, legend<span class="op">=</span><span class="cn">TRUE</span>, cex<span class="op">=</span><span class="fl">1.2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">taf</span>, cex<span class="op">=</span><span class="fl">1.2</span>, legend<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>show<span class="op">=</span><span class="st">"cis"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="trimfill-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### estimator "R0" also provides test</span></span></span>
-<span class="r-in"><span><span class="va">res.tf</span> <span class="op">&lt;-</span> <span class="fu">trimfill</span><span class="op">(</span><span class="va">res</span>, estimator<span class="op">=</span><span class="st">"R0"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">res.tf</span></span></span>
+<span class="r-in"><span><span class="co">### estimator "R0" also provides test of H0: no missing studies (on the chosen side)</span></span></span>
+<span class="r-in"><span><span class="va">taf</span> <span class="op">&lt;-</span> <span class="fu">trimfill</span><span class="op">(</span><span class="va">res</span>, estimator<span class="op">=</span><span class="st">"R0"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">taf</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimated number of missing studies on the right side: 4 (SE = 3.1623)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test of H0: no missing studies on the right side:      p-val = 0.0312</span>
@@ -244,8 +244,8 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### meta-analysis of the log risk ratios using a random-effects model</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">res.tf</span> <span class="op">&lt;-</span> <span class="fu">trimfill</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">res.tf</span></span></span>
+<span class="r-in"><span><span class="va">taf</span> <span class="op">&lt;-</span> <span class="fu">trimfill</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">taf</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Estimated number of missing studies on the right side: 1 (SE = 2.4528)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -267,15 +267,15 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res.tf</span>, legend<span class="op">=</span><span class="cn">TRUE</span>, cex<span class="op">=</span><span class="fl">1.2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">taf</span>, cex<span class="op">=</span><span class="fl">1.2</span>, legend<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>show<span class="op">=</span><span class="st">"cis"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="trimfill-2.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### the examples above are equal-equal and random-random approaches</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### illustration of an equal-random approach</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"EE"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">res.tf</span> <span class="op">&lt;-</span> <span class="fu">trimfill</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">filled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>yi <span class="op">=</span> <span class="va">res.tf</span><span class="op">$</span><span class="va">yi</span>, vi <span class="op">=</span> <span class="va">res.tf</span><span class="op">$</span><span class="va">vi</span>, fill <span class="op">=</span> <span class="va">res.tf</span><span class="op">$</span><span class="va">fill</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">taf</span> <span class="op">&lt;-</span> <span class="fu">trimfill</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">filled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>yi <span class="op">=</span> <span class="va">taf</span><span class="op">$</span><span class="va">yi</span>, vi <span class="op">=</span> <span class="va">taf</span><span class="op">$</span><span class="va">vi</span>, fill <span class="op">=</span> <span class="va">taf</span><span class="op">$</span><span class="va">fill</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">filled</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             yi          vi  fill</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  -0.88931133 0.325584765 FALSE</span>

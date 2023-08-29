@@ -12,7 +12,7 @@ trimfill(x, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}.}
-   \item{side}{optional character string (either \code{"left"} or \code{"right"}) to specify on which side of the funnel plot the missing studies should be imputed. If left unspecified, the side is chosen within the function depending on the results of Egger's regression test (see \code{\link{regtest}} for details on this test).}
+   \item{side}{optional character string (either \code{"left"} or \code{"right"}) to specify on which side of the funnel plot the missing studies should be imputed. If left unspecified, the side is chosen within the function depending on the results of the regression test (see \code{\link{regtest}} for details on this test).}
    \item{estimator}{character string (either \code{"L0"}, \code{"R0"}, or \code{"Q0"}) to specify the estimator for the number of missing studies (the default is \code{"L0"}).}
    \item{maxiter}{integer to specify the maximum number of iterations for the trim and fill method (the default is \code{100}).}
    \item{verbose}{logical to specify whether output should be generated on the progress of the iterative algorithm used as part of the trim and fill method (the default is \code{FALSE}).}
@@ -28,11 +28,11 @@ trimfill(x, \dots)
    \item{side}{either \code{"left"} or \code{"right"}, indicating on which side of the funnel plot the missing studies (if any) were imputed.}
    \item{se.k0}{standard error of k0.}
    \item{p.k0}{p-value for the test of \mjeqn{\mbox{H}_0}{H_0}: no missing studies on the chosen side (only when \code{estimator="R0"}; \code{NA} otherwise).}
-   \item{yi}{the observed effect sizes or outcomes plus the augmented values (if there are any).}
+   \item{yi}{the observed effect sizes or outcomes plus the imputed values (if there are any).}
    \item{vi}{the corresponding sampling variances}
-   \item{fill}{a logical vector indicating which of the values in \code{yi} are the observed (\code{FALSE}) and the augmented (\code{TRUE}) data.}
+   \item{fill}{a logical vector indicating which of the values in \code{yi} are the observed (\code{FALSE}) and the imputed (\code{TRUE}) data.}
 
-   The results of the fitted model after the data augmentation are printed with the \code{\link[=print.rma.uni]{print}} function. Calling \code{\link[=funnel.rma]{funnel}} on the object provides a funnel plot of the observed and augmented data.
+   The results of the fitted model after the data augmentation are printed with the \code{\link[=print.rma.uni]{print}} function. Calling \code{\link[=funnel.rma]{funnel}} on the object provides a funnel plot of the observed and imputed data.
 }
 \note{
    Three different estimators for the number of missing studies were proposed by Duval and Tweedie (2000a, 2000b). Based on these articles and Duval (2005), \code{"R0"} and \code{"L0"} are recommended. An advantage of estimator \code{"R0"} is that it provides a test of the null hypothesis that the number of missing studies (on the chosen side) is zero.
@@ -64,26 +64,26 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
 ### meta-analysis of the log risk ratios using an equal-effects model
 res <- rma(yi, vi, data=dat, method="EE")
-res.tf <- trimfill(res)
-res.tf
-funnel(res.tf, legend=TRUE, cex=1.2)
+taf <- trimfill(res)
+taf
+funnel(taf, cex=1.2, legend=list(show="cis"))
 
-### estimator "R0" also provides test
-res.tf <- trimfill(res, estimator="R0")
-res.tf
+### estimator "R0" also provides test of H0: no missing studies (on the chosen side)
+taf <- trimfill(res, estimator="R0")
+taf
 
 ### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(yi, vi, data=dat)
-res.tf <- trimfill(res)
-res.tf
-funnel(res.tf, legend=TRUE, cex=1.2)
+taf <- trimfill(res)
+taf
+funnel(taf, cex=1.2, legend=list(show="cis"))
 
 ### the examples above are equal-equal and random-random approaches
 
 ### illustration of an equal-random approach
 res <- rma(yi, vi, data=dat, method="EE")
-res.tf <- trimfill(res)
-filled <- data.frame(yi = res.tf$yi, vi = res.tf$vi, fill = res.tf$fill)
+taf <- trimfill(res)
+filled <- data.frame(yi = taf$yi, vi = taf$vi, fill = taf$fill)
 filled
 rma(yi, vi, data=filled)
 }

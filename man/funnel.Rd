@@ -55,7 +55,7 @@ funnel(x, \dots)
    \item{bg}{optional character string to specify the background color of open plot symbols. Can also be a vector.}
    \item{label}{argument to control the labeling of the points (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{offset}{argument to control the distance between the points and the corresponding labels.}
-   \item{legend}{logical to indicate whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to indicate the position of the legend (see \code{\link{legend}}).}
+   \item{legend}{logical to indicate whether a legend should be added to the plot (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -78,13 +78,16 @@ funnel(x, \dots)
    \item \code{yaxis="wi"} for the weights.
    } However, only when \code{yaxis="sei"} (the default) will the pseudo confidence region have the expected (upside-down) funnel shape with straight lines. Also, when placing (a function of) the sample sizes on the y-axis or the weights, then the pseudo confidence region cannot be drawn. See Sterne and Egger (2001) for more details on the choice of the y-axis.
 
-   If the object passed to the function comes from the \code{\link{trimfill}} function, the outcomes that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in outcomes can be specified via the \code{pch.fill} argument. Arguments \code{col} and \code{bg} can then be of length 2 to specify the (border) color and background color of the observed and filled in outcomes.
+   If the object passed to the function comes from the \code{\link{trimfill}} function, the studies that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in studies can be specified via the \code{pch.fill} argument. Arguments \code{col} and \code{bg} can then be of length 2 to specify the (border) color and background color of the observed and filled in studies.
 
    One can also directly pass a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances (via \code{vi}), standard errors (via \code{sei}), and/or sample sizes (via \code{ni}) to the function. By default, the vertical reference line is then drawn at zero.
 
-   The arguments \code{back}, \code{shade}, and \code{hlines} can be set to \code{NULL} to suppress the shading and the horizontal reference line.
+   The arguments \code{back}, \code{shade}, and \code{hlines} can be set to \code{NULL} to suppress the shading and the horizontal reference line. One can also suppress the funnel by setting \code{refline} to \code{NULL}.
 
    With the \code{label} argument, one can control whether points in the plot will be labeled. If \code{label="all"} (or \code{label=TRUE}), all points in the plot will be labeled. If \code{label="out"}, points falling outside of the pseudo confidence region will be labeled. Finally, one can also set this argument to a numeric value (between 1 and \mjseqn{k}) to specify how many of the most extreme points should be labeled (e.g., with \code{label=1} only the most extreme point are labeled, while with \code{label=3}, the most extreme, and the second and third most extreme points are labeled). With the \code{offset} argument, one can adjust the distance between the labels and the corresponding points.
+
+   By setting the \code{legend} argument to \code{TRUE}, a legend is added to the plot. One can also specify a keyword for this argument to indicate the position of the legend (e.g., \code{legend="topleft"}; see \code{\link{legend}} for options). Finally, this argument can also be a list, with elements \code{x}, \code{y}, \code{inset}, \code{bty}, and \code{bg}, which are passed on as the corresponding arguments to the \code{\link{legend}} function for even more control (elements not specified are set to defaults). The list can also include elements \code{studies} (a logical to indicate whether to include \sQuote{Studies} in the legend; default is \code{TRUE}) and \code{show} (either \code{"pvals"} to show the p-values corresponding to the shade regions, \code{"cis"} to show the confidence interval levels corresponding to the shade regions, or \code{NA} to show neither; default is \code{"pvals"}).
+
 }
 \note{
    Placing (a function of) the sample sizes on the y-axis (i.e., using \code{yaxis="ni"}, \code{yaxis="ninv"}, \code{yaxis="sqrtni"}, \code{yaxis="sqrtninv"}, or \code{yaxis="lni"}) is only possible when information about the sample sizes is actually stored within the object passed to the \code{funnel} function. That should automatically be the case when the observed effect sizes or outcomes were computed with the \code{\link{escalc}} function or when the observed effect sizes or outcomes were computed within the model fitting function. On the other hand, this will not be the case when \code{\link{rma.uni}} was used together with the \code{yi} and \code{vi} arguments and the \code{yi} and \code{vi} values were \emph{not} computed with \code{\link{escalc}}. In that case, it is still possible to pass information about the sample sizes to the \code{\link{rma.uni}} function (e.g., use \code{rma.uni(yi, vi, ni=ni, data=dat)}, where data frame \code{dat} includes a variable called \code{ni} with the sample sizes).
@@ -137,7 +140,7 @@ funnel(res, atransf=exp)
 funnel(res, atransf=exp, label="out")
 
 ### passing log risk ratios and sampling variances directly to the function
-### note: same plot, except that reference line is centered at zero
+### note: same plot, except that the reference line is centered at zero
 funnel(dat$yi, dat$vi)
 
 ### the with() function can be used to avoid having to retype dat$... over and over
@@ -154,7 +157,11 @@ funnel(res, level=c(90, 95, 99), shade=c("white", "gray55", "gray75"), refline=0
 
 ### same, but show risk ratio values on the x-axis and some further adjustments
 funnel(res, level=c(90, 95, 99), shade=c("white", "gray55", "gray75"), digits=3L, ylim=c(0,.8),
-       refline=0, legend=TRUE, atransf=exp, at=log(c(.125, .25, .5, 1, 2, 4, 8)))
+       atransf=exp, at=log(c(.125, .25, .5, 1, 2, 4, 8)), refline=0, legend=TRUE)
+
+### same, but show confidence interval levels in the legend
+funnel(res, level=c(90, 95, 99), shade=c("white", "gray55", "gray75"), digits=3L, ylim=c(0,.8),
+       atransf=exp, at=log(c(.125, .25, .5, 1, 2, 4, 8)), refline=0, legend=list(show="cis"))
 
 ### illustrate the use of vectors for 'pch' and 'col'
 res <- rma(yi, vi, data=dat, subset=2:10)
@@ -181,11 +188,11 @@ gencor <- function(rhoi, ni) {
 }
 
 set.seed(1234)
-k  <- 200                               ### number of studies to simulate
-ni <- round(rchisq(k, df=2) * 20 + 20)  ### simulate sample sizes (skewed distribution)
-ri <- mapply(gencor, rep(0.2,k), ni)    ### simulate correlations
+k  <- 200                               # number of studies to simulate
+ni <- round(rchisq(k, df=2) * 20 + 20)  # simulate sample sizes (skewed distribution)
+ri <- mapply(gencor, rep(0.2,k), ni)    # simulate correlations
 
-res <- rma(measure="ZCOR", ri=ri, ni=ni, method="EE") ### use r-to-z transformed correlations
+res <- rma(measure="ZCOR", ri=ri, ni=ni, method="EE") # use r-to-z transformed correlations
 
 funnel(res, yaxis="sei")
 funnel(res, yaxis="vi")
