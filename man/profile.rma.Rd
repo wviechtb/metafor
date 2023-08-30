@@ -143,7 +143,7 @@ res <- rma(yi, vi, data=dat)
 profile(res, progbar=FALSE)
 
 ### change data into long format
-dat.long <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+dat.long <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, append=FALSE)
 
 ### set levels of group variable ("exp" = experimental/vaccinated; "con" = control/non-vaccinated)
 levels(dat.long$group) <- c("exp", "con")
@@ -153,6 +153,7 @@ dat.long$group <- relevel(dat.long$group, ref="con")
 
 ### calculate log odds and corresponding sampling variances
 dat.long <- escalc(measure="PLO", xi=out1, mi=out2, data=dat.long)
+dat.long
 
 ### fit bivariate random-effects model using rma.mv()
 res <- rma.mv(yi, vi, mods = ~ group, random = ~ group | study, struct="UN", data=dat.long)
@@ -167,7 +168,7 @@ profile(res, tau2=2)
 profile(res, rho=1, xlim=c(0.90, 0.98))
 }
 
-### an example where the peak is at 0
+### an example where the peak of the likelihood profile is at 0
 dat <- escalc(measure="RD", n1i=n1i, n2i=n2i, ai=ai, ci=ci, data=dat.hine1989)
 res <- rma(yi, vi, data=dat)
 par(mfrow=c(1,1))

@@ -38,7 +38,7 @@ to.long(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{to}{see the documentation of the \code{\link{escalc}} function.}
    \item{drop00}{see the documentation of the \code{\link{escalc}} function.}
    \item{vlong}{optional logical whether a very long format should be used (only relevant for \mjeqn{2 \times 2}{2x2} or \mjeqn{1 \times 2}{1x2} table data).}
-   \item{append}{logical to specify whether the data frame specified via the \code{data} argument (if one has been specified) should be returned together with the long format data (the default is \code{TRUE}).}
+   \item{append}{logical to specify whether the data frame specified via the \code{data} argument (if one has been specified) should be returned together with the long format data (the default is \code{TRUE}). Can also be a character or numeric vector to indicate which variables from \code{data} to append.}
    \item{var.names}{optional character vector with variable names (the length depends on the data type). If unspecified, the function sets appropriate variable names by default.}
 }
 \details{
@@ -75,22 +75,31 @@ to.long(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 }
 \examples{
 ### convert data to long format
-dat <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
-dat
+dat.bcg
+dat.long <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+dat.long
 
 ### extra long format
 dat <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, vlong=TRUE)
 dat
 
-### convert data to long format
-dat <- to.long(measure="IRR", x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i,
-               data=dat.hart1999, var.names=c("id", "group", "events", "ptime"))
-dat
+### select variables to append
+dat.long <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
+                    data=dat.bcg, append=c("author","year"))
+dat.long
+dat.long <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
+                    data=dat.bcg, append=2:3)
+dat.long
 
 ### convert data to long format
-dat <- to.long(measure="MD", m1i=m1i, sd1i=sd1i, n1i=n1i,
-               m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat.normand1999,
-               var.names=c("id", "group", "mean", "sd", "n"))
-dat
+dat.long <- to.long(measure="IRR", x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i,
+                   data=dat.hart1999, var.names=c("id", "group", "events", "ptime"))
+dat.long
+
+### convert data to long format
+dat.long <- to.long(measure="MD", m1i=m1i, sd1i=sd1i, n1i=n1i,
+                    m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat.normand1999,
+                    var.names=c("id", "group", "mean", "sd", "n"))
+dat.long
 }
 \keyword{manip}

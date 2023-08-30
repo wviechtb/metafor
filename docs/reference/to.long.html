@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-15</span>
       </span>
     </div>
 
@@ -193,7 +193,7 @@
 <dd><p>optional logical whether a very long format should be used (only relevant for <em></em>\(2 \times 2\) or <em></em>\(1 \times 2\) table data).</p></dd>
 
    <dt>append</dt>
-<dd><p>logical to specify whether the data frame specified via the <code>data</code> argument (if one has been specified) should be returned together with the long format data (the default is <code>TRUE</code>).</p></dd>
+<dd><p>logical to specify whether the data frame specified via the <code>data</code> argument (if one has been specified) should be returned together with the long format data (the default is <code>TRUE</code>). Can also be a character or numeric vector to indicate which variables from <code>data</code> to append.</p></dd>
 
    <dt>var.names</dt>
 <dd><p>optional character vector with variable names (the length depends on the data type). If unspecified, the function sets appropriate variable names by default.</p></dd>
@@ -231,8 +231,23 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### convert data to long format</span></span></span>
-<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">dat</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    trial               author year tpos  tneg cpos  cneg ablat      alloc</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1              Aronson 1948    4   119   11   128    44     random</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      2     Ferguson &amp; Simes 1949    6   300   29   274    55     random</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      3      Rosenthal et al 1960    3   228   11   209    42     random</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      4    Hart &amp; Sutherland 1977   62 13536  248 12619    52     random</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      5 Frimodt-Moller et al 1973   33  5036   47  5761    13  alternate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      6      Stein &amp; Aronson 1953  180  1361  372  1079    44  alternate</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      7     Vandiviere et al 1973    8  2537   10   619    19     random</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      8           TPT Madras 1980  505 87886  499 87892    13     random</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      9     Coetzee &amp; Berjak 1968   29  7470   45  7232    27     random</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10    10      Rosenthal et al 1961   17  1699   65  1600    42 systematic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11    11       Comstock et al 1974  186 50448  141 27197    18 systematic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12    12   Comstock &amp; Webster 1969    5  2493    3  2338    33 systematic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13    13       Comstock et al 1976   27 16886   29 17825    33 systematic</span>
+<span class="r-in"><span><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat.long</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    trial               author year tpos  tneg cpos  cneg ablat      alloc study group out1  out2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1              Aronson 1948    4   119   11   128    44     random     1     1    4   119</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      1              Aronson 1948    4   119   11   128    44     random     1     2   11   128</span>
@@ -318,10 +333,72 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 51    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13     2       1    29</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 52    13       Comstock et al 1976   27 16886   29 17825    33 systematic    13     2       2 17825</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### select variables to append</span></span></span>
+<span class="r-in"><span><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>,</span></span>
+<span class="r-in"><span>                    data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, append<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"author"</span>,<span class="st">"year"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat.long</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  author year study group out1  out2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1               Aronson 1948     1     1    4   119</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2               Aronson 1948     1     2   11   128</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      Ferguson &amp; Simes 1949     2     1    6   300</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      Ferguson &amp; Simes 1949     2     2   29   274</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       Rosenthal et al 1960     3     1    3   228</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       Rosenthal et al 1960     3     2   11   209</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     Hart &amp; Sutherland 1977     4     1   62 13536</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     Hart &amp; Sutherland 1977     4     2  248 12619</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  Frimodt-Moller et al 1973     5     1   33  5036</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 Frimodt-Moller et al 1973     5     2   47  5761</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11      Stein &amp; Aronson 1953     6     1  180  1361</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12      Stein &amp; Aronson 1953     6     2  372  1079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13     Vandiviere et al 1973     7     1    8  2537</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14     Vandiviere et al 1973     7     2   10   619</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15           TPT Madras 1980     8     1  505 87886</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16           TPT Madras 1980     8     2  499 87892</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17     Coetzee &amp; Berjak 1968     9     1   29  7470</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18     Coetzee &amp; Berjak 1968     9     2   45  7232</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19      Rosenthal et al 1961    10     1   17  1699</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20      Rosenthal et al 1961    10     2   65  1600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21       Comstock et al 1974    11     1  186 50448</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22       Comstock et al 1974    11     2  141 27197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23   Comstock &amp; Webster 1969    12     1    5  2493</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24   Comstock &amp; Webster 1969    12     2    3  2338</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25       Comstock et al 1976    13     1   27 16886</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26       Comstock et al 1976    13     2   29 17825</span>
+<span class="r-in"><span><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>,</span></span>
+<span class="r-in"><span>                    data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, append<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat.long</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  author year study group out1  out2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1               Aronson 1948     1     1    4   119</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2               Aronson 1948     1     2   11   128</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      Ferguson &amp; Simes 1949     2     1    6   300</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      Ferguson &amp; Simes 1949     2     2   29   274</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       Rosenthal et al 1960     3     1    3   228</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6       Rosenthal et al 1960     3     2   11   209</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7     Hart &amp; Sutherland 1977     4     1   62 13536</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8     Hart &amp; Sutherland 1977     4     2  248 12619</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  Frimodt-Moller et al 1973     5     1   33  5036</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 Frimodt-Moller et al 1973     5     2   47  5761</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11      Stein &amp; Aronson 1953     6     1  180  1361</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12      Stein &amp; Aronson 1953     6     2  372  1079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13     Vandiviere et al 1973     7     1    8  2537</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14     Vandiviere et al 1973     7     2   10   619</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15           TPT Madras 1980     8     1  505 87886</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16           TPT Madras 1980     8     2  499 87892</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17     Coetzee &amp; Berjak 1968     9     1   29  7470</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18     Coetzee &amp; Berjak 1968     9     2   45  7232</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19      Rosenthal et al 1961    10     1   17  1699</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20      Rosenthal et al 1961    10     2   65  1600</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21       Comstock et al 1974    11     1  186 50448</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22       Comstock et al 1974    11     2  141 27197</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23   Comstock &amp; Webster 1969    12     1    5  2493</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24   Comstock &amp; Webster 1969    12     2    3  2338</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25       Comstock et al 1976    13     1   27 16886</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26       Comstock et al 1976    13     2   29 17825</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### convert data to long format</span></span></span>
-<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"IRR"</span>, x1i<span class="op">=</span><span class="va">x1i</span>, x2i<span class="op">=</span><span class="va">x2i</span>, t1i<span class="op">=</span><span class="va">t1i</span>, t2i<span class="op">=</span><span class="va">t2i</span>,</span></span>
-<span class="r-in"><span>               data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.hart1999.html" class="external-link">dat.hart1999</a></span>, var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"group"</span>, <span class="st">"events"</span>, <span class="st">"ptime"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">dat</span></span></span>
+<span class="r-in"><span><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"IRR"</span>, x1i<span class="op">=</span><span class="va">x1i</span>, x2i<span class="op">=</span><span class="va">x2i</span>, t1i<span class="op">=</span><span class="va">t1i</span>, t2i<span class="op">=</span><span class="va">t2i</span>,</span></span>
+<span class="r-in"><span>                   data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.hart1999.html" class="external-link">dat.hart1999</a></span>, var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"group"</span>, <span class="st">"events"</span>, <span class="st">"ptime"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat.long</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    trial  study year x1i n1i t1i x2i n2i t2i compgrp  prevtype   trinr id group events ptime</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1 AFASAK 1989   9 335 413  19 336 398 placebo   primary 2.8-4.2  1     1      9   413</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      1 AFASAK 1989   9 335 413  19 336 398 placebo   primary 2.8-4.2  1     2     19   398</span>
@@ -337,10 +414,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12     6   EAFT 1993  20 225 507  50 214 405 placebo secondary 2.5-4.0  6     2     50   405</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### convert data to long format</span></span></span>
-<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"MD"</span>, m1i<span class="op">=</span><span class="va">m1i</span>, sd1i<span class="op">=</span><span class="va">sd1i</span>, n1i<span class="op">=</span><span class="va">n1i</span>,</span></span>
-<span class="r-in"><span>               m2i<span class="op">=</span><span class="va">m2i</span>, sd2i<span class="op">=</span><span class="va">sd2i</span>, n2i<span class="op">=</span><span class="va">n2i</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.normand1999.html" class="external-link">dat.normand1999</a></span>,</span></span>
-<span class="r-in"><span>               var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"group"</span>, <span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"n"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">dat</span></span></span>
+<span class="r-in"><span><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu">to.long</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"MD"</span>, m1i<span class="op">=</span><span class="va">m1i</span>, sd1i<span class="op">=</span><span class="va">sd1i</span>, n1i<span class="op">=</span><span class="va">n1i</span>,</span></span>
+<span class="r-in"><span>                    m2i<span class="op">=</span><span class="va">m2i</span>, sd2i<span class="op">=</span><span class="va">sd2i</span>, n2i<span class="op">=</span><span class="va">n2i</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.normand1999.html" class="external-link">dat.normand1999</a></span>,</span></span>
+<span class="r-in"><span>                    var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"id"</span>, <span class="st">"group"</span>, <span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"n"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat.long</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    study             source n1i m1i sd1i n2i m2i sd2i id group mean sd   n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      1          Edinburgh 155  55   47 156  75   64  1     1   55 47 155</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      1          Edinburgh 155  55   47 156  75   64  1     2   75 64 156</span>

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-15</span>
       </span>
     </div>
 
@@ -321,7 +321,7 @@
 <span class="r-plt img"><img src="profile.rma-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### change data into long format</span></span></span>
-<span class="r-in"><span><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="to.long.html">to.long</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="to.long.html">to.long</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, append<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### set levels of group variable ("exp" = experimental/vaccinated; "con" = control/non-vaccinated)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">dat.long</span><span class="op">$</span><span class="va">group</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"exp"</span>, <span class="st">"con"</span><span class="op">)</span></span></span>
@@ -331,6 +331,36 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### calculate log odds and corresponding sampling variances</span></span></span>
 <span class="r-in"><span><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"PLO"</span>, xi<span class="op">=</span><span class="va">out1</span>, mi<span class="op">=</span><span class="va">out2</span>, data<span class="op">=</span><span class="va">dat.long</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat.long</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    study group out1  out2      yi     vi </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1   con    4   119 -3.3928 0.2584 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      1   exp   11   128 -2.4541 0.0987 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      2   con    6   300 -3.9120 0.1700 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      2   exp   29   274 -2.2458 0.0381 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      3   con    3   228 -4.3307 0.3377 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      3   exp   11   209 -2.9444 0.0957 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      4   con   62 13536 -5.3860 0.0162 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      4   exp  248 12619 -3.9295 0.0041 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      5   con   33  5036 -5.0279 0.0305 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     5   exp   47  5761 -4.8087 0.0215 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11     6   con  180  1361 -2.0230 0.0063 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     6   exp  372  1079 -1.0649 0.0036 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13     7   con    8  2537 -5.7593 0.1254 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14     7   exp   10   619 -4.1255 0.1016 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15     8   con  505 87886 -5.1592 0.0020 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16     8   exp  499 87892 -5.1713 0.0020 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17     9   con   29  7470 -5.5514 0.0346 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18     9   exp   45  7232 -5.0796 0.0224 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19    10   con   17  1699 -4.6046 0.0594 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20    10   exp   65  1600 -3.2034 0.0160 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21    11   con  186 50448 -5.6030 0.0054 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22    11   exp  141 27197 -5.2621 0.0071 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23    12   con    5  2493 -6.2118 0.2004 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24    12   exp    3  2338 -6.6584 0.3338 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25    13   con   27 16886 -6.4384 0.0371 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26    13   exp   29 17825 -6.4211 0.0345 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit bivariate random-effects model using rma.mv()</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">group</span>, random <span class="op">=</span> <span class="op">~</span> <span class="va">group</span> <span class="op">|</span> <span class="va">study</span>, struct<span class="op">=</span><span class="st">"UN"</span>, data<span class="op">=</span><span class="va">dat.long</span><span class="op">)</span></span></span>
@@ -374,7 +404,7 @@
 <span class="r-in"><span><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, tau2<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, rho<span class="op">=</span><span class="fl">1</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.90</span>, <span class="fl">0.98</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### an example where the peak is at 0</span></span></span>
+<span class="r-in"><span><span class="co">### an example where the peak of the likelihood profile is at 0</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RD"</span>, n1i<span class="op">=</span><span class="va">n1i</span>, n2i<span class="op">=</span><span class="va">n2i</span>, ai<span class="op">=</span><span class="va">ai</span>, ci<span class="op">=</span><span class="va">ci</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.hine1989.html" class="external-link">dat.hine1989</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>

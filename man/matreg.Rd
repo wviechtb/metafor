@@ -160,13 +160,14 @@ matreg(1, 2:4, R=R, V=vcov(res), ztor=TRUE)
 ### a different example based on van Houwelingen et al. (2002)
 
 ### create dataset in long format
-dat.long <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.colditz1994)
+dat.long <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
+                    data=dat.colditz1994, append=FALSE)
 dat.long <- escalc(measure="PLO", xi=out1, mi=out2, data=dat.long)
-dat.long$tpos <- dat.long$tneg <- dat.long$cpos <- dat.long$cneg <- NULL
 levels(dat.long$group) <- c("CON", "EXP")
+dat.long
 
 ### fit bivariate model
-res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | trial, struct="UN",
+res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | study, struct="UN",
               data=dat.long, method="ML")
 res
 
@@ -177,7 +178,7 @@ matreg(y=2, x=1, R=res$G, cov=TRUE, means=coef(res), n=res$g.levels.comb.k)
 ### it was a var-cov matrix computed from raw data based on res$g.levels.comb.k (= 13) data points
 
 ### fit bivariate model and get the var-cov matrix of the estimates in res$G
-res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | trial, struct="UN",
+res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | study, struct="UN",
               data=dat.long, method="ML", cvvc="varcov", control=list(nearpd=TRUE))
 
 ### now use res$vvc as the var-cov matrix of the estimates in res$G

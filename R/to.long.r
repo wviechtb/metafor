@@ -55,6 +55,30 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          data <- data.frame(data)
    }
 
+   doappend <- FALSE
+
+   if (has.data && is.logical(append) && isTRUE(append)) {
+      doappend <- TRUE
+      appendvars <- seq_len(ncol(data))
+   }
+
+   if (has.data && is.numeric(append)) {
+      doappend <- TRUE
+      append <- unique(round(append))
+      append <- append[which(append >= 1)]
+      append <- append[which(append <= ncol(data))]
+      append <- c(na.omit(append))
+      appendvars <- append
+   }
+
+   if (has.data && is.character(append)) {
+      doappend <- TRUE
+      append <- unique(append)
+      append <- pmatch(append, colnames(data))
+      append <- c(na.omit(append))
+      appendvars <- append
+   }
+
    mf <- match.call()
 
    ### get slab and subset arguments (will be NULL when unspecified)
@@ -700,8 +724,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[2]] <- factor(dat[[2]], levels=c(2,1))
          dat[[3]] <- factor(dat[[3]], levels=c(2,1))
 
-         if (has.data && append)
-            dat <- cbind(data[rep(seq_len(k), each=4L),], dat)
+         if (doappend)
+            dat <- cbind(data[rep(seq_len(k), each=4L),appendvars,drop=FALSE], dat)
 
       } else {
 
@@ -724,8 +748,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[1]] <- factor(dat[[1]])
          dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
-         if (has.data && append)
-            dat <- cbind(data[rep(seq_len(k), each=2L),], dat)
+         if (doappend)
+            dat <- cbind(data[rep(seq_len(k), each=2L),appendvars,drop=FALSE], dat)
 
       }
 
@@ -790,8 +814,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[2]] <- factor(dat[[2]], levels=c(2,1))
          dat[[3]] <- factor(dat[[3]], levels=c(2,1))
 
-         if (has.data && append)
-            dat <- data.frame(data[rep(seq_len(k), each=4L),], dat)
+         if (doappend)
+            dat <- data.frame(data[rep(seq_len(k), each=4L),appendvars,drop=FALSE], dat)
 
       } else {
 
@@ -814,8 +838,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[1]] <- factor(dat[[1]])
          dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
-         if (has.data && append)
-            dat <- cbind(data[rep(seq_len(k), each=2L),], dat)
+         if (doappend)
+            dat <- cbind(data[rep(seq_len(k), each=2L),appendvars,drop=FALSE], dat)
 
       }
 
@@ -880,8 +904,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[2]] <- factor(dat[[2]], levels=c(2,1))
          dat[[3]] <- factor(dat[[3]], levels=c(2,1))
 
-         if (has.data && append)
-            dat <- cbind(data[rep(seq_len(k), each=4L),], dat)
+         if (doappend)
+            dat <- cbind(data[rep(seq_len(k), each=4L),appendvars,drop=FALSE], dat)
 
       } else {
 
@@ -904,8 +928,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[1]] <- factor(dat[[1]])
          dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
-         if (has.data && append)
-            dat <- cbind(data[rep(seq_len(k), each=2L),], dat)
+         if (doappend)
+            dat <- cbind(data[rep(seq_len(k), each=2L),appendvars,drop=FALSE], dat)
 
       }
 
@@ -965,8 +989,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       dat[[1]] <- factor(dat[[1]])
       dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
-      if (has.data && append)
-         dat <- cbind(data[rep(seq_len(k), each=2L),], dat)
+      if (doappend)
+         dat <- cbind(data[rep(seq_len(k), each=2L),appendvars,drop=FALSE], dat)
 
    }
 
@@ -1027,8 +1051,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
       dat[[1]] <- factor(dat[[1]])
       dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
-      if (has.data && append)
-         dat <- cbind(data[rep(seq_len(k), each=2L),], dat)
+      if (doappend)
+         dat <- cbind(data[rep(seq_len(k), each=2L),appendvars,drop=FALSE], dat)
 
    }
 
@@ -1082,8 +1106,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       dat[[1]] <- factor(dat[[1]])
 
-      if (has.data && append)
-         dat <- cbind(data, dat)
+      if (doappend)
+         dat <- cbind(data[,appendvars,drop=FALSE], dat)
 
    }
 
@@ -1142,8 +1166,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
          dat[[1]] <- factor(dat[[1]])
          dat[[2]] <- factor(dat[[2]], levels=c(2,1))
 
-         if (has.data && append)
-            dat <- cbind(data[rep(seq_len(k), each=2L),], dat)
+         if (doappend)
+            dat <- cbind(data[rep(seq_len(k), each=2L),appendvars,drop=FALSE], dat)
 
       } else {
 
@@ -1164,8 +1188,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          dat[[1]] <- factor(dat[[1]])
 
-         if (has.data && append)
-            dat <- cbind(data, dat)
+         if (doappend)
+            dat <- cbind(data[,appendvars,drop=FALSE], dat)
 
       }
 
@@ -1221,8 +1245,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       dat[[1]] <- factor(dat[[1]])
 
-      if (has.data && append)
-         dat <- cbind(data, dat)
+      if (doappend)
+         dat <- cbind(data[,appendvars,drop=FALSE], dat)
 
    }
 
@@ -1278,8 +1302,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       dat[[1]] <- factor(dat[[1]])
 
-      if (has.data && append)
-         dat <- cbind(data, dat)
+      if (doappend)
+         dat <- cbind(data[,appendvars,drop=FALSE], dat)
 
    }
 
@@ -1348,8 +1372,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          dat[[1]] <- factor(dat[[1]])
 
-         if (has.data && append)
-            dat <- cbind(data, dat)
+         if (doappend)
+            dat <- cbind(data[,appendvars,drop=FALSE], dat)
 
       } else {
 
@@ -1371,8 +1395,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
          dat[[1]] <- factor(dat[[1]])
 
-         if (has.data && append)
-            dat <- cbind(data, dat)
+         if (doappend)
+            dat <- cbind(data[,appendvars,drop=FALSE], dat)
 
       }
 
@@ -1430,8 +1454,8 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       dat[[1]] <- factor(dat[[1]])
 
-      if (has.data && append)
-         dat <- data.frame(data, dat)
+      if (doappend)
+         dat <- data.frame(data[,appendvars,drop=FALSE], dat)
 
    }
 

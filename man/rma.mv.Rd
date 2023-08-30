@@ -267,6 +267,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
 \examples{
 ### calculate log odds ratios and corresponding sampling variances
 dat <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+dat
 
 ### fit random-effects model using rma.uni()
 rma(yi, vi, data=dat)
@@ -276,7 +277,7 @@ rma(yi, vi, data=dat)
 rma.mv(yi, vi, random = ~ 1 | trial, data=dat)
 
 ### change data into long format
-dat.long <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+dat.long <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, append=FALSE)
 
 ### set levels of group variable ("exp" = experimental/vaccinated; "con" = control/non-vaccinated)
 levels(dat.long$group) <- c("exp", "con")
@@ -286,6 +287,7 @@ dat.long$group <- relevel(dat.long$group, ref="con")
 
 ### calculate log odds and corresponding sampling variances
 dat.long <- escalc(measure="PLO", xi=out1, mi=out2, data=dat.long)
+dat.long
 
 ### fit bivariate random-effects model using rma.mv()
 res <- rma.mv(yi, vi, mods = ~ group, random = ~ group | study, struct="UN", data=dat.long)
