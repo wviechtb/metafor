@@ -3,7 +3,7 @@
 \alias{simulate.rma}
 \title{Simulate Method for 'rma' Objects}
 \description{
-   The function simulates effect sizes or outcomes based on \code{"rma"} model object.
+   Function to simulate effect sizes or outcomes based on \code{"rma"} model objects.
 }
 \usage{
 \method{simulate}{rma}(object, nsim=1, seed=NULL, olim, \dots)

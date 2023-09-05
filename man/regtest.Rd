@@ -2,7 +2,7 @@
 \alias{regtest}
 \title{Regression Test for Funnel Plot Asymmetry}
 \description{
-   The function can be used to carry out (various versions of) Egger's regression test for funnel plot asymmetry. \loadmathjax
+   Function to carry out (various versions of) Egger's regression test for funnel plot asymmetry. \loadmathjax
 }
 \usage{
 regtest(x, vi, sei, ni, subset, data,
@@ -92,7 +92,7 @@ regtest(x, vi, sei, ni, subset, data,
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{ranktest}} for the rank test, \code{\link{trimfill}} for the trim and fill method, \code{\link{tes}} for the test of excess significance, and \code{\link{selmodel}} for selection models.
+   \code{\link{ranktest}} for the rank correlation test, \code{\link{trimfill}} for the trim and fill method, \code{\link{tes}} for the test of excess significance, \code{\link{fsn}} to compute the fail-safe N (file drawer analysis), and \code{\link{selmodel}} for selection models.
 }
 \examples{
 ### copy data into 'dat' and examine data

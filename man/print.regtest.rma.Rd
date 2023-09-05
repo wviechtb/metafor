@@ -2,7 +2,7 @@
 \alias{print.regtest}
 \title{Print Method for 'regtest' Objects}
 \description{
-   Print method for objects of class \code{"regtest"}.
+   Function to print objects of class \code{"regtest"}.
 }
 \usage{
 \method{print}{regtest}(x, digits=x$digits, ret.fit=x$ret.fit, \dots)

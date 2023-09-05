@@ -4,7 +4,7 @@
 \alias{print.summary.matreg}
 \title{Print and Summary Methods for 'matreg' Objects}
 \description{
-   Print and summary methods for objects of class \code{"matreg"}. \loadmathjax
+   Functions to print objects of class \code{"matreg"} and \code{"summary.matreg"}. \loadmathjax
 }
 \usage{
 \method{print}{matreg}(x, digits, signif.stars=getOption("show.signif.stars"),

@@ -2,7 +2,7 @@
 \alias{print.fsn}
 \title{Print Method for 'fsn' Objects}
 \description{
-   Print method for objects of class \code{"fsn"}.
+   Function to print objects of class \code{"fsn"}.
 }
 \usage{
 \method{print}{fsn}(x, digits=x$digits, \dots)

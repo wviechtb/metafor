@@ -5,7 +5,7 @@
 \alias{cumul.rma.peto}
 \title{Cumulative Meta-Analysis for 'rma' Objects}
 \description{
-   The functions repeatedly fit the specified model, adding one study at a time to the model. \loadmathjax
+   Function to carry out a \sQuote{cumulative meta-analysis}, by repeatedly fitting the specified model adding one study at a time. \loadmathjax
 }
 \usage{
 cumul(x, \dots)

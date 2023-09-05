@@ -2,7 +2,7 @@
 \alias{metafor.news}
 \title{Read News File of the Metafor Package}
 \description{
-   Read the news file of the \pkg{\link{metafor-package}}.
+   Function to read the \file{NEWS} file of the \pkg{\link{metafor-package}}.
 }
 \usage{
 metafor.news()

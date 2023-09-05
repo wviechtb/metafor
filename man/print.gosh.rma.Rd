@@ -2,7 +2,7 @@
 \alias{print.gosh.rma}
 \title{Print Method for 'gosh.rma' Objects}
 \description{
-   Print method for objects of class \code{"gosh.rma"}.
+   Function to print objects of class \code{"gosh.rma"}.
 }
 \usage{
 \method{print}{gosh.rma}(x, digits=x$digits, \dots)

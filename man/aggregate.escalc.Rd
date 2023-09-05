@@ -3,7 +3,7 @@
 \alias{aggregate.escalc}
 \title{Aggregate Multiple Effect Sizes or Outcomes Within Studies}
 \description{
-   The function can be used to aggregate multiple effect sizes or outcomes belonging to the same study (or to the same level of some other clustering variable) into a single combined effect size or outcome. \loadmathjax
+   Function to aggregate multiple effect sizes or outcomes belonging to the same study (or to the same level of some other clustering variable) into a single combined effect size or outcome. \loadmathjax
 }
 \usage{
 \method{aggregate}{escalc}(x, cluster, time, obs, V, struct="CS", rho, phi,

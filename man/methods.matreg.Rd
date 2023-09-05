@@ -3,7 +3,7 @@
 \alias{vcov.matreg}
 \title{Extract the Model Coefficients and Variance-Covariance Matrix from 'matreg' Objects}
 \description{
-   The \code{coef} function extracts the estimated model coefficients from objects of class \code{"matreg"}. The \code{vcov} function extracts the corresponding variance-covariance matrix.
+   Methods for objects of class \code{"matreg"}.
 }
 \usage{
 \method{coef}{matreg}(object, \dots)
@@ -12,6 +12,9 @@
 \arguments{
    \item{object}{an object of class \code{"matreg"}.}
    \item{\dots}{other arguments.}
+}
+\details{
+   The \code{coef} function extracts the estimated model coefficients from objects of class \code{"matreg"}. The \code{vcov} function extracts the corresponding variance-covariance matrix.
 }
 \value{
    Either a vector with the estimated model coefficients or a variance-covariance matrix.

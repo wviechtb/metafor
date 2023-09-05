@@ -2,7 +2,7 @@
 \alias{plot.permutest.rma.uni}
 \title{Plot Method for 'permutest.rma.uni' Objects}
 \description{
-   Plot method for objects of class \code{"permutest.rma.uni"}.
+   Function to plot objects of class \code{"permutest.rma.uni"}.
 }
 \usage{
 \method{plot}{permutest.rma.uni}(x, beta, alpha, QM=FALSE, QS=FALSE,

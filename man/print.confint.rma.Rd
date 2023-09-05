@@ -3,7 +3,7 @@
 \alias{print.list.confint.rma}
 \title{Print Methods for 'confint.rma' and 'list.confint.rma' Objects}
 \description{
-   Print methods for objects of class \code{"confint.rma"} and \code{"list.confint.rma"}.
+   Functions to print objects of class \code{"confint.rma"} and \code{"list.confint.rma"}.
 }
 \usage{
 \method{print}{confint.rma}(x, digits=x$digits, \dots)

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-16</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
 
     <table class="ref-index"><colgroup><col class="alias"><col class="title"></colgroup><tbody><tr><th colspan="2">
           <h2 id="package-introduction">Package Introduction <a href="#package-introduction" class="anchor" aria-hidden="true"></a></h2>
-          <p class="section-desc"></p><p>Introduction to the package</p>
+          <p class="section-desc"></p><p>Introduction to the package.</p>
         </th>
       </tr></tbody><tbody><tr><td>
           <p><code><a href="metafor-package.html">metafor-package</a></code> <code><a href="metafor-package.html">metafor</a></code> </p>
@@ -260,7 +260,7 @@
         <td><p>Normal QQ Plots for 'rma' Objects</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="publication-bias">Publication Bias <a href="#publication-bias" class="anchor" aria-hidden="true"></a></h2>
-          <p class="section-desc"></p><p>Functions for detecting, assessing the impact of, and correcting for publication bias.</p>
+          <p class="section-desc"></p><p>Functions for detecting, assessing the impact of, and correcting for publication bias (funnel plot asymmetry / small-study effects).</p>
         </th>
       </tr></tbody><tbody><tr><td>
           <p><code><a href="regtest.html">regtest()</a></code> </p>
@@ -342,13 +342,9 @@
           <p><code><a href="update.rma.html">update(<i>&lt;rma&gt;</i>)</a></code> </p>
         </td>
         <td><p>Model Updating for 'rma' Objects</p></td>
-      </tr><tr><td>
-          <p><code><a href="vif.html">vif()</a></code> <code><a href="vif.html">print(<i>&lt;vif.rma&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Variance Inflation Factors for 'rma' Objects</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="model-diagnostics">Model Diagnostics <a href="#model-diagnostics" class="anchor" aria-hidden="true"></a></h2>
-          <p class="section-desc"></p><p>Functions for identifying outliers and/or influential studies and for conducting sensitivity analyses.</p>
+          <p class="section-desc"></p><p>Functions for identifying outliers / influential studies, sensitivity analyses, and checking for multicollinearity.</p>
         </th>
       </tr></tbody><tbody><tr><td>
           <p><code><a href="residuals.rma.html">residuals(<i>&lt;rma&gt;</i>)</a></code> <code><a href="residuals.rma.html">rstandard(<i>&lt;rma.uni&gt;</i>)</a></code> <code><a href="residuals.rma.html">rstandard(<i>&lt;rma.mh&gt;</i>)</a></code> <code><a href="residuals.rma.html">rstandard(<i>&lt;rma.peto&gt;</i>)</a></code> <code><a href="residuals.rma.html">rstandard(<i>&lt;rma.mv&gt;</i>)</a></code> <code><a href="residuals.rma.html">rstudent(<i>&lt;rma.uni&gt;</i>)</a></code> <code><a href="residuals.rma.html">rstudent(<i>&lt;rma.mh&gt;</i>)</a></code> <code><a href="residuals.rma.html">rstudent(<i>&lt;rma.peto&gt;</i>)</a></code> <code><a href="residuals.rma.html">rstudent(<i>&lt;rma.mv&gt;</i>)</a></code> </p>
@@ -370,6 +366,10 @@
           <p><code><a href="leave1out.html">leave1out()</a></code> </p>
         </td>
         <td><p>Leave-One-Out Diagnostics for 'rma' Objects</p></td>
+      </tr><tr><td>
+          <p><code><a href="vif.html">vif()</a></code> <code><a href="vif.html">print(<i>&lt;vif.rma&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Variance Inflation Factors for 'rma' Objects</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="print-methods">Print Methods <a href="#print-methods" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p><p>Print methods.</p>
@@ -385,7 +385,7 @@
       </tr><tr><td>
           <p><code><a href="print.anova.rma.html">print(<i>&lt;anova.rma&gt;</i>)</a></code> <code><a href="print.anova.rma.html">print(<i>&lt;list.anova.rma&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Print Method for 'anova.rma' and 'list.anova.rma' Objects</p></td>
+        <td><p>Print Methods for 'anova.rma' and 'list.anova.rma' Objects</p></td>
       </tr><tr><td>
           <p><code><a href="print.confint.rma.html">print(<i>&lt;confint.rma&gt;</i>)</a></code> <code><a href="print.confint.rma.html">print(<i>&lt;list.confint.rma&gt;</i>)</a></code> </p>
         </td>
@@ -405,7 +405,7 @@
       </tr><tr><td>
           <p><code><a href="print.list.rma.html">print(<i>&lt;list.rma&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Print method for 'list.rma' Objects</p></td>
+        <td><p>Print Method for 'list.rma' Objects</p></td>
       </tr><tr><td>
           <p><code><a href="print.matreg.html">print(<i>&lt;matreg&gt;</i>)</a></code> <code><a href="print.matreg.html">summary(<i>&lt;matreg&gt;</i>)</a></code> <code><a href="print.matreg.html">print(<i>&lt;summary.matreg&gt;</i>)</a></code> </p>
         </td>
@@ -452,7 +452,7 @@
         <td><p>Extract the Model Coefficients and Variance-Covariance Matrix from 'matreg' Objects</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="convenience-functions">Convenience Functions <a href="#convenience-functions" class="anchor" aria-hidden="true"></a></h2>
-          <p class="section-desc"></p><p>Some miscellaneous convenience functions.</p>
+          <p class="section-desc"></p><p>Miscellaneous convenience functions.</p>
         </th>
       </tr></tbody><tbody><tr><td>
           <p><code><a href="mfopt.html">getmfopt()</a></code> <code><a href="mfopt.html">setmfopt()</a></code> </p>
@@ -548,7 +548,7 @@
         <td><p>Methods for 'vif.rma' Objects</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="miscellaneous-documentation">Miscellaneous Documentation <a href="#miscellaneous-documentation" class="anchor" aria-hidden="true"></a></h2>
-          <p class="section-desc"></p><p>Miscellaneous documentation.</p>
+          <p class="section-desc"></p><p>Miscellaneous documentation on models, recommendations, and options.</p>
         </th>
       </tr></tbody><tbody><tr><td>
           <p><code><a href="misc-models.html">misc-models</a></code> <code><a href="misc-models.html">misc_models</a></code> </p>

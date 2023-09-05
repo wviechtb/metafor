@@ -8,7 +8,7 @@
 \alias{weights.rma.mv}
 \title{Compute Weights for 'rma' Objects}
 \description{
-   The function computes the weights given to the observed effect sizes or outcomes during the model fitting for objects of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, and \code{"rma.mv"}.
+   Functions to compute the weights given to the observed effect sizes or outcomes during the model fitting for objects of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, and \code{"rma.mv"}.
 }
 \usage{
 \method{weights}{rma.uni}(object, type="diagonal", \dots)

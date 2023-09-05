@@ -2,7 +2,7 @@
 \alias{rcalc}
 \title{Calculate the Variance-Covariance of Dependent Correlation Coefficients}
 \description{
-   The function can be used to calculate the variance-covariance matrix of correlation coefficients computed based on the same sample of subjects. \loadmathjax
+   Function to calculate the variance-covariance matrix of correlation coefficients computed based on the same sample of subjects. \loadmathjax
 }
 \usage{
 rcalc(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, \dots)

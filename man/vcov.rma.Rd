@@ -3,7 +3,7 @@
 \alias{vcov.rma}
 \title{Extract Various Types of Variance-Covariance Matrices from 'rma' Objects}
 \description{
-   The function extracts various types of variance-covariance matrices from objects of class \code{"rma"}. By default, the variance-covariance matrix of the parameter estimates (fixed effects) is returned. \loadmathjax
+   Function to extract various types of variance-covariance matrices from objects of class \code{"rma"}. By default, the variance-covariance matrix of the fixed effects is returned. \loadmathjax
 }
 \usage{
 \method{vcov}{rma}(object, type="fixed", \dots)

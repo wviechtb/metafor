@@ -74,7 +74,7 @@ navbar:
 reference:
   - title: "Package Introduction"
     desc: >
-      Introduction to the package
+      Introduction to the package.
     contents:
     - metafor-package
   - title: "Effect Sizes / Outcome Measures / Data Prep"
@@ -127,7 +127,7 @@ reference:
       - qqnorm.rma
   - title: "Publication Bias"
     desc: >
-      Functions for detecting, assessing the impact of, and correcting for publication bias.
+      Functions for detecting, assessing the impact of, and correcting for publication bias (funnel plot asymmetry / small-study effects).
     contents:
       - regtest
       - ranktest
@@ -152,16 +152,16 @@ reference:
       - fitstats
       - simulate.rma
       - update.rma
-      - vif
   - title: "Model Diagnostics"
     desc: >
-      Functions for identifying outliers and/or influential studies and for conducting sensitivity analyses.
+      Functions for identifying outliers / influential studies, sensitivity analyses, and checking for multicollinearity.
     contents:
       - residuals.rma
       - influence.rma.uni
       - influence.rma.mv
       - weights.rma
       - leave1out
+      - vif
   - title: "Print Methods"
     desc: >
       Print methods.
@@ -196,7 +196,7 @@ reference:
       - vcov.matreg
   - title: "Convenience Functions"
     desc: >
-      Some miscellaneous convenience functions.
+      Miscellaneous convenience functions.
     contents:
       - mfopt
       - bldiag
@@ -226,7 +226,7 @@ reference:
       - methods.vif.rma
   - title: "Miscellaneous Documentation"
     desc: >
-      Miscellaneous documentation.
+      Miscellaneous documentation on models, recommendations, and options.
     contents:
       - misc-models
       - misc-recs

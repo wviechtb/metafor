@@ -4,7 +4,7 @@
 \alias{print.vif.rma}
 \title{Variance Inflation Factors for 'rma' Objects}
 \description{
-   Compute (generalized) variance inflation factors (VIFs) for objects of class \code{"rma"}. \loadmathjax
+   Function to compute (generalized) variance inflation factors (VIFs) for objects of class \code{"rma"}. \loadmathjax
 }
 \usage{
 vif(x, \dots)

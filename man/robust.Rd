@@ -4,7 +4,7 @@
 \alias{robust.rma.mv}
 \title{Cluster-Robust Tests and Confidence Intervals for 'rma' Objects}
 \description{
-   The function provides cluster-robust tests and confidence intervals (also known as robust variance estimation) of the model coefficients for objects of class \code{"rma"}. \loadmathjax
+   Function to obtain cluster-robust tests and confidence intervals (also known as robust variance estimation) of the model coefficients for objects of class \code{"rma"}. \loadmathjax
 }
 \usage{
 robust(x, cluster, \dots)

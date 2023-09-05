@@ -3,7 +3,7 @@
 \alias{reporter.rma.uni}
 \title{Dynamically Generated Analysis Reports for 'rma.uni' Objects}
 \description{
-   The function dynamically generates analysis reports for objects of class \code{"rma.uni"}.
+   Function to dynamically generate an analysis report for objects of class \code{"rma.uni"}.
 }
 \usage{
 reporter(x, \dots)

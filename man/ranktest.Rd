@@ -2,7 +2,7 @@
 \alias{ranktest}
 \title{Rank Correlation Test for Funnel Plot Asymmetry}
 \description{
-   The function can be used to carry out the rank correlation test for funnel plot asymmetry.
+   Function to carry out the rank correlation test for funnel plot asymmetry.
 }
 \usage{
 ranktest(x, vi, sei, subset, data, digits, \dots)
@@ -42,7 +42,7 @@ ranktest(x, vi, sei, subset, data, digits, \dots)
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{regtest}} for the regression test, \code{\link{trimfill}} for the trim and fill method, \code{\link{tes}} for the test of excess significance, and \code{\link{selmodel}} for selection models.
+   \code{\link{regtest}} for the regression test, \code{\link{trimfill}} for the trim and fill method, \code{\link{tes}} for the test of excess significance, \code{\link{fsn}} to compute the fail-safe N (file drawer analysis), and \code{\link{selmodel}} for selection models.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

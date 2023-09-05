@@ -2,7 +2,7 @@
 \alias{plot.infl.rma.uni}
 \title{Plot Method for 'infl.rma.uni' Objects}
 \description{
-   Plot method for objects of class \code{"infl.rma.uni"}. \loadmathjax
+   Function to plot objects of class \code{"infl.rma.uni"}. \loadmathjax
 }
 \usage{
 \method{plot}{infl.rma.uni}(x, plotinf=TRUE, plotdfbs=FALSE, dfbsnew=FALSE, logcov=TRUE,

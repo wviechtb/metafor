@@ -2,7 +2,7 @@
 \alias{to.wide}
 \title{Convert Data from a Long to a Wide Format}
 \description{
-   The function converts data given in long format to a wide format.
+   Function to convert data given in long format to a wide format.
 }
 \usage{
 to.wide(data, study, grp, ref, grpvars, postfix=c(".1",".2"),

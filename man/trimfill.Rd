@@ -3,7 +3,7 @@
 \alias{trimfill.rma.uni}
 \title{Trim and Fill Analysis for 'rma.uni' Objects}
 \description{
-   Carry out a trim and fill analysis for objects of class \code{"rma.uni"}. \loadmathjax
+   Function to carry out a trim and fill analysis for objects of class \code{"rma.uni"}. \loadmathjax
 }
 \usage{
 trimfill(x, \dots)
@@ -56,7 +56,7 @@ trimfill(x, \dots)
 \seealso{
    \code{\link[=funnel.rma]{funnel}} for a function to create funnel plots of the observed and augmented data.
 
-   \code{\link{ranktest}} for the rank test, \code{\link{regtest}} for the regression test, \code{\link{tes}} for the test of excess significance, and \code{\link{selmodel}} for selection models.
+   \code{\link{regtest}} for the regression test, \code{\link{ranktest}} for the rank correlation test, \code{\link{tes}} for the test of excess significance, \code{\link{fsn}} to compute the fail-safe N (file drawer analysis), and \code{\link{selmodel}} for selection models.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

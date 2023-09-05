@@ -1,8 +1,8 @@
 \name{print.list.rma}
 \alias{print.list.rma}
-\title{Print method for 'list.rma' Objects}
+\title{Print Method for 'list.rma' Objects}
 \description{
-   Print method for objects of class \code{"list.rma"}.
+   Function to print objects of class \code{"list.rma"}.
 }
 \usage{
 \method{print}{list.rma}(x, digits=x$digits, \dots)

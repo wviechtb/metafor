@@ -2,7 +2,7 @@
 \alias{plot.gosh.rma}
 \title{Plot Method for 'gosh.rma' Objects}
 \description{
-   Plot method for objects of class \code{"gosh.rma"}.
+   Function to plot objects of class \code{"gosh.rma"}.
 }
 \usage{
 \method{plot}{gosh.rma}(x, het="I2", pch=16, cex, out, col, alpha, border,

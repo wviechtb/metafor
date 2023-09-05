@@ -2,7 +2,7 @@
 \alias{print.ranktest}
 \title{Print Method for 'ranktest' Objects}
 \description{
-   Print method for objects of class \code{"ranktest"}.
+   Function to print objects of class \code{"ranktest"}.
 }
 \usage{
 \method{print}{ranktest}(x, digits=x$digits, \dots)

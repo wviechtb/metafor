@@ -2,7 +2,7 @@
 \alias{blsplit}
 \title{Split Block Diagonal Matrix}
 \description{
-   Split a block diagonal matrix into a list of sub-matrices.
+   Function to split a block diagonal matrix into a list of sub-matrices.
 }
 \usage{
 blsplit(x, cluster, fun, args, sort=FALSE)

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-16</span>
       </span>
     </div>
 
@@ -96,8 +96,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.3-15" id="metafor-43-15-2023-08-30">metafor 4.3-15 (2023-08-30)<a class="anchor" aria-label="anchor" href="#metafor-43-15-2023-08-30"></a></h2>
+<h2 class="page-header" data-toc-text="4.3-16" id="metafor-43-16-2023-09-05">metafor 4.3-16 (2023-09-05)<a class="anchor" aria-label="anchor" href="#metafor-43-16-2023-09-05"></a></h2>
 <ul><li><p>added <code><a href="../reference/mfopt.html">getmfopt()</a></code> and <code><a href="../reference/mfopt.html">setmfopt()</a></code> functions for getting and setting package options and made some of the options more flexible</p></li>
+<li><p>removed argument <code>weighted</code> from <code><a href="../reference/fsn.html">fsn()</a></code> (whether weighted or unweighted averages are used in Orwin’s method is now simply determined by whether sampling variances are specified or not); added <code>type="General"</code> to <code><a href="../reference/fsn.html">fsn()</a></code> as a generalization of the Orwin and Rosenberg methods (that allows for heterogeneity based on a random-effects model)</p></li>
 <li><p>further improved the theming of all plots based on the foreground and background colors; within RStudio, plot colors can also be automatically chosen based on the theme</p></li>
 <li><p>added (for now undocumented) <code>vccon</code> argument to <code><a href="../reference/rma.mv.html">rma.mv()</a></code></p></li>
 <li><p><code>replace</code> argument in <code><a href="../reference/conv.2x2.html">conv.2x2()</a></code>, <code><a href="../reference/conv.delta.html">conv.delta()</a></code>, <code><a href="../reference/conv.fivenum.html">conv.fivenum()</a></code>, and <code><a href="../reference/conv.wald.html">conv.wald()</a></code> can now also be a logical</p></li>

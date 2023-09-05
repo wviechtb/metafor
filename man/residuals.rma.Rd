@@ -13,7 +13,7 @@
 \alias{rstudent.rma.peto}
 \title{Residual Values based on 'rma' Objects}
 \description{
-   The \code{residuals}, \code{rstandard}, and \code{rstudent} functions compute residuals, corresponding standard errors, and standardized residuals for models fitted with the \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, and \code{\link{rma.mv}} functions. \loadmathjax
+   Functions to compute residuals and standardized versions thereof for models fitted with the \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, and \code{\link{rma.mv}} functions. \loadmathjax
 }
 \usage{
 \method{residuals}{rma}(object, type="response", \dots)

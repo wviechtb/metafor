@@ -2,7 +2,7 @@
 \alias{contrmat}
 \title{Construct Contrast Matrix for Two-Group Comparisons}
 \description{
-   The function constructs a matrix that indicates which two groups have been contrasted against each other in each row of a dataset.
+   Function to construct a matrix that indicates which two groups have been contrasted against each other in each row of a dataset.
 }
 \usage{
 contrmat(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE, append=TRUE)

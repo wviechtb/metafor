@@ -14,15 +14,16 @@ test_that("confint() gives correct results for the 'expectancy data' in Becker (
    out <- capture.output(print(sav)) ### so that print.fsn() is run (at least once)
 
    ### use Fisher's test
-   sav <- fsn(yi, vi, data=dat.raudenbush1985, test="Fisher")
+   sav <- fsn(yi, vi, data=dat.raudenbush1985, pool="Fisher")
    expect_equivalent(sav$fsnum, 40)
 
    sav <- fsn(yi, data=dat.raudenbush1985, type="Orwin", target=.05)
    expect_equivalent(sav$fsnum, 44)
-   ### note: Becker finds N = 4, but uses the FE model estimate with 1/vi weights for
-   ### the average effect size, but Orwin's methods is based on units weighting
 
    out <- capture.output(print(sav)) ### so that print.fsn() is run (at least once) with type="Orwin"
+
+   sav <- fsn(yi, vi, data=dat.raudenbush1985, type="Orwin", target=.05)
+   expect_equivalent(sav$fsnum, 4)
 
    sav <- fsn(yi, vi, data=dat.raudenbush1985, type="Rosenberg")
    expect_equivalent(sav$fsnum, 0)
@@ -31,9 +32,13 @@ test_that("confint() gives correct results for the 'expectancy data' in Becker (
 
    skip_on_cran()
 
-   ### fsn() based on random-effects model
-   sav <- fsn(yi, vi, data=dat.raudenbush1985, type="REM")
-   expect_equivalent(sav$fsnum, 16)
+   sav <- fsn(yi, vi, data=dat.raudenbush1985, type="General")
+   expect_equivalent(sav$fsnum, 0)
+
+   sav <- fsn(yi, vi, data=dat.raudenbush1985, type="General", exact=TRUE)
+   expect_equivalent(sav$fsnum, 0)
+
+   out <- capture.output(print(sav)) ### so that print.fsn() is run (at least once) with type="General"
 
 })
 
@@ -46,17 +51,27 @@ test_that("confint() gives correct results for the 'passive smoking data' in Bec
 
    sav <- fsn(yi, data=dat.hackshaw1998, type="Orwin", target=.049)
    expect_equivalent(sav$fsnum, 186)
-   ### note: Becker finds N = 103, but uses the FE model estimate with 1/vi weights for
-   ### the average effect size, but Orwin's methods is based on units weighting
+
+   sav <- fsn(yi, vi, data=dat.hackshaw1998, type="Orwin", target=.049)
+   expect_equivalent(sav$fsnum, 104) # not 103 as fsn() always rounds up
 
    sav <- fsn(yi, vi, data=dat.hackshaw1998, type="Rosenberg")
    expect_equivalent(sav$fsnum, 202)
+
+   skip_on_cran()
+
+   sav <- fsn(yi, vi, data=dat.hackshaw1998, type="General")
+   expect_equivalent(sav$fsnum, 112)
+
+   sav <- fsn(yi, vi, data=dat.hackshaw1998, type="General", exact=TRUE)
+   expect_equivalent(sav$fsnum, 119)
 
 })
 
 test_that("confint() gives correct results for the 'interview data' in Becker (2005).", {
 
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat.mcdaniel1994)
+
    sav <- fsn(yi, vi, data=dat)
 
    expect_equivalent(sav$fsnum, 50364)
@@ -64,11 +79,20 @@ test_that("confint() gives correct results for the 'interview data' in Becker (2
 
    sav <- fsn(yi, data=dat, type="Orwin", target=.15)
    expect_equivalent(sav$fsnum, 129)
-   ### note: Becker finds N = 64, but uses the FE model estimate with 1/vi weights for
-   ### the average effect size, but Orwin's methods is based on units weighting
+
+   sav <- fsn(yi, vi, data=dat, type="Orwin", target=.15)
+   expect_equivalent(sav$fsnum, 65) # not 64 as fsn() always rounds up
 
    sav <- fsn(yi, vi, data=dat, type="Rosenberg")
    expect_equivalent(sav$fsnum, 45528)
+
+   skip_on_cran()
+
+   sav <- fsn(yi, vi, data=dat, type="General")
+   expect_equivalent(sav$fsnum, 6068)
+
+   sav <- fsn(yi, vi, data=dat, type="General", exact=TRUE)
+   expect_equivalent(sav$fsnum, 6068)
 
 })
 

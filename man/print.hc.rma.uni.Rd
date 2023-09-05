@@ -2,7 +2,7 @@
 \alias{print.hc.rma.uni}
 \title{Print Method for 'hc.rma.uni' Objects}
 \description{
-   Print method for objects of class \code{"hc.rma.uni"}. \loadmathjax
+   Function to print objects of class \code{"hc.rma.uni"}. \loadmathjax
 }
 \usage{
 \method{print}{hc.rma.uni}(x, digits=x$digits, \dots)

@@ -2,7 +2,7 @@
 \alias{print.permutest.rma.uni}
 \title{Print Method for 'permutest.rma.uni' Objects}
 \description{
-   Print method for objects of class \code{"permutest.rma.uni"}.
+   Function to print objects of class \code{"permutest.rma.uni"}.
 }
 \usage{
 \method{print}{permutest.rma.uni}(x, digits=x$digits, signif.stars=getOption("show.signif.stars"),

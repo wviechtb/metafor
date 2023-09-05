@@ -5,7 +5,7 @@
 \alias{hatvalues.rma.mv}
 \title{Model Diagnostics for 'rma.mv' Objects}
 \description{
-   The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case at a time on the model fit or the fitted/residual values) for objects of class \code{"rma.mv"}. \loadmathjax
+   Functions to compute various outlier and influential study diagnostics (some of which indicate the influence of deleting one study at a time on the model fit or the fitted/residual values) for objects of class \code{"rma.mv"}. \loadmathjax
 }
 \usage{
 \method{cooks.distance}{rma.mv}(model, progbar=FALSE, cluster,

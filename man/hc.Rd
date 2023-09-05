@@ -3,7 +3,7 @@
 \alias{hc.rma.uni}
 \title{Meta-Analysis based on the Method by Henmi and Copas (2010)}
 \description{
-   The function can be used to obtain an estimate of the average true outcome and corresponding confidence interval under a random-effects model using the method described by Henmi and Copas (2010).
+   Function to obtain an estimate of the average true outcome and corresponding confidence interval under a random-effects model using the method described by Henmi and Copas (2010).
 }
 \usage{
 hc(object, \dots)

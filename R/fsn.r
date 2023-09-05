@@ -1,4 +1,5 @@
-fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted=FALSE, subset, digits, ...) {
+fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target,
+                method="REML", exact=FALSE, subset, verbose=FALSE, digits, ...) {
 
    #########################################################################
 
@@ -9,12 +10,21 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
-   type <- match.arg(type, c("Rosenthal", "Orwin", "Rosenberg", "Binomial", "REM"))
+   ### select/match type
+
+   type.options <- c("rosenthal", "binomial", "orwin", "rosenberg", "general")
+
+   type <- type.options[grep(tolower(type), type.options)[1]]
+
+   if (is.na(type))
+      stop(mstyle$stop("Unknown 'type' specified."))
+
+   type <- paste0(toupper(substr(type, 1, 1)), substr(type, 2, nchar(type)))
+
+   ### set defaults
 
    if (missing(target))
       target <- NULL
-
-   ### set defaults for digits
 
    if (missing(digits)) {
       digits <- .set.digits(dmiss=TRUE)
@@ -24,35 +34,67 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("test", "verbose", "interval", "iters"))
+   .chkdots(ddd, c("pool", "interval", "maxint", "tol", "maxiter", "tau2", "test", "mumiss", "weighted"))
+
+   if (is.null(ddd$pool)) {
+      pool <- "stouffer"
+   } else {
+      pool <- match.arg(tolower(ddd$pool), c("stouffer", "fisher"))
+   }
+
+   # note: interval default set below; see [a] (based on k)
+
+   if (is.null(ddd$maxint)) {
+      maxint <- 10^7
+   } else {
+      maxint <- ddd$maxint
+   }
+
+   if (is.null(ddd$tol)) {
+      tol <- .Machine$double.eps^0.25
+   } else {
+      tol <- ddd$tol
+   }
+
+   if (is.null(ddd$maxiter)) {
+      maxiter <- 1000
+   } else {
+      maxiter <- ddd$maxiter
+   }
+
+   if (is.null(ddd$tau2)) {
+      tau2fix <- NULL
+   } else {
+      tau2fix <- ddd$tau2
+   }
 
    if (is.null(ddd$test)) {
-      test <- "Stouffer"
+      test <- "z"
    } else {
-      test <- match.arg(ddd$test, c("Stouffer", "Fisher"))
+      test <- ddd$test
    }
 
-   if (is.null(ddd$verbose)) {
-      verbose <- FALSE
+   if (type == "General" && test != "z")
+      exact <- TRUE
+
+   if (is.null(ddd$mumiss)) {
+      mumiss <- 0
    } else {
-      verbose <- ddd$verbose
+      mumiss <- ddd$mumiss
    }
 
-   if (is.null(ddd$interval)) {
-      interval <- c(0,1000)
-   } else {
-      interval <- ddd$interval
-   }
+   ### observed values (to be replaced as needed)
 
-   if (is.null(ddd$iters)) {
-      iters <- 100000
-   } else {
-      iters <- ddd$iters
-   }
+   est  <- NA_real_ # pooled estimate
+   tau2 <- NA_real_ # tau^2 estimate
+   pval <- NA_real_ # p-value
 
-   meanes  <- NA_real_
-   pval    <- NA_real_
-   rejrate <- NA_real_
+   ### defaults (to be replaced if type="General")
+
+   est.fsn  <- NA_real_
+   tau2.fsn <- NA_real_
+   pval.fsn <- NA_real_
+   ub.sign  <- ""
 
    #########################################################################
 
@@ -78,17 +120,29 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
    #weight <- .getx("weights", mf=mf, data=data, checknumeric=TRUE)
    subset <- .getx("subset",  mf=mf, data=data, checknumeric=TRUE)
 
-   if (type %in% c("Rosenthal", "Rosenberg", "REM") || (type == "Orwin" && weighted)) {
-      if (is.null(vi)) {
-         if (is.null(sei)) {
-            stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
-         } else {
-            vi <- sei^2
-         }
-      }
-   } else {
-      vi <- rep(0, length(yi))
+   if (is.null(vi)) {
+      if (!is.null(sei))
+         vi <- sei^2
    }
+
+   if (type %in% c("Rosenthal", "Rosenberg", "General") && is.null(vi))
+      stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
+
+   ### ensure backwards compatibility with the 'weighted' argument when type="Orwin"
+
+   if (type == "Orwin") {
+      if (isTRUE(ddd$weighted) && is.null(vi)) # if weighted=TRUE, then check that the vi's are available
+         stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
+      if (isFALSE(ddd$weighted)) # if weighted=FALSE, then set vi <- 1 for unweighted
+         vi <- 1
+      if (is.null(ddd$weighted) && is.null(vi)) # if weighted is unspecified, set vi <- 1 if vi's are unspecified
+         vi <- 1
+   }
+
+   ### allow easy setting of vi to a single value
+
+   if (length(vi) == 1L)
+      vi <- rep(vi, length(yi))
 
    ### check length of yi and vi
 
@@ -125,12 +179,31 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
 
    }
 
+   ### check for non-positive sampling variances
+
+   if (any(vi <= 0))
+      stop(mstyle$stop("Cannot use method when there are non-positive sampling variances in the data."))
+
+   ### number of studies left over
+
+   k <- length(yi)
+
+   if (k == 1)
+      stop(mstyle$stop("Stopped because k = 1."))
+
+   ### set interval for uniroot() [a]
+
+   if (is.null(ddd$interval)) {
+      interval <- c(0, k*50)
+   } else {
+      interval <- ddd$interval
+   }
+
    #########################################################################
 
-   if (type == "Rosenthal" && test == "Stouffer") {
+   if (type == "Rosenthal" && pool == "stouffer") {
 
-      k      <- length(yi)
-      zi     <- yi / sqrt(vi)
+      zi     <- c(yi / sqrt(vi))
       z.avg  <- abs(sum(zi) / sqrt(k))
       pval   <- pnorm(z.avg, lower.tail=FALSE)
       fsnum  <- max(0, k * (z.avg / qnorm(alpha, lower.tail=FALSE))^2 - k)
@@ -138,7 +211,7 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
 
    }
 
-   if (type == "Rosenthal" && test == "Fisher") {
+   if (type == "Rosenthal" && pool == "fisher") {
 
       zi <- c(yi / sqrt(vi))
       pi <- pnorm(abs(zi), lower.tail=FALSE)
@@ -147,54 +220,16 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
       if (pval >= alpha) {
          fsnum <- 0
       } else {
-         fsnum <- try(uniroot(.fsn.fisher, interval=interval, extendInt="upX", pi=pi, alpha=alpha)$root, silent=FALSE)
+         fsnum <- try(uniroot(.fsn.fisher, interval=interval, extendInt="upX", tol=tol, maxiter=maxiter, pi=pi, alpha=alpha)$root, silent=FALSE)
          if (inherits(fsnum, "try-error"))
-            stop(mstyle$stop("Could not find fail-safe N using Fisher's method."))
+            stop(mstyle$stop("Could not find fail-safe N using Fisher's method for pooling p-values."))
       }
-      target <- NA_real_
-
-   }
-
-   if (type == "Orwin") {
-
-      k <- length(yi)
-
-      if (weighted) {
-         wi <- 1/vi
-         meanes <- .wmean(yi, wi)
-      } else {
-         meanes <- mean(yi)
-      }
-
-      if (is.null(target))
-         target <- meanes / 2
-
-      if (identical(target, 0)) {
-         fsnum <- Inf
-      } else {
-         if (sign(target) != sign(meanes))
-            target <- -1 * target
-         fsnum <- max(0, k * (meanes - target) / target)
-      }
-
-   }
-
-   if (type == "Rosenberg") {
-
-      k      <- length(yi)
-      wi     <- 1/vi
-      meanes <- .wmean(yi, wi)
-      zval   <- meanes / sqrt(1/sum(wi))
-      w.p    <- (sum(wi*yi) / qnorm(alpha/2, lower.tail=FALSE))^2 - sum(wi)
-      pval   <- 2*pnorm(abs(zval), lower.tail=FALSE)
-      fsnum  <- max(0, k*w.p/sum(wi))
       target <- NA_real_
 
    }
 
    if (type == "Binomial") {
 
-      k    <- length(yi)
       kpos <- sum(yi > 0)
       pval <- binom.test(kpos, k)$p.value
       if (pval >= alpha) {
@@ -211,42 +246,119 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
 
    }
 
-   if (type == "REM") {
+   if (type == "Orwin") {
 
-      res <- .fsn.fitre(yi, vi)
-
-      vnew   <- 1/mean(1/vi)
-      tau2   <- res$tau2
-      meanes <- res$est
-      pval   <- res$pval
+      wi <- 1 / vi
+      est <- .wmean(yi, wi)
 
       if (is.null(target))
-         target <- meanes / 2
+         target <- est / 2
 
       if (identical(target, 0)) {
-
          fsnum <- Inf
-
       } else {
-
-         if (sign(target) != sign(meanes))
+         if (sign(target) != sign(est))
             target <- -1 * target
-
-         diff.lo <- .fsn.re(0, yi=yi, vi=vi, vnew=vnew, tau2=tau2, target=target, alpha=alpha, iters=iters)
-
-         if ((meanes > 0 && diff.lo < 0) || (meanes < 0 && diff.lo > 0)) {
-            fsnum <- 0
-         } else {
-            fsnum <- try(uniroot(.fsn.re, interval=interval, tol=.001, extendInt=ifelse(meanes > 0,"downX","upX"), yi=yi, vi=vi, vnew=vnew, tau2=tau2, target=target, alpha=alpha, iters=iters, verbose=verbose)$root, silent=TRUE)
-            if (inherits(fsnum, "try-error"))
-               stop(mstyle$stop("Could not find fail-safe N based on a random-effects model."))
-         }
-
-         rejrate <- .fsn.fitnew(fsnum, yi, vi, vnew, tau2, alpha, iters)$rejrate
-
+         fsnum <- max(0, k * (est - target) / target)
       }
 
    }
+
+   if (type == "Rosenberg") {
+
+      wi     <- 1 / vi
+      est    <- .wmean(yi, wi)
+      zval   <- est / sqrt(1/sum(wi))
+      pval   <- 2*pnorm(abs(zval), lower.tail=FALSE)
+      vt     <- 1 / mean(1/vi)
+      #w.p   <- (sum(wi*yi) / qnorm(alpha/2, lower.tail=FALSE))^2 - sum(wi)
+      #fsnum <- max(0, k*w.p/sum(wi))
+      fsnum  <- max(0, ((sum(wi*yi) / qnorm(alpha/2, lower.tail=FALSE))^2 - sum(wi)) * vt)
+      target <- NA_real_
+
+   }
+
+   if (type == "General") {
+
+      if (is.null(ddd$weighted)) {
+         weighted <- TRUE
+      } else {
+         weighted <- isTRUE(ddd$weighted)
+      }
+
+      tmp <- try(rma(yi, vi, method=method, tau2=tau2fix, test=test, weighted=weighted, verbose=verbose), silent=!verbose)
+
+      if (inherits(tmp, "try-error"))
+         stop(mstyle$stop("Could not fit random-effects model (use verbose=TRUE for more info)."), call.=FALSE)
+
+      vt   <- 1 / mean(1/vi)
+      est  <- tmp$beta[1]
+      tau2 <- tmp$tau2
+      pval <- tmp$pval
+
+      if (is.null(target)) {
+
+         if (pval >= alpha) {
+
+            fsnum <- 0
+
+         } else {
+
+            fsnum <- try(uniroot(.fsn.gen, interval=interval, extendInt="upX", tol=tol, maxiter=maxiter, yi=yi, vi=vi, vt=vt, est=est, tau2=tau2, tau2fix=tau2fix, test=test, weighted=weighted, target=target, alpha=alpha, exact=exact, method=method, mumiss=mumiss, upperint=max(interval), maxint=maxint, verbose=verbose)$root, silent=TRUE)
+
+            if (inherits(fsnum, "try-error"))
+               stop(mstyle$stop("Could not find fail-safe N based on a random-effects model (use verbose=TRUE for more info)."))
+
+            if (fsnum > maxint)
+               fsnum <- maxint
+
+            tmp <- .fsn.gen(fsnum, yi=yi, vi=vi, vt=vt, est=est, tau2=tau2, tau2fix=tau2fix, test=test, weighted=weighted, target=target, alpha=alpha, exact=exact, method=method, mumiss=mumiss, upperint=max(interval), maxint=maxint, newest=TRUE)
+
+         }
+
+         target <- NA_real_
+
+      } else {
+
+         if (sign(target) != sign(est))
+            target <- -1 * target
+
+         if (identical(target, 0)) {
+            fsnum <- Inf
+         } else if (abs(target) >= abs(est)) {
+            fsnum <- 0
+         } else {
+
+            fsnum <- try(uniroot(.fsn.gen, interval=interval, extendInt=ifelse(est > 0,"downX","upX"), tol=tol, maxiter=maxiter, yi=yi, vi=vi, vt=vt, est=est, tau2=tau2, tau2fix=tau2fix, test=test, weighted=weighted, target=target, alpha=alpha, exact=exact, method=method, mumiss=mumiss, upperint=max(interval), maxint=maxint, verbose=verbose)$root, silent=TRUE)
+
+            if (inherits(fsnum, "try-error"))
+               stop(mstyle$stop("Could not find fail-safe N based on a random-effects model (use verbose=TRUE for more info)."))
+
+            if (fsnum > maxint)
+               fsnum <- maxint
+
+            tmp <- .fsn.gen(fsnum, yi=yi, vi=vi, vt=vt, est=est, tau2=tau2, tau2fix=tau2fix, test=test, weighted=weighted, target=target, alpha=alpha, exact=exact, method=method, mumiss=mumiss, upperint=max(interval), maxint=maxint, newest=TRUE)
+
+         }
+
+      }
+
+      if (fsnum == 0) {
+         est.fsn  <- est
+         tau2.fsn <- tau2
+         pval.fsn <- pval
+      } else {
+         est.fsn  <- tmp$est.fsn
+         tau2.fsn <- tmp$tau2.fsn
+         pval.fsn <- tmp$pval.fsn
+      }
+
+      if (fsnum >= maxint)
+         ub.sign <- ">"
+
+   }
+
+   #########################################################################
 
    if (is.finite(fsnum) && abs(fsnum - round(fsnum)) >= .Machine$double.eps^0.5) {
       fsnum <- ceiling(fsnum)
@@ -254,9 +366,9 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target, weighted
       fsnum <- round(fsnum)
    }
 
-   #########################################################################
-
-   res <- list(type=type, fsnum=fsnum, alpha=alpha, pval=pval, meanes=meanes, target=target, rejrate=rejrate, digits=digits)
+   res <- list(type=type, fsnum=fsnum, est=est, tau2=tau2, meanes=est, pval=pval, alpha=alpha, target=target,
+               method=ifelse(type=="General", method, NA), est.fsn=est.fsn, tau2.fsn=tau2.fsn, pval.fsn=pval.fsn,
+               ub.sign=ub.sign, digits=digits)
 
    class(res) <- "fsn"
    return(res)

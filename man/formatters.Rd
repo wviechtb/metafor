@@ -5,7 +5,7 @@
 \alias{fmtt}
 \title{Formatter Functions}
 \description{
-   A set of formatter functions. \loadmathjax
+   Functions to format various types of outputs. \loadmathjax
 }
 \usage{
 fmtp(p, digits=4, pname="", equal=FALSE, sep=FALSE, add0=FALSE, quote=FALSE)

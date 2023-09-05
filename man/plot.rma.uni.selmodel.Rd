@@ -2,7 +2,7 @@
 \alias{plot.rma.uni.selmodel}
 \title{Plot Method for 'plot.rma.uni.selmodel' Objects}
 \description{
-   Plot method for objects of class \code{"plot.rma.uni.selmodel"}. \loadmathjax
+   Function to plot objects of class \code{"plot.rma.uni.selmodel"}. \loadmathjax
 }
 \usage{
 \method{plot}{rma.uni.selmodel}(x, xlim, ylim, n=1000, prec="max", scale=FALSE,

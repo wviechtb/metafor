@@ -2,7 +2,7 @@
 \alias{forest}
 \title{Forest Plots}
 \description{
-   The \code{forest} function can be used to create forest plots.
+   Function to create forest plots.
 }
 \usage{
 forest(x, \dots)

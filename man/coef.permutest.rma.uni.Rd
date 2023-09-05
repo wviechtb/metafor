@@ -2,7 +2,7 @@
 \alias{coef.permutest.rma.uni}
 \title{Extract the Model Coefficient Table from 'permutest.rma.uni' Objects}
 \description{
-   The function extracts the estimated model coefficients, corresponding standard errors, test statistics, p-values (based on the permutation tests), and confidence interval bounds from objects of class \code{"permutest.rma.uni"}.
+   Function to extract the estimated model coefficients, corresponding standard errors, test statistics, p-values (based on the permutation tests), and confidence interval bounds from objects of class \code{"permutest.rma.uni"}.
 }
 \usage{
 \method{coef}{permutest.rma.uni}(object, \dots)

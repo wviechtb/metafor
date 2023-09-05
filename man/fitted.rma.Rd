@@ -3,7 +3,7 @@
 \alias{fitted.rma}
 \title{Fitted Values for 'rma' Objects}
 \description{
-   The function computes the fitted values for objects of class \code{"rma"}.
+   Function to compute the fitted values for objects of class \code{"rma"}.
 }
 \usage{
 \method{fitted}{rma}(object, \dots)

@@ -118,7 +118,7 @@ funnel(x, \dots)
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, and \code{\link{rma.mv}} for functions to fit models for which funnel plots can be drawn.
 
-   \code{\link{trimfill}} for the trim and fill method and \code{\link{regtest}} for the regression test.
+   \code{\link{trimfill}} for the trim and fill method, \code{\link{regtest}} for the regression test, and \code{\link{ranktest}} for the rank correlation test.
 }
 \examples{
 ### copy BCG vaccine data into 'dat'

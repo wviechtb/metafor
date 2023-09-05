@@ -10,7 +10,7 @@
 \alias{hatvalues.rma.uni}
 \title{Model Diagnostics for 'rma.uni' Objects}
 \description{
-   The functions can be used to compute various outlier and influential case diagnostics (some of which indicate the influence of deleting one case at a time on the model fit or the fitted/residual values) for objects of class \code{"rma.uni"}. For the corresponding documentation for \code{"rma.mv"} objects, see \code{\link[=influence.rma.mv]{influence}}. \loadmathjax
+   Functions to compute various outlier and influential study diagnostics (some of which indicate the influence of deleting one study at a time on the model fit or the fitted/residual values) for objects of class \code{"rma.uni"}. For the corresponding documentation for \code{"rma.mv"} objects, see \code{\link[=influence.rma.mv]{influence}}. \loadmathjax
 }
 \usage{
 \method{influence}{rma.uni}(model, digits, progbar=FALSE, \dots)
@@ -31,7 +31,7 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   The term \sQuote{case} below refers to a particular row from the dataset used in the model fitting (which is typically synonymous with study).
+   The term \sQuote{case} below refers to a particular row from the dataset used in the model fitting (which is typically synonymous with \sQuote{study}).
 
    The \code{influence} function calculates the following leave-one-out diagnostics for each case:
    \itemize{

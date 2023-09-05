@@ -9,7 +9,7 @@
 \alias{plot.profile.rma}
 \title{Profile Likelihood Plots for 'rma' Objects}
 \description{
-   Function to profile the (restricted) log-likelihood for objects of class \code{"rma.uni"}, \code{"rma.mv"}, \code{"rma.uni.selmodel"}, and \code{"rma.ls"}. \loadmathjax
+   Functions to profile the (restricted) log-likelihood for objects of class \code{"rma.uni"}, \code{"rma.mv"}, \code{"rma.uni.selmodel"}, and \code{"rma.ls"}. \loadmathjax
 }
 \usage{
 \method{profile}{rma.uni}(fitted, xlim, ylim, steps=20,

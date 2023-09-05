@@ -4,7 +4,7 @@
 \alias{permutest.rma.ls}
 \title{Permutation Tests for 'rma.uni' Objects}
 \description{
-   The function carries out permutation tests for objects of class \code{"rma.uni"} and \code{"rma.ls"}. \loadmathjax
+   Function to carry out permutation tests for objects of class \code{"rma.uni"} and \code{"rma.ls"}. \loadmathjax
 }
 \usage{
 permutest(x, \dots)

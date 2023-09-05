@@ -2,7 +2,7 @@
 \alias{escalc}
 \title{Calculate Effect Sizes and Outcome Measures}
 \description{
-   The function can be used to calculate various effect sizes or outcome measures (and the corresponding sampling variances) that are commonly used in meta-analyses. \loadmathjax
+   Function to calculate various effect sizes or outcome measures (and the corresponding sampling variances) that are commonly used in meta-analyses. \loadmathjax
 }
 \usage{
 escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,

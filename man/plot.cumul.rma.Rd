@@ -2,7 +2,7 @@
 \alias{plot.cumul.rma}
 \title{Plot Method for 'cumul.rma' Objects}
 \description{
-   Plot method for objects of class \code{"cumul.rma"}. \loadmathjax
+   Function to plot objects of class \code{"cumul.rma"}. \loadmathjax
 }
 \usage{
 \method{plot}{cumul.rma}(x, yaxis, xlim, ylim, xlab, ylab,

@@ -2,7 +2,7 @@
 \alias{addpoly}
 \title{Add Polygons to Forest Plots}
 \description{
-   The \code{addpoly} function can be used to add polygons, sometimes called \sQuote{diamonds}, to a forest plot, for example to indicate summary estimates for subgroups of studies or to indicate fitted/predicted values based on models involving moderators.
+   Function to add polygons (sometimes called \sQuote{diamonds}) to a forest plot, for example to indicate summary estimates for subgroups of studies or to indicate fitted/predicted values based on models involving moderators.
 }
 \usage{
 addpoly(x, \dots)

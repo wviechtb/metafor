@@ -43,7 +43,7 @@
 \alias{transf.lnortortet.digby}
 \title{Transformation Functions}
 \description{
-   A set of transformation functions useful for meta-analyses. \loadmathjax
+   Functions to carry out various types of transformations that are useful for meta-analyses. \loadmathjax
 }
 \usage{
 transf.rtoz(xi)

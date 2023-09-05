@@ -11,7 +11,7 @@
       "<link id=\"css\" rel=\"stylesheet\" href=\"https://bootswatch.com/3/flatly/bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
     );
   }
-</script><title>Fail-Safe N Analysis (File Drawer Analysis) — fsn • metafor</title><!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css"><script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet"><script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous"><link href="../docsearch.css" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Fail-Safe N Analysis (File Drawer Analysis) — fsn"><meta property="og:description" content="Function to compute the fail-safe N (also called a file drawer analysis)."><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@wviechtb"><meta name="twitter:site" content="@wviechtb"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+</script><title>Fail-Safe N Analysis (File Drawer Analysis) — fsn • metafor</title><!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css"><script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet"><script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous"><link href="../docsearch.css" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Fail-Safe N Analysis (File Drawer Analysis) — fsn"><meta property="og:description" content="Function to compute the fail-safe N (also called a file drawer analysis). "><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@wviechtb"><meta name="twitter:site" content="@wviechtb"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-16</span>
       </span>
     </div>
 
@@ -97,12 +97,12 @@
     </div>
 
     <div class="ref-description">
-    <p>Function to compute the fail-safe N (also called a file drawer analysis).</p>
+    <p>Function to compute the fail-safe N (also called a file drawer analysis). <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fsn</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">data</span>, type<span class="op">=</span><span class="st">"Rosenthal"</span>, alpha<span class="op">=</span><span class="fl">.05</span>,</span>
-<span>    <span class="va">target</span>, weighted<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">subset</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fsn</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">data</span>, type<span class="op">=</span><span class="st">"Rosenthal"</span>, alpha<span class="op">=</span><span class="fl">.05</span>, <span class="va">target</span>,</span>
+<span>    method<span class="op">=</span><span class="st">"REML"</span>, exact<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">subset</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -120,19 +120,25 @@
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
 
    <dt>type</dt>
-<dd><p>character string to specify the method to use for the calculation of the fail-safe N. Possible options are <code>"Rosenthal"</code> (the default), <code>"Orwin"</code>, or <code>"Rosenberg"</code>. See ‘Details’.</p></dd>
+<dd><p>character string to specify the type of method to use for the calculation of the fail-safe N. Possible options are <code>"Rosenthal"</code> (the default), <code>"Orwin"</code>, <code>"Rosenberg"</code>, or <code>"General"</code>. Can be abbreviated.</p></dd>
 
    <dt>alpha</dt>
-<dd><p>target alpha level for the Rosenthal and Rosenberg methods (the default is .05).</p></dd>
+<dd><p>target alpha level for the Rosenthal, Rosenberg, and General methods (the default is .05).</p></dd>
 
    <dt>target</dt>
-<dd><p>target average effect size or outcome for the Orwin method. If undefined, then the target average effect size or outcome will be equal to the observed average effect size or outcome divided by 2.</p></dd>
+<dd><p>target average effect size or outcome for the Orwin and General methods.</p></dd>
 
-   <dt>weighted</dt>
-<dd><p>logical to specify whether Orwin's method should be based on unweighted (the default) or weighted averages (the default is <code>FALSE</code>).</p></dd>
+   <dt>method</dt>
+<dd><p>character string to specify the model fitting method for <code>type="General"</code> (the default is <code>"REML"</code>). See <code><a href="rma.uni.html">rma.uni</a></code> for options.</p></dd>
+
+   <dt>exact</dt>
+<dd><p>logical to indicate whether the General method should be based on exact (but slower) calculations or approximate (but faster) ones.</p></dd>
 
    <dt>subset</dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the calculations.</p></dd>
+
+   <dt>verbose</dt>
+<dd><p>logical to specify whether output should be generated on the progress of the calculations for <code>type="General"</code> (the default is <code>FALSE</code>).</p></dd>
 
    <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded.</p></dd>
@@ -143,41 +149,89 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The function can be used in combination with any of the usual effect sizes / outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation), or, more generally, any set of estimates (with corresponding sampling variances) one would like to analyze. Simply specify the observed outcomes via the <code>yi</code> argument and the corresponding sampling variances via the <code>vi</code> argument (instead of specifying <code>vi</code>, one can specify the standard errors via the <code>sei</code> argument). The <code><a href="escalc.html">escalc</a></code> function can be used to compute a wide variety of effect sizes / outcome measures (and the corresponding sampling variances) based on summary statistics.</p>
-<p>The Rosenthal method (sometimes called a ‘file drawer analysis’) calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the combined significance level (p-value) to a particular alpha level (e.g., .05). The calculation is based on Stouffer's method to combine p-values and is described in Rosenthal (1979).</p>
-<p>The Orwin method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the (unweighted or weighted) average outcome to a target value (as specified via the <code>target</code> argument). The method is described in Orwin (1983). If <code>weighted=FALSE</code> (the default), the method does not require (or makes use) of <code>vi</code> (or <code>sei</code>), so these arguments are then not relevant for this method. If the <code>target</code> argument is not specified, then the target average outcome will be equal to the observed average outcome divided by 2 (which is quite arbitrary). One should really set <code>target</code> to a value that reflects an outcome one would consider practically irrelevant. Note that if <code>target</code> has the opposite sign as the actually observed average outcome, then its sign is automatically flipped.</p>
-<p>The Rosenberg method calculates the number of studies averaging null results that would have to be added to the given set of observed outcomes to reduce the significance level (i.e., p-value) of the weighted average outcome (based on an equal-effects model) to a particular alpha level (e.g., .05). The method is described in Rosenberg (2005).</p>
-<p>If the combined/observed significance level is above the specified alpha level (for <code>type = "Rosenthal"</code> or <code>type = "Rosenberg"</code>) or if the observed average outcome is below the target average outcome (for <code>type = "Orwin"</code>), then the fail-safe N value will be 0.</p>
+    <p>The function can be used to calculate the ‘fail-safe N’, that is, the minimum number of studies averaging null results that would have to be added to a given set of <em></em>\(k\) studies to change the conclusions of a meta-analysis. If this number is small (in relation to the actual number of studies), then this indicates that the results based on the observed studies are not robust to publication bias (of the form assumed by the method, that is, where a set of studies averaging null results is missing). The method is also called a ‘file drawer analysis’ as it assumes that there is a set of studies averaging null results hiding in file drawers, which can overturn the findings from a meta-analysis. Note that <em>the method does not estimate the number of missing studies</em>, only how many studies must be hiding in file drawers for the findings to be overturned.</p>
+<p>There are various types of methods that are all based on the same principle, which are described in more detail further below.</p>
+<p>The function can be used in combination with any of the usual effect sizes / outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation), or, more generally, any set of estimates (with corresponding sampling variances) one would like to analyze. Simply specify the observed outcomes of a given set of studies via the <code>yi</code> argument and the corresponding sampling variances via the <code>vi</code> argument (instead of specifying <code>vi</code>, one can specify the standard errors via the <code>sei</code> argument). The <code><a href="escalc.html">escalc</a></code> function can be used to compute a wide variety of effect sizes / outcome measures (and the corresponding sampling variances) based on summary statistics.</p>
+<p></p><div class="section">
+<h3 id="rosenthal-method">Rosenthal Method<a class="anchor" aria-label="anchor" href="#rosenthal-method"></a></h3>
+
+
+<p>The Rosenthal method (<code>type="Rosenthal"</code>) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the (one-tailed) combined significance level (i.e., p-value) to a particular alpha level, which can be specified via the <code>alpha</code> argument (.05 by default). The calculation is based on Stouffer's method for combining p-values and is described in Rosenthal (1979). Note that the method is primarily of interest for historical reasons, but the other methods described below are more closely aligned with the way meta-analyses are typically conducted in practice.</p>
+<p></p>
+</div>
+
+<p></p><div class="section">
+<h3 id="orwin-method">Orwin Method<a class="anchor" aria-label="anchor" href="#orwin-method"></a></h3>
+
+
+<p>The Orwin method (<code>type="Orwin"</code>) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the (unweighted or weighted) average effect size / outcome to a target value (as specified via the <code>target</code> argument). The method is described in Orwin (1983). When <code>vi</code> (or <code>sei</code>) is not specified, the method is based on the unweighted average of the effect sizes / outcomes; otherwise, the method uses the inverse-variance weighted average. If the <code>target</code> argument is not specified, then the target value will be equal to the observed average effect size / outcome divided by 2 (which is entirely arbitrary and will always lead to a fail-safe N number that is equal to <em></em>\(k\)). One should really set <code>target</code> to a value that reflects an effect size / outcome one would consider practically irrelevant. Note that if <code>target</code> has the opposite sign as the actually observed average, then its sign is automatically flipped.</p>
+<p></p>
+</div>
+
+<p></p><div class="section">
+<h3 id="rosenberg-method">Rosenberg Method<a class="anchor" aria-label="anchor" href="#rosenberg-method"></a></h3>
+
+
+<p>The Rosenberg method (<code>type="Rosenberg"</code>) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on an equal-effects model) to a particular alpha level, which can be specified via the <code>alpha</code> argument (.05 by default). The method is described in Rosenberg (2005). Note that the p-value is calculated based on a standard normal distribution (instead of a t-distribution, as suggested by Rosenberg, 2005), but the difference is typically negligible.</p>
+<p></p>
+</div>
+
+<p></p><div class="section">
+<h3 id="general-method">General Method<a class="anchor" aria-label="anchor" href="#general-method"></a></h3>
+
+
+<p>This method is a generalization of the methods by Orwin and Rosenberg. By default (i.e., when <code>target</code> is not specified), it calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on a random-effects model) to a particular alpha level, which can be specified via the <code>alpha</code> argument (.05 by default). The random-effects model is fitted with the method specified via the <code>method</code> argument, with <code>"REML"</code> being the default (see <code><a href="rma.uni.html">rma.uni</a></code> for other options). When setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Rosenberg's method.</p>
+<p>If <code>target</code> is specified, then the method calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the average effect size / outcome (as estimated based on a random-effects model) to a target value (as specified via the <code>target</code> argument). When setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Orwin's method with inverse-variance weights.</p>
+<p>The method uses an iterative algorithm for calculating the fail-safe N, which can be computationally expensive especially when N is large. By default, the method uses approximate (but faster) calculations, but when setting <code>exact=TRUE</code>, the method uses exact (but slower) calculations. The difference between the two is typically negligible. If N is larger than <em></em>\(10^7\), then the calculated number is given as <code>&gt;1e+07</code>.</p>
+<p></p>
+</div>
+
+
     </div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>An object of class <code>"fsn"</code>. The object is a list containing the following components:</p>
+<p>An object of class <code>"fsn"</code>. The object is a list containing the following components (some of which may be <code>NA</code> if they are not applicable to the chosen method):</p>
 <dl><dt>type</dt>
-<dd><p>the method used.</p></dd>
+<dd><p>the type of method used.</p></dd>
 
    <dt>fsnum</dt>
 <dd><p>the calculated fail-safe N.</p></dd>
 
-   <dt>alpha</dt>
-<dd><p>the specified alpha level.</p></dd>
+   <dt>est</dt>
+<dd><p>the average effect size / outcome based on the observed studies.</p></dd>
+
+   <dt>tau2</dt>
+<dd><p>the estimated amount of heterogeneity based on the observed studies.</p></dd>
 
    <dt>pval</dt>
-<dd><p>the p-value of the observed results. <code>NA</code> for the Orwin method.</p></dd>
+<dd><p>the p-value of the observed results.</p></dd>
 
-   <dt>meanes</dt>
-<dd><p>the average outcome of the observed results. <code>NA</code> for the Rosenthal method.</p></dd>
+   <dt>alpha</dt>
+<dd><p>the specified target alpha level.</p></dd>
 
    <dt>target</dt>
-<dd><p>the target value. <code>NA</code> for the Rosenthal and Rosenberg methods.</p></dd>
+<dd><p>the target average effect size / outcome.</p></dd>
+
+   <dt>est.fsn</dt>
+<dd><p>the average effect size / outcome when combining the observed studies with those in the file drawer.</p></dd>
+
+   <dt>tau2</dt>
+<dd><p>the estimated amount of heterogeneity when combining the observed studies with those in the file drawer.</p></dd>
+
+   <dt>pval</dt>
+<dd><p>the p-value when combining the observed studies with those in the file drawer.</p></dd>
+
+   <dt>...</dt>
+<dd><p>some additional elements/values.</p></dd>
 
 
 </dl><p>The results are formatted and printed with the <code><a href="print.fsn.html">print</a></code> function.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>For the Rosenberg method, the p-value is calculated based on a standard normal distribution (instead of a t-distribution, as suggested by Rosenberg, 2005).</p>
+    <p>If the significance level of the observed studies is already above the specified alpha level or if the average effect size / outcome of the observed studies is already below the target average effect size / outcome, then the fail-safe N value is zero.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -192,7 +246,7 @@
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="ranktest.html">ranktest</a></code> for the rank correlation test, <code><a href="regtest.html">regtest</a></code> for the regression test, <code><a href="trimfill.html">trimfill</a></code> for the trim and fill method, <code><a href="tes.html">tes</a></code> for the test of excess significance, and <code><a href="selmodel.html">selmodel</a></code> for selection models.</p></div>
+    <div class="dont-index"><p><code><a href="regtest.html">regtest</a></code> for the regression test, <code><a href="ranktest.html">ranktest</a></code> for the rank correlation test, <code><a href="trimfill.html">trimfill</a></code> for the trim and fill method, <code><a href="tes.html">tes</a></code> for the test of excess significance, and <code><a href="selmodel.html">selmodel</a></code> for selection models.</p></div>
     </div>
 
     <div id="ref-examples">
@@ -239,7 +293,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N: 175</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu">fsn</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, type<span class="op">=</span><span class="st">"Orwin"</span>, weighted<span class="op">=</span><span class="cn">TRUE</span>, target<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">fsn</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, type<span class="op">=</span><span class="st">"Orwin"</span>, target<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">0.95</span><span class="op">)</span><span class="op">)</span> <span class="co"># Orwin's method with 1/vi weights</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N Calculation Using the Orwin Approach</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -248,15 +302,57 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N: 97</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">fsn</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, type<span class="op">=</span><span class="st">"General"</span>, target<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">0.95</span><span class="op">)</span>, method<span class="op">=</span><span class="st">"EE"</span><span class="op">)</span> <span class="co"># like Orwin's method</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N Calculation Using the General Approach</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Average Effect Size:         -0.4303 (with file drawer: -0.0513)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Observed Significance Level:  &lt;.0001 (with file drawer:  0.0002)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Target Effect Size:          -0.0513</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N: 97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">fsn</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, type<span class="op">=</span><span class="st">"Rosenberg"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N Calculation Using the Rosenberg Approach</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Average Effect Size:         -0.4303</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Observed Significance Level: &lt;.0001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Target Significance Level:   0.05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Observed Significance Level:  &lt;.0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Target Significance Level:    0.05</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N: 370</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">fsn</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, type<span class="op">=</span><span class="st">"General"</span>, method<span class="op">=</span><span class="st">"EE"</span><span class="op">)</span> <span class="co"># like Rosenberg's method</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N Calculation Using the General Approach</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Average Effect Size:         -0.4303 (with file drawer: -0.0146)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Observed Significance Level:  &lt;.0001 (with file drawer:  0.0500)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Target Significance Level:    0.05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N: 370</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">fsn</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, type<span class="op">=</span><span class="st">"General"</span><span class="op">)</span> <span class="co"># based on a random-effects model</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N Calculation Using the General Approach</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Average Effect Size:         -0.7145 (with file drawer: -0.2172)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Amount of Heterogeneity:      0.3132 (with file drawer:  0.4228)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Observed Significance Level:  &lt;.0001 (with file drawer:  0.0513)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Target Significance Level:    0.05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N: 26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">fsn</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, type<span class="op">=</span><span class="st">"General"</span>, target<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">0.95</span><span class="op">)</span><span class="op">)</span> <span class="co"># based on a random-effects model</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N Calculation Using the General Approach</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Average Effect Size:         -0.7145 (with file drawer: -0.0511)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Amount of Heterogeneity:      0.3132 (with file drawer:  0.3518)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Observed Significance Level:  &lt;.0001 (with file drawer:  0.3094)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Target Effect Size:          -0.0513</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N: 138</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

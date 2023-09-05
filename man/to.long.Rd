@@ -2,7 +2,7 @@
 \alias{to.long}
 \title{Convert Data from Vector to Long Format}
 \description{
-   The function converts summary data in vector format to the corresponding long format. \loadmathjax
+   Function to convert summary data in vector format to the corresponding long format. \loadmathjax
 }
 \usage{
 to.long(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,

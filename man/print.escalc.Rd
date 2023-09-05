@@ -3,7 +3,7 @@
 \alias{summary.escalc}
 \title{Print and Summary Methods for 'escalc' Objects}
 \description{
-   Print and summary methods for objects of class \code{"escalc"}. \loadmathjax
+   Function to print objects of class \code{"escalc"} (and to obtain inferences for the individual studies/rows in such an object). \loadmathjax
 }
 \usage{
 \method{print}{escalc}(x, digits=attr(x,"digits"), \dots)

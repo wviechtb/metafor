@@ -4,7 +4,7 @@
 \alias{ranef.rma.mv}
 \title{Best Linear Unbiased Predictions for 'rma.uni' and 'rma.mv' Objects}
 \description{
-   The function computes best linear unbiased predictions (BLUPs) of the random effects for objects of class \code{"rma.uni"} and \code{"rma.mv"}. Corresponding standard errors and prediction interval bounds are also provided. \loadmathjax
+   Functions to compute best linear unbiased predictions (BLUPs) of the random effects for objects of class \code{"rma.uni"} and \code{"rma.mv"}. Corresponding standard errors and prediction interval bounds are also provided. \loadmathjax
 }
 \usage{
 \method{ranef}{rma.uni}(object, level, digits, transf, targs, \dots)

@@ -3,7 +3,7 @@
 \alias{model.matrix.rma}
 \title{Extract the Model Matrix from 'rma' Objects}
 \description{
-   The function extracts the model matrix from objects of class \code{"rma"}.
+   Function to extract the model matrix from objects of class \code{"rma"}.
 }
 \usage{
 \method{model.matrix}{rma}(object, asdf, \dots)

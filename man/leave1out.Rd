@@ -5,7 +5,7 @@
 \alias{leave1out.rma.peto}
 \title{Leave-One-Out Diagnostics for 'rma' Objects}
 \description{
-   The functions repeatedly fit the specified model, leaving out one observation/study at a time. \loadmathjax
+   Functions to carry out a \sQuote{leave-one-out analysis}, by repeatedly fitting the specified model leaving out one study at a time. \loadmathjax
 }
 \usage{
 leave1out(x, \dots)

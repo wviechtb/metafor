@@ -2,7 +2,7 @@
 \alias{vcalc}
 \title{Construct or Approximate the Variance-Covariance Matrix of Dependent Effect Sizes or Outcomes}
 \description{
-   The function can be used to construct or approximate the variance-covariance matrix of dependent effect sizes or outcomes, or more precisely, of their sampling errors (i.e., the \code{V} matrix in \code{\link{rma.mv}}). \loadmathjax
+   Function to construct or approximate the variance-covariance matrix of dependent effect sizes or outcomes, or more precisely, of their sampling errors (i.e., the \code{V} matrix in \code{\link{rma.mv}}). \loadmathjax
 }
 \usage{
 vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,

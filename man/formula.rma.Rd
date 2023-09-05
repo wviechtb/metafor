@@ -3,7 +3,7 @@
 \alias{formula.rma}
 \title{Extract the Model Formula from 'rma' Objects}
 \description{
-   The function extracts the model formula from objects of class \code{"rma"}.
+   Function to extract the model formula from objects of class \code{"rma"}.
 }
 \usage{
 \method{formula}{rma}(x, type="mods", \dots)

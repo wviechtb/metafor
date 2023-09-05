@@ -1,9 +1,9 @@
 \name{print.anova.rma}
 \alias{print.anova.rma}
 \alias{print.list.anova.rma}
-\title{Print Method for 'anova.rma' and 'list.anova.rma' Objects}
+\title{Print Methods for 'anova.rma' and 'list.anova.rma' Objects}
 \description{
-   Print method for objects of class \code{"anova.rma"}. \loadmathjax
+   Functions to print objects of class \code{"anova.rma"} and \code{"list.anova.rma"}. \loadmathjax
 }
 \usage{
 \method{print}{anova.rma}(x, digits=x$digits, \dots)

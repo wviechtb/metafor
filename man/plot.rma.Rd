@@ -6,7 +6,7 @@
 \alias{plot.rma.glmm}
 \title{Plot Method for 'rma' Objects}
 \description{
-   Plot method for objects of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, and \code{"rma.glmm"}.
+   Functions to plot objects of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, and \code{"rma.glmm"}.
 }
 \usage{
 \method{plot}{rma.uni}(x, qqplot=FALSE, \dots)
