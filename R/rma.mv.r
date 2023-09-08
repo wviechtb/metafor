@@ -686,9 +686,9 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
       ### separate mf.r into mf.s (~ 1 | id), mf.g (~ inner | outer), and mf.h (~ inner | outer) parts
 
-      mf.s <- mf.r[which(mf.r.ncols == 1)]      ### if there is no '~ 1 | factor' term, this is list() ([] so that we get a list of data frames)
-      mf.g <- mf.r[[which(mf.r.ncols >= 2)[1]]] ### if there is no 1st '~ inner | outer' terms, this is NULL ([[]] so that we get a data frame, not a list)
-      mf.h <- mf.r[[which(mf.r.ncols >= 2)[2]]] ### if there is no 2nd '~ inner | outer' terms, this is NULL ([[]] so that we get a data frame, not a list)
+      mf.s <- mf.r[which(mf.r.ncols == 1)]      # if there is no '~ 1 | factor' term, this is list() ([] so that we get a list of data frames)
+      mf.g <- mf.r[[which(mf.r.ncols >= 2)[1]]] # if there is no 1st '~ inner | outer' terms, this is NULL ([[]] so that we get a data frame, not a list)
+      mf.h <- mf.r[[which(mf.r.ncols >= 2)[2]]] # if there is no 2nd '~ inner | outer' terms, this is NULL ([[]] so that we get a data frame, not a list)
 
       ### if there is no (~ 1 | factor) term, then mf.s is list(), so turn that into NULL
 

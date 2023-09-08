@@ -67,8 +67,10 @@
 
    ### check that the number of variables is correct for the chosen structure
 
-   if (is.element(struct, c("CS","HCS","UN","UNR","AR","HAR","CAR","ID","DIAG","PHYBM","PHYPL","PHYPD")) && nvars != 2)
+   if (is.element(struct, c("CS","HCS","UN","UNR","AR","HAR","CAR","ID","DIAG","PHYBM","PHYPL","PHYPD")) && sum(sapply(mf.g, NCOL)) != 2)
       stop(mstyle$stop(paste0("Only a single inner variable allowed for an '~ inner | outer' term when 'struct=\"", struct, "\"'.")), call.=FALSE)
+
+   # note: need to use sum(sapply(mf.g, NCOL)) above because when 'random = ~ X | study' (and X is a matrix with 2+ columns), nvars will still be 2 for (unless struct="GEN")
 
    ### get variables names in mf.g
 
