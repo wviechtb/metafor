@@ -4,14 +4,16 @@
 
    mstyle <- .get.mstyle("crayon" %in% .packages())
 
-   lopts <- list(x       = "topright",
-                 y       = NULL,
-                 inset   = 0.01,
-                 bty     = "o",
-                 bg      = .coladj(par("bg","fg"), dark=0.00, light=0.00), # avoids a transparent background
-                 studies = TRUE,
-                 show    = "pvals",
-                 cex     = c(2,1))
+   lopts <- list(x         = "topright",
+                 y         = NULL,
+                 inset     = 0.01,
+                 bty       = "o",
+                 bg        = .coladj(par("bg","fg"), dark=0.00, light=0.00), # avoids a transparent background
+                 studies   = TRUE,
+                 show      = "pvals",
+                 cex       = c(1,2,1),
+                 x.intersp = 1,
+                 y.intersp = 1)
 
    if (is.list(legend)) {
 
@@ -19,6 +21,11 @@
       lopts.pos <- pmatch(names(legend), names(lopts))
       lopts[c(na.omit(lopts.pos))] <- legend[!is.na(lopts.pos)]
       legend <- TRUE
+
+      if (length(lopts$cex) == 1L)
+         lopts$cex <- c(lopts$cex, 2*lopts$cex, lopts$cex)
+      if (length(lopts$cex) == 2L)
+         lopts$cex <- c(lopts$cex[1], lopts$cex[2], lopts$cex[1])
 
    } else {
 
@@ -78,7 +85,7 @@
 
          pch.l  <- rep(22, lvals)
          col.l  <- rep(colci, lvals)
-         pt.cex <- rep(lopts$cex[1], lvals)
+         pt.cex <- rep(lopts$cex[2], lvals)
          pt.bg  <- c(shade, back)
 
       }
@@ -96,7 +103,7 @@
 
          pch.l  <- rep(22, lvals)
          col.l  <- rep(colci, lvals)
-         pt.cex <- rep(lopts$cex[1], lvals)
+         pt.cex <- rep(lopts$cex[2], lvals)
          pt.bg  <- c(shade)
 
       }
@@ -110,21 +117,22 @@
          }
          pch.l  <- c(pch.l, pch[1])
          col.l  <- c(col.l, col[1])
-         pt.cex <- c(pt.cex, lopts$cex[2])
+         pt.cex <- c(pt.cex, lopts$cex[3])
          pt.bg  <- c(pt.bg, bg[1])
 
          if (trimfill) {
             ltxt   <- c(ltxt, expression(plain(Imputed~Studies)))
             pch.l  <- c(pch.l, pch.fill[1])
             col.l  <- c(col.l, col[2])
-            pt.cex <- c(pt.cex, lopts$cex[2])
+            pt.cex <- c(pt.cex, lopts$cex[3])
             pt.bg  <- c(pt.bg, bg[2])
          }
 
       }
 
-      legend(x=lopts$x, y=lopts$y, inset=lopts$inset, bty=lopts$bty, bg=lopts$bg, pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
-      #legend(lpos, inset=.01, bg=.coladj(par("bg","fg"), dark=0.05, light=-0.05), pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
+      legend(x=lopts$x, y=lopts$y, inset=lopts$inset, bty=lopts$bty, bg=lopts$bg,
+             cex=lopts$cex[1], x.intersp=lopts$x.intersp, y.intersp=lopts$y.intersp,
+             pch=pch.l, col=col.l, pt.cex=pt.cex, pt.bg=pt.bg, legend=ltxt)
 
    }
 
