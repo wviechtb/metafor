@@ -44,6 +44,9 @@ ranktest <- function(x, vi, sei, subset, data, digits, ...) {
       if (!missing(vi) || !missing(sei) || !missing(subset))
          warning(mstyle$warning("Arguments 'vi', 'sei', and 'subset' ignored when 'x' is a model object."), call.=FALSE)
 
+      if (!x$int.only)
+         stop(mstyle$stop("Test only applicable to models without moderators."))
+
       yi <- x$yi
       vi <- x$vi
 

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-19</span>
       </span>
     </div>
 
@@ -101,26 +101,29 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fsn</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">data</span>, type<span class="op">=</span><span class="st">"Rosenthal"</span>, alpha<span class="op">=</span><span class="fl">.05</span>, <span class="va">target</span>,</span>
-<span>    method<span class="op">=</span><span class="st">"REML"</span>, exact<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">subset</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fsn</span><span class="op">(</span><span class="va">x</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">subset</span>, <span class="va">data</span>, <span class="va">type</span>, alpha<span class="op">=</span><span class="fl">.05</span>, <span class="va">target</span>,</span>
+<span>    <span class="va">method</span>, exact<span class="op">=</span><span class="cn">FALSE</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>yi</dt>
-<dd><p>vector with the observed effect sizes or outcomes.</p></dd>
+    <dl><dt>x</dt>
+<dd><p>a vector with the observed effect sizes or outcomes or an object of class <code>"rma"</code>.</p></dd>
 
    <dt>vi</dt>
-<dd><p>vector with the corresponding sampling variances.</p></dd>
+<dd><p>vector with the corresponding sampling variances (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
 
    <dt>sei</dt>
 <dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
+
+   <dt>subset</dt>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the calculations (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
 
    <dt>data</dt>
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
 
    <dt>type</dt>
-<dd><p>character string to specify the type of method to use for the calculation of the fail-safe N. Possible options are <code>"Rosenthal"</code> (the default), <code>"Orwin"</code>, <code>"Rosenberg"</code>, or <code>"General"</code>. Can be abbreviated.</p></dd>
+<dd><p>optional character string to specify the type of method to use for the calculation of the fail-safe N. Possible options are <code>"Rosenthal"</code> (the default when <code>x</code> is a vector with the observed effect sizes or outcomes), <code>"Orwin"</code>, <code>"Rosenberg"</code>, or <code>"General"</code> (the default when <code>x</code> is an object of class <code>"rma"</code>). Can be abbreviated. See ‘Details’.</p></dd>
 
    <dt>alpha</dt>
 <dd><p>target alpha level for the Rosenthal, Rosenberg, and General methods (the default is .05).</p></dd>
@@ -129,13 +132,10 @@
 <dd><p>target average effect size or outcome for the Orwin and General methods.</p></dd>
 
    <dt>method</dt>
-<dd><p>character string to specify the model fitting method for <code>type="General"</code> (the default is <code>"REML"</code>). See <code><a href="rma.uni.html">rma.uni</a></code> for options.</p></dd>
+<dd><p>optional character string to specify the model fitting method for <code>type="General"</code> (if unspecified, either <code>"REML"</code> by default or the method that was used in fitting the <code>"rma"</code> model). See <code><a href="rma.uni.html">rma.uni</a></code> for options.</p></dd>
 
    <dt>exact</dt>
-<dd><p>logical to indicate whether the General method should be based on exact (but slower) calculations or approximate (but faster) ones.</p></dd>
-
-   <dt>subset</dt>
-<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the calculations.</p></dd>
+<dd><p>logical to indicate whether the General method should be based on exact (but slower) or approximate (but faster) calculations.</p></dd>
 
    <dt>verbose</dt>
 <dd><p>logical to specify whether output should be generated on the progress of the calculations for <code>type="General"</code> (the default is <code>FALSE</code>).</p></dd>
@@ -149,9 +149,8 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The function can be used to calculate the ‘fail-safe N’, that is, the minimum number of studies averaging null results that would have to be added to a given set of <em></em>\(k\) studies to change the conclusions of a meta-analysis. If this number is small (in relation to the actual number of studies), then this indicates that the results based on the observed studies are not robust to publication bias (of the form assumed by the method, that is, where a set of studies averaging null results is missing). The method is also called a ‘file drawer analysis’ as it assumes that there is a set of studies averaging null results hiding in file drawers, which can overturn the findings from a meta-analysis. Note that <em>the method does not estimate the number of missing studies</em>, only how many studies must be hiding in file drawers for the findings to be overturned.</p>
-<p>There are various types of methods that are all based on the same principle, which are described in more detail further below.</p>
-<p>The function can be used in combination with any of the usual effect sizes / outcome measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation), or, more generally, any set of estimates (with corresponding sampling variances) one would like to analyze. Simply specify the observed outcomes of a given set of studies via the <code>yi</code> argument and the corresponding sampling variances via the <code>vi</code> argument (instead of specifying <code>vi</code>, one can specify the standard errors via the <code>sei</code> argument). The <code><a href="escalc.html">escalc</a></code> function can be used to compute a wide variety of effect sizes / outcome measures (and the corresponding sampling variances) based on summary statistics.</p>
+    <p>The function can be used to calculate the ‘fail-safe N’, that is, the minimum number of studies averaging null results that would have to be added to a given set of <em></em>\(k\) studies to change the conclusion of a meta-analysis. If this number is small (in relation to the actual number of studies), then this indicates that the results based on the observed studies are not robust to publication bias (of the form assumed by the method, that is, where a set of studies averaging null results is missing). The method is also called a ‘file drawer analysis’ as it assumes that there is a set of studies averaging null results hiding in file drawers, which can overturn the findings from a meta-analysis. There are various types of methods that are all based on the same principle, which are described in more detail further below. Note that <em>the fail-safe N is not an estimate of the number of missing studies</em>, only how many studies must be hiding in file drawers for the findings to be overturned.</p>
+<p>One can either pass a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>.</p>
 <p></p><div class="section">
 <h3 id="rosenthal-method">Rosenthal Method<a class="anchor" aria-label="anchor" href="#rosenthal-method"></a></h3>
 
@@ -164,7 +163,7 @@
 <h3 id="orwin-method">Orwin Method<a class="anchor" aria-label="anchor" href="#orwin-method"></a></h3>
 
 
-<p>The Orwin method (<code>type="Orwin"</code>) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the (unweighted or weighted) average effect size / outcome to a target value (as specified via the <code>target</code> argument). The method is described in Orwin (1983). When <code>vi</code> (or <code>sei</code>) is not specified, the method is based on the unweighted average of the effect sizes / outcomes; otherwise, the method uses the inverse-variance weighted average. If the <code>target</code> argument is not specified, then the target value will be equal to the observed average effect size / outcome divided by 2 (which is entirely arbitrary and will always lead to a fail-safe N number that is equal to <em></em>\(k\)). One should really set <code>target</code> to a value that reflects an effect size / outcome one would consider practically irrelevant. Note that if <code>target</code> has the opposite sign as the actually observed average, then its sign is automatically flipped.</p>
+<p>The Orwin method (<code>type="Orwin"</code>) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the (unweighted or weighted) average effect size / outcome to a target value (as specified via the <code>target</code> argument). The method is described in Orwin (1983). When <code>vi</code> (or <code>sei</code>) is not specified, the method is based on the unweighted average of the effect sizes / outcomes; otherwise, the method uses the inverse-variance weighted average. If the <code>target</code> argument is not specified, then the target value will be equal to the observed average effect size / outcome divided by 2 (which is entirely arbitrary and will always lead to a fail-safe N number that is equal to <em></em>\(k\)). One should really set <code>target</code> to a value that reflects an effect size / outcome that would be considered to be practically irrelevant. Note that if <code>target</code> has the opposite sign as the actually observed average, then its sign is automatically flipped.</p>
 <p></p>
 </div>
 
@@ -180,8 +179,8 @@
 <h3 id="general-method">General Method<a class="anchor" aria-label="anchor" href="#general-method"></a></h3>
 
 
-<p>This method is a generalization of the methods by Orwin and Rosenberg. By default (i.e., when <code>target</code> is not specified), it calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on a random-effects model) to a particular alpha level, which can be specified via the <code>alpha</code> argument (.05 by default). The random-effects model is fitted with the method specified via the <code>method</code> argument, with <code>"REML"</code> being the default (see <code><a href="rma.uni.html">rma.uni</a></code> for other options). When setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Rosenberg's method.</p>
-<p>If <code>target</code> is specified, then the method calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the average effect size / outcome (as estimated based on a random-effects model) to a target value (as specified via the <code>target</code> argument). When setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Orwin's method with inverse-variance weights.</p>
+<p>This method is a generalization of the methods by Orwin and Rosenberg. By default (i.e., when <code>target</code> is not specified), it calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on a chosen model) to a particular alpha level, which can be specified via the <code>alpha</code> argument (.05 by default). The type of model that is used in the calculation is chosen via the <code>method</code> argument. If this is unspecified, then a random-effects model is automatically used (using <code>method="REML"</code>) or the method that was used in fitting the <code>"rma"</code> model (see <code><a href="rma.uni.html">rma.uni</a></code> for options). Therefore, when setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Rosenberg's method.</p>
+<p>If <code>target</code> is specified, then the method calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the average effect size / outcome (as estimated based on a chosen model) to a target value (as specified via the <code>target</code> argument). As described above, the type of model that is used in the calculation is chosen via the <code>method</code> argument. When setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Orwin's method with inverse-variance weights.</p>
 <p>The method uses an iterative algorithm for calculating the fail-safe N, which can be computationally expensive especially when N is large. By default, the method uses approximate (but faster) calculations, but when setting <code>exact=TRUE</code>, the method uses exact (but slower) calculations. The difference between the two is typically negligible. If N is larger than <em></em>\(10^7\), then the calculated number is given as <code>&gt;1e+07</code>.</p>
 <p></p>
 </div>
@@ -344,6 +343,31 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N: 26</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">fsn</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, type<span class="op">=</span><span class="st">"General"</span>, target<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">0.95</span><span class="op">)</span><span class="op">)</span> <span class="co"># based on a random-effects model</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N Calculation Using the General Approach</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Average Effect Size:         -0.7145 (with file drawer: -0.0511)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Amount of Heterogeneity:      0.3132 (with file drawer:  0.3518)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Observed Significance Level:  &lt;.0001 (with file drawer:  0.3094)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Target Effect Size:          -0.0513</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N: 138</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit a random-effects model and use fsn() on the model object</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">fsn</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N Calculation Using the General Approach</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Average Effect Size:         -0.7145 (with file drawer: -0.2172)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Amount of Heterogeneity:      0.3132 (with file drawer:  0.4228)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Observed Significance Level:  &lt;.0001 (with file drawer:  0.0513)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Target Significance Level:    0.05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N: 26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">fsn</span><span class="op">(</span><span class="va">res</span>, target<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fail-safe N Calculation Using the General Approach</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

@@ -1,8 +1,8 @@
-# metafor 4.3-17 (2023-09-08)
+# metafor 4.3-19 (2023-09-10)
 
 - added `getmfopt()` and `setmfopt()` functions for getting and setting package options and made some of the options more flexible
 
-- removed argument `weighted` from `fsn()` (whether weighted or unweighted averages are used in Orwin's method is now simply determined by whether sampling variances are specified or not); added `type="General"` to `fsn()` as a generalization of the Orwin and Rosenberg methods (that allows for heterogeneity based on a random-effects model)
+- removed argument `weighted` from `fsn()` (whether weighted or unweighted averages are used in Orwin's method is now simply determined by whether sampling variances are specified or not); added `type="General"` to `fsn()` as a generalization of the Orwin and Rosenberg methods (that allows for a fail-safe N calculation based on a random-effects model); can now pass an `rma` object to the `fsn()` function
 
 - further improved the theming of all plots based on the foreground and background colors; within RStudio, plot colors can also be automatically chosen based on the theme
 

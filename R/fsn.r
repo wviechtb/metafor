@@ -1,5 +1,5 @@
-fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target,
-                method="REML", exact=FALSE, subset, verbose=FALSE, digits, ...) {
+fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
+                method, exact=FALSE, verbose=FALSE, digits, ...) {
 
    #########################################################################
 
@@ -10,31 +10,14 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target,
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
-   ### select/match type
-
-   type.options <- c("rosenthal", "binomial", "orwin", "rosenberg", "general")
-
-   type <- type.options[grep(tolower(type), type.options)[1]]
-
-   if (is.na(type))
-      stop(mstyle$stop("Unknown 'type' specified."))
-
-   type <- paste0(toupper(substr(type, 1, 1)), substr(type, 2, nchar(type)))
-
    ### set defaults
 
    if (missing(target))
       target <- NULL
 
-   if (missing(digits)) {
-      digits <- .set.digits(dmiss=TRUE)
-   } else {
-      digits <- .set.digits(digits, dmiss=FALSE)
-   }
-
    ddd <- list(...)
 
-   .chkdots(ddd, c("pool", "interval", "maxint", "tol", "maxiter", "tau2", "test", "mumiss", "weighted"))
+   .chkdots(ddd, c("pool", "mumiss", "interval", "maxint", "tol", "maxiter", "tau2", "test", "weighted"))
 
    if (is.null(ddd$pool)) {
       pool <- "stouffer"
@@ -42,7 +25,13 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target,
       pool <- match.arg(tolower(ddd$pool), c("stouffer", "fisher"))
    }
 
-   # note: interval default set below; see [a] (based on k)
+   if (is.null(ddd$mumiss)) {
+      mumiss <- 0
+   } else {
+      mumiss <- ddd$mumiss
+   }
+
+   # note: default interval set below; see [a] (based on k)
 
    if (is.null(ddd$maxint)) {
       maxint <- 10^7
@@ -62,34 +51,13 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target,
       maxiter <- ddd$maxiter
    }
 
-   if (is.null(ddd$tau2)) {
-      tau2fix <- NULL
-   } else {
-      tau2fix <- ddd$tau2
-   }
-
-   if (is.null(ddd$test)) {
-      test <- "z"
-   } else {
-      test <- ddd$test
-   }
-
-   if (type == "General" && test != "z")
-      exact <- TRUE
-
-   if (is.null(ddd$mumiss)) {
-      mumiss <- 0
-   } else {
-      mumiss <- ddd$mumiss
-   }
-
    ### observed values (to be replaced as needed)
 
    est  <- NA_real_ # pooled estimate
    tau2 <- NA_real_ # tau^2 estimate
    pval <- NA_real_ # p-value
 
-   ### defaults (to be replaced if type="General")
+   ### defaults (to be replaced for type="General")
 
    est.fsn  <- NA_real_
    tau2.fsn <- NA_real_
@@ -97,8 +65,6 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target,
    ub.sign  <- ""
 
    #########################################################################
-
-   ###### data setup
 
    ### check if data argument has been specified
 
@@ -114,77 +80,151 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target,
 
    mf <- match.call()
 
-   yi     <- .getx("yi",      mf=mf, data=data, checknumeric=TRUE)
-   vi     <- .getx("vi",      mf=mf, data=data, checknumeric=TRUE)
-   sei    <- .getx("sei",     mf=mf, data=data, checknumeric=TRUE)
-   #weight <- .getx("weights", mf=mf, data=data, checknumeric=TRUE)
-   subset <- .getx("subset",  mf=mf, data=data, checknumeric=TRUE)
+   x <- .getx("x", mf=mf, data=data)
 
-   if (is.null(vi)) {
-      if (!is.null(sei))
-         vi <- sei^2
-   }
+   #########################################################################
 
-   if (type %in% c("Rosenthal", "Rosenberg", "General") && is.null(vi))
-      stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
+   if (inherits(x, "rma")) {
 
-   ### ensure backwards compatibility with the 'weighted' argument when type="Orwin"
+      .chkclass(class(x), must="rma", notav=c("robust.rma", "rma.glmm", "rma.mv", "rma.ls", "rma.gen", "rma.uni.selmodel"))
 
-   if (type == "Orwin") {
-      if (isTRUE(ddd$weighted) && is.null(vi)) # if weighted=TRUE, then check that the vi's are available
-         stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
-      if (isFALSE(ddd$weighted)) # if weighted=FALSE, then set vi <- 1 for unweighted
-         vi <- 1
-      if (is.null(ddd$weighted) && is.null(vi)) # if weighted is unspecified, set vi <- 1 if vi's are unspecified
-         vi <- 1
-   }
+      if (!x$int.only)
+         stop(mstyle$stop("Method only applicable to models without moderators."))
 
-   ### allow easy setting of vi to a single value
+      if (!missing(type) && type != "General")
+         warning(mstyle$warning("Setting type='General' when using fsn() on a model object. "), call.=FALSE)
 
-   if (length(vi) == 1L)
-      vi <- rep(vi, length(yi))
+      type <- "General"
 
-   ### check length of yi and vi
+      if (!is.null(x$weights))
+         stop(mstyle$stop("Cannot use function on models with custom weights."))
 
-   if (length(yi) != length(vi))
-      stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') is not the same."))
+      if (!missing(vi) || !missing(sei) || !missing(subset))
+         warning(mstyle$warning("Arguments 'vi', 'sei', and 'subset' ignored when 'x' is a model object."), call.=FALSE)
 
-   ### check 'vi' argument for potential misuse
+      yi <- x$yi
+      vi <- x$vi
 
-   .chkviarg(mf$vi)
+      ### set defaults for digits
 
-   ### if a subset of studies is specified
-
-   if (!is.null(subset)) {
-      subset <- .chksubset(subset, length(yi))
-      yi <- .getsubset(yi, subset)
-      vi <- .getsubset(vi, subset)
-   }
-
-   ### check for NAs in yi/vi and act accordingly
-
-   yivi.na <- is.na(yi) | is.na(vi)
-
-   if (any(yivi.na)) {
-
-      not.na <- !yivi.na
-
-      if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
-         yi <- yi[not.na]
-         vi <- vi[not.na]
+      if (missing(digits)) {
+         digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
+      } else {
+         digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
       }
 
-      if (na.act == "na.fail")
-         stop(mstyle$stop("Missing values in results."))
+   } else {
+
+      if (!.is.vector(x))
+         stop(mstyle$stop("Argument 'x' must be a vector or an 'rma' model object."))
+
+      ### select/match type
+
+      if (missing(type))
+         type <- "Rosenthal"
+
+      type.options <- c("rosenthal", "binomial", "orwin", "rosenberg", "general")
+
+      type <- type.options[grep(tolower(type), type.options)[1]]
+
+      if (is.na(type))
+         stop(mstyle$stop("Unknown 'type' specified."))
+
+      type <- paste0(toupper(substr(type, 1, 1)), substr(type, 2, nchar(type)))
+
+      ### check if yi is numeric
+
+      yi <- x
+
+      if (!is.numeric(yi))
+         stop(mstyle$stop("The object/variable specified for the 'x' argument is not numeric."))
+
+      ### set defaults for digits
+
+      if (missing(digits)) {
+         digits <- .set.digits(dmiss=TRUE)
+      } else {
+         digits <- .set.digits(digits, dmiss=FALSE)
+      }
+
+      vi     <- .getx("vi",     mf=mf, data=data, checknumeric=TRUE)
+      sei    <- .getx("sei",    mf=mf, data=data, checknumeric=TRUE)
+      subset <- .getx("subset", mf=mf, data=data)
+
+      if (is.null(vi)) {
+         if (!is.null(sei))
+            vi <- sei^2
+      }
+
+      if (type %in% c("Rosenthal", "Rosenberg", "General") && is.null(vi))
+         stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
+
+      ### ensure backwards compatibility with the 'weighted' argument when type="Orwin"
+
+      if (type == "Orwin") {
+         if (isTRUE(ddd$weighted) && is.null(vi)) # if weighted=TRUE, then check that the vi's are available
+            stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
+         if (isFALSE(ddd$weighted)) # if weighted=FALSE, then set vi <- 1 for unweighted
+            vi <- 1
+         if (is.null(ddd$weighted) && is.null(vi)) # if weighted is unspecified, set vi <- 1 if vi's are unspecified
+            vi <- 1
+      }
+
+      ### allow easy setting of vi to a single value
+
+      if (length(vi) == 1L)
+         vi <- rep(vi, length(yi))
+
+      ### check length of yi and vi
+
+      if (length(yi) != length(vi))
+         stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') is not the same."))
+
+      ### check 'vi' argument for potential misuse
+
+      .chkviarg(mf$vi)
+
+      #########################################################################
+
+      ### if a subset of studies is specified
+
+      if (!is.null(subset)) {
+         subset <- .chksubset(subset, length(yi))
+         yi <- .getsubset(yi, subset)
+         vi <- .getsubset(vi, subset)
+      }
+
+      ### check for NAs and act accordingly
+
+      has.na <- is.na(yi) | is.na(vi)
+
+      if (any(has.na)) {
+
+         not.na <- !has.na
+
+         if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
+
+            yi <- yi[not.na]
+            vi <- vi[not.na]
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted.")), call.=FALSE)
+
+         }
+
+         if (na.act == "na.fail")
+            stop(mstyle$stop("Missing values in data."))
+
+      }
 
    }
+
+   #########################################################################
 
    ### check for non-positive sampling variances
 
    if (any(vi <= 0))
-      stop(mstyle$stop("Cannot use method when there are non-positive sampling variances in the data."))
+      stop(mstyle$stop("Cannot use function when there are non-positive sampling variances in the data."))
 
-   ### number of studies left over
+   ### number of studies
 
    k <- length(yi)
 
@@ -280,11 +320,40 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target,
 
    if (type == "General") {
 
-      if (is.null(ddd$weighted)) {
-         weighted <- TRUE
-      } else {
-         weighted <- isTRUE(ddd$weighted)
+      if (missing(method)) {
+         if (inherits(x, "rma")) {
+            method <- x$method
+         } else {
+            method <- "REML"
+         }
       }
+
+      tau2fix <- NULL
+
+      if (inherits(x, "rma") && x$tau2.fix)
+         tau2fix <- x$tau2
+
+      if (!is.null(ddd$tau2))
+         tau2fix <- ddd$tau2
+
+      test <- "z"
+
+      if (inherits(x, "rma"))
+         test <- x$test
+
+      if (!is.null(ddd$test))
+         test <- ddd$test
+
+      if (test != "z")
+         exact <- TRUE
+
+      weighted <- TRUE
+
+      if (inherits(x, "rma"))
+         weighted <- x$weighted
+
+      if (!is.null(ddd$weighted))
+         weighted <- isTRUE(ddd$weighted)
 
       tmp <- try(rma(yi, vi, method=method, tau2=tau2fix, test=test, weighted=weighted, verbose=verbose), silent=!verbose)
 
@@ -304,7 +373,10 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target,
 
          } else {
 
-            fsnum <- try(uniroot(.fsn.gen, interval=interval, extendInt="upX", tol=tol, maxiter=maxiter, yi=yi, vi=vi, vt=vt, est=est, tau2=tau2, tau2fix=tau2fix, test=test, weighted=weighted, target=target, alpha=alpha, exact=exact, method=method, mumiss=mumiss, upperint=max(interval), maxint=maxint, verbose=verbose)$root, silent=TRUE)
+            fsnum <- try(uniroot(.fsn.gen, interval=interval, extendInt="upX", tol=tol, maxiter=maxiter,
+                                 yi=yi, vi=vi, vt=vt, est=est, tau2=tau2, tau2fix=tau2fix,
+                                 test=test, weighted=weighted, target=target, alpha=alpha, exact=exact,
+                                 method=method, mumiss=mumiss, upperint=max(interval), maxint=maxint, verbose=verbose)$root, silent=TRUE)
 
             if (inherits(fsnum, "try-error"))
                stop(mstyle$stop("Could not find fail-safe N based on a random-effects model (use verbose=TRUE for more info)."))
@@ -312,7 +384,9 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target,
             if (fsnum > maxint)
                fsnum <- maxint
 
-            tmp <- .fsn.gen(fsnum, yi=yi, vi=vi, vt=vt, est=est, tau2=tau2, tau2fix=tau2fix, test=test, weighted=weighted, target=target, alpha=alpha, exact=exact, method=method, mumiss=mumiss, upperint=max(interval), maxint=maxint, newest=TRUE)
+            tmp <- .fsn.gen(fsnum, yi=yi, vi=vi, vt=vt, est=est, tau2=tau2, tau2fix=tau2fix,
+                            test=test, weighted=weighted, target=target, alpha=alpha, exact=exact,
+                            method=method, mumiss=mumiss, upperint=max(interval), maxint=maxint, newest=TRUE)
 
          }
 
@@ -329,7 +403,10 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target,
             fsnum <- 0
          } else {
 
-            fsnum <- try(uniroot(.fsn.gen, interval=interval, extendInt=ifelse(est > 0,"downX","upX"), tol=tol, maxiter=maxiter, yi=yi, vi=vi, vt=vt, est=est, tau2=tau2, tau2fix=tau2fix, test=test, weighted=weighted, target=target, alpha=alpha, exact=exact, method=method, mumiss=mumiss, upperint=max(interval), maxint=maxint, verbose=verbose)$root, silent=TRUE)
+            fsnum <- try(uniroot(.fsn.gen, interval=interval, extendInt=ifelse(est > 0,"downX","upX"), tol=tol, maxiter=maxiter,
+                                 yi=yi, vi=vi, vt=vt, est=est, tau2=tau2, tau2fix=tau2fix,
+                                 test=test, weighted=weighted, target=target, alpha=alpha, exact=exact,
+                                 method=method, mumiss=mumiss, upperint=max(interval), maxint=maxint, verbose=verbose)$root, silent=TRUE)
 
             if (inherits(fsnum, "try-error"))
                stop(mstyle$stop("Could not find fail-safe N based on a random-effects model (use verbose=TRUE for more info)."))
@@ -337,7 +414,9 @@ fsn <- function(yi, vi, sei, data, type="Rosenthal", alpha=.05, target,
             if (fsnum > maxint)
                fsnum <- maxint
 
-            tmp <- .fsn.gen(fsnum, yi=yi, vi=vi, vt=vt, est=est, tau2=tau2, tau2fix=tau2fix, test=test, weighted=weighted, target=target, alpha=alpha, exact=exact, method=method, mumiss=mumiss, upperint=max(interval), maxint=maxint, newest=TRUE)
+            tmp <- .fsn.gen(fsnum, yi=yi, vi=vi, vt=vt, est=est, tau2=tau2, tau2fix=tau2fix,
+                            test=test, weighted=weighted, target=target, alpha=alpha, exact=exact,
+                            method=method, mumiss=mumiss, upperint=max(interval), maxint=maxint, newest=TRUE)
 
          }
 

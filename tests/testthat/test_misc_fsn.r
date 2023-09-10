@@ -11,7 +11,7 @@ test_that("confint() gives correct results for the 'expectancy data' in Becker (
    expect_equivalent(sav$fsnum, 26)
    ### note: Becker uses p-values based on t-tests, which yields N =~ 23
 
-   out <- capture.output(print(sav)) ### so that print.fsn() is run (at least once)
+   out <- capture.output(print(sav)) # so that print.fsn() is run (at least once)
 
    ### use Fisher's test
    sav <- fsn(yi, vi, data=dat.raudenbush1985, pool="Fisher")
@@ -20,7 +20,7 @@ test_that("confint() gives correct results for the 'expectancy data' in Becker (
    sav <- fsn(yi, data=dat.raudenbush1985, type="Orwin", target=.05)
    expect_equivalent(sav$fsnum, 44)
 
-   out <- capture.output(print(sav)) ### so that print.fsn() is run (at least once) with type="Orwin"
+   out <- capture.output(print(sav)) # so that print.fsn() is run (at least once) with type="Orwin"
 
    sav <- fsn(yi, vi, data=dat.raudenbush1985, type="Orwin", target=.05)
    expect_equivalent(sav$fsnum, 4)
@@ -28,7 +28,7 @@ test_that("confint() gives correct results for the 'expectancy data' in Becker (
    sav <- fsn(yi, vi, data=dat.raudenbush1985, type="Rosenberg")
    expect_equivalent(sav$fsnum, 0)
 
-   out <- capture.output(print(sav)) ### so that print.fsn() is run (at least once) with type="Rosenberg"
+   out <- capture.output(print(sav)) # so that print.fsn() is run (at least once) with type="Rosenberg"
 
    skip_on_cran()
 
@@ -38,7 +38,11 @@ test_that("confint() gives correct results for the 'expectancy data' in Becker (
    sav <- fsn(yi, vi, data=dat.raudenbush1985, type="General", exact=TRUE)
    expect_equivalent(sav$fsnum, 0)
 
-   out <- capture.output(print(sav)) ### so that print.fsn() is run (at least once) with type="General"
+   out <- capture.output(print(sav)) # so that print.fsn() is run (at least once) with type="General"
+
+   res <- rma(yi, vi, data=dat.raudenbush1985)
+   sav <- fsn(res, target=.05)
+   expect_equivalent(sav$fsnum, 12)
 
 })
 
@@ -92,6 +96,11 @@ test_that("confint() gives correct results for the 'interview data' in Becker (2
    expect_equivalent(sav$fsnum, 6068)
 
    sav <- fsn(yi, vi, data=dat, type="General", exact=TRUE)
+   expect_equivalent(sav$fsnum, 6068)
+
+   res <- rma(yi, vi, data=dat)
+
+   sav <- fsn(res)
    expect_equivalent(sav$fsnum, 6068)
 
 })

@@ -58,7 +58,7 @@
 
          }
 
-         if (weighted) {
+         if (isTRUE(weighted)) {
             est.fsn  <- weighted.mean(yinew, 1 / (vinew + tau2.fsn))
             zval.new <- est.fsn / sqrt(1 / (sum(1 / (vi + tau2.fsn)) + fsnum / (vt + tau2.fsn)))
          } else {
@@ -115,7 +115,7 @@
 
          }
 
-         if (weighted) {
+         if (isTRUE(weighted)) {
             est.fsn  <- weighted.mean(yinew, 1 / (vinew + tau2.fsn))
             zval.new <- est.fsn / sqrt(1 / (sum(1 / (vi + tau2.fsn)) + fsnum / (vt + tau2.fsn)))
          } else {

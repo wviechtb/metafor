@@ -695,13 +695,13 @@
 
    if (!cholesky) {
       if (vctransf) {
-         v <- ifelse(is.na(v.val), exp(v), v.val)           ### variances are optimized in log space, so exponentiate
+         v <- ifelse(is.na(v.val), exp(v), v.val)           # variances are optimized in log space, so exponentiate
          if (struct == "CAR")
-            r <- ifelse(is.na(r.val), plogis(r), r.val)     ### CAR correlation is optimized in qlogis space, so use plogis
+            r <- ifelse(is.na(r.val), plogis(r), r.val)     # CAR correlation is optimized in qlogis space, so use plogis
          if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")))
-            r <- ifelse(is.na(r.val), exp(r), r.val)        ### spatial and phylogenetic 'correlation' parameter is optimized in log space, so exponentiate
+            r <- ifelse(is.na(r.val), exp(r), r.val)        # spatial and phylogenetic 'correlation' parameter is optimized in log space, so exponentiate
          if (!is.element(struct, c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")))
-            r <- ifelse(is.na(r.val), tanh(r), r.val)       ### other correlations are optimized in atanh space, so use tanh
+            r <- ifelse(is.na(r.val), tanh(r), r.val)       # other correlations are optimized in atanh space, so use tanh
       } else {
          ### for Hessian computation, can choose to leave as is
          v <- ifelse(is.na(v.val), v, v.val)
@@ -719,7 +719,7 @@
             r[r >  1] <-  1
          }
       }
-      v <- ifelse(v <= .Machine$double.eps*10, 0, v) ### don't do this with Cholesky factorization, since values can be negative
+      v <- ifelse(v <= .Machine$double.eps*10, 0, v) # don't do this with Cholesky factorization, since values can be negative
    }
 
    ncol.Z1 <- ncol(Z1)
@@ -739,32 +739,32 @@
    if (is.element(struct, c("UN","GEN"))) {
       if (cholesky) {
          E <- .con.vcov.UN.chol(v, r)
-         v <- diag(E)                  ### need this, so correct values are shown when verbose=TRUE
-         r <- cov2cor(E)[lower.tri(E)] ### need this, so correct values are shown when verbose=TRUE
-         v[!is.na(v.val)] <- v.val[!is.na(v.val)] ### replace any fixed values
-         r[!is.na(r.val)] <- r.val[!is.na(r.val)] ### replace any fixed values
+         v <- diag(E)                  # need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[lower.tri(E)] # need this, so correct values are shown when verbose=TRUE
+         v[!is.na(v.val)] <- v.val[!is.na(v.val)] # replace any fixed values
+         r[!is.na(r.val)] <- r.val[!is.na(r.val)] # replace any fixed values
       }
       E <- .con.vcov.UN(v, r, vccov)
       if (nearpd) {
-         E <- as.matrix(nearPD(E)$mat) ### nearPD() in Matrix package
-         v <- diag(E)                  ### need this, so correct values are shown when verbose=TRUE
-         r <- cov2cor(E)[lower.tri(E)] ### need this, so correct values are shown when verbose=TRUE
+         E <- as.matrix(nearPD(E)$mat) # nearPD() in Matrix package
+         v <- diag(E)                  # need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[lower.tri(E)] # need this, so correct values are shown when verbose=TRUE
       }
    }
 
    if (struct == "UNR") {
       if (cholesky) {
          E <- .con.vcov.UNR.chol(v, r)
-         v <- diag(E)[1,1]             ### need this, so correct values are shown when verbose=TRUE
-         r <- cov2cor(E)[lower.tri(E)] ### need this, so correct values are shown when verbose=TRUE
-         v[!is.na(v.val)] <- v.val[!is.na(v.val)] ### replace any fixed values
-         r[!is.na(r.val)] <- r.val[!is.na(r.val)] ### replace any fixed values
+         v <- diag(E)[1,1]             # need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[lower.tri(E)] # need this, so correct values are shown when verbose=TRUE
+         v[!is.na(v.val)] <- v.val[!is.na(v.val)] # replace any fixed values
+         r[!is.na(r.val)] <- r.val[!is.na(r.val)] # replace any fixed values
       }
       E <- .con.vcov.UNR(v, r)
       if (nearpd) {
-         E <- as.matrix(nearPD(E, keepDiag=TRUE)$mat) ### nearPD() in Matrix package
-         v <- E[1,1]                   ### need this, so correct values are shown when verbose=TRUE
-         r <- cov2cor(E)[lower.tri(E)] ### need this, so correct values are shown when verbose=TRUE
+         E <- as.matrix(nearPD(E, keepDiag=TRUE)$mat) # nearPD() in Matrix package
+         v <- E[1,1]                   # need this, so correct values are shown when verbose=TRUE
+         r <- cov2cor(E)[lower.tri(E)] # need this, so correct values are shown when verbose=TRUE
       }
    }
 
@@ -874,9 +874,9 @@
       vars <- par[seq_len(sigma2s)]
 
       if (vctransf) {
-         sigma2 <- ifelse(is.na(sigma2.val), exp(vars), sigma2.val) ### sigma2 is optimized in log space, so exponentiate
+         sigma2 <- ifelse(is.na(sigma2.val), exp(vars), sigma2.val) # sigma2 is optimized in log space, so exponentiate
       } else {
-         sigma2 <- ifelse(is.na(sigma2.val), vars, sigma2.val)      ### for Hessian computation, can choose to leave as is
+         sigma2 <- ifelse(is.na(sigma2.val), vars, sigma2.val)      # for Hessian computation, can choose to leave as is
          sigma2[sigma2 < 0] <- 0
       }
 

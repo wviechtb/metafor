@@ -19,7 +19,7 @@ ranktest(x, vi, sei, subset, data, digits, \dots)
 \details{
    The function carries out the rank correlation test as described by Begg and Mazumdar (1994). The test can be used to examine whether the observed effect sizes or outcomes and the corresponding sampling variances are correlated. A high correlation would indicate that the funnel plot is asymmetric, which may be a result of publication bias.
 
-   One can either pass a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}.
+   One can either pass a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}. When passing a model object, the model must be a model without moderators (i.e., either an equal- or a random-effects model).
 }
 \value{
    An object of class \code{"ranktest"}. The object is a list containing the following components:
