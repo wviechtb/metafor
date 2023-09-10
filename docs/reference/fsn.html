@@ -117,7 +117,7 @@
 <dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
 
    <dt>subset</dt>
-<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the calculations (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the calculation (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
 
    <dt>data</dt>
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
@@ -135,7 +135,7 @@
 <dd><p>optional character string to specify the model fitting method for <code>type="General"</code> (if unspecified, either <code>"REML"</code> by default or the method that was used in fitting the <code>"rma"</code> model). See <code><a href="rma.uni.html">rma.uni</a></code> for options.</p></dd>
 
    <dt>exact</dt>
-<dd><p>logical to indicate whether the General method should be based on exact (but slower) or approximate (but faster) calculations.</p></dd>
+<dd><p>logical to indicate whether the general method should be based on exact (but slower) or approximate (but faster) calculations.</p></dd>
 
    <dt>verbose</dt>
 <dd><p>logical to specify whether output should be generated on the progress of the calculations for <code>type="General"</code> (the default is <code>FALSE</code>).</p></dd>
@@ -150,7 +150,7 @@
     <div id="details">
     <h2>Details</h2>
     <p>The function can be used to calculate the ‘fail-safe N’, that is, the minimum number of studies averaging null results that would have to be added to a given set of <em></em>\(k\) studies to change the conclusion of a meta-analysis. If this number is small (in relation to the actual number of studies), then this indicates that the results based on the observed studies are not robust to publication bias (of the form assumed by the method, that is, where a set of studies averaging null results is missing). The method is also called a ‘file drawer analysis’ as it assumes that there is a set of studies averaging null results hiding in file drawers, which can overturn the findings from a meta-analysis. There are various types of methods that are all based on the same principle, which are described in more detail further below. Note that <em>the fail-safe N is not an estimate of the number of missing studies</em>, only how many studies must be hiding in file drawers for the findings to be overturned.</p>
-<p>One can either pass a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>.</p>
+<p>One can either pass a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>. When passing a model object, the model must be a model without moderators (i.e., either an equal- or a random-effects model).</p>
 <p></p><div class="section">
 <h3 id="rosenthal-method">Rosenthal Method<a class="anchor" aria-label="anchor" href="#rosenthal-method"></a></h3>
 

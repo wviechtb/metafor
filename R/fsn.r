@@ -92,7 +92,7 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
          stop(mstyle$stop("Method only applicable to models without moderators."))
 
       if (!missing(type) && type != "General")
-         warning(mstyle$warning("Setting type='General' when using fsn() on a model object. "), call.=FALSE)
+         warning(mstyle$warning("Setting type='General' when using fsn() on a model object."), call.=FALSE)
 
       type <- "General"
 
@@ -364,6 +364,11 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
       est  <- tmp$beta[1]
       tau2 <- tmp$tau2
       pval <- tmp$pval
+
+      if (mumiss != 0 && sign(est) == sign(mumiss)) {
+         mumiss <- -mumiss
+         message(mstyle$message("Flipped the sign of 'mumiss'."))
+      }
 
       if (is.null(target)) {
 

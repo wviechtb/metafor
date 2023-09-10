@@ -38,6 +38,9 @@
          tau2.fsn <- tmp$tau2
          pval.fsn <- tmp$pval
 
+         if (mumiss != 0 && sign(est.fsn) == sign(mumiss))
+            pval.fsn <- 1
+
       } else {
 
          k <- length(yi)
@@ -65,7 +68,11 @@
             est.fsn  <- mean(yinew)
             zval.new <- (k + fsnum) * est.fsn / sqrt(sum(vi + tau2.fsn) + fsnum * (vt + tau2.fsn))
          }
+
          pval.fsn <- 2*pnorm(abs(zval.new), lower.tail=FALSE)
+
+         if (mumiss != 0 && sign(est.fsn * mumiss) == 1)
+            pval.fsn <- 1
 
       }
 
