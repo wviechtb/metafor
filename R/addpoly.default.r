@@ -344,7 +344,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
       annotext <- cbind(annotext[,1], annosym[1], annotext[,2], annosym[2], annotext[,3], annosym[3])
 
       annotext <- apply(annotext, 1, paste, collapse="")
-      annotext <- sub("-", annosym[4], annotext, fixed=TRUE)
+      annotext <- gsub("-", annosym[4], annotext, fixed=TRUE)
       annotext <- gsub(" ", annosym[5], annotext, fixed=TRUE)
 
       par(family=names(fonts)[2], font=fonts[2])
