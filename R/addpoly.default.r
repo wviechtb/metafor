@@ -98,10 +98,12 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
    }
 
    if (is.null(annosym))
-      annosym <- c(" [", ", ", "]", "-") # 4th element for minus sign symbol
+      annosym <- c(" [", ", ", "]", "-", " ") # 4th element for minus sign symbol; 5th for space (in place of numbers and +)
    if (length(annosym) == 3L)
-      annosym <- c(annosym, "-")
-   if (length(annosym) != 4L)
+      annosym <- c(annosym, "-", " ")
+   if (length(annosym) == 4L)
+      annosym <- c(annosym, " ")
+   if (length(annosym) != 5)
       stop(mstyle$stop("Argument 'annosym' must be a vector of length 3 (or 4)."))
 
    if (is.null(ddd$lcol)) {
@@ -327,7 +329,6 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
       }
 
       annotext <- fmtx(annotext, digits[[1]])
-      annotext <- sub("-", annosym[4], annotext, fixed=TRUE)
 
       if (is.null(width)) {
          width <- apply(annotext, 2, function(x) max(nchar(x)))
@@ -341,7 +342,11 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
       }
 
       annotext <- cbind(annotext[,1], annosym[1], annotext[,2], annosym[2], annotext[,3], annosym[3])
+
       annotext <- apply(annotext, 1, paste, collapse="")
+      annotext <- sub("-", annosym[4], annotext, fixed=TRUE)
+      annotext <- gsub(" ", annosym[5], annotext, fixed=TRUE)
+
       par(family=names(fonts)[2], font=fonts[2])
       ltext(x=textpos[2], rows, labels=annotext, pos=2, cex=cex, ...)
       par(family=names(fonts)[1], font=fonts[1])
