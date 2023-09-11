@@ -116,15 +116,29 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (length(efac) == 1L)
       efac <- rep(efac, 2L)
 
+   ### setting for tabular figures
+
+   if (is.null(ddd$tabfig)) {
+      tabfig <- FALSE
+   } else {
+      tabfig <- ddd$tabfig
+   }
+
    ### annotation symbols vector
 
    if (is.null(ddd$annosym)) {
-      annosym <- c(" [", ", ", "]", "-") # 4th element for minus sign symbol
+      if (tabfig) {
+         annosym <- c("\u2009[", ",\u2009", "]", "\u2212", "\u2000") # \u2009 thin space, \u2212 minus, \u2000 en quad (same width as minus for Calibri/Carlito); see [a]
+      } else {
+         annosym <- c(" [", ", ", "]", "-", " ") # 4th element for minus sign symbol; 5th for space (in place of numbers and +)
+      }
    } else {
       annosym <- ddd$annosym
       if (length(annosym) == 3L)
-         annosym <- c(annosym, "-")
-      if (length(annosym) != 4L)
+         annosym <- c(annosym, "-", " ")
+      if (length(annosym) == 4L)
+         annosym <- c(annosym, " ")
+      if (length(annosym) != 5L)
          stop(mstyle$stop("Argument 'annosym' must be a vector of length 3 (or 4)."))
    }
 
@@ -197,14 +211,14 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       xlabfont <- ddd$xlabfont
    }
 
-   lplot     <- function(..., textpos, clim, rowadj, annosym, top, xlabadj, xlabfont) plot(...)
-   labline   <- function(..., textpos, clim, rowadj, annosym, top, xlabadj, xlabfont) abline(...)
-   lsegments <- function(..., textpos, clim, rowadj, annosym, top, xlabadj, xlabfont) segments(...)
-   laxis     <- function(..., textpos, clim, rowadj, annosym, top, xlabadj, xlabfont) axis(...)
-   lmtext    <- function(..., textpos, clim, rowadj, annosym, top, xlabadj, xlabfont) mtext(...)
-   lpolygon  <- function(..., textpos, clim, rowadj, annosym, top, xlabadj, xlabfont) polygon(...)
-   ltext     <- function(..., textpos, clim, rowadj, annosym, top, xlabadj, xlabfont) text(...)
-   lpoints   <- function(..., textpos, clim, rowadj, annosym, top, xlabadj, xlabfont) points(...)
+   lplot     <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) plot(...)
+   labline   <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) abline(...)
+   lsegments <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) segments(...)
+   laxis     <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) axis(...)
+   lmtext    <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) mtext(...)
+   lpolygon  <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) polygon(...)
+   ltext     <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) text(...)
+   lpoints   <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) points(...)
 
    #########################################################################
 
@@ -732,7 +746,6 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       }
 
       annotext <- fmtx(annotext, digits[[1]])
-      annotext <- sub("-", annosym[4], annotext, fixed=TRUE)
 
       if (missing(width)) {
          width <- apply(annotext, 2, function(x) max(nchar(x)))
@@ -748,9 +761,12 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       }
 
       annotext <- cbind(annotext[,1], annosym[1], annotext[,2], annosym[2], annotext[,3], annosym[3])
+
       annotext <- apply(annotext, 1, paste, collapse="")
       annotext[grepl("NA", annotext, fixed=TRUE)] <- ""
-      annotext <- sub("-", annosym[4], annotext, fixed=TRUE)
+      annotext <- gsub("-", annosym[4], annotext, fixed=TRUE) # [a]
+      annotext <- gsub(" ", annosym[5], annotext, fixed=TRUE)
+
       par(family=names(fonts)[2], font=fonts[2])
       ltext(textpos[2], rows+rowadj[2], labels=annotext, pos=2, cex=cex, col=col, ...)
       par(family=names(fonts)[1], font=fonts[1])
