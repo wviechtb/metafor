@@ -119,9 +119,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (is.null(ddd$annosym)) {
       annosym <- c(" [", ", ", "]", "-", " ") # 4th element for minus sign symbol; 5th for space (in place of numbers and +); see [a]
       if (tabfig == 1)
-         annosym <- c("\u2009[", ",\u2009", "]", "\u2212", "\u2000") # \u2009 thin space; \u2212 minus and \u2000 en quad have same width for: Calibri, Carlito, Palatino Linotype, Source Sans 3
+         annosym <- c("\u2009[", ",\u2009", "]", "\u2212", "\u2002") # \u2009 thin space; \u2212 minus and \u2002 en space have same width for: Calibri, Carlito, Palatino Linotype, Source Sans 3
       if (tabfig == 2)
-         annosym <- c("\u2009[", ",\u2009", "]", "\u2013", "\u2000") # \u2009 thin space; \u2013 en dash and \u2000 en quad have same width for: CMU Sans Serif, Latin Modern Sans, Latin Modern Roman
+         annosym <- c("\u2009[", ",\u2009", "]", "\u2013", "\u2002") # \u2009 thin space; \u2013 en dash and \u2002 en space have same width for: CMU Sans Serif, Latin Modern Sans, Latin Modern Roman
    } else {
       annosym <- ddd$annosym
       if (length(annosym) == 3L)
