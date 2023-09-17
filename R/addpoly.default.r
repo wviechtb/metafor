@@ -104,7 +104,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
    if (length(annosym) == 4L)
       annosym <- c(annosym, " ")
    if (length(annosym) != 5)
-      stop(mstyle$stop("Argument 'annosym' must be a vector of length 3 (or 4)."))
+      stop(mstyle$stop("Argument 'annosym' must be a vector of length 3 (or 4 or 5)."))
 
    if (is.null(ddd$lcol)) {
       lcol <- .coladj(par("fg"), dark=-0.3, light=0.3)

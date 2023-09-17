@@ -164,19 +164,19 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    ### annotation symbols vector
 
    if (is.null(ddd$annosym)) {
-      if (tabfig) {
-         annosym <- c("\u2009[", ",\u2009", "]", "\u2212", "\u2000") # \u2009 thin space, \u2212 minus, \u2000 en quad (same width as minus for Calibri/Carlito); see [a]
-      } else {
-         annosym <- c(" [", ", ", "]", "-", " ") # 4th element for minus sign symbol; 5th for space (in place of numbers and +)
-      }
-   } else {
+      annosym <- c(" [", ", ", "]", "-", " ") # 4th element for minus sign symbol; 5th for space (in place of numbers and +); see [a]
+         if (tabfig == 1)
+         annosym <- c("\u2009[", ",\u2009", "]", "\u2212", "\u2000") # \u2009 thin space; \u2212 minus and \u2000 en quad have same width for: Calibri, Carlito, Palatino Linotype, Source Sans 3
+      if (tabfig == 2)
+         annosym <- c("\u2009[", ",\u2009", "]", "\u2013", "\u2000") # \u2009 thin space; \u2013 en dash and \u2000 en quad have same width for: CMU Sans Serif, Latin Modern Sans, Latin Modern Roman
+} else {
       annosym <- ddd$annosym
       if (length(annosym) == 3L)
          annosym <- c(annosym, "-", " ")
       if (length(annosym) == 4L)
          annosym <- c(annosym, " ")
       if (length(annosym) != 5L)
-         stop(mstyle$stop("Argument 'annosym' must be a vector of length 3 (or 4)."))
+         stop(mstyle$stop("Argument 'annosym' must be a vector of length 3 (or 4 or 5)."))
    }
 
    ### get measure from object
