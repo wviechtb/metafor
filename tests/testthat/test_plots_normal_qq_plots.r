@@ -72,7 +72,7 @@ test_that("plot can be drawn for 'rma.peto' object.", {
 test_that("plot cannot be drawn for 'rma.mv' object.", {
 
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, sparse=.sparse)
    expect_error(qqnorm(res))
 
 })

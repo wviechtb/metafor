@@ -31,7 +31,7 @@ However, the question then remains what the real fixed-effects model is all abou
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-22</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@ However, the question then remains what the real fixed-effects model is all abou
     <h2>Details</h2>
     
 
-<div class="section">
+<p></p><div class="section">
 <h3 id="fixed-effects-model">Fixed-Effects Model<a class="anchor" aria-label="anchor" href="#fixed-effects-model"></a></h3>
 
 
@@ -117,7 +117,7 @@ However, the question then remains what the real fixed-effects model is all abou
 <p>The fixed-effects model is simply given by \[y_i = \theta_i + \varepsilon_i,\] where the <em></em>\(\theta_i\) values are the (fixed) true effects/outcomes of the <em></em>\(k\) studies. Therefore, the model ‘conditions’ on the true effects/outcomes and provides a <em>conditional inference</em> about the <em></em>\(k\) studies included in the meta-analysis.</p>
 <p>When using weighted estimation (the default in <code><a href="rma.uni.html">rma.uni</a></code> when <code>method="FE"</code>), this implies that the fitted model provides an estimate of \[\bar{\theta}_w = \frac{\sum_{i=1}^k w_i \theta_i}{\sum_{i=1}^k w_i},\] that is, the <em>weighted average</em> of the true effects/outcomes in the <em></em>\(k\) studies, with weights equal to <em></em>\(w_i = 1/v_i\).</p>
 <p>As an example, consider the meta-analysis by Bangert-Drowns et al. (2004) on the effectiveness of writing-to-learn interventions on academic achievement. The dataset (<code><a href="https://wviechtb.github.io/metadat/reference/dat.bangertdrowns2004.html" class="external-link">dat.bangertdrowns2004</a></code>) includes the observed standardized mean differences (variable <code>yi</code>) and the corresponding sampling variances (variable <code>vi</code>) of the 48 studies. We can fit a fixed-effects model to these data with:</p>
-<div class="sourceCode"><pre><code><span><span class="co"># copy data into 'dat'</span></span>
+<p></p><div class="sourceCode"><pre><code><span><span class="co"># copy data into 'dat'</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bangertdrowns2004.html" class="external-link">dat.bangertdrowns2004</a></span></span>
 <span></span>
 <span><span class="co"># fit a fixed-effects model</span></span>
@@ -140,7 +140,7 @@ However, the question then remains what the real fixed-effects model is all abou
 <p>The Q-test suggests that the underlying true standardized mean differences are heterogeneous <em></em>\((Q(\textrm{df}=47) = 107.11, p &lt; .0001).\) Therefore, if we believe this to be true, then the value shown under <code>estimate</code> is an estimate of the inverse-variance weighted average of the true standardized mean differences of these 48 studies (i.e., <em></em>\(\hat{\bar{\theta}}_w = 0.17\)).</p>
 <p>One can also employ an unweighted estimation method (by setting <code>weighted=FALSE</code> in <code><a href="rma.uni.html">rma.uni</a></code>), which provides an estimate of the <em>unweighted average</em> of the true effects/outcomes in the <em></em>\(k\) studies, that is, an estimate of \[\bar{\theta}_u = \frac{\sum_{i=1}^k \theta_i}{k}.\]</p>
 <p>Returning to the example, we then find:</p>
-<div class="sourceCode"><pre><code><span><span class="co"># fit a fixed-effects model using unweighted estimation</span></span>
+<p></p><div class="sourceCode"><pre><code><span><span class="co"># fit a fixed-effects model using unweighted estimation</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"FE"</span>, weighted<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">res</span></span>
 <span></span>
@@ -160,7 +160,7 @@ However, the question then remains what the real fixed-effects model is all abou
 <p>Therefore, the <code>estimate</code> value is now an estimate of the average of the true standardized mean differences of these 48 studies (i.e., <em></em>\(\hat{\bar{\theta}}_u = 0.26\)).</p>
 <p>For weighted estimation, one could also choose to estimate <em></em>\(\bar{\theta}_w\), where the <em></em>\(w_i\) values are user-defined weights (via argument <code>weights</code> in <code><a href="rma.uni.html">rma.uni</a></code>). Hence, using inverse-variance weights or unit weights (as in unweighted estimation) are just special cases. It is up to the user to decide to what extent <em></em>\(\bar{\theta}_w\) is a meaningful parameter to estimate (regardless of the weights used).</p>
 <p>For example, we could use the sample sizes as weights:</p>
-<div class="sourceCode"><pre><code><span><span class="co"># fit a fixed-effects model using the sample sizes as weights</span></span>
+<p></p><div class="sourceCode"><pre><code><span><span class="co"># fit a fixed-effects model using the sample sizes as weights</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"FE"</span>, weights<span class="op">=</span><span class="va">ni</span><span class="op">)</span></span>
 <span><span class="va">res</span></span>
 <span></span>
@@ -178,15 +178,16 @@ However, the question then remains what the real fixed-effects model is all abou
 <span><span class="co">#   0.1719  0.0269  6.3802  &lt;.0001  0.1191  0.2248</span></span></code></pre></div>
 
 <p>We therefore obtain an estimate of the sample-size weighted average of the true standardized mean differences of these 48 studies (i.e., <em></em>\(\hat{\bar{\theta}}_w = 0.17\)). Since the sample sizes and the inverse sampling variances are highly correlated (<code>cor(dat$ni, 1/dat$vi)</code> yields <code>0.999</code>), the results are almost identical to the ones we obtained earlier using inverse-variance weighting.</p>
+<p></p>
 </div>
 
-<div class="section">
+<p></p><div class="section">
 <h3 id="random-effects-model">Random-Effects Model<a class="anchor" aria-label="anchor" href="#random-effects-model"></a></h3>
 
 
 <p>The random-effects model does not condition on the true effects/outcomes. Instead, the <em></em>\(k\) studies included in the meta-analysis are assumed to be a random sample from a larger population of studies. In rare cases, the studies included in a meta-analysis are actually sampled from a larger collection of studies. More typically, all efforts have been made to find and include all relevant studies providing evidence about the phenomenon of interest and hence the population of studies is a hypothetical population of an essentially infinite set of studies comprising all of the studies that have been conducted, that could have been conducted, or that may be conducted in the future. We assume that <em></em>\(\theta_i \sim N(\mu, \tau^2)\), that is, the true effects/outcomes in the population of studies are normally distributed with <em></em>\(\mu\) denoting the average true effect/outcome and <em></em>\(\tau^2\) the variance of the true effects/outcomes in the population (<em></em>\(\tau^2\) is therefore often referred to as the amount of ‘heterogeneity’ in the true effects/outcomes). The random-effects model can also be written as \[y_i = \mu + u_i + \varepsilon_i,\] where <em></em>\(u_i \sim N(0, \tau^2)\) and <em></em>\(\varepsilon_i \sim N(0, v_i)\). The fitted model provides estimates of <em></em>\(\mu\) and <em></em>\(\tau^2\). Consequently, the random-effects model provides an <em>unconditional inference</em> about the average true effect/outcome in the population of studies (from which the <em></em>\(k\) studies included in the meta-analysis are assumed to be a random sample).</p>
 <p>Fitting a random-effects model to the example data yields:</p>
-<div class="sourceCode"><pre><code><span><span class="co"># fit a random-effects model (note: method="REML" is the default)</span></span>
+<p></p><div class="sourceCode"><pre><code><span><span class="co"># fit a random-effects model (note: method="REML" is the default)</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span>
 <span><span class="va">res</span></span>
 <span></span>
@@ -207,24 +208,27 @@ However, the question then remains what the real fixed-effects model is all abou
 
 <p>The value shown under <code>estimate</code> is now an estimate of the average true standardized mean difference of studies in the population of studies from which the 48 studies included in this dataset have come (i.e., <em></em>\(\hat{\mu}_w = 0.22\)).</p>
 <p>When using weighted estimation in the context of a random-effects model, the model is fitted with weights equal to <em></em>\(w_i = 1/(\tau^2 + v_i)\), with <em></em>\(\tau^2\) replaced by its estimate (the default in <code><a href="rma.uni.html">rma.uni</a></code> when <code>method</code> is set to one of the possible choices for estimating <em></em>\(\tau^2\)). One can also choose unweighted estimation in the context of the random-effects model (<code>weighted=FALSE</code>) or specify user-defined weights (via <code>weights</code>), although the parameter that is estimated (i.e., <em></em>\(\mu\)) remains the same regardless of the estimation method and weights used (as opposed to the fixed-effect model, where the parameter estimated is different for weighted versus unweighted estimation or when using different weights than the standard inverse-variance weights). Since weighted estimation with inverse-variance weights is most efficient, it is usually to be preferred for random-effects models (while in the fixed-effect model case, we must carefully consider whether <em></em>\(\bar{\theta}_w\) or <em></em>\(\bar{\theta}_u\) is the more meaningful parameter to estimate).</p>
+<p></p>
 </div>
 
-<div class="section">
+<p></p><div class="section">
 <h3 id="conditional-versus-unconditional-inferences">Conditional versus Unconditional Inferences<a class="anchor" aria-label="anchor" href="#conditional-versus-unconditional-inferences"></a></h3>
 
 
 <p>Contrary to what is often stated in the literature, it is important to realize that the fixed-effects model does <em>not</em> assume that the true effects/outcomes are homogeneous (i.e., that <em></em>\(\theta_i\) is equal to some common value <em></em>\(\theta\) in all <em></em>\(k\) studies). In other words, the fixed-effects model provides perfectly valid inferences under heterogeneity, as long as one is restricting these inferences to the set of studies included in the meta-analysis and one realizes that the model does not provide an estimate of <em></em>\(\theta\) or <em></em>\(\mu\), but of <em></em>\(\bar{\theta}_w\) or <em></em>\(\bar{\theta}_u\) (depending on the estimation method used).</p>
 <p>However, such inferences are conditional on the included studies. It is therefore not permissible to generalize those inferences beyond the set of studies included in a meta-analysis. In contrast, a random-effects model provides unconditional inferences and therefore allows a generalization beyond the set of included studies, although the population of studies to which we can generalize is typically only vaguely defined (since the included studies are not a proper random sample from a specified sampling frame). Instead, we simply must assume that the included studies are a representative sample of <em>some</em> population and it is to that population to which we are generalizing.</p>
 <p>Leaving aside this issue, the above implies that there is nothing wrong with fitting both the fixed- and random-effects models to the same data, since these models address inherently different questions (i.e., what was the average effect in the studies that have been conducted and are included in this meta-analysis versus what is the average effect in the larger population of studies?).</p>
+<p></p>
 </div>
 
-<div class="section">
+<p></p><div class="section">
 <h3 id="equal-effects-model">Equal-Effects Model<a class="anchor" aria-label="anchor" href="#equal-effects-model"></a></h3>
 
 
 <p>In the special case that the true effects/outcomes are actually homogeneous (the equal-effects case), the distinction between the fixed- and random-effects models disappears, since homogeneity implies that <em></em>\(\mu = \bar{\theta}_w = \bar{\theta}_u \equiv \theta\). Therefore, if one belives that the true effects/outcomes are homogeneous, then one can fit an equal-effects model (using weighted estimation), since this will provide the most efficient estimate of <em></em>\(\theta\) (note that if the true effects/outcomes are really homogeneous but we fit a random-effects model, it can happen that the estimate of <em></em>\(\tau^2\) is actually larger than 0, which then leads to a loss of efficiency).</p>
 <p>However, since there is no infallible method to test whether the true effects/outcomes are really homogeneous or not, a researcher should decide on the type of inference desired before examining the data and choose the model accordingly.</p>
 <p>Note that fitting an equal-effects model (with <code>method="EE"</code>) yields the exact same output as fitting a fixed-effects model, since the equations used to fit these two models are identical. However, the interpretation of the results is different. If we fit an equal-effects model, we make the assumption that the true effects are homogeneous and, if we believe this assumption to be justified, can interpret the estimate as an estimate of <em>the</em> true effect. On the other hand, if we reject the homogeneity assumption, then we should reject the model altogether. In contrast, if we fit a fixed-effects model, we do not assume homogeneity and instead interpret the estimate as an estimate of the (weighted) average true effect of the included studies.</p>
+<p></p>
 </div>
 
 <p>For further discussions of the distinction between the equal-, fixed-, and random-effects models, see Laird and Mosteller (1990) and Hedges and Vevea (1998).</p>

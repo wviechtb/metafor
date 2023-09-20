@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-22</span>
       </span>
     </div>
 
@@ -225,7 +225,8 @@
     <p>For equal- and random-effects models (i.e., models not involving moderators), the plot shows the observed effect sizes or outcomes on the x-axis against the corresponding standard errors (i.e., the square root of the sampling variances) on the y-axis. A vertical line indicates the estimate based on the model. A pseudo confidence interval region is drawn around this value with bounds equal to <em></em>\(\pm 1.96 \mbox{SE}\), where <em></em>\(\mbox{SE}\) is the standard error value from the y-axis (assuming <code>level=95</code>). If <code>addtau2=TRUE</code> (only for models of class <code>"rma.uni"</code>), then the bounds of the pseudo confidence interval region are equal to <em></em>\(\pm 1.96 \sqrt{\mbox{SE}^2 + \hat{\tau}^2}\), where <em></em>\(\hat{\tau}^2\) is the amount of heterogeneity as estimated by the model.</p>
 <p>For (mixed-effects) meta-regression models (i.e., models involving moderators), the plot shows the residuals on the x-axis against their corresponding standard errors. Either the usual or deleted residuals can be used for that purpose (set via the <code>type</code> argument). See <code><a href="residuals.rma.html">residuals</a></code> for more details on the different types of residuals.</p>
 <p>With the <code>atransf</code> argument, the labels on the x-axis can be transformed with some suitable function. For example, when plotting log odds ratios, one could use <code>transf=exp</code> to obtain a funnel plot with the values on the x-axis corresponding to the odds ratios. See also <a href="transf.html">transf</a> for some other useful transformation functions in the context of a meta-analysis.</p>
-<p>Instead of placing the standard errors on the y-axis, several other options are available by setting the <code>yaxis</code> argument to:</p><ul><li><p><code>yaxis="vi"</code> for the sampling variances,</p></li>
+<p>Instead of placing the standard errors on the y-axis, several other options are available by setting the <code>yaxis</code> argument to:</p>
+<p></p><ul><li><p><code>yaxis="vi"</code> for the sampling variances,</p></li>
 <li><p><code>yaxis="seinv"</code> for the inverse of the standard errors,</p></li>
 <li><p><code>yaxis="vinv"</code> for the inverse of the sampling variances,</p></li>
 <li><p><code>yaxis="ni"</code> for the sample sizes,</p></li>

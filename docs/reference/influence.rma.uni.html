@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-22</span>
       </span>
     </div>
 
@@ -142,7 +142,8 @@
     <div id="details">
     <h2>Details</h2>
     <p>The term ‘case’ below refers to a particular row from the dataset used in the model fitting (which is typically synonymous with ‘study’).</p>
-<p>The <code>influence</code> function calculates the following leave-one-out diagnostics for each case:</p><ul><li><p>externally standardized residual,</p></li>
+<p>The <code>influence</code> function calculates the following leave-one-out diagnostics for each case:</p>
+<p></p><ul><li><p>externally standardized residual,</p></li>
 <li><p>DFFITS value,</p></li>
 <li><p>Cook's distance,</p></li>
 <li><p>covariance ratio,</p></li>
@@ -157,7 +158,8 @@
 <p>The leave-one-out amount of (residual) heterogeneity is the estimated value of <em></em>\(\tau^2\) based on the dataset with the <em></em>\(i\textrm{th}\) case removed. This is always equal to 0 for equal-effects models.</p>
 <p>Similarly, the leave-one-out test statistic of the test for (residual) heterogeneity is the value of the test statistic of the test for (residual) heterogeneity calculated based on the dataset with the <em></em>\(i\textrm{th}\) case removed.</p>
 <p>Finally, the DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the <em></em>\(i\textrm{th}\) case from the model fitting.</p>
-<p>A case may be considered to be ‘influential’ if at least one of the following is true:</p><ul><li><p>The absolute DFFITS value is larger than <em></em>\(3 \times \sqrt{p/(k-p)}\), where <em></em>\(p\) is the number of model coefficients and <em></em>\(k\) the number of cases.</p></li>
+<p>A case may be considered to be ‘influential’ if at least one of the following is true:</p>
+<p></p><ul><li><p>The absolute DFFITS value is larger than <em></em>\(3 \times \sqrt{p/(k-p)}\), where <em></em>\(p\) is the number of model coefficients and <em></em>\(k\) the number of cases.</p></li>
 <li><p>The lower tail area of a chi-square distribution with <em></em>\(p\) degrees of freedom cut off by the Cook's distance is larger than 50%.</p></li>
 <li><p>The hat value is larger than <em></em>\(3 \times (p/k)\).</p></li>
 <li><p>Any DFBETAS value is larger than <em></em>\(1\).</p></li>

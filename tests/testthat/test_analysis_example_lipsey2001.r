@@ -63,11 +63,7 @@ test_that("results are correct for the meta-regression analysis (fixed-effects w
 
    res <- rma(yi, vi, mods = ~ random + intensity, data=dat, method="FE")
 
-   expected <- structure(list(estimate = c(0.3223, -0.3298, -0.0041), se = c(0.2998, 0.1304, 0.0493),
-                              zval = c(1.0752, -2.5286, -0.0829), pval = c(0.2823, 0.0115, 0.9339),
-                              ci.lb = c(-0.2652, -0.5854, -0.1007), ci.ub = c(0.9099, -0.0742, 0.0925)),
-                              .Names = c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub"),
-                              row.names = c("intrcpt", "random", "intensity"), class = "data.frame")
+   expected <- structure(list(estimate = c(0.32233263, -0.32978043, -0.00408559), se = c(0.29977632, 0.13041815, 0.04928185), zval = c(1.0752438, -2.52863907, -0.08290246), pval = c(0.28226559, 0.01145057, 0.9339291), ci.lb = c(-0.26521816, -0.58539531, -0.10067623), ci.ub = c(0.90988342, -0.07416555, 0.09250506)), row.names = c("intrcpt", "random", "intensity"), class = "data.frame")
 
    ### compare with results on page 141 (Exhibit 7.6)
 
@@ -83,11 +79,7 @@ test_that("results are correct for the meta-regression analysis (mixed-effects m
 
    res <- rma(yi, vi, mods = ~ random + intensity, data=dat, method="DL")
 
-   expected <- structure(list(estimate = c(0.3311, -0.3269, -0.0068), se = c(0.3198, 0.1439, 0.0528),
-                              zval = c(1.0351, -2.2712, -0.1292), pval = c(0.3006, 0.0231, 0.8972),
-                              ci.lb = c(-0.2958, -0.609, -0.1103), ci.ub = c(0.9579, -0.0448, 0.0967)),
-                              .Names = c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub"),
-                              row.names = c("intrcpt", "random", "intensity"), class = "data.frame")
+   expected <- structure(list(estimate = c(0.33106915, -0.32691858, -0.00682302), se = c(0.31983925, 0.1439395, 0.0528008), zval = c(1.03511109, -2.2712222, -0.12922184), pval = c(0.30061703, 0.02313353, 0.89718211), ci.lb = c(-0.29580425, -0.60903481, -0.11031068), ci.ub = c(0.95794255, -0.04480235, 0.09666464)), row.names = c("intrcpt", "random", "intensity"), class = "data.frame")
 
    ### compare with results on page 141 (Exhibit 7.7)
 

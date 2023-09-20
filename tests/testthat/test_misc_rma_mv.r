@@ -8,15 +8,15 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
 test_that("rma.mv() correctly handles a formula for the 'yi' argument", {
 
-   res1 <- rma.mv(yi ~ ablat, vi, random = ~ 1 | trial, data=dat, sparse=sparse)
-   res2 <- rma.mv(yi, vi, mods = ~ ablat, random = ~ 1 | trial, data=dat, sparse=sparse)
+   res1 <- rma.mv(yi ~ ablat, vi, random = ~ 1 | trial, data=dat, sparse=.sparse)
+   res2 <- rma.mv(yi, vi, mods = ~ ablat, random = ~ 1 | trial, data=dat, sparse=.sparse)
    expect_equivalent(coef(res1), coef(res2), tolerance=.tol[["coef"]])
 
 })
 
 test_that("rma.mv() works correctly when using user-defined weights", {
 
-   res <- rma.mv(yi, vi, W=1, random = ~ 1 | trial, data=dat, sparse=sparse)
+   res <- rma.mv(yi, vi, W=1, random = ~ 1 | trial, data=dat, sparse=.sparse)
    expect_equivalent(coef(res), mean(dat$yi), tolerance=.tol[["coef"]])
    expect_equivalent(c(vcov(res)), 0.0358, tolerance=.tol[["var"]])
 
@@ -25,7 +25,7 @@ test_that("rma.mv() works correctly when using user-defined weights", {
 test_that("rma.mv() correctly handles negative sampling variances", {
 
    dat$vi[1] <- -.01
-   expect_warning(res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, sparse=sparse))
+   expect_warning(res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, sparse=.sparse))
    expect_equivalent(coef(res), -0.7220, tolerance=.tol[["coef"]])
    expect_equivalent(c(vcov(res)), 0.0293, tolerance=.tol[["var"]])
 
@@ -34,7 +34,7 @@ test_that("rma.mv() correctly handles negative sampling variances", {
 test_that("rma.mv() correctly handles a missing value", {
 
    dat$vi[1] <- NA
-   expect_warning(res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, sparse=sparse))
+   expect_warning(res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, sparse=.sparse))
    expect_equivalent(coef(res), -0.7071, tolerance=.tol[["coef"]])
    expect_equivalent(c(vcov(res)), 0.0361, tolerance=.tol[["var"]])
 
@@ -65,7 +65,7 @@ test_that("rma.mv() correctly handles the R argument", {
                          vi = c(0.213, 0.387, 0.381, 0.467, 0.132, 0.603, 0.374, 0.2, 0.119, 0.092, 0.139, 0.449, 0.412, 0.398, 0.25, 0.168, 0.303, 0.125, 0.164, 0.229, 0.482, 0.059, 0.421, 0.111, 0.373, 0.032, 0.062, 0.126, 0.066, 0.155, 0.229, 0.276, 0.039, 0.409, 0.312, 0.304, 0.601, 0.096, 0.216, 0.181, 0.537, 0.16, 0.303, 0.281)),
                          .Names = c("study", "species", "phylogeny", "yi", "vi"), row.names = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44"), class = "data.frame")
 
-   res <- rma.mv(yi, vi, random = list(~ 1 | study, ~ 1 | species, ~ 1 | phylogeny), R = list(phylogeny=P), data=dat, sparse=sparse)
+   res <- rma.mv(yi, vi, random = list(~ 1 | study, ~ 1 | species, ~ 1 | phylogeny), R = list(phylogeny=P), data=dat, sparse=.sparse)
 
    expect_equivalent(coef(res), .5504, tolerance=.tol[["coef"]])
    expect_equivalent(res$sigma2, c(0.1763, 0.5125, 0.1062), tolerance=.tol[["var"]])
@@ -77,43 +77,43 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
 test_that("rma.mv() correctly computes the Hessian", {
 
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, cvvc=TRUE, sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, cvvc=TRUE, sparse=.sparse)
    expect_equivalent(c(sqrt(res$vvc)), 0.1678, tolerance=.tol[["se"]])
 
 })
 
 test_that("rma.mv() works correctly with test='t'", {
 
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, test="t", sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, test="t", sparse=.sparse)
    expect_equivalent(res$pval, 0.0018, tolerance=.tol[["pval"]])
 
 })
 
 test_that("rma.mv() works correctly with different optimizers", {
 
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="BFGS"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="BFGS"), sparse=.sparse)
    expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="L-BFGS-B"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="L-BFGS-B"), sparse=.sparse)
    expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="Nelder-Mead"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="Nelder-Mead"), sparse=.sparse)
    expect_equivalent(res$sigma2, 0.3133, tolerance=.tol[["var"]])
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nlminb"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nlminb"), sparse=.sparse)
    expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="uobyqa"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="uobyqa"), sparse=.sparse)
    expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="newuoa"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="newuoa"), sparse=.sparse)
    expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="bobyqa"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="bobyqa"), sparse=.sparse)
    expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nloptr"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nloptr"), sparse=.sparse)
    expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nlm"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nlm"), sparse=.sparse)
    expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="hjk"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="hjk"), sparse=.sparse)
    expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nmk"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="nmk"), sparse=.sparse)
    expect_equivalent(res$sigma2, 0.3131, tolerance=.tol[["var"]])
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="ucminf"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="ucminf"), sparse=.sparse)
    expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
 
 })

@@ -27,12 +27,15 @@
    When \code{plotinf=TRUE}, the function plots the (1) externally standardized residuals, (2) DFFITS values, (3) Cook's distances, (4) covariance ratios, (5) leave-one-out \mjseqn{\tau^2} estimates, (6) leave-one-out (residual) heterogeneity test statistics, (7) hat values, and (8) weights. If \code{plotdfbs=TRUE}, the DFBETAS values are also plotted either after confirming the page change (if \code{dfbsnew=FALSE}) or on a separate device (if \code{dfbsnew=TRUE}).
 
    A case (which is typically synonymous with study) may be considered to be \sQuote{influential} if at least one of the following is true:
+
    \itemize{
    \item The absolute DFFITS value is larger than \mjeqn{3 \times \sqrt{p/(k-p)}}{3*\sqrt(p/(k-p))}, where \mjseqn{p} is the number of model coefficients and \mjseqn{k} the number of cases.
    \item The lower tail area of a chi-square distribution with \mjseqn{p} degrees of freedom cut off by the Cook's distance is larger than 50\%.
    \item The hat value is larger than \mjeqn{3 \times (p/k)}{3*(p/k)}.
    \item Any DFBETAS value is larger than \mjseqn{1}.
-   } Cases which are considered influential with respect to any of these measures are indicated by the color specified for the \code{bg.infl} argument (the default is \code{"red"}).
+   }
+
+   Cases which are considered influential with respect to any of these measures are indicated by the color specified for the \code{bg.infl} argument (the default is \code{"red"}).
 
    The cut-offs described above are indicated in the plot with horizontal reference lines. In addition, on the plot of the externally standardized residuals, horizontal reference lines are drawn at -1.96, 0, and 1.96. On the plot of the hat values, a horizontal reference line is drawn at \mjseqn{p/k}. Since the sum of the hat values is equal to \mjseqn{p}, the value \mjseqn{p/k} indicates equal hat values for all \mjseqn{k} cases. Finally, on the plot of weights, a horizontal reference line is drawn at \mjseqn{100/k}, corresponding to the value for equal weights (in \%) for all \mjseqn{k} cases. Note that all weights will automatically be equal to each other when using unweighted model fitting. Also, the hat values will be equal to the weights values (except for their scaling) in models without moderators.
 

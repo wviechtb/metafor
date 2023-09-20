@@ -66,6 +66,7 @@ funnel(x, \dots)
    With the \code{atransf} argument, the labels on the x-axis can be transformed with some suitable function. For example, when plotting log odds ratios, one could use \code{transf=exp} to obtain a funnel plot with the values on the x-axis corresponding to the odds ratios. See also \link{transf} for some other useful transformation functions in the context of a meta-analysis.
 
    Instead of placing the standard errors on the y-axis, several other options are available by setting the \code{yaxis} argument to:
+
    \itemize{
    \item \code{yaxis="vi"} for the sampling variances,
    \item \code{yaxis="seinv"} for the inverse of the standard errors,
@@ -76,7 +77,9 @@ funnel(x, \dots)
    \item \code{yaxis="sqrtninv"} for the inverse square root of the sample sizes,
    \item \code{yaxis="lni"} for the log of the sample sizes,
    \item \code{yaxis="wi"} for the weights.
-   } However, only when \code{yaxis="sei"} (the default) will the pseudo confidence region have the expected (upside-down) funnel shape with straight lines. Also, when placing (a function of) the sample sizes on the y-axis or the weights, then the pseudo confidence region cannot be drawn. See Sterne and Egger (2001) for more details on the choice of the y-axis.
+   }
+
+   However, only when \code{yaxis="sei"} (the default) will the pseudo confidence region have the expected (upside-down) funnel shape with straight lines. Also, when placing (a function of) the sample sizes on the y-axis or the weights, then the pseudo confidence region cannot be drawn. See Sterne and Egger (2001) for more details on the choice of the y-axis.
 
    If the object passed to the function comes from the \code{\link{trimfill}} function, the studies that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in studies can be specified via the \code{pch.fill} argument. Arguments \code{col} and \code{bg} can then be of length 2 to specify the (border) color and background color of the observed and filled in studies.
 

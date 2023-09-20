@@ -67,6 +67,7 @@
    \subsection{Selecting the Parameter(s) to Profile}{
 
       The parameters that can be profiled depend on the model object:
+
       \itemize{
       \item For objects of class \code{"rma.uni"} obtained with the \code{\link{rma.uni}} function, the function profiles over \mjseqn{\tau^2} (not for equal-effects models).
       \item For objects of class \code{"rma.mv"} obtained with the \code{\link{rma.mv}} function, profiling is done by default over all (non-fixed) variance and correlation components of the model. Alternatively, one can use the \code{sigma2}, \code{tau2}, \code{rho}, \code{gamma2}, or \code{phi} arguments to specify over which parameter the profiling should be done. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter.

@@ -24,7 +24,7 @@ test_that("results for rma.mv() and lm() match.", {
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat.molloy2014)
    dat$id <- 1:nrow(dat)
 
-   res1 <- rma.mv(yi, 0, random = ~ 1 | id, data=dat, sparse=sparse)
+   res1 <- rma.mv(yi, 0, random = ~ 1 | id, data=dat, sparse=.sparse)
    res2 <- lm(yi ~ 1, data=dat)
 
    ### coefficients should be the same

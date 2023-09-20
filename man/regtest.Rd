@@ -29,6 +29,7 @@ regtest(x, vi, sei, ni, subset, data,
    The model type for the regression test is chosen via the \code{model} argument, with \code{model="lm"} for a weighted regression model with a multiplicative dispersion term or \code{model="rma"} for a (mixed-effects) meta-regression model (the default).
 
    The predictor for the test is chosen via the \code{predictor} argument:
+
    \itemize{
    \item \code{predictor="sei"} for the standard errors (the default),
    \item \code{predictor="vi"} for the sampling variances,

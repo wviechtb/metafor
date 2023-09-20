@@ -131,20 +131,20 @@ test_that("NAs are correctly handled by rma.mv() intercept-only models.", {
 
    dat <- dat.konstantopoulos2011
 
-   res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=sparse)
-   res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat, sparse=sparse)
+   res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=.sparse)
+   res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat, sparse=.sparse)
    expect_equivalent(logLik(res1), logLik(res2), tolerance=.tol[["fit"]])
 
    dat$yi[1:2] <- NA
 
-   expect_warning(res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=sparse))
-   expect_warning(res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat, sparse=sparse))
+   expect_warning(res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=.sparse))
+   expect_warning(res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat, sparse=.sparse))
    expect_equivalent(logLik(res1), logLik(res2), tolerance=.tol[["fit"]])
 
    dat$yi[1:4] <- NA # entire district 11 is missing
 
-   expect_warning(res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=sparse))
-   expect_warning(res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat, sparse=sparse))
+   expect_warning(res1 <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=.sparse))
+   expect_warning(res2 <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat, sparse=.sparse))
    expect_equivalent(logLik(res1), logLik(res2), tolerance=.tol[["fit"]])
 
 })

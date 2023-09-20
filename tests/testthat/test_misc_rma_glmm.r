@@ -33,8 +33,8 @@ test_that("rma.glmm() works correctly for 'UM.FS' model.", {
 
    expect_warning(res <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="UM.FS", test="t", control=list(package="GLMMadaptive")))
 
-   expect_equivalent(coef(res), -1.2370, tolerance=.tol[["coef"]])
-   expect_equivalent(res$tau2,   0.3227, tolerance=.tol[["var"]])
+   expect_equivalent(coef(res), -1.236772, tolerance=.tol[["coef"]])
+   expect_equivalent(res$tau2,   0.322732, tolerance=.tol[["var"]])
 
    expect_warning(res <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="UM.FS", test="t", control=list(package="glmmTMB")))
 
@@ -119,31 +119,31 @@ test_that("rma.glmm() works correctly for 'CM.EL' model.", {
    expect_warning(res11 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="subplex", hessianCtrl=list(r=4))))
    expect_warning(res12 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="BBoptim")))
 
-   expect_equivalent(coef(res1),  -1.3532, tolerance=.tol[["coef"]])
-   expect_equivalent(coef(res2),  -1.3540, tolerance=.tol[["coef"]])
-   expect_equivalent(coef(res3),  -1.3532, tolerance=.tol[["coef"]])
-   expect_equivalent(coef(res4),  -1.3532, tolerance=.tol[["coef"]])
-   expect_equivalent(coef(res5),  -1.3536, tolerance=.tol[["coef"]])
-   expect_equivalent(coef(res6),  -1.3532, tolerance=.tol[["coef"]])
-   expect_equivalent(coef(res7),  -1.3593, tolerance=.tol[["coef"]])
-   expect_equivalent(coef(res8),  -1.3542, tolerance=.tol[["coef"]])
-   expect_equivalent(coef(res9),  -1.3532, tolerance=.tol[["coef"]])
-   expect_equivalent(coef(res10), -1.3532, tolerance=.tol[["coef"]])
-   expect_equivalent(coef(res11), -1.3542, tolerance=.tol[["coef"]])
-   expect_equivalent(coef(res12), -1.3532, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res1),  -1.353158, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res2),  -1.354041, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res3),  -1.353158, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res4),  -1.353158, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res5),  -1.352573, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res6),  -1.353160, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res7),  -1.359295, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res8),  -1.354186, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res9),  -1.353158, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res10), -1.353170, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res11), -1.354171, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res12), -1.353158, tolerance=.tol[["coef"]])
 
-   expect_equivalent(c(vcov(res1)),  0.1232, tolerance=.tol[["var"]])
-   expect_equivalent(c(vcov(res2)),  0.1228, tolerance=.tol[["var"]])
-   expect_equivalent(c(vcov(res3)),  0.1232, tolerance=.tol[["var"]])
-   expect_equivalent(c(vcov(res4)),  0.1232, tolerance=.tol[["var"]])
-   expect_equivalent(c(vcov(res5)),  0.1231, tolerance=.tol[["var"]])
-   expect_equivalent(c(vcov(res6)),  0.1232, tolerance=.tol[["var"]])
-   expect_equivalent(c(vcov(res7)),  0.0413, tolerance=.tol[["var"]]) # :(
-   expect_equivalent(c(vcov(res8)),  0.0405, tolerance=.tol[["var"]]) # :(
-   expect_equivalent(c(vcov(res9)),  0.1232, tolerance=.tol[["var"]])
-   expect_equivalent(c(vcov(res10)), 0.1232, tolerance=.tol[["var"]])
-   expect_equivalent(c(vcov(res11)), 0.0405, tolerance=.tol[["var"]]) # :(
-   expect_equivalent(c(vcov(res12)), 0.1233, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res1)),  0.1232445, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res2)),  0.1227803, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res3)),  0.1231863, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res4)),  0.1231865, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res5)),  0.1230846, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res6)),  0.1231713, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res7)),  0.0412516, tolerance=.tol[["var"]]) # :(
+   expect_equivalent(c(vcov(res8)),  0.0404966, tolerance=.tol[["var"]]) # :(
+   expect_equivalent(c(vcov(res9)),  0.1232442, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res10)), 0.1232348, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res11)), 0.0404973, tolerance=.tol[["var"]]) # :(
+   expect_equivalent(c(vcov(res12)), 0.1233028, tolerance=.tol[["var"]])
 
    expect_equivalent(res1$tau2,  0.6935, tolerance=.tol[["var"]])
    expect_equivalent(res2$tau2,  0.6945, tolerance=.tol[["var"]])

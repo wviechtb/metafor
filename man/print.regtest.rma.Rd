@@ -15,6 +15,7 @@
 }
 \details{
    The output includes:
+
    \itemize{
    \item the model used for the regression test
    \item the predictor used for the regression test

@@ -19,7 +19,7 @@ test_that("vcov() works correctly for 'rma.uni' objects.", {
 test_that("vcov() works correctly for 'rma.mv' objects.", {
 
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
-   res <- rma.mv(yi ~ ablat, vi, random = ~ 1 | trial, data=dat, sparse=sparse)
+   res <- rma.mv(yi ~ ablat, vi, random = ~ 1 | trial, data=dat, sparse=.sparse)
 
    expect_equivalent(vcov(res), structure(c(0.062, -0.0016, -0.0016, 1e-04), .Dim = c(2L, 2L), .Dimnames = list(c("intrcpt", "ablat"), c("intrcpt", "ablat"))), tolerance=.tol[["var"]])
    expect_equivalent(diag(vcov(res, type="obs")), dat$vi + res$sigma2)

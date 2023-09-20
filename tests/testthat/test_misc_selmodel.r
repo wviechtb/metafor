@@ -56,9 +56,9 @@ test_that("results are correct for the beta function model.", {
    sav <- selmodel(res, type="beta")
    out <- capture.output(print(sav))
 
-   expect_equivalent(coef(sav)$delta, c(0.4731131, 4.4613093), tolerance=.tol[["coef"]])
-   expect_equivalent(sav$se.delta, c(0.2352523, 2.1845971), tolerance=.tol[["se"]])
-   expect_equivalent(sav$LRT, 7.846906, tolerance=.tol[["test"]])
+   expect_equivalent(coef(sav)$delta, c(0.4731131, 4.4613162), tolerance=.tol[["coef"]])
+   expect_equivalent(sav$se.delta, c(0.2352481, 2.1841983), tolerance=.tol[["se"]])
+   expect_equivalent(sav$LRT, 7.846907, tolerance=.tol[["test"]])
    expect_identical(sav$LRTdf, 2L)
    expect_equivalent(sav$tau2, 0.00000243, tolerance=.tol[["var"]])
 
@@ -72,7 +72,7 @@ test_that("results are correct for the beta function model.", {
    out <- capture.output(print(sav))
 
    expect_equivalent(coef(sav)$delta, c(0.4200973, 5.0959707), tolerance=.tol[["coef"]])
-   expect_equivalent(sav$se.delta, c(0.239128, 2.410997), tolerance=.tol[["se"]])
+   expect_equivalent(sav$se.delta, c(0.2391269, 2.4108796), tolerance=.tol[["se"]])
    expect_equivalent(sav$LRT, 9.044252, tolerance=.tol[["test"]])
    expect_identical(sav$LRTdf, 2L)
    expect_equivalent(sav$tau2, 0.00000193, tolerance=.tol[["var"]])

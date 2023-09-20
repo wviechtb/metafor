@@ -42,6 +42,7 @@
 }
 \details{
    The output includes:
+
    \itemize{
    \item the log-likelihood, deviance, AIC, BIC, and AICc value (when setting \code{showfit=TRUE} or by default for \code{summary}).
    \item for objects of class \code{"rma.uni"} and \code{"rma.glmm"}, the amount of (residual) heterogeneity in the random/mixed-effects model (i.e., the estimate of \mjseqn{\tau^2} and its square root). Suppressed for equal-effects models. The (asymptotic) standard error of the estimate of \mjseqn{\tau^2} is also provided (where possible).
@@ -55,6 +56,7 @@
    \item a table with the estimated coefficients, corresponding standard errors, test statistics, p-values, and confidence interval bounds.
    \item the Cochran-Mantel-Haenszel test and Tarone's test for heterogeneity (only when analyzing odds ratios using the Mantel-Haenszel method, i.e., \code{"rma.mh"}).
    }
+
    See also \link[=misc-options]{here} for details on the option to create styled/colored output with the help of the \href{https://cran.r-project.org/package=crayon}{crayon} package.
 }
 \value{

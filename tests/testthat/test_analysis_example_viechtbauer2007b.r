@@ -58,10 +58,7 @@ test_that("results are correct for the mixed-effects model.", {
    expect_equivalent(res$tau2, .0475, tolerance=.tol[["var"]])
    expect_equivalent(res$R2, 47.3778, tolerance=.tol[["r2"]]) ### 48% in article
 
-   sav <- structure(list(estimate = c(0.4763, -0.0058, -0.0672, -0.0016), se = c(0.0876, 0.01, 0.0352, 0.0034),
-                         zval = c(5.4342, -0.5846, -1.9086, -0.4555), pval = c(0, 0.5588, 0.0563, 0.6487)),
-                         .Names = c("estimate", "se", "zval", "pval"),
-                         row.names = c("Intercept", "Dosage", "Baseline", "Dosage x Baseline"), class = "data.frame")
+   sav <- structure(list(estimate = c(0.47625885, -0.0058448, -0.06722782, -0.00156996), se = c(0.08764097, 0.00999872, 0.03522283, 0.00344659), zval = c(5.43420301, -0.58455444, -1.9086436, -0.45551255), pval = c(6e-08, 0.55884735, 0.05630808, 0.64874054)), row.names = c("intrcpt", "I(dosage - 34)", "I(baseline - 20)", "I(dosage - 34):I(baseline - 20)"), class = "data.frame")
 
    ### compare with results in Table II on page 113
    expect_equivalent(coef(summary(res))[,1:4], sav, tolerance=.tol[["misc"]])

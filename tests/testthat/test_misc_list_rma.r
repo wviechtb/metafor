@@ -36,7 +36,7 @@ test_that("as.data.frame.list.rma() works correctly.", {
    res <- as.data.frame(res)
    res <- res[1:3,1:2]
 
-   sav <- structure(list(pred = c(-1.029, -1.3491, -0.9708), se = c(0.1404, 0.2011, 0.1315)), .Names = c("pred", "se"), row.names = c(NA, 3L), class = "data.frame")
+   sav <- structure(list(pred = c(-1.02900878645837, -1.34912705666653, -0.97080546460234), se = c(0.140375124151501, 0.201103941277043, 0.131456743392091)), row.names = c(NA, 3L), class = "data.frame")
 
    expect_equivalent(res, sav, tolerance=.tol[["misc"]])
 
@@ -50,7 +50,7 @@ test_that("as.matrix.list.rma() works correctly.", {
    res <- as.matrix(res)
    res <- res[1:3,1:2]
 
-   sav <- structure(c(-1.029, -1.3491, -0.9708, 0.1404, 0.2011, 0.1315), .Dim = c(3L, 2L), .Dimnames = list(c("1", "2", "3"), c("pred", "se")))
+   sav <- structure(c(-1.02900878645837, -1.34912705666653, -0.97080546460234, 0.140375124151501, 0.201103941277043, 0.131456743392091), dim = 3:2, dimnames = list(c("1", "2", "3"), c("pred", "se")))
 
    expect_equivalent(res, sav, tolerance=.tol[["misc"]])
 

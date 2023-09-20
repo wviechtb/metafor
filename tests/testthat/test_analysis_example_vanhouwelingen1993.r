@@ -56,7 +56,7 @@ test_that("results of the random-effects conditional logistic model are correct.
    expect_equivalent(res$se, 0.1364, tolerance=.tol[["se"]])
    expect_equivalent(res$ci.lb, -0.0929, tolerance=.tol[["ci"]])
    expect_equivalent(res$ci.ub, 0.4417, tolerance=.tol[["ci"]])
-   expect_equivalent(c(logLik(res)), -52.9001, tolerance=.tol[["fit"]])
+   expect_equivalent(c(logLik(res)), -52.99009, tolerance=.tol[["fit"]])
    expect_equivalent(res$tau2, 0.1192, tolerance=.tol[["var"]])
 
    ### run with control(dnchgcalc="dnoncenhypergeom")
@@ -67,7 +67,7 @@ test_that("results of the random-effects conditional logistic model are correct.
    expect_equivalent(res$se, 0.1364, tolerance=.tol[["se"]])
    expect_equivalent(res$ci.lb, -0.0930, tolerance=.tol[["ci"]])
    expect_equivalent(res$ci.ub, 0.4418, tolerance=.tol[["ci"]])
-   expect_equivalent(c(logLik(res)), -52.9901, tolerance=.tol[["fit"]])
+   expect_equivalent(c(logLik(res)), -52.99009, tolerance=.tol[["fit"]])
    expect_equivalent(res$tau2, 0.1192, tolerance=.tol[["var"]])
 
 })

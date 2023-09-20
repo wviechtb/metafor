@@ -14,6 +14,7 @@
 }
 \details{
    The output includes:
+
    \itemize{
    \item the estimated value of Kendall's tau rank correlation coefficient
    \item the corresponding p-value for the test that the true tau is equal to zero

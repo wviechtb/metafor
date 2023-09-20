@@ -21,8 +21,8 @@ test_that("location-scale model results are correct for a categorical predictor"
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    res1 <- rma(yi ~ alloc, vi, scale = ~ alloc - 1, data=dat)
-   res2 <- rma(yi ~ alloc, vi, scale = ~ alloc - 1, link = "identity", data=dat)
-   res3 <- rma.mv(yi ~ alloc, vi, random = ~ alloc | trial, struct="DIAG", data=dat, sparse=sparse)
+   res2 <- rma(yi ~ alloc, vi, scale = ~ alloc - 1, link = "identity", data=dat, control=list(optimizer="solnp"))
+   res3 <- rma.mv(yi ~ alloc, vi, random = ~ alloc | trial, struct="DIAG", data=dat, sparse=.sparse)
    expect_equivalent(as.vector(exp(coef(res1)$alpha)), as.vector(coef(res2)$alpha), tolerance=.tol[["var"]])
    expect_equivalent(as.vector(exp(coef(res1)$alpha)), res3$tau2, tolerance=.tol[["var"]])
 
@@ -36,12 +36,12 @@ test_that("location-scale model results are correct for a continuous predictor",
    dat$ni[dat$study == "Whitlock"] <- dat$ni[dat$study == "Whitlock"] + 2
 
    res <- suppressWarnings(rma(yi, vi, scale = ~ I(1/ni) - 1, link="identity", data=dat, method="ML"))
-   expect_equivalent(as.vector(coef(res)$alpha), 79.1084, tolerance=.tol[["var"]])
+   expect_equivalent(as.vector(coef(res)$alpha), 79.07531, tolerance=.tol[["var"]])
    expect_equivalent(exp(c(res$beta, res$ci.lb, res$ci.ub)), c(0.8539, 0.5482, 1.3302), tolerance=.tol[["coef"]])
 
    res <- rma(yi, vi, scale = ~ I(1/ni), link="identity", data=dat, method="ML")
-   expect_equivalent(as.vector(coef(res)$alpha), c(0.2750, 31.5127), tolerance=.tol[["var"]])
-   expect_equivalent(exp(c(res$beta, res$ci.lb, res$ci.ub)), c(1.0163, 0.6215, 1.6618), tolerance=.tol[["coef"]])
+   expect_equivalent(as.vector(coef(res)$alpha), c(0.274623, 31.523043), tolerance=.tol[["var"]])
+   expect_equivalent(exp(c(res$beta, res$ci.lb, res$ci.ub)), c(1.0161589, 0.6214663, 1.6615205), tolerance=.tol[["coef"]])
 
    res <- rma(yi, vi, scale = ~ I(1/ni) - 1, data=dat)
    expect_equivalent(as.vector(coef(res)$alpha), -34.5187, tolerance=.tol[["var"]])
@@ -53,7 +53,7 @@ test_that("location-scale model results are correct for a continuous predictor",
 
    sav <- coef(summary(res))
 
-   expected <- list(beta = structure(list(estimate = 0.0463, se = 0.2641, zval = 0.1755, pval = 0.8607, ci.lb = -0.4713, ci.ub = 0.564), row.names = "intrcpt", class = "data.frame"), alpha = structure(list(estimate = c(-0.8868, 42.4065), se = c(1.2392, 118.6932), zval = c(-0.7156, 0.3573), pval = c(0.4742, 0.7209 ), ci.lb = c(-3.3156, -190.228), ci.ub = c(1.542, 275.041 )), row.names = c("intrcpt", "I(1/ni)"), class = "data.frame"))
+   expected <- list(beta = structure(list(estimate = 0.0463401794422422, se = 0.264116077624852, zval = 0.175453837793485, pval = 0.86072304016451, ci.lb = -0.471317820440453, ci.ub = 0.563998179324937), class = "data.frame", row.names = "intrcpt"), alpha = structure(list(estimate = c(-0.886827277584096, 42.4065282951426 ), se = c(1.23920300372018, 118.69324661881), zval = c(-0.715643260161388, 0.357278358315816), pval = c(0.474211654391012, 0.720883429839682 ), ci.lb = c(-3.31562053440951, -190.227960285855), ci.ub = c(1.54196597924132, 275.04101687614)), class = "data.frame", row.names = c("intrcpt", "I(1/ni)")))
 
    expect_equivalent(sav, expected, tolerance=.tol[["misc"]])
 
@@ -61,7 +61,7 @@ test_that("location-scale model results are correct for a continuous predictor",
    expect_equivalent(sav, cbind(1, 1/dat$ni))
 
    sav <- fitted(res)$scale
-   expect_equivalent(sav, c(-0.479, -0.588, -0.831, -0.711, -0.494, -0.254, -0.661, -0.458, -0.542, -0.039, -0.039, -0.13, -0.405, -0.764, -0.357), tolerance=.tol[["var"]])
+   expect_equivalent(sav, c(-0.4790722, -0.58818975, -0.8305852, -0.71086658, -0.49417424, -0.25389402, -0.66126064, -0.45847851, -0.54205875, -0.03869671, -0.03869671, -0.12956784, -0.40493491, -0.76426506, -0.35674567), tolerance=.tol[["var"]])
 
 })
 

@@ -45,7 +45,7 @@ test_that("results are correct for the two-level mixed-effects model fitted with
 
 test_that("results are correct for the two-level random-effects model fitted with rma.mv().", {
 
-   res <- rma.mv(yi, vi, random = ~ 1 | study, data=dat, sparse=sparse)
+   res <- rma.mv(yi, vi, random = ~ 1 | study, data=dat, sparse=.sparse)
 
    ### compare with results on page 70 (Table 4)
    expect_equivalent(coef(res), 0.1279, tolerance=.tol[["coef"]])
@@ -57,7 +57,7 @@ test_that("results are correct for the two-level random-effects model fitted wit
 test_that("results are correct for the three-level random-effects model fitted with rma.mv() using ML estimation.", {
 
    ### three-level model (ml = multilevel parameterization)
-   res.ml <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, method="ML", sparse=sparse)
+   res.ml <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, method="ML", sparse=.sparse)
    out <- capture.output(print(res.ml))
    out <- capture.output(print(summary(res.ml)))
 
@@ -74,7 +74,7 @@ test_that("results are correct for the three-level random-effects model fitted w
 test_that("results are correct for the three-level mixed-effects model fitted with rma.mv() using ML estimation.", {
 
    ### three-level model (multilevel parameterization)
-   res.ml <- rma.mv(yi, vi, mods = ~ I(year-mean(year)), random = ~ 1 | district/study, data=dat, method="ML", sparse=sparse)
+   res.ml <- rma.mv(yi, vi, mods = ~ I(year-mean(year)), random = ~ 1 | district/study, data=dat, method="ML", sparse=.sparse)
    out <- capture.output(print(res.ml))
 
    ### compare with results on page 71 (Table 5)
@@ -87,7 +87,7 @@ test_that("results are correct for the three-level mixed-effects model fitted wi
 test_that("results are correct for the three-level random-effects model fitted with rma.mv() using REML estimation.", {
 
    ### three-level model (ml = multilevel parameterization)
-   res.ml <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=sparse)
+   res.ml <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=.sparse)
    out <- capture.output(print(res.ml))
 
    ### (results for this not given in paper)
@@ -119,7 +119,7 @@ test_that("profiling works for the three-level random-effects model (multilevel 
    skip_on_cran()
 
    ### three-level model (ml = multilevel parameterization)
-   res.ml <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=sparse)
+   res.ml <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=.sparse)
 
    ### profile variance components
    opar <- par(no.readonly=TRUE)
@@ -133,7 +133,7 @@ test_that("profiling works for the three-level random-effects model (multilevel 
 test_that("results are correct for the three-level random-effects model when using the multivariate parameterization.", {
 
    ### three-level model (mv = multivariate parameterization)
-   res.mv <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat, sparse=sparse)
+   res.mv <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat, sparse=.sparse)
 
    ### (results for this not given in paper)
    expect_equivalent(coef(res.mv), 0.1847, tolerance=.tol[["coef"]])
@@ -153,7 +153,7 @@ test_that("profiling works for the three-level random-effects model (multivariat
    skip_on_cran()
 
    ### three-level model (mv = multivariate parameterization)
-   res.mv <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat, sparse=sparse)
+   res.mv <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat, sparse=.sparse)
 
    ### profile variance components
    opar <- par(no.readonly=TRUE)
@@ -169,14 +169,14 @@ test_that("BLUPs are calculated correctly for the three-level random-effects mod
    skip_on_cran()
 
    ### three-level model (ml = multilevel parameterization)
-   res.ml <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=sparse)
+   res.ml <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=.sparse)
 
    sav <- ranef(res.ml)
 
-   expect_equivalent(sav[[1]]$intrcpt, c(-0.190, -0.085,  0.141,  0.241, -0.107, -0.237,  0.534, -0.200,  0.057, -0.142, -0.012), tolerance=.tol[["pred"]])
-   expect_equivalent(sav[[1]]$se,      c( 0.167,  0.124,  0.137,  0.119,  0.119,  0.101,  0.130,  0.101,  0.111,  0.125,  0.150), tolerance=.tol[["se"]])
-   expect_equivalent(sav[[2]]$intrcpt, c(-0.038, -0.047,  0.044, -0.055,  0.021, -0.252,  0.062,  0.127,  0.073,  0.024, -0.026, -0.165, 0.200, -0.058, 0.144, 0.002, -0.031, 0.098, -0.122, -0.080, 0.033, 0.033, -0.136, 0.007, -0.151, 0.103, 0.043, 0.084, -0.023, -0.031, -0.287, 0.195, 0.361, -0.053, -0.033, 0.006, 0.035, -0.014, 0.015, 0.025, -0.082, 0.198, 0.313, -0.032, -0.19, -0.137, -0.123, -0.289, 0.337, -0.038, 0.118, -0.2, -0.014, 0.125, -0.044, -0.073), tolerance=.tol[["pred"]])
-   expect_equivalent(sav[[2]]$se,      c( 0.164,  0.164,  0.166,  0.166,  0.122,  0.122,  0.123,  0.132,  0.137,  0.146,  0.129,  0.126, 0.103,  0.103, 0.109, 0.125,  0.109, 0.105,  0.103,  0.118, 0.115, 0.117, 0.121, 0.118, 0.119, 0.089, 0.092, 0.092, 0.092, 0.092, 0.127, 0.123, 0.122, 0.069, 0.069, 0.069, 0.069, 0.069, 0.069, 0.069, 0.069, 0.107, 0.109, 0.107, 0.106, 0.113, 0.113, 0.137, 0.137, 0.136, 0.136, 0.136, 0.159, 0.158, 0.155, 0.155), tolerance=.tol[["se"]])
+   expect_equivalent(sav[[1]]$intrcpt, c(-0.18998596, -0.08467077, 0.1407273, 0.24064814, -0.1072942, -0.23650899, 0.5342778, -0.2004695, 0.05711692, -0.14168396, -0.01215679), tolerance=.tol[["pred"]])
+   expect_equivalent(sav[[1]]$se,      c(0.16653966, 0.12407891, 0.13724053, 0.11885896, 0.11895233, 0.10112845, 0.1297891, 0.101322, 0.11104458, 0.12485549, 0.15042221), tolerance=.tol[["se"]])
+   expect_equivalent(sav[[2]]$intrcpt, c(-0.03794675, -0.04663383, 0.04357906, -0.05459167, 0.02098376, -0.25219111, 0.06169069, 0.12691378, 0.07315932, 0.02358293, -0.02593401, -0.16472466, 0.20017925, -0.05824454, 0.14387428, 0.00163316, -0.03082723, 0.09766431, -0.12245631, -0.07958353, 0.03342001, 0.03277405, -0.13648311, 0.00732233, -0.15120705, 0.10293055, 0.04267145, 0.08386343, -0.02323572, -0.03147411, -0.28733359, 0.19536367, 0.36079672, -0.0526358, -0.03322863, 0.00558571, 0.03469647, -0.01382146, 0.0152893, 0.02499288, -0.08174655, 0.19776024, 0.31299764, -0.03204218, -0.18968221, -0.13730492, -0.12298966, -0.28918454, 0.33743506, -0.03810734, 0.11843554, -0.19986832, -0.01436916, 0.12481101, -0.04350898, -0.07304968), tolerance=.tol[["pred"]])
+   expect_equivalent(sav[[2]]$se,      c(0.16388194, 0.16388194, 0.16603559, 0.16603559, 0.12233812, 0.12233812, 0.12342216, 0.13171712, 0.13653182, 0.14617064, 0.12941105, 0.12588568, 0.10313659, 0.10313659, 0.10868276, 0.12489868, 0.10877088, 0.10517399, 0.10324522, 0.11803445, 0.11512181, 0.11661284, 0.12068892, 0.11803445, 0.11939164, 0.08878259, 0.09186319, 0.09186319, 0.09186319, 0.09186319, 0.12687757, 0.12311091, 0.12210943, 0.06873404, 0.06873404, 0.06873404, 0.06873404, 0.06873404, 0.06873404, 0.06873404, 0.06873404, 0.10744609, 0.10928134, 0.10744609, 0.10550931, 0.11267925, 0.11267925, 0.13697347, 0.13697347, 0.13632667, 0.13632667, 0.13632667, 0.1589217, 0.1581043, 0.15527374, 0.15527374), tolerance=.tol[["se"]])
 
 })
 
@@ -188,9 +188,9 @@ test_that("restarting with 'restart=TRUE' works.", {
    expect_error(res <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, control=list(maxiter=4), restart=TRUE))
    res <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, control=list(maxiter=4), restart=TRUE)
 
-   expect_equivalent(coef(res), 0.1845, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.0805, tolerance=.tol[["se"]])
-   expect_equivalent(res$sigma2, c(0.0577, 0.0329), tolerance=.tol[["var"]])
+   expect_equivalent(coef(res), 0.1847132, tolerance=.tol[["coef"]])
+   expect_equivalent(res$se, 0.08455592, tolerance=.tol[["se"]])
+   expect_equivalent(res$sigma2, c(0.06506194, 0.03273652), tolerance=.tol[["var"]])
 
 })
 
@@ -202,7 +202,7 @@ test_that("results are correct when allowing for different tau^2 per district.",
    set.seed(1234)
    dat <- dat[sample(nrow(dat)),]
 
-   res <- rma.mv(yi, vi, random = list(~ 1 | district, ~ factor(district) | study), struct="DIAG", data=dat, control=list(optimizer="optim"), sparse=sparse)
+   res <- rma.mv(yi, vi, random = list(~ 1 | district, ~ factor(district) | study), struct="DIAG", data=dat, control=list(optimizer="optim"), sparse=.sparse)
    out <- capture.output(print(res, digits=4))
    out <- capture.output(print(summary(res, digits=4)))
 
@@ -221,4 +221,3 @@ test_that("results are correct when allowing for different tau^2 per district.",
 })
 
 rm(list=ls())
-

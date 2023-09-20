@@ -99,6 +99,7 @@ transf.lnortortet.digby(xi)
 }
 \details{
    The following transformation functions are currently implemented:
+
    \itemize{
    \item \code{transf.rtoz}: Fisher's r-to-z transformation for correlation coefficients (same as \code{atanh(x)}).
    \item \code{transf.ztor}: inverse of the former (i.e., the z-to-r transformation; same as \code{tanh(x)}).

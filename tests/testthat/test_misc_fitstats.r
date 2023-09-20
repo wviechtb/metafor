@@ -58,7 +58,7 @@ test_that("fit statistics are correct for rma.mv().", {
    V <- bldiag(lapply(split(dat[,c("v1i", "v2i")], dat$trial), as.matrix))
 
    ### multiple outcomes random-effects model (with ML estimation)
-   res <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="UN", data=dat, method="ML", sparse=sparse)
+   res <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="UN", data=dat, method="ML", sparse=.sparse)
 
    tmp <- c(logLik(res))
    expect_equivalent(tmp, 5.8407, tolerance=.tol[["fit"]])

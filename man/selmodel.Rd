@@ -70,12 +70,15 @@ selmodel(x, \dots)
       power                \tab \ics \tab \code{"power"}     \tab \ics \tab \mjseqn{w(p_i) = (1-p_i)^{\delta \times \mathrm{prec}_i}}}
 
       where \mjseqn{\mathrm{prec}_i = \sqrt{v_i}} (i.e., the standard error of the \mjeqn{i\textrm{th}}{ith} study) according to Preston et al. (2004). Here, this idea is generalized to allow the user to specify the specific measure of precision to use (via the \code{prec} argument). Possible options are:
+
       \itemize{
       \item \code{prec="sei"} for the standard errors,
       \item \code{prec="vi"} for the sampling variances,
       \item \code{prec="ninv"} for the inverse of the sample sizes,
       \item \code{prec="sqrtninv"} for the inverse square root of the sample sizes.
-      } Using some function of the sample sizes as a measure of precision is only possible when information about the sample sizes is actually stored within the object passed to the \code{selmodel} function. See \sQuote{Note}.
+      }
+
+      Using some function of the sample sizes as a measure of precision is only possible when information about the sample sizes is actually stored within the object passed to the \code{selmodel} function. See \sQuote{Note}.
 
       Note that \mjseqn{\mathrm{prec}_i} is really a measure of imprecision (with higher values corresponding to lower precision). Also, regardless of the specific measure chosen, the values are actually rescaled with \mjseqn{\mathrm{prec}_i = \mathrm{prec}_i / \max(\mathrm{prec}_i)} inside of the function, such that \mjseqn{\mathrm{prec}_i = 1} for the least precise study and \mjseqn{\mathrm{prec}_i < 1} for the remaining studies (the rescaling does not actually change the fit of the model, it only helps to improve the stability of model fitting algorithm). \ifelse{text}{}{The figure below shows some examples of the relative likelihood of selection using these selection functions for two different precision values (note that lower values of \mjseqn{\mathrm{prec}} lead to a higher likelihood of selection).}
 

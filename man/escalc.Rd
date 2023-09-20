@@ -92,6 +92,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          where \code{m1i} and \code{m2i} are the observed means of the two groups, \code{sd1i} and \code{sd2i} are the observed standard deviations, and \code{n1i} and \code{n2i} denote the number of individuals in each group. The raw mean difference, the standardized mean difference, and the (log transformed) ratio of means (also called the log \sQuote{response ratio}) are useful outcome measures when meta-analyzing studies of this type.
 
          The options for the \code{measure} argument are then:
+
          \itemize{
          \item \code{"MD"} for the \emph{raw mean difference} (e.g., Borenstein, 2009),
          \item \code{"SMD"} for the \emph{standardized mean difference} (Hedges, 1981),
@@ -113,6 +114,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          Datasets corresponding to data of this type are provided in \code{\link[metadat]{dat.normand1999}}, \code{\link[metadat]{dat.curtis1998}}, and \code{\link[metadat]{dat.gibson2002}}.
 
          Interest may also be focused on differences between the two groups with respect to their variability. Here, the (log transformed) ratio of the coefficient of variation of the two groups (also called the coefficient of variation ratio) can be a useful measure (Nakagawa et al., 2015). If focus is solely on the variability of the measurements within the two groups, then the (log transformed) ratio of the standard deviations (also called the variability ratio) can be used (Nakagawa et al., 2015). For the latter, one only needs to specify \code{sd1i}, \code{sd2i}, \code{n1i}, and \code{n2i}. The options for the \code{measure} argument are:
+
          \itemize{
          \item \code{"CVR"} for the \emph{log transformed coefficient of variation ratio},
          \item \code{"VR"} for the \emph{log transformed variability ratio}.
@@ -136,6 +138,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          A meta-analysis of studies reporting results in terms of \mjeqn{2 \times 2}{2x2} tables can be based on one of several different outcome measures, including the risk ratio (also called the relative risk), the odds ratio, the risk difference, and the arcsine square root transformed risk difference (e.g., Fleiss & Berlin, 2009, \enc{Rücker}{Ruecker} et al., 2009). For any of these outcome measures, one needs to specify the cell frequencies via the \code{ai}, \code{bi}, \code{ci}, and \code{di} arguments (or alternatively, one can use the \code{ai}, \code{ci}, \code{n1i}, and \code{n2i} arguments).
 
          The options for the \code{measure} argument are then:
+
          \itemize{
          \item \code{"RR"} for the \emph{log risk ratio},
          \item \code{"OR"} for the \emph{log odds ratio},
@@ -166,6 +169,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          This form of data is fundamentally different from what was described in the previous section, since the total follow-up time may differ even for groups of the same size and the individuals studied may experience the event of interest multiple times. Hence, different outcome measures than the ones described in the previous section need to be considered when data are reported in this format. These include the incidence rate ratio, the incidence rate difference, and the square root transformed incidence rate difference (Bagos & Nikolopoulos, 2009; Rothman et al., 2008). For any of these outcome measures, one needs to specify the total number of events via the \code{x1i} and \code{x2i} arguments and the corresponding total person-time values via the \code{t1i} and \code{t2i} arguments.
 
          The options for the \code{measure} argument are then:
+
          \itemize{
          \item \code{"IRR"} for the \emph{log incidence rate ratio},
          \item \code{"IRD"} for the \emph{incidence rate difference},
@@ -185,6 +189,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          In some meta-analyses, one may encounter studies that contrast two groups with respect to a quantitative response variable (case 1a above) and other studies that contrast the same two groups with respect to a dichotomous variable (case 2b above). If both types of studies are to be combined in the same analysis, one needs to compute the same outcome measure across all studies.
 
          For this, one may need to transform standardized mean differences into log odds ratios (e.g., Cox & Snell, 1989; Chinn, 2000; Hasselblad & Hedges, 1995; \enc{Sánchez-Meca}{Sanchez-Meca} et al., 2003). Here, the data need to be specified as described under (1a) and the options for the \code{measure} argument are then:
+
          \itemize{
          \item \code{"D2ORN"} for the \emph{transformed standardized mean difference} assuming normal distributions,
          \item \code{"D2ORL"} for the \emph{transformed standardized mean difference} assuming logistic distributions.
@@ -193,6 +198,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          Both of these transformations provide an estimate of the log odds ratio, the first assuming that the responses within the two groups are normally distributed, while the second assumes that the responses follow logistic distributions.
 
          Alternatively, assuming that the dichotomous outcome in a \mjeqn{2 \times 2}{2x2} table is actually a dichotomized version of the responses on an underlying quantitative scale, it is also possible to estimate the standardized mean difference based on \mjeqn{2 \times 2}{2x2} table data, using either the probit transformed risk difference or a transformation of the odds ratio (e.g., Cox & Snell, 1989; Chinn, 2000; Hasselblad & Hedges, 1995; \enc{Sánchez-Meca}{Sanchez-Meca} et al., 2003). Here, the data need to be specified as described under (1b) and the options for the \code{measure} argument are then:
+
          \itemize{
          \item \code{"PBIT"} for the \emph{probit transformed risk difference},
          \item \code{"OR2DN"} for the \emph{transformed odds ratio} assuming normal distributions,
@@ -216,6 +222,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          The (Pearson or product-moment) correlation coefficient quantifies the direction and strength of the (linear) relationship between two quantitative variables and is therefore frequently used as the outcome measure for meta-analyses. Two alternative measures are a bias-corrected version of the correlation coefficient and Fisher's r-to-z transformed correlation coefficient.
 
          For these measures, one needs to specify \code{ri}, the vector with the raw correlation coefficients, and \code{ni}, the corresponding sample sizes. The options for the \code{measure} argument are then:
+
          \itemize{
          \item \code{"COR"} for the \emph{raw correlation coefficient},
          \item \code{"UCOR"} for the \emph{raw correlation coefficient} corrected for its slight negative bias (based on equation 2.3 in Olkin & Pratt, 1958),
@@ -246,6 +253,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          The phi coefficient and the odds ratio are commonly used measures of association for \mjeqn{2 \times 2}{2x2} table data (e.g., Fleiss & Berlin, 2009). The latter is particularly advantageous, as it is directly comparable to values obtained from stratified sampling (as described earlier). Yule's Q and Yule's Y (Yule, 1912) are additional measures of association for \mjeqn{2 \times 2}{2x2} table data (although they are not typically used in meta-analyses). Finally, assuming that the two dichotomous variables are actually dichotomized versions of the responses on two underlying quantitative scales (and assuming that the two variables follow a bivariate normal distribution), it is also possible to estimate the correlation between the two quantitative variables using the tetrachoric correlation coefficient (Pearson, 1900; Kirk, 1973).
 
          For any of these outcome measures, one needs to specify the cell frequencies via the \code{ai}, \code{bi}, \code{ci}, and \code{di} arguments (or alternatively, one can use the \code{ai}, \code{ci}, \code{n1i}, and \code{n2i} arguments). The options for the \code{measure} argument are then:
+
          \itemize{
          \item \code{"OR"} for the \emph{log odds ratio},
          \item \code{"PHI"} for the \emph{phi coefficient},
@@ -267,6 +275,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          We can also consider outcome measures that can be used to describe the relationship between two variables, where one variable is dichotomous and the other variable measures some quantitative characteristic. In that case, it is likely that study authors again report summary statistics, such as the mean and standard deviation of the measurements within the two groups (defined by the dichotomous variable). Based on this information, one can compute the point-biserial correlation coefficient (Tate, 1954) as a measure of association between the two variables. If the dichotomous variable is actually a dichotomized version of the responses on an underlying quantitative scale (and assuming that the two variables follow a bivariate normal distribution), it is also possible to estimate the correlation between the two variables using the biserial correlation coefficient (Pearson, 1909; Soper, 1914; Jacobs & Viechtbauer, 2017).
 
          Here, one again needs to specify \code{m1i} and \code{m2i} for the observed means of the two groups, \code{sd1i} and \code{sd2i} for the observed standard deviations, and \code{n1i} and \code{n2i} for the number of individuals in each group. The options for the \code{measure} argument are then:
+
          \itemize{
          \item \code{"RPB"} for the \emph{point-biserial correlation coefficient},
          \item \code{"RBIS"} for the \emph{biserial correlation coefficient}.
@@ -291,6 +300,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          The goal of a meta-analysis may be to characterize individual groups, where the response, characteristic, or dependent variable assessed in the individual studies is measured on some quantitative scale. In the simplest case, the raw mean for the quantitative variable is reported for each group, which then becomes the observed outcome for the meta-analysis. Here, one needs to specify \code{mi}, \code{sdi}, and \code{ni} for the observed means, the observed standard deviations, and the sample sizes, respectively. For ratio scale measurements, the log transformed mean or the log transformed coefficient of variation (with bias correction) may also be of interest (Nakagawa et al., 2015). If focus is solely on the variability of the measurements, then the log transformed standard deviation (with bias correction) is a useful measure (Nakagawa et al., 2015; Raudenbush & Bryk, 1987). Here, one only needs to specify \code{sdi} and \code{ni}.
 
          The options for the \code{measure} argument are:
+
          \itemize{
          \item \code{"MN"} for the \emph{raw mean},
          \item \code{"MNLN"} for the \emph{log transformed mean},
@@ -305,6 +315,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
       \subsection{(3b) Measures for Dichotomous Variables}{
 
          A meta-analysis may also be conducted to aggregate studies that provide data about individual groups with respect to a dichotomous dependent variable. Here, one needs to specify \code{xi} and \code{ni}, denoting the number of individuals experiencing the event of interest and the total number of individuals within each study, respectively. Instead of specifying \code{ni}, one can use \code{mi} to specify the number of individuals that do not experience the event of interest (i.e., \code{mi=ni-xi}). The options for the \code{measure} argument are then:
+
          \itemize{
          \item \code{"PR"} for the \emph{raw proportion},
          \item \code{"PLN"} for the \emph{log transformed proportion},
@@ -322,6 +333,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
       \subsection{(3c) Measures for Event Counts}{
 
          Various measures can be used to characterize individual groups when the dependent variable assessed is an event count. Here, one needs to specify \code{xi} and \code{ti}, denoting the number of events that occurred and the total person-times at risk, respectively. The options for the \code{measure} argument are then:
+
          \itemize{
          \item \code{"IR"} for the \emph{raw incidence rate},
          \item \code{"IRLN"} for the \emph{log transformed incidence rate},
@@ -344,6 +356,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
       \subsection{(4a) Measures for Quantitative Variables}{
 
          When the response or dependent variable assessed in the individual studies is measured on some quantitative scale, the raw mean change, standardized versions thereof, or the (log transformed) ratio of means (log response ratio) can be used as outcome measures (Becker, 1988; Gibbons et al., 1993; Lajeunesse, 2011; Morris, 2000). Here, one needs to specify \code{m1i} and \code{m2i}, the observed means at the two measurement occasions, \code{sd1i} and \code{sd2i} for the corresponding observed standard deviations, \code{ri} for the correlation between the measurements at the two measurement occasions, and \code{ni} for the sample size. The options for the \code{measure} argument are then:
+
          \itemize{
          \item \code{"MC"} for the \emph{raw mean change},
          \item \code{"SMCC"} for the \emph{standardized mean change} using change score standardization (Gibbons et al., 1993),
@@ -357,6 +370,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          In practice, one often has a mix of information available from the individual studies to compute these measures. In particular, if \code{m1i} and \code{m2i} are unknown, but the raw mean change is directly reported in a particular study, then one can set \code{m1i} to that value and \code{m2i} to 0 (making sure that the raw mean change was computed as \code{m1i-m2i} within that study and not the other way around). Also, for measures \code{"MC"} and \code{"SMCC"}, if \code{sd1i}, \code{sd2i}, and \code{ri} are unknown, but the standard deviation of the change scores is directly reported, then one can set \code{sd1i} to that value and both \code{sd2i} and \code{ri} to 0. For measure \code{"SMCR"}, argument \code{sd2i} is actually not needed, as the standardization is only based on \code{sd1i} (Becker, 1988; Morris, 2000), which is usually the pre-test standard deviation (if the post-test standard deviation should be used, then set \code{sd1i} to that). Finally, for \code{measure="SMCC"}, one can also directly specify standardized mean change values via argument \code{di} or the t-statistics from a paired samples t-test or the corresponding (two-sided) p-values via argument \code{ti} or \code{pi}, respectively (which are then transformed into the corresponding standardized mean change values within the function). The sign of the p-values (which can be negative) is used as the sign of the standardized mean change values (e.g., \code{escalc(measure="SMCC", pi=-0.018, ni=50)} yields a negative standardized mean change value of \code{-0.3408}).
 
          Finally, interest may also be focused on differences in the variability of the measurements at the two measurement occasions (or between the two matched groups). Here, the (log transformed) ratio of the coefficient of variation (also called the coefficient of variation ratio) can be a useful measure (Nakagawa et al., 2015). If focus is solely on the variability of the measurements, then the (log transformed) ratio of the standard deviations (also called the variability ratio) can be used (Nakagawa et al., 2015). For the latter, one only needs to specify \code{sd1i}, \code{sd2i}, \code{ni}, and \code{ri}. The options for the \code{measure} argument are:
+
          \itemize{
          \item \code{"CVRC"} for the \emph{log transformed coefficient of variation ratio},
          \item \code{"VRC"} for the \emph{log transformed variability ratio}.
@@ -381,6 +395,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          which is of the same form as a \mjeqn{2 \times 2}{2x2} table that would arise in a study comparing/contrasting two independent groups.
 
          The options for the \code{measure} argument that will compute outcome measures based on the marginal table are:
+
          \itemize{
          \item \code{"MPRR"} for the matched pairs \emph{marginal log risk ratio},
          \item \code{"MPOR"} for the matched pairs \emph{marginal log odds ratio},
@@ -390,6 +405,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          See Becker and Balagtas (1993), Curtin et al. (2002), Elbourne et al. (2002), Fagerland et al. (2014), May and Johnson (1997), Newcombe (1998), Stedman et al. (2011), and Zou (2007) for discussions of these measures.
 
          The options for the \code{measure} argument that will compute outcome measures based on the paired table are:
+
          \itemize{
          \item \code{"MPORC"} for the \emph{conditional log odds ratio},
          \item \code{"MPPETO"} for the \emph{conditional log odds ratio} estimated with Peto's method.
@@ -410,6 +426,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
       \subsection{Cronbach's alpha and Transformations Thereof}{
 
          Meta-analytic methods can also be used to aggregate Cronbach's alpha values from multiple studies. This is usually referred to as a \sQuote{reliability generalization meta-analysis} (Vacha-Haase, 1998). Here, one needs to specify \code{ai}, \code{mi}, and \code{ni} for the observed alpha values, the number of items/replications/parts of the measurement instrument, and the sample sizes, respectively. One can either directly analyze the raw Cronbach's alpha values or transformations thereof (Bonett, 2002, 2010; Hakstian & Whalen, 1976). The options for the \code{measure} argument are then:
+
          \itemize{
          \item \code{"ARAW"} for \emph{raw alpha} values,
          \item \code{"AHW"} for \emph{transformed alpha values} (Hakstian & Whalen, 1976),
@@ -425,6 +442,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
       \subsection{Partial and Semi-Partial Correlations}{
 
          Aloe and Becker (2012), Aloe and Thompson (2013), and Aloe (2014) describe the use of partial and semi-partial correlation coefficients for meta-analyzing the results from regression models (when the focus is on a common regression coefficient of interest across studies). To compute these measures, one needs to specify \code{ti} for the test statistics (i.e., t-tests) of the \sQuote{focal} regression coefficient of interest, \code{ni} for the sample sizes of the studies, \code{mi} for the total number of predictors in the regression models (counting the focal predictor of interest), and \code{r2i} for the \mjseqn{R^2} values of the regression models (the latter is only needed when \code{measure="SPCOR"} or \code{measure="ZSPCOR"}). The options for the \code{measure} argument are then:
+
          \itemize{
          \item \code{"PCOR"} for the \emph{partial correlation coefficient},
          \item \code{"ZPCOR"} for \emph{Fisher's r-to-z transformed partial correlation coefficient},
@@ -445,6 +463,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
       \subsection{Coefficients of Determination}{
 
          One can in principle also meta-analyze coefficients of determination (i.e., \mjseqn{R^2} values / R-squared values) obtained from a series of linear regression models (however, see the caveats mentioned below). For this, one needs to specify \code{r2i} for the \mjseqn{R^2} values of the regression models, \code{ni} for the sample sizes of the studies, and \code{mi} for the number of predictors in the regression models. The options for the \code{measure} argument are then:
+
          \itemize{
          \item \code{"R2"} for the \emph{raw coefficient of determination},
          \item \code{"ZR2"} for the \emph{r-to-z transformed coefficient of determination}.

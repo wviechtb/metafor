@@ -54,12 +54,14 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \subsection{Specifying the Data}{
 
       The function can be used in combination with the following effect sizes or outcome measures:
+
       \itemize{
       \item \code{measure="OR"} for (log transformed) odds ratios,
       \item \code{measure="IRR"} for (log transformed) incidence rate ratios,
       \item \code{measure="PLO"} for (logit transformed) proportions (i.e., log odds),
       \item \code{measure="IRLN"} for (log transformed) incidence rates.
       }
+
       The \code{\link{escalc}} function describes the data/arguments that should be specified/used for these measures.
 
    }
@@ -67,12 +69,14 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \subsection{Specifying the Model}{
 
       A variety of model types are available when analyzing \mjeqn{2 \times 2}{2x2} table data (i.e., when \code{measure="OR"}) or two-group event count data (i.e., when \code{measure="IRR"}):
+
       \itemize{
       \item \code{model="UM.FS"} for an unconditional generalized linear mixed-effects model with fixed study effects,
       \item \code{model="UM.RS"} for an unconditional generalized linear mixed-effects model with random study effects,
       \item \code{model="CM.AL"} for a conditional generalized linear mixed-effects model (approximate likelihood),
       \item \code{model="CM.EL"} for a conditional generalized linear mixed-effects model (exact likelihood).
       }
+
       For \code{measure="OR"}, models \code{"UM.FS"} and \code{"UM.RS"} are essentially (mixed-effects) logistic regression models, while for \code{measure="IRR"}, these models are (mixed-effects) Poisson regression models. The difference between \code{"UM.FS"} and \code{"UM.RS"} is how study level variability (i.e., differences in outcomes across studies irrespective of group membership) is modeled. One can choose between using fixed study effects (which means that \mjseqn{k} dummy variables are added to the model) or random study effects (which means that random effects corresponding to the levels of the study factor are added to the model).
 
       The conditional model (\code{model="CM.EL"}) avoids having to model study level variability by conditioning on the total numbers of cases/events in each study. For \code{measure="OR"}, this leads to a non-central hypergeometric distribution for the data within each study and the corresponding model is then a (mixed-effects) conditional logistic model. Fitting this model can be difficult and computationally expensive. When the number of cases in each study is small relative to the group sizes, one can approximate the exact likelihood by a binomial distribution, which leads to a regular (mixed-effects) logistic regression model (\code{model="CM.AL"}). For \code{measure="IRR"}, the conditional model leads directly to a binomial distribution for the data within each study and the resulting model is again a (mixed-effects) logistic regression model (no approximate likelihood model is needed here).
@@ -90,11 +94,14 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \subsection{Equal-, Saturated-, and Random/Mixed-Effects Models}{
 
       When fitting a particular model, actually up to three different models are fitted within the function:
+
       \itemize{
       \item the equal-effects model (i.e., where \mjseqn{\tau^2} is set to 0),
       \item the saturated model (i.e., the model with a deviance of 0), and
       \item the random/mixed-effects model (i.e., where \mjseqn{\tau^2} is estimated) (only if \code{method="ML"}).
-      } The saturated model is obtained by adding as many dummy variables to the model as needed so that the model deviance is equal to zero. Even when \code{method="ML"}, the equal- and saturated models are also fitted, as they are used to compute the test statistics for the Wald-type and likelihood ratio tests for (residual) heterogeneity (see below).
+      }
+
+      The saturated model is obtained by adding as many dummy variables to the model as needed so that the model deviance is equal to zero. Even when \code{method="ML"}, the equal- and saturated models are also fitted, as they are used to compute the test statistics for the Wald-type and likelihood ratio tests for (residual) heterogeneity (see below).
 
    }
 
@@ -169,6 +176,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    When \code{model="UM.RS"} and \code{method="ML"}, one has to decide whether the random study effects are allowed to be correlated with the random group effects. By default (i.e., when \code{cor=FALSE}), no such correlation is allowed (which is typically an appropriate assumption when \code{coding=1/2}). When using a different coding scheme for the group variable (i.e., \code{coding=1} or \code{coding=0}), allowing the random study and group effects to be correlated (i.e., using \code{cor=TRUE}) is usually recommended.
 
    Fitting the various types of models requires several different iterative algorithms:
+
    \itemize{
    \item For \code{model="UM.FS"} and \code{model="CM.AL"}, iteratively reweighted least squares (IWLS) as implemented in the \code{\link{glm}} function is used for fitting the equal-effects and the saturated models. For \code{method="ML"}, adaptive Gauss-Hermite quadrature as implemented in the \code{\link[lme4]{glmer}} function is used. The same applies when \code{model="CM.EL"} is used in combination with \code{measure="IRR"} or when \code{measure="PLO"} or \code{measure="IRLN"} (regardless of the model type).
    \item For \code{model="UM.RS"}, adaptive Gauss-Hermite quadrature as implemented in the \code{\link[lme4]{glmer}} function is used to fit all of the models.
@@ -176,15 +184,21 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 
    One can also chose a different optimizer from \code{\link{optim}} via the \code{control} argument (e.g., \code{control=list(optimizer="BFGS")} or \code{control=list(optimizer="Nelder-Mead")}). Besides \code{\link{nlminb}} and one of the methods from \code{\link{optim}}, one can also choose one of the optimizers from the \code{minqa} package (i.e., \code{\link[minqa]{uobyqa}}, \code{\link[minqa]{newuoa}}, or \code{\link[minqa]{bobyqa}}), one of the (derivative-free) algorithms from the \code{\link[nloptr]{nloptr}} package, the Newton-type algorithm implemented in \code{\link{nlm}}, the various algorithms implemented in the \code{dfoptim} package (\code{\link[dfoptim]{hjk}} for the Hooke-Jeeves, \code{\link[dfoptim]{nmk}} for the Nelder-Mead, and \code{\link[dfoptim]{mads}} for the Mesh Adaptive Direct Searches algorithm), the quasi-Newton type optimizers \code{\link[ucminf]{ucminf}} and \code{\link[lbfgsb3c]{lbfgsb3c}} and the subspace-searching simplex algorithm \code{\link[subplex]{subplex}} from the packages of the same name, the Barzilai-Borwein gradient decent method implemented in \code{\link[BB]{BBoptim}}, the \code{\link[Rcgmin]{Rcgmin}} and \code{\link[Rvmmin]{Rvmmin}} optimizers, or the parallelized version of the L-BFGS-B algorithm implemented in \code{\link[optimParallel]{optimParallel}} from the package of the same name.
 
-   The optimizer name must be given as a character string (i.e., in quotes). Additional control parameters can be specified via the \code{optCtrl} elements of the \code{control} argument (e.g., \code{control=list(optCtrl=list(iter.max=1000, rel.tol=1e-8))}). For \code{\link[nloptr]{nloptr}}, the default is to use the BOBYQA implementation from that package with a relative convergence criterion of \code{1e-8} on the function value (i.e., log-likelihood), but this can be changed via the \code{algorithm} and \code{ftop_rel} arguments (e.g., \code{control=list(optimizer="nloptr", optCtrl=list(algorithm="NLOPT_LN_SBPLX", ftol_rel=1e-6))}). For \code{\link[optimParallel]{optimParallel}}, the control argument \code{ncpus} can be used to specify the number of cores to use for the parallelization (e.g., \code{control=list(optimizer="optimParallel", ncpus=2)}). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.} When \code{model="CM.EL"} and \code{measure="OR"}, actually \code{model="CM.AL"} is used first to obtain starting values for \code{\link{optim}}, so either 4 (if \code{method="EE"}) or 6 (if \code{method="ML"}) models need to be fitted in total.
+   The optimizer name must be given as a character string (i.e., in quotes). Additional control parameters can be specified via the \code{optCtrl} elements of the \code{control} argument (e.g., \code{control=list(optCtrl=list(iter.max=1000, rel.tol=1e-8))}). For \code{\link[nloptr]{nloptr}}, the default is to use the BOBYQA implementation from that package with a relative convergence criterion of \code{1e-8} on the function value (i.e., log-likelihood), but this can be changed via the \code{algorithm} and \code{ftop_rel} arguments (e.g., \code{control=list(optimizer="nloptr", optCtrl=list(algorithm="NLOPT_LN_SBPLX", ftol_rel=1e-6))}). For \code{\link[optimParallel]{optimParallel}}, the control argument \code{ncpus} can be used to specify the number of cores to use for the parallelization (e.g., \code{control=list(optimizer="optimParallel", ncpus=2)}). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
+   }
+
+   When \code{model="CM.EL"} and \code{measure="OR"}, actually \code{model="CM.AL"} is used first to obtain starting values for \code{\link{optim}}, so either 4 (if \code{method="EE"}) or 6 (if \code{method="ML"}) models need to be fitted in total.
 
    Various additional control parameters can be adjusted via the \code{control} argument:
+
    \itemize{
       \item \code{glmCtrl} is a list of named arguments to be passed on to the \code{control} argument of the \code{\link{glm}} function,
       \item \code{glmerCtrl} is a list of named arguments to be passed on to the \code{control} argument of the \code{\link[lme4]{glmer}} function,
       \item \code{intCtrl} is a list of named arguments (i.e., \code{rel.tol} and \code{subdivisions}) to be passed on to the \code{\link{integrate}} function, and
       \item \code{hessianCtrl} is a list of named arguments to be passed on to the \code{method.args} argument of the \code{\link[numDeriv]{hessian}} function. Most important is the \code{r} argument, which is set to 16 by default (i.e., \code{control=list(hessianCtrl=list(r=16))}). If the Hessian cannot be inverted, it may be necessary to adjust the \code{r} argument to a different number (e.g., try \code{r=4}, \code{r=6}, or \code{r=8}).
-   } Also, for \code{\link[lme4]{glmer}}, the \code{nAGQ} argument is used to specify the number of quadrature points. The default value is 7, which should provide sufficient accuracy in the evaluation of the log-likelihood in most cases, but at the expense of speed. Setting this to 1 corresponds to the Laplacian approximation (which is faster, but less accurate). Note that \code{\link[lme4]{glmer}} does not allow values of \code{nAGQ > 1} when \code{model="UM.RS"} and \code{method="ML"}, so this value is automatically set to 1 for this model.
+   }
+
+   Also, for \code{\link[lme4]{glmer}}, the \code{nAGQ} argument is used to specify the number of quadrature points. The default value is 7, which should provide sufficient accuracy in the evaluation of the log-likelihood in most cases, but at the expense of speed. Setting this to 1 corresponds to the Laplacian approximation (which is faster, but less accurate). Note that \code{\link[lme4]{glmer}} does not allow values of \code{nAGQ > 1} when \code{model="UM.RS"} and \code{method="ML"}, so this value is automatically set to 1 for this model.
 
    Instead of \code{\link[lme4]{glmer}}, one can also choose to use \code{\link[GLMMadaptive]{mixed_model}} from the \code{GLMMadaptive} package or \code{\link[glmmTMB]{glmmTMB}} from the \code{glmmTMB} package for the model fitting. This is done by setting \code{control=list(package="GLMMadaptive")} or \code{control=list(package="glmmTMB")}, respectively.
 
@@ -193,12 +207,15 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    For \code{model="CM.EL"} and \code{measure="OR"}, optimization involves repeated calculation of the density of the non-central hypergeometric distribution. When \code{method="ML"}, this also requires integration over the same density. This is currently implemented in a rather brute-force manner and may not be numerically stable, especially when models with moderators are fitted. Stability can be improved by scaling the moderators in a similar manner (i.e., don't use a moderator that is coded 0 and 1, while another uses values in the 1000s). For models with an intercept and moderators, the function actually rescales (non-dummy) variables to z-scores during the model fitting (results are given after back-scaling, so this should be transparent to the user). For models without an intercept, this is not done, so sensitivity analyses are highly recommended here (to ensure that the results do not depend on the scaling of the moderators). Also, if a warning is issued that the standard errors of the fixed effects are unusually small, one should try sensitivity analyses with different optimizers and/or adjusted settings for the \code{hessianCtrl} and \code{tau2tol} control arguments.
 
    Finally, there is also (experimental!) support for the following measures:
+
    \itemize{
    \item \code{measure="RR"} for log transformed risk ratios,
    \item \code{measure="RD"} for raw risk differences,
    \item \code{measure="PLN"} for log transformed proportions,
    \item \code{measure="PR"} for raw proportions,
-   } (the first two only for models \code{"UM.FS"} and \code{"UM.RS"}) by using log and identity links for the binomial models. However, model fitting with these measures will often lead to numerical problems.
+   }
+
+   (the first two only for models \code{"UM.FS"} and \code{"UM.RS"}) by using log and identity links for the binomial models. However, model fitting with these measures will often lead to numerical problems.
 
    Via the (undocumented) \code{link} argument, one can also directly adjust the link function that is used (by default, measures \code{"OR"} and \code{"PLO"} use a \code{"logit"} link, measures \code{"RR"} and \code{"PLN"} use a \code{"log"} link, measures \code{"RD"} and \code{"PR"} use an \code{"identity"} link, and measures \code{"IRR"} and \code{"IRLN"} use a \code{"log"} link). See \code{\link{family}} for alternative options. Changing these defaults is only recommended for users familiar with the consequences and the interpretation of the resulting estimates (when misused, the results could be meaningless).
 }

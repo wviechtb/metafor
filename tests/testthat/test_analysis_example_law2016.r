@@ -54,7 +54,7 @@ test_that("results are correct for example 1.", {
    X <- contrmat(EG1, grp1="trt", grp2="ref", append=FALSE, last=NA)[,-1] # remove 'A' to make it the reference level
 
    ### fit model assuming consistency (tau^2_omega=0)
-   modC <- rma.mv(y, S1, mods=X, intercept=FALSE, random = ~ contr | study, rho=1/2, data=EG1, sparse=sparse)
+   modC <- rma.mv(y, S1, mods=X, intercept=FALSE, random = ~ contr | study, rho=1/2, data=EG1, sparse=.sparse)
    ci <- confint(modC)
 
    expect_equivalent(modC$tau2, 0.0000, tolerance=.tol[["var"]])
@@ -62,8 +62,8 @@ test_that("results are correct for example 1.", {
    expect_equivalent(ci$random[1,2:3], c(0.0000, 0.0708), tolerance=.tol[["var"]])
 
    ### fit inconsistency model (switch optimizer so that model converges also under Atlas)
-   #modI <- rma.mv(y, S1, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG1, sparse=sparse)
-   modI <- rma.mv(y, S1, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG1, sparse=sparse, control=list(optimizer="optim"))
+   #modI <- rma.mv(y, S1, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG1, sparse=.sparse)
+   modI <- rma.mv(y, S1, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG1, sparse=.sparse, control=list(optimizer="optim"))
    ci <- confint(modI)
 
    out <- capture.output(print(modI))
@@ -128,7 +128,7 @@ test_that("results are correct for example 2.", {
    X <- contrmat(EG2, grp1="trt", grp2="ref", append=FALSE, last=NA)[,-1] # remove 'A' to make it the reference level
 
    ### fit model assuming consistency (tau^2_omega=0)
-   modC <- rma.mv(y, S2, mods=X, intercept=FALSE, random = ~ contr | study, rho=1/2, data=EG2, sparse=sparse)
+   modC <- rma.mv(y, S2, mods=X, intercept=FALSE, random = ~ contr | study, rho=1/2, data=EG2, sparse=.sparse)
    ci <- confint(modC)
 
    expect_equivalent(modC$tau2, 0.5482, tolerance=.tol[["var"]])
@@ -136,7 +136,7 @@ test_that("results are correct for example 2.", {
    expect_equivalent(ci$random[1,2:3], c(0.0788, 2.0156), tolerance=.tol[["var"]])
 
    ### fit inconsistency model
-   modI <- rma.mv(y, S2, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG2, sparse=sparse)
+   modI <- rma.mv(y, S2, mods=X, intercept=FALSE, random = list(~ contr | study, ~ contr | design), rho=1/2, phi=1/2, data=EG2, sparse=.sparse)
    ci <- confint(modI)
 
    expect_equivalent(modI$tau2, 0.1036, tolerance=.tol[["var"]])
@@ -151,10 +151,10 @@ test_that("results are correct for example 2.", {
 
    sav <- ranef(modI)
 
-   expect_equivalent(sav[[1]]$intrcpt, c(-0.106, -0.094, -0.078, 0.335, -0.058, -0.128, 0.026, -0.121, 0.013, -0.148, 0.029, 0.13, 0.027, 0.084, -0.101, -0.064), tolerance=.tol[["pred"]])
-   expect_equivalent(sav[[1]]$se,      c(0.314, 0.293, 0.283, 0.301, 0.285, 0.282, 0.286, 0.297, 0.297, 0.304, 0.313, 0.315, 0.301, 0.304, 0.302, 0.305), tolerance=.tol[["se"]])
-   expect_equivalent(sav[[2]]$intrcpt, c(-0.551, 0.152, 0.675, -0.119, -0.383, 0.104, -0.493, -0.699), tolerance=.tol[["pred"]])
-   expect_equivalent(sav[[2]]$se,      c(0.64, 0.619, 0.642, 0.518, 0.543, 0.53, 0.486, 0.54), tolerance=.tol[["se"]])
+   expect_equivalent(sav[[1]]$intrcpt, c(-0.10597655, -0.09440298, -0.07779308, 0.3347431, -0.05778032, -0.12762821, 0.02644374, -0.12131344, 0.01314657, -0.14752923, 0.02919657, 0.12976825, 0.02697319, 0.08415593, -0.10064816, -0.06422411), tolerance=.tol[["pred"]])
+   expect_equivalent(sav[[1]]$se,      c(0.31440795, 0.29262165, 0.28283046, 0.30063561, 0.28520752, 0.28184516, 0.28589877, 0.29733608, 0.29721077, 0.30375728, 0.3128377, 0.31456144, 0.3010675, 0.30435923, 0.30178776, 0.3045846), tolerance=.tol[["se"]])
+   expect_equivalent(sav[[2]]$intrcpt, c(-0.55126986, 0.15187503, 0.67502976, -0.11892109, -0.38324316, 0.10368152, -0.49349415, -0.69903298), tolerance=.tol[["pred"]])
+   expect_equivalent(sav[[2]]$se,      c(0.64017885, 0.61901365, 0.64221591, 0.51773958, 0.54266969, 0.53007858, 0.48613683, 0.54031058), tolerance=.tol[["se"]])
 
    out <- capture.output(print(sav))
 

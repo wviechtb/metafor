@@ -34,6 +34,7 @@
    The term \sQuote{case} below refers to a particular row from the dataset used in the model fitting (which is typically synonymous with \sQuote{study}).
 
    The \code{influence} function calculates the following leave-one-out diagnostics for each case:
+
    \itemize{
    \item externally standardized residual,
    \item DFFITS value,
@@ -42,7 +43,9 @@
    \item the leave-one-out amount of (residual) heterogeneity,
    \item the leave-one-out test statistic of the test for (residual) heterogeneity,
    \item DFBETAS value(s).
-   } The diagonal elements of the hat matrix and the weights (in \%) given to the observed effect sizes or outcomes during the model fitting are also provided (except for their scaling, the hat values and weights are the same for models without moderators, but will differ when moderators are included).
+   }
+
+   The diagonal elements of the hat matrix and the weights (in \%) given to the observed effect sizes or outcomes during the model fitting are also provided (except for their scaling, the hat values and weights are the same for models without moderators, but will differ when moderators are included).
 
    For details on externally standardized residuals, see \code{\link[=rstudent.rma.uni]{rstudent}}.
 
@@ -59,12 +62,15 @@
    Finally, the DFBETAS value(s) essentially indicate(s) how many standard deviations the estimated coefficient(s) change(s) after excluding the \mjeqn{i\textrm{th}}{ith} case from the model fitting.
 
    A case may be considered to be \sQuote{influential} if at least one of the following is true:
+
    \itemize{
    \item The absolute DFFITS value is larger than \mjeqn{3 \times \sqrt{p/(k-p)}}{3*\sqrt(p/(k-p))}, where \mjseqn{p} is the number of model coefficients and \mjseqn{k} the number of cases.
    \item The lower tail area of a chi-square distribution with \mjseqn{p} degrees of freedom cut off by the Cook's distance is larger than 50\%.
    \item The hat value is larger than \mjeqn{3 \times (p/k)}{3*(p/k)}.
    \item Any DFBETAS value is larger than \mjseqn{1}.
-   } Cases which are considered influential with respect to any of these measures are marked with an asterisk. Note that the chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each case on the results.
+   }
+
+   Cases which are considered influential with respect to any of these measures are marked with an asterisk. Note that the chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each case on the results.
 }
 \value{
    An object of class \code{"infl.rma.uni"}, which is a list containing the following components:

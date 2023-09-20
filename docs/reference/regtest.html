@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-22</span>
       </span>
     </div>
 
@@ -146,7 +146,8 @@
     <p>Various tests for funnel plot asymmetry have been suggested in the literature, including the rank correlation test by Begg and Mazumdar (1994) and the regression test by Egger et al. (1997). Extensions, modifications, and further developments of the regression test are described (among others) by Macaskill, Walter, and Irwig (2001), Sterne and Egger (2005), Harbord, Egger, and Sterne (2006), Peters et al. (2006), Rücker et al. (2008), and Moreno et al. (2009). The various versions of the regression test differ in terms of the model (either a weighted regression model with a multiplicative dispersion term or a fixed/mixed-effects meta-regression model is used), in terms of the predictor variable that the observed effect sizes or outcomes are hypothesized to be related to when publication bias is present (suggested predictors include the standard error, the sampling variance, and the sample size or transformations thereof), and in terms of the outcome measure used (e.g., for <em></em>\(2 \times 2\) table data, one has the choice between various outcome measures). The idea behind the various tests is the same though: If there is a relationship between the observed effect sizes or outcomes and the chosen predictor, then this usually implies asymmetry in the funnel plot, which in turn may be an indication of publication bias.</p>
 <p>The <code>regtest</code> function can be used to carry out various versions of the regression test. One can either pass a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>.</p>
 <p>The model type for the regression test is chosen via the <code>model</code> argument, with <code>model="lm"</code> for a weighted regression model with a multiplicative dispersion term or <code>model="rma"</code> for a (mixed-effects) meta-regression model (the default).</p>
-<p>The predictor for the test is chosen via the <code>predictor</code> argument:</p><ul><li><p><code>predictor="sei"</code> for the standard errors (the default),</p></li>
+<p>The predictor for the test is chosen via the <code>predictor</code> argument:</p>
+<p></p><ul><li><p><code>predictor="sei"</code> for the standard errors (the default),</p></li>
 <li><p><code>predictor="vi"</code> for the sampling variances,</p></li>
 <li><p><code>predictor="ni"</code> for the sample sizes,</p></li>
 <li><p><code>predictor="ninv"</code> for the inverse of the sample sizes,</p></li>
