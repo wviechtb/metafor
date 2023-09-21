@@ -1,12 +1,14 @@
-# metafor 4.3-22 (2023-09-20)
+# metafor 4.3-23 (2023-09-21)
 
 - added `getmfopt()` and `setmfopt()` functions for getting and setting package options and made some of the options more flexible
 
 - removed argument `weighted` from `fsn()` (whether weighted or unweighted averages are used in Orwin's method is now simply determined by whether sampling variances are specified or not); added `type="General"` to `fsn()` as a generalization of the Orwin and Rosenberg methods (that allows for a fail-safe N calculation based on a random-effects model); can now pass an `rma` object to the `fsn()` function
 
-- further improved the theming of all plots based on the foreground and background colors; within RStudio, plot colors can also be automatically chosen based on the theme
+- further improved the theming of all plots based on the foreground and background colors; within RStudio, plot colors can also be automatically chosen based on the theme (with `setmfopt(theme="auto")`)
 
-- added (for now undocumented) `vccon` argument to `rma.mv()`
+- added additional/optional argument `tabfig` to the various `forest()` functions, for easily setting the `annosym` argument to an appropriate vector for exactly aligning numbers (when using a matching font)
+
+- added (for now undocumented) `vccon` argument to `rma.mv()` for setting equality constraints on variance/correlation components
 
 - `replace` argument in `conv.2x2()`, `conv.delta()`, `conv.fivenum()`, and `conv.wald()` can now also be a logical
 

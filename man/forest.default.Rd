@@ -91,13 +91,14 @@
 
    The \code{lty} argument can also be a vector of two elements, the first for specifying the line type of the individual CIs (\code{"solid"} by default), the second for the line type of the horizontal line that is automatically added to the plot (\code{"solid"} by default; set to \code{"blank"} to remove it).
 }
-\section{Additional Arguments}{
-   There are some additional arguments that can be passed to the function via \code{...} (hence, they cannot be abbreviated):
+\section{Additional Optional Arguments}{
+   There are some additional optional arguments that can be passed to the function via \code{...} (hence, they cannot be abbreviated):
    \describe{
-   \item{top}{the amount of space to leave empty at the top of the plot (e.g., for adding headers) (the default is 3 rows).}
-   \item{annosym}{optional vector of length 3 to select the left bracket, separation, and right bracket symbols for the annotations (the default is \code{c(" [", ", ", "]")}). Can also include a 4th element to adjust the look of the minus symbol, for example to use a proper minus (\ifelse{latex}{\mjseqn{-}}{\enc{−}{-}}) sign instead of a hyphen-minus (-). Can also include a 5th element that should be a space-like symbol (e.g., an en space) that is used in place of numbers (only relevant when trying to line up numbers exactly).}
-   \item{textpos}{optional vector of length 2 to specify the placement of the study labels and the annotations (the default is to use the horizontal limits of the plot region, i.e., the study labels to the right of \code{xlim[1]} and the annotations to the left of \code{xlim[2]}).}
-   \item{rowadj}{optional vector of length 3 to vertically adjust the position of the study labels, the annotations, and the extra information (if specified via \code{ilab}). This is useful for fine-tuning the position of text added with different positional alignments (i.e., argument \code{pos} in the \code{\link{text}} function).}
+   \item{top}{single numeric value to specify the amount of space (in terms of number of rows) to leave empty at the top of the plot (e.g., for adding headers). The default is 3.}
+   \item{annosym}{vector of length 3 to select the left bracket, separation, and right bracket symbols for the annotations. The default is \code{c(" [", ", ", "]")}. Can also include a 4th element to adjust the look of the minus symbol, for example to use a proper minus sign (\ifelse{latex}{\mjseqn{-}}{\enc{−}{-}}) instead of a hyphen-minus (-). Can also include a 5th element that should be a space-like symbol (e.g., an \sQuote{en space}) that is used in place of numbers (only relevant when trying to line up numbers exactly).}
+   \item{tabfig}{single numeric value (either a 1, 2, or 3) to set \code{annosym} automatically to a vector that will exactly align the numbers in the annotations when using a font that provides \sQuote{tabular figures}. The appropriate value for this argument depends on the font used. For example, for fonts Calibri and Carlito, 1 or 2 should work; for fonts Source Sans 3 and Palatino Linotype, 1, 2, and 3 should all work; for Computer Moden and Latin Modern fonts, 2 should work; for Lato, Roboto, and Open Sans (and maybe Arial), 3 should work. Other fonts may work as well, but this is untested.}
+   \item{textpos}{numeric vector of length 2 to specify the placement of the study labels and the annotations. The default is to use the horizontal limits of the plot region, i.e., the study labels to the right of \code{xlim[1]} and the annotations to the left of \code{xlim[2]}.}
+   \item{rowadj}{numeric vector of length 3 to vertically adjust the position of the study labels, the annotations, and the extra information (if specified via \code{ilab}). This is useful for fine-tuning the position of text added with different positional alignments (i.e., argument \code{pos} in the \code{\link{text}} function).}
    }
 }
 \author{
