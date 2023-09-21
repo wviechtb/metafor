@@ -73,23 +73,23 @@ test_that("results are correct for the mixed-effects model.", {
 
    skip_on_cran()
 
-   size <- 1 / sqrt(dat$vi)
-   size <- 0.15 * size / max(size)
+   png(filename="test_analysis_example_viechtbauer2007b.png", res=200, width=1800, height=1600, type="cairo")
 
-   modvals <- cbind(0, cbind(seq(12, 24, by=.1)) - 20, 0)
-   preds   <- predict(res, modvals, transf=exp)
+   par(mar=c(4,4,1,1))
 
-   opar <- par(no.readonly=TRUE)
+   xvals   <- seq(12, 24, by=0.1) - 20
+   modvals <- cbind(0, cbind(xvals, 0))
+   preds   <- predict(res, modvals)
 
-   plot(NA, NA, xlab="Baseline HRSD Score", ylab="Relative Rate", xlim=c(12,24), ylim=c(0.5,4.0), bty="l")
-   abline(h=seq(1, 4, by=0.5), col="lightgray")
-   abline(v=seq(14, 24, by=2), col="lightgray")
-   lines(modvals[,2] + 20, preds$pred, col="darkgray", lwd=2)
-   lines(modvals[,2] + 20, preds$ci.lb, col="darkgray", lty="dashed", lwd=2)
-   lines(modvals[,2] + 20, preds$ci.ub, col="darkgray", lty="dashed", lwd=2)
-   symbols(dat$baseline, exp(dat$yi), circles=size, inches=FALSE, add=TRUE, bg="black")
+   regplot(res, mod=3, pred=preds, xvals=xvals,
+           shade=FALSE, bty="l", las=1, digits=1, transf=exp,
+           xlim=c(12,24)-20, ylim=c(0.5,4), xaxt="n",
+           xlab="Baseline HRSD Score", ylab="Relative Rate")
+   axis(side=1, at=seq(12, 24, by=2) - 20, labels=seq(12, 24, by=2))
 
-   par(opar)
+   dev.off()
+
+   expect_true(.vistest("test_analysis_example_viechtbauer2007b.png", "images/test_analysis_example_viechtbauer2007b.png"))
 
    ### check results for all tau^2 estimators
 

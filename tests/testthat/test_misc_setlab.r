@@ -11,11 +11,11 @@ test_that(".setlab() works correctly together with forest().", {
 
    expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
-   opar <- par(no.readonly=TRUE)
+   png(filename="test_misc_setlab.png", res=300, width=5000, height=8000, type="cairo")
 
-   par(mfrow=c(5,3), mar=c(5,6,0,4))
+   par(mfrow=c(14,6), mar=c(5,4,0,4))
    xlim <- c(-3,5)
-   cex.lab <- .5
+   cex.lab <- 0.5
 
    dat <- escalc(measure="GEN", yi=yi, vi=vi)
    forest(dat$yi, dat$vi, xlim=xlim, cex.lab=cex.lab, header=TRUE)
@@ -182,7 +182,9 @@ test_that(".setlab() works correctly together with forest().", {
    dat <- escalc(measure="SPCOR", yi=yi, vi=vi)
    forest(dat$yi, dat$vi, xlim=xlim, cex.lab=cex.lab, header=TRUE)
 
-   par(opar)
+   dev.off()
+
+   expect_true(.vistest("test_misc_setlab.png", "images/test_misc_setlab.png"))
 
 })
 

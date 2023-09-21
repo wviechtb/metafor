@@ -30,9 +30,9 @@ test_that("funnel() works correctly.", {
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni) ### compute r-to-z transformed correlations
    res <- rma(yi, vi, data=dat, method="EE")
 
-   opar <- par(no.readonly=TRUE)
+   png(filename="test_misc_funnel_1.png", res=200, width=1800, height=2000, type="cairo")
 
-   par(mfrow=c(5,2), mar=c(5,4,1,1), cex=.5)
+   par(mfrow=c(5,2), mar=c(5,4,1,1), cex=0.5)
 
    funnel(res, yaxis="sei")
    funnel(res, yaxis="vi")
@@ -45,11 +45,13 @@ test_that("funnel() works correctly.", {
    funnel(res, yaxis="lni")
    funnel(res, yaxis="wi")
 
-   par(opar)
+   dev.off()
 
-   opar <- par(no.readonly=TRUE)
+   expect_true(.vistest("test_misc_funnel_1.png", "images/test_misc_funnel_1.png"))
 
-   par(mfrow=c(5,2), mar=c(5,4,1,1), cex=.5)
+   png(filename="test_misc_funnel_2.png", res=200, width=1800, height=2000, type="cairo")
+
+   par(mfrow=c(5,2), mar=c(5,4,1,1), cex=0.5)
 
    funnel(dat$yi, dat$vi, yaxis="sei")
    funnel(dat$yi, dat$vi, yaxis="vi")
@@ -62,7 +64,9 @@ test_that("funnel() works correctly.", {
    funnel(dat$yi, dat$vi, yaxis="lni")
    funnel(dat$yi, dat$vi, yaxis="wi")
 
-   par(opar)
+   dev.off()
+
+   expect_true(.vistest("test_misc_funnel_2.png", "images/test_misc_funnel_2.png"))
 
 })
 

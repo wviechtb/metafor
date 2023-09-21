@@ -27,3 +27,32 @@
 #.sparse <- TRUE
 
 ############################################################################
+
+.vistest <- function(file1, file2) {
+   if (isFALSE(as.logical(Sys.getenv("RUN_VIS_TESTS", "false")))) {
+      return(TRUE)
+   } else {
+      hash1 <- suppressWarnings(system2("md5sum", file1, stdout=TRUE, stderr=TRUE))
+      hash2 <- suppressWarnings(system2("md5sum", file2, stdout=TRUE, stderr=TRUE))
+      if (isTRUE(attributes(hash1)$status == 1) || isTRUE(attributes(hash2)$status == 1))
+         return(FALSE)
+      hash1 <- strsplit(hash1, "  ")[[1]][1]
+      hash2 <- strsplit(hash2, "  ")[[1]][1]
+      return(identical(hash1,hash2))
+      #file1 <- readLines(file1, warn=FALSE)
+      #file2 <- readLines(file2, warn=FALSE)
+      #file1 <- file1[!grepl("CreationDate", file1, fixed=TRUE, useBytes=TRUE)]
+      #file2 <- file2[!grepl("CreationDate", file2, fixed=TRUE, useBytes=TRUE)]
+      #file1 <- file1[!grepl("ModDate",      file1, fixed=TRUE, useBytes=TRUE)]
+      #file2 <- file2[!grepl("ModDate",      file2, fixed=TRUE, useBytes=TRUE)]
+      #file1 <- file1[!grepl("Producer",     file1, fixed=TRUE, useBytes=TRUE)]
+      #file2 <- file2[!grepl("Producer",     file2, fixed=TRUE, useBytes=TRUE)]
+      #return(identical(file1,file2))
+   }
+}
+
+############################################################################
+
+setmfopt(theme="default")
+
+############################################################################

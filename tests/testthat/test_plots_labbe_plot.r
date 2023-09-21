@@ -12,7 +12,7 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   opar <- par(no.readonly=TRUE)
+   png("test_plots_labbe_plot.png", res=200, width=1800, height=1600, type="cairo")
 
    ### decrease margins so the full space is used
    par(mar=c(5,4,1,2))
@@ -23,7 +23,9 @@ test_that("plot can be drawn.", {
    ### draw L'Abbé plot
    labbe(res)
 
-   par(opar)
+   dev.off()
+
+   expect_true(.vistest("test_plots_labbe_plot.png", "images/test_plots_labbe_plot.png"))
 
 })
 

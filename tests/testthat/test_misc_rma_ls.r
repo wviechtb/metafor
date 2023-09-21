@@ -48,7 +48,7 @@ test_that("profile() and confint() work correctly for location-scale models", {
 
    skip_on_cran()
 
-   opar <- par(no.readonly=TRUE)
+   png(filename="test_misc_rma_ls_profile_1.png", res=200, width=1800, height=1600, type="cairo")
 
    par(mfrow=c(2,2))
 
@@ -61,9 +61,6 @@ test_that("profile() and confint() work correctly for location-scale models", {
    prof2 <- profile(res2, progbar=FALSE, cline=TRUE, xlim=c(.01,.15))
    conf2 <- confint(res2)
    abline(v=conf2$random[1,2:3], lty="dotted")
-
-   expect_equivalent(prof1$ll, prof2$ll, tolerance=.tol[["fit"]])
-   expect_equivalent(conf1$random[1,], conf2$random[1,], tolerance=.tol[["var"]])
 
    res3  <- rma(yi, vi, data=dat, scale = ~ 1)
    prof3 <- profile(res3, progbar=FALSE, cline=TRUE, xlim=log(c(.01,.15)))
@@ -78,20 +75,21 @@ test_that("profile() and confint() work correctly for location-scale models", {
    conf4 <- confint(res4, control=list(vc.max=.2))
    abline(v=conf4$random[1,2:3], lty="dotted")
 
+   dev.off()
+
+   expect_true(.vistest("test_misc_rma_ls_profile_1.png", "images/test_misc_rma_ls_profile_1.png"))
+
+   expect_equivalent(prof1$ll, prof2$ll, tolerance=.tol[["fit"]])
+   expect_equivalent(conf1$random[1,], conf2$random[1,], tolerance=.tol[["var"]])
+
    expect_equivalent(prof1$ll, prof4$ll, tolerance=.tol[["fit"]])
    expect_equivalent(conf1$random[1,], conf4$random, tolerance=.tol[["var"]])
-
-   par(opar)
 
 })
 
 test_that("location-scale model works correctly for a continuous predictor", {
 
    skip_on_cran()
-
-   opar <- par(no.readonly=TRUE)
-
-   par(mfrow=c(3,2))
 
    res1 <- rma(yi, vi, data=dat, scale = ~ grade)
    expect_equivalent(res1$beta, 0.2220791, tolerance=.tol[["coef"]])
@@ -111,11 +109,6 @@ test_that("location-scale model works correctly for a continuous predictor", {
    conf12 <- confint(res1, alpha=2, xlim=c(-1,1))
    expect_equivalent(conf12$random, c( 0.04136, -0.65819,  0.69562), tolerance=.tol[["var"]])
 
-   profile(res1, alpha=1, progbar=FALSE, cline=TRUE)
-   abline(v=conf11$random[2:3], lty="dotted")
-   profile(res1, alpha=2, progbar=FALSE, cline=TRUE)
-   abline(v=conf12$random[2:3], lty="dotted")
-
    conf21 <- confint(res2, alpha=1, control=list(vc.min=-0.4, vc.max=0.3))
    conf22 <- confint(res2, alpha=2, control=list(vc.min=-0.1, vc.max=0.05))
    conf2  <- list(conf21, conf22)
@@ -123,26 +116,37 @@ test_that("location-scale model works correctly for a continuous predictor", {
    expect_equivalent(conf2[[1]]$random, c(0.04293, -0.00137, 0.23145), tolerance=.tol[["var"]])
    expect_equivalent(conf2[[2]]$random, c(0.00273, -0.04972, 0.04411), tolerance=.tol[["var"]])
 
-   profile(res2, alpha=1, progbar=FALSE, cline=TRUE, xlim=c(0,0.3))
-   abline(v=conf2[[1]]$random[2:3], lty="dotted")
-   profile(res2, alpha=2, progbar=FALSE, cline=TRUE, xlim=c(-0.1,0.05))
-   abline(v=conf2[[2]]$random[2:3], lty="dotted")
-
    conf3 <- confint(res3)
    expect_equivalent(conf3[[1]]$random[1,], c(0.04291, 0.00000, 0.11333), tolerance=.tol[["var"]])
    expect_equivalent(conf3[[2]]$random[1,], c(0.00273, 0.00000, 0.04062), tolerance=.tol[["var"]])
-
-   profile(res3, tau2=1, progbar=FALSE, cline=TRUE, xlim=c(0,.3))
-   abline(v=conf3[[1]]$random[1,2:3], lty="dotted")
-   profile(res3, tau2=2, progbar=FALSE, cline=TRUE, xlim=c(0,.05))
-   abline(v=conf3[[2]]$random[1,2:3], lty="dotted")
 
    # conf2 and conf3 are not the same because in res3 the two components must
    # be >= 0 while this restriction does not apply to res2 (and when profiling
    # or getting the CIs, fixing a particular component can lead to the other
    # component becoming negative)
 
-   par(opar)
+   png(filename="test_misc_rma_ls_profile_2.png", res=200, width=1800, height=2200, type="cairo")
+
+   par(mfrow=c(3,2))
+
+   profile(res1, alpha=1, progbar=FALSE, cline=TRUE)
+   abline(v=conf11$random[2:3], lty="dotted")
+   profile(res1, alpha=2, progbar=FALSE, cline=TRUE)
+   abline(v=conf12$random[2:3], lty="dotted")
+
+   profile(res2, alpha=1, progbar=FALSE, cline=TRUE, xlim=c(0,0.3))
+   abline(v=conf2[[1]]$random[2:3], lty="dotted")
+   profile(res2, alpha=2, progbar=FALSE, cline=TRUE, xlim=c(-0.1,0.05))
+   abline(v=conf2[[2]]$random[2:3], lty="dotted")
+
+   profile(res3, tau2=1, progbar=FALSE, cline=TRUE, xlim=c(0,.3))
+   abline(v=conf3[[1]]$random[1,2:3], lty="dotted")
+   profile(res3, tau2=2, progbar=FALSE, cline=TRUE, xlim=c(0,.05))
+   abline(v=conf3[[2]]$random[1,2:3], lty="dotted")
+
+   dev.off()
+
+   expect_true(.vistest("test_misc_rma_ls_profile_2.png", "images/test_misc_rma_ls_profile_2.png"))
 
 })
 
@@ -201,7 +205,11 @@ test_that("permutation tests work correctly for a location-scale model", {
    expect_equivalent(sav$pval, 0.01, tolerance=.tol[["pval"]])
    expect_equivalent(sav$pval.alpha, c(0.81, 0.95, 0.02, 0.04), tolerance=.tol[["coef"]])
 
+   png(filename="test_misc_rma_ls_permutest.png", res=200, width=1800, height=1800, type="cairo")
    plot(sav)
+   dev.off()
+
+   expect_true(.vistest("test_misc_rma_ls_permutest.png", "images/test_misc_rma_ls_permutest.png"))
 
 })
 

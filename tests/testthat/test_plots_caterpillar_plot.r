@@ -21,7 +21,7 @@ test_that("plot can be drawn.", {
    ### fit RE model
    res <- rma(yi, vi)
 
-   opar <- par(no.readonly=TRUE)
+   png("test_plots_caterpillar_plot.png", res=200, width=1800, height=1500, type="cairo")
 
    ### decrease margins so the full space is used
    par(mar=c(5,1,1,1))
@@ -45,7 +45,10 @@ test_that("plot can be drawn.", {
    addpoly(res, mlab="", cex=1)
    text(-2, -2, "RE Model", pos=4, offset=0, cex=1)
 
-   par(opar)
+   dev.off()
+
+   expect_true(.vistest("test_plots_caterpillar_plot.png", "images/test_plots_caterpillar_plot.png"))
+
 
 })
 

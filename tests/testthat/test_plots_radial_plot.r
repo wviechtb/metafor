@@ -12,10 +12,10 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   opar <- par(no.readonly=TRUE)
+   png("test_plots_radial_plot.png", res=200, width=1800, height=1800, type="cairo")
 
    ### adjust margins so the space is better used
-   par(mar=c(5,4,0,2))
+   par(mar=c(5,4,0,3))
 
    ### fit equal-effects model
    res <- rma(yi, vi, data=dat.hackshaw1998, method="EE")
@@ -23,7 +23,9 @@ test_that("plot can be drawn.", {
    ### draw radial plot
    radial(res)
 
-   par(opar)
+   dev.off()
+
+   expect_true(.vistest("test_plots_radial_plot.png", "images/test_plots_radial_plot.png"))
 
 })
 

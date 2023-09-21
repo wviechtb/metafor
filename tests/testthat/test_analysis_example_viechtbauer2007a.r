@@ -78,13 +78,21 @@ test_that("CI is correct for the profile likelihood method.", {
 
    skip_on_cran()
 
-   profile(res.ML, xlim=c(0,1.2), steps=50, progbar=FALSE)
-   abline(h=logLik(res.ML) - qchisq(.95,1)/2, lty="dotted")
-   abline(v=c(0.027, 1.131), lty="dotted")
+   png(filename="test_analysis_example_viechtbauer2007a_profile_ll_ml.png", res=200, width=1800, height=1400, type="cairo")
+   profile(res.ML, xlim=c(0,1.2), steps=50, cline=TRUE)
+   tmp <- confint(res.ML, type="PL", digits=2)
+   abline(v=tmp$random[1, 2:3], lty="dotted")
+   dev.off()
 
-   profile(res.REML, xlim=c(0,1.6), steps=50, progbar=FALSE)
-   abline(h=logLik(res.REML) - qchisq(.95,1)/2, lty="dotted")
-   abline(v=c(0.043, 1.475), lty="dotted")
+   expect_true(.vistest("test_analysis_example_viechtbauer2007a_profile_ll_ml.png", "images/test_analysis_example_viechtbauer2007a_profile_ll_ml.png"))
+
+   png(filename="test_analysis_example_viechtbauer2007a_profile_ll_reml.png", res=200, width=1800, height=1400, type="cairo")
+   profile(res.REML, xlim=c(0,1.6), steps=50, cline=TRUE)
+   tmp <- confint(res.REML, type="PL", digits=2)
+   abline(v=tmp$random[1, 2:3], lty="dotted")
+   dev.off()
+
+   expect_true(.vistest("test_analysis_example_viechtbauer2007a_profile_ll_reml.png", "images/test_analysis_example_viechtbauer2007a_profile_ll_reml.png"))
 
 })
 

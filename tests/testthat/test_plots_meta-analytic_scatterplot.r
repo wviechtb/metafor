@@ -12,7 +12,7 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   opar <- par(no.readonly=TRUE)
+   png("test_plots_meta_analytic_scatterplot.png", res=200, width=1800, height=1500, type="cairo")
 
    ### adjust margins so the space is better used
    par(mar=c(5,5,1,2))
@@ -23,36 +23,14 @@ test_that("plot can be drawn.", {
    ### fit mixed-effects model with absolute latitude as predictor
    res <- rma(yi, vi, mods = ~ ablat, data=dat)
 
-   ### calculate predicted risk ratios for 0 to 60 degrees absolute latitude
-   preds <- predict(res, newmods=c(0:60), transf=exp)
+   ### draw plot
+   regplot(res, xlim=c(10,60), predlim=c(10,60), xlab="Absolute Latitude", refline=0,
+           atransf=exp, at=log(seq(0.2,1.6,by=0.2)), digits=1, las=1, bty="l",
+           label=c(4,7,12,13), offset=c(1.6,0.8), labsize=0.9)
 
-   ### radius of points will be proportional to the inverse standard errors
-   ### hence the area of the points will be proportional to inverse variances
-   size <- 1 / sqrt(dat$vi)
-   size <- size / max(size)
+   dev.off()
 
-   ### set up plot (risk ratios on y-axis, absolute latitude on x-axis)
-   plot(NA, NA, xlim=c(10,60), ylim=c(0.2,1.6),
-        xlab="Absolute Latitude", ylab="Risk Ratio",
-        las=1, bty="l", log="y")
-
-   ### add points
-   symbols(dat$ablat, exp(dat$yi), circles=size, inches=FALSE, add=TRUE, bg="black")
-
-   ### add predicted values (and corresponding CI bounds)
-   lines(0:60, preds$pred)
-   lines(0:60, preds$ci.lb, lty="dashed")
-   lines(0:60, preds$ci.ub, lty="dashed")
-
-   ### dotted line at RR=1 (no difference between groups)
-   abline(h=1, lty="dotted")
-
-   ### labels some points in the plot
-   ids <- c(4,7,12,13)
-   pos <- c(3,3,1,1)
-   text(dat$ablat[ids], exp(dat$yi)[ids], ids, cex=.9, pos=pos)
-
-   par(opar)
+   expect_true(.vistest("test_plots_meta_analytic_scatterplot.png", "images/test_plots_meta_analytic_scatterplot.png"))
 
 })
 

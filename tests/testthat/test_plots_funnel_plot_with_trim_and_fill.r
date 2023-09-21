@@ -12,7 +12,7 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   opar <- par(no.readonly=TRUE)
+   png("test_plots_funnel_plot_with_trim_and_fill.png", res=200, width=1800, height=1500, type="cairo")
 
    ### decrease margins so the full space is used
    par(mar=c(5,4,1,2))
@@ -24,9 +24,11 @@ test_that("plot can be drawn.", {
    taf <- trimfill(res)
 
    ### draw funnel plot with missing studies filled in
-   funnel(taf, legend=TRUE)
+   funnel(taf, legend=list(show="cis"))
 
-   par(opar)
+   dev.off()
+
+   expect_true(.vistest("test_plots_funnel_plot_with_trim_and_fill.png", "images/test_plots_funnel_plot_with_trim_and_fill.png"))
 
    out <- capture.output(print(taf))
 

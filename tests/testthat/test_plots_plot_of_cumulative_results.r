@@ -12,7 +12,7 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   opar <- par(no.readonly=TRUE)
+   png("test_plots_plot_of_cumulative_results.png", res=200, width=1800, height=1600, type="cairo")
 
    ### decrease margins so the more space is used
    par(mar=c(5,5,2,2))
@@ -27,9 +27,11 @@ test_that("plot can be drawn.", {
    tmp <- cumul(res, order=year)
 
    ### plot of cumulative results
-   plot(tmp, transf=exp, xlim=c(.25,.5), lwd=3, cex=1.3)
+   plot(tmp, transf=exp, xlim=c(0.25,0.5), lwd=3, cex=1.3)
 
-   par(opar)
+   dev.off()
+
+   expect_true(.vistest("test_plots_plot_of_cumulative_results.png", "images/test_plots_plot_of_cumulative_results.png"))
 
 })
 

@@ -14,13 +14,19 @@ test_that("log likelihood plot can be drawn.", {
 
    skip_on_cran()
 
-   opar <- par(no.readonly=TRUE)
+   png(filename="test_analysis_example_yusuf1985.png", res=200, width=1800, height=800, type="cairo")
+
+   par(mar=c(5,4,1,2))
+
    par(mfrow=c(1,2))
    expect_warning(llplot(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat,
-                  subset=(table=="6"), drop00=FALSE, lwd=1, xlim=c(-5,5)))
+                         subset=(table=="6"), drop00=FALSE, lwd=1, xlim=c(-5,5)))
    expect_warning(llplot(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat,
-                  subset=(table=="6"), drop00=FALSE, lwd=1, xlim=c(-5,5), scale=FALSE))
-   par(opar)
+                         subset=(table=="6"), drop00=FALSE, lwd=1, xlim=c(-5,5), scale=FALSE))
+
+   dev.off()
+
+   expect_true(.vistest("test_analysis_example_yusuf1985.png", "images/test_analysis_example_yusuf1985.png"))
 
 })
 

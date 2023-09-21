@@ -12,7 +12,7 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   opar <- par(no.readonly=TRUE)
+   png("test_plots_contour_enhanced_funnel_plot.png", res=200, width=1800, height=1500, type="cairo")
 
    ### decrease margins so the full space is used
    par(mar=c(5,4,1,2))
@@ -24,7 +24,9 @@ test_that("plot can be drawn.", {
    ### create contour enhanced funnel plot (with funnel centered at 0)
    funnel(res, level=c(90, 95, 99), shade=c("white", "gray55", "gray75"), refline=0, legend=TRUE)
 
-   par(opar)
+   dev.off()
+
+   expect_true(.vistest("test_plots_contour_enhanced_funnel_plot.png", "images/test_plots_contour_enhanced_funnel_plot.png"))
 
 })
 

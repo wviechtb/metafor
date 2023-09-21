@@ -122,11 +122,14 @@ test_that("profiling works for the three-level random-effects model (multilevel 
    res.ml <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, sparse=.sparse)
 
    ### profile variance components
-   opar <- par(no.readonly=TRUE)
+   png("test_analysis_example_konstantopoulos2011_profile_1.png", res=200, width=1800, height=2000, type="cairo")
    par(mfrow=c(2,1))
    sav <- profile(res.ml, progbar=FALSE)
+   dev.off()
+
+   expect_true(.vistest("test_analysis_example_konstantopoulos2011_profile_1.png", "images/test_analysis_example_konstantopoulos2011_profile_1.png"))
+
    out <- capture.output(print(sav))
-   par(opar)
 
 })
 
@@ -156,11 +159,13 @@ test_that("profiling works for the three-level random-effects model (multivariat
    res.mv <- rma.mv(yi, vi, random = ~ factor(study) | district, data=dat, sparse=.sparse)
 
    ### profile variance components
-   opar <- par(no.readonly=TRUE)
+   png("test_analysis_example_konstantopoulos2011_profile_2.png", res=200, width=1800, height=2000, type="cairo")
    par(mfrow=c(2,1))
    #profile(res.mv, progbar=FALSE)
    profile(res.mv, progbar=FALSE, parallel="snow")
-   par(opar)
+   dev.off()
+
+   expect_true(.vistest("test_analysis_example_konstantopoulos2011_profile_2.png", "images/test_analysis_example_konstantopoulos2011_profile_2.png"))
 
 })
 

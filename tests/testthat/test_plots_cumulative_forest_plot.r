@@ -12,7 +12,7 @@ test_that("plot can be drawn for 'rma.uni' object.", {
 
    skip_on_cran()
 
-   opar <- par(no.readonly=TRUE)
+   png("test_plots_cumulative_forest_plot_1.png", res=240, width=1800, height=1400, type="cairo")
 
    ### decrease margins so the full space is used
    par(mar=c(4,4,1,2))
@@ -27,10 +27,13 @@ test_that("plot can be drawn for 'rma.uni' object.", {
    tmp <- cumul(res, order=year)
 
    ### cumulative forest plot
-   forest(tmp, xlim=c(-4,2), at=log(c(.125, .25, .5, 1, 2)),
-          atransf=exp, digits=c(2,3), cex=.85, header="Author(s) and Year")
+   forest(tmp, xlim=c(-4,2), at=log(c(0.125, 0.25, 0.5, 1, 2)),
+          atransf=exp, digits=c(2L,3L), cex=0.85, header="Author(s) and Year")
 
-   par(opar)
+   dev.off()
+
+   expect_true(.vistest("test_plots_cumulative_forest_plot_1.png", "images/test_plots_cumulative_forest_plot_1.png"))
+
 
 })
 
@@ -40,7 +43,7 @@ test_that("plot can be drawn for 'rma.mh' object.", {
 
    skip_on_cran()
 
-   opar <- par(no.readonly=TRUE)
+   png("test_plots_cumulative_forest_plot_2.png", res=240, width=1800, height=1400, type="cairo")
 
    ### decrease margins so the full space is used
    par(mar=c(4,4,1,2))
@@ -52,10 +55,12 @@ test_that("plot can be drawn for 'rma.mh' object.", {
    tmp <- cumul(res, order=dat.bcg$year)
 
    ### cumulative forest plot
-   forest(tmp, xlim=c(-4,2), at=log(c(.125, .25, .5, 1, 2)),
-          atransf=exp, digits=c(2,3), cex=.85, header="Author(s) and Year")
+   forest(tmp, xlim=c(-4,2), at=log(c(0.125, 0.25, 0.5, 1, 2)),
+          atransf=exp, digits=c(2L,3L), cex=0.85, header="Author(s) and Year")
 
-   par(opar)
+   dev.off()
+
+   expect_true(.vistest("test_plots_cumulative_forest_plot_2.png", "images/test_plots_cumulative_forest_plot_2.png"))
 
 })
 
@@ -65,7 +70,7 @@ test_that("plot can be drawn for 'rma.peto' object.", {
 
    skip_on_cran()
 
-   opar <- par(no.readonly=TRUE)
+   png("test_plots_cumulative_forest_plot_3.png", res=240, width=1800, height=1400, type="cairo")
 
    ### decrease margins so the full space is used
    par(mar=c(4,4,1,2))
@@ -77,10 +82,12 @@ test_that("plot can be drawn for 'rma.peto' object.", {
    tmp <- cumul(res, order=dat.bcg$year)
 
    ### cumulative forest plot
-   forest(tmp, xlim=c(-4,2), at=log(c(.125, .25, .5, 1, 2)),
-          atransf=exp, digits=c(2,3), cex=.85, header="Author(s) and Year")
+   forest(tmp, xlim=c(-4,2), at=log(c(0.125, 0.25, 0.5, 1, 2)),
+          atransf=exp, digits=c(2L,3L), cex=0.85, header="Author(s) and Year")
 
-   par(opar)
+   dev.off()
+
+   expect_true(.vistest("test_plots_cumulative_forest_plot_3.png", "images/test_plots_cumulative_forest_plot_3.png"))
 
 })
 

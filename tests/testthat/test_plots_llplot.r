@@ -1,7 +1,5 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true")
 
-### see also: https://www.metafor-project.org/doku.php/plots:baujat_plot
-
 source("settings.r")
 
 context("Checking plots example: likelihood plot")
@@ -12,7 +10,7 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   opar <- par(no.readonly=TRUE)
+   png("test_plots_llplot.png", res=200, width=1800, height=1600, type="cairo")
 
    ### adjust margins so the space is better used
    par(mar=c(5,4,2,2))
@@ -23,7 +21,9 @@ test_that("plot can be drawn.", {
    ### create likelihood plot
    llplot(measure="GEN", yi=yi, vi=vi, data=dat, lwd=1, refline=NA, xlim=c(-3,2))
 
-   par(opar)
+   dev.off()
+
+   expect_true(.vistest("test_plots_llplot.png", "images/test_plots_llplot.png"))
 
 })
 

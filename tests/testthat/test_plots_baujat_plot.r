@@ -12,7 +12,8 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   opar <- par(no.readonly=TRUE)
+   ### create Baujat plot
+   png("test_plots_baujat_plot.png", res=200, width=1800, height=1800, type="cairo")
 
    ### adjust margins so the space is better used
    par(mar=c(5,4,2,2))
@@ -27,10 +28,11 @@ test_that("plot can be drawn.", {
    ### meta-analysis based on all 65 trials
    res <- rma(yi, vi, data=dat, method="EE", slab=id)
 
-   ### create Baujat plot
-   baujat(res, xlim=c(0,20), ylim=c(0,.20))
+   baujat(res, xlim=c(0,20), ylim=c(0,0.2))
 
-   par(opar)
+   dev.off()
+
+   expect_true(.vistest("test_plots_baujat_plot.png", "images/test_plots_baujat_plot.png"))
 
 })
 
