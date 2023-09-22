@@ -252,8 +252,10 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       colnames(res.table)[ncol(res.table)] <- ""
    }
 
-   if (.isTRUE(ddd$num))
-      rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
+   if (.isTRUE(ddd$num)) {
+      width <- nchar(nrow(res.table))
+      rownames(res.table) <- paste0(formatC(seq_len(nrow(res.table)), format="d", width=width), ") ", rownames(res.table))
+   }
 
    if (x$int.only)
       res.table <- res.table[1,]
@@ -303,8 +305,10 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          res.table[j, res.table[j,] == "NA"] <- ifelse(x$alpha.fix[j], "---", "NA")
       }
 
-      if (.isTRUE(ddd$num))
-         rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
+      if (.isTRUE(ddd$num)) {
+         width <- nchar(nrow(res.table))
+         rownames(res.table) <- paste0(formatC(seq_len(nrow(res.table)), format="d", width=width), ") ", rownames(res.table))
+      }
 
       if (length(x$alpha) == 1L)
          res.table <- res.table[1,]

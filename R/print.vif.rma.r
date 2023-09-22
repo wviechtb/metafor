@@ -101,8 +101,10 @@ print.vif.rma <- function(x, digits=x$digits, ...) {
             if (!is.null(x$sim))
                res.table$prop <- fmtx(x$prop, 2)
 
-            if (.isTRUE(ddd$num))
-               rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
+            if (.isTRUE(ddd$num)) {
+               width <- nchar(nrow(res.table))
+               rownames(res.table) <- paste0(formatC(seq_len(nrow(res.table)), format="d", width=width), ") ", rownames(res.table))
+            }
 
             tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=1))
             .print.table(tmp, mstyle)

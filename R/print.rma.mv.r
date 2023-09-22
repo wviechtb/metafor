@@ -407,8 +407,10 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
       colnames(res.table)[ncol(res.table)] <- ""
    }
 
-   if (.isTRUE(ddd$num))
-      rownames(res.table) <- paste0(seq_len(nrow(res.table)), ") ", rownames(res.table))
+   if (.isTRUE(ddd$num)) {
+      width <- nchar(nrow(res.table))
+      rownames(res.table) <- paste0(formatC(seq_len(nrow(res.table)), format="d", width=width), ") ", rownames(res.table))
+   }
 
    if (x$int.only)
       res.table <- res.table[1,]
