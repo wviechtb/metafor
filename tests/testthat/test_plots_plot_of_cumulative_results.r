@@ -12,7 +12,7 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   png("test_plots_plot_of_cumulative_results.png", res=200, width=1800, height=1600, type="cairo")
+   png("images/test_plots_plot_of_cumulative_results_test.png", res=200, width=1800, height=1600, type="cairo")
 
    ### decrease margins so the more space is used
    par(mar=c(5,5,2,2))
@@ -31,7 +31,7 @@ test_that("plot can be drawn.", {
 
    dev.off()
 
-   expect_true(.vistest("test_plots_plot_of_cumulative_results.png", "images/test_plots_plot_of_cumulative_results.png"))
+   expect_true(.vistest("images/test_plots_plot_of_cumulative_results_test.png", "images/test_plots_plot_of_cumulative_results.png"))
 
 })
 

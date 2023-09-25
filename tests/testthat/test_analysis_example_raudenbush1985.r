@@ -40,25 +40,25 @@ test_that("results are correct for the random-effects model.", {
    skip_on_cran()
 
    ### profile tau^2
-   png("test_analysis_example_raudenbush1985_profile_1.png", res=200, width=1800, height=1600, type="cairo")
+   png("images/test_analysis_example_raudenbush1985_profile_1_test.png", res=200, width=1800, height=1600, type="cairo")
    profile(res, xlim=c(0,.20), progbar=FALSE)
    dev.off()
 
-   expect_true(.vistest("test_analysis_example_raudenbush1985_profile_1.png", "images/test_analysis_example_raudenbush1985_profile_1.png"))
+   expect_true(.vistest("images/test_analysis_example_raudenbush1985_profile_1_test.png", "images/test_analysis_example_raudenbush1985_profile_1.png"))
 
    ### profile tau^2 (without 'xlim' specified)
-   png("test_analysis_example_raudenbush1985_profile_2.png", res=200, width=1800, height=1600, type="cairo")
+   png("images/test_analysis_example_raudenbush1985_profile_2_test.png", res=200, width=1800, height=1600, type="cairo")
    profile(res, progbar=FALSE)
    dev.off()
 
-   expect_true(.vistest("test_analysis_example_raudenbush1985_profile_2.png", "images/test_analysis_example_raudenbush1985_profile_2.png"))
+   expect_true(.vistest("images/test_analysis_example_raudenbush1985_profile_2_test.png", "images/test_analysis_example_raudenbush1985_profile_2.png"))
 
    ### profile tau^2 (with parallel processing)
-   png("test_analysis_example_raudenbush1985_profile_3.png", res=200, width=1800, height=1600, type="cairo")
+   png("images/test_analysis_example_raudenbush1985_profile_3_test.png", res=200, width=1800, height=1600, type="cairo")
    profile(res, xlim=c(0,.20), progbar=FALSE, parallel="snow")
    dev.off()
 
-   expect_true(.vistest("test_analysis_example_raudenbush1985_profile_3.png", "images/test_analysis_example_raudenbush1985_profile_3.png"))
+   expect_true(.vistest("images/test_analysis_example_raudenbush1985_profile_3_test.png", "images/test_analysis_example_raudenbush1985_profile_3.png"))
 
 })
 
@@ -102,21 +102,21 @@ test_that("results are correct for the mixed-effects model.", {
    skip_on_cran()
 
    ### profile tau^2
-   png("test_analysis_example_raudenbush1985_profile_4.png", res=200, width=1800, height=1600, type="cairo")
+   png("images/test_analysis_example_raudenbush1985_profile_4_test.png", res=200, width=1800, height=1600, type="cairo")
    profile(res, xlim=c(0,.06), progbar=FALSE)
    dev.off()
 
-   expect_true(.vistest("test_analysis_example_raudenbush1985_profile_4.png", "images/test_analysis_example_raudenbush1985_profile_4.png"))
+   expect_true(.vistest("images/test_analysis_example_raudenbush1985_profile_4_test.png", "images/test_analysis_example_raudenbush1985_profile_4.png"))
 
    ### regplot
 
-   png(filename="test_analysis_example_raudenbush1985_scatterplot.png", res=200, width=1800, height=1600, type="cairo")
+   png(filename="images/test_analysis_example_raudenbush1985_scatterplot_test.png", res=200, width=1800, height=1600, type="cairo")
    par(mar=c(5,5,1,2))
    regplot(res, xlab="Weeks of Prior Contact", bty="l", las=1, digits=1, refline=0, xaxt="n")
    axis(side=1, at=c(0,1,2,3), labels=c("0", "1", "2", ">2"))
    dev.off()
 
-   expect_true(.vistest("test_analysis_example_raudenbush1985_scatterplot.png", "images/test_analysis_example_raudenbush1985_scatterplot.png"))
+   expect_true(.vistest("images/test_analysis_example_raudenbush1985_scatterplot_test.png", "images/test_analysis_example_raudenbush1985_scatterplot.png"))
 
 })
 

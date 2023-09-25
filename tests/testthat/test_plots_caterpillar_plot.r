@@ -21,7 +21,7 @@ test_that("plot can be drawn.", {
    ### fit RE model
    res <- rma(yi, vi)
 
-   png("test_plots_caterpillar_plot.png", res=200, width=1800, height=1500, type="cairo")
+   png("images/test_plots_caterpillar_plot_test.png", res=200, width=1800, height=1500, type="cairo")
 
    ### decrease margins so the full space is used
    par(mar=c(5,1,1,1))
@@ -47,7 +47,7 @@ test_that("plot can be drawn.", {
 
    dev.off()
 
-   expect_true(.vistest("test_plots_caterpillar_plot.png", "images/test_plots_caterpillar_plot.png"))
+   expect_true(.vistest("images/test_plots_caterpillar_plot_test.png", "images/test_plots_caterpillar_plot.png"))
 
 
 })

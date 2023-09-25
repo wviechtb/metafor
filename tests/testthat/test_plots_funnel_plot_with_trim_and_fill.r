@@ -12,7 +12,7 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   png("test_plots_funnel_plot_with_trim_and_fill.png", res=200, width=1800, height=1500, type="cairo")
+   png("images/test_plots_funnel_plot_with_trim_and_fill_test.png", res=200, width=1800, height=1500, type="cairo")
 
    ### decrease margins so the full space is used
    par(mar=c(5,4,1,2))
@@ -28,7 +28,7 @@ test_that("plot can be drawn.", {
 
    dev.off()
 
-   expect_true(.vistest("test_plots_funnel_plot_with_trim_and_fill.png", "images/test_plots_funnel_plot_with_trim_and_fill.png"))
+   expect_true(.vistest("images/test_plots_funnel_plot_with_trim_and_fill_test.png", "images/test_plots_funnel_plot_with_trim_and_fill.png"))
 
    out <- capture.output(print(taf))
 

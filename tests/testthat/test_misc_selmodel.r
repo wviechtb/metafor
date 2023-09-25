@@ -22,11 +22,11 @@ test_that("results are correct for a step function model.", {
    expect_identical(sav$LRTdf, 3L)
    expect_equivalent(sav$tau2, 0.03071325, tolerance=.tol[["var"]])
 
-   png(filename="test_misc_selmodel_1.png", res=200, width=1800, height=1600, type="cairo")
+   png(filename="images/test_misc_selmodel_1_test.png", res=200, width=1800, height=1600, type="cairo")
    plot(sav)
    dev.off()
 
-   expect_true(.vistest("test_misc_selmodel_1.png", "images/test_misc_selmodel_1.png"))
+   expect_true(.vistest("images/test_misc_selmodel_1_test.png", "images/test_misc_selmodel_1.png"))
 
    tmp <- confint(sav)
    expect_equivalent(tmp[[1]]$random[1,], c(0.030713, 0.000224, 0.135284), tolerance=.tol[["var"]])
@@ -64,11 +64,11 @@ test_that("results are correct for the beta function model.", {
    expect_identical(sav$LRTdf, 2L)
    expect_equivalent(sav$tau2, 0.00000243, tolerance=.tol[["var"]])
 
-   png(filename="test_misc_selmodel_2.png", res=200, width=1800, height=1600, type="cairo")
+   png(filename="images/test_misc_selmodel_2_test.png", res=200, width=1800, height=1600, type="cairo")
    plot(sav)
    dev.off()
 
-   expect_true(.vistest("test_misc_selmodel_2.png", "images/test_misc_selmodel_2.png"))
+   expect_true(.vistest("images/test_misc_selmodel_2_test.png", "images/test_misc_selmodel_2.png"))
 
    res <- rma(yi, sei^2, mods = ~ xi, method="ML")
 
@@ -113,11 +113,11 @@ test_that("results are correct for the various exponential function models.", {
    expect_equivalent(c(sav1$delta, sav2$delta, sav3$delta, sav4$delta), c(3.162948, 2.656714, 3.339338, 1.458923), tolerance=.tol[["coef"]])
    expect_equivalent(c(sav1$se.delta, sav2$se.delta, sav3$se.delta, sav4$se.delta), c(2.988922, 2.347468, 2.388776, 1.393725), tolerance=.tol[["se"]])
 
-   png(filename="test_misc_selmodel_profile_1.png", res=200, width=1800, height=1600, type="cairo")
+   png(filename="images/test_misc_selmodel_profile_1_test.png", res=200, width=1800, height=1600, type="cairo")
    tmp <- profile(sav1, progbar=FALSE)
    dev.off()
 
-   expect_true(.vistest("test_misc_selmodel_profile_1.png", "images/test_misc_selmodel_profile_1.png"))
+   expect_true(.vistest("images/test_misc_selmodel_profile_1_test.png", "images/test_misc_selmodel_profile_1.png"))
 
    expect_equivalent(tmp$ll, c(NA, -6.569986, -6.35659, -6.210436, -6.121035, -6.07939, -6.077928, -6.110356, -6.171488, -6.257068, -6.363607, -6.488238, -6.628599, -6.782733, -6.949015, -7.126075, -7.312763, -7.508097, -7.711241, -7.921472), tolerance=.tol[["fit"]])
 
@@ -189,11 +189,11 @@ test_that("results are correct for a truncated distribution model.", {
    expect_equivalent(tmp[[1]]$random[1,], c(0.026771, 0.001693, 0.099835), tolerance=.tol[["var"]])
    expect_equivalent(tmp[[2]]$random[1,], c(0.381842, 0.108796, 1.116679), tolerance=.tol[["coef"]])
 
-   png(filename="test_misc_selmodel_profile_2.png", res=200, width=1800, height=1600, type="cairo")
+   png(filename="images/test_misc_selmodel_profile_2_test.png", res=200, width=1800, height=1600, type="cairo")
    tmp <- profile(sav, cline=TRUE, progbar=FALSE)
    dev.off()
 
-   expect_true(.vistest("test_misc_selmodel_profile_2.png", "images/test_misc_selmodel_profile_2.png"))
+   expect_true(.vistest("images/test_misc_selmodel_profile_2_test.png", "images/test_misc_selmodel_profile_2.png"))
 
    res <- rma(yi, vi, data=dat, method="EE")
 

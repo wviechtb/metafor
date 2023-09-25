@@ -73,7 +73,7 @@ test_that("results are correct for the mixed-effects model.", {
 
    skip_on_cran()
 
-   png(filename="test_analysis_example_viechtbauer2007b.png", res=200, width=1800, height=1600, type="cairo")
+   png(filename="images/test_analysis_example_viechtbauer2007b_test.png", res=200, width=1800, height=1600, type="cairo")
 
    par(mar=c(4,4,1,1))
 
@@ -89,7 +89,7 @@ test_that("results are correct for the mixed-effects model.", {
 
    dev.off()
 
-   expect_true(.vistest("test_analysis_example_viechtbauer2007b.png", "images/test_analysis_example_viechtbauer2007b.png"))
+   expect_true(.vistest("images/test_analysis_example_viechtbauer2007b_test.png", "images/test_analysis_example_viechtbauer2007b.png"))
 
    ### check results for all tau^2 estimators
 

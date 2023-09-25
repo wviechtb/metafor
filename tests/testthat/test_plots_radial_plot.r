@@ -12,7 +12,7 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   png("test_plots_radial_plot.png", res=200, width=1800, height=1800, type="cairo")
+   png("images/test_plots_radial_plot_test.png", res=200, width=1800, height=1800, type="cairo")
 
    ### adjust margins so the space is better used
    par(mar=c(5,4,0,3))
@@ -25,7 +25,7 @@ test_that("plot can be drawn.", {
 
    dev.off()
 
-   expect_true(.vistest("test_plots_radial_plot.png", "images/test_plots_radial_plot.png"))
+   expect_true(.vistest("images/test_plots_radial_plot_test.png", "images/test_plots_radial_plot.png"))
 
 })
 

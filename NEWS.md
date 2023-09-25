@@ -1,4 +1,4 @@
-# metafor 4.3-24 (2023-09-21)
+# metafor 4.3-25 (2023-09-25)
 
 - added `getmfopt()` and `setmfopt()` functions for getting and setting package options and made some of the options more flexible
 
@@ -35,6 +35,8 @@
 - added a few more transformation functions
 
 - small bug fixes
+
+- added automated visual comparison tests of plots
 
 - improved the documentation a bit
 

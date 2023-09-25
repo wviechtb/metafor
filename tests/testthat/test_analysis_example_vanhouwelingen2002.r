@@ -66,12 +66,12 @@ test_that("profile plot for tau^2 can be drawn.", {
 
    res <- rma(yi, vi, data=dat, method="ML")
 
-   png(filename="test_analysis_example_vanhouwelingen2002_profile.png", res=200, width=1800, height=1600, type="cairo")
+   png(filename="images/test_analysis_example_vanhouwelingen2002_profile_test.png", res=200, width=1800, height=1600, type="cairo")
    profile(res, xlim=c(0.01,2), steps=200, log="x", cex=0, lwd=2, cline=TRUE, progbar=FALSE)
    abline(v=c(0.1151, 0.8937), lty="dotted")
    dev.off()
 
-   expect_true(.vistest("test_analysis_example_vanhouwelingen2002_profile.png", "images/test_analysis_example_vanhouwelingen2002_profile.png"))
+   expect_true(.vistest("images/test_analysis_example_vanhouwelingen2002_profile_test.png", "images/test_analysis_example_vanhouwelingen2002_profile.png"))
 
 })
 
@@ -84,7 +84,7 @@ test_that("forest plot of observed log(OR)s and corresponding BLUPs can be drawn
    res <- rma(yi, vi, data=dat, method="ML")
    sav <- blup(res)
 
-   png(filename="test_analysis_example_vanhouwelingen2002_forest.png", res=200, width=1800, height=1400, family="mono")
+   png(filename="images/test_analysis_example_vanhouwelingen2002_forest_test.png", res=200, width=1800, height=1400, family="mono")
    par(mar=c(5,5,1,2))
    forest(res, refline=res$b, addcred=TRUE, xlim=c(-7,7), alim=c(-3,3), slab=1:13, psize=0.8,
           ilab=paste0("(n = ", formatC(apply(dat[,c(4:7)], 1, sum), width=7, big.mark=","), ")"),
@@ -93,7 +93,7 @@ test_that("forest plot of observed log(OR)s and corresponding BLUPs can be drawn
    points(sav$pred, 13:1 - 0.15, pch=15, cex=0.8)
    dev.off()
 
-   expect_true(.vistest("test_analysis_example_vanhouwelingen2002_forest.png", "images/test_analysis_example_vanhouwelingen2002_forest.png"))
+   expect_true(.vistest("images/test_analysis_example_vanhouwelingen2002_forest_test.png", "images/test_analysis_example_vanhouwelingen2002_forest.png"))
 
 })
 
@@ -124,13 +124,13 @@ test_that("L'Abbe plot can be drawn.", {
 
    res <- rma(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat, method="EE")
 
-   png(filename="test_analysis_example_vanhouwelingen2002_labbe.png", res=200, width=1800, height=1400, type="cairo")
+   png(filename="images/test_analysis_example_vanhouwelingen2002_labbe_test.png", res=200, width=1800, height=1400, type="cairo")
    par(mar=c(5,5,1,2))
    labbe(res, xlim=c(-7,-1), ylim=c(-7,-1),
          xlab="ln(odds) not-vaccinated group", ylab="ln(odds) vaccinated group")
    dev.off()
 
-   expect_true(.vistest("test_analysis_example_vanhouwelingen2002_labbe.png", "images/test_analysis_example_vanhouwelingen2002_labbe.png"))
+   expect_true(.vistest("images/test_analysis_example_vanhouwelingen2002_labbe_test.png", "images/test_analysis_example_vanhouwelingen2002_labbe.png"))
 
 })
 

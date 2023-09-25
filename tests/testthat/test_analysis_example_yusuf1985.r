@@ -14,7 +14,7 @@ test_that("log likelihood plot can be drawn.", {
 
    skip_on_cran()
 
-   png(filename="test_analysis_example_yusuf1985.png", res=200, width=1800, height=800, type="cairo")
+   png(filename="images/test_analysis_example_yusuf1985_test.png", res=200, width=1800, height=800, type="cairo")
 
    par(mar=c(5,4,1,2))
 
@@ -26,7 +26,7 @@ test_that("log likelihood plot can be drawn.", {
 
    dev.off()
 
-   expect_true(.vistest("test_analysis_example_yusuf1985.png", "images/test_analysis_example_yusuf1985.png"))
+   expect_true(.vistest("images/test_analysis_example_yusuf1985_test.png", "images/test_analysis_example_yusuf1985.png"))
 
 })
 

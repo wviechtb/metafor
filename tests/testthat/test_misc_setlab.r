@@ -11,7 +11,7 @@ test_that(".setlab() works correctly together with forest().", {
 
    expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
-   png(filename="test_misc_setlab.png", res=300, width=5000, height=8000, type="cairo")
+   png(filename="images/test_misc_setlab_test.png", res=300, width=5000, height=8000, type="cairo")
 
    par(mfrow=c(14,6), mar=c(5,4,0,4))
    xlim <- c(-3,5)
@@ -184,7 +184,7 @@ test_that(".setlab() works correctly together with forest().", {
 
    dev.off()
 
-   expect_true(.vistest("test_misc_setlab.png", "images/test_misc_setlab.png"))
+   expect_true(.vistest("images/test_misc_setlab_test.png", "images/test_misc_setlab.png"))
 
 })
 

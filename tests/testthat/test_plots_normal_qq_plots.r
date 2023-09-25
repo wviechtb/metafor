@@ -12,7 +12,7 @@ test_that("plot can be drawn for 'rma.uni' object.", {
 
    skip_on_cran()
 
-   png("test_plots_normal_qq_plots_1.png", res=200, width=1800, height=1800, type="cairo")
+   png("images/test_plots_normal_qq_plots_1_test.png", res=200, width=1800, height=1800, type="cairo")
 
    ### set up 2x2 array for plotting
    par(mfrow=c(2,2))
@@ -36,14 +36,14 @@ test_that("plot can be drawn for 'rma.uni' object.", {
 
    dev.off()
 
-   expect_true(.vistest("test_plots_normal_qq_plots_1.png", "images/test_plots_normal_qq_plots_1.png"))
+   expect_true(.vistest("images/test_plots_normal_qq_plots_1_test.png", "images/test_plots_normal_qq_plots_1.png"))
 
    ### draw plot with studentized residuals and labels
-   png("test_plots_normal_qq_plots_2.png", res=200, width=1800, height=1800, type="cairo")
+   png("images/test_plots_normal_qq_plots_2_test.png", res=200, width=1800, height=1800, type="cairo")
    qqnorm(res2, type="rstudent", label=TRUE, seed=1234)
    dev.off()
 
-   expect_true(.vistest("test_plots_normal_qq_plots_2.png", "images/test_plots_normal_qq_plots_2.png"))
+   expect_true(.vistest("images/test_plots_normal_qq_plots_2_test.png", "images/test_plots_normal_qq_plots_2.png"))
 
 })
 
@@ -53,7 +53,7 @@ test_that("plot can be drawn for 'rma.mh' object.", {
 
    skip_on_cran()
 
-   png("test_plots_normal_qq_plots_3.png", res=200, width=1800, height=1800, type="cairo")
+   png("images/test_plots_normal_qq_plots_3_test.png", res=200, width=1800, height=1800, type="cairo")
 
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    qqnorm(res)
@@ -61,7 +61,7 @@ test_that("plot can be drawn for 'rma.mh' object.", {
 
    dev.off()
 
-   expect_true(.vistest("test_plots_normal_qq_plots_3.png", "images/test_plots_normal_qq_plots_3.png"))
+   expect_true(.vistest("images/test_plots_normal_qq_plots_3_test.png", "images/test_plots_normal_qq_plots_3.png"))
 
 })
 
@@ -71,7 +71,7 @@ test_that("plot can be drawn for 'rma.peto' object.", {
 
    skip_on_cran()
 
-   png("test_plots_normal_qq_plots_4.png", res=200, width=1800, height=1800, type="cairo")
+   png("images/test_plots_normal_qq_plots_4_test.png", res=200, width=1800, height=1800, type="cairo")
 
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    qqnorm(res)
@@ -79,7 +79,7 @@ test_that("plot can be drawn for 'rma.peto' object.", {
 
    dev.off()
 
-   expect_true(.vistest("test_plots_normal_qq_plots_4.png", "images/test_plots_normal_qq_plots_4.png"))
+   expect_true(.vistest("images/test_plots_normal_qq_plots_4_test.png", "images/test_plots_normal_qq_plots_4.png"))
 
 })
 

@@ -12,7 +12,7 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   png("test_plots_meta_analytic_scatterplot.png", res=200, width=1800, height=1500, type="cairo")
+   png("images/test_plots_meta_analytic_scatterplot_test.png", res=200, width=1800, height=1500, type="cairo")
 
    ### adjust margins so the space is better used
    par(mar=c(5,5,1,2))
@@ -30,7 +30,7 @@ test_that("plot can be drawn.", {
 
    dev.off()
 
-   expect_true(.vistest("test_plots_meta_analytic_scatterplot.png", "images/test_plots_meta_analytic_scatterplot.png"))
+   expect_true(.vistest("images/test_plots_meta_analytic_scatterplot_test.png", "images/test_plots_meta_analytic_scatterplot.png"))
 
 })
 

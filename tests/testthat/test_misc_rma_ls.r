@@ -48,7 +48,7 @@ test_that("profile() and confint() work correctly for location-scale models", {
 
    skip_on_cran()
 
-   png(filename="test_misc_rma_ls_profile_1.png", res=200, width=1800, height=1600, type="cairo")
+   png(filename="images/test_misc_rma_ls_profile_1_test.png", res=200, width=1800, height=1600, type="cairo")
 
    par(mfrow=c(2,2))
 
@@ -77,7 +77,7 @@ test_that("profile() and confint() work correctly for location-scale models", {
 
    dev.off()
 
-   expect_true(.vistest("test_misc_rma_ls_profile_1.png", "images/test_misc_rma_ls_profile_1.png"))
+   expect_true(.vistest("images/test_misc_rma_ls_profile_1_test.png", "images/test_misc_rma_ls_profile_1.png"))
 
    expect_equivalent(prof1$ll, prof2$ll, tolerance=.tol[["fit"]])
    expect_equivalent(conf1$random[1,], conf2$random[1,], tolerance=.tol[["var"]])
@@ -125,7 +125,7 @@ test_that("location-scale model works correctly for a continuous predictor", {
    # or getting the CIs, fixing a particular component can lead to the other
    # component becoming negative)
 
-   png(filename="test_misc_rma_ls_profile_2.png", res=200, width=1800, height=2200, type="cairo")
+   png(filename="images/test_misc_rma_ls_profile_2_test.png", res=200, width=1800, height=2200, type="cairo")
 
    par(mfrow=c(3,2))
 
@@ -146,7 +146,7 @@ test_that("location-scale model works correctly for a continuous predictor", {
 
    dev.off()
 
-   expect_true(.vistest("test_misc_rma_ls_profile_2.png", "images/test_misc_rma_ls_profile_2.png"))
+   expect_true(.vistest("images/test_misc_rma_ls_profile_2_test.png", "images/test_misc_rma_ls_profile_2.png"))
 
 })
 
@@ -205,11 +205,11 @@ test_that("permutation tests work correctly for a location-scale model", {
    expect_equivalent(sav$pval, 0.01, tolerance=.tol[["pval"]])
    expect_equivalent(sav$pval.alpha, c(0.81, 0.95, 0.02, 0.04), tolerance=.tol[["coef"]])
 
-   png(filename="test_misc_rma_ls_permutest.png", res=200, width=1800, height=1800, type="cairo")
+   png(filename="images/test_misc_rma_ls_permutest_test.png", res=200, width=1800, height=1800, type="cairo")
    plot(sav)
    dev.off()
 
-   expect_true(.vistest("test_misc_rma_ls_permutest.png", "images/test_misc_rma_ls_permutest.png"))
+   expect_true(.vistest("images/test_misc_rma_ls_permutest_test.png", "images/test_misc_rma_ls_permutest.png"))
 
 })
 

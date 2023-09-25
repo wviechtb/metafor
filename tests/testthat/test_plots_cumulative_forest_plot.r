@@ -12,7 +12,7 @@ test_that("plot can be drawn for 'rma.uni' object.", {
 
    skip_on_cran()
 
-   png("test_plots_cumulative_forest_plot_1.png", res=240, width=1800, height=1400, type="cairo")
+   png("images/test_plots_cumulative_forest_plot_1_test.png", res=240, width=1800, height=1400, type="cairo")
 
    ### decrease margins so the full space is used
    par(mar=c(4,4,1,2))
@@ -32,7 +32,7 @@ test_that("plot can be drawn for 'rma.uni' object.", {
 
    dev.off()
 
-   expect_true(.vistest("test_plots_cumulative_forest_plot_1.png", "images/test_plots_cumulative_forest_plot_1.png"))
+   expect_true(.vistest("images/test_plots_cumulative_forest_plot_1_test.png", "images/test_plots_cumulative_forest_plot_1.png"))
 
 
 })
@@ -43,7 +43,7 @@ test_that("plot can be drawn for 'rma.mh' object.", {
 
    skip_on_cran()
 
-   png("test_plots_cumulative_forest_plot_2.png", res=240, width=1800, height=1400, type="cairo")
+   png("images/test_plots_cumulative_forest_plot_2_test.png", res=240, width=1800, height=1400, type="cairo")
 
    ### decrease margins so the full space is used
    par(mar=c(4,4,1,2))
@@ -60,7 +60,7 @@ test_that("plot can be drawn for 'rma.mh' object.", {
 
    dev.off()
 
-   expect_true(.vistest("test_plots_cumulative_forest_plot_2.png", "images/test_plots_cumulative_forest_plot_2.png"))
+   expect_true(.vistest("images/test_plots_cumulative_forest_plot_2_test.png", "images/test_plots_cumulative_forest_plot_2.png"))
 
 })
 
@@ -70,7 +70,7 @@ test_that("plot can be drawn for 'rma.peto' object.", {
 
    skip_on_cran()
 
-   png("test_plots_cumulative_forest_plot_3.png", res=240, width=1800, height=1400, type="cairo")
+   png("images/test_plots_cumulative_forest_plot_3_test.png", res=240, width=1800, height=1400, type="cairo")
 
    ### decrease margins so the full space is used
    par(mar=c(4,4,1,2))
@@ -87,7 +87,7 @@ test_that("plot can be drawn for 'rma.peto' object.", {
 
    dev.off()
 
-   expect_true(.vistest("test_plots_cumulative_forest_plot_3.png", "images/test_plots_cumulative_forest_plot_3.png"))
+   expect_true(.vistest("images/test_plots_cumulative_forest_plot_3_test.png", "images/test_plots_cumulative_forest_plot_3.png"))
 
 })
 
