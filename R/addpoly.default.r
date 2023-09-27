@@ -9,7 +9,7 @@
 
 addpoly.default     <- function(x, vi, sei, ci.lb, ci.ub, pi.lb, pi.ub,
 rows=-1, level,         annotate,                digits, width, mlab,
-transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
+transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...) {
 
    #########################################################################
 
@@ -51,6 +51,19 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
 
    if (missing(efac))
       efac <- .getfromenv("forest", "efac", default=1)
+
+   ### vertical expansion factor: 1st = PI end lines, 2nd = arrows, 3rd = polygon(s)
+   ### vertical expansion factor: 1st = polygon(s), 2nd = PI end lines
+
+   ### note: forest.rma() puts 'efac' into .metafor in the order:
+   ### 1st = CI/PI end lines, 2nd = arrows, 3rd = summary polygon or fitted polygons
+   ### so need to pick out the 3rd and 1st element in that order
+
+   if (length(efac) == 3L)
+      efac <- c(efac[3], efac[1])
+
+   if (length(efac) == 1L)
+      efac <- rep(efac, 2L)
 
    if (missing(fonts))
       fonts <- .getfromenv("forest", "fonts", default=NULL)
@@ -362,17 +375,26 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
    if (length(lcol) == 1L)
       lcol <- rep(lcol, k)
 
+   if (isTRUE(constarea)) {
+      areas <- (ci.ub - ci.lb) * (height/100)*cex*efac[1]
+      areas <- areas / min(areas, na.rm=TRUE)
+      invareas <- 1 / areas
+      heights <- (height/100)*cex*efac[1]*invareas
+   } else {
+      heights <- rep((height/100)*cex*efac[1], k)
+   }
+
    ### add polygon(s)
 
    for (i in seq_len(k)) {
 
       ### prediction interval(s)
       lsegments(pi.lb[i], rows[i], pi.ub[i], rows[i], lty=lty[1], col=lcol[i], ...)
-      lsegments(pi.lb[i], rows[i]-(height/150)*cex*efac, pi.lb[i], rows[i]+(height/150)*cex*efac, col=lcol[i], lty=lty[2], ...)
-      lsegments(pi.ub[i], rows[i]-(height/150)*cex*efac, pi.ub[i], rows[i]+(height/150)*cex*efac, col=lcol[i], lty=lty[2], ...)
+      lsegments(pi.lb[i], rows[i]-(height/150)*cex*efac[2], pi.lb[i], rows[i]+(height/150)*cex*efac[2], col=lcol[i], lty=lty[2], ...)
+      lsegments(pi.ub[i], rows[i]-(height/150)*cex*efac[2], pi.ub[i], rows[i]+(height/150)*cex*efac[2], col=lcol[i], lty=lty[2], ...)
 
       ### polygon(s)
-      lpolygon(x=c(ci.lb[i], yi[i], ci.ub[i], yi[i]), y=c(rows[i], rows[i]+(height/100)*cex*efac, rows[i], rows[i]-(height/100)*cex*efac), col=col[i], border=border[i], ...)
+      lpolygon(x=c(ci.lb[i], yi[i], ci.ub[i], yi[i]), y=c(rows[i], rows[i]+heights[i], rows[i], rows[i]-heights[i]), col=col[i], border=border[i], ...)
 
       ### label(s)
       if (!is.null(mlab)) {

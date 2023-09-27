@@ -8,6 +8,8 @@ test_that("plot can be drawn for rma().", {
 
    expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
+   skip_on_cran()
+
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, data=dat)
 
@@ -31,6 +33,8 @@ test_that("plot can be drawn for rma.mh().", {
 
    expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
+   skip_on_cran()
+
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
    png(filename="images/test_misc_plot_rma_3_test.png", res=200, width=1800, height=1800, type="cairo")
@@ -44,6 +48,8 @@ test_that("plot can be drawn for rma.mh().", {
 test_that("plot can be drawn for rma.peto().", {
 
    expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
+
+   skip_on_cran()
 
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 

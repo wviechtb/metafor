@@ -11,6 +11,8 @@ test_that(".setlab() works correctly together with forest().", {
 
    expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
+   skip_on_cran()
+
    png(filename="images/test_misc_setlab_test.png", res=300, width=5000, height=8000, type="cairo")
 
    par(mfrow=c(14,6), mar=c(5,4,0,4))

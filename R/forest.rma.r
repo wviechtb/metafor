@@ -145,13 +145,13 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          lty <- c(lty, "solid")
    }
 
-   ### vertical expansion factor: 1st = CI end lines, 2nd = arrows, 3rd = summary polygon or fitted polygons
+   ### vertical expansion factor: 1st = CI/PI end lines, 2nd = arrows, 3rd = summary polygon or fitted polygons
 
    if (length(efac) == 1L)
       efac <- rep(efac, 3L)
 
    if (length(efac) == 2L)
-      efac <- c(efac[1], efac[1], efac[2]) # if 2 values specified: 1st = CI end lines and arrows, 2nd = summary polygon or fitted polygons
+      efac <- c(efac[1], efac[1], efac[2]) # if 2 values specified: 1st = CI/PI end lines and arrows, 2nd = summary polygon or fitted polygons
 
    ### annotation symbols vector
 
@@ -1233,7 +1233,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### put stuff into the .metafor environment, so that it can be used by addpoly()
 
-   sav <- c(res, list(level=level, annotate=annotate, digits=digits[[1]], width=width, transf=transf, atransf=atransf, targs=targs, efac=efac[3], fonts=fonts[1:2], annosym=annosym))
+   sav <- c(res, list(level=level, annotate=annotate, digits=digits[[1]], width=width, transf=transf, atransf=atransf, targs=targs, efac=efac, fonts=fonts[1:2], annosym=annosym))
    try(assign("forest", sav, envir=.metafor), silent=TRUE)
 
    invisible(res)

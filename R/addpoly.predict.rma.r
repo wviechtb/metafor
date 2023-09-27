@@ -1,6 +1,6 @@
 addpoly.predict.rma <- function(x,
 rows=-2,                annotate, addpred=FALSE, digits, width, mlab,
-transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
+transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...) {
 
    #########################################################################
 
@@ -63,6 +63,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
    addpoly(x$pred, ci.lb=x$ci.lb, ci.ub=x$ci.ub, pi.lb=pi.lb, pi.ub=pi.ub,
            rows=rows,             annotate=annotate, digits=digits, width=width,
            mlab=mlab, transf=transf, atransf=atransf, targs=targs,
-           efac=efac, col=col, border=border, lty=lty, fonts=fonts, cex=cex, ...)
+           efac=efac, col=col, border=border, lty=lty, fonts=fonts, cex=cex,
+           constarea=constarea, ...)
 
 }

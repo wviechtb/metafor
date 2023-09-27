@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-25</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.3-26</span>
       </span>
     </div>
 
@@ -104,7 +104,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for predict.rma</span></span>
 <span><span class="fu"><a href="addpoly.html">addpoly</a></span><span class="op">(</span><span class="va">x</span>, rows<span class="op">=</span><span class="op">-</span><span class="fl">2</span>, <span class="va">annotate</span>,</span>
 <span>        addpred<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">width</span>, <span class="va">mlab</span>, <span class="va">transf</span>, <span class="va">atransf</span>, <span class="va">targs</span>,</span>
-<span>        <span class="va">efac</span>, <span class="va">col</span>, <span class="va">border</span>, <span class="va">lty</span>, <span class="va">fonts</span>, <span class="va">cex</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>        <span class="va">efac</span>, <span class="va">col</span>, <span class="va">border</span>, <span class="va">lty</span>, <span class="va">fonts</span>, <span class="va">cex</span>, constarea<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -156,6 +156,9 @@
 
    <dt>cex</dt>
 <dd><p>optional symbol expansion factor.</p></dd>
+
+   <dt>constarea</dt>
+<dd><p>logical to specify whether the height of the polygons (when adding multiple) should be adjusted so that the area of the polygons is constant (the default is <code>FALSE</code>).</p></dd>
 
    <dt>...</dt>
 <dd><p>other arguments.</p></dd>

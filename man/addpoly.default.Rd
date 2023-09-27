@@ -7,7 +7,8 @@
 \usage{
 \method{addpoly}{default}(x, vi, sei, ci.lb, ci.ub, pi.lb, pi.ub,
         rows=-1, level, annotate, digits, width, mlab,
-        transf, atransf, targs, efac, col, border, lty, fonts, cex, \dots)
+        transf, atransf, targs, efac, col, border, lty, fonts, cex,
+        constarea=FALSE, \dots)
 }
 \arguments{
    \item{x}{vector with the values at which the polygons should be drawn.}
@@ -32,6 +33,7 @@
    \item{lty}{optional character string to specify the line type for the prediction interval.}
    \item{fonts}{optional character string to specify the font for the labels and annotations.}
    \item{cex}{optional symbol expansion factor.}
+   \item{constarea}{logical to specify whether the height of the polygons (when adding multiple) should be adjusted so that the area of the polygons is constant (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
 \details{

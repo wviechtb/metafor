@@ -7,7 +7,7 @@
 \usage{
 \method{addpoly}{predict.rma}(x, rows=-2, annotate,
         addpred=FALSE, digits, width, mlab, transf, atransf, targs,
-        efac, col, border, lty, fonts, cex, \dots)
+        efac, col, border, lty, fonts, cex, constarea=FALSE, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"predict.rma"}.}
@@ -26,6 +26,7 @@
    \item{lty}{optional character string to specify the line type for the prediction interval.}
    \item{fonts}{optional character string to specify the font for the labels and annotations.}
    \item{cex}{optional symbol expansion factor.}
+   \item{constarea}{logical to specify whether the height of the polygons (when adding multiple) should be adjusted so that the area of the polygons is constant (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
 \details{
