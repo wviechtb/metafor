@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-3</span>
       </span>
     </div>
 
@@ -157,7 +157,7 @@
 <li><p>The hat value is larger than <em></em>\(3 \times (p/k)\).</p></li>
 <li><p>Any DFBETAS value is larger than <em></em>\(1\).</p></li>
 </ul><p>Cases which are considered influential with respect to any of these measures are indicated by the color specified for the <code>bg.infl</code> argument (the default is <code>"red"</code>).</p>
-<p>The cut-offs described above are indicated in the plot with horizontal reference lines. In addition, on the plot of the externally standardized residuals, horizontal reference lines are drawn at -1.96, 0, and 1.96. On the plot of the hat values, a horizontal reference line is drawn at <em></em>\(p/k\). Since the sum of the hat values is equal to <em></em>\(p\), the value <em></em>\(p/k\) indicates equal hat values for all <em></em>\(k\) cases. Finally, on the plot of weights, a horizontal reference line is drawn at <em></em>\(100/k\), corresponding to the value for equal weights (in %) for all <em></em>\(k\) cases. Note that all weights will automatically be equal to each other when using unweighted model fitting. Also, the hat values will be equal to the weights values (except for their scaling) in models without moderators.</p>
+<p>The cut-offs described above are indicated in the plot with horizontal reference lines. In addition, on the plot of the externally standardized residuals, horizontal reference lines are drawn at -1.96, 0, and 1.96. On the plot of the covariance ratios, a horizontal reference line is drawn at 1. On the plot of leave-one-out <em></em>\(\tau^2\) estimates, a horizontal reference line is drawn at the <em></em>\(\tau^2\) estimate based on all cases. On the plot of leave-one-out (residual) heterogeneity test statistics, horizontal reference lines are drawn at the test statistic based on all cases and at <em></em>\(k-p\), the degrees of freedom of the test statistic. On the plot of the hat values, a horizontal reference line is drawn at <em></em>\(p/k\). Since the sum of the hat values is equal to <em></em>\(p\), the value <em></em>\(p/k\) indicates equal hat values for all <em></em>\(k\) cases. Finally, on the plot of weights, a horizontal reference line is drawn at <em></em>\(100/k\), corresponding to the value for equal weights (in %) for all <em></em>\(k\) cases. Note that all weights will automatically be equal to each other when using unweighted model fitting. Also, the hat values will be equal to the weights (except for their scaling) in models without moderators.</p>
 <p>The chosen cut-offs are (somewhat) arbitrary. Substantively informed judgment should always be used when examining the influence of each case on the results.</p>
     </div>
     <div id="author">

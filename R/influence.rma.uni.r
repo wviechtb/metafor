@@ -19,7 +19,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
    .chkdots(ddd, c("btt", "measure", "time"))
 
-   btt <- .set.btt(ddd$btt, x$p, int.incl=FALSE, Xnames=colnames(x$X))
+   btt <- .set.btt(ddd$btt, x$p, int.incl=FALSE, Xnames=colnames(x$X)) # note: 1:p by default (also in models with intercept)
    m <- length(btt)
 
    if (is.null(ddd$measure)) {
@@ -160,7 +160,8 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
       cook.d[i] <- crossprod(dfb,svb) %*% dfb # / x$p
 
-      #cook.d[i] <- sum(1/(x$vi+tau2.del[i]) * (pred.full - x$X %*% res$beta)^2) / x$p
+      #cook.d[i] <- sum(1/(x$vi+tau2.del[i]) * (pred.full - x$X %*% res$beta)^2) # / x$p
+      #cook.d[i] <- sum(1/(x$vi+x$tau2) * (pred.full - x$X %*% res$beta)^2) # / x$p
 
       ### compute covariance ratio
 
