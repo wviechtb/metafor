@@ -358,7 +358,7 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
       tmp <- try(rma(yi, vi, method=method, tau2=tau2fix, test=test, weighted=weighted, verbose=verbose), silent=!verbose)
 
       if (inherits(tmp, "try-error"))
-         stop(mstyle$stop("Could not fit random-effects model (use verbose=TRUE for more info)."), call.=FALSE)
+         stop(mstyle$stop("Could not fit random-effects model (use verbose=TRUE for more info)."))
 
       vt   <- 1 / mean(1/vi)
       est  <- tmp$beta[1]

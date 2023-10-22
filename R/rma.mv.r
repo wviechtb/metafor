@@ -1034,7 +1034,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
                ### check if there are levels in R which are not in s.levels (if yes, issue a warning)
 
                if (any(!is.element(colnames(R[[j]]), s.levels[[j]])))
-                  warning(mstyle$warning(paste0("There are rows/columns in the 'R' matrix for '", s.names[j], "' for which there are no data.")))
+                  warning(mstyle$warning(paste0("There are rows/columns in the 'R' matrix for '", s.names[j], "' for which there are no data.")), call.=FALSE)
 
             }
 
@@ -1413,7 +1413,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       if (Rscale=="cor" || Rscale=="cor0") {
          R[Rfix] <- lapply(R[Rfix], function(x) {
             if (any(diag(x) <= 0))
-               stop(mstyle$stop("Cannot use Rscale=\"cor\" or Rscale=\"cor0\" with non-positive values on the diagonal of an 'R' matrix."), call.=FALSE)
+               stop(mstyle$stop("Cannot use Rscale=\"cor\" or Rscale=\"cor0\" with non-positive values on the diagonal of an 'R' matrix."))
             tmp <- cov2cor(x)
             if (any(abs(tmp) > 1))
                warning(mstyle$warning("Some values are larger than +-1 in an 'R' matrix after cov2cor() (see 'Rscale' argument)."), call.=FALSE)

@@ -49,7 +49,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
       time.start <- proc.time()
 
    if (!is.null(ddd$startmethod))
-      warning(mstyle$warning("Argument 'startmethod' has been deprecated."))
+      warning(mstyle$warning("Argument 'startmethod' has been deprecated."), call.=FALSE)
 
    #########################################################################
 

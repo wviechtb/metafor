@@ -220,7 +220,7 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
          sim.loc <- 0
 
       if (sim >= 2 && any(x$coef.na)) {
-         warning(mstyle$warning("Cannot use 'sim' when some redundant predictors were dropped from the model."))
+         warning(mstyle$warning("Cannot use 'sim' when some redundant predictors were dropped from the model."), call.=FALSE)
          sim.loc <- 0
       }
 
@@ -341,7 +341,7 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
          sim.scale <- 0
 
       if (sim >= 2 && any(x$coef.na.Z)) {
-         warning(mstyle$warning("Cannot use 'sim' when some redundant predictors were dropped from the model."))
+         warning(mstyle$warning("Cannot use 'sim' when some redundant predictors were dropped from the model."), call.=FALSE)
          sim.scale <- 0
       }
 

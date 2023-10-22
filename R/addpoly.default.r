@@ -151,7 +151,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
    yi <- x
 
    if (!missing(vi) && is.function(vi)) # if vi is utils::vi()
-      stop(mstyle$stop("Cannot find variable specified for 'vi' argument."), call.=FALSE)
+      stop(mstyle$stop("Cannot find variable specified for 'vi' argument."))
 
    if (hasArg(ci.lb) && hasArg(ci.ub)) {
 

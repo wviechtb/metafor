@@ -70,7 +70,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       vi <- NULL
 
    if (is.function(vi)) # if vi is utils::vi()
-      stop(mstyle$stop("Cannot find variable specified for 'vi' argument."), call.=FALSE)
+      stop(mstyle$stop("Cannot find variable specified for 'vi' argument."))
 
    if (missing(sei))
       sei <- NULL

@@ -120,7 +120,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, .
          cs.wald <- try(clubSandwich::Wald_test(x, cluster=cluster, vcov=vb, test=ddd$wald_test, constraints=clubSandwich::constrain_zero(x$btt)), silent=!isTRUE(ddd$verbose))
 
          if (inherits(cs.wald, "try-error")) {
-            warning(mstyle$warning("Could not obtain the cluster-robust omnibus Wald test (use verbose=TRUE for more details)."))
+            warning(mstyle$warning("Could not obtain the cluster-robust omnibus Wald test (use verbose=TRUE for more details)."), call.=FALSE)
             cs.wald <- list(Fstat=NA_real_, df_num=NA_integer_, df_denom=NA_real_)
          }
 
@@ -255,7 +255,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, .
       QM <- try(as.vector(t(beta)[x$btt] %*% chol2inv(chol(vb[x$btt,x$btt])) %*% beta[x$btt]), silent=TRUE)
 
       if (inherits(QM, "try-error") || is.na(QM)) {
-         warning(mstyle$warning("Could not obtain the cluster-robust omnibus Wald test."))
+         warning(mstyle$warning("Could not obtain the cluster-robust omnibus Wald test."), call.=FALSE)
          QM <- NA_real_
       }
 

@@ -85,10 +85,10 @@ level, digits, transf, targs, vcov=FALSE, ...) {
             pos <- sapply(colnames(X.new), function(colname) {
                      d <- c(adist(colname, colnames.mod, costs=c(ins=1, sub=Inf, del=Inf))) # compute edit distances with Inf costs for substitutions/deletions
                      if (all(is.infinite(d))) # if there is no match, then all elements are Inf
-                        stop(mstyle$stop(paste0("Could not find variable '", colname, "' in the model.")), call. = FALSE)
+                        stop(mstyle$stop(paste0("Could not find variable '", colname, "' in the model.")))
                      d <- which(d == min(d)) # don't use which.min() since that only finds the first minimum
                      if (length(d) > 1L) # if there is no unique match, then there is more than one minimum
-                        stop(mstyle$stop(paste0("Could not match up variable '", colname, "' uniquely to a variable in the model.")), call. = FALSE)
+                        stop(mstyle$stop(paste0("Could not match up variable '", colname, "' uniquely to a variable in the model.")))
                      return(d)
                      })
             if (anyDuplicated(pos)) { # if the same name is used more than once, then there will be duplicated pos values
@@ -153,10 +153,10 @@ level, digits, transf, targs, vcov=FALSE, ...) {
             pos <- sapply(colnames(Z.new), function(colname) {
                      d <- c(adist(colname, colnames.mod, costs=c(ins=1, sub=Inf, del=Inf))) # compute edit distances with Inf costs for substitutions/deletions
                      if (all(is.infinite(d))) # if there is no match, then all elements are Inf
-                        stop(mstyle$stop(paste0("Could not find variable '", colname, "' from 'newscale' in the model.")), call. = FALSE)
+                        stop(mstyle$stop(paste0("Could not find variable '", colname, "' from 'newscale' in the model.")))
                      d <- which(d == min(d)) # don't use which.min() since that only finds the first minimum
                      if (length(d) > 1L) # if there is no unique match, then there is more than one minimum
-                        stop(mstyle$stop(paste0("Could not match up variable '", colname, "' from 'newscale' uniquely to a variable in the model.")), call. = FALSE)
+                        stop(mstyle$stop(paste0("Could not match up variable '", colname, "' from 'newscale' uniquely to a variable in the model.")))
                      return(d)
                      })
             if (anyDuplicated(pos)) { # if the same name is used more than once, then there will be duplicated pos values

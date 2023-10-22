@@ -404,7 +404,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       pred <- pred$pred
 
       if (!is.null(label) && is.character(label) && label %in% c("ciout", "piout")) {
-         warning(mstyle$stop("Cannot label points based on the confidence/prediction interval when passing an object to 'pred'."))
+         warning(mstyle$stop("Cannot label points based on the confidence/prediction interval when passing an object to 'pred'."), call.=FALSE)
          label <- NULL
       }
 

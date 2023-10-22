@@ -1315,7 +1315,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                   stop(mstyle$stop("Iterative DL estimator did not converge."))
                } else {
                   if (verbose)
-                     warning(mstyle$warning("Iterative DL estimator did not converge."))
+                     warning(mstyle$warning("Iterative DL estimator did not converge."), call.=FALSE)
                }
             }
 
@@ -1379,7 +1379,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                         stop(mstyle$stop("Value of 'tau2.max' too low. Try increasing 'tau2.max' or switch to another 'method'."))
                      } else {
                         if (verbose)
-                           warning(mstyle$warning("Value of 'tau2.max' too low. Try increasing 'tau2.max' or switch to another 'method'."))
+                           warning(mstyle$warning("Value of 'tau2.max' too low. Try increasing 'tau2.max' or switch to another 'method'."), call.=FALSE)
                      }
 
                   } else {
@@ -1389,10 +1389,10 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                      if (inherits(tau2, "try-error")) {
                         conv <- FALSE
                         if (length(method) == 1L) {
-                           stop(mstyle$stop("Error in iterative search for tau2 using uniroot()."))
+                           stop(mstyle$stop("Error in iterative search for tau^2 using uniroot()."))
                         } else {
                            if (verbose)
-                              warning(mstyle$warning("Error in iterative search for tau2 using uniroot()."))
+                              warning(mstyle$warning("Error in iterative search for tau^2 using uniroot()."), call.=FALSE)
                         }
                      }
 
@@ -1471,7 +1471,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                   stop(mstyle$stop("Iterative SJ estimator did not converge."))
                } else {
                   if (verbose)
-                     warning(mstyle$warning("Iterative SJ estimator did not converge."))
+                     warning(mstyle$warning("Iterative SJ estimator did not converge."), call.=FALSE)
                }
             }
 
@@ -1506,7 +1506,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                         stop(mstyle$stop("Value of 'tau2.max' too low. Try increasing 'tau2.max' or switch to another 'method'."))
                      } else {
                         if (verbose)
-                           warning(mstyle$warning("Value of 'tau2.max' too low. Try increasing 'tau2.max' or switch to another 'method'."))
+                           warning(mstyle$warning("Value of 'tau2.max' too low. Try increasing 'tau2.max' or switch to another 'method'."), call.=FALSE)
                      }
 
                   } else {
@@ -1516,10 +1516,10 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                      if (inherits(tau2, "try-error")) {
                         conv <- FALSE
                         if (length(method) == 1L) {
-                           stop(mstyle$stop("Error in iterative search for tau2 using uniroot()."))
+                           stop(mstyle$stop("Error in iterative search for tau^2 using uniroot()."))
                         } else {
                            if (verbose)
-                              warning(mstyle$warning("Error in iterative search for tau2 using uniroot()."))
+                              warning(mstyle$warning("Error in iterative search for tau^2 using uniroot()."), call.=FALSE)
                         }
                      }
 
@@ -1600,7 +1600,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                   stop(mstyle$stop("Fisher scoring algorithm did not converge. See 'help(rma)' for possible remedies."))
                } else {
                   if (verbose)
-                     warning(mstyle$warning("Fisher scoring algorithm did not converge. See 'help(rma)' for possible remedies."))
+                     warning(mstyle$warning("Fisher scoring algorithm did not converge. See 'help(rma)' for possible remedies."), call.=FALSE)
                }
             }
 

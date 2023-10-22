@@ -222,7 +222,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    ### extract data, study labels, and other arguments
 
    if (!missing(vi) && is.function(vi)) # if vi is utils::vi()
-      stop(mstyle$stop("Cannot find variable specified for 'vi' argument."), call.=FALSE)
+      stop(mstyle$stop("Cannot find variable specified for 'vi' argument."))
 
    if (hasArg(ci.lb) && hasArg(ci.ub)) {     # CI bounds are specified by user
       if (length(ci.lb) != length(ci.ub))
