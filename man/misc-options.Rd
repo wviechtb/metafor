@@ -41,7 +41,7 @@ This page documents some miscellaneous options and features that do not fit very
 
       The \href{https://cran.r-project.org/package=crayon}{crayon} package provides a way to create colored output. The \pkg{metafor} package is designed to automatically make use of this feature when the \code{crayon} package is installed (\code{install.packages("crayon")}) and loaded (\code{library(crayon)}). Note that this only works on terminals that support \sQuote{ANSI} color/highlight codes (e.g., not under RGui on Windows or R.app on macOS, but the RStudio console and all modern terminals should support this).
 
-      The default color theme that is used is quite plain, but should work with a light or dark colored background. One can modify the color theme with \code{setmfopt(style = ...)}, where \code{...} is a list whose elements specify the styles for various parts of the output (see below for some examples and the documentation of the \code{crayon} package for the syntax to specify styles). The following elements are recognized:
+      The default color style that is used is quite plain, but should work with a light or dark colored background. One can modify the color style with \code{setmfopt(style = ...)}, where \code{...} is a list whose elements specify the styles for various parts of the output (see below for some examples and the documentation of the \code{crayon} package for the syntax to specify styles). The following elements are recognized:
 
       \itemize{
       \item \code{header} for the header of tables (underlined by default),
@@ -80,7 +80,7 @@ This page documents some miscellaneous options and features that do not fit very
                       result  = make_style("gray70"),
                       legend  = make_style("gray30")))}
 
-      for a light or dark colored background, respectively. A slightly more colorful theme could be:
+      for a light or dark colored background, respectively. A slightly more colorful style could be:
 
       \preformatted{setmfopt(style = list(header  = combine_styles("snow", make_style("royalblue4", bg=TRUE)),
                       body1   = combine_styles("gray10", make_style("gray95", bg=TRUE)),
@@ -104,7 +104,7 @@ This page documents some miscellaneous options and features that do not fit very
 
       for a light and dark colored background, respectively.
 
-      The following code snippet includes all output elements (except for an error) and can be used to test out a chosen color theme:
+      The following code snippet includes all output elements (except for an error) and can be used to test out a chosen color style:
 
       \preformatted{# calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg,
@@ -146,12 +146,7 @@ res}
 
    \subsection{Dark Mode for Plots}{
 
-      By default, plots created in \R have a white background and use black (and other darker colors) as the plotting color. Figures created with the \pkg{metafor} package also adhere to this standard. However, all plotting functions in the package are designed in such a way that switching to a dark background is easily possible. For this, one should set the canvas/figure background to a dark color (e.g., \code{"black"} or \code{"gray10"}) and the foreground color to some bright color (e.g., \code{"gray90"}, \code{"gray95"}, or \code{"white"}). The following code will accomplish this:
-
-      \preformatted{bg <- "gray10"
-fg <- "gray95"
-dev.new(canvas=bg)
-par(fg=fg, bg=bg, col=fg, col.axis=fg, col.lab=fg, col.main=fg, col.sub=fg)}
+      By default, plots created in \R have a white background and use black (and other darker colors) as the plotting color. Figures created with the \pkg{metafor} package also adhere to this standard. However, all plotting functions in the package are designed in such a way that switching to a dark background is easily possible. For this, one should set the canvas/figure background to a dark color (e.g., \code{"black"} or \code{"gray10"}) and the foreground color to some bright color (e.g., \code{"gray90"}, \code{"gray95"}, or \code{"white"}). This can be easily accomplished with \code{setmfopt(theme="custom", fg="gray95", bg="gray10")} (see \code{\link{mfopt}} for getting and setting package options).
 
       Figures that make use of additional colors for various plot elements will by default then use colors that are compatible with the chosen background. For example, the following two figures illustrate the difference between the two styles:
 
@@ -163,7 +158,7 @@ par(fg=fg, bg=bg, col=fg, col.axis=fg, col.lab=fg, col.main=fg, col.sub=fg)}
       \figure{plots-light.pdf}{options: width=5.5in}
       \figure{plots-dark.pdf}{options: width=5.5in}}
 
-      By setting \code{setmfopt(theme="dark")} (see \code{\link{mfopt}} for getting and setting package options), all plots created by the package will automatically use a dark mode. RStudio users can also set \code{setmfopt(theme="auto")}, in which case plotting colors are chosen depending on the RStudio theme used (for some themes, setting this to \code{"auto2"} might be aesthetically more pleasing).
+      By setting \code{setmfopt(theme="dark")}, all plots created by the package will automatically use a dark mode. RStudio users can also set \code{setmfopt(theme="auto")}, in which case plotting colors are chosen depending on the RStudio theme used (for some themes, setting this to \code{"auto2"} might be aesthetically more pleasing).
 
    }
 

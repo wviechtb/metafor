@@ -21,7 +21,7 @@ test_that("plot can be drawn.", {
    res <- rma(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, measure="RR")
 
    ### draw L'Abbé plot
-   labbe(res)
+   labbe(res, las=1, bty="l")
 
    dev.off()
 

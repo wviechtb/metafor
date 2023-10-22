@@ -30,6 +30,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                               "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT",                                  # alpha (and transformations thereof)
                               "REH",                                               # relative excess heterozygosity
+                              "HRR","HRD",                                         # hazard rate ratios and differences
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 

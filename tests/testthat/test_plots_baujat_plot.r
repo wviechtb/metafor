@@ -28,7 +28,7 @@ test_that("plot can be drawn.", {
    ### meta-analysis based on all 65 trials
    res <- rma(yi, vi, data=dat, method="EE", slab=id)
 
-   baujat(res, xlim=c(0,20), ylim=c(0,0.2))
+   baujat(res, xlim=c(0,20), ylim=c(0,0.2), bty="l", las=1)
 
    dev.off()
 

@@ -38,7 +38,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       shade <- rep(shade, length(level))
 
    if (missing(hlines))
-      hlines <- par("bg")
+      hlines <- .coladj(par("bg","fg"), dark=c(0,-0.9), light=c(0,1))
 
    if (is.null(refline))
       refline <- NA
@@ -592,11 +592,6 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    #########################################################################
 
-   ### add L-shaped box around plot
-
-   if (!is.na(colbox))
-      box(bty="l", col=colbox)
-
    ### generate x-axis positions if none are specified
 
    if (is.null(at)) {
@@ -623,6 +618,11 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    ### add x-axis
 
    laxis(side=1, at=at, labels=at.lab, ...)
+
+   ### add L-shaped box around plot
+
+   if (!is.na(colbox))
+      box(bty="l", col=colbox)
 
    ############################################################################
 

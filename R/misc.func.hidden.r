@@ -1083,6 +1083,26 @@
          }
       }
       ######################################################################
+      if (measure == "HRR") {
+         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
+            lab <- ifelse(short, "Log[HR]", "Log Hazard Ratio")
+         } else {
+            lab <- ifelse(short, lab, "Transformed Log Hazard Ratio")
+            funlist <- lapply(list(exp, transf.exp.int), deparse)
+            if (any(sapply(funlist, identical, atransf.char)))
+               lab <- ifelse(short, "REH", "Hazard Ratio (log scale)")
+            if (any(sapply(funlist, identical, transf.char)))
+               lab <- ifelse(short, "REH", "Hazard Ratio")
+         }
+      }
+      if (measure == "HRD") {
+         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
+            lab <- ifelse(short, "HR Difference", "Hazard Rate Difference")
+         } else {
+            lab <- ifelse(short, lab, "Transformed Hazard Rate Difference")
+         }
+      }
+      ######################################################################
 
    }
 
@@ -1854,6 +1874,7 @@
    } else {
       col <- col + round(light*255)[[pos]]
    }
+
    col[col < 0] <- 0
    col[col > 255] <- 255
 

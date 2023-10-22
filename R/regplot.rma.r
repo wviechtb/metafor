@@ -791,7 +791,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       }
 
       if (length(ltxt) >= 1L)
-         legend(lpos, inset=.01, bg=par("bg"), pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt, box.lty=box.lty)
+         legend(lpos, inset=.01, bg=.coladj(par("bg"), dark=0, light=0), pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt, box.lty=box.lty)
 
       pch.l  <- NULL
       col.l  <- NULL

@@ -30,6 +30,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                               "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT",                                  # alpha (and transformations thereof)
                               "REH",                                               # relative excess heterozygosity
+                              "HRR","HRD",                                         # hazard rate ratios and differences
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 

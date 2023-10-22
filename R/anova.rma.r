@@ -294,7 +294,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                ddf <- cs.lc$df
 
                if (!missing(rhs))
-                  warning(mstyle$warning("Cannot use 'rhs' argument for 'robust.rma' objects based on 'clubSandwich'."))
+                  warning(mstyle$warning("Cannot use 'rhs' argument for 'robust.rma' objects based on 'clubSandwich'."), call.=FALSE)
 
                rhs <- rep(0, m)
 
@@ -504,7 +504,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
       ### for LRTs, using anything besides ML/REML is strictly speaking incorrect
 
       if (test == "LRT" && (!is.element(model.f$method, c("FE","EE","CE","ML","REML")) || !is.element(model.r$method, c("FE","EE","CE","ML","REML"))))
-         warning(mstyle$warning("LRTs should be based on ML/REML estimation."))
+         warning(mstyle$warning("LRTs should be based on ML/REML estimation."), call.=FALSE)
 
       ### for LRTs based on REML estimation, check if fixed effects differ
       if (test == "LRT" && model.f$method == "REML" && (!identical(model.f$X, model.r$X))) {
