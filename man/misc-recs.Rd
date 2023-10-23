@@ -52,7 +52,7 @@ anova(sav, ...)}
 
       How \code{\link{vcalc}} and \code{\link{rma.mv}} should be used (and the clustering variable specified for \code{\link{robust}}) will depend on the specifics of the application.
 
-      See \code{\link[metadat]{dat.knapp2017}} and \code{\link[metadat]{dat.tannersmith2016}} for some examples illustrating this workflow.
+      See \code{\link[metadat]{dat.assink2016}}, \code{\link[metadat]{dat.knapp2017}}, and \code{\link[metadat]{dat.tannersmith2016}} for some examples illustrating this workflow.
 
    }
 
