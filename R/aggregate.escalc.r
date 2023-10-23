@@ -2,7 +2,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
                              weighted=TRUE, checkpd=TRUE, fun, na.rm=TRUE,
                              addk=FALSE, subset, select, digits, var.names, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="escalc")
 

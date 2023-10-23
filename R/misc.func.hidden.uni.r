@@ -22,7 +22,7 @@
 
 .QE.func <- function(tau2val, Y, vi, X, k, objective, verbose=FALSE, digits=4) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (any(tau2val + vi < 0))
       stop(mstyle$stop("Some marginal variances are negative."), call.=FALSE)
@@ -45,7 +45,7 @@
 
 .GENQ.func <- function(tau2val, P, vi, Q, level, k, p, getlower, verbose=FALSE, digits=4) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    S <- diag(sqrt(vi + tau2val), nrow=k, ncol=k)
    lambda <- Re(eigen(S %*% P %*% S, symmetric=TRUE, only.values=TRUE)$values)
@@ -123,7 +123,7 @@
 
 .permci <- function(val, obj, j, exact, iter, progbar, level, digits, control) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    ### fit model with shifted outcome
    args <- list(yi=obj$yi - c(val*obj$X[,j]), vi=obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted,
@@ -175,7 +175,7 @@
                        REMLf, link, mZ, alpha.min, alpha.max, alpha.transf,
                        tau2.min, tau2.max, optbeta) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (optbeta) {
       beta  <- par[seq_len(pX)]

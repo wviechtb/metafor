@@ -1,6 +1,6 @@
 simulate.rma <- function(object, nsim=1, seed=NULL, olim, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="rma", notav=c("rma.gen", "rma.glmm", "rma.mh", "rma.peto", "rma.uni.selmodel"))
 

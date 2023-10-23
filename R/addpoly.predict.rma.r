@@ -4,7 +4,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="predict.rma")
 

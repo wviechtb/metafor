@@ -4,7 +4,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="permutest.rma.uni")
 

@@ -2,7 +2,7 @@
 
 update.rma <- function(object, formula., ..., evaluate=TRUE) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="rma", notav="robust.rma")
 

@@ -2,7 +2,7 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="profile.rma")
 

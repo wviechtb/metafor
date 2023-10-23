@@ -3,7 +3,7 @@ conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
 
    # TODO: allow t-distribution based CIs/tests (then also need dfs argument)?
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (missing(out) && missing(ci.lb) && missing(ci.ub) && missing(zval) && missing(pval))
       stop(mstyle$stop("Must specify at least some of these arguments: 'out', 'ci.lb', 'ci.ub', 'zval', 'pval'."))

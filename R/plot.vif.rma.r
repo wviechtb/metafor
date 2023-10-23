@@ -4,7 +4,7 @@ plot.vif.rma <- function(x,
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="vif.rma")
 

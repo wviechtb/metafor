@@ -1,7 +1,7 @@
 vcalc <- function(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
 data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    ############################################################################
 

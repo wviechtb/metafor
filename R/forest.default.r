@@ -8,7 +8,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    na.act <- getOption("na.action")
 

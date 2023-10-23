@@ -1,6 +1,6 @@
 permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, control, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="rma.ls")
 

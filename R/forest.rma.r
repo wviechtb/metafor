@@ -8,7 +8,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="rma", notav=c("rma.ls", "rma.gen"))
 

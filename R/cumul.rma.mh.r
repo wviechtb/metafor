@@ -1,6 +1,6 @@
 cumul.rma.mh <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="rma.mh")
 

@@ -1,6 +1,6 @@
 bldiag <- function(..., order) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    mlist <- list(...)
 

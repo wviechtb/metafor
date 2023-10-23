@@ -3,7 +3,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    # TODO: add a H0 argument? since p-value may not be based on H0: theta_i = 0
    # TODO: argument for which deltas to include in LRT (a delta may also not be constrained under H0, so it should not be included in the LRT then)
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="rma.uni", notav=c("rma.ls", "rma.gen", "robust.rma"))
 

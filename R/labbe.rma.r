@@ -1,7 +1,7 @@
 labbe.rma <- function(x, xlim, ylim, xlab, ylab,
 add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid=FALSE, lty, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="rma", notav=c("rma.mv", "rma.ls", "rma.gen", "rma.uni.selmodel"))
 

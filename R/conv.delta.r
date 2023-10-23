@@ -1,6 +1,6 @@
 conv.delta <- function(yi, vi, ni, data, include, transf, var.names, append=TRUE, replace="ifna", ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (missing(yi) || missing(vi))
       stop(mstyle$stop("Must specify 'yi' and 'vi' arguments."))

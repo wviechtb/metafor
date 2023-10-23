@@ -2,7 +2,7 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    na.act <- getOption("na.action")
 

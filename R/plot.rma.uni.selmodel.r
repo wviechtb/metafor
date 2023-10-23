@@ -4,7 +4,7 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="rma.uni.selmodel")
 

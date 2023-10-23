@@ -1,6 +1,6 @@
 rstandard.rma.peto <- function(model, digits, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(model), must="rma.peto")
 

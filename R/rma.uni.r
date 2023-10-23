@@ -9,7 +9,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    ###### setup
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    ### check argument specifications
    ### (arguments "to" and "vtype" are checked inside escalc function)

@@ -1,6 +1,6 @@
 rstandard.rma.mv <- function(model, digits, cluster, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(model), must="rma.mv", notav="robust.rma")
 

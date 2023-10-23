@@ -1,6 +1,6 @@
 logLik.rma <- function(object, REML, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="rma")
 

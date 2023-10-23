@@ -1,6 +1,6 @@
 BIC.rma <- function(object, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="rma")
 

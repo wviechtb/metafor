@@ -1,6 +1,6 @@
 confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, transf, targs, verbose=FALSE, control, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="rma.ls")
 

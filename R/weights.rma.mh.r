@@ -1,6 +1,6 @@
 weights.rma.mh <- function(object, type="diagonal", ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="rma.mh")
 

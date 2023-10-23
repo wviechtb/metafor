@@ -1,6 +1,6 @@
 anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="rma", notap=c("rma.mh", "rma.peto"), notav="rma.glmm")
 

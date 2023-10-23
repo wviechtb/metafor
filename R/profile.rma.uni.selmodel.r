@@ -1,7 +1,7 @@
 profile.rma.uni.selmodel <- function(fitted, tau2, delta,
    xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl, plot=TRUE, pch=19, refline=TRUE, cline=FALSE, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(fitted), must="rma.uni.selmodel")
 

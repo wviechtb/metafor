@@ -38,7 +38,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ### check argument specifications
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (!is.element(method, c("FE","EE","CE","ML","REML")))
       stop(mstyle$stop("Unknown 'method' specified."))

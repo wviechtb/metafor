@@ -7,7 +7,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="rma", notav=c("rma.mh","rma.peto"))
 

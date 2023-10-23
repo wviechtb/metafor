@@ -1,6 +1,6 @@
 hatvalues.rma.uni <- function(model, type="diagonal", ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(model), must="rma.uni", notav=c("rma.uni.selmodel", "rma.gen"))
 

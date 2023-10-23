@@ -1,6 +1,6 @@
 qqnorm.rma.peto <- function(y, type="rstandard", pch=21, col, bg, label=FALSE, offset=0.3, pos=13, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(y), must="rma.peto")
 

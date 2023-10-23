@@ -1,7 +1,7 @@
 plot.infl.rma.uni <- function(x, plotinf=TRUE, plotdfbs=FALSE, dfbsnew=FALSE, logcov=TRUE,
 layout, slab.style=1, las=0, pch=21, bg, bg.infl, col.na, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="infl.rma.uni")
 

@@ -1,6 +1,6 @@
 confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, gamma2, phi, digits, transf, targs, verbose=FALSE, control, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="rma.mv")
 

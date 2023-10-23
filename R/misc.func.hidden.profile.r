@@ -4,7 +4,7 @@
    parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE,
    objective, model=0L, verbose=FALSE, outlist=NULL) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (parallel == "snow")
       library(metafor)
@@ -97,7 +97,7 @@
    parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE,
    objective, verbose=FALSE) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (parallel == "snow")
       library(metafor)
@@ -217,7 +217,7 @@
    parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE,
    objective, verbose=FALSE) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (parallel == "snow")
       library(metafor)
@@ -285,7 +285,7 @@
    parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE,
    objective, verbose=FALSE) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (parallel == "snow")
       library(metafor)

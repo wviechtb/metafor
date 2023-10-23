@@ -1,7 +1,7 @@
 summary.escalc <- function(object, out.names=c("sei","zi","pval","ci.lb","ci.ub"), var.names,
 H0=0, append=TRUE, replace=TRUE, level=95, olim, digits, transf, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="escalc")
 

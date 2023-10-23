@@ -1,6 +1,6 @@
 print.regtest <- function(x, digits=x$digits, ret.fit=x$ret.fit, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="regtest")
 

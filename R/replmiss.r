@@ -1,6 +1,6 @@
 replmiss <- function(x, y, data) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    ### check if data argument has been specified
 

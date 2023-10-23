@@ -1,6 +1,6 @@
 rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (!(inherits(x, "formula") || inherits(x, "matrix") || inherits(x, "list")))
       stop(mstyle$stop("Argument 'x' must be either a formula, a matrix, or a list of matrices."))

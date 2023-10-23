@@ -1,6 +1,6 @@
 print.escalc <- function(x, digits=attr(x,"digits"), ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="escalc")
 

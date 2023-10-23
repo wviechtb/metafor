@@ -4,7 +4,7 @@
 
 .set.btt <- function(btt, p, int.incl, Xnames, fixed=FALSE) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (missing(btt) || is.null(btt)) {
 
@@ -228,12 +228,12 @@
 .level <- function(level, allow.vector=FALSE) {
 
    if (!allow.vector && length(level) != 1L) {
-      mstyle <- .get.mstyle("crayon" %in% .packages())
+      mstyle <- .get.mstyle()
       stop(mstyle$stop("Argument 'level' must specify a single value."), call.=FALSE)
    }
 
    if (!is.numeric(level)) {
-      mstyle <- .get.mstyle("crayon" %in% .packages())
+      mstyle <- .get.mstyle()
       stop(mstyle$stop("The 'level' argument must be numeric."), call.=FALSE)
    }
 
@@ -334,7 +334,7 @@
 
 .print.time <- function(x) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    hours   <- floor(x/60/60)
    minutes <- floor(x/60) - hours*60
@@ -381,7 +381,7 @@
       ddd[okargs[i]] <- NULL
 
    if (length(ddd) > 0L) {
-      mstyle <- .get.mstyle("crayon" %in% .packages())
+      mstyle <- .get.mstyle()
       warning(mstyle$warning(paste0("Extra argument", ifelse(length(ddd) > 1L, "s ", " "), "(", paste0("'", names(ddd), "'", collapse=", "), ") disregarded.")), call.=FALSE)
    }
 
@@ -391,7 +391,7 @@
 
 .getx <- function(x, mf, data, enclos=sys.frame(sys.parent(n=2)), checknull=TRUE, checknumeric=FALSE, default) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    mf.getx <- match.call()
    dname <- deparse1(mf.getx[[match("data", names(mf.getx))]])
@@ -477,7 +477,7 @@
 
 .chkclass <- function(class, must, notap, notav, type="Method") {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    obj <- as.character(match.call()[2])
    obj <- substr(obj, 7, nchar(obj)-1)
@@ -533,7 +533,7 @@
          ok <- TRUE
 
       if (!ok) {
-         mstyle <- .get.mstyle("crayon" %in% .packages())
+         mstyle <- .get.mstyle()
          warning(mstyle$warning(paste0("The 'vi' argument is for specifying the sampling variances,\nbut '", x, "' sounds like this variable may contain standard\nerrors (maybe use 'sei=", x, "' instead?).")), call.=FALSE)
          try(assign("runvicheck", FALSE, envir=.metafor), silent=TRUE)
       }
@@ -1114,17 +1114,28 @@
 
 ### stuff related to colored/styled output
 
-.get.mstyle <- function(withcrayon) {
+.get.mstyle <- function() {
 
-   if (withcrayon) {
+   crayonloaded <- "crayon" %in% .packages()
+
+   styleopt <- getmfopt("style")
+
+   if (is.logical(styleopt)) {
+
+      if (isTRUE(styleopt)) {
+         styleopt <- NULL
+      } else {
+         crayonloaded <- FALSE
+      }
+   }
+
+   if (crayonloaded) {
 
       if (exists(".mstyle")) {
          .mstyle <- get(".mstyle")
       } else {
          .mstyle <- list()
       }
-
-      styleopt <- getmfopt("style")
 
       if (!is.null(styleopt))
          .mstyle <- styleopt
@@ -1408,7 +1419,7 @@
    if (is.null(x)) # if x is NULL, return x (i.e., NULL)
       return(x)
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    argname <- deparse(substitute(x))
 
@@ -1456,7 +1467,7 @@
    if (is.null(x) || is.null(subset)) # if x or subset is NULL, return x
       return(x)
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    xname <- deparse(substitute(x))
 
@@ -1498,7 +1509,7 @@
 
 .chkopt <- function(optimizer, optcontrol) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    ### set NLOPT_LN_BOBYQA as the default algorithm for nloptr optimizer
    ### and by default use a relative convergence criterion of 1e-8 on the function value
@@ -1670,7 +1681,7 @@
 
 .chkconv <- function(optimizer, opt.res, optcontrol, fun, verbose) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (optimizer == "optimParallel::optimParallel" && verbose) {
       tmp <- capture.output(print(opt.res$loginfo))

@@ -1,7 +1,7 @@
 conv.2x2 <- function(ori, ri, x2i, ni, n1i, n2i, correct=TRUE, data, include,
                     var.names=c("ai","bi","ci","di"), append=TRUE, replace="ifna") {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (is.logical(replace)) {
       if (isTRUE(replace)) {

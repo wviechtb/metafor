@@ -3,7 +3,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="rma.ls")
 

@@ -3,7 +3,7 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="rma")
 

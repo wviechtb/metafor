@@ -2,7 +2,7 @@ ranktest <- function(x, vi, sei, subset, data, digits, ...) {
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    na.act <- getOption("na.action")
 

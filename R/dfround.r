@@ -1,6 +1,6 @@
 dfround <- function(x, digits, drop0=TRUE) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (inherits(x, "matrix") && length(dim(x)) == 2L)
       x <- data.frame(x, check.names=FALSE)

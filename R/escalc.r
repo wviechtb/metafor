@@ -3,7 +3,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
    ### check argument specifications
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (missing(measure) && missing(yi))
       stop(mstyle$stop("Must specify an effect size or outcome measure via the 'measure' argument."))

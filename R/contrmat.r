@@ -1,6 +1,6 @@
 contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE, append=TRUE) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (!is.data.frame(data))
       data <- data.frame(data)

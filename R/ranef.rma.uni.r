@@ -1,6 +1,6 @@
 ranef.rma.uni <- function(object, level, digits, transf, targs, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="rma.uni", notav=c("rma.gen", "rma.uni.selmodel"))
 

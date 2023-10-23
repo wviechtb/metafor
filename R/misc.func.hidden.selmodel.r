@@ -50,7 +50,7 @@
                               wi.fun, steps, pgrp,
                               alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    beta  <- par[1:pX]
    tau2  <- par[pX+1]
@@ -113,7 +113,7 @@
                                  wi.fun, steps, pgrp,
                                  alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    beta  <- par[1:pX]
    tau2  <- par[pX+1]
@@ -211,7 +211,7 @@
                                wi.fun, steps, pgrp,
                                alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    beta  <- par[1:pX]
    tau2  <- par[pX+1]

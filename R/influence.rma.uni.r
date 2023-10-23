@@ -1,6 +1,6 @@
 influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(model), must="rma.uni", notav=c("rma.ls", "rma.gen", "rma.uni.selmodel"))
 

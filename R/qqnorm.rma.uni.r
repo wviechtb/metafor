@@ -2,7 +2,7 @@ qqnorm.rma.uni <- function(y, type="rstandard", pch=21, col, bg,
 envelope=TRUE, level=y$level, bonferroni=FALSE, reps=1000, smooth=TRUE, bass=0,
 label=FALSE, offset=0.3, pos=13, lty, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(y), must="rma.uni", notav=c("rma.gen", "rma.uni.selmodel"))
 

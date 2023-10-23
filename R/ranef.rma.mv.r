@@ -1,6 +1,6 @@
 ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="rma.mv")
 

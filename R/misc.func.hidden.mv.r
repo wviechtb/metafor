@@ -37,7 +37,7 @@
       return(vcvals)
 
    if (length(ids) != length(vcvals)) {
-      mstyle <- .get.mstyle("crayon" %in% .packages())
+      mstyle <- .get.mstyle()
       stop(mstyle$stop(paste0("Length of 'vccon$", vcname, "' (", length(ids), ") does not match length of ", vcname, " (", length(vcvals), ").")), call.=FALSE)
    }
 
@@ -56,7 +56,7 @@
 
 .process.G.aftersub <- function(mf.g, struct, formula, tau2, rho, isG, k, sparse, verbose) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (verbose > 1)
       message(mstyle$message(paste0("Processing '", paste0(formula, collapse=""), "' term (#1) ...")))
@@ -254,7 +254,7 @@
 
 .process.G.afterrmna <- function(mf.g, g.nlevels, g.levels, g.values, struct, formula, tau2, rho, Z.G1, Z.G2, isG, sparse, distspec, verbose) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (verbose > 1)
       message(mstyle$message(paste0("Processing '", paste0(formula, collapse=""), "' term (#2) ...")))
@@ -865,7 +865,7 @@
                        sparse, cholesky, nearpd, vctransf, vccov, vccon,
                        verbose, digits, REMLf, dofit=FALSE, hessian=FALSE) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    ### only NA values in sigma2.val, tau2.val, rho.val, gamma2.val, phi.val should be estimated; otherwise, replace with fixed values
 
@@ -1355,7 +1355,7 @@
 
 .ddf.calc <- function(dfs, X, k, p, mf.s=NULL, mf.g=NULL, mf.h=NULL, beta=TRUE) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (beta) {
 

@@ -1,6 +1,6 @@
 AIC.rma <- function(object, ..., k=2, correct=FALSE) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="rma")
 

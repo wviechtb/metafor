@@ -9,7 +9,7 @@
 
 confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type, digits, transf, targs, verbose=FALSE, control, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="rma.uni", notav=c("robust.rma", "rma.ls", "rma.gen"))
 

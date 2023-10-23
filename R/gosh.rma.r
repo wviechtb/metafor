@@ -1,6 +1,6 @@
 gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="rma", notav=c("rma.glmm", "rma.mv", "robust.rma", "rma.ls", "rma.gen", "rma.uni.selmodel"))
 

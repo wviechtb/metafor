@@ -1,6 +1,6 @@
 rstudent.rma.mh <- function(model, digits, progbar=FALSE, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(model), must="rma.mh")
 

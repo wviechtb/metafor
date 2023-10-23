@@ -1,6 +1,6 @@
 rstandard.rma.uni <- function(model, digits, type="marginal", ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(model), must="rma.uni", notav=c("robust.rma", "rma.gen", "rma.uni.selmodel"))
 

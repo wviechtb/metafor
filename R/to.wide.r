@@ -1,7 +1,7 @@
 to.wide <- function(data, study, grp, ref, grpvars, postfix=c(".1",".2"),
 addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","design")) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (!is.data.frame(data))
       data <- data.frame(data)

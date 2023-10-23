@@ -1,6 +1,6 @@
 reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE, digits, forest, funnel, footnotes=FALSE, verbose=TRUE, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="rma.uni", notav=c("robust.rma", "rma.ls", "rma.gen", "rma.uni.selmodel"))
 

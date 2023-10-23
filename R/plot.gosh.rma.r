@@ -1,7 +1,7 @@
 plot.gosh.rma <- function(x, het="I2", pch=16, cex, out, col, alpha, border,
 xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="gosh.rma")
 

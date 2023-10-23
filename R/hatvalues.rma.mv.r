@@ -1,6 +1,6 @@
 hatvalues.rma.mv <- function(model, type="diagonal", ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(model), must="rma.mv")
 

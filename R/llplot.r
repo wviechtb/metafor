@@ -4,7 +4,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    ### data setup
 

@@ -1,7 +1,7 @@
 to.long <- function(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, sdi, ni,
 data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, var.names) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    ### check argument specifications
 

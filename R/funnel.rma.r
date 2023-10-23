@@ -6,7 +6,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="rma")
 

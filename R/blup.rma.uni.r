@@ -1,6 +1,6 @@
 blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="rma.uni", notav=c("rma.uni.selmodel", "rma.gen"))
 

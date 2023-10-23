@@ -3,7 +3,7 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    na.act <- getOption("na.action")
 

@@ -123,6 +123,8 @@ summary(res)}
 
       Note that support for 256 different colors and text formatting (such as underlined and bold text) differs across terminals.
 
+      To switch off output styling when the \code{crayon} package is loaded, use \code{setmfopt(style=FALSE}).
+
    }
 
    \subsection{Removing Empty Lines Before and After the Output}{

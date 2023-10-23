@@ -26,7 +26,7 @@
 
 .rtet <- function(ai, bi, ci, di, maxcor=.9999) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (!requireNamespace("mvtnorm", quietly=TRUE))
       stop(mstyle$stop("Please install the 'mvtnorm' package to compute this measure."), call.=FALSE)
@@ -169,7 +169,7 @@
 
 .Fcalc <- function(a, b, g, x) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (!requireNamespace("gsl", quietly=TRUE))
       stop(mstyle$stop("Please install the 'gsl' package to use measure='UCOR'."), call.=FALSE)

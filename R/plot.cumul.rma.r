@@ -3,7 +3,7 @@ digits, cols, grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="cumul.rma")
 

@@ -1,6 +1,6 @@
 vcov.rma <- function(object, type="fixed", ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="rma")
 

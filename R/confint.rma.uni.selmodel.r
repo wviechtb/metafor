@@ -1,6 +1,6 @@
 confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, delta, digits, transf, targs, verbose=FALSE, control, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="rma.uni.selmodel")
 

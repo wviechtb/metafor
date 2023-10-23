@@ -1,6 +1,6 @@
 blsplit <- function(x, cluster, fun, args, sort=FALSE) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    if (missing(cluster))
       stop(mstyle$stop("Must specify 'cluster' variable."))

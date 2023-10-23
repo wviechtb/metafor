@@ -1,6 +1,6 @@
 vec2mat <- function(x, diag=FALSE, corr=!diag, dimnames) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    p <- length(x)
 

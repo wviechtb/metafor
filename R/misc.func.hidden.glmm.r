@@ -6,7 +6,7 @@
 
 .dnoncenhypergeom <- function (x=NA_real_, n1, n2, m1, psi) { ### x=ai, n1=ai+bi, n2=ci+di, m1=ai+ci, psi=ORi
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    mode.compute <- function(n1, n2, m1, psi, ll, uu) {
       a <- psi - 1
@@ -67,7 +67,7 @@
 
 .dnchgi <- function(logOR, ai, bi, ci, di, mu.i, tau2, random, dnchgcalc, dnchgprec) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    k <- length(logOR)
    dnchgi <- rep(NA_real_, k)
@@ -110,7 +110,7 @@
 
 .dnchg <- function(parms, ai, bi, ci, di, X.fit, random, verbose=FALSE, digits, dnchgcalc, dnchgprec, intCtrl) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    p    <- ncol(X.fit)
    k    <- length(ai)

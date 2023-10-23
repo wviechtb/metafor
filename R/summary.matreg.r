@@ -1,6 +1,6 @@
 summary.matreg <- function(object, digits, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(object), must="matreg")
 

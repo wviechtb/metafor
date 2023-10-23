@@ -1,6 +1,6 @@
 robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="rma.uni", notav=c("rma.ls", "rma.gen", "rma.uni.selmodel"))
 

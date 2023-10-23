@@ -4,7 +4,7 @@ transf, targs, pch=21, col, bg, back, arc.res=100, cex, cex.lab, cex.axis, ...) 
 
    #########################################################################
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="rma", notav=c("robust.rma", "rma.mv", "rma.ls", "rma.gen", "rma.uni.selmodel"))
 

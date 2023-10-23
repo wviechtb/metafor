@@ -1,6 +1,6 @@
 print.list.anova.rma <- function(x, digits=x[[1]]$digits, ...) {
 
-   mstyle <- .get.mstyle("crayon" %in% .packages())
+   mstyle <- .get.mstyle()
 
    .chkclass(class(x), must="list.anova.rma")
 
