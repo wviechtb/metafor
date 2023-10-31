@@ -1,4 +1,4 @@
-# metafor 4.5-5 (2023-10-31)
+# metafor 4.5-6 (2023-10-31)
 
 - a few minor fixes to the dynamic theming of plots based on the foreground and background colors of the plotting device
 

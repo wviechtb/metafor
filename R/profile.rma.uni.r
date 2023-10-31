@@ -196,7 +196,7 @@ profile.rma.uni <- function(fitted,
          ylim <- rep(maxll, 2L)
       }
 
-      if (.isFALSE(ddd$exp))
+      if (!.isTRUE(ddd$exp))
          ylim <- ylim + c(-0.1, 0.1)
 
    } else {
@@ -209,10 +209,10 @@ profile.rma.uni <- function(fitted,
    }
 
    if (.isTRUE(ddd$sqrt)) {
-      xlab <- expression(paste(tau, " Value"))
+      xlab  <- expression(paste(tau, " Value"))
       title <- expression(paste("Profile Plot for ", tau))
    } else {
-      xlab <- expression(paste(tau^2, " Value"))
+      xlab  <- expression(paste(tau^2, " Value"))
       title <- expression(paste("Profile Plot for ", tau^2))
    }
 

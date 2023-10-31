@@ -459,46 +459,46 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
 
    if (comp == "sigma2") {
       if (x$sigma2s == 1L) {
-         xlab <- expression(paste(sigma^2, " Value"))
+         xlab  <- expression(paste(sigma^2, " Value"))
          title <- expression(paste("Profile Plot for ", sigma^2))
       } else {
-         xlab <- bquote(sigma[.(sigma2)]^2 ~ "Value")
+         xlab  <- bquote(sigma[.(sigma2)]^2 ~ "Value")
          title <- bquote("Profile Plot for" ~ sigma[.(sigma2)]^2)
       }
    }
    if (comp == "tau2") {
       if (x$tau2s == 1L) {
-         xlab <- expression(paste(tau^2, " Value"))
+         xlab  <- expression(paste(tau^2, " Value"))
          title <- expression(paste("Profile Plot for ", tau^2))
       } else {
-         xlab <- bquote(tau[.(tau2)]^2 ~ "Value")
+         xlab  <- bquote(tau[.(tau2)]^2 ~ "Value")
          title <- bquote("Profile Plot for" ~ tau[.(tau2)]^2)
       }
    }
    if (comp == "rho") {
       if (x$rhos == 1L) {
-         xlab <- expression(paste(rho, " Value"))
+         xlab  <- expression(paste(rho, " Value"))
          title <- expression(paste("Profile Plot for ", rho))
       } else {
-         xlab <- bquote(rho[.(rho)] ~ "Value")
+         xlab  <- bquote(rho[.(rho)] ~ "Value")
          title <- bquote("Profile Plot for" ~ rho[.(rho)])
       }
    }
    if (comp == "gamma2") {
       if (x$gamma2s == 1L) {
-         xlab <- expression(paste(gamma^2, " Value"))
+         xlab  <- expression(paste(gamma^2, " Value"))
          title <- expression(paste("Profile Plot for ", gamma^2))
       } else {
-         xlab <- bquote(gamma[.(gamma2)]^2 ~ "Value")
+         xlab  <- bquote(gamma[.(gamma2)]^2 ~ "Value")
          title <- bquote("Profile Plot for" ~ gamma[.(gamma2)]^2)
       }
    }
    if (comp == "phi") {
       if (x$phis == 1L) {
-         xlab <- expression(paste(phi, " Value"))
+         xlab  <- expression(paste(phi, " Value"))
          title <- expression(paste("Profile Plot for ", phi))
       } else {
-         xlab <- bquote(phi[.(phi)] ~ "Value")
+         xlab  <- bquote(phi[.(phi)] ~ "Value")
          title <- bquote("Profile Plot for" ~ phi[.(phi)])
       }
    }

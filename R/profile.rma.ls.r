@@ -255,12 +255,12 @@ profile.rma.ls <- function(fitted, alpha,
 
    if (comp == "alpha") {
       if (x$alphas == 1L) {
-         xlab <- expression(paste(alpha, " Value"))
+         xlab  <- expression(paste(alpha, " Value"))
          title <- expression(paste("Profile Plot for ", alpha))
       } else {
          if (.isTRUE(ddd$sub1))
             alpha <- alpha - 1
-         xlab <- bquote(alpha[.(alpha)] ~ "Value")
+         xlab  <- bquote(alpha[.(alpha)] ~ "Value")
          title <- bquote("Profile Plot for" ~ alpha[.(alpha)])
       }
    }

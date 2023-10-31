@@ -301,15 +301,15 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
    }
 
    if (comp == "tau2") {
-      xlab <- expression(paste(tau^2, " Value"))
+      xlab  <- expression(paste(tau^2, " Value"))
       title <- expression(paste("Profile Plot for ", tau^2))
    }
    if (comp == "delta") {
       if (x$deltas == 1L) {
-         xlab <- expression(paste(delta, " Value"))
+         xlab  <- expression(paste(delta, " Value"))
          title <- expression(paste("Profile Plot for ", delta))
       } else {
-         xlab <- bquote(delta[.(delta)] ~ "Value")
+         xlab  <- bquote(delta[.(delta)] ~ "Value")
          title <- bquote("Profile Plot for" ~ delta[.(delta)])
       }
    }
