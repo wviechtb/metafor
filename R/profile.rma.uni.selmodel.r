@@ -284,7 +284,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
          if (xlim[1] <= vc && xlim[2] >= vc) {
             ylim <- range(c(logLik(x),lls[is.finite(lls)]), na.rm=TRUE)
          } else {
-            ylim <- range(lls[is.finite(lls)])
+            ylim <- range(lls[is.finite(lls)], na.rm=TRUE)
          }
       } else {
          ylim <- rep(logLik(x), 2L)
@@ -314,7 +314,9 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
       }
    }
 
-   sav <- list(vc=vcs, ll=lls, beta=beta, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, ylim=ylim, method=x$method, vc=vc, maxll=logLik(x), xlab=xlab, title=title)
+   ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
+
+   sav <- list(vc=vcs, ll=lls, beta=beta, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, ylim=ylim, method=x$method, vc=vc, maxll=logLik(x), xlab=xlab, ylab=ylab, title=title)
    names(sav)[1] <- switch(comp, tau2="tau2", delta="delta")
    class(sav) <- "profile.rma"
 

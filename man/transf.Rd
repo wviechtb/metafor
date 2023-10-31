@@ -117,7 +117,7 @@ transf.lnortortet.digby(xi)
    \item \code{transf.iahw}: inverse of the former.
    \item \code{transf.abt}: transformation of coefficient alpha as suggested by Bonett (2002), except that \mjeqn{-\ln(1-\alpha)}{-ln(1-\alpha)} is used (so that the transformed values are a monotonically increasing function of the \mjseqn{\alpha} values).
    \item \code{transf.iabt}: inverse of the former.
-   \item \code{transf.r2toz}: variance stabilizing transformation for the coefficient of determination, given by \mjeqn{z_i = \frac{1}{2} \log \left[\frac{1+\sqrt{R_i^2}}{1-\sqrt{R_i^2}}\right]}{z_i = 1/2 log[(1+\sqrt(R_i^2))/(1-\sqrt(R_i^2))]} (see Olkin & Finn, 1995, but with the additional \mjseqn{\frac{1}{2}} factor).
+   \item \code{transf.r2toz}: variance stabilizing transformation for the coefficient of determination, given by \mjeqn{z_i = \frac{1}{2} \ln\mathopen{}\left(\frac{1+\sqrt{R_i^2}}{1-\sqrt{R_i^2}}\right)\mathclose{}}{z_i = 1/2 log((1+\sqrt(R_i^2))/(1-\sqrt(R_i^2)))} (see Olkin & Finn, 1995, but with the additional \mjeqn{\frac{1}{2}}{1/2} factor).
    \item \code{transf.ztor2}: inverse of the former.
    \item \code{transf.ztor.int}: integral transformation method for the z-to-r transformation.
    \item \code{transf.exp.int}: integral transformation method for the exponential transformation.

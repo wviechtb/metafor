@@ -21,8 +21,8 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
 
    ### filter out some arguments for the plot() function
 
-   lplot   <- function(..., time, LB, startmethod, sub1) plot(...)
-   lpoints <- function(..., time, LB, startmethod, sub1, log) points(...) # need 'log' here so profile(res, log="x") doesn't throw a warning
+   lplot   <- function(..., time, LB, startmethod, sub1, sqrt, exp) plot(...)
+   lpoints <- function(..., time, LB, startmethod, sub1, log, sqrt, exp) points(...) # need 'log' here so profile(res, log="x") doesn't throw a warning
 
    #########################################################################
 
@@ -38,10 +38,12 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
          xlab <- x$xlab
 
       if (missing.ylab)
-         ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
+         ylab <- x$ylab
 
       if (missing.main)
          main <- x$title
+
+      ### add the actual vc value to the profile
 
       if (min(x[[1]]) <= x$vc && max(x[[1]]) >= x$vc) {
          pos <- which(x[[1]] >= x$vc)[1]
@@ -74,17 +76,15 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
          if (missing.xlab) {
             xlab <- x[[j]]$xlab
          } else {
-            if (length(xlab) == 1L) {
+            if (length(xlab) == 1L)
                xlab <- rep(xlab, x$comps)
-            }
          }
 
          if (missing.ylab) {
-            ylab <- paste(ifelse(x[[j]]$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
+            ylab <- x[[j]]$ylab
          } else {
-            if (length(ylab) == 1L) {
+            if (length(ylab) == 1L)
                ylab <- rep(ylab, x$comps)
-            }
          }
 
          if (missing.main) {

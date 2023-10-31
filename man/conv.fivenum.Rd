@@ -112,9 +112,9 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 
    Shi, J., Luo, D., Weng, H., Zeng, X.-T., Lin, L., Chu, H. & Tong, T. (2020a). Optimally estimating the sample standard deviation from the five-number summary. \emph{Research Synthesis Methods}, \bold{11}(5), 641--654. \verb{https://doi.org/https://doi.org/10.1002/jrsm.1429}
 
-   Shi, J., Tong, T., Wang, Y. & Genton, M. G. (2020b). Estimating the mean and variance from the five-number summary of a log-normal distribution. Statistics and Its Interface, 13(4), 519-531. https://doi.org/10.4310/sii.2020.v13.n4.a9
+   Shi, J., Tong, T., Wang, Y. & Genton, M. G. (2020b). Estimating the mean and variance from the five-number summary of a log-normal distribution. \emph{Statistics and Its Interface}, \bold{13}(4), 519--531. https://doi.org/10.4310/sii.2020.v13.n4.a9
 
-   Shi, J., Luo, D., Wan, X., Liu, Y., Liu, J., Bian, Z. & Tong, T. (2023). Detecting the skewness of data from the five-number summary and its application in meta-analysis. \emph{Statistical Methods in Medical Research}. \verb{https://doi.org/10.1177/09622802231172043}
+   Shi, J., Luo, D., Wan, X., Liu, Y., Liu, J., Bian, Z. & Tong, T. (2023). Detecting the skewness of data from the five-number summary and its application in meta-analysis. \emph{Statistical Methods in Medical Research}, \bold{32}(7), 1338--1360. \verb{https://doi.org/10.1177/09622802231172043}
 
    Walter, S. D. & Yao, X. (2007). Effect sizes can be calculated for studies reporting ranges for outcome variables in systematic reviews. \emph{Journal of Clinical Epidemiology}, \bold{60}(8), 849-852. \verb{https://doi.org/10.1016/j.jclinepi.2006.11.003}
 

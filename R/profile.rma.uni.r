@@ -6,7 +6,7 @@ profile.rma.uni <- function(fitted,
    .chkclass(class(fitted), must="rma.uni", notav=c("rma.gen", "rma.uni.selmodel"))
 
    if (is.element(fitted$method, c("FE","EE","CE")))
-      stop(mstyle$stop("Cannot profile tau2 parameter for equal/fixed-effects models."))
+      stop(mstyle$stop("Cannot profile tau^2 parameter for equal/fixed-effects models."))
 
    if (steps < 2)
       stop(mstyle$stop("Argument 'steps' must be >= 2."))
@@ -67,10 +67,10 @@ profile.rma.uni <- function(fitted,
       } else {
 
          ### min() and max() so the actual value is within the xlim bounds
-         ### could still get NAs for the bounds if the CI is the empty set
+         ### note: could still get NAs for the bounds if the CI is the empty set
 
          vc.lb <- min(x$tau2, vc.ci$random[1,2])
-         vc.ub <- max(.1, x$tau2, vc.ci$random[1,3]) ### if CI is equal to null set, then this still gives vc.ub = .1
+         vc.ub <- max(0.1, x$tau2, vc.ci$random[1,3]) # if CI is equal to null set, then this still gives vc.ub = 0.1
 
       }
 
@@ -78,8 +78,8 @@ profile.rma.uni <- function(fitted,
 
          ### if the CI method fails, try a Wald-type CI for tau^2
 
-         vc.lb <- max( 0, x$tau2 - qnorm(.995) * x$se.tau2)
-         vc.ub <- max(.1, x$tau2 + qnorm(.995) * x$se.tau2)
+         vc.lb <- max(  0, x$tau2 - qnorm(0.995) * x$se.tau2)
+         vc.ub <- max(0.1, x$tau2 + qnorm(0.995) * x$se.tau2)
 
       }
 
@@ -87,8 +87,8 @@ profile.rma.uni <- function(fitted,
 
          ### if this still results in NA bounds, use simple method
 
-         vc.lb <- max( 0, x$tau2/4)
-         vc.ub <- max(.1, x$tau2*4)
+         vc.lb <- max(  0, x$tau2/4)
+         vc.ub <- max(0.1, x$tau2*4)
 
       }
 
@@ -99,6 +99,9 @@ profile.rma.uni <- function(fitted,
 
       xlim <- c(vc.lb, vc.ub)
 
+      if (.isTRUE(ddd$sqrt))
+         xlim <- sqrt(xlim)
+
    } else {
 
       if (length(xlim) != 2L)
@@ -106,13 +109,20 @@ profile.rma.uni <- function(fitted,
 
       xlim <- sort(xlim)
 
+      ### note: if sqrt=TRUE, then xlim is assumed to be given in terms of tau
+
    }
 
    vcs <- seq(xlim[1], xlim[2], length.out=steps)
    #return(vcs)
 
-   if (length(vcs) <= 1L)
+   if (length(vcs) <= 1L) # not sure how this could happen / why this check is needed, but leave it here just in case
       stop(mstyle$stop("Cannot set 'xlim' automatically. Please set this argument manually."))
+
+   ### if sqrt=TRUE, then the sequence of vcs are tau values, so square them for the actual profiling
+
+   if (.isTRUE(ddd$sqrt))
+      vcs <- vcs^2
 
    if (parallel == "no")
       res <- pbapply::pblapply(vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
@@ -138,6 +148,15 @@ profile.rma.uni <- function(fitted,
       }
    }
 
+   ### if sqrt=TRUE, then transform the tau^2 values back to tau values
+
+   if (.isTRUE(ddd$sqrt)) {
+      vcs <- sqrt(vcs)
+      vc  <- sqrt(x$tau2)
+   } else {
+      vc <- x$tau2
+   }
+
    lls <- sapply(res, function(x) x$ll)
    beta  <- do.call(rbind, lapply(res, function(x) t(x$beta)))
    ci.lb <- do.call(rbind, lapply(res, function(x) t(x$ci.lb)))
@@ -158,18 +177,27 @@ profile.rma.uni <- function(fitted,
    names(ci.lb) <- rownames(x$beta)
    names(ci.ub) <- rownames(x$beta)
 
+   maxll <- logLik(x)
+
+   if (.isTRUE(ddd$exp)) {
+      lls <- exp(lls)
+      maxll <- exp(maxll)
+   }
+
    if (missing(ylim)) {
 
       if (any(is.finite(lls))) {
-         if (xlim[1] <= x$tau2 && xlim[2] >= x$tau2) {
-            ylim <- range(c(logLik(x),lls[is.finite(lls)]), na.rm=TRUE)
+         if (xlim[1] <= vc && xlim[2] >= vc) {
+            ylim <- range(c(maxll,lls[is.finite(lls)]), na.rm=TRUE)
          } else {
-            ylim <- range(lls[is.finite(lls)])
+            ylim <- range(lls[is.finite(lls)], na.rm=TRUE)
          }
       } else {
-         ylim <- rep(logLik(x), 2L)
+         ylim <- rep(maxll, 2L)
       }
-      ylim <- ylim + c(-0.1, 0.1)
+
+      if (.isFALSE(ddd$exp))
+         ylim <- ylim + c(-0.1, 0.1)
 
    } else {
 
@@ -180,11 +208,25 @@ profile.rma.uni <- function(fitted,
 
    }
 
-   xlab <- expression(paste(tau^2, " Value"))
-   title <- expression(paste("Profile Plot for ", tau^2))
+   if (.isTRUE(ddd$sqrt)) {
+      xlab <- expression(paste(tau, " Value"))
+      title <- expression(paste("Profile Plot for ", tau))
+   } else {
+      xlab <- expression(paste(tau^2, " Value"))
+      title <- expression(paste("Profile Plot for ", tau^2))
+   }
 
-   sav <- list(tau2=vcs, ll=lls, beta=beta, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, xlim=xlim, ylim=ylim, method=x$method, vc=x$tau2, maxll=logLik(x), xlab=xlab, title=title)
+   if (.isTRUE(ddd$exp)) {
+      ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Likelihood", sep="")
+   } else {
+      ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
+   }
+
+   sav <- list(tau2=vcs, ll=lls, beta=beta, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, xlim=xlim, ylim=ylim, method=x$method, vc=vc, maxll=maxll, xlab=xlab, ylab=ylab, title=title)
    class(sav) <- "profile.rma"
+
+   if (.isTRUE(ddd$sqrt))
+      names(sav)[1] <- "tau"
 
    #########################################################################
 
