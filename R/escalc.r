@@ -310,11 +310,54 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             } else {
                yi <- log(p1i.u) - log(p2i.u)
             }
+
+            if (length(vtype) == 1L)
+               vtype <- rep(vtype, k)
+
+            vi <- rep(NA_real_, k)
+
             if (addvi) {
-               vi <- 1/ai - 1/n1i + 1/ci - 1/n2i
+               mnwp1i <- .wmean(p1i, n1i, na.rm=TRUE) # sample size weighted average of proportions
+               mnwp2i <- .wmean(p2i, n2i, na.rm=TRUE) # sample size weighted average of proportions
             } else {
-               vi <- 1/ai.u - 1/n1i.u + 1/ci.u - 1/n2i.u
+               mnwp1i.u <- .wmean(p1i.u, n1i.u, na.rm=TRUE) # sample size weighted average of proportions
+               mnwp2i.u <- .wmean(p2i.u, n2i.u, na.rm=TRUE) # sample size weighted average of proportions
             }
+
+            if (!all(is.element(vtype, c("UB","LS","AV"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'UB', 'LS', or 'AV'."))
+
+            for (i in seq_len(k)) {
+
+               ### unbiased estimate of the sampling variance
+               if (vtype[i] == "UB") {
+                  if (addvi) {
+                     vi[i] <- (1 / (n1i[i]-1)) * (1 / p1i[i] - 1) + (1 / (n2i[i]-1)) * (1 / p2i[i] - 1)
+                  } else {
+                     vi[i] <- (1 / (n1i.u[i]-1)) * (1 / p1i.u[i] - 1) + (1 / (n2i.u[i]-1)) * (1 / p2i.u[i] - 1)
+                  }
+               }
+
+               ### large sample approximation to the sampling variance
+               if (vtype[i] == "LS") {
+                  if (addvi) {
+                     vi[i] <- (1 / n1i[i]) * (1 / p1i[i] - 1) + (1 / n2i[i]) * (1 / p2i[i] - 1)
+                  } else {
+                     vi[i] <- (1 / n1i.u[i]) * (1 / p1i.u[i] - 1) + (1 / n2i.u[i]) * (1 / p2i.u[i] - 1)
+                  }
+               }
+
+               ### estimate assuming homogeneity (using the average proportions)
+               if (vtype[i] == "AV") {
+                  if (addvi) {
+                     vi[i] <- (1 / n1i[i]) * (1 / mnwp1i - 1) + (1 / n2i[i]) * (1 / mnwp2i - 1)
+                  } else {
+                     vi[i] <- (1 / n1i.u[i]) * (1 / mnwp1i.u - 1) + (1 / n2i.u[i]) * (1 / mnwp1i.u - 1)
+                  }
+               }
+
+            }
+
          }
 
          ### log odds ratio
@@ -325,10 +368,52 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             } else {
                yi <- log(p1i.u/(1-p1i.u)) - log(p2i.u/(1-p2i.u))
             }
+
+            if (length(vtype) == 1L)
+               vtype <- rep(vtype, k)
+
+            vi <- rep(NA_real_, k)
+
             if (addvi) {
-               vi <- 1/ai + 1/bi + 1/ci + 1/di
+               mnwp1i <- .wmean(p1i, n1i, na.rm=TRUE) # sample size weighted average of proportions
+               mnwp2i <- .wmean(p2i, n2i, na.rm=TRUE) # sample size weighted average of proportions
             } else {
-               vi <- 1/ai.u + 1/bi.u + 1/ci.u + 1/di.u
+               mnwp1i.u <- .wmean(p1i.u, n1i.u, na.rm=TRUE) # sample size weighted average of proportions
+               mnwp2i.u <- .wmean(p2i.u, n2i.u, na.rm=TRUE) # sample size weighted average of proportions
+            }
+
+            if (!all(is.element(vtype, c("UB","LS","AV"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'UB', 'LS', or 'AV'."))
+
+            for (i in seq_len(k)) {
+
+               ### unbiased estimate of the sampling variance
+               if (vtype[i] == "UB") {
+                  if (addvi) {
+                     vi[i] <- 1 / ((n1i[i]-1) * p1i[i] * (1 - p1i[i])) + 1 / ((n2i[i]-1) * p2i[i] * (1 - p2i[i]))
+                  } else {
+                     vi[i] <- 1 / ((n1i.u[i]-1) * p1i.u[i] * (1 - p1i.u[i])) + 1 / ((n2i.u[i]-1) * p2i.u[i] * (1 - p2i.u[i]))
+                  }
+               }
+
+               ### large sample approximation to the sampling variance
+               if (vtype[i] == "LS") {
+                  if (addvi) {
+                     vi[i] <- 1 / (n1i[i] * p1i[i] * (1 - p1i[i])) + 1 / (n2i[i] * p2i[i] * (1 - p2i[i]))
+                  } else {
+                     vi[i] <- 1 / (n1i.u[i] * p1i.u[i] * (1 - p1i.u[i])) + 1 / (n2i.u[i] * p2i.u[i] * (1 - p2i.u[i]))
+                  }
+               }
+
+               ### estimate assuming homogeneity (using the average proportions)
+               if (vtype[i] == "AV") {
+                  if (addvi) {
+                     vi[i] <- 1 / (n1i[i] * mnwp1i * (1 - mnwp1i)) + 1 / (n2i[i] * mnwp2i * (1 - mnwp2i))
+                  } else {
+                     vi[i] <- 1 / (n1i.u[i] * mnwp1i.u * (1 - mnwp1i.u)) + 1 / (n2i.u[i] * mnwp2i.u * (1 - mnwp2i.u))
+                  }
+               }
+
             }
          }
 
