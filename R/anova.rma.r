@@ -17,17 +17,17 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
    if (!is.null(ddd$L))
       X <- ddd$L
 
-   if (is.null(ddd$fixed)) {
-      fixed <- FALSE
-   } else {
-      fixed <- .isTRUE(ddd$fixed)
-   }
+   fixed <- .chkddd(ddd$fixed, FALSE, .isTRUE(ddd$fixed))
 
    if (!missing(att) && !inherits(object, "rma.ls"))
       stop(mstyle$stop("Can only specify 'att' for location-scale models."))
 
    if (!missing(Z) && !inherits(object, "rma.ls"))
       stop(mstyle$stop("Can only specify 'Z' for location-scale models."))
+
+   #mf <- match.call()
+   #if (any(grepl("pairwise(", as.character(mf), fixed=TRUE)))
+   #   try(assign("pairwise", object, envir=.metafor), silent=TRUE)
 
    if (missing(object2)) {
 
@@ -442,11 +442,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
       if (!identical(class(object), class(object2)))
          stop(mstyle$stop("Class of 'object' must be the same as class of 'object2'."))
 
-      if (!is.null(ddd$test)) {
-         test <- match.arg(ddd$test, c("LRT", "Wald"))
-      } else {
-         test <- "LRT"
-      }
+      test <- .chkddd(ddd$test, "LRT", match.arg(ddd$test, c("LRT", "Wald")))
 
       ### assume 'object' is the full model and 'object2' the reduced model
 

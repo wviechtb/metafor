@@ -135,36 +135,11 @@ tes <- function(x, vi, sei, subset, data,
 
       .chkdots(ddd, c("correct", "rel.tol", "subdivisions", "tau2.lb", "find.lim"))
 
-      if (!is.null(ddd$correct)) {
-         correct <- ddd$correct
-      } else {
-         correct <- FALSE
-      }
-
-      if (!is.null(ddd$rel.tol)) {
-         rel.tol <- ddd$rel.tol
-      } else {
-         rel.tol <- .Machine$double.eps^0.25
-      }
-
-      if (!is.null(ddd$subdivisions)) {
-         subdivisions <- ddd$subdivisions
-      } else {
-         subdivisions <- 100L
-      }
-
-      if (!is.null(ddd$tau2.lb)) {
-         tau2.lb <- ddd$tau2.lb
-      } else {
-         #tau2.lb <- 0.0001
-         tau2.lb <- 0
-      }
-
-      if (!is.null(ddd$find.lim)) {
-         find.lim <- ddd$find.lim
-      } else {
-         find.lim <- TRUE
-      }
+      correct      <- .chkddd(ddd$correct, FALSE)
+      rel.tol      <- .chkddd(ddd$rel.tol, .Machine$double.eps^0.25)
+      subdivisions <- .chkddd(ddd$subdivisions, 100L)
+      tau2.lb      <- .chkddd(ddd$tau2.lb, 0) # 0.0001
+      find.lim     <- .chkddd(ddd$find.lim, TRUE)
 
       #########################################################################
 

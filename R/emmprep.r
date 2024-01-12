@@ -113,7 +113,7 @@ emmprep <- function(x, verbose=FALSE, ...) {
 
    if (is.null(ddd$tran)) {
 
-      if (is.element(x$measure, c("RR","OR","MPORM","PETO","MPRR","MPOR","MPORC","MPPETO","IRR","ROM","D2OR","D2ORL","D2ORN","CVR","VR","PLN","IRLN","SDLN","MNLN","CVLN","ROMC","CVRC","VRC","REH","HRR"))) {
+      if (is.element(x$measure, c("RR","OR","MPORM","PETO","MPRR","MPOR","MPORC","MPPETO","IRR","ROM","D2OR","D2ORL","D2ORN","CVR","VR","PLN","IRLN","SDLN","MNLN","CVLN","ROMC","CVRC","VRC","REH","HR"))) {
          out@misc$tran <- "log"
          #out@misc$tran <- emmeans::make.tran("genlog", 0)
          #out <- update(out, emmeans::make.tran("genlog", 0))

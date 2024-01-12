@@ -1,17 +1,24 @@
 profile.rma.uni.selmodel <- function(fitted, tau2, delta,
-   xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl, plot=TRUE, pch=19, refline=TRUE, cline=FALSE, ...) {
+   xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl, plot=TRUE, ...) {
 
    mstyle <- .get.mstyle()
 
    .chkclass(class(fitted), must="rma.uni.selmodel")
 
-   if (steps < 2)
-      stop(mstyle$stop("Argument 'steps' must be >= 2."))
-
    x <- fitted
 
-   if (x$betaspec) ### TODO: consider allowing profiling over beta values as well
+   if (x$betaspec) # TODO: consider allowing profiling over beta values as well
       stop(mstyle$stop("Cannot profile when one or more beta values were fixed."))
+
+   if (length(steps) >= 2L) {
+      if (missing(xlim))
+         xlim <- range(steps, na.rm=TRUE)
+      stepseq <- TRUE
+   } else {
+      if (steps < 2)
+         stop(mstyle$stop("Argument 'steps' must be >= 2."))
+      stepseq <- FALSE
+   }
 
    parallel <- match.arg(parallel, c("no", "snow", "multicore"))
 
@@ -67,7 +74,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
          stop(mstyle$stop("No components in the model for which a profile likelihood can be constructed."))
 
       if (plot) {
-         if (dev.cur() == 1) {
+         if (dev.cur() == 1L) { # if only the 'null device' is currently open, set mfrow
             par(mfrow=n2mfrow(comps))
             #on.exit(par(mfrow=c(1,1)), add=TRUE)
          }
@@ -116,6 +123,14 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
       return(invisible(sav))
 
    }
+
+   ### round and take unique values
+
+   if (!missing(delta) && is.numeric(delta))
+      delta <- unique(round(delta))
+
+   if (!missing(tau2) && is.numeric(tau2))
+      tau2 <- unique(round(tau2))
 
    ### check if user has specified more than one of these arguments
 
@@ -180,26 +195,28 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
 
    #return(list(comp=comp, vc=vc))
 
-   if (missing(xlim)) {
+   #########################################################################
+
+   if (missing(xlim) || is.null(xlim)) {
 
       ### if the user has not specified xlim, set it automatically
 
       if (comp == "tau2") {
          if (is.na(x$se.tau2)) {
             vc.lb <- max(0, vc/4)
-            vc.ub <- min(max(.1, vc*4), x$tau2.max)
+            vc.ub <- min(max(0.1, vc*4), x$tau2.max)
          } else {
-            vc.lb <- max(0, vc - qnorm(.995) * x$se.tau2)
-            vc.ub <- min(max(.1, vc + qnorm(.995) * x$se.tau2), x$tau2.max)
+            vc.lb <- max(0, vc - qnorm(0.995) * x$se.tau2)
+            vc.ub <- min(max(0.1, vc + qnorm(0.995) * x$se.tau2), x$tau2.max)
          }
       }
       if (comp == "delta") {
          if (is.na(x$se.delta[delta])) {
             vc.lb <- max(0, vc/4, x$delta.min[delta])
-            vc.ub <- min(max(.1, vc*4), x$delta.max[delta])
+            vc.ub <- min(max(0.1, vc*4), x$delta.max[delta])
          } else {
-            vc.lb <- max(0, vc - qnorm(.995) * x$se.delta[delta], x$delta.min[delta])
-            vc.ub <- min(max(.1, vc + qnorm(.995) * x$se.delta[delta]), x$delta.max[delta])
+            vc.lb <- max(0, vc - qnorm(0.995) * x$se.delta[delta], x$delta.min[delta])
+            vc.ub <- min(max(0.1, vc + qnorm(0.995) * x$se.delta[delta]), x$delta.max[delta])
          }
       }
 
@@ -230,7 +247,12 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
 
    }
 
-   vcs <- seq(xlim[1], xlim[2], length.out=steps)
+   if (stepseq) {
+      vcs <- steps
+   } else {
+      vcs <- seq(xlim[1], xlim[2], length.out=steps)
+   }
+
    #return(vcs)
 
    if (length(vcs) <= 1L)
@@ -251,25 +273,19 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
       if (.isTRUE(ddd$LB)) {
          res <- parallel::parLapplyLB(cl, vcs, .profile.rma.uni.selmodel, obj=x, comp=comp, delta.pos=delta.pos, parallel=parallel, profile=TRUE)
          #res <- parallel::clusterApplyLB(cl, vcs, .profile.rma.uni.selmodel, obj=x, comp=comp, delta.pos=delta.pos, parallel=parallel, profile=TRUE)
+         #res <- parallel::clusterMap(cl, .profile.rma.uni.selmodel, vcs, MoreArgs=list(obj=x, comp=comp, delta.pos=delta.pos, parallel=parallel, profile=TRUE), .scheduling = "dynamic")
       } else {
          res <- pbapply::pblapply(vcs, .profile.rma.uni.selmodel, obj=x, comp=comp, delta.pos=delta.pos, parallel=parallel, profile=TRUE, cl=cl)
          #res <- parallel::parLapply(cl, vcs, .profile.rma.uni.selmodel, obj=x, comp=comp, delta.pos=delta.pos, parallel=parallel, profile=TRUE)
          #res <- parallel::clusterApply(cl, vcs, .profile.rma.uni.selmodel, obj=x, comp=comp, delta.pos=delta.pos, parallel=parallel, profile=TRUE)
+         #res <- parallel::clusterMap(cl, .profile.rma.uni.selmodel, vcs, MoreArgs=list(obj=x, comp=comp, delta.pos=delta.pos, parallel=parallel, profile=TRUE))
       }
    }
 
-   lls <- sapply(res, function(x) x$ll)
+   lls   <- sapply(res, function(x) x$ll)
    beta  <- do.call(rbind, lapply(res, function(x) t(x$beta)))
    ci.lb <- do.call(rbind, lapply(res, function(x) t(x$ci.lb)))
    ci.ub <- do.call(rbind, lapply(res, function(x) t(x$ci.ub)))
-
-   #########################################################################
-
-   if (any(lls >= logLik(x) + lltol, na.rm=TRUE))
-      warning(mstyle$warning("At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model."), call.=FALSE)
-
-   if (all(is.na(lls)))
-      warning(mstyle$warning("All model fits failed. Cannot draw profile likelihood plot."), call.=FALSE)
 
    beta  <- data.frame(beta)
    ci.lb <- data.frame(ci.lb)
@@ -278,18 +294,35 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
    names(ci.lb) <- rownames(x$beta)
    names(ci.ub) <- rownames(x$beta)
 
+   #########################################################################
+
+   maxll <- c(logLik(x))
+
+   if (any(lls >= maxll + lltol, na.rm=TRUE))
+      warning(mstyle$warning("At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model."), call.=FALSE)
+
+   if (all(is.na(lls)))
+      warning(mstyle$warning("All model fits failed. Cannot draw profile likelihood plot."), call.=FALSE)
+
+   if (.isTRUE(ddd$exp)) {
+      lls <- exp(lls)
+      maxll <- exp(maxll)
+   }
+
    if (missing(ylim)) {
 
       if (any(is.finite(lls))) {
          if (xlim[1] <= vc && xlim[2] >= vc) {
-            ylim <- range(c(logLik(x),lls[is.finite(lls)]), na.rm=TRUE)
+            ylim <- range(c(maxll,lls[is.finite(lls)]), na.rm=TRUE)
          } else {
             ylim <- range(lls[is.finite(lls)], na.rm=TRUE)
          }
       } else {
-         ylim <- rep(logLik(x), 2L)
+         ylim <- rep(maxll, 2L)
       }
-      ylim <- ylim + c(-0.1, 0.1)
+
+      if (!.isTRUE(ddd$exp))
+         ylim <- ylim + c(-0.1, 0.1)
 
    } else {
 
@@ -314,16 +347,14 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
       }
    }
 
-   ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
-
-   sav <- list(vc=vcs, ll=lls, beta=beta, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, ylim=ylim, method=x$method, vc=vc, maxll=logLik(x), xlab=xlab, ylab=ylab, title=title)
+   sav <- list(vc=vcs, ll=lls, beta=beta, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, ylim=ylim, method=x$method, vc=vc, maxll=maxll, xlab=xlab, title=title, exp=ddd$exp)
    names(sav)[1] <- switch(comp, tau2="tau2", delta="delta")
    class(sav) <- "profile.rma"
 
    #########################################################################
 
    if (plot)
-      plot(sav, pch=pch, refline=refline, cline=cline, ...)
+      plot(sav, ...)
 
    #########################################################################
 

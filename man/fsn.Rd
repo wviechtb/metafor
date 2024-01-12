@@ -100,7 +100,7 @@ rma(yi, vi, data=dat, method="EE")
 
 ### fail-safe N computations
 fsn(yi, vi, data=dat)
-fsn(yi, data=dat, type="Orwin", target=log(0.95)) # target corresponds to a 5% risk reduction
+fsn(yi, data=dat, type="Orwin", target=log(0.95)) # target corresponds to a 5\% risk reduction
 fsn(yi, vi, data=dat, type="Orwin", target=log(0.95)) # Orwin's method with 1/vi weights
 fsn(yi, vi, data=dat, type="General", target=log(0.95), method="EE") # like Orwin's method
 fsn(yi, vi, data=dat, type="Rosenberg")

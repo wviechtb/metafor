@@ -1,8 +1,14 @@
-# metafor 4.5-6 (2023-10-31)
+# metafor 4.5-7 (2024-01-12)
+
+- the `steps` argument in the various `profile()` functions can now also be a numeric vector to specify for which parameter values the likelihood should be evaluated
 
 - a few minor fixes to the dynamic theming of plots based on the foreground and background colors of the plotting device
 
 - slightly improved flexibility for setting package options
+
+- added measure `"SMN"` to `escalc()` (single-group standardized mean / single-group standardized mean difference)
+
+- some internal refactoring of the coding
 
 - improved the documentation a bit
 

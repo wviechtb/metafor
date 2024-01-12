@@ -20,7 +20,7 @@
    \item{ci.lb}{lower bound of the (permutation-based) confidence interval(s).}
    \item{ci.ub}{upper bound of the (permutation-based) confidence interval(s).}
 
-   When the model was fitted with \code{test="t"} or \code{test="knha"}, then \code{zval} is called \code{tval} in the data frame that is returned by the function.
+   When the model was fitted with \code{test="t"}, \code{test="knha"}, \code{test="hksj"}, or \code{test="adhoc"}, then \code{zval} is called \code{tval} in the data frame that is returned by the function.
 }
 \author{
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}

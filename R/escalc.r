@@ -26,11 +26,11 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                               "R2","ZR2",                                          # coefficient of determination (raw and r-to-z transformed)
                               "PR","PLN","PLO","PAS","PFT",                        # single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            # single-group person-time data (and transformations thereof)
-                              "MN","MNLN","CVLN","SDLN","SMN",                     # mean, log(mean), log(CV), log(SD), standardized mean
+                              "MN","SMN","MNLN","CVLN","SDLN",                     # mean, single-group standardized mean, log(mean), log(CV), log(SD),
                               "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT",                                  # alpha (and transformations thereof)
                               "REH",                                               # relative excess heterozygosity
-                              "HRR","HRD",                                         # hazard rate ratios and differences
+                              "HR","HD",                                           # hazard (rate) ratios and differences
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
@@ -84,10 +84,10 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
    ### set defaults or get onlyo1, addyi, addvi, and correct arguments
 
-   onlyo1  <- ifelse(is.null(ddd$onlyo1),  FALSE, .isTRUE(ddd$onlyo1))
-   addyi   <- ifelse(is.null(ddd$addyi),   TRUE,  .isTRUE(ddd$addyi))
-   addvi   <- ifelse(is.null(ddd$addvi),   TRUE,  .isTRUE(ddd$addvi))
-   correct <- ifelse(is.null(ddd$correct), TRUE,  .isTRUE(ddd$correct))
+   onlyo1  <- .chkddd(ddd$onlyo1,  FALSE, .isTRUE(ddd$onlyo1))
+   addyi   <- .chkddd(ddd$addyi,   TRUE,  .isTRUE(ddd$addyi))
+   addvi   <- .chkddd(ddd$addvi,   TRUE,  .isTRUE(ddd$addvi))
+   correct <- .chkddd(ddd$correct, TRUE,  .isTRUE(ddd$correct))
 
    ### set defaults for digits
 
@@ -1826,7 +1826,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
       ######################################################################
 
-      if (is.element(measure, c("MN","MNLN","CVLN","SDLN","SMN"))) {
+      if (is.element(measure, c("MN","SMN","MNLN","CVLN","SDLN"))) {
 
          mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE) # for SDLN, do not need to supply this
          sdi <- .getx("sdi", mf=mf, data=data, checknumeric=TRUE)
@@ -1834,7 +1834,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          ### for these measures, need mi, sdi, and ni
 
-         if (is.element(measure, c("MN","MNLN","CVLN","SMN"))) {
+         if (is.element(measure, c("MN","SMN","MNLN","CVLN"))) {
 
             if (!.all.specified(mi, sdi, ni))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., mi, sdi, ni)."))
@@ -1907,6 +1907,14 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          }
 
+         ### single-group standardized mean
+
+         if (measure == "SMN") {
+            cmi <- .cmicalc(ni-1)
+            yi <- cmi * mi / sdi
+            vi <- 1 / ni + yi^2 / (2*ni)
+         }
+
          ### log(mean)
 
          if (measure == "MNLN") {
@@ -1936,14 +1944,6 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                yi <- log(sdi)
             }
             vi <- 1 / (2*(ni-1))
-         }
-
-         ### single-group standardized mean
-
-         if (measure == "SMN") {
-            cmi <- .cmicalc(ni-1)
-            yi <- cmi * mi / sdi
-            vi <- 1 / ni + yi^2 / (2*ni)
          }
 
       }

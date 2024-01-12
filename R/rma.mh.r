@@ -53,9 +53,9 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
 
    ### set defaults or get onlyo1, addyi, and addvi arguments
 
-   onlyo1 <- ifelse(is.null(ddd$onlyo1), FALSE, ddd$onlyo1)
-   addyi  <- ifelse(is.null(ddd$addyi),  TRUE,  ddd$addyi)
-   addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
+   onlyo1 <- .chkddd(ddd$onlyo1, FALSE)
+   addyi  <- .chkddd(ddd$addyi,  TRUE)
+   addvi  <- .chkddd(ddd$addvi,  TRUE)
 
    ### set defaults for digits
 

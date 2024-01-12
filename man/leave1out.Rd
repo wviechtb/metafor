@@ -39,7 +39,7 @@ leave1out(x, \dots)
    \item{I2}{values of \mjseqn{I^2}.}
    \item{H2}{values of \mjseqn{H^2}.}
 
-   When the model was fitted with \code{test="t"} or \code{test="knha"}, then \code{zval} is called \code{tval} in the object that is returned by the function.
+   When the model was fitted with \code{test="t"}, \code{test="knha"}, \code{test="hksj"}, or \code{test="adhoc"}, then \code{zval} is called \code{tval} in the object that is returned by the function.
 
    The object is formatted and printed with the \code{\link[=print.list.rma]{print}} function. To format the results as a data frame, one can use the \code{\link[=as.data.frame.list.rma]{as.data.frame}} function.
 }

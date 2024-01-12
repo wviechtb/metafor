@@ -406,21 +406,34 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ...) {
          stop(mstyle$stop(paste0("There ", ifelse(length(rvars) == 1L, "is 1 variable ", paste0("are ", length(rvars), " variables ")), "specified via 'rvars', but there are clusters with more rows.")))
 
       if (max(k.cluster) != length(rvars))
-         stop(mstyle$stop(paste0("There ", ifelse(length(rvars) == 1L, "is 1 variable ", paste0("are ", length(rvars), " variables ")), "specified via 'rvars', but no cluster with this many more rows.")))
+         stop(mstyle$stop(paste0("There ", ifelse(length(rvars) == 1L, "is 1 variable ", paste0("are ", length(rvars), " variables ")), "specified via 'rvars', but no cluster with this many rows.")))
 
       ### construct R matrix based on rvars
 
-      R <- lapply(split(rvars, cluster), function(x) {
-         k <- nrow(x)
-         x <- x[seq_len(k)]
+      R <- list()
+
+      for (i in seq_len(n)) {
+         x <- rvars[cluster == ucluster[i],]
+         x <- x[seq_len(nrow(x))]
+         if (anyNA(x[lower.tri(x, diag=TRUE)]))
+            warning(mstyle$warning(paste0("There are missing values in 'rvals' for cluster ", ucluster[i], ".")), call.=FALSE)
          x[upper.tri(x)] <- t(x)[upper.tri(x)]
-         as.matrix(x)
-         })
+         R[[i]] <- as.matrix(x)
+      }
 
-      R <- bldiag(R, order=cluster)
+      names(R) <- ucluster
 
-      if (sparse)
-         R <- Matrix(R, sparse=TRUE)
+      #R <- lapply(split(rvars, cluster), function(x) {
+      #   k <- nrow(x)
+      #   x <- x[seq_len(k)]
+      #   x[upper.tri(x)] <- t(x)[upper.tri(x)]
+      #   as.matrix(x)
+      #   })
+
+      #R <- bldiag(R, order=cluster)
+
+      R <- bldiag(R)
+      R <- Matrix(R, sparse=TRUE)
 
    }
 
@@ -461,13 +474,13 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ...) {
 
    ### turn R into V
 
-   if (sparse) {
-      S <- Diagonal(k, sqrt(as.vector(vi)))
-   } else {
-      S <- diag(sqrt(as.vector(vi)), nrow=k, ncol=k)
-   }
+   vi <- as.vector(vi)
 
+   S <- Diagonal(k, sqrt(vi))
    V <- S %*% R %*% S
+
+   if (!sparse)
+      V <- as.matrix(V)
 
    if (.isTRUE(ddd$retdat))
       V <- data.frame(cluster, type, obs, grp1, grp2, time1, time2, w1, w2, vi, V=V)

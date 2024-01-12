@@ -26,11 +26,11 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                               "R2","ZR2",                                          # coefficient of determination (raw and r-to-z transformed)
                               "PR","PLN","PLO","PAS","PFT",                        # single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            # single-group person-time data (and transformations thereof)
-                              "MN","MNLN","CVLN","SDLN","SMN",                     # mean, log(mean), log(CV), log(SD), standardized mean
+                              "MN","SMN","MNLN","CVLN","SDLN",                     # mean, single-group standardized mean, log(mean), log(CV), log(SD),
                               "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT",                                  # alpha (and transformations thereof)
                               "REH",                                               # relative excess heterozygosity
-                              "HRR","HRD",                                         # hazard rate ratios and differences
+                              "HR","HD",                                           # hazard (rate) ratios and differences
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
@@ -72,8 +72,13 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    if (.isTRUE(ddd$knha))
       test <- "knha"
 
-   if (!is.element(test, c("z", "t", "knha", "adhoc")))
+    test <- tolower(test)
+
+   if (!is.element(test, c("z", "t", "knha", "hksj", "adhoc")))
       stop(mstyle$stop("Invalid option selected for 'test' argument."))
+
+   if (test == "hksj")
+      test <- "knha"
 
    if (missing(scale)) {
       model <- "rma.uni"
@@ -83,43 +88,25 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    ### set defaults or get onlyo1, addyi, and addvi arguments
 
-   onlyo1 <- ifelse(is.null(ddd$onlyo1), FALSE, ddd$onlyo1)
-   addyi  <- ifelse(is.null(ddd$addyi),  TRUE,  ddd$addyi)
-   addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
+   onlyo1 <- .chkddd(ddd$onlyo1, FALSE)
+   addyi  <- .chkddd(ddd$addyi,  TRUE)
+   addvi  <- .chkddd(ddd$addvi,  TRUE)
 
    ### set defaults for i2def and r2def
 
-   i2def <- ifelse(is.null(ddd$i2def), "1", ddd$i2def)
-   r2def <- ifelse(is.null(ddd$r2def), "1", ddd$r2def)
+   i2def <- .chkddd(ddd$i2def, "1")
+   r2def <- .chkddd(ddd$r2def, "1")
 
    ### handle arguments for location-scale models
 
-   if (!is.null(ddd$link)) {
-      link <- match.arg(ddd$link, c("log", "identity"))
-   } else {
-      link <- "log"
-   }
-
-   if (!is.null(ddd$optbeta)) {
-      optbeta <- .isTRUE(ddd$optbeta)
-   } else {
-      optbeta <- FALSE
-   }
+   link <- .chkddd(ddd$link, "log", match.arg(ddd$link, c("log", "identity")))
+   optbeta <- .chkddd(ddd$optbeta, FALSE, .isTRUE(ddd$optbeta))
 
    if (optbeta && !weighted)
       stop(mstyle$stop("Must use 'weighted=TRUE' when 'optbeta=TRUE'."))
 
-   if (!is.null(ddd$alpha)) {
-      alpha <- ddd$alpha
-   } else {
-      alpha <- NA_real_
-   }
-
-   if (!is.null(ddd$beta)) {
-      beta <- ddd$beta
-   } else {
-      beta <- NA_real_
-   }
+   alpha <- .chkddd(ddd$alpha, NA_real_)
+   beta  <- .chkddd(ddd$beta,  NA_real_)
 
    if (model == "rma.uni" && !missing(att))
       warning(mstyle$warning("Argument 'att' only relevant for location-scale models and hence ignored."), call.=FALSE)
@@ -632,7 +619,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       }
 
-      if (is.element(measure, c("MN","MNLN","CVLN","SDLN","SMN"))) {
+      if (is.element(measure, c("MN","SMN","MNLN","CVLN","SDLN"))) {
 
          mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE)
          sdi <- .getx("sdi", mf=mf, data=data, checknumeric=TRUE)
@@ -1187,11 +1174,14 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    ###### heterogeneity estimation for the standard normal-normal model (rma.uni)
 
+   tau2.inf <- FALSE
+
    if (model == "rma.uni") {
 
       if (!is.null(tau2) && !is.na(tau2) && !is.element(method[1], c("FE","EE","CE"))) { # if user has fixed the tau2 value
          tau2.fix <- TRUE
          tau2.val <- tau2
+         tau2.inf <- identical(tau2, Inf)
       } else {
          tau2.fix <- FALSE
          tau2.val <- NA_real_
@@ -1209,7 +1199,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       conv <- FALSE
 
-      while (!conv) {
+      while (!conv && !tau2.inf) {
 
          ### convergence indicator and change variable
 
@@ -1272,7 +1262,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
          }
 
-         ### DerSimonian-Laird (DL) estimator with iteration
+         ### DerSimonian-Laird (DL) estimator with iteration (when this converges, same as PM)
 
          if (method[1] == "DLIT") {
 
@@ -1297,9 +1287,11 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                W     <- diag(wi, nrow=k, ncol=k)
                stXWX <- .invcalc(X=X, W=W, k=k)
                P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
-               RSS   <- crossprod(Ymc,P) %*% Ymc
+               V     <- diag(vi, nrow=k, ncol=k)
                trP   <- .tr(P)
-               tau2  <- ifelse(tau2.fix, tau2.val, (RSS - (k-p)) / trP)
+               trPV  <- .tr(P %*% V)
+               RSS   <- crossprod(Ymc,P) %*% Ymc
+               tau2  <- ifelse(tau2.fix, tau2.val, (RSS - trPV) / trP)
                tau2[tau2 < con$tau2.min] <- con$tau2.min
                change <- abs(old2 - tau2)
 
@@ -1567,14 +1559,14 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
                if (method[1] == "ML") {
                   PP  <- P %*% P
-                  adj <- (crossprod(Ymc,PP) %*% Ymc - sum(wi)) / sum(wi^2)
+                  adj <- c(crossprod(Ymc,PP) %*% Ymc - sum(wi)) / sum(wi^2)
                }
                if (method[1] == "REML") {
                   PP  <- P %*% P
-                  adj <- (crossprod(Ymc,PP) %*% Ymc - .tr(P)) / .tr(PP)
+                  adj <- c(crossprod(Ymc,PP) %*% Ymc - .tr(P)) / .tr(PP)
                }
                if (method[1] == "EB") {
-                  adj <- (crossprod(Ymc,P) %*% Ymc * k/(k-p) - k) / sum(wi)
+                  adj <- c(crossprod(Ymc,P) %*% Ymc * k/(k-p) - k) / sum(wi)
                }
 
                adj <- c(adj) * con$stepadj # apply (user-defined) step adjustment
@@ -1682,7 +1674,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                se.tau2 <- k/(k-p) * sqrt(1/sum(wi)^2 * (2*(k-p) + 4*max(tau2,0)*.tr(P) + 2*max(tau2,0)^2*sum(P*P)))
             if (method[1] == "HE")
                se.tau2 <- sqrt(1/(k-p)^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*trPV + 2*max(tau2,0)^2*(k-p)))
-            if (is.element(method[1], c("DL","DLIT")))
+            if (method[1] == "DL")
                se.tau2 <- sqrt(1/trP^2 * (2*(k-p) + 4*max(tau2,0)*trP + 2*max(tau2,0)^2*sum(P*P)))
             if (is.element(method[1], c("GENQ","GENQM")))
                se.tau2 <- sqrt(1/trP^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*sum(PV*P) + 2*max(tau2,0)^2*sum(P*P)))
@@ -1693,7 +1685,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             if (method[1] == "REML")
                se.tau2 <- sqrt(2/sum(P*P)) # based on Fisher information matrix
                #se.tau2 <- sqrt(1 / (t(Ymc) %*% P %*% P %*% P %*% Ymc - 1/2 * sum(P*P))) # based on Hessian
-            if (is.element(method[1], c("EB","PM","MP","PMM","SJIT"))) {
+            if (is.element(method[1], c("EB","PM","MP","PMM","DLIT","SJIT"))) {
                wi  <- 1/(vi + tau2)
                #V  <- diag(vi, nrow=k, ncol=k)
                #PV <- P %*% V # note: this is not symmetric
@@ -2264,9 +2256,14 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          ### don't recompute beta and vb when optbeta=TRUE, since these are already estimated
 
          if (!optbeta) {
-            stXWX <- .invcalc(X=X, W=W, k=k)
-            beta  <- stXWX %*% crossprod(X,W) %*% Y
-            vb    <- stXWX
+            if (tau2.inf) {
+               beta <- cbind(coef(lm(yi ~ 0 + X)))
+               vb <- diag(rep(Inf,p), nrow=p, ncol=p)
+            } else {
+               stXWX <- .invcalc(X=X, W=W, k=k)
+               beta  <- stXWX %*% crossprod(X,W) %*% Y
+               vb    <- stXWX
+            }
          }
          RSS.f <- sum(wi*c(yi - X %*% beta)^2)
          #P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
@@ -2362,14 +2359,15 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    vb <- s2w * vb
 
+   ### handle special case of tau2=Inf
+
+   if (tau2.inf)
+      vb <- diag(rep(Inf,p), nrow=p, ncol=p)
+
    ### ddf calculation
 
    if (is.element(test, c("knha","adhoc","t"))) {
-      if (is.null(ddd$dfs)) {
-         ddf <- k-p
-      } else {
-         ddf <- ddd$dfs[[1]] # would be nice to allow multiple dfs values, but tricky
-      }                      # since some methods are set up for a single df value
+      ddf <- .chkddd(ddd$dfs, k-p, ddd$dfs[[1]]) # would be nice to allow multiple dfs values, but tricky since some methods are set up for a single df value
    } else {
       ddf <- NA_integer_
    }

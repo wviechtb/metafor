@@ -1,14 +1,21 @@
 profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
-   xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl, plot=TRUE, pch=19, refline=TRUE, cline=FALSE, ...) {
+   xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl, plot=TRUE, ...) {
 
    mstyle <- .get.mstyle()
 
    .chkclass(class(fitted), must="rma.mv")
 
-   if (steps < 2)
-      stop(mstyle$stop("Argument 'steps' must be >= 2."))
-
    x <- fitted
+
+   if (length(steps) >= 2L) {
+      if (missing(xlim))
+         xlim <- range(steps, na.rm=TRUE)
+      stepseq <- TRUE
+   } else {
+      if (steps < 2)
+         stop(mstyle$stop("Argument 'steps' must be >= 2."))
+      stepseq <- FALSE
+   }
 
    parallel <- match.arg(parallel, c("no", "snow", "multicore"))
 
@@ -67,7 +74,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
          stop(mstyle$stop("No components in the model for which a profile likelihood can be constructed."))
 
       if (plot) {
-         if (dev.cur() == 1) {
+         if (dev.cur() == 1L) { # if only the 'null device' is currently open, set mfrow
             par(mfrow=n2mfrow(comps))
             #on.exit(par(mfrow=c(1,1)), add=TRUE)
          }
@@ -159,6 +166,23 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
       return(invisible(sav))
 
    }
+
+   ### round and take unique values
+
+   if (!missing(sigma2) && is.numeric(sigma2))
+      sigma2 <- unique(round(sigma2))
+
+   if (!missing(tau2) && is.numeric(tau2))
+      tau2 <- unique(round(tau2))
+
+   if (!missing(rho) && is.numeric(rho))
+      rho <- unique(round(rho))
+
+   if (!missing(gamma2) && is.numeric(gamma2))
+      gamma2 <- unique(round(gamma2))
+
+   if (!missing(phi) && is.numeric(phi))
+      phi <- unique(round(phi))
 
    #if (missing(sigma2) && missing(tau2) && missing(rho) && missing(gamma2) && missing(phi))
    #   stop(mstyle$stop("Must specify one of the arguments 'sigma2', 'tau2', 'rho', 'gamma2', or 'phi'."))
@@ -294,59 +318,61 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
 
    #return(list(comp=comp, vc=vc))
 
-   if (missing(xlim)) {
+   #########################################################################
+
+   if (missing(xlim) || is.null(xlim)) {
 
       ### if the user has not specified xlim, set it automatically
       ### TODO: maybe try something based on CI later
 
       if (comp == "sigma2") {
-         vc.lb <- max( 0, vc/4)
-         vc.ub <- max(.1, vc*4)
+         vc.lb <- max(  0, vc/4)
+         vc.ub <- max(0.1, vc*4)
       }
       if (comp == "tau2") {
          if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD"))) {
-            vc.lb <- max( 0, vc/2)
-            vc.ub <- max(.1, vc*2)
+            vc.lb <- max(  0, vc/2)
+            vc.ub <- max(0.1, vc*2)
          } else {
-            vc.lb <- max( 0, vc/4)
-            vc.ub <- max(.1, vc*4)
+            vc.lb <- max(  0, vc/4)
+            vc.ub <- max(0.1, vc*4)
          }
       }
       if (comp == "gamma2") {
          if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD"))) {
-            vc.lb <- max( 0, vc/2)
-            vc.ub <- max(.1, vc*2)
+            vc.lb <- max(  0, vc/2)
+            vc.ub <- max(0.1, vc*2)
          } else {
-            vc.lb <- max( 0, vc/4)
-            vc.ub <- max(.1, vc*4)
+            vc.lb <- max(  0, vc/4)
+            vc.ub <- max(0.1, vc*4)
          }
       }
       if (comp == "rho") {
          if (x$struct[1] == "CAR") {
-            vc.lb <- max(0, vc-.5)
-            vc.ub <- min(+.99999, vc+.5)
+            vc.lb <- max(0, vc-0.5)
+            vc.ub <- min(0.99999, vc+0.5)
          }
          if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD"))) {
             vc.lb <- vc/2
             vc.ub <- vc*2
          }
          if (!is.element(x$struct[1], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD"))) {
-            vc.lb <- max(-.99999, vc-.5)
-            vc.ub <- min(+.99999, vc+.5)
+            vc.lb <- max(-0.99999, vc-0.5)
+            vc.ub <- min( 0.99999, vc+0.5)
          }
       }
       if (comp == "phi") {
          if (x$struct[2] == "CAR") {
-            vc.lb <- max(0, vc-.5)
-            vc.ub <- min(+.99999, vc+.5)
+            vc.lb <- max(0, vc-0.5)
+            vc.ub <- min(0.99999, vc+0.5)
          }
          if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD"))) {
             vc.lb <- vc/2
             vc.ub <- vc*2
          }
          if (!is.element(x$struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYPL","PHYPD"))) {
-            vc.lb <- max(-.99999, vc-.5)
-            vc.ub <- min(+.99999, vc+.5)
+            vc.lb <- max(-0.99999, vc-0.5)
+            vc.ub <- min( 0.99999, vc+0.5)
          }
       }
 
@@ -387,7 +413,12 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
 
    }
 
-   vcs <- seq(xlim[1], xlim[2], length.out=steps)
+   if (stepseq) {
+      vcs <- steps
+   } else {
+      vcs <- seq(xlim[1], xlim[2], length.out=steps)
+   }
+
    #return(vcs)
 
    if (length(vcs) <= 1L)
@@ -408,25 +439,19 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
       if (.isTRUE(ddd$LB)) {
          res <- parallel::parLapplyLB(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
          #res <- parallel::clusterApplyLB(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
+         #res <- parallel::clusterMap(cl, .profile.rma.mv, vcs, MoreArgs=list(obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE), .scheduling = "dynamic")
       } else {
          res <- pbapply::pblapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, cl=cl)
          #res <- parallel::parLapply(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
          #res <- parallel::clusterApply(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
+         #res <- parallel::clusterMap(cl, .profile.rma.mv, vcs, MoreArgs=list(obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE))
       }
    }
 
-   lls <- sapply(res, function(x) x$ll)
+   lls   <- sapply(res, function(x) x$ll)
    beta  <- do.call(rbind, lapply(res, function(x) t(x$beta)))
    ci.lb <- do.call(rbind, lapply(res, function(x) t(x$ci.lb)))
    ci.ub <- do.call(rbind, lapply(res, function(x) t(x$ci.ub)))
-
-   #########################################################################
-
-   if (any(lls >= logLik(x) + lltol, na.rm=TRUE))
-      warning(mstyle$warning("At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model."), call.=FALSE)
-
-   if (all(is.na(lls)))
-      warning(mstyle$warning("All model fits failed. Cannot draw profile likelihood plot."), call.=FALSE)
 
    beta  <- data.frame(beta)
    ci.lb <- data.frame(ci.lb)
@@ -435,18 +460,35 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
    names(ci.lb) <- rownames(x$beta)
    names(ci.ub) <- rownames(x$beta)
 
+   #########################################################################
+
+   maxll <- c(logLik(x))
+
+   if (any(lls >= maxll + lltol, na.rm=TRUE))
+      warning(mstyle$warning("At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model."), call.=FALSE)
+
+   if (all(is.na(lls)))
+      warning(mstyle$warning("All model fits failed. Cannot draw profile likelihood plot."), call.=FALSE)
+
+   if (.isTRUE(ddd$exp)) {
+      lls <- exp(lls)
+      maxll <- exp(maxll)
+   }
+
    if (missing(ylim)) {
 
       if (any(is.finite(lls))) {
          if (xlim[1] <= vc && xlim[2] >= vc) {
-            ylim <- range(c(logLik(x),lls[is.finite(lls)]), na.rm=TRUE)
+            ylim <- range(c(maxll,lls[is.finite(lls)]), na.rm=TRUE)
          } else {
             ylim <- range(lls[is.finite(lls)], na.rm=TRUE)
          }
       } else {
-         ylim <- rep(logLik(x), 2L)
+         ylim <- rep(maxll, 2L)
       }
-      ylim <- ylim + c(-0.1, 0.1)
+
+      if (!.isTRUE(ddd$exp))
+         ylim <- ylim + c(-0.1, 0.1)
 
    } else {
 
@@ -503,16 +545,14 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
       }
    }
 
-   ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
-
-   sav <- list(vc=vcs, ll=lls, beta=beta, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, ylim=ylim, method=x$method, vc=vc, maxll=logLik(x), xlab=xlab, ylab=ylab, title=title)
+   sav <- list(vc=vcs, ll=lls, beta=beta, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, ylim=ylim, method=x$method, vc=vc, maxll=maxll, xlab=xlab, title=title, exp=ddd$exp)
    names(sav)[1] <- switch(comp, sigma2="sigma2", tau2="tau2", rho="rho", gamma2="gamma2", phi="phi")
    class(sav) <- "profile.rma"
 
    #########################################################################
 
    if (plot)
-      plot(sav, pch=pch, refline=refline, cline=cline, ...)
+      plot(sav, ...)
 
    #########################################################################
 

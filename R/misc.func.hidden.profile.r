@@ -1,7 +1,7 @@
 ### for profile(), confint(), and gosh()
 
 .profile.rma.uni <- function(val, obj,
-   parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE,
+   parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, pred=FALSE, blup=FALSE, newmods=NULL,
    objective, model=0L, verbose=FALSE, outlist=NULL) {
 
    mstyle <- .get.mstyle()
@@ -14,7 +14,7 @@
       ### for profile and confint, fit model with tau2 fixed to 'val'
 
       args <- list(yi=obj$yi, vi=obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted,
-                   test=obj$test, level=obj$level, control=obj$control, tau2=val, skipr2=TRUE, outlist="minimal")
+                   test=obj$test, level=obj$level, control=obj$control, tau2=val, skipr2=TRUE, outlist = if (pred || blup) NULL else "minimal")
       res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
 
    }
@@ -22,9 +22,26 @@
    if (profile) {
 
       if (inherits(res, "try-error")) {
-         sav <- list(ll = NA_real_, beta = matrix(NA_real_, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA_real_, length(obj$ci.lb)), ci.ub = rep(NA_real_, length(obj$ci.ub)))
+         sav <- list(ll = NA_real_, beta = matrix(NA_real_, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA_real_, length(obj$ci.lb)), ci.ub = rep(NA_real_, length(obj$ci.ub)), I2 = NA_real_)
       } else {
-         sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub)
+         sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub, I2=res$I2)
+      }
+
+      if (pred) {
+         tmp <- predict(res, newmods=newmods)
+         sav$pred <- tmp$pred
+         sav$pred.ci.lb <- tmp$ci.lb
+         sav$pred.ci.ub <- tmp$ci.ub
+         sav$pred.pi.lb <- tmp$pi.lb
+         sav$pred.pi.ub <- tmp$pi.ub
+      }
+
+      if (blup) { # note: already removed NAs and subsetted
+         tmp <- blup(res)
+         sav$blup <- tmp$pred
+         sav$blup.se <- tmp$se
+         sav$blup.pi.lb <- tmp$pi.lb
+         sav$blup.pi.ub <- tmp$pi.ub
       }
 
    }

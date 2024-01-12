@@ -133,7 +133,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
             cat(mstyle$result(fmtx(x$I2, 2, postfix="%")))
             cat("\n")
          }
-         if (!is.na(x$H2)) {
+         if (!is.na(x$H2) && !is.infinite(x$H2)) {
             cat(mstyle$text("H^2 (total variability / sampling variability):  "))
             cat(mstyle$result(fmtx(x$H2, 2)))
             cat("\n")
@@ -144,7 +144,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
             cat(mstyle$result(fmtx(x$I2, 2, postfix="%")))
             cat("\n")
          }
-         if (!is.na(x$H2)) {
+         if (!is.na(x$H2) && !is.infinite(x$H2)) {
             cat(mstyle$text("H^2 (unaccounted variability / sampling variability):   "))
             cat(mstyle$result(fmtx(x$H2, 2)))
             cat("\n")

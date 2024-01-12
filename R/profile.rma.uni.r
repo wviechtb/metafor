@@ -1,17 +1,24 @@
 profile.rma.uni <- function(fitted,
-   xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl, plot=TRUE, pch=19, refline=TRUE, cline=FALSE, ...) {
+   xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl, plot=TRUE, ...) {
 
    mstyle <- .get.mstyle()
 
-   .chkclass(class(fitted), must="rma.uni", notav=c("rma.gen", "rma.uni.selmodel"))
+   .chkclass(class(fitted), must="rma.uni", notav=c("rma.ls", "rma.uni.selmodel", "rma.gen"))
 
    if (is.element(fitted$method, c("FE","EE","CE")))
       stop(mstyle$stop("Cannot profile tau^2 parameter for equal/fixed-effects models."))
 
-   if (steps < 2)
-      stop(mstyle$stop("Argument 'steps' must be >= 2."))
-
    x <- fitted
+
+   if (length(steps) >= 2L) {
+      if (missing(xlim))
+         xlim <- range(steps, na.rm=TRUE)
+      stepseq <- TRUE
+   } else {
+      if (steps < 2)
+         stop(mstyle$stop("Argument 'steps' must be >= 2."))
+      stepseq <- FALSE
+   }
 
    parallel <- match.arg(parallel, c("no", "snow", "multicore"))
 
@@ -51,11 +58,30 @@ profile.rma.uni <- function(fitted,
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
 
+   pred <- isTRUE(ddd$pred)
+   blup <- isTRUE(ddd$blup)
+
+   newmods <- NULL
+
+   if (pred) {
+
+      if (!is.null(ddd$newmods))
+         newmods <- ddd$newmods
+
+      ### test if predict() works with the given newmods (and to get slab for [a])
+
+      predtest <- predict(x, newmods=newmods)
+
+      if (length(predtest$pred) == 0L)
+         stop(mstyle$stop("Cannot compute predicted values."))
+
+   }
+
    #########################################################################
 
-   if (missing(xlim)) {
+   if (missing(xlim) || is.null(xlim)) {
 
-      ### if the user has not specified xlim, try to get CI for tau^2
+      ### if the user has not specified xlim, set it automatically
 
       vc.ci <- try(suppressWarnings(confint(x)), silent=TRUE)
 
@@ -92,7 +118,7 @@ profile.rma.uni <- function(fitted,
 
       }
 
-      ### if all of that fails, throw an error
+      ### if that fails, throw an error
 
       if (is.na(vc.lb) || is.na(vc.ub))
          stop(mstyle$stop("Cannot set 'xlim' automatically. Please set this argument manually."))
@@ -113,10 +139,15 @@ profile.rma.uni <- function(fitted,
 
    }
 
-   vcs <- seq(xlim[1], xlim[2], length.out=steps)
+   if (stepseq) {
+      vcs <- steps
+   } else {
+      vcs <- seq(xlim[1], xlim[2], length.out=steps)
+   }
+
    #return(vcs)
 
-   if (length(vcs) <= 1L) # not sure how this could happen / why this check is needed, but leave it here just in case
+   if (length(vcs) <= 1L)
       stop(mstyle$stop("Cannot set 'xlim' automatically. Please set this argument manually."))
 
    ### if sqrt=TRUE, then the sequence of vcs are tau values, so square them for the actual profiling
@@ -125,11 +156,11 @@ profile.rma.uni <- function(fitted,
       vcs <- vcs^2
 
    if (parallel == "no")
-      res <- pbapply::pblapply(vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
+      res <- pbapply::pblapply(vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, pred=pred, blup=blup, newmods=newmods)
 
    if (parallel == "multicore")
-      res <- pbapply::pblapply(vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, cl=ncpus)
-      #res <- parallel::mclapply(vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, mc.cores=ncpus)
+      res <- pbapply::pblapply(vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, cl=ncpus, pred=pred, blup=blup, newmods=newmods)
+      #res <- parallel::mclapply(vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, pred=pred, blup=blup, newmods=newmods, mc.cores=ncpus)
 
    if (parallel == "snow") {
       if (is.null(cl)) {
@@ -137,14 +168,14 @@ profile.rma.uni <- function(fitted,
          on.exit(parallel::stopCluster(cl), add=TRUE)
       }
       if (.isTRUE(ddd$LB)) {
-         res <- parallel::parLapplyLB(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
-         #res <- parallel::clusterApplyLB(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
-         #res <- parallel::clusterMap(cl, .profile.rma.uni, vcs, MoreArgs=list(obj=x, parallel=parallel, profile=TRUE), .scheduling = "dynamic")
+         res <- parallel::parLapplyLB(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, pred=pred, blup=blup, newmods=newmods)
+         #res <- parallel::clusterApplyLB(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, pred=pred, blup=blup, newmods=newmods)
+         #res <- parallel::clusterMap(cl, .profile.rma.uni, vcs, MoreArgs=list(obj=x, parallel=parallel, profile=TRUE, pred=pred, blup=blup, newmods=newmods), .scheduling = "dynamic")
       } else {
-         res <- pbapply::pblapply(vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, cl=cl)
-         #res <- parallel::parLapply(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
-         #res <- parallel::clusterApply(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE)
-         #res <- parallel::clusterMap(cl, .profile.rma.uni, vcs, MoreArgs=list(obj=x, parallel=parallel, profile=TRUE))
+         res <- pbapply::pblapply(vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, pred=pred, blup=blup, newmods=newmods, cl=cl)
+         #res <- parallel::parLapply(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, pred=pred, blup=blup, newmods=newmods)
+         #res <- parallel::clusterApply(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, pred=pred, blup=blup, newmods=newmods)
+         #res <- parallel::clusterMap(cl, .profile.rma.uni, vcs, MoreArgs=list(obj=x, parallel=parallel, profile=TRUE, pred=pred, blup=blup, newmods=newmods))
       }
    }
 
@@ -157,18 +188,10 @@ profile.rma.uni <- function(fitted,
       vc <- x$tau2
    }
 
-   lls <- sapply(res, function(x) x$ll)
+   lls   <- sapply(res, function(x) x$ll)
    beta  <- do.call(rbind, lapply(res, function(x) t(x$beta)))
    ci.lb <- do.call(rbind, lapply(res, function(x) t(x$ci.lb)))
    ci.ub <- do.call(rbind, lapply(res, function(x) t(x$ci.ub)))
-
-   #########################################################################
-
-   if (x$method %in% c("ML", "REML") && any(lls >= logLik(x) + lltol, na.rm=TRUE))
-      warning(mstyle$warning("At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model."), call.=FALSE)
-
-   if (all(is.na(lls)))
-      warning(mstyle$warning("All model fits failed. Cannot draw profile likelihood plot."), call.=FALSE)
 
    beta  <- data.frame(beta)
    ci.lb <- data.frame(ci.lb)
@@ -177,7 +200,15 @@ profile.rma.uni <- function(fitted,
    names(ci.lb) <- rownames(x$beta)
    names(ci.ub) <- rownames(x$beta)
 
-   maxll <- logLik(x)
+   #########################################################################
+
+   maxll <- c(logLik(x))
+
+   if (x$method %in% c("ML","REML") && any(lls >= maxll + lltol, na.rm=TRUE))
+      warning(mstyle$warning("At least one profiled log-likelihood value is larger than the log-likelihood of the fitted model."), call.=FALSE)
+
+   if (all(is.na(lls)))
+      warning(mstyle$warning("All model fits failed. Cannot draw profile likelihood plot."), call.=FALSE)
 
    if (.isTRUE(ddd$exp)) {
       lls <- exp(lls)
@@ -216,22 +247,38 @@ profile.rma.uni <- function(fitted,
       title <- expression(paste("Profile Plot for ", tau^2))
    }
 
-   if (.isTRUE(ddd$exp)) {
-      ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Likelihood", sep="")
-   } else {
-      ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
-   }
-
-   sav <- list(tau2=vcs, ll=lls, beta=beta, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, xlim=xlim, ylim=ylim, method=x$method, vc=vc, maxll=maxll, xlab=xlab, ylab=ylab, title=title)
+   sav <- list(tau2=vcs, ll=lls, beta=beta, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, xlim=xlim, ylim=ylim, method=x$method, vc=vc, maxll=maxll, xlab=xlab, title=title, exp=ddd$exp, sqrt=ddd$sqrt)
    class(sav) <- "profile.rma"
 
    if (.isTRUE(ddd$sqrt))
       names(sav)[1] <- "tau"
 
+   sav$I2 <- sapply(res, function(x) x$I2)
+
+   if (pred) {
+      sav$pred       <- do.call(cbind, lapply(res, function(x) x$pred)) # use do.call(cbind, lapply()) instead of sapply() to always get a matrix, even when predicting a single value
+      sav$pred.ci.lb <- do.call(cbind, lapply(res, function(x) x$pred.ci.lb))
+      sav$pred.ci.ub <- do.call(cbind, lapply(res, function(x) x$pred.ci.ub))
+      sav$pred.pi.lb <- do.call(cbind, lapply(res, function(x) x$pred.pi.lb))
+      sav$pred.pi.ub <- do.call(cbind, lapply(res, function(x) x$pred.pi.ub))
+      rownames(sav$pred) <- rownames(sav$pred.ci.lb) <- rownames(sav$pred.ci.ub) <- rownames(sav$pred.pi.lb) <- rownames(sav$pred.pi.ub) <- predtest$slab # [a]
+   }
+
+   if (blup) {
+      sav$blup       <- sapply(res, function(x) x$blup)
+      sav$blup.se    <- sapply(res, function(x) x$blup.se)
+      sav$blup.pi.lb <- sapply(res, function(x) x$blup.pi.lb)
+      sav$blup.pi.ub <- sapply(res, function(x) x$blup.pi.ub)
+      rownames(sav$blup) <- x$slab[x$not.na]
+      rownames(sav$blup.se) <- x$slab[x$not.na]
+      rownames(sav$blup.pi.lb) <- x$slab[x$not.na]
+      rownames(sav$blup.pi.ub) <- x$slab[x$not.na]
+   }
+
    #########################################################################
 
    if (plot)
-      plot(sav, pch=pch, refline=refline, cline=cline, ...)
+      plot(sav, ...)
 
    #########################################################################
 

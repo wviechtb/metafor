@@ -55,7 +55,7 @@ navbar:
   left:
     - icon: fa-home fa-lg
       href: index.html
-    - text: Introduction
+    - text: Intro
       href: reference/metafor-package.html
     - text: "Functions"
       href: reference/index.html
@@ -66,9 +66,16 @@ navbar:
     - text: "Changelog"
       href: news/index.html
   right:
-   - icon: fa-twitter
-     href: https://twitter.com/wviechtb
-   - icon: fa-github
+   #- icon: fa-twitter
+   #  href: https://twitter.com/wviechtb
+   #- icon: fa-github
+   #  href: https://github.com/wviechtb/metafor
+   # this doesn't work :( so using text links for now
+   #- icon: fa-mastodon
+   #  href: https://scholar.social/@wviechtb
+   - text: Mastodon
+     href: https://scholar.social/@wviechtb
+   - text: GitHub
      href: https://github.com/wviechtb/metafor
 
 reference:

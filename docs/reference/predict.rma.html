@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-7</span>
       </span>
     </div>
 
@@ -41,7 +41,7 @@
   </a>
 </li>
 <li>
-  <a href="../reference/metafor-package.html">Introduction</a>
+  <a href="../reference/metafor-package.html">Intro</a>
 </li>
 <li>
   <a href="../reference/index.html">Functions</a>
@@ -62,16 +62,10 @@
         </li>
         
         <li>
-  <a href="https://twitter.com/wviechtb" class="external-link">
-    <span class="fa fa-twitter"></span>
-     
-  </a>
+  <a href="https://scholar.social/@wviechtb" class="external-link">Mastodon</a>
 </li>
 <li>
-  <a href="https://github.com/wviechtb/metafor" class="external-link">
-    <span class="fa fa-github"></span>
-     
-  </a>
+  <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>
 </li>
         
         
@@ -160,7 +154,7 @@
     <p>For an equal-effects model, <code>predict(object)</code> returns the estimated (average) outcome in the set of studies included in the meta-analysis. This is the same as the estimated intercept in the equal-effects model (i.e., <em></em>\(\hat{\theta}\)).</p>
 <p>For a random-effects model, <code>predict(object)</code> returns the estimated (average) outcome in the hypothetical population of studies from which the set of studies included in the meta-analysis are assumed to be a random selection. This is the same as the estimated intercept in the random-effects model (i.e., <em></em>\(\hat{\mu}\)).</p>
 <p>For models including one or more moderators, <code>predict(object)</code> returns the estimated (average) outcomes for values of the moderator(s) equal to those of the <em></em>\(k\) studies included in the meta-analysis (i.e., the ‘fitted values’ for the <em></em>\(k\) studies).</p>
-<p>For models including <em></em>\(p'\) moderator variables, new moderator values (for <em></em>\(k_{new}\) hypothetical new studies) can be specified by setting <code>newmods</code> equal to a <em></em>\(k_{new} \times p'\) matrix with the corresponding new moderator values. If the model object included an intercept, then it should not be explicitly specified under <code>newmods</code>, as it will be added by default (unless one sets <code>intercept=FALSE</code>). Also, any factors in the original model get turned into the appropriate contrast variables within the <code>rma</code> function, so that <code>newmods</code> should actually include the values for the contrast variables. Examples are shown below.</p>
+<p>For models including <em></em>\(p'\) moderator variables, new moderator values (for <em></em>\(k_{new}\) hypothetical new studies) can be specified by setting <code>newmods</code> equal to a <em></em>\(k_{new} \times p'\) matrix with the corresponding new moderator values (if <code>newmods</code> is a vector, then only a single predicted value is computed unless the model only includes a single moderator variable, in which case predicted values corresponding to all the vector values are computed). If the model object included an intercept, then it should not be explicitly specified under <code>newmods</code>, as it will be added by default (unless one sets <code>intercept=FALSE</code>). Also, any factors in the original model get turned into the appropriate contrast variables within the <code>rma</code> function, so that <code>newmods</code> should actually include the values for the contrast variables. If the matrix specified via <code>newmods</code> has row names, then these are used to label the predicted values in the output. Examples are shown below.</p>
 <p>For random/mixed-effects models, a prediction interval is also computed (Riley et al., 2011). The interval estimates where <code>level</code> % of the true effect sizes or outcomes fall in the hypothetical population of studies (and hence where the true effect or outcome of a new study from the population of studies should fall in <code>level</code> % of the cases).</p>
 <p>For random-effects models that were fitted with the <code><a href="rma.mv.html">rma.mv</a></code> function, the model may actually include multiple <em></em>\(\tau^2\) values (i.e., when the <code>random</code> argument includes an ‘<code>~ inner | outer</code>’ term and <code>struct="HCS"</code>, <code>struct="DIAG"</code>, <code>struct="HAR"</code>, or <code>struct="UN"</code>). In that case, the function will provide prediction intervals for each level of the inner factor (since the prediction intervals differ depending on the <em></em>\(\tau^2\) value). Alternatively, one can use the <code>tau2.levels</code> argument to specify for which level(s) the prediction interval should be provided. If the model includes a second ‘<code>~ inner | outer</code>’ term with multiple <em></em>\(\gamma^2\) values, prediction intervals for each combination of levels of the inner factors will be provided. Alternatively, one can use the <code>tau2.levels</code> and <code>gamma2.levels</code> arguments to specify for which level combination(s) the prediction interval should be provided.</p>
 <p>When using the <code>newmods</code> argument for mixed-effects models that were fitted with the <code><a href="rma.mv.html">rma.mv</a></code> function, if the model includes multiple <em></em>\(\tau^2\) (and multiple <em></em>\(\gamma^2\)) values, then one must use the <code>tau2.levels</code> (and <code>gamma2.levels</code>) argument to specify the levels of the inner factor(s) (i.e., a vector of length <em></em>\(k_{new}\)) to obtain the appropriate prediction interval(s).</p>
@@ -212,7 +206,7 @@
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>Confidence and prediction intervals are constructed based on the critical values from a standard normal distribution (i.e., <em></em>\(\pm 1.96\) for <code>level=95</code>). When the model was fitted with <code>test="t"</code> or <code>test="knha"</code>, then a t-distribution with <em></em>\(k-p\) degrees of freedom is used.</p>
+    <p>Confidence and prediction intervals are constructed based on the critical values from a standard normal distribution (i.e., <em></em>\(\pm 1.96\) for <code>level=95</code>). When the model was fitted with <code>test="t"</code>, <code>test="knha"</code>, <code>test="hksj"</code>, or <code>test="adhoc"</code>, then a t-distribution with <em></em>\(k-p\) degrees of freedom is used.</p>
 <p>For a random-effects model (where <em></em>\(p=1\)) fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function, note that this differs slightly from Riley et al. (2011), who suggest to use a t-distribution with <em></em>\(k-2\) degrees of freedom for constructing the prediction interval. Neither a normal, nor a t-distribution with <em></em>\(k-1\) or <em></em>\(k-2\) degrees of freedom is correct; all of these are approximations. The computations are done in the way described above, so that the prediction interval is identical to the confidence interval when <em></em>\(\hat{\tau}^2 = 0\), which could be argued is the logical thing that should happen. If the prediction interval should be computed exactly as described by Riley et al. (2011), then one can use argument <code>pi.type="Riley"</code>.</p>
 <p>The predicted values are based only on the fixed effects of the model. Best linear unbiased predictions (BLUPs) that combine the fitted values based on the fixed effects and the estimated contributions of the random effects can be obtained with <code><a href="blup.html">blup</a></code> (currently only for objects of class <code>"rma.uni"</code>).</p>
 <p>When using the <code>transf</code> option, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are omitted from the printed output. Also, <code>vcov=TRUE</code> is ignored when using the <code>transf</code> option.</p>
@@ -295,6 +289,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.2348 0.1005 0.5481 0.0805 0.6843         1      60   1980 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### predicted average risk ratios for 10 and 60 degrees latitude in 1970 (row names as labels)</span></span></span>
+<span class="r-in"><span><span class="fu">predict</span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span>at10<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">1970</span><span class="op">)</span>, at60<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">60</span>,<span class="fl">1970</span><span class="op">)</span><span class="op">)</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        pred  ci.lb  ci.ub  pi.lb  pi.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> at10 0.9345 0.5833 1.4973 0.4179 2.0899 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> at60 0.2303 0.1209 0.4386 0.0921 0.5761 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit mixed-effects model with two moderators (one of which is a factor)</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">alloc</span><span class="op">)</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -331,7 +333,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 13                         1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### predictd average risk ratios at 30 degrees for the three factor levels</span></span></span>
+<span class="r-in"><span><span class="co">### predicted average risk ratios at 30 degrees for the three factor levels</span></span></span>
 <span class="r-in"><span><span class="co">### note: the contrast (dummy) variables need to specified explicitly here</span></span></span>
 <span class="r-in"><span><span class="fu">predict</span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">30</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, addx<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>   <span class="co"># for alternate  allocation</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -355,7 +357,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>                          1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### can also use named vector with arbitrary order and abbreviated variable names</span></span></span>
+<span class="r-in"><span><span class="co">### can also use a named vector with arbitrary order and abbreviated variable names</span></span></span>
 <span class="r-in"><span><span class="fu">predict</span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>sys<span class="op">=</span><span class="fl">0</span>, ran<span class="op">=</span><span class="fl">0</span>, abl<span class="op">=</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     pred     se   ci.lb  ci.ub   pi.lb  pi.ub </span>

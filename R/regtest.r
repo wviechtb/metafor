@@ -89,13 +89,9 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
          X <- x$X
       }
 
-      if (!is.null(ddd$level)) {
-         level <- .level(ddd$level)
-      } else {
-         level <- x$level
-      }
-      method   <- ifelse(is.null(ddd$method), x$method, ddd$method)
-      test     <- ifelse(is.null(ddd$test), x$test, ddd$test)
+      level    <- .chkddd(ddd$level, x$level, .level(ddd$level))
+      method   <- .chkddd(ddd$method, x$method)
+      test     <- .chkddd(ddd$test, x$test)
       weights  <- x$weights
       weighted <- x$weighted
       tau2     <- ifelse(x$tau2.fix, x$tau2, NA_real_)
@@ -121,11 +117,7 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
          digits <- .set.digits(digits, dmiss=FALSE)
       }
 
-      if (!is.null(ddd$level)) {
-         level <- .level(ddd$level)
-      } else {
-         level <- .05
-      }
+      level <- .chkddd(ddd$level, 0.05, .level(ddd$level))
 
       k <- length(yi)
 
@@ -207,8 +199,8 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
       k <- length(yi)
       X <- cbind(rep(1,k))
 
-      method   <- ifelse(is.null(ddd$method), "REML", ddd$method)
-      test     <- ifelse(is.null(ddd$test), "z", ddd$test)
+      method   <- .chkddd(ddd$method, "REML")
+      test     <- .chkddd(ddd$test, "z")
       weights  <- NULL
       weighted <- TRUE
       tau2     <- NA_real_

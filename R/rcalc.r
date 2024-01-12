@@ -17,17 +17,8 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
 
    .chkdots(ddd, c("upper", "simplify", "rowid", "vnames", "noid"))
 
-   if (is.null(ddd$upper)) {
-      upper <- FALSE
-   } else {
-      upper <- ddd$upper
-   }
-
-   if (is.null(ddd$simplify)) {
-      simplify <- TRUE
-   } else {
-      simplify <- ddd$simplify
-   }
+   upper    <- .chkddd(ddd$upper,    FALSE)
+   simplify <- .chkddd(ddd$simplify, TRUE)
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act), add=TRUE)

@@ -169,7 +169,7 @@ dat2$ntot[!is.na(dat2$tpos)] <- NA
 dat2
 
 ### in studies 1 and 12, authors reported only the odds ratio and the corresponding p-value
-### in studies 4 and 9, authors reported only the odds ratio and the corresponding 95% CI
+### in studies 4 and 9, authors reported only the odds ratio and the corresponding 95\% CI
 
 ### use escalc() first
 dat2 <- escalc(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat2)

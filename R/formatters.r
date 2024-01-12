@@ -56,23 +56,9 @@ fmtx <- function(x, digits=4, flag="", quote=FALSE, ...) {
 
    ddd <- list(...)
 
-   if (is.null(ddd$addwidth)) {
-      width <- NULL
-   } else {
-      width <- digits + ddd$addwidth
-   }
-
-   if (is.null(ddd$drop0ifint)) {
-      drop0ifint <- FALSE
-   } else {
-      drop0ifint <- ddd$drop0ifint
-   }
-
-   if (is.null(ddd$add0)) {
-      add0 <- TRUE
-   } else {
-      add0 <- ddd$add0
-   }
+   width      <- .chkddd(ddd$addwidth,   NULL, digits + ddd$addwidth)
+   drop0ifint <- .chkddd(ddd$drop0ifint, FALSE)
+   add0       <- .chkddd(ddd$add0,       TRUE)
 
    if (!is.null(ddd$thresh)) {
       if (length(x) != 1L)
@@ -81,11 +67,7 @@ fmtx <- function(x, digits=4, flag="", quote=FALSE, ...) {
          digits <- 0
    }
 
-   if (is.null(ddd$postfix)) {
-      postfix <- ""
-   } else {
-      postfix <- ddd$postfix
-   }
+   postfix <- .chkddd(ddd$postfix, "")
 
    out <- sapply(x, function(x) {
       if (is.na(x))
@@ -127,11 +109,7 @@ fmtt <- function(val, tname, df, df1, df2, pval, digits=4, pname="p-val", format
 
    ddd <- list(...)
 
-   if (is.null(ddd$flag)) {
-      flag <- ""
-   } else {
-      flag <- ddd$flag
-   }
+   flag <- .chkddd(ddd$flag, "")
 
    if (length(digits) == 1L)
       digits <- c(test = digits, pval = digits)

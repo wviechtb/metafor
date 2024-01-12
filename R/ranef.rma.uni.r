@@ -47,7 +47,10 @@ ranef.rma.uni <- function(object, level, digits, transf, targs, ...) {
    ### see Appendix in: Raudenbush, S. W., & Bryk, A. S. (1985). Empirical
    ### Bayes meta-analysis. Journal of Educational Statistics, 10(2), 75-98
 
-   li <- x$tau2.f / (x$tau2.f + x$vi.f)
+   if (length(x$tau2.f) == 1L)
+      x$tau2.f <- rep(x$tau2.f, length(x$yi.f))
+
+   li <- ifelse(is.infinite(x$tau2.f), 1, x$tau2.f / (x$tau2.f + x$vi.f))
 
    for (i in seq_len(x$k.f)[x$not.na]) { ### note: skipping NA cases
       Xi <- matrix(x$X.f[i,], nrow=1)

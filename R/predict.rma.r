@@ -47,15 +47,12 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    .chkdots(ddd, c("pi.type", "newvi", "verbose"))
 
-   if (is.null(ddd$pi.type)) {
-      pi.type <- "default"
-   } else {
-      pi.type <- ddd$pi.type
-      pi.type <- tolower(pi.type)
-   }
+   pi.type <- .chkddd(ddd$pi.type, "default", tolower(ddd$pi.type))
 
    if (x$int.only && !is.null(newmods))
       stop(mstyle$stop("Cannot specify new moderator values for models without moderators."))
+
+   rnames <- NULL
 
    #########################################################################
 
@@ -147,13 +144,21 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       if ((!x$int.incl && x$p == 1L) || (x$int.incl && x$p == 2L)) { # if single moderator (multiple k.new possible) (either without or with intercept in the model)
          k.new <- length(newmods)                                    #
          X.new <- cbind(c(newmods))                                  #
+         if (.is.vector(newmods)) {                                  #
+            rnames <- names(newmods)                                 #
+         } else {                                                    #
+            rnames <- rownames(newmods)                              #
+         }                                                           #
       } else {                                                       # in case the model has more than one predictor:
          if (.is.vector(newmods) || nrow(newmods) == 1L) {           #   # if user gives one vector or one row matrix (only one k.new):
             k.new <- 1L                                              #
             X.new <- rbind(newmods)                                  #
+            if (inherits(newmods, "matrix"))                         #
+               rnames <- rownames(newmods)                           #
          } else {                                                    #   # if user gives multiple rows and columns (multiple k.new):
             k.new <- nrow(newmods)                                   #
             X.new <- cbind(newmods)                                  #
+            rnames <- rownames(newmods)                              #
          }                                                           #
          ### allow matching of terms by names (note: only possible if all columns in X.new and x$X have colnames)
          if (!is.null(colnames(X.new)) && all(colnames(X.new) != "") && !is.null(colnames(x$X)) && all(colnames(x$X) != "")) {
@@ -540,6 +545,8 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       slab <- x$slab
    } else {
       slab <- seq_len(k.new)
+      if (!is.null(rnames))
+         slab <- rnames
    }
 
    ### add row/colnames to vcovpred
@@ -549,7 +556,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    ### but when predicting just a single value, use "" as study label
 
-   if (k.new == 1L)
+   if (k.new == 1L && is.null(rnames))
       slab <- ""
 
    ### handle NAs

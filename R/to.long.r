@@ -23,7 +23,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
                               "R2","ZR2",                                          # coefficient of determination (raw and r-to-z transformed)
                               "PR","PLN","PLO","PAS","PFT",                        # single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            # single-group person-time data (and transformations thereof)
-                              "MN","MNLN","CVLN","SDLN","SMN",                     # mean, log(mean), log(CV), log(SD), standardized mean
+                              "MN","SMN","MNLN","CVLN","SDLN",                     # mean, single-group standardized mean, log(mean), log(CV), log(SD),
                               "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT")))                                # alpha (and transformations thereof)
       stop(mstyle$stop("Unknown 'measure' specified."))
@@ -498,7 +498,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
    #########################################################################
 
-   if (is.element(measure, c("MN","MNLN","SMN"))) {
+   if (is.element(measure, c("MN","SMN","MNLN"))) {
 
       mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE)
       sdi <- .getx("sdi", mf=mf, data=data, checknumeric=TRUE)
@@ -1252,7 +1252,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
    #########################################################################
 
-   if (is.element(measure, c("MN","MNLN","SMN"))) {
+   if (is.element(measure, c("MN","SMN","MNLN"))) {
 
       ### check for NAs in table data and act accordingly
 

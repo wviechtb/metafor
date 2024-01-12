@@ -152,7 +152,7 @@ dat
 res <- rma(yi, vi, data=dat, method="EE")
 res
 
-# estimated coefficient of variation (with 95% CI)
+# estimated coefficient of variation (with 95\% CI)
 predict(res, transf=exp, digits=2)
 
 ############################################################################

@@ -102,8 +102,13 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (.isTRUE(ddd$tdist))
       test <- "t"
 
-   if (!is.element(test, c("z", "t", "knha", "adhoc")))
+    test <- tolower(test)
+
+   if (!is.element(test, c("z", "t", "knha", "hksj", "adhoc")))
       stop(mstyle$stop("Invalid option selected for 'test' argument."))
+
+   if (test == "hksj")
+      test <- "knha"
 
    if (is.character(dfs))
       dfs <- match.arg(dfs, c("residual", "contain"))
@@ -128,7 +133,11 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ### handle 'dist' argument from ...
 
-   if (!is.null(ddd$dist)) {
+   if (is.null(ddd$dist)) {
+
+      ddd$dist <- list("euclidean", "euclidean")
+
+   } else {
 
       if (is.data.frame(ddd$dist) || .is.matrix(ddd$dist))
          ddd$dist <- list(ddd$dist)
@@ -162,8 +171,6 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             stop(mstyle$stop("Please install the 'sp' package to compute great-circle distances."))
       }
 
-   } else {
-      ddd$dist <- list("euclidean", "euclidean")
    }
 
    if (is.null(ddd$vccon)) {
@@ -2151,7 +2158,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (is.element(test, c("knha","adhoc"))) {
       knha.rma.mv.warn <- .getfromenv("knha.rma.mv.warn", default=TRUE)
       if (knha.rma.mv.warn) {
-         warning(mstyle$warning("Use of Knapp and Hartung method for 'rma.mv()' models is experimental.\nNote: This warning is only issued once per session (ignore at your peril)."), call.=FALSE)
+         warning(mstyle$warning("Use of the Knapp and Hartung method for 'rma.mv()' models is experimental.\nNote: This warning is only issued once per session (ignore at your peril)."), call.=FALSE)
          try(assign("knha.rma.mv.warn", FALSE, envir=.metafor), silent=TRUE)
       }
       RSS <- try(as.vector(t(Y - X %*% beta) %*% chol2inv(chol(M)) %*% (Y - X %*% beta)), silent=TRUE)
@@ -2330,7 +2337,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
          ### row/column names
 
-         colnames(hessian) <- seq_len(ncol(hessian)) ### need to do this, so the subsetting of colnames below works
+         colnames(hessian) <- seq_len(ncol(hessian)) # need to do this, so the subsetting of colnames below works
 
          if (sigma2s == 1) {
             colnames(hessian)[1] <- "sigma^2"

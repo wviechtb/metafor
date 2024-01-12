@@ -12,41 +12,34 @@
    Functions to profile the (restricted) log-likelihood for objects of class \code{"rma.uni"}, \code{"rma.mv"}, \code{"rma.uni.selmodel"}, and \code{"rma.ls"}. \loadmathjax
 }
 \usage{
-\method{profile}{rma.uni}(fitted, xlim, ylim, steps=20,
-        lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl,
-        plot=TRUE, pch=19, refline=TRUE, cline=FALSE, \dots)
+\method{profile}{rma.uni}(fitted, xlim, ylim, steps=20, lltol=1e-03,
+        progbar=TRUE, parallel="no", ncpus=1, cl, plot=TRUE, \dots)
 
-\method{profile}{rma.mv}(fitted, sigma2, tau2, rho, gamma2, phi,
-        xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE,
-        parallel="no", ncpus=1, cl,
-        plot=TRUE, pch=19, refline=TRUE, cline=FALSE, \dots)
+\method{profile}{rma.mv}(fitted, sigma2, tau2, rho, gamma2, phi, xlim, ylim, steps=20, lltol=1e-03,
+        progbar=TRUE, parallel="no", ncpus=1, cl, plot=TRUE, \dots)
 
-\method{profile}{rma.uni.selmodel}(fitted, tau2, delta,
-        xlim, ylim, steps=20, lltol=1e-03, progbar=TRUE,
-        parallel="no", ncpus=1, cl,
-        plot=TRUE, pch=19, refline=TRUE, cline=FALSE, \dots)
+\method{profile}{rma.uni.selmodel}(fitted, tau2, delta, xlim, ylim, steps=20, lltol=1e-03,
+        progbar=TRUE, parallel="no", ncpus=1, cl, plot=TRUE, \dots)
 
-\method{profile}{rma.ls}(fitted, alpha, xlim, ylim, steps=20,
-        lltol=1e-03, progbar=TRUE, parallel="no", ncpus=1, cl,
-        plot=TRUE, pch=19, refline=TRUE, cline=FALSE, \dots)
+\method{profile}{rma.ls}(fitted, alpha, xlim, ylim, steps=20, lltol=1e-03,
+        progbar=TRUE, parallel="no", ncpus=1, cl, plot=TRUE, \dots)
 
 \method{print}{profile.rma}(x, \dots)
-\method{plot}{profile.rma}(x, xlim, ylim, pch=19,
-     xlab, ylab, main, refline=TRUE, cline=FALSE, \dots)
+\method{plot}{profile.rma}(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TRUE, cline=FALSE, \dots)
 }
 \arguments{
    \item{fitted}{an object of class \code{"rma.uni"}, \code{"rma.mv"}, \code{"rma.uni.selmodel"}, or \code{"rma.ls"}.}
    \item{x}{an object of class \code{"profile.rma"} (for \code{plot} and \code{print}).}
-   \item{sigma2}{optional integer to specify for which \mjseqn{\sigma^2} value the likelihood should be profiled.}
-   \item{tau2}{optional integer to specify for which \mjseqn{\tau^2} value the likelihood should be profiled.}
-   \item{rho}{optional integer to specify for which \mjseqn{\rho} value the likelihood should be profiled.}
-   \item{gamma2}{optional integer to specify for which \mjseqn{\gamma^2} value the likelihood should be profiled.}
-   \item{phi}{optional integer to specify for which \mjseqn{\phi} value the likelihood should be profiled.}
-   \item{delta}{optional integer to specify for which \mjseqn{\delta} value the likelihood should be profiled.}
-   \item{alpha}{optional integer to specify for which \mjseqn{\alpha} value the likelihood should be profiled.}
+   \item{sigma2}{optional integer to specify for which \mjseqn{\sigma^2} parameter the likelihood should be profiled.}
+   \item{tau2}{optional integer to specify for which \mjseqn{\tau^2} parameter the likelihood should be profiled.}
+   \item{rho}{optional integer to specify for which \mjseqn{\rho} parameter the likelihood should be profiled.}
+   \item{gamma2}{optional integer to specify for which \mjseqn{\gamma^2} parameter the likelihood should be profiled.}
+   \item{phi}{optional integer to specify for which \mjseqn{\phi} parameter the likelihood should be profiled.}
+   \item{delta}{optional integer to specify for which \mjseqn{\delta} parameter the likelihood should be profiled.}
+   \item{alpha}{optional integer to specify for which \mjseqn{\alpha} parameter the likelihood should be profiled.}
    \item{xlim}{optional vector to specify the lower and upper limit of the parameter over which the profiling should be done. If unspecified, the function sets these limits automatically.}
    \item{ylim}{optional vector to specify the y-axis limits when plotting the profiled likelihood. If unspecified, the function sets these limits automatically.}
-   \item{steps}{number of points between \code{xlim[1]} and \code{xlim[2]} (inclusive) for which the likelihood should be evaluated (the default is 20).}
+   \item{steps}{number of points between \code{xlim[1]} and \code{xlim[2]} (inclusive) for which the likelihood should be evaluated (the default is 20). Can also be a numeric vector of length 2 or longer to specify for which parameter values the likelihood should be evaluated (in this case, \code{xlim} is automatically set to \code{range(steps)} if unspecified).}
    \item{lltol}{numerical tolerance used when comparing values of the profiled log-likelihood with the log-likelihood of the fitted model (the default is 1e-03).}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{TRUE}).}
    \item{parallel}{character string to specify whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Details}.}
@@ -55,7 +48,7 @@
    \item{plot}{logical to specify whether the profile plot should be drawn after profiling is finished (the default is \code{TRUE}).}
    \item{pch}{plotting symbol to use. By default, a filled circle is used. See \code{\link{points}} for other options.}
    \item{refline}{logical to specify whether the value of the parameter estimate should be indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line (the default is \code{TRUE}).}
-   \item{cline}{logical to specify whether a horizontal reference line should be added to the plot that indicates the log-likelihood value corresponding to the 95\% profile confidence interval (the default is \code{FALSE}).}
+   \item{cline}{logical to specify whether a horizontal reference line should be added to the plot that indicates the log-likelihood value corresponding to the 95\% profile confidence interval (the default is \code{FALSE}). Can also be a numeric value between 0 and 100 to specify the confidence interval level.}
    \item{xlab}{title for the x-axis. If unspecified, the function sets an appropriate axis title.}
    \item{ylab}{title for the y-axis. If unspecified, the function sets an appropriate axis title.}
    \item{main}{title for the plot. If unspecified, the function sets an appropriate title.}
@@ -81,13 +74,13 @@
 
       A profile plot should show a single peak at the corresponding ML/REML estimate (assuming that the model was fitted with ML/REML estimation). If \code{refline=TRUE} (the default), the value of the parameter estimate is indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line. Hence, the intersection of these two lines should correspond to the peak.
 
-      When profiling a variance component (or some other parameter that cannot be negative), the peak may be at zero (if this corresponds to the ML/REML estimate of the parameter). In this case, the profiled log-likelihood should be a monotonically decreasing function of the parameter.
+      When profiling a variance component (or some other parameter that cannot be negative), the peak may be at zero (if this corresponds to the ML/REML estimate of the parameter). In this case, the profiled log-likelihood should be a monotonically decreasing function of the parameter. Similarly, when profiling a correlation component, the peak may be at -1 or +1.
 
       If the profiled log-likelihood has multiple peaks, this indicates that the likelihood surface is not unimodal. In such cases, the ML/REML estimate may correspond to a local optimum (when the intersection of the two dotted lines is not at the highest peak).
 
       If the profile is flat (over the entire parameter space or large portions of it), then this suggests that at least some of the parameters of the model are not identifiable (and the parameter estimates obtained are to some extent arbitrary). See Raue et al. (2009) for some further discussion of parameter identifiability (structurally and practically) and the use of profile likelihoods to check for this.
 
-      The function checks whether any profiled log-likelihood value is actually larger than the log-likelihood of the fitted model (using a numerical tolerance of \code{lltol}). If so, a warning is issued as this might indicate that the optimizer did not identify the actual ML/REML estimate.
+      The function checks whether any profiled log-likelihood value is actually larger than the log-likelihood of the fitted model (using a numerical tolerance of \code{lltol}). If so, a warning is issued as this might indicate that the optimizer did not identify the actual ML/REML estimate of the parameter profiled.
 
    }
 
@@ -143,6 +136,12 @@ res <- rma(yi, vi, data=dat)
 ### profile over tau^2
 profile(res, progbar=FALSE)
 
+### adjust xlim
+profile(res, progbar=FALSE, xlim=c(0,1))
+
+### specify tau^2 values at which to profile the likelihood
+profile(res, progbar=FALSE, steps=c(seq(0,0.2,length=20),seq(0.3,1,by=0.1)))
+
 ### change data into long format
 dat.long <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, append=FALSE)
 
@@ -167,12 +166,12 @@ par(mfrow=c(2,2))
 profile(res, tau2=1)
 profile(res, tau2=2)
 profile(res, rho=1, xlim=c(0.90, 0.98))
+par(mfrow=c(1,1))
 }
 
 ### an example where the peak of the likelihood profile is at 0
 dat <- escalc(measure="RD", n1i=n1i, n2i=n2i, ai=ai, ci=ci, data=dat.hine1989)
 res <- rma(yi, vi, data=dat)
-par(mfrow=c(1,1))
 profile(res, progbar=FALSE)
 }
 \keyword{hplot}

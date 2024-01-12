@@ -23,11 +23,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
 
    .chkdots(ddd, c("verbose", "seed"))
 
-   if (is.null(ddd$verbose)) {
-      verbose <- FALSE
-   } else {
-      verbose <- .isTRUE(ddd$verbose)
-   }
+   verbose <- .chkddd(ddd$verbose, FALSE, .isTRUE(ddd$verbose))
 
    if (!is.null(ddd$seed))
       set.seed(ddd$seed)

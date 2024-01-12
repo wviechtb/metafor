@@ -27,23 +27,9 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
    ddd <- list(...)
 
-   if (is.null(ddd$alternative)) {
-      alternative <- x$alternative
-   } else {
-      alternative <- match.arg(ddd$alternative, c("two.sided", "less", "greater"))
-   }
-
-   if (is.null(ddd$p2defn)) {
-      p2defn <- x$p2defn
-   } else {
-      p2defn <- match.arg(ddd$p2defn, c("abs", "px2"))
-   }
-
-   if (is.null(ddd$stat)) {
-      stat <- x$stat
-   } else {
-      stat <- match.arg(ddd$stat, c("test", "coef"))
-   }
+   alternative <- .chkddd(ddd$alternative, x$alternative, match.arg(ddd$alternative, c("two.sided", "less", "greater")))
+   p2defn      <- .chkddd(ddd$p2defn,      x$p2defn,      match.arg(ddd$p2defn, c("abs", "px2")))
+   stat        <- .chkddd(ddd$stat,        x$stat,        match.arg(ddd$stat, c("test", "coef")))
 
    ### check trim
 

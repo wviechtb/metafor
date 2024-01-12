@@ -47,8 +47,6 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
    if (!fixed && !random)
       stop(mstyle$stop("At least one of the arguments 'fixed' and 'random' must be TRUE."))
 
-   level <- .level(level)
-
    ddd <- list(...)
 
    .chkdots(ddd, c("time", "xlim", "extint"))
@@ -57,8 +55,10 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
       time.start <- proc.time()
 
    if (!is.null(ddd$xlim)) {
+      if (length(ddd$xlim) == 1L)
+         ddd$xlim <- c(0, ddd$xlim)
       if (length(ddd$xlim) != 2L)
-         stop(mstyle$stop("Argument 'xlim' should be a vector of length 2."))
+         stop(mstyle$stop("Argument 'xlim' should be a vector of length 1 or 2."))
       control$tau2.min <- ddd$xlim[1]
       control$tau2.max <- ddd$xlim[2]
    }
@@ -74,6 +74,8 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
       if (!is.element(type, c("qp","genq","pl","ht","wald","wald.log","wald.sqrt")))
          stop(mstyle$stop("Unknown 'type' specified."))
    }
+
+   level <- .level(level, stopon100=(type=="pl" && .isTRUE(ddd$extint)))
 
    #########################################################################
    #########################################################################

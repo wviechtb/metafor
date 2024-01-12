@@ -96,37 +96,72 @@
 
 ### pairwise sorting of the elements of two vectors
 
-.psort <- function(x,y) {
+#.psort.old <- function(x, y) {
+#
+#   if (is.null(x) || length(x) == 0L) # need to catch this
+#      return(NULL)
+#
+#   if (missing(y)) {
+#      if (is.matrix(x)) {
+#         xy <- x
+#      } else {
+#         xy <- rbind(x) # in case x is just a vector
+#      }
+#   } else {
+#      xy <- cbind(x,y)
+#   }
+#
+#   n <- nrow(xy)
+#
+#   for (i in seq_len(n)) {
+#      if (anyNA(xy[i,]))
+#         next
+#      xy[i,] <- sort(xy[i,])
+#   }
+#
+#   colnames(xy) <- NULL
+#
+#   return(xy)
+#
+#}
 
-   ### t(apply(xy, 1, sort)) would be okay, but problematic if there are NAs;
-   ### either they are removed completely (na.last=NA) or they are always put
-   ### first/last (na.last=FALSE/TRUE); but we just want to leave the NAs in
-   ### their position!
+.psort <- function(x, y, as.list=FALSE) {
 
-   if (is.null(x) || length(x) == 0L) ### need to catch this
+   # simpler / vectorized version that also deals with x and y being matrices
+   # (of the same dimensions) for elementwise swapping of pairs as needed
+
+   # t(apply(xy, 1, sort)) would be okay, but problematic if there are NAs;
+   # either they are removed completely (na.last=NA) or they are always put
+   # first/last (na.last=FALSE/TRUE); but we just want to leave the NAs in
+   # their position!
+
+   if (is.null(x) || length(x) == 0L) # need to catch this
       return(NULL)
 
    if (missing(y)) {
       if (is.matrix(x)) {
-         xy <- x
+         y <- x[,2]
+         x <- x[,1]
       } else {
-         xy <- rbind(x) ### in case x is just a vector
+         y <- x[2]
+         x <- x[1]
       }
+   }
+
+   flip <- x > y
+   flip[is.na(flip)] <- FALSE
+
+   x.flip <- x
+   y.flip <- y
+
+   x.flip[flip] <- y[flip]
+   y.flip[flip] <- x[flip]
+
+   if (as.list) {
+      return(list(x=x.flip, y=y.flip))
    } else {
-      xy <- cbind(x,y)
+      return(cbind(x.flip, y.flip))
    }
-
-   n <- nrow(xy)
-
-   for (i in seq_len(n)) {
-      if (anyNA(xy[i,]))
-         next
-      xy[i,] <- sort(xy[i,])
-   }
-
-   colnames(xy) <- NULL
-
-   return(xy)
 
 }
 
@@ -192,6 +227,35 @@
    is.numeric(x)
 }
 
+### sapply()-like function but for matrices that always preserves the matrix dimensions (used in traceplot.rma.uni())
+
+.matapply <- function(x, FUN, targs=NULL) {
+   if (is.null(x))
+      return(NULL)
+   if (is.null(targs)) {
+      x[] <- sapply(x, FUN)
+   } else {
+      x[] <- sapply(x, FUN, targs)
+   }
+   return(x)
+}
+
+### check if ddd element is NULL; if so, return ifnull, otherwise the ddd element or ifnot
+
+.chkddd <- function(x, ifnull=NULL, ifnot=NULL) {
+
+   if (is.null(x)) {
+      return(ifnull)
+   } else {
+      if (is.null(ifnot)) {
+         return(x)
+      } else {
+         return(ifnot)
+      }
+   }
+
+}
+
 ############################################################################
 
 ### function to format p-values (no longer used; use fmtp() instead)
@@ -225,17 +289,21 @@
 
 ### function to handle 'level' argument
 
-.level <- function(level, allow.vector=FALSE) {
+.level <- function(level, allow.vector=FALSE, argname="level", stopon100=FALSE) {
 
-   if (!allow.vector && length(level) != 1L) {
-      mstyle <- .get.mstyle()
-      stop(mstyle$stop("Argument 'level' must specify a single value."), call.=FALSE)
-   }
+   mstyle <- .get.mstyle()
 
-   if (!is.numeric(level)) {
-      mstyle <- .get.mstyle()
-      stop(mstyle$stop("The 'level' argument must be numeric."), call.=FALSE)
-   }
+   if (any(level > 100) || any(level < 0))
+      stop(mstyle$stop(paste0("Argument '", argname, "' must be between 0 and 100.")), call.=FALSE)
+
+   if (isTRUE(stopon100) && any(level==100))
+      stop(mstyle$stop(paste0("Argument '", argname, "' cannot be equal to 100.")), call.=FALSE)
+
+   if (!allow.vector && length(level) != 1L)
+      stop(mstyle$stop(paste0("Argument '", argname, "' must specify a single value.")), call.=FALSE)
+
+   if (!is.numeric(level))
+      stop(mstyle$stop(paste0("The '", argname, "' argument must be numeric.")), call.=FALSE)
 
    ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
 
@@ -943,6 +1011,13 @@
             lab <- ifelse(short, lab, "Transformed Mean")
          }
       }
+      if (measure == "SMN") {
+         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
+            lab <- ifelse(short, "Std. Mean", "Standardized Mean")
+         } else {
+            lab <- ifelse(short, lab, "Transformed Standardized Mean")
+         }
+      }
       if (measure == "MNLN") {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, "Log[Mean]", "Log Mean")
@@ -953,13 +1028,6 @@
                lab <- ifelse(short, "Mean", "Mean (log scale)")
             if (any(sapply(funlist, identical, transf.char)))
                lab <- ifelse(short, "Mean", "Mean")
-         }
-      }
-      if (measure == "SMN") {
-         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
-            lab <- ifelse(short, "SM", "Standardized Mean")
-         } else {
-            lab <- ifelse(short, lab, "Transformed Standardized Mean")
          }
       }
       if (measure == "CVLN") {
@@ -1083,23 +1151,23 @@
          }
       }
       ######################################################################
-      if (measure == "HRR") {
+      if (measure == "HR") {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, "Log[HR]", "Log Hazard Ratio")
          } else {
             lab <- ifelse(short, lab, "Transformed Log Hazard Ratio")
             funlist <- lapply(list(exp, transf.exp.int), deparse)
             if (any(sapply(funlist, identical, atransf.char)))
-               lab <- ifelse(short, "REH", "Hazard Ratio (log scale)")
+               lab <- ifelse(short, "HR", "Hazard Ratio (log scale)")
             if (any(sapply(funlist, identical, transf.char)))
-               lab <- ifelse(short, "REH", "Hazard Ratio")
+               lab <- ifelse(short, "HR", "Hazard Ratio")
          }
       }
-      if (measure == "HRD") {
+      if (measure == "HD") {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
-            lab <- ifelse(short, "HR Difference", "Hazard Rate Difference")
+            lab <- ifelse(short, "HD", "Hazard Difference")
          } else {
-            lab <- ifelse(short, lab, "Transformed Hazard Rate Difference")
+            lab <- ifelse(short, lab, "Transformed Hazard Difference")
          }
       }
       ######################################################################

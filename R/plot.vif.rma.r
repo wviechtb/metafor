@@ -62,23 +62,9 @@ plot.vif.rma <- function(x,
 
    ddd <- list(...)
 
-   if (is.null(ddd$tail)) {
-      tail <- "upper"
-   } else {
-      tail <- match.arg(ddd$tail, c("lower", "upper"))
-   }
-
-   if (is.null(ddd$new)) {
-      new <- TRUE
-   } else {
-      new <- FALSE
-   }
-
-   if (is.null(ddd$mainadd)) {
-      mainadd <- ""
-   } else {
-      mainadd <- ddd$mainadd
-   }
+   tail    <- .chkddd(ddd$tail, "upper", match.arg(ddd$tail, c("lower", "upper")))
+   new     <- .chkddd(ddd$new, TRUE, FALSE)
+   mainadd <- .chkddd(ddd$mainadd, "")
 
    ### check if 'sim' was actually used
 

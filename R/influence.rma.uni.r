@@ -22,11 +22,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
    btt <- .set.btt(ddd$btt, x$p, int.incl=FALSE, Xnames=colnames(x$X)) # note: 1:p by default (also in models with intercept)
    m <- length(btt)
 
-   if (is.null(ddd$measure)) {
-      measure <- "all"
-   } else {
-      measure <- ddd$measure
-   }
+   measure <- .chkddd(ddd$measure, "all")
 
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
@@ -176,9 +172,9 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
    resid <- x$yi - delpred
    resid[abs(resid) < 100 * .Machine$double.eps] <- 0
-   #resid[abs(resid) < 100 * .Machine$double.eps * median(abs(resid), na.rm=TRUE)] <- 0 ### see lm.influence
+   #resid[abs(resid) < 100 * .Machine$double.eps * median(abs(resid), na.rm=TRUE)] <- 0 # see lm.influence
    #seresid <- sqrt(x$vi + vdelpred + tau2.del)
-   seresid <- sqrt(x$vi * s2w.del + vdelpred + tau2.del * s2w.del) ### this yields the same results as a mean shift outlier model when using test="knha"
+   seresid <- sqrt(x$vi * s2w.del + vdelpred + tau2.del * s2w.del) # this yields the same results as a mean shift outlier model when using test="knha"
    stresid <- resid / seresid
 
    ### extract weights
@@ -211,7 +207,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
       #inf$cov.r > 1 + 3*m/(x$k-m) |
       #inf$cov.r < 1 - 3*m/(x$k-m) |
       inf$hat > 3*x$p/x$k |
-      apply(abs(dfbs) > 1, 1, any) ### consider using rowAnys() from matrixStats package
+      apply(abs(dfbs) > 1, 1, any) # consider using rowAnys() from matrixStats package
 
    #print(is.infl)
 

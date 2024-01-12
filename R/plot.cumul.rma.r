@@ -96,8 +96,8 @@ digits, cols, grid=TRUE, pch=19, cex=1, lwd=2, ...) {
       grid <- TRUE
    }
 
-   lplot <- function(..., addgrid) plot(...)
-   laxis <- function(..., addgrid) axis(...)
+   lplot <- function(..., addgrid, at.lab) plot(...)
+   laxis <- function(..., addgrid, at.lab) axis(...)
 
    #########################################################################
 
@@ -168,16 +168,24 @@ digits, cols, grid=TRUE, pch=19, cex=1, lwd=2, ...) {
       at <- at[at < par("usr")[2]]
    }
 
-   at.lab <- at
+   if (is.null(ddd$at.lab)) {
 
-   if (is.function(atransf)) {
-      if (is.null(targs)) {
-         at.lab <- fmtx(sapply(at.lab, atransf), digits[[1]], drop0ifint=TRUE)
+      at.lab <- at
+
+      if (is.function(atransf)) {
+         if (is.null(targs)) {
+            at.lab <- fmtx(sapply(at.lab, atransf), digits[[1]], drop0ifint=TRUE)
+         } else {
+            at.lab <- fmtx(sapply(at.lab, atransf, targs), digits[[1]], drop0ifint=TRUE)
+         }
       } else {
-         at.lab <- fmtx(sapply(at.lab, atransf, targs), digits[[1]], drop0ifint=TRUE)
+         at.lab <- fmtx(at.lab, digits[[1]], drop0ifint=TRUE)
       }
+
    } else {
-      at.lab <- fmtx(at.lab, digits[[1]], drop0ifint=TRUE)
+
+      at.lab <- ddd$at.lab
+
    }
 
    ### add x-axis

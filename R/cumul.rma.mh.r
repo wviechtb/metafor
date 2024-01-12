@@ -29,11 +29,7 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
 
-   if (is.null(ddd$decreasing)) {
-      decreasing <- FALSE
-   } else {
-      decreasing <- ddd$decreasing
-   }
+   decreasing <- .chkddd(ddd$decreasing, FALSE)
 
    #########################################################################
 

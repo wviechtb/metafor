@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-7</span>
       </span>
     </div>
 
@@ -41,7 +41,7 @@
   </a>
 </li>
 <li>
-  <a href="../reference/metafor-package.html">Introduction</a>
+  <a href="../reference/metafor-package.html">Intro</a>
 </li>
 <li>
   <a href="../reference/index.html">Functions</a>
@@ -62,16 +62,10 @@
         </li>
         
         <li>
-  <a href="https://twitter.com/wviechtb" class="external-link">
-    <span class="fa fa-twitter"></span>
-     
-  </a>
+  <a href="https://scholar.social/@wviechtb" class="external-link">Mastodon</a>
 </li>
 <li>
-  <a href="https://github.com/wviechtb/metafor" class="external-link">
-    <span class="fa fa-github"></span>
-     
-  </a>
+  <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>
 </li>
         
         
@@ -118,7 +112,7 @@
 <h3 id="improved-inference-methods">Improved Inference Methods<a class="anchor" aria-label="anchor" href="#improved-inference-methods"></a></h3>
 
 
-<p>When fitting models with the <code><a href="rma.uni.html">rma.uni</a></code> function, tests of individual model coefficients and the corresponding confidence intervals are by default (i.e., when <code>test="z"</code>) based on a standard normal distribution, while the omnibus test is based on a chi-square distribution. These inference methods may not perform nominally (i.e., the Type I error rate of tests and the coverage rate of confidence intervals may deviate from the chosen level), especially when the number of studies, <em></em>\(k\), is low. Therefore, it is highly recommended to use the method by Hartung (1999), Sidik and Jonkman (2002), and Knapp and Hartung (2003) (the Knapp-Hartung method; also referred to as the Hartung-Knapp-Sidik-Jonkman method) by setting <code>test="knha"</code>. Then tests of individual coefficients and confidence intervals are based on a t-distribution with <em></em>\(k-p\) degrees of freedom, while the omnibus test then uses an F-distribution with <em></em>\(m\) and <em></em>\(k-p\) degrees of freedom (with <em></em>\(m\) denoting the number of coefficients tested and <em></em>\(p\) the total number of model coefficients). Various simulation studies have shown that this method works very well in providing tests and confidence intervals with close to nominal performance (e.g., Sánchez-Meca &amp; Marín-Martínez, 2008; Viechtbauer et al., 2015).</p>
+<p>When fitting models with the <code><a href="rma.uni.html">rma.uni</a></code> function, tests of individual model coefficients and the corresponding confidence intervals are by default (i.e., when <code>test="z"</code>) based on a standard normal distribution, while the omnibus test is based on a chi-square distribution. These inference methods may not perform nominally (i.e., the Type I error rate of tests and the coverage rate of confidence intervals may deviate from the chosen level), especially when the number of studies, <em></em>\(k\), is low. Therefore, it is highly recommended to use the method by Hartung (1999), Sidik and Jonkman (2002), and Knapp and Hartung (2003) (the Knapp-Hartung method; also referred to as the Hartung-Knapp-Sidik-Jonkman method) by setting <code>test="knha"</code> (or equivalently, <code>test="hksj"</code>). Then tests of individual coefficients and confidence intervals are based on a t-distribution with <em></em>\(k-p\) degrees of freedom, while the omnibus test then uses an F-distribution with <em></em>\(m\) and <em></em>\(k-p\) degrees of freedom (with <em></em>\(m\) denoting the number of coefficients tested and <em></em>\(p\) the total number of model coefficients). Various simulation studies have shown that this method works very well in providing tests and confidence intervals with close to nominal performance (e.g., Sánchez-Meca &amp; Marín-Martínez, 2008; Viechtbauer et al., 2015).</p>
 <p>Alternatively, one can also conduct permutation tests using the <code><a href="permutest.html">permutest</a></code> function. These also perform very well (and are, in a certain sense, ‘exact’ tests), but are computationally expensive.</p>
 <p>For models fitted with the <code><a href="rma.mv.html">rma.mv</a></code> and <code><a href="rma.glmm.html">rma.glmm</a></code> functions, the Knapp-Hartung method and permutation tests are not available. Instead, one can set <code>test="t"</code> to also use t- and F-distributions for making inferences (although this does not involve the adjustment to the standard errors of the estimated model coefficients that is made as part of the Knapp-Hartung method). For <code><a href="rma.mv.html">rma.mv</a></code>, one should also set <code>dfs="contain"</code>, which uses an improved method for approximating the degrees of freedom of the t- and F-distributions.</p>
 <p>Note that <code>test="z"</code> is the default for the <code><a href="rma.uni.html">rma.uni</a></code>, <code><a href="rma.mv.html">rma.mv</a></code>, and the <code><a href="rma.glmm.html">rma.glmm</a></code> functions. While the improved inference methods described above should ideally be the default, changing this now would break backwards compatibility.</p>

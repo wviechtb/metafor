@@ -30,11 +30,11 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
    if (missing(control))
       control <- list()
 
-   level <- .level(level)
-
    ddd <- list(...)
 
    .chkdots(ddd, c("time", "xlim", "extint"))
+
+   level <- .level(level, stopon100=.isTRUE(ddd$extint))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()

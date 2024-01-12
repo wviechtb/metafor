@@ -213,63 +213,31 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    if (!is.null(ddd$transf))
       warning("Function does not have a 'transf' argument (use 'atransf' instead).", call.=FALSE, immediate.=TRUE)
 
-   lplot     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) plot(...)
-   labline   <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) abline(...)
-   lsegments <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) segments(...)
-   laxis     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) axis(...)
-   lpolygon  <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) polygon(...)
-   llines    <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) lines(...)
-   lpoints   <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) points(...)
-   lrect     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) rect(...)
-   ltext     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res) text(...)
+   lplot     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res, at.lab) plot(...)
+   labline   <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res, at.lab) abline(...)
+   lsegments <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res, at.lab) segments(...)
+   laxis     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res, at.lab) axis(...)
+   lpolygon  <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res, at.lab) polygon(...)
+   llines    <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res, at.lab) lines(...)
+   lpoints   <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res, at.lab) points(...)
+   lrect     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res, at.lab) rect(...)
+   ltext     <- function(..., refline2, level2, lty2, colci, colref, colbox, transf, ci.res, at.lab) text(...)
 
    ### refline2, level2, and lty2 for adding a second reference line / funnel
 
-   if (!is.null(ddd$refline2)) {
-      refline2 <- ddd$refline2
-   } else {
-      refline2 <- NULL
-   }
-
-   if (!is.null(ddd$level2)) {
-      level2 <- ddd$level2
-   } else {
-      level2 <- 95
-   }
-
-   if (!is.null(ddd$lty2)) {
-      lty2 <- ddd$lty2
-   } else {
-      lty2 <- 3
-   }
+   refline2 <- ddd$refline2
+   level2   <- .chkddd(ddd$level2, 95)
+   lty2     <- .chkddd(ddd$lty2, 3)
 
    ### number of y-axis values at which to calculate the bounds of the pseudo confidence interval
 
-   if (!is.null(ddd$ci.res)) {
-      ci.res <- ddd$ci.res
-   } else {
-      ci.res <- 1000
-   }
+   ci.res <- .chkddd(ddd$ci.res, 1000)
 
    ### to adjust color of reference line, region bounds, and the L box
 
-   if (!is.null(ddd$colref)) {
-      colref <- ddd$colref
-   } else {
-      colref <- .coladj(par("bg","fg"), dark=0.6, light=-0.6)
-   }
-
-   if (!is.null(ddd$colci)) {
-      colci <- ddd$colci
-   } else {
-      colci <- .coladj(par("bg","fg"), dark=0.6, light=-0.6)
-   }
-
-   if (!is.null(ddd$colbox)) {
-      colbox <- ddd$colbox
-   } else {
-      colbox <- .coladj(par("bg","fg"), dark=0.6, light=-0.6)
-   }
+   colref <- .chkddd(ddd$colref, .coladj(par("bg","fg"), dark=0.6, light=-0.6))
+   colci  <- .chkddd(ddd$colci,  .coladj(par("bg","fg"), dark=0.6, light=-0.6))
+   colbox <- .chkddd(ddd$colbox, .coladj(par("bg","fg"), dark=0.6, light=-0.6))
 
    #########################################################################
 
@@ -400,10 +368,9 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    if (is.element(yaxis, c("sei", "vi", "seinv", "vinv"))) {
 
-      level     <- ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
-      level2    <- ifelse(level2 == 0, 1, ifelse(level2 >= 1, (100-level2)/100, ifelse(level2 > .5, 1-level2, level2)))
-      #level    <- ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)) # note: there may be multiple level values
-      level.min <- min(level)                                                              # note: smallest level is the widest CI
+      level  <- .level(level, allow.vector=TRUE) # note: there may be multiple level values
+      level2 <- .level(level2)
+      level.min <- min(level) # note: smallest level is the widest CI
       lvals     <- length(level)
 
       ### calculate the CI bounds at the bottom of the figure (for the widest CI if there are multiple)
@@ -603,16 +570,24 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       at <- at[at < par("usr")[2]]
    }
 
-   at.lab <- at
+   if (is.null(ddd$at.lab)) {
 
-   if (is.function(atransf)) {
-      if (is.null(targs)) {
-         at.lab <- fmtx(sapply(at.lab, atransf), digits[[1]], drop0ifint=TRUE)
+      at.lab <- at
+
+      if (is.function(atransf)) {
+         if (is.null(targs)) {
+            at.lab <- fmtx(sapply(at.lab, atransf), digits[[1]], drop0ifint=TRUE)
+         } else {
+            at.lab <- fmtx(sapply(at.lab, atransf, targs), digits[[1]], drop0ifint=TRUE)
+         }
       } else {
-         at.lab <- fmtx(sapply(at.lab, atransf, targs), digits[[1]], drop0ifint=TRUE)
+         at.lab <- fmtx(at.lab, digits[[1]], drop0ifint=TRUE)
       }
+
    } else {
-      at.lab <- fmtx(at.lab, digits[[1]], drop0ifint=TRUE)
+
+      at.lab <- ddd$at.lab
+
    }
 
    ### add x-axis

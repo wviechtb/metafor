@@ -30,7 +30,7 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
 ### fit random-effects model
 res <- rma(yi, vi, data=dat)
 
-### get 95% CI for tau^2, tau, I^2, and H^2
+### get 95\% CI for tau^2, tau, I^2, and H^2
 sav <- confint(res)
 sav
 
@@ -48,7 +48,7 @@ V <- vcalc(vi=1, cluster=author, rvars=c(v1i, v2i), data=dat)
 ### fit multivariate model
 res <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="UN", data=dat)
 
-### get 95% CI for variance components and correlation
+### get 95\% CI for variance components and correlation
 sav <- confint(res)
 sav
 

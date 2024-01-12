@@ -24,8 +24,8 @@ test_that("rma() correctly handles an 'escalc' object", {
 
 test_that("rma() works with method='DLIT' and method='SJIT'", {
 
-   res <- rma(yi, vi, data=dat, method="DLIT", control=list(maxiter=500))
-   expect_equivalent(res$tau2, 0.1576, tolerance=.tol[["var"]])
+   res <- rma(yi, vi, data=dat, method="DLIT")
+   expect_equivalent(res$tau2, 0.3181, tolerance=.tol[["var"]])
    res <- rma(yi, vi, data=dat, method="SJIT")
    expect_equivalent(res$tau2, 0.3181, tolerance=.tol[["var"]])
 

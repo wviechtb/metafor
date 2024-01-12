@@ -59,6 +59,7 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
          res.table <- data.frame(estimate=fmtx(c(x$Xb), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), zval=fmtx(x$zval, digits[["test"]]), pval=fmtp(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
       }
       rownames(res.table) <- paste0(seq_len(x$m), ":")
+
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
       .print.table(tmp, mstyle)
 
@@ -101,6 +102,7 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
          res.table <- data.frame(estimate=fmtx(c(x$Za), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), zval=fmtx(x$zval, digits[["test"]]), pval=fmtp(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
       }
       rownames(res.table) <- paste0(seq_len(x$m), ":")
+
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
       .print.table(tmp, mstyle)
 

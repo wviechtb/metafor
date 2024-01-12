@@ -24,7 +24,7 @@ conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
 
    .chkdots(ddd, c("cifac"))
 
-   cifac <- ifelse(is.null(ddd$cifac), 0.1, ddd$cifac)
+   cifac <- .chkddd(ddd$cifac, 0.1)
 
    #########################################################################
 

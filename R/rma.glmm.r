@@ -90,13 +90,13 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    ### set defaults or get onlyo1, addyi, and addvi arguments
 
-   onlyo1 <- ifelse(is.null(ddd$onlyo1), FALSE, ddd$onlyo1)
-   addyi  <- ifelse(is.null(ddd$addyi),  TRUE,  ddd$addyi)
-   addvi  <- ifelse(is.null(ddd$addvi),  TRUE,  ddd$addvi)
+   onlyo1 <- .chkddd(ddd$onlyo1, FALSE)
+   addyi  <- .chkddd(ddd$addyi,  TRUE)
+   addvi  <- .chkddd(ddd$addvi,  TRUE)
 
    ### set default for i2def
 
-   i2def <- ifelse(is.null(ddd$i2def), "1", ddd$i2def)
+   i2def <- .chkddd(ddd$i2def, "1")
 
    ### set defaults for digits
 

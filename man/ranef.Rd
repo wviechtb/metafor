@@ -40,7 +40,7 @@
 
    When using the \code{transf} argument, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output.
 
-   By default, a standard normal distribution is used to construct the prediction intervals. When the model was fitted with \code{test="t"} or \code{test="knha"}, then a t-distribution with \mjseqn{k-p} degrees of freedom is used.
+   By default, a standard normal distribution is used to construct the prediction intervals. When the model was fitted with \code{test="t"}, \code{test="knha"}, \code{test="hksj"}, or \code{test="adhoc"}, then a t-distribution with \mjseqn{k-p} degrees of freedom is used.
 
    To be precise, it should be noted that the function actually computes empirical BLUPs (eBLUPs), since the predicted values are a function of the estimated variance component(s).
 }

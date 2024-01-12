@@ -8,17 +8,8 @@ as.data.frame.confint.rma <- function(x, ...) {
 
    .chkdots(ddd, c("fixed", "random"))
 
-   if (is.null(ddd$fixed)) {
-      fixed <- is.element("fixed", names(x))
-   } else {
-      fixed <- ddd$fixed
-   }
-
-   if (is.null(ddd$random)) {
-      random <- is.element("random", names(x))
-   } else {
-      random <- ddd$random
-   }
+   fixed  <- .chkddd(ddd$fixed,  is.element("fixed",  names(x)))
+   random <- .chkddd(ddd$random, is.element("random", names(x)))
 
    if (fixed) {
       df <- x$fixed

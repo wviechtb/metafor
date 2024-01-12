@@ -51,7 +51,7 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 ### fit mixed-effects model with absolute latitude and publication year as moderators
 res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
 
-### extract the model fitting weights (in %)
+### extract the model fitting weights (in \%)
 weights(res)
 
 ### extract the weight matrix

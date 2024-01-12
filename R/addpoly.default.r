@@ -104,11 +104,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
    ### annotation symbols vector
 
-   if (is.null(ddd$annosym)) {
-      annosym <- .getfromenv("forest", "annosym", default=NULL)
-   } else {
-      annosym <- ddd$annosym
-   }
+   annosym <- .chkddd(ddd$annosym, .getfromenv("forest", "annosym", default=NULL))
 
    if (is.null(annosym))
       annosym <- c(" [", ", ", "]", "-", " ") # 4th element for minus sign symbol; 5th for space (in place of numbers and +)
@@ -119,11 +115,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
    if (length(annosym) != 5)
       stop(mstyle$stop("Argument 'annosym' must be a vector of length 3 (or 4 or 5)."))
 
-   if (is.null(ddd$lcol)) {
-      lcol <- .coladj(par("fg"), dark=-0.3, light=0.3)
-   } else {
-      lcol <- ddd$lcol
-   }
+   lcol <- .chkddd(ddd$lcol, .coladj(par("fg"), dark=-0.3, light=0.3))
 
    lsegments <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym, textpos) segments(...)
    ltext     <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym, textpos) text(...)
@@ -304,11 +296,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
    ### allow adjustment of position of study labels and annotations via textpos argument
 
-   if (is.null(ddd$textpos)) {
-      textpos <- .getfromenv("forest", "textpos", default=xlim)
-   } else {
-      textpos <- ddd$textpos
-   }
+   textpos <- .chkddd(ddd$textpos, .getfromenv("forest", "textpos", default=xlim))
 
    if (length(textpos) != 2L)
       stop(mstyle$stop("Argument 'textpos' must be of length 2."))

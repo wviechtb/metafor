@@ -167,11 +167,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (!annotate)
       header.right <- NULL
 
-   if (is.null(ddd$decreasing)) {
-      decreasing <- FALSE
-   } else {
-      decreasing <- ddd$decreasing
-   }
+   decreasing <- .chkddd(ddd$decreasing, FALSE)
 
    if (!is.null(ddd$clim))
       olim <- ddd$clim
@@ -188,11 +184,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          rowadj <- c(rowadj,0) # if two values are specified, use them for 1&2
    }
 
-   if (is.null(ddd$top)) {
-      top <- 3
-   } else {
-      top <- ddd$top
-   }
+   top <- .chkddd(ddd$top, 3)
 
    if (is.null(ddd$xlabadj)) {
       xlabadj <- c(NA,NA)
@@ -202,20 +194,16 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          xlabadj <- c(xlabadj, 1-xlabadj)
    }
 
-   if (is.null(ddd$xlabfont)) {
-      xlabfont <- 1
-   } else {
-      xlabfont <- ddd$xlabfont
-   }
+   xlabfont <- .chkddd(ddd$xlabfont, 1)
 
-   lplot     <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) plot(...)
-   labline   <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) abline(...)
-   lsegments <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) segments(...)
-   laxis     <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) axis(...)
-   lmtext    <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) mtext(...)
-   lpolygon  <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) polygon(...)
-   ltext     <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) text(...)
-   lpoints   <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont) points(...)
+   lplot     <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) plot(...)
+   labline   <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) abline(...)
+   lsegments <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) segments(...)
+   laxis     <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) axis(...)
+   lmtext    <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) mtext(...)
+   lpolygon  <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) polygon(...)
+   ltext     <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) text(...)
+   lpoints   <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) points(...)
 
    #########################################################################
 
@@ -578,16 +566,24 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### x-axis labels (apply transformation to axis labels if requested)
 
-   at.lab <- at
+   if (is.null(ddd$at.lab)) {
 
-   if (is.function(atransf)) {
-      if (is.null(targs)) {
-         at.lab <- fmtx(sapply(at.lab, atransf), digits[[2]], drop0ifint=TRUE)
+      at.lab <- at
+
+      if (is.function(atransf)) {
+         if (is.null(targs)) {
+            at.lab <- fmtx(sapply(at.lab, atransf), digits[[2]], drop0ifint=TRUE)
+         } else {
+            at.lab <- fmtx(sapply(at.lab, atransf, targs), digits[[2]], drop0ifint=TRUE)
+         }
       } else {
-         at.lab <- fmtx(sapply(at.lab, atransf, targs), digits[[2]], drop0ifint=TRUE)
+         at.lab <- fmtx(at.lab, digits[[2]], drop0ifint=TRUE)
       }
+
    } else {
-      at.lab <- fmtx(at.lab, digits[[2]], drop0ifint=TRUE)
+
+      at.lab <- ddd$at.lab
+
    }
 
    ### set plot limits (xlim)
@@ -660,11 +656,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### allow adjustment of position of study labels and annotations via textpos argument
 
-   if (is.null(ddd$textpos)) {
-      textpos <- xlim
-   } else {
-      textpos <- ddd$textpos
-   }
+   textpos <- .chkddd(ddd$textpos, xlim)
 
    if (length(textpos) != 2L)
       stop(mstyle$stop("Argument 'textpos' must be of length 2."))

@@ -8,7 +8,7 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
 
    .start.plot()
 
-   if (dev.cur() == 1) {
+   if (dev.cur() == 1L) { # if only the 'null device' is currently open, set mfrow
       par(mfrow=n2mfrow(x$comps))
       #on.exit(par(mfrow=c(1,1)), add=TRUE)
    }
@@ -21,8 +21,8 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
 
    ### filter out some arguments for the plot() function
 
-   lplot   <- function(..., time, LB, startmethod, sub1, sqrt, exp) plot(...)
-   lpoints <- function(..., time, LB, startmethod, sub1, log, sqrt, exp) points(...) # need 'log' here so profile(res, log="x") doesn't throw a warning
+   lplot   <- function(..., time, LB, startmethod, sub1, sqrt, exp, pred, blup) plot(...)
+   lpoints <- function(..., time, LB, startmethod, sub1, log, sqrt, exp, pred, blup) points(...) # need 'log' here so profile(res, log="x") doesn't throw a warning
 
    #########################################################################
 
@@ -37,8 +37,13 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
       if (missing.xlab)
          xlab <- x$xlab
 
-      if (missing.ylab)
-         ylab <- x$ylab
+      if (missing.ylab) {
+         if (isTRUE(x$exp)) {
+            ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Likelihood", sep="")
+         } else {
+            ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
+         }
+      }
 
       if (missing.main)
          main <- x$title
@@ -58,8 +63,18 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
          abline(h=x$maxll, lty="dotted")
       }
 
-      if (cline)
-         abline(h=x$maxll - qchisq(0.95, df=1)/2, lty="dotted")
+      if (isTRUE(cline))
+         cline <- 0.05
+
+      if (is.numeric(cline)) {
+         cline <- .level(cline, argname="cline")
+         if (isTRUE(x$exp)) {
+            hval <- exp(log(x$maxll) - qchisq(1-cline, df=1)/2)
+         } else {
+            hval <- x$maxll - qchisq(1-cline, df=1)/2
+         }
+         abline(h=hval, lty="dotted")
+      }
 
       lpoints(x[[1]], x[[2]], type="o", pch=pch, ...)
 
@@ -81,7 +96,11 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
          }
 
          if (missing.ylab) {
-            ylab <- x[[j]]$ylab
+            if (isTRUE(x$exp)) {
+               ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Likelihood", sep="")
+            } else {
+               ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
+            }
          } else {
             if (length(ylab) == 1L)
                ylab <- rep(ylab, x$comps)

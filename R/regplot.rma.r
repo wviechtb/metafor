@@ -94,11 +94,10 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       grid <- TRUE
    }
 
-   ### shade argument can either be a logical or a color (first for ci, second for pi)
+   ### shade argument can either be a logical or a color vector (first for ci, second for pi)
 
-   if (is.logical(shade)) {
+   if (is.logical(shade))
       shadecol <- c(.coladj(par("bg","fg"), dark=0.15, light=-0.15), .coladj(par("bg","fg"), dark=0.05, light=-0.05))
-   }
 
    if (is.character(shade)) {
       if (length(shade) == 1L)
@@ -163,32 +162,18 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    ddd <- list(...)
 
-   lplot    <- function(..., grep, fixed, box.lty) plot(...)
-   laxis    <- function(..., grep, fixed, box.lty) axis(...)
-   lpolygon <- function(..., grep, fixed, box.lty) polygon(...)
-   llines   <- function(..., grep, fixed, box.lty) lines(...)
-   lpoints  <- function(..., grep, fixed, box.lty) points(...)
-   labline  <- function(..., grep, fixed, box.lty) abline(...)
-   lbox     <- function(..., grep, fixed, box.lty) box(...)
-   ltext    <- function(..., grep, fixed, box.lty) text(...)
+   lplot    <- function(..., grep, fixed, box.lty, at.lab) plot(...)
+   laxis    <- function(..., grep, fixed, box.lty, at.lab) axis(...)
+   lpolygon <- function(..., grep, fixed, box.lty, at.lab) polygon(...)
+   llines   <- function(..., grep, fixed, box.lty, at.lab) lines(...)
+   lpoints  <- function(..., grep, fixed, box.lty, at.lab) points(...)
+   labline  <- function(..., grep, fixed, box.lty, at.lab) abline(...)
+   lbox     <- function(..., grep, fixed, box.lty, at.lab) box(...)
+   ltext    <- function(..., grep, fixed, box.lty, at.lab) text(...)
 
-   if (is.null(ddd$fixed)) {
-      fixed <- FALSE
-   } else {
-      fixed <- .isTRUE(ddd$fixed)
-   }
-
-   if (is.null(ddd$grep)) {
-      grep <- FALSE
-   } else {
-      grep <- .isTRUE(ddd$grep)
-   }
-
-   if (is.null(ddd$box.lty)) {
-      box.lty <- par("lty")
-   } else {
-      box.lty <- ddd$box.lty
-   }
+   grep    <- .chkddd(ddd$grep,  FALSE, .isTRUE(ddd$grep))
+   fixed   <- .chkddd(ddd$fixed, FALSE, .isTRUE(ddd$fixed))
+   box.lty <- .chkddd(ddd$box.lty, par("lty"))
 
    ############################################################################
 
@@ -524,6 +509,14 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    pi.lb <- tmp[,1]
    pi.ub <- tmp[,2]
 
+   tmp <- .psort(yi.ci.lb, yi.ci.ub)
+   yi.ci.lb <- tmp[,1]
+   yi.ci.ub <- tmp[,2]
+
+   tmp <- .psort(yi.pi.lb, yi.pi.ub)
+   yi.pi.lb <- tmp[,1]
+   yi.pi.ub <- tmp[,2]
+
    ### apply observation/outcome limits if specified
 
    if (!missing(olim)) {
@@ -625,16 +618,24 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    ### y-axis labels (apply transformation to axis labels if requested)
 
-   at.lab <- at
+   if (is.null(ddd$at.lab)) {
 
-   if (is.function(atransf)) {
-      if (is.null(targs)) {
-         at.lab <- fmtx(sapply(at.lab, atransf), digits[[1]], drop0ifint=TRUE)
+      at.lab <- at
+
+      if (is.function(atransf)) {
+         if (is.null(targs)) {
+            at.lab <- fmtx(sapply(at.lab, atransf), digits[[1]], drop0ifint=TRUE)
+         } else {
+            at.lab <- fmtx(sapply(at.lab, atransf, targs), digits[[1]], drop0ifint=TRUE)
+         }
       } else {
-         at.lab <- fmtx(sapply(at.lab, atransf, targs), digits[[1]], drop0ifint=TRUE)
+         at.lab <- fmtx(at.lab, digits[[1]], drop0ifint=TRUE)
       }
+
    } else {
-      at.lab <- fmtx(at.lab, digits[[1]], drop0ifint=TRUE)
+
+      at.lab <- ddd$at.lab
+
    }
 
    ### add y-axis

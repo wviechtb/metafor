@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-7</span>
       </span>
     </div>
 
@@ -41,7 +41,7 @@
   </a>
 </li>
 <li>
-  <a href="../reference/metafor-package.html">Introduction</a>
+  <a href="../reference/metafor-package.html">Intro</a>
 </li>
 <li>
   <a href="../reference/index.html">Functions</a>
@@ -62,16 +62,10 @@
         </li>
         
         <li>
-  <a href="https://twitter.com/wviechtb" class="external-link">
-    <span class="fa fa-twitter"></span>
-     
-  </a>
+  <a href="https://scholar.social/@wviechtb" class="external-link">Mastodon</a>
 </li>
 <li>
-  <a href="https://github.com/wviechtb/metafor" class="external-link">
-    <span class="fa fa-github"></span>
-     
-  </a>
+  <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>
 </li>
         
         
@@ -343,7 +337,7 @@
 <li><p><code>"UCOR"</code> for the <em>raw correlation coefficient</em> corrected for its slight negative bias (based on equation 2.3 in Olkin &amp; Pratt, 1958),</p></li>
 <li><p><code>"ZCOR"</code> for <em>Fisher's r-to-z transformed correlation coefficient</em> (Fisher, 1921).</p></li>
 </ul><p>If the correlation coefficient is unknown for some studies, but the t-statistics <em></em>\(t_i = r_i \sqrt{n_i - 2} / \sqrt{1 - r_i^2}\) are available for those studies (for the standard t-test of <em></em>\(\mbox{H}_0{:}\; \rho_i = 0\)), one can specify those values via argument <code>ti</code>, which are then transformed into the corresponding correlation coefficients within the function (the sign of the t-statistics is then taken to be the sign of the correlations). If only the (two-sided) p-values corresponding to the t-tests are known, one can specify those values via argument <code>pi</code>. However, since a two-sided p-value does not carry information about the sign of the test statistic (and hence neither about the correlation), the sign of the p-values (which can be negative) is used as the sign of the correlation coefficients (e.g., <code>escalc(measure="COR", pi=-0.07, ni=30)</code> yields a negative correlation of <code>-0.3354</code>).</p>
-<p>For <code>measure="COR"</code> and <code>measure="UCOR"</code>, one can choose between <code>vtype="LS"</code> (the default) for the usual large-sample approximation to compute the sampling variances (i.e., plugging the (biased-corrected) correlation coefficients into equation 12.27 in Borenstein, 2009), <code>vtype="UB"</code> to compute unbiased estimates of the sampling variances (see Hedges, 1989, but using the exact equation instead of the approximation), and <code>vtype="AV"</code> to compute the sampling variances with the usual large-sample approximation but plugging the sample-size weighted average of the (bias-corrected) correlation coefficients into the equation.</p>
+<p>For <code>measure="COR"</code> and <code>measure="UCOR"</code>, one can choose between <code>vtype="LS"</code> (the default) for the usual large-sample approximation to compute the sampling variances (i.e., plugging the (biased-corrected) correlation coefficients into equation 12.27 in Borenstein, 2009) and <code>vtype="AV"</code> to compute the sampling variances with the usual large-sample approximation but plugging the sample-size weighted average of the (bias-corrected) correlation coefficients into the equation. For <code>measure="UCOR"</code>, one can also choose <code>vtype="UB"</code> to compute unbiased estimates of the sampling variances (see Hedges, 1989, but using the exact equation instead of the approximation).</p>
 <p>Datasets corresponding to data of this type are provided in <code><a href="https://wviechtb.github.io/metadat/reference/dat.mcdaniel1994.html" class="external-link">dat.mcdaniel1994</a></code> and <code><a href="https://wviechtb.github.io/metadat/reference/dat.molloy2014.html" class="external-link">dat.molloy2014</a></code>.</p>
 <p>For meta-analyses involving multiple (dependent) correlation coefficients extracted from the same sample, see also the <code><a href="rcalc.html">rcalc</a></code> function.</p>
 <p></p>
@@ -394,9 +388,10 @@
 <h4 id="-a-measures-for-quantitative-variables-1">(3a) Measures for Quantitative Variables<a class="anchor" aria-label="anchor" href="#-a-measures-for-quantitative-variables-1"></a></h4>
 
 
-<p>The goal of a meta-analysis may be to characterize individual groups, where the response, characteristic, or dependent variable assessed in the individual studies is measured on some quantitative scale. In the simplest case, the raw mean for the quantitative variable is reported for each group, which then becomes the observed outcome for the meta-analysis. Here, one needs to specify <code>mi</code>, <code>sdi</code>, and <code>ni</code> for the observed means, the observed standard deviations, and the sample sizes, respectively. For ratio scale measurements, the log transformed mean or the log transformed coefficient of variation (with bias correction) may also be of interest (Nakagawa et al., 2015). If focus is solely on the variability of the measurements, then the log transformed standard deviation (with bias correction) is a useful measure (Nakagawa et al., 2015; Raudenbush &amp; Bryk, 1987). Here, one only needs to specify <code>sdi</code> and <code>ni</code>.</p>
+<p>The goal of a meta-analysis may be to characterize individual groups, where the response, characteristic, or dependent variable assessed in the individual studies is measured on some quantitative scale. In the simplest case, the raw mean for the quantitative variable is reported for each group, which then becomes the observed outcome for the meta-analysis. Here, one needs to specify <code>mi</code>, <code>sdi</code>, and <code>ni</code> for the observed means, the observed standard deviations, and the sample sizes, respectively. One can also compute the ‘single-group standardized mean’, where the mean is divided by the standard deviation (when first subtracting some fixed constant from each mean, then this is the ‘single-group standardized mean difference’). For ratio scale measurements, the log transformed mean or the log transformed coefficient of variation (with bias correction) may also be of interest (Nakagawa et al., 2015). If focus is solely on the variability of the measurements, then the log transformed standard deviation (with bias correction) is a useful measure (Nakagawa et al., 2015; Raudenbush &amp; Bryk, 1987). For the latter, one only needs to specify <code>sdi</code> and <code>ni</code>.</p>
 <p>The options for the <code>measure</code> argument are:</p>
 <p></p><ul><li><p><code>"MN"</code> for the <em>raw mean</em>,</p></li>
+<li><p><code>"SMN"</code> for the <em>single-group standardized mean</em>,</p></li>
 <li><p><code>"MNLN"</code> for the <em>log transformed mean</em>,</p></li>
 <li><p><code>"CVLN"</code> for the <em>log transformed coefficient of variation</em>,</p></li>
 <li><p><code>"SDLN"</code> for the <em>log transformed standard deviation</em>.</p></li>

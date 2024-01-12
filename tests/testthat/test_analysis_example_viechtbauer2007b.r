@@ -111,8 +111,8 @@ test_that("results are correct for the mixed-effects model.", {
                      tau2=sapply(res, function(x) x$tau2),
                      se.tau2=sapply(res, function(x) x$se.tau2))
 
-   expect_equivalent(res$tau2,    c(0.0253, 0.0388, 0.0475, 0.06, 0.0912, 0.0299, 0.0633, 0.0633, 0.024, 0.0558, 0.0633), tolerance=.tol[["var"]])
-   expect_equivalent(res$se.tau2, c(0.0197, 0.0764, 0.0376, 0.0528, 0.0436, 0.0437, 0.046, 0.046, 0.0222, 0.0409, 0.046), tolerance=.tol[["sevar"]])
+   expect_equivalent(res$tau2,    c(0.0253, 0.0388, 0.0475, 0.06, 0.0912, 0.0633, 0.0633, 0.0633, 0.024, 0.0558, 0.0633), tolerance=.tol[["var"]])
+   expect_equivalent(res$se.tau2, c(0.0197, 0.0764, 0.0376, 0.0528, 0.0436, 0.046, 0.046, 0.046, 0.0222, 0.0409, 0.046), tolerance=.tol[["sevar"]])
 
 })
 

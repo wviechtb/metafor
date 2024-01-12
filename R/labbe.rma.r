@@ -52,8 +52,8 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    ### set defaults or get addyi and addvi arguments
 
-   addyi <- ifelse(is.null(ddd$addyi), TRUE, ddd$addyi)
-   addvi <- ifelse(is.null(ddd$addvi), TRUE, ddd$addvi)
+   addyi <- .chkddd(ddd$addyi, TRUE)
+   addvi <- .chkddd(ddd$addvi, TRUE)
 
    ### grid argument can either be a logical or a color
 

@@ -114,7 +114,7 @@ dat
 ### 2) reports the t-statistic from an independent samples t-test (and group sizes)
 ### 3) reports the standardized mean difference directly (and group sizes)
 ### 4) dichotomized the continuous dependent variable and reports the resulting 2x2 table
-### 5) dichotomized the continuous dependent variable and reports an odds ratio with 95% CI
+### 5) dichotomized the continuous dependent variable and reports an odds ratio with 95\% CI
 ### 6) treated the group variable continuously and reports a Pearson product-moment correlation
 
 ### use escalc() to directly compute the SMD and its variance for studies 1, 2, and 3
@@ -181,7 +181,7 @@ dat
 ### 3) dichotomized one variable and reports means and SDs for the two corresponding groups
 ### 4) reports the phi coefficient, marginal counts, and total sample size
 ### 5) dichotomized both variables and reports the resulting 2x2 table
-### 6) dichotomized both variables and reports an odds ratio with 95% CI
+### 6) dichotomized both variables and reports an odds ratio with 95\% CI
 
 ### use escalc() to directly compute the correlation and its variance for studies 1 and 2
 dat <- escalc(measure="COR", ri=ri, ni=ni, ti=tval, data=dat)
