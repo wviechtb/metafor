@@ -1644,13 +1644,13 @@
    }
 
    if (optimizer == "Rcgmin") {
-      if (!requireNamespace("Rcgmin", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'Rcgmin' package to use this optimizer."), call.=FALSE)
+      if (!requireNamespace(optimizer, quietly=TRUE))
+         stop(mstyle$stop(paste0("Please install the '", optimizer, "' package to use this optimizer.")), call.=FALSE)
    }
 
    if (optimizer == "Rvmmin") {
-      if (!requireNamespace("Rvmmin", quietly=TRUE))
-         stop(mstyle$stop("Please install the 'Rvmmin' package to use this optimizer."), call.=FALSE)
+      if (!requireNamespace(optimizer, quietly=TRUE))
+         stop(mstyle$stop(paste0("Please install the '", optimizer, "' package to use this optimizer.")), call.=FALSE)
    }
 
    #########################################################################

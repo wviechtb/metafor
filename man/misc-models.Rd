@@ -19,7 +19,7 @@ However, the question then remains what the real fixed-effects model is all abou
 
       When using weighted estimation (the default in \code{\link{rma.uni}} when \code{method="FE"}), this implies that the fitted model provides an estimate of \mjdeqn{\bar{\theta}_w = \frac{\sum_{i=1}^k w_i \theta_i}{\sum_{i=1}^k w_i},}{\theta_w = \sum w_i \theta_i / \sum w_i,} that is, the \emph{weighted average} of the true effects/outcomes in the \mjseqn{k} studies, with weights equal to \mjseqn{w_i = 1/v_i}.
 
-      As an example, consider the meta-analysis by Bangert-Drowns et al. (2004) on the effectiveness of writing-to-learn interventions on academic achievement. The dataset (\code{\link[metadat]{dat.bangertdrowns2004}}) includes the observed standardized mean differences (variable \code{yi}) and the corresponding sampling variances (variable \code{vi}) of the 48 studies. We can fit a fixed-effects model to these data with:
+      As an example, consider the meta-analysis by Bangert-Drowns et al. (2004) on the effectiveness of writing-to-learn interventions on academic achievement. The dataset (\code{\link[metadat]{dat.bangertdrowns2004}}) includes the observed standardized mean differences (variable \code{yi}) and the corresponding sampling variances (variable \code{vi}) of 48 studies that have examined such an intervention. We can fit a fixed-effects model to these data with:
 
       \preformatted{# copy data into 'dat'
 dat <- dat.bangertdrowns2004
@@ -64,11 +64,11 @@ res
 # estimate      se    zval    pval   ci.lb   ci.ub
 #   0.2598  0.0380  6.8366  <.0001  0.1853  0.3343}
 
-      Therefore, the \code{estimate} value is now an estimate of the average of the true standardized mean differences of these 48 studies (i.e., \mjeqn{\hat{\bar{\theta}}_u = 0.26}{\theta-bar-hat_u = 0.26}).
+      Therefore, the value shown under \code{estimate} is now an estimate of the unweighted average of the true standardized mean differences of these 48 studies (i.e., \mjeqn{\hat{\bar{\theta}}_u = 0.26}{\theta-bar-hat_u = 0.26}).
 
       For weighted estimation, one could also choose to estimate \mjeqn{\bar{\theta}_w}{\theta_w}, where the \mjseqn{w_i} values are user-defined weights (via argument \code{weights} in \code{\link{rma.uni}}). Hence, using inverse-variance weights or unit weights (as in unweighted estimation) are just special cases. It is up to the user to decide to what extent \mjeqn{\bar{\theta}_w}{\theta_w} is a meaningful parameter to estimate (regardless of the weights used).
 
-      For example, we could use the sample sizes as weights:
+      For example, we could use the sample sizes of the studies as weights:
 
       \preformatted{# fit a fixed-effects model using the sample sizes as weights
 res <- rma(yi, vi, data=dat, method="FE", weights=ni)
@@ -116,7 +116,7 @@ res
 # estimate      se    zval    pval   ci.lb   ci.ub
 #   0.2219  0.0460  4.8209  <.0001  0.1317  0.3122}
 
-      The value shown under \code{estimate} is now an estimate of the average true standardized mean difference of studies in the population of studies from which the 48 studies included in this dataset have come (i.e., \mjeqn{\hat{\mu}_w = 0.22}{\mu-hat = 0.22}).
+      The value shown under \code{estimate} is now an estimate of the average true standardized mean difference of studies in the population of studies from which the 48 studies included in this dataset have come (i.e., \mjeqn{\hat{\mu} = 0.22}{\mu-hat = 0.22}).
 
       When using weighted estimation in the context of a random-effects model, the model is fitted with weights equal to \mjseqn{w_i = 1/(\tau^2 + v_i)}, with \mjseqn{\tau^2} replaced by its estimate (the default in \code{\link{rma.uni}} when \code{method} is set to one of the possible choices for estimating \mjseqn{\tau^2}). One can also choose unweighted estimation in the context of the random-effects model (\code{weighted=FALSE}) or specify user-defined weights (via \code{weights}), although the parameter that is estimated (i.e., \mjseqn{\mu}) remains the same regardless of the estimation method and weights used (as opposed to the fixed-effect model, where the parameter estimated is different for weighted versus unweighted estimation or when using different weights than the standard inverse-variance weights). Since weighted estimation with inverse-variance weights is most efficient, it is usually to be preferred for random-effects models (while in the fixed-effect model case, we must carefully consider whether \mjeqn{\bar{\theta}_w}{\theta_w} or \mjeqn{\bar{\theta}_u}{\theta_u} is the more meaningful parameter to estimate).
 
@@ -126,7 +126,7 @@ res
 
       Contrary to what is often stated in the literature, it is important to realize that the fixed-effects model does \emph{not} assume that the true effects/outcomes are homogeneous (i.e., that \mjseqn{\theta_i} is equal to some common value \mjseqn{\theta} in all \mjseqn{k} studies). In other words, the fixed-effects model provides perfectly valid inferences under heterogeneity, as long as one is restricting these inferences to the set of studies included in the meta-analysis and one realizes that the model does not provide an estimate of \mjseqn{\theta} or \mjseqn{\mu}, but of \mjeqn{\bar{\theta}_w}{\theta_w} or \mjeqn{\bar{\theta}_u}{\theta_u} (depending on the estimation method used).
 
-      However, such inferences are conditional on the included studies. It is therefore not permissible to generalize those inferences beyond the set of studies included in a meta-analysis. In contrast, a random-effects model provides unconditional inferences and therefore allows a generalization beyond the set of included studies, although the population of studies to which we can generalize is typically only vaguely defined (since the included studies are not a proper random sample from a specified sampling frame). Instead, we simply must assume that the included studies are a representative sample of \emph{some} population and it is to that population to which we are generalizing.
+      However, such inferences are conditional on the included studies. It is therefore not permissible to generalize those inferences beyond the set of studies included in a meta-analysis (or doing so requires \sQuote{extra-statistical} arguments). In contrast, a random-effects model provides unconditional inferences and therefore allows a generalization beyond the set of included studies, although the population of studies to which we can generalize is typically only vaguely defined (since the included studies are not a proper random sample from a specified sampling frame). Instead, we simply must assume that the included studies are a representative sample of \emph{some} population and it is to that population to which we are generalizing.
 
       Leaving aside this issue, the above implies that there is nothing wrong with fitting both the fixed- and random-effects models to the same data, since these models address inherently different questions (i.e., what was the average effect in the studies that have been conducted and are included in this meta-analysis versus what is the average effect in the larger population of studies?).
 
