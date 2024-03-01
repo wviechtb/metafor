@@ -70,10 +70,9 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
 
    ### process cluster variable
 
-   # note: cluster variable is assumed to be of the same length as the size of
-   # the original dataset passed to the model fitting function and so we apply
-   # the same subsetting and removing of missings (if necessary) as was done
-   # during model fitting
+   ### note: cluster variable must be of the same length as the original dataset
+   ###       so we have to apply the same subsetting (if necessary) and removing
+   ###       of NAs as was done during model fitting
 
    if (length(cluster) != x$k.all)
       stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not match length of data (", x$k.all, ").")))

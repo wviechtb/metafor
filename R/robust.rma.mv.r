@@ -22,8 +22,10 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, .
    #########################################################################
 
    ### process cluster variable
-   ### note: cluster variable is assumed to be of the same length as the original data passed to the model fitting function
-   ###       so we have to apply the same subsetting (if necessary) and removing of missings as done during model fitting
+
+   ### note: cluster variable must be of the same length as the original dataset
+   ###       so we have to apply the same subsetting (if necessary) and removing
+   ###       of NAs as was done during model fitting
 
    mf <- match.call()
    cluster <- .getx("cluster", mf=mf, data=x$data)

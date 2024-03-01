@@ -5,9 +5,10 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
 
    .chkclass(class(x), must="gosh.rma")
 
-   het <- match.arg(het, c("QE", "I2", "H2", "tau2"))
+   het <- match.arg(het, c("QE", "I2", "I^2", "H2", "H^2", "tau2", "tau^2", "tau"))
+   het <- sub("^", "", het, fixed=TRUE)
 
-   if (het == "tau2" && is.element(x$method, c("FE","EE","CE")))
+   if (is.element(het, c("tau2","tau")) && is.element(x$method, c("FE","EE","CE")))
       stop(mstyle$stop("Cannot plot 'tau2' for equal/fixed-effects models."))
 
    if (missing(cex)) {
@@ -28,7 +29,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
          trim <- as.list(trim)
       }
 
-      X <- cbind(x$res[,het], x$res[,6:ncol(x$res)])
+      X <- cbind(x$res[,het], x$res[,7:ncol(x$res)])
       del <- rep(FALSE, nrow(X))
       for (i in seq_len(ncol(X))) {
          del[X[,i] < quantile(X[,i], trim[[i]][1], na.rm=TRUE) | X[,i] > quantile(X[,i], 1-trim[[i]][length(trim[[i]])], na.rm=TRUE)] <- TRUE
@@ -141,11 +142,13 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
          labels <- expression(H^2)
       if (het == "tau2")
          labels <- expression(tau^2)
+      if (het == "tau")
+         labels <- expression(tau)
 
       if (x$int.only) {
          labels <- c(.setlab(x$measure, transf.char="FALSE", atransf.char="FALSE", gentype=2), labels)
       } else {
-         labels <- c(labels, colnames(x$res)[-seq_len(5)])
+         labels <- c(labels, colnames(x$res)[-seq_len(6)])
       }
 
    }
@@ -166,7 +169,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
       if (!xhist & yhist)
          layout(mat=matrix(c(1,2), nrow=1, byrow=TRUE), widths=c(1-hh[2],hh[2]))
 
-      hx <- hist(x$res[,6],   breaks=breaks[[1]], plot=FALSE)
+      hx <- hist(x$res[,"estimate"], breaks=breaks[[1]], plot=FALSE)
       hy <- hist(x$res[,het], breaks=breaks[[2]], plot=FALSE)
 
       if (missout) {
@@ -177,7 +180,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
             ylim <- range(hy$breaks)
 
          if (xhist) {
-            d <- density(x$res[,6], adjust=adjust[1], na.rm=TRUE)
+            d <- density(x$res[,"estimate"], adjust=adjust[1], na.rm=TRUE)
             brks <- hx$breaks
             nB <- length(brks)
             y <- hx$density
@@ -192,8 +195,8 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
 
          isout <- x$incl[,out]
 
-         hx.o <- hist(x$res[isout,6],  breaks=hx$breaks, plot=FALSE)
-         hx.i <- hist(x$res[!isout,6], breaks=hx$breaks, plot=FALSE)
+         hx.o <- hist(x$res[isout,"estimate"],  breaks=hx$breaks, plot=FALSE)
+         hx.i <- hist(x$res[!isout,"estimate"], breaks=hx$breaks, plot=FALSE)
 
          hy.o <- hist(x$res[isout,het],  breaks=hy$breaks, plot=FALSE)
          hy.i <- hist(x$res[!isout,het], breaks=hy$breaks, plot=FALSE)
@@ -204,8 +207,8 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
             ylim <- c(min(hy.o$breaks, hy.i$breaks), max(hy.o$breaks, hy.i$breaks))
 
          if (xhist) {
-            d.o <- density(x$res[isout,6],  adjust=adjust[1], na.rm=TRUE)
-            d.i <- density(x$res[!isout,6], adjust=adjust[1], na.rm=TRUE)
+            d.o <- density(x$res[isout,"estimate"],  adjust=adjust[1], na.rm=TRUE)
+            d.i <- density(x$res[!isout,"estimate"], adjust=adjust[1], na.rm=TRUE)
             brks.o <- hx.o$breaks
             brks.i <- hx.i$breaks
             nB.o <- length(brks.o)
@@ -228,7 +231,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
          plot.new()
 
       par(mar = par.mar.adj)
-      lplot(x$res[,6], x$res[,het], xlim=xlim, ylim=ylim, pch=pch, cex=cex, col=col.pnts, bty="l", xlab=labels[1], ylab=labels[2], ...)
+      lplot(x$res[,"estimate"], x$res[,het], xlim=xlim, ylim=ylim, pch=pch, cex=cex, col=col.pnts, bty="l", xlab=labels[1], ylab=labels[2], ...)
 
       if (missout) {
 
@@ -319,7 +322,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
 
       ### draw scatterplot matrix
 
-      X <- cbind(x$res[,het], x$res[,6:ncol(x$res)])
+      X <- cbind(x$res[,het], x$res[,7:ncol(x$res)])
       lpairs(X, pch=pch, cex=cex, diag.panel=panel.hist, col=col.pnts, labels=labels, ...)
 
    }

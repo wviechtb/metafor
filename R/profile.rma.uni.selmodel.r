@@ -10,9 +10,12 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
    if (x$betaspec) # TODO: consider allowing profiling over beta values as well
       stop(mstyle$stop("Cannot profile when one or more beta values were fixed."))
 
+   if (anyNA(steps))
+      stop(mstyle$stop("No missing values allowed in 'steps' argument."))
+
    if (length(steps) >= 2L) {
       if (missing(xlim))
-         xlim <- range(steps, na.rm=TRUE)
+         xlim <- range(steps)
       stepseq <- TRUE
    } else {
       if (steps < 2)

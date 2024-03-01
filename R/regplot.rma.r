@@ -12,7 +12,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    .chkclass(class(x), must="rma", notav=c("rma.mh","rma.peto"))
 
    if (x$int.only)
-      stop(mstyle$stop("Plot not applicable to intercept-only models."))
+      stop(mstyle$stop("Cannot draw plot for intercept-only models."))
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act), add=TRUE)
@@ -242,9 +242,8 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    options(na.action = na.act)
 
-   ### note: pch (if vector), psize (if vector), col (if vector), bg (if vector)
-   ###       must have the same length as the original dataset so we have to
-   ###       apply the same subsetting (if necessary) and removing of NAs as was
+   ### note: pch, psize, col, and bg (if vectors) must be of the same length as the original dataset
+   ###       so we have to apply the same subsetting (if necessary) and removing of NAs as was
    ###       done during the model fitting (note: NAs are removed further below)
 
    if (length(pch) == 1L)

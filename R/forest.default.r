@@ -899,7 +899,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       }
 
       if (showweights) {
-         annotext <- cbind(annotext[,1], paste0("%", rep(substr(annosym[1],1,1),3)), annotext[,2], annosym[1], annotext[,3], annosym[2], annotext[,4], annosym[3])
+         annotext <- cbind(annotext[,1], paste0("%", paste0(rep(substr(annosym[1],1,1),3), collapse="")), annotext[,2], annosym[1], annotext[,3], annosym[2], annotext[,4], annosym[3])
       } else {
          annotext <- cbind(annotext[,1], annosym[1], annotext[,2], annosym[2], annotext[,3], annosym[3])
       }

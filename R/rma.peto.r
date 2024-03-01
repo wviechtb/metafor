@@ -354,7 +354,7 @@ level=95, verbose=FALSE, digits, ...) {
    ###### fit statistics
 
    if (verbose)
-      message(mstyle$message("Computing fit statistics and log likelihood ..."))
+      message(mstyle$message("Computing fit statistics and log-likelihood ..."))
 
    ll.ML     <- -1/2 * (k.yi)   * log(2*base::pi)                   - 1/2 * sum(log(vi))                      - 1/2 * RSS
    ll.REML   <- -1/2 * (k.yi-1) * log(2*base::pi) + 1/2 * log(k.yi) - 1/2 * sum(log(vi)) - 1/2 * log(sum(wi)) - 1/2 * RSS

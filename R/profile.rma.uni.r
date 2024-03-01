@@ -10,9 +10,12 @@ profile.rma.uni <- function(fitted,
 
    x <- fitted
 
+   if (anyNA(steps))
+      stop(mstyle$stop("No missing values allowed in 'steps' argument."))
+
    if (length(steps) >= 2L) {
       if (missing(xlim))
-         xlim <- range(steps, na.rm=TRUE)
+         xlim <- range(steps)
       stepseq <- TRUE
    } else {
       if (steps < 2)
@@ -254,6 +257,7 @@ profile.rma.uni <- function(fitted,
       names(sav)[1] <- "tau"
 
    sav$I2 <- sapply(res, function(x) x$I2)
+   sav$H2 <- sapply(res, function(x) x$H2)
 
    if (pred) {
       sav$pred       <- do.call(cbind, lapply(res, function(x) x$pred)) # use do.call(cbind, lapply()) instead of sapply() to always get a matrix, even when predicting a single value

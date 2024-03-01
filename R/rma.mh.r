@@ -723,7 +723,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
    ###### fit statistics
 
    if (verbose)
-      message(mstyle$message("Computing fit statistics and log likelihood ..."))
+      message(mstyle$message("Computing fit statistics and log-likelihood ..."))
 
    if (k.yi >= 1) {
 

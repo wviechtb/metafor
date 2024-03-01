@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-8</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@
 <dd><p>an object of class <code>"gosh.rma"</code> obtained with <code><a href="gosh.html">gosh</a></code>.</p></dd>
 
    <dt>het</dt>
-<dd><p>character string to specify the heterogeneity measure to plot. Either <code>"I2"</code>, <code>"H2"</code>, <code>"QE"</code>, or <code>"tau2"</code> (the last only for random/mixed-effects models).</p></dd>
+<dd><p>character string to specify the heterogeneity measure to plot. Either <code>"I2"</code>, <code>"H2"</code>, <code>"QE"</code>, <code>"tau2"</code>, or <code>"tau"</code> (the last two only for random/mixed-effects models).</p></dd>
 
    <dt>pch</dt>
 <dd><p>plotting symbol to use. By default, a borderless filled circle is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
@@ -160,7 +160,7 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>For models without moderators, the function draws a scatter plot of the model estimates on the x-axis against the chosen measure of heterogeneity on the y-axis. Histograms of the respective distributions (with kernel density estimates superimposed) are shown in the margins (when <code>xhist=TRUE</code> and <code>yhist=TRUE</code>).</p>
+    <p>For models without moderators, the function draws a scatter plot of the model estimates on the x-axis against the chosen measure of heterogeneity on the y-axis for the various subsets. Histograms of the respective distributions (with kernel density estimates superimposed) are shown in the margins (when <code>xhist=TRUE</code> and <code>yhist=TRUE</code>).</p>
 <p>For models with moderators, the function draws a scatter plot matrix (with the <code><a href="https://rdrr.io/r/graphics/pairs.html" class="external-link">pairs</a></code> function) of the chosen measure of heterogeneity and each of the model coefficients. Histograms of the variables plotted are shown along the diagonal, with kernel density estimates of the distributions superimposed. Arguments <code>xlim</code>, <code>ylim</code>, <code>xhist</code>, and <code>yhist</code> are then ignored, while argument <code>hh</code> can be used to compress/stretch the height of the distributions shown along the diagonal.</p>
     </div>
     <div id="author">

@@ -10,9 +10,12 @@ profile.rma.ls <- function(fitted, alpha,
    if (x$optbeta)
       stop(mstyle$stop("Profiling not yet implemented for 'optbeta=TRUE'."))
 
+   if (anyNA(steps))
+      stop(mstyle$stop("No missing values allowed in 'steps' argument."))
+
    if (length(steps) >= 2L) {
       if (missing(xlim))
-         xlim <- range(steps, na.rm=TRUE)
+         xlim <- range(steps)
       stepseq <- TRUE
    } else {
       if (steps < 2)

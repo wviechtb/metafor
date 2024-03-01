@@ -2014,7 +2014,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
       if (anyNA(c(sigma2, tau2, rho, gamma2, phi))) {
 
-         optcall <- paste(optimizer, "(", par.arg, "=c(con$sigma2.init, con$tau2.init, con$rho.init, con$gamma2.init, con$phi.init),
+         optcall <- paste0(optimizer, "(", par.arg, "=c(con$sigma2.init, con$tau2.init, con$rho.init, con$gamma2.init, con$phi.init),
             .ll.rma.mv, reml=reml, ", ifelse(optimizer=="optim", "method=optmethod, ", ""), "Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
             D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
             sigma2.val=sigma2, tau2.val=tau2, rho.val=rho, gamma2.val=gamma2, phi.val=phi, beta.val=beta.val,
@@ -2022,7 +2022,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             withS=withS, withG=withG, withH=withH, struct=struct,
             g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
             sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE, vccon=vccon,
-            verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE, hessian=FALSE", ctrl.arg, ")\n", sep="")
+            verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE, hessian=FALSE", ctrl.arg, ")\n")
 
          #return(optcall)
 
@@ -2342,31 +2342,31 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
          if (sigma2s == 1) {
             colnames(hessian)[1] <- "sigma^2"
          } else {
-            colnames(hessian)[1:sigma2s] <- paste("sigma^2.", seq_len(sigma2s), sep="")
+            colnames(hessian)[1:sigma2s] <- paste0("sigma^2.", seq_len(sigma2s))
          }
          if (tau2s == 1) {
             colnames(hessian)[sigma2s+1] <- "tau^2"
          } else {
-            colnames(hessian)[(sigma2s+1):(sigma2s+tau2s)] <- paste("tau^2.", seq_len(tau2s), sep="")
+            colnames(hessian)[(sigma2s+1):(sigma2s+tau2s)] <- paste0("tau^2.", seq_len(tau2s))
          }
          term <- ifelse(cvvc == "varcov", ifelse(withH, "cov1", "cov"), "rho")
          if (rhos == 1) {
             colnames(hessian)[sigma2s+tau2s+1] <- term
          } else {
-            colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste(term, ".", outer(seq_len(g.nlevels.f[1]), seq_len(g.nlevels.f[1]), paste, sep=".")[lower.tri(matrix(NA,nrow=g.nlevels.f,ncol=g.nlevels.f))], sep="")
-            #colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste(term, ".", seq_len(rhos), sep="")
+            colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste0(term, ".", outer(seq_len(g.nlevels.f[1]), seq_len(g.nlevels.f[1]), paste, sep=".")[lower.tri(matrix(NA,nrow=g.nlevels.f,ncol=g.nlevels.f))])
+            #colnames(hessian)[(sigma2s+tau2s+1):(sigma2s+tau2s+rhos)] <- paste0(term, ".", seq_len(rhos))
          }
          if (gamma2s == 1) {
             colnames(hessian)[sigma2s+tau2s+rhos+1] <- "gamma^2"
          } else {
-            colnames(hessian)[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)] <- paste("gamma^2.", seq_len(gamma2s), sep="")
+            colnames(hessian)[(sigma2s+tau2s+rhos+1):(sigma2s+tau2s+rhos+gamma2s)] <- paste0("gamma^2.", seq_len(gamma2s))
          }
          term <- ifelse(cvvc == "varcov", "cov2", "phi")
          if (phis == 1) {
             colnames(hessian)[sigma2s+tau2s+rhos+gamma2s+1] <- term
          } else {
-            colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste(term, ".", outer(seq_len(h.nlevels.f[1]), seq_len(h.nlevels.f[1]), paste, sep=".")[lower.tri(matrix(NA,nrow=h.nlevels.f,ncol=h.nlevels.f))], sep="")
-            #colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste(term, ".", seq_len(phis), sep="")
+            colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste0(term, ".", outer(seq_len(h.nlevels.f[1]), seq_len(h.nlevels.f[1]), paste, sep=".")[lower.tri(matrix(NA,nrow=h.nlevels.f,ncol=h.nlevels.f))])
+            #colnames(hessian)[(sigma2s+tau2s+rhos+gamma2s+1):(sigma2s+tau2s+rhos+gamma2s+phis)] <- paste0(term, ".", seq_len(phis))
          }
 
          rownames(hessian) <- colnames(hessian)
@@ -2438,7 +2438,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    ###### fit statistics
 
    if (verbose > 1)
-      message(mstyle$message("Computing fit statistics and log likelihood ..."))
+      message(mstyle$message("Computing fit statistics and log-likelihood ..."))
 
    ### note: this only counts *estimated* variance components and correlations for the total number of parameters
 

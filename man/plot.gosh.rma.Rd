@@ -11,7 +11,7 @@
 }
 \arguments{
    \item{x}{an object of class \code{"gosh.rma"} obtained with \code{\link{gosh}}.}
-   \item{het}{character string to specify the heterogeneity measure to plot. Either \code{"I2"}, \code{"H2"}, \code{"QE"}, or \code{"tau2"} (the last only for random/mixed-effects models).}
+   \item{het}{character string to specify the heterogeneity measure to plot. Either \code{"I2"}, \code{"H2"}, \code{"QE"}, \code{"tau2"}, or \code{"tau"} (the last two only for random/mixed-effects models).}
    \item{pch}{plotting symbol to use. By default, a borderless filled circle is used. See \code{\link{points}} for other options.}
    \item{cex}{symbol expansion factor.}
    \item{out}{optional integer to specify the number of a study that may be a potential outlier. If specified, subsets containing the specified study are drawn in a different color than those not containing the study.}
@@ -30,7 +30,7 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   For models without moderators, the function draws a scatter plot of the model estimates on the x-axis against the chosen measure of heterogeneity on the y-axis. Histograms of the respective distributions (with kernel density estimates superimposed) are shown in the margins (when \code{xhist=TRUE} and \code{yhist=TRUE}).
+   For models without moderators, the function draws a scatter plot of the model estimates on the x-axis against the chosen measure of heterogeneity on the y-axis for the various subsets. Histograms of the respective distributions (with kernel density estimates superimposed) are shown in the margins (when \code{xhist=TRUE} and \code{yhist=TRUE}).
 
    For models with moderators, the function draws a scatter plot matrix (with the \code{\link{pairs}} function) of the chosen measure of heterogeneity and each of the model coefficients. Histograms of the variables plotted are shown along the diagonal, with kernel density estimates of the distributions superimposed. Arguments \code{xlim}, \code{ylim}, \code{xhist}, and \code{yhist} are then ignored, while argument \code{hh} can be used to compress/stretch the height of the distributions shown along the diagonal.
 }

@@ -602,7 +602,7 @@
 
       if (!ok) {
          mstyle <- .get.mstyle()
-         warning(mstyle$warning(paste0("The 'vi' argument is for specifying the sampling variances,\nbut '", x, "' sounds like this variable may contain standard\nerrors (maybe use 'sei=", x, "' instead?).")), call.=FALSE)
+         warning(mstyle$warning(paste0("The 'vi' argument should be used to specify sampling variances,\nbut '", x, "' sounds like this variable may contain standard\nerrors (maybe use 'sei=", x, "' instead?).")), call.=FALSE)
          try(assign("runvicheck", FALSE, envir=.metafor), silent=TRUE)
       }
 
@@ -621,7 +621,7 @@
    if (all(ks == 0L)) { # if all elements have length 0 (are NULL), return TRUE
       return(TRUE)
    } else {
-      ks <- ks[ks > 0L]  # keep the non-zero lengths
+      ks <- ks[ks > 0L] # keep the non-zero lengths
       return(length(unique(ks)) == 1L) # check that they are all identical
    }
 
@@ -1062,7 +1062,7 @@
             lab <- ifelse(short, lab, "Transformed Mean Change")
          }
       }
-      if (is.element(measure, c("SMCC","SMCR","SMCRH"))) {
+      if (is.element(measure, c("SMCC","SMCR","SMCRH","SMCRP","SMCRPH"))) {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, "SMC", "Standardized Mean Change")
          } else {

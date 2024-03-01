@@ -67,9 +67,9 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    #########################################################################
 
-   ### note: 'pch', 'psize', 'col', and 'bg' must be of the same length as the original data passed to rma()
-   ###       so we have to apply the same subsetting (if necessary) and removing of NAs as done during the
-   ###       model fitting (note: NAs are removed further below)
+   ### note: pch, psize, col, and bg (if vectors) must be of the same length as the original dataset
+   ###       so we have to apply the same subsetting (if necessary) and removing of NAs as was
+   ###       done during the model fitting (note: NAs are removed further below)
 
    if (length(pch) == 1L)
       pch <- rep(pch, x$k.all)

@@ -1701,11 +1701,11 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             ###        3) no integration needed for FE model, so intCtrl is not actually relevant
             ###        4) results can be sensitive to the scaling of moderators
 
-            optcall <- paste(optimizer, "(", par.arg, "=c(coef(res.FE)[seq_len(p)], 0),
+            optcall <- paste0(optimizer, "(", par.arg, "=c(coef(res.FE)[seq_len(p)], 0),
                .dnchg, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
                "ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE,
                verbose=verbose, digits=digits,
-               dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl", ctrl.arg, ")\n", sep="")
+               dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl", ctrl.arg, ")\n")
 
             #return(optcall)
 
@@ -1793,11 +1793,11 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                   b.QE <- b.QE[!is.aliased]
                   X.QE <- X.QE[,!is.aliased,drop=FALSE]
 
-                  optcall <- paste(optimizer, "(", par.arg, "=c(b.QE, 0),
+                  optcall <- paste0(optimizer, "(", par.arg, "=c(b.QE, 0),
                      .dnchg, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
                      "ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE,
                      verbose=verbose, digits=digits,
-                     dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl", ctrl.arg, ")\n", sep="")
+                     dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl", ctrl.arg, ")\n")
 
                   #return(optcall)
 
@@ -1977,7 +1977,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             ### fit saturated FE model (= QE model)
             ### notes: 1) must figure out which terms are aliased in saturated model and remove those terms before fitting
             ###        2) fixed effects part does not include 'study' factor, since this is incorporated into the strata
-            ###        3) however, for calculating the log likelihood, we need to go back to the conditional data, so we need to reconstruct X.QE (the study.l:group1 coefficients are the study coefficients)
+            ###        3) however, for calculating the log-likelihood, we need to go back to the conditional data, so we need to reconstruct X.QE (the study.l:group1 coefficients are the study coefficients)
 
             if (QEconv) { # QEconv is FALSE when skiphet=TRUE so this then also gets skipped automatically
 
@@ -2041,11 +2041,11 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             if (verbose)
                message(mstyle$message("Fitting ML model ..."))
 
-            optcall <- paste(optimizer, "(", par.arg, "=c(beta, log(tau2+.01)),
+            optcall <- paste0(optimizer, "(", par.arg, "=c(beta, log(tau2+.01)),
                .dnchg, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
                "ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE,
                verbose=verbose, digits=digits,
-               dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl", ctrl.arg, ")\n", sep="")
+               dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl", ctrl.arg, ")\n")
 
             #return(optcall)
 
@@ -2577,7 +2577,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    ###### fit statistics
 
    if (verbose > 1)
-      message(mstyle$message("Computing fit statistics and log likelihood ..."))
+      message(mstyle$message("Computing fit statistics and log-likelihood ..."))
 
    ll.ML     <- ifelse(is.element(method, c("FE","EE","CE")), ll.FE, ll.ML)
    ll.REML   <- NA_real_

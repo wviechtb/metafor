@@ -168,7 +168,7 @@
    }
 }
 
-### -1 times the log likelihood (regular or restricted) for location-scale model
+### -1 times the log-likelihood (regular or restricted) for location-scale model
 
 .ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX,
                        alpha.val, beta.val, verbose, digits,

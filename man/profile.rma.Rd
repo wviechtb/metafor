@@ -55,7 +55,7 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   The function fixes a particular parameter of the model and then computes the maximized (restricted) log-likelihood over the remaining parameters of the model. By doing this for a range of values for the parameter that was fixed, a profile of the (restricted) log-likelihood is constructed.
+   The function fixes a particular parameter of the model and then computes the maximized (restricted) log-likelihood over the remaining parameters of the model. By fixing the parameter of interest to a range of values, a profile of the (restricted) log-likelihood is constructed.
 
    \subsection{Selecting the Parameter(s) to Profile}{
 
@@ -63,22 +63,22 @@
 
       \itemize{
       \item For objects of class \code{"rma.uni"} obtained with the \code{\link{rma.uni}} function, the function profiles over \mjseqn{\tau^2} (not for equal-effects models).
-      \item For objects of class \code{"rma.mv"} obtained with the \code{\link{rma.mv}} function, profiling is done by default over all (non-fixed) variance and correlation components of the model. Alternatively, one can use the \code{sigma2}, \code{tau2}, \code{rho}, \code{gamma2}, or \code{phi} arguments to specify over which parameter the profiling should be done. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter.
-      \item For selection model objects of class \code{"rma.uni.selmodel"} obtained with the \code{\link{selmodel}} function, profiling is done by default over \mjseqn{\tau^2} (for models where this is an estimated parameter) and all (non-fixed) selection model parameters. Alternatively, one can choose to profile only \mjseqn{\tau^2} by setting \code{tau2=TRUE} or one can select one of the selection model parameters to profile by specifying its number via the \code{delta} argument.
-      \item For location-scale model objects of class \code{"rma.ls"} obtained with the \code{\link{rma.uni}} function, profiling is done by default over all (non-fixed) \mjseqn{\alpha} parameters that are part of the scale model.
+      \item For objects of class \code{"rma.mv"} obtained with the \code{\link{rma.mv}} function, profiling is done by default over all variance and correlation components of the model. Alternatively, one can use the \code{sigma2}, \code{tau2}, \code{rho}, \code{gamma2}, or \code{phi} arguments to specify over which parameter the profiling should be done. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter.
+      \item For selection model objects of class \code{"rma.uni.selmodel"} obtained with the \code{\link{selmodel}} function, profiling is done by default over \mjseqn{\tau^2} (for models where this is an estimated parameter) and all selection model parameters. Alternatively, one can choose to profile only \mjseqn{\tau^2} by setting \code{tau2=TRUE} or one can select one of the selection model parameters to profile by specifying its number via the \code{delta} argument.
+      \item For location-scale model objects of class \code{"rma.ls"} obtained with the \code{\link{rma.uni}} function, profiling is done by default over all \mjseqn{\alpha} parameters that are part of the scale model. Alternatively, one can select one of the parameters to profile by specifying its number via the \code{alpha} argument.
       }
 
    }
 
-   \subsection{Interpreting a Likelihood Profile}{
+   \subsection{Interpreting Profile Likelihood Plots}{
 
-      A profile plot should show a single peak at the corresponding ML/REML estimate (assuming that the model was fitted with ML/REML estimation). If \code{refline=TRUE} (the default), the value of the parameter estimate is indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line. Hence, the intersection of these two lines should correspond to the peak.
+      A profile likelihood plot should show a single peak at the corresponding ML/REML estimate. If \code{refline=TRUE} (the default), the value of the parameter estimate is indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line. Hence, the intersection of these two lines should correspond to the peak (assuming that the model was fitted with ML/REML estimation).
 
       When profiling a variance component (or some other parameter that cannot be negative), the peak may be at zero (if this corresponds to the ML/REML estimate of the parameter). In this case, the profiled log-likelihood should be a monotonically decreasing function of the parameter. Similarly, when profiling a correlation component, the peak may be at -1 or +1.
 
       If the profiled log-likelihood has multiple peaks, this indicates that the likelihood surface is not unimodal. In such cases, the ML/REML estimate may correspond to a local optimum (when the intersection of the two dotted lines is not at the highest peak).
 
-      If the profile is flat (over the entire parameter space or large portions of it), then this suggests that at least some of the parameters of the model are not identifiable (and the parameter estimates obtained are to some extent arbitrary). See Raue et al. (2009) for some further discussion of parameter identifiability (structurally and practically) and the use of profile likelihoods to check for this.
+      If the profile is flat (over the entire parameter space or large portions of it), then this suggests that at least some of the parameters of the model are not identifiable (and the parameter estimates obtained are to some extent arbitrary). See Raue et al. (2009) for some further discussion of parameter identifiability and the use of profile likelihoods to check for this.
 
       The function checks whether any profiled log-likelihood value is actually larger than the log-likelihood of the fitted model (using a numerical tolerance of \code{lltol}). If so, a warning is issued as this might indicate that the optimizer did not identify the actual ML/REML estimate of the parameter profiled.
 

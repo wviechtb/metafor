@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-8</span>
       </span>
     </div>
 
@@ -197,27 +197,27 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The function fixes a particular parameter of the model and then computes the maximized (restricted) log-likelihood over the remaining parameters of the model. By doing this for a range of values for the parameter that was fixed, a profile of the (restricted) log-likelihood is constructed.</p>
+    <p>The function fixes a particular parameter of the model and then computes the maximized (restricted) log-likelihood over the remaining parameters of the model. By fixing the parameter of interest to a range of values, a profile of the (restricted) log-likelihood is constructed.</p>
 <p></p><div class="section">
 <h3 id="selecting-the-parameter-s-to-profile">Selecting the Parameter(s) to Profile<a class="anchor" aria-label="anchor" href="#selecting-the-parameter-s-to-profile"></a></h3>
 
 
 <p>The parameters that can be profiled depend on the model object:</p>
 <p></p><ul><li><p>For objects of class <code>"rma.uni"</code> obtained with the <code><a href="rma.uni.html">rma.uni</a></code> function, the function profiles over <em></em>\(\tau^2\) (not for equal-effects models).</p></li>
-<li><p>For objects of class <code>"rma.mv"</code> obtained with the <code><a href="rma.mv.html">rma.mv</a></code> function, profiling is done by default over all (non-fixed) variance and correlation components of the model. Alternatively, one can use the <code>sigma2</code>, <code>tau2</code>, <code>rho</code>, <code>gamma2</code>, or <code>phi</code> arguments to specify over which parameter the profiling should be done. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter.</p></li>
-<li><p>For selection model objects of class <code>"rma.uni.selmodel"</code> obtained with the <code><a href="selmodel.html">selmodel</a></code> function, profiling is done by default over <em></em>\(\tau^2\) (for models where this is an estimated parameter) and all (non-fixed) selection model parameters. Alternatively, one can choose to profile only <em></em>\(\tau^2\) by setting <code>tau2=TRUE</code> or one can select one of the selection model parameters to profile by specifying its number via the <code>delta</code> argument.</p></li>
-<li><p>For location-scale model objects of class <code>"rma.ls"</code> obtained with the <code><a href="rma.uni.html">rma.uni</a></code> function, profiling is done by default over all (non-fixed) <em></em>\(\alpha\) parameters that are part of the scale model.</p></li>
+<li><p>For objects of class <code>"rma.mv"</code> obtained with the <code><a href="rma.mv.html">rma.mv</a></code> function, profiling is done by default over all variance and correlation components of the model. Alternatively, one can use the <code>sigma2</code>, <code>tau2</code>, <code>rho</code>, <code>gamma2</code>, or <code>phi</code> arguments to specify over which parameter the profiling should be done. Only one of these arguments can be used at a time. A single integer is used to specify the number of the parameter.</p></li>
+<li><p>For selection model objects of class <code>"rma.uni.selmodel"</code> obtained with the <code><a href="selmodel.html">selmodel</a></code> function, profiling is done by default over <em></em>\(\tau^2\) (for models where this is an estimated parameter) and all selection model parameters. Alternatively, one can choose to profile only <em></em>\(\tau^2\) by setting <code>tau2=TRUE</code> or one can select one of the selection model parameters to profile by specifying its number via the <code>delta</code> argument.</p></li>
+<li><p>For location-scale model objects of class <code>"rma.ls"</code> obtained with the <code><a href="rma.uni.html">rma.uni</a></code> function, profiling is done by default over all <em></em>\(\alpha\) parameters that are part of the scale model. Alternatively, one can select one of the parameters to profile by specifying its number via the <code>alpha</code> argument.</p></li>
 </ul><p></p>
 </div>
 
 <p></p><div class="section">
-<h3 id="interpreting-a-likelihood-profile">Interpreting a Likelihood Profile<a class="anchor" aria-label="anchor" href="#interpreting-a-likelihood-profile"></a></h3>
+<h3 id="interpreting-profile-likelihood-plots">Interpreting Profile Likelihood Plots<a class="anchor" aria-label="anchor" href="#interpreting-profile-likelihood-plots"></a></h3>
 
 
-<p>A profile plot should show a single peak at the corresponding ML/REML estimate (assuming that the model was fitted with ML/REML estimation). If <code>refline=TRUE</code> (the default), the value of the parameter estimate is indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line. Hence, the intersection of these two lines should correspond to the peak.</p>
+<p>A profile likelihood plot should show a single peak at the corresponding ML/REML estimate. If <code>refline=TRUE</code> (the default), the value of the parameter estimate is indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line. Hence, the intersection of these two lines should correspond to the peak (assuming that the model was fitted with ML/REML estimation).</p>
 <p>When profiling a variance component (or some other parameter that cannot be negative), the peak may be at zero (if this corresponds to the ML/REML estimate of the parameter). In this case, the profiled log-likelihood should be a monotonically decreasing function of the parameter. Similarly, when profiling a correlation component, the peak may be at -1 or +1.</p>
 <p>If the profiled log-likelihood has multiple peaks, this indicates that the likelihood surface is not unimodal. In such cases, the ML/REML estimate may correspond to a local optimum (when the intersection of the two dotted lines is not at the highest peak).</p>
-<p>If the profile is flat (over the entire parameter space or large portions of it), then this suggests that at least some of the parameters of the model are not identifiable (and the parameter estimates obtained are to some extent arbitrary). See Raue et al. (2009) for some further discussion of parameter identifiability (structurally and practically) and the use of profile likelihoods to check for this.</p>
+<p>If the profile is flat (over the entire parameter space or large portions of it), then this suggests that at least some of the parameters of the model are not identifiable (and the parameter estimates obtained are to some extent arbitrary). See Raue et al. (2009) for some further discussion of parameter identifiability and the use of profile likelihoods to check for this.</p>
 <p>The function checks whether any profiled log-likelihood value is actually larger than the log-likelihood of the fitted model (using a numerical tolerance of <code>lltol</code>). If so, a warning is issued as this might indicate that the optimizer did not identify the actual ML/REML estimate of the parameter profiled.</p>
 <p></p>
 </div>

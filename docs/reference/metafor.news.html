@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-8</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">metafor.news</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 4.5-7 (2024-01-12)                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 4.5-8 (2024-03-01)                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - the steps argument in the various profile() functions can now also</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     be a numeric vector to specify for which parameter values the</span>
@@ -126,10 +126,21 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - slightly improved flexibility for setting package options</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - added measure "SMN" to escalc() (single-group standardized mean /</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     single-group standardized mean difference)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - new measures added to escalc(): "SMN" for the single-group</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     standardized mean / single-group standardized mean difference,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     "SMCRP" for the standardized mean change using raw score</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     standardization with pooled standard deviations, and "SMCRPH" for</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     the standardized mean change using raw score standardization with</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     pooled standard deviations and heteroscedastic population variances</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     at the two measurement occasions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - some internal refactoring of the coding</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - calculation of the sampling variances for measures "SMDH", "SMD1H",</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     and "SMCRH" was slightly adjusted for consistency</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - in plot.gosh.rma(), can also set het="tau" (to plot the square root</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     of tau^2 as the measure of heterogeneity)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - some internal refactoring of the code</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - improved the documentation a bit</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

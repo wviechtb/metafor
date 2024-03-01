@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-8</span>
       </span>
     </div>
 
@@ -262,10 +262,10 @@
 <dd><p>single numeric value to specify the amount of space (in terms of number of rows) to leave empty at the top of the plot (e.g., for adding headers). The default is 3.</p></dd>
 
    <dt>annosym</dt>
-<dd><p>vector of length 3 to select the left bracket, separation, and right bracket symbols for the annotations. The default is <code>c(" [", ", ", "]")</code>. Can also include a 4th element to adjust the look of the minus symbol, for example to use a proper minus sign (−) instead of a hyphen-minus (-). Can also include a 5th element that should be a space-like symbol (e.g., an ‘en space’) that is used in place of numbers (only relevant when trying to line up numbers exactly).</p></dd>
+<dd><p>vector of length 3 to select the left bracket, separation, and right bracket symbols for the annotations. The default is <code>c(" [", ", ", "]")</code>. Can also include a 4th element to adjust the look of the minus symbol, for example to use a proper minus sign (−) instead of a hyphen-minus (-). Can also include a 5th element that should be a space-like symbol (e.g., an ‘en space’) that is used in place of numbers (only relevant when trying to line up numbers exactly). For example, <code>annosym=c(" [", ", ", "]", "\u2212", "\u2002")</code> would use a proper minus sign and an ‘en space’ for the annotations.</p></dd>
 
    <dt>tabfig</dt>
-<dd><p>single numeric value (either a 1, 2, or 3) to set <code>annosym</code> automatically to a vector that will exactly align the numbers in the annotations when using a font that provides ‘tabular figures’. The appropriate value for this argument depends on the font used. For example, for fonts Calibri and Carlito, 1 or 2 should work; for fonts Source Sans 3 and Palatino Linotype, 1, 2, and 3 should all work; for Computer/Latin Modern and Segoe UI, 2 should work; for Lato, Roboto, and Open Sans (and maybe Arial), 3 should work. Other fonts may work as well, but this is untested.</p></dd>
+<dd><p>single numeric value (either a 1, 2, or 3) to set <code>annosym</code> automatically to a vector that will exactly align the numbers in the annotations when using a font that provides ‘tabular figures’. Value 1 corresponds to using <code>"\u2212"</code> (a minus) and <code>"\u2002"</code> (an ‘en space’) in <code>annoyym</code> as shown above. Value 2 corresponds to <code>"\u2013"</code> (an ‘en dash’) and <code>"\u2002"</code> (an ‘en space’). Value 3 corresponds to <code>"\u2212"</code> (a minus) and <code>"\u2007"</code> (a ‘figure space’). The appropriate value for this argument depends on the font used. For example, for fonts Calibri and Carlito, 1 or 2 should work; for fonts Source Sans 3 and Palatino Linotype, 1, 2, and 3 should all work; for Computer/Latin Modern and Segoe UI, 2 should work; for Lato, Roboto, and Open Sans (and maybe Arial), 3 should work. Other fonts may work as well, but this is untested.</p></dd>
 
    <dt>textpos</dt>
 <dd><p>numeric vector of length 2 to specify the placement of the study labels and the annotations. The default is to use the horizontal limits of the plot region, i.e., the study labels to the right of <code>xlim[1]</code> and the annotations to the left of <code>xlim[2]</code>.</p></dd>

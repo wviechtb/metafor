@@ -1,21 +1,22 @@
 ############################################################################
 
-### c(m) calculation function for bias correction of SMDs (mi = n1i + n2i - 2) or SMCC/SMCRs (mi = ni - 1)
+### c(m) calculation function for bias correction of SMDs or SMCC/SMCRs
 
 .cmicalc <- function(mi, correct=TRUE) {
 
-   ### this can overflow if mi is 'large' (on my machine, if mi >= 344)
+   ### this can overflow if mi is 'large' (if mi >= 344)
    #cmi <- gamma(mi/2)/(sqrt(mi/2)*gamma((mi-1)/2))
    ### catch those cases and apply the approximate formula (which is accurate then)
    #is.na <- is.na(cmi)
    #cmi[is.na] <- 1 - 3/(4*mi[is.na] - 1)
 
    if (correct) {
-      ### this avoids the problem with overflow altogether
+      # this avoids the problem with overflow altogether
       cmi <- ifelse(mi <= 1, NA_real_, exp(lgamma(mi/2) - log(sqrt(mi/2)) - lgamma((mi-1)/2)))
    } else {
       cmi <- rep(1, length(mi))
    }
+
    return(cmi)
 
 }

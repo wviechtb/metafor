@@ -1,4 +1,4 @@
-# metafor 4.5-7 (2024-01-12)
+# metafor 4.5-8 (2024-03-01)
 
 - the `steps` argument in the various `profile()` functions can now also be a numeric vector to specify for which parameter values the likelihood should be evaluated
 
@@ -6,9 +6,13 @@
 
 - slightly improved flexibility for setting package options
 
-- added measure `"SMN"` to `escalc()` (single-group standardized mean / single-group standardized mean difference)
+- new measures added to `escalc()`: `"SMN"` for the single-group standardized mean / single-group standardized mean difference, `"SMCRP"` for the standardized mean change using raw score standardization with pooled standard deviations, and `"SMCRPH"` for the standardized mean change using raw score standardization with pooled standard deviations and heteroscedastic population variances at the two measurement occasions
 
-- some internal refactoring of the coding
+- calculation of the sampling variances for measures `"SMDH"`, `"SMD1H"`, and `"SMCRH"` was slightly adjusted for consistency
+
+- in `plot.gosh.rma()`, can also set `het="tau"` (to plot the square root of tau^2 as the measure of heterogeneity)
+
+- some internal refactoring of the code
 
 - improved the documentation a bit
 

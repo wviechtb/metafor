@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-8</span>
       </span>
     </div>
 
@@ -90,12 +90,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.5-7" id="metafor-45-7-2024-01-12">metafor 4.5-7 (2024-01-12)<a class="anchor" aria-label="anchor" href="#metafor-45-7-2024-01-12"></a></h2>
+<h2 class="page-header" data-toc-text="4.5-8" id="metafor-45-8-2024-03-01">metafor 4.5-8 (2024-03-01)<a class="anchor" aria-label="anchor" href="#metafor-45-8-2024-03-01"></a></h2>
 <ul><li><p>the <code>steps</code> argument in the various <code><a href="../reference/profile.rma.html">profile()</a></code> functions can now also be a numeric vector to specify for which parameter values the likelihood should be evaluated</p></li>
 <li><p>a few minor fixes to the dynamic theming of plots based on the foreground and background colors of the plotting device</p></li>
 <li><p>slightly improved flexibility for setting package options</p></li>
-<li><p>added measure <code>"SMN"</code> to <code><a href="../reference/escalc.html">escalc()</a></code> (single-group standardized mean / single-group standardized mean difference)</p></li>
-<li><p>some internal refactoring of the coding</p></li>
+<li><p>new measures added to <code><a href="../reference/escalc.html">escalc()</a></code>: <code>"SMN"</code> for the single-group standardized mean / single-group standardized mean difference, <code>"SMCRP"</code> for the standardized mean change using raw score standardization with pooled standard deviations, and <code>"SMCRPH"</code> for the standardized mean change using raw score standardization with pooled standard deviations and heteroscedastic population variances at the two measurement occasions</p></li>
+<li><p>calculation of the sampling variances for measures <code>"SMDH"</code>, <code>"SMD1H"</code>, and <code>"SMCRH"</code> was slightly adjusted for consistency</p></li>
+<li><p>in <code><a href="../reference/plot.gosh.rma.html">plot.gosh.rma()</a></code>, can also set <code>het="tau"</code> (to plot the square root of tau^2 as the measure of heterogeneity)</p></li>
+<li><p>some internal refactoring of the code</p></li>
 <li><p>improved the documentation a bit</p></li>
 </ul></div>
     <div class="section level2">

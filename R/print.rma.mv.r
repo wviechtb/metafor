@@ -78,7 +78,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
          if (length(x$sigma2) == 1L) {
             rownames(vc) <- "sigma^2  "
          } else {
-            rownames(vc) <- paste("sigma^2.", seq_along(x$sigma2), sep="")
+            rownames(vc) <- paste0("sigma^2.", seq_along(x$sigma2))
          }
          tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
          .print.table(tmp, mstyle)
@@ -133,7 +133,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             if (length(x$tau2) == 1L) {
                rownames(vc) <- c("tau^2   ", "rho")
             } else {
-               rownames(vc) <- c(paste("tau^2.", seq_along(x$tau2), "  ", sep=""), "rho")
+               rownames(vc) <- c(paste0("tau^2.", seq_along(x$tau2), "  "), "rho")
             }
             if (x$struct[1] == "DIAG")
                vc <- vc[seq_along(tau2),,drop=FALSE]
@@ -153,7 +153,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             if (length(x$g.levels.k) == 1L) {
                rownames(vc) <- c("tau^2")
             } else {
-               rownames(vc) <- paste("tau^2.", seq_along(x$g.levels.k), "  ", sep="")
+               rownames(vc) <- paste0("tau^2.", seq_along(x$g.levels.k), "  ")
             }
             tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
             .print.table(tmp, mstyle)
@@ -180,7 +180,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             diag(G.info) <- "-"
 
             vc <- cbind(G, "", G.info)
-            colnames(vc) <- c(paste("rho.", abbreviate(x$g.levels.f[[1]]), sep=""), "", abbreviate(x$g.levels.f[[1]])) ### FIXME: x$g.levels.f[[1]] may be numeric, in which case a wrapping 'header' is not recognized
+            colnames(vc) <- c(paste0("rho.", abbreviate(x$g.levels.f[[1]])), "", abbreviate(x$g.levels.f[[1]])) ### FIXME: x$g.levels.f[[1]] may be numeric, in which case a wrapping 'header' is not recognized
             rownames(vc) <- x$g.levels.f[[1]]
             tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
             .print.table(tmp, mstyle)
@@ -264,7 +264,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             if (length(x$gamma2) == 1L) {
                rownames(vc) <- c("gamma^2 ", "phi")
             } else {
-               rownames(vc) <- c(paste("gamma^2.", seq_along(x$gamma2), "  ", sep=""), "phi")
+               rownames(vc) <- c(paste0("gamma^2.", seq_along(x$gamma2), "  "), "phi")
             }
             if (x$struct[2] == "DIAG")
                vc <- vc[seq_along(gamma2),,drop=FALSE]
@@ -284,7 +284,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             if (length(x$h.levels.k) == 1L) {
                rownames(vc) <- c("gamma^2")
             } else {
-               rownames(vc) <- paste("gamma^2.", seq_along(x$h.levels.k), "  ", sep="")
+               rownames(vc) <- paste0("gamma^2.", seq_along(x$h.levels.k), "  ")
             }
             tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
             .print.table(tmp, mstyle)
@@ -311,7 +311,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             diag(H.info) <- "-"
 
             vc <- cbind(H, "", H.info)
-            colnames(vc) <- c(paste("phi.", abbreviate(x$h.levels.f[[1]]), sep=""), "", abbreviate(x$h.levels.f[[1]])) ### FIXME: x$h.levels.f[[1]] may be numeric, in which case a wrapping 'header' is not recognized
+            colnames(vc) <- c(paste0("phi.", abbreviate(x$h.levels.f[[1]])), "", abbreviate(x$h.levels.f[[1]])) ### FIXME: x$h.levels.f[[1]] may be numeric, in which case a wrapping 'header' is not recognized
             rownames(vc) <- x$h.levels.f[[1]]
             tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
             .print.table(tmp, mstyle)

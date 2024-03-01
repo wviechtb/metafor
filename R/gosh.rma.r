@@ -210,6 +210,10 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl, ...) 
       colnames(beta) <- colnames(x$X)
    }
 
+   ### add tau as column to het
+
+   het <- cbind(het, tau=sqrt(het[,"tau2"]))
+
    ### combine het and beta objects and order incl and res by k
 
    res <- data.frame(het, beta)

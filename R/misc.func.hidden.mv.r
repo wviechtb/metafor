@@ -854,7 +854,7 @@
 
 ############################################################################
 
-### -1 times the log likelihood (regular or restricted) for rma.mv models
+### -1 times the log-likelihood (regular or restricted) for rma.mv models
 
 .ll.rma.mv <- function(par, reml, Y, M, A, X, k, pX, # note: pX due to nlm(); M=V to begin with
                        D.S, Z.G1, Z.G2, Z.H1, Z.H2, g.Dmat, h.Dmat,
@@ -1000,7 +1000,7 @@
 
    if (inherits(W, "try-error")) {
 
-      ### if M is not positive-definite, set the (restricted) log likelihood to -Inf
+      ### if M is not positive-definite, set the (restricted) log-likelihood to -Inf
       ### this idea is based on: https://stats.stackexchange.com/q/11368/1934 (this is crude, but should
       ### move the parameter estimates away from values that create the non-positive-definite M matrix)
 

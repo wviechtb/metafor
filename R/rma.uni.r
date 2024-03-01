@@ -15,22 +15,22 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    ### (arguments "to" and "vtype" are checked inside escalc function)
 
    if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","ZPHI","YUQ","YUY","RTET","ZTET", # 2x2 table measures
-                              "PBIT","OR2D","OR2DN","OR2DL",                       # - transformations to SMD
-                              "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",       # - measures for matched pairs data
-                              "IRR","IRD","IRSD",                                  # two-group person-time data measures
-                              "MD","SMD","SMDH","SMD1","SMD1H","ROM",              # two-group mean/SD measures
-                              "CVR","VR",                                          # coefficient of variation ratio, variability ratio
-                              "RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL",    # - transformations to r_PB, r_BIS, and log(OR)
-                              "COR","UCOR","ZCOR",                                 # correlations (raw and r-to-z transformed)
-                              "PCOR","ZPCOR","SPCOR","ZSPCOR",                     # partial and semi-partial correlations
-                              "R2","ZR2",                                          # coefficient of determination (raw and r-to-z transformed)
-                              "PR","PLN","PLO","PAS","PFT",                        # single proportions (and transformations thereof)
-                              "IR","IRLN","IRS","IRFT",                            # single-group person-time data (and transformations thereof)
-                              "MN","SMN","MNLN","CVLN","SDLN",                     # mean, single-group standardized mean, log(mean), log(CV), log(SD),
-                              "MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC",      # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
-                              "ARAW","AHW","ABT",                                  # alpha (and transformations thereof)
-                              "REH",                                               # relative excess heterozygosity
-                              "HR","HD",                                           # hazard (rate) ratios and differences
+                              "PBIT","OR2D","OR2DN","OR2DL",                                     # 2x2 table transformations to SMDs
+                              "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",                     # 2x2 table measures for matched pairs / pre-post data
+                              "IRR","IRD","IRSD",                                                # two-group person-time data (incidence) measures
+                              "MD","SMD","SMDH","SMD1","SMD1H","ROM",                            # two-group mean/SD measures
+                              "CVR","VR",                                                        # coefficient of variation ratio, variability ratio
+                              "RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL",                  # two-group mean/SD transformations to r_pb, r_bis, and log(OR)
+                              "COR","UCOR","ZCOR",                                               # correlations (raw and r-to-z transformed)
+                              "PCOR","ZPCOR","SPCOR","ZSPCOR",                                   # partial and semi-partial correlations
+                              "R2","ZR2",                                                        # coefficient of determination / R^2 (raw and r-to-z transformed)
+                              "PR","PLN","PLO","PAS","PFT",                                      # single proportions (and transformations thereof)
+                              "IR","IRLN","IRS","IRFT",                                          # single-group person-time (incidence) data (and transformations thereof)
+                              "MN","SMN","MNLN","CVLN","SDLN",                                   # mean, single-group standardized mean, log(mean), log(CV), log(SD),
+                              "MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","ROMC","CVRC","VRC",   # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
+                              "ARAW","AHW","ABT",                                                # alpha (and transformations thereof)
+                              "REH",                                                             # relative excess heterozygosity
+                              "HR","HD",                                                         # hazard (rate) ratios and differences
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
@@ -385,8 +385,8 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          vi <- .getsubset(vi, subset)
          ni <- .getsubset(ni, subset)
 
-         attr(yi, "measure") <- measure ### add measure attribute back
-         attr(yi, "ni")      <- ni      ### add ni attribute back
+         attr(yi, "measure") <- measure # add measure attribute back
+         attr(yi, "ni")      <- ni      # add ni attribute back
 
       }
 
@@ -408,7 +408,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          if (is.null(bi)) bi <- n1i - ai
          if (is.null(di)) di <- n2i - ci
 
-         k <- length(ai) ### number of outcomes before subsetting
+         k <- length(ai) # number of outcomes before subsetting
          k.all <- k
 
          if (!is.null(subset)) {
@@ -432,7 +432,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          t1i <- .getx("t1i", mf=mf, data=data, checknumeric=TRUE)
          t2i <- .getx("t2i", mf=mf, data=data, checknumeric=TRUE)
 
-         k <- length(x1i) ### number of outcomes before subsetting
+         k <- length(x1i) # number of outcomes before subsetting
          k.all <- k
 
          if (!is.null(subset)) {
@@ -474,7 +474,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
          }
 
-         k <- length(n1i) ### number of outcomes before subsetting
+         k <- length(n1i) # number of outcomes before subsetting
          k.all <- k
 
          if (!is.null(subset)) {
@@ -504,7 +504,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          ti <- replmiss(ti, .convp2t(pi, df=ni-2))
          ri <- replmiss(ri, ti / sqrt(ti^2 + ni-2))
 
-         k <- length(ri) ### number of outcomes before subsetting
+         k <- length(ri) # number of outcomes before subsetting
          k.all <- k
 
          if (!is.null(subset)) {
@@ -537,7 +537,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          if (is.element(measure, c("SPCOR","ZSPCOR")))
             ri <- replmiss(ri, ti * sqrt(1-r2i) / sqrt(ni-mi-1))
 
-         k <- length(ri) ### number of outcomes before subsetting
+         k <- length(ri) # number of outcomes before subsetting
          k.all <- k
 
          if (!is.null(subset)) {
@@ -566,7 +566,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          fi  <- replmiss(fi, .convp2f(pi, df1=mi, df2=ni-mi-1))
          r2i <- replmiss(r2i, mi*fi / (mi*fi + (ni-mi-1)))
 
-         k <- length(r2i) ### number of outcomes before subsetting
+         k <- length(r2i) # number of outcomes before subsetting
          k.all <- k
 
          if (!is.null(subset)) {
@@ -588,7 +588,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
          if (is.null(mi)) mi <- ni - xi
 
-         k <- length(xi) ### number of outcomes before subsetting
+         k <- length(xi) # number of outcomes before subsetting
          k.all <- k
 
          if (!is.null(subset)) {
@@ -606,7 +606,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          xi <- .getx("xi", mf=mf, data=data, checknumeric=TRUE)
          ti <- .getx("ti", mf=mf, data=data, checknumeric=TRUE)
 
-         k <- length(xi) ### number of outcomes before subsetting
+         k <- length(xi) # number of outcomes before subsetting
          k.all <- k
 
          if (!is.null(subset)) {
@@ -625,7 +625,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          sdi <- .getx("sdi", mf=mf, data=data, checknumeric=TRUE)
          ni  <- .getx("ni",  mf=mf, data=data, checknumeric=TRUE)
 
-         k <- length(ni) ### number of outcomes before subsetting
+         k <- length(ni) # number of outcomes before subsetting
          k.all <- k
 
          if (!is.null(subset)) {
@@ -639,7 +639,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       }
 
-      if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","ROMC","CVRC","VRC"))) {
+      if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","ROMC","CVRC","VRC"))) {
 
          m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE)
          m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE)
@@ -667,7 +667,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
          }
 
-         k <- length(m1i) ### number of outcomes before subsetting
+         k <- length(m1i) # number of outcomes before subsetting
          k.all <- k
 
          if (!is.null(subset)) {
@@ -690,7 +690,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          mi <- .getx("mi", mf=mf, data=data, checknumeric=TRUE)
          ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
 
-         k <- length(ai) ### number of outcomes before subsetting
+         k <- length(ai) # number of outcomes before subsetting
          k.all <- k
 
          if (!is.null(subset)) {
@@ -710,7 +710,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          bi <- .getx("bi", mf=mf, data=data, checknumeric=TRUE)
          ci <- .getx("ci", mf=mf, data=data, checknumeric=TRUE)
 
-         k <- length(ai) ### number of outcomes before subsetting
+         k <- length(ai) # number of outcomes before subsetting
          k.all <- k
 
          if (!is.null(subset)) {
@@ -731,9 +731,9 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       ### note: these values are already subsetted
 
-      yi <- dat$yi         ### one or more yi/vi pairs may be NA/NA
-      vi <- dat$vi         ### one or more yi/vi pairs may be NA/NA
-      ni <- attr(yi, "ni") ### unadjusted total sample sizes (ni.u in escalc)
+      yi <- dat$yi         # one or more yi/vi pairs may be NA/NA
+      vi <- dat$vi         # one or more yi/vi pairs may be NA/NA
+      ni <- attr(yi, "ni") # unadjusted total sample sizes (ni.u in escalc)
 
    }
 
@@ -742,7 +742,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    ### allow easy setting of weights to a single value
 
    if (length(weights) == 1L)
-      weights <- rep(weights, k) ### note: k is number of outcomes before subsetting
+      weights <- rep(weights, k) # note: k is number of outcomes before subsetting
 
    ### check length of yi and weights (only if weights is not NULL)
 
@@ -764,17 +764,17 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    if (inherits(mods, "formula")) {
       formula.mods <- mods
-      if (isTRUE(all.equal(formula.mods, ~ 1))) { ### needed so 'mods = ~ 1' without 'data' specified works
+      if (isTRUE(all.equal(formula.mods, ~ 1))) { # needed so 'mods = ~ 1' without 'data' specified works
          mods <- matrix(1, nrow=k, ncol=1)
          intercept <- FALSE
       } else {
-         options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
-         mods <- model.matrix(mods, data=data) ### extract model matrix
-         attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
-         attr(mods, "contrasts") <- NULL       ### strip contrasts attribute (not needed at the moment)
-         options(na.action = na.act)           ### set na.action back to na.act
-         intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
-      }                                        ### note: code further below ([b]) actually checks whether intercept is included or not
+         options(na.action = "na.pass")        # set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
+         mods <- model.matrix(mods, data=data) # extract model matrix
+         attr(mods, "assign") <- NULL          # strip assign attribute (not needed at the moment)
+         attr(mods, "contrasts") <- NULL       # strip contrasts attribute (not needed at the moment)
+         options(na.action = na.act)           # set na.action back to na.act
+         intercept <- FALSE                    # set to FALSE since formula now controls whether the intercept is included or not
+      }                                        # note: code further below ([b]) actually checks whether intercept is included or not
    }
 
    ### turn a vector for mods into a column vector
@@ -802,7 +802,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    if (model == "rma.ls") {
       if (inherits(scale, "formula")) {
          formula.scale <- scale
-         if (isTRUE(all.equal(formula.scale, ~ 1))) { ### needed so 'scale = ~ 1' without 'data' specified works
+         if (isTRUE(all.equal(formula.scale, ~ 1))) { # needed so 'scale = ~ 1' without 'data' specified works
             Z <- matrix(1, nrow=k, ncol=1)
             colnames(Z) <- "intrcpt"
          } else {
@@ -923,8 +923,8 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          k       <- length(yi)
          warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted from model fitting.")), call.=FALSE)
 
-         attr(yi, "measure") <- measure ### add measure attribute back
-         attr(yi, "ni")      <- ni      ### add ni attribute back
+         attr(yi, "measure") <- measure # add measure attribute back
+         attr(yi, "ni")      <- ni      # add ni attribute back
 
          ### note: slab is always of the same length as the full yi vector (after subsetting), so missings are not removed and slab is not added back to yi
 
@@ -1010,9 +1010,9 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    if (any(is.int)) {
       int.incl <- TRUE
       int.indx <- which(is.int, arr.ind=TRUE)
-      X        <- cbind(intrcpt=1,   X[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
-      X.f      <- cbind(intrcpt=1, X.f[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
-      intercept <- TRUE ### set intercept appropriately so that the predict() function works
+      X        <- cbind(intrcpt=1,   X[,-int.indx, drop=FALSE]) # this removes any duplicate intercepts
+      X.f      <- cbind(intrcpt=1, X.f[,-int.indx, drop=FALSE]) # this removes any duplicate intercepts
+      intercept <- TRUE # set intercept appropriately so that the predict() function works
    } else {
       int.incl <- FALSE
    }
@@ -1035,15 +1035,15 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    ### check if there are too many parameters for given k (TODO: what about rma.ls models?)
 
    if (!(int.only && k == 1L)) {
-      if (is.element(method[1], c("FE","EE","CE"))) { ### have to estimate p parms
+      if (is.element(method[1], c("FE","EE","CE"))) { # have to estimate p parms
          if (p > k)
             stop(mstyle$stop("Number of parameters to be estimated is larger than the number of observations."))
       } else {
-         if (!is.null(tau2) && !is.na(tau2)) {        ### have to estimate p parms (tau2 is fixed at value specified)
+         if (!is.null(tau2) && !is.na(tau2)) {        # have to estimate p parms (tau2 is fixed at value specified)
             if (p > k)
                stop(mstyle$stop("Number of parameters to be estimated is larger than the number of observations."))
          } else {
-            if ((p+1) > k)                            ### have to estimate p+1 parms
+            if ((p+1) > k)                            # have to estimate p+1 parms
                stop(mstyle$stop("Number of parameters to be estimated is larger than the number of observations."))
          }
       }
@@ -1060,7 +1060,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    con <- list(verbose = FALSE,
                evtol = 1e-07,                  # lower bound for eigenvalues to determine if model matrix is positive definite (also for checking if vimaxmin >= 1/con$evtol)
-               REMLf = TRUE)                   # should |X'X| term be included in the REML log likelihood?
+               REMLf = TRUE)                   # should |X'X| term be included in the REML log-likelihood?
 
    if (model == "rma.uni") {
 
@@ -1778,14 +1778,14 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       if (any(is.int)) {
          Z.int.incl <- TRUE
          int.indx   <- which(is.int, arr.ind=TRUE)
-         Z          <- cbind(intrcpt=1,   Z[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
-         Z.f        <- cbind(intrcpt=1, Z.f[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
-         Z.intercept <- TRUE ### set intercept appropriately so that the predict() function works
+         Z          <- cbind(intrcpt=1,   Z[,-int.indx, drop=FALSE]) # this removes any duplicate intercepts
+         Z.f        <- cbind(intrcpt=1, Z.f[,-int.indx, drop=FALSE]) # this removes any duplicate intercepts
+         Z.intercept <- TRUE # set intercept appropriately so that the predict() function works
       } else {
          Z.int.incl <- FALSE
       }
 
-      q <- NCOL(Z) ### number of columns in Z (including the intercept if it is included)
+      q <- NCOL(Z) # number of columns in Z (including the intercept if it is included)
 
       ### check whether model matrix is of full rank
 
@@ -1832,11 +1832,11 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       if (!Z.int.only && Z.int.incl && con$scaleZ && is.na(alpha[1]) && all(is.infinite(con$alpha.min)) && all(is.infinite(con$alpha.max)) && !optbeta) {
          Zsave <- Z
          meanZ <- colMeans(Z[, 2:q, drop=FALSE])
-         sdZ   <- apply(Z[, 2:q, drop=FALSE], 2, sd) ### consider using colSds() from matrixStats package
-         is.d  <- apply(Z, 2, .is.dummy) ### is each column a dummy variable (i.e., only 0s and 1s)?
+         sdZ   <- apply(Z[, 2:q, drop=FALSE], 2, sd) # consider using colSds() from matrixStats package
+         is.d  <- apply(Z, 2, .is.dummy) # is each column a dummy variable (i.e., only 0s and 1s)?
          mZ    <- rbind(c(intrcpt=1, -1*ifelse(is.d[-1], 0, meanZ/sdZ)), cbind(0, diag(ifelse(is.d[-1], 1, 1/sdZ), nrow=length(is.d)-1, ncol=length(is.d)-1)))
          imZ   <- try(suppressWarnings(solve(mZ)), silent=TRUE)
-         Z[,!is.d] <- apply(Z[, !is.d, drop=FALSE], 2, scale) ### rescale the non-dummy variables
+         Z[,!is.d] <- apply(Z[, !is.d, drop=FALSE], 2, scale) # rescale the non-dummy variables
          if (any(!is.na(alpha))) {
             if (inherits(imZ, "try-error"))
                stop(mstyle$stop("Unable to rescale starting values for the scale parameters."))
@@ -2018,10 +2018,10 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       if (link == "log") {
 
-         optcall <- paste(optimizer, "(", par.arg, "=c(beta.init, alpha.init), .ll.rma.ls, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
+         optcall <- paste0(optimizer, "(", par.arg, "=c(beta.init, alpha.init), .ll.rma.ls, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
                           "yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, beta.val=beta, verbose=verbose, digits=digits,
                           REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
-                          tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n", sep="")
+                          tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
 
       }
 
@@ -2489,7 +2489,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    ###### fit statistics
 
    if (verbose > 1)
-      message(mstyle$message("Computing fit statistics and log likelihood ..."))
+      message(mstyle$message("Computing fit statistics and log-likelihood ..."))
 
    ### note: tau2 is not counted as a parameter when it was fixed by the user (same for fixed alpha values)
    q.est <- ifelse(model == "rma.uni", 0, sum(is.na(alpha.val)))
@@ -2512,7 +2512,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    AIC.ML    <- -2 * ll.ML   + 2*parms
    BIC.ML    <- -2 * ll.ML   +   parms * log(k)
    AICc.ML   <- -2 * ll.ML   + 2*parms * max(k, parms+2) / (max(k, parms+2) - parms - 1)
-   dev.REML  <- -2 * (ll.REML - 0) ### saturated model has ll = 0 when using the full REML likelihood
+   dev.REML  <- -2 * (ll.REML - 0) # saturated model has ll = 0 when using the full REML likelihood
    AIC.REML  <- -2 * ll.REML + 2*parms
    BIC.REML  <- -2 * ll.REML +   parms * log(k-p)
    AICc.REML <- -2 * ll.REML + 2*parms * max(k-p, parms+2) / (max(k-p, parms+2) - parms - 1)

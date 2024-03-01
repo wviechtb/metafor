@@ -22,9 +22,9 @@
    if (profile) {
 
       if (inherits(res, "try-error")) {
-         sav <- list(ll = NA_real_, beta = matrix(NA_real_, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA_real_, length(obj$ci.lb)), ci.ub = rep(NA_real_, length(obj$ci.ub)), I2 = NA_real_)
+         sav <- list(ll = NA_real_, beta = matrix(NA_real_, nrow=nrow(obj$beta), ncol=1), ci.lb = rep(NA_real_, length(obj$ci.lb)), ci.ub = rep(NA_real_, length(obj$ci.ub)), I2 = NA_real_, H2 = NA_real_)
       } else {
-         sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub, I2=res$I2)
+         sav <- list(ll = logLik(res), beta = res$beta, ci.lb = res$ci.lb, ci.ub = res$ci.ub, I2=res$I2, H2=res$H2)
       }
 
       if (pred) {

@@ -417,7 +417,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
       attr(xagg, "digits") <- attr(x, "digits")
    }
 
-   if (is.null(attr(xagg, "digits"))) ### in case x no longer has a 'digits' attribute
+   if (is.null(attr(xagg, "digits"))) # in case x no longer has a 'digits' attribute
       attr(xagg, "digits") <- 4
 
    class(xagg) <- c("escalc", "data.frame")

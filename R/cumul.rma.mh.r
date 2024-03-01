@@ -46,9 +46,9 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    if (length(order) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'order' argument (", length(order), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
-   ### note: order variable is assumed to be of the same length as the size of the
-   ###       original dataset passed to the model fitting function and so we apply
-   ###       the same subsetting (if necessary) as was done during model fitting
+   ### note: order variable must be of the same length as the original dataset
+   ###       so we have to apply the same subsetting (if necessary)
+   ###       as was done during model fitting
 
    order <- .getsubset(order, x$subset)
 

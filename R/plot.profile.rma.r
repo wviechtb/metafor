@@ -39,9 +39,9 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
 
       if (missing.ylab) {
          if (isTRUE(x$exp)) {
-            ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Likelihood", sep="")
+            ylab <- paste0(ifelse(x$method=="REML", "Restricted ", ""), "Likelihood")
          } else {
-            ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
+            ylab <- paste0(ifelse(x$method=="REML", "Restricted ", ""), "Log-Likelihood")
          }
       }
 
@@ -97,9 +97,9 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
 
          if (missing.ylab) {
             if (isTRUE(x$exp)) {
-               ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Likelihood", sep="")
+               ylab <- paste0(ifelse(x$method=="REML", "Restricted ", ""), "Likelihood")
             } else {
-               ylab <- paste(ifelse(x$method=="REML", "Restricted ", ""), "Log-Likelihood", sep="")
+               ylab <- paste0(ifelse(x$method=="REML", "Restricted ", ""), "Log-Likelihood")
             }
          } else {
             if (length(ylab) == 1L)

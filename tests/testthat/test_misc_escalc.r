@@ -64,7 +64,7 @@ test_that("escalc() works correctly for measure='SMD/SMDH/ROM'", {
 
    sav <- escalc(measure="SMDH", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1:4)
    expect_equivalent(sav$yi, c(-0.3553, -0.3465, -2.3018, -1.8880), tolerance=.tol[["est"]])
-   expect_equivalent(sav$vi, c( 0.0131,  0.0657,  0.0509,  0.1874), tolerance=.tol[["var"]])
+   expect_equivalent(sav$vi, c( 0.0132,  0.0674,  0.0515,  0.1961), tolerance=.tol[["var"]])
 
    sav <- escalc(measure="ROM", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1:4)
    expect_equivalent(sav$yi, c(-0.3102, -0.0715, -0.6202, -0.7303), tolerance=.tol[["est"]])
@@ -169,7 +169,7 @@ test_that("escalc() works correctly for measure='MC/SMCRH'", {
 
    dat <- escalc(measure="SMCRH", m1i=26, m2i=22, sd1i=sqrt(30), sd2i=sqrt(20), ni=60, ri=0.7)
    expect_equivalent(dat$yi, 0.7210, tolerance=.tol[["est"]])
-   expect_equivalent(dat$vi, 0.0129, tolerance=.tol[["var"]])
+   expect_equivalent(dat$vi, 0.0133, tolerance=.tol[["var"]])
 
 })
 
