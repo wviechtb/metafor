@@ -116,6 +116,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (length(efac) == 1L)
       efac <- rep(efac, 2L)
 
+   efac[efac == 0] <- NA
+
    ### annotation symbols vector
 
    if (is.null(ddd$annosym)) {

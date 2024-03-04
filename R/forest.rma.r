@@ -153,6 +153,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (length(efac) == 2L)
       efac <- c(efac[1], efac[1], efac[2]) # if 2 values specified: 1st = CI/PI end lines and arrows, 2nd = summary polygon or fitted polygons
 
+   efac[efac == 0] <- NA
+
    ### annotation symbols vector
 
    if (is.null(ddd$annosym)) {

@@ -256,6 +256,10 @@ par(op)
 ### see also the addpoly.rma function for an example where summaries
 ### for the three subgroups are added to such a forest plot
 
+### illustrate the efac argument
+forest(res, header=TRUE)
+forest(res, header=TRUE, efac=c(0,1))
+
 ### illustrate use of olim argument with a meta-analysis of raw correlation
 ### coefficients (data from Pritz, 1997); without olim=c(0,1), some of the
 ### CIs would have upper bounds larger than 1
