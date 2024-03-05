@@ -1,4 +1,4 @@
-forest.rma       <- function(x,
+forest.rma       <- function(x, y,
 annotate=TRUE, addfit=TRUE, addpred=FALSE, showweights=FALSE, header=FALSE,
 xlim, alim, olim, ylim, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab, slab, mlab, ilab, ilab.xpos, ilab.pos, order,
@@ -9,8 +9,10 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    #########################################################################
 
    mstyle <- .get.mstyle()
-
+   
    .chkclass(class(x), must="rma", notav=c("rma.ls", "rma.gen"))
+   if (!missing(y))
+     .chkclass(class(y), must="rma", notav=c("rma.ls", "rma.gen"))
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act), add=TRUE)
@@ -773,7 +775,11 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    if (missing(ylim)) {
       if (x$int.only && addfit) {
-         ylim <- c(-1.5, max(rows, na.rm=TRUE)+top)
+        if (missing(y)) {
+          ylim <- c(-1.5, max(rows, na.rm=TRUE)+top)
+        } else {
+          ylim <- c(-2.5, max(rows, na.rm=TRUE)+top)
+        }
       } else {
          ylim <- c(0.5, max(rows, na.rm=TRUE)+top)
       }
@@ -1004,6 +1010,49 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       } else {
          ltext(textpos[1], -1+rowadj[1], mlab, pos=4, cex=cex, ...)
       }
+      
+      ### add polygon and label for model estimate for other fixed/random effects model 
+      
+      if (!missing(y)) {
+        
+        # obtain estimates for other model
+        temp <- predict(y, level=level, pi.type=pi.type)
+        beta.y       <- temp$pred
+        beta.ci.lb.y <- temp$ci.lb
+        beta.ci.ub.y <- temp$ci.ub
+        if (is.function(transf)) {
+          if (is.null(targs)) {
+            beta.y       <- sapply(beta.y, transf)
+            beta.ci.lb.y <- sapply(beta.ci.lb.y, transf)
+            beta.ci.ub.y <- sapply(beta.ci.ub.y, transf)
+          } else {
+            beta.y       <- sapply(beta.y, transf, targs)
+            beta.ci.lb.y <- sapply(beta.ci.lb.y, transf, targs)
+            beta.ci.ub.y <- sapply(beta.ci.ub.y, transf, targs)
+          }
+        }
+        # make sure order of intervals is always increasing
+        tmp <- .psort(beta.ci.lb.y, beta.ci.ub.y)
+        beta.ci.lb.y <- tmp[,1]
+        beta.ci.ub.y <- tmp[,2]
+        # apply observation/outcome limits if specified
+        if (!missing(olim)) {
+          beta.ci.lb.y[beta.ci.lb.y < olim[1]] <- olim[1]
+          beta.ci.ub.y[beta.ci.ub.y > olim[2]] <- olim[2]
+        }
+        
+        # add polygon #
+        lpolygon(x=c(beta.ci.lb.y, beta.y, beta.ci.ub.y, beta.y), y=c(-2, -2+(height/100)*cex*efac[3], -2, -2-(height/100)*cex*efac[3]), col=col[1], border=border, ...)
+        
+        # add labels
+        if (missing(mlab.y))
+          mlab.y <- sapply(y$method, switch, "FE"="FE Model", "EE"="EE Model", "CE"="CE Model", "RE Model", USE.NAMES=FALSE)
+        if (is.list(mlab.y)) {
+          ltext(ddd$textpos[1], -2, mlab.y[[1]], pos=4, cex=cex, ...)
+        } else {
+          ltext(ddd$textpos[1], -2, mlab.y, pos=4, cex=cex, ...)
+        }
+      }
 
    }
 
@@ -1109,13 +1158,21 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
          if (is.null(targs)) {
             if (addfit && x$int.only) {
-               annotext <- cbind(sapply(c(yi, beta), atransf), sapply(c(ci.lb, beta.ci.lb), atransf), sapply(c(ci.ub, beta.ci.ub), atransf))
+              if (missing(y)) {
+                annotext <- cbind(sapply(c(yi, beta), atransf), sapply(c(ci.lb, beta.ci.lb), atransf), sapply(c(ci.ub, beta.ci.ub), atransf))
+              } else {
+                annotext <- cbind(sapply(c(yi, beta, beta.y), atransf), sapply(c(ci.lb, beta.ci.lb, beta.ci.lb.y), atransf), sapply(c(ci.ub, beta.ci.ub, beta.ci.ub.y), atransf))
+              }
             } else {
                annotext <- cbind(sapply(yi, atransf), sapply(ci.lb, atransf), sapply(ci.ub, atransf))
             }
          } else {
             if (addfit && x$int.only) {
-               annotext <- cbind(sapply(c(yi, beta), atransf, targs), sapply(c(ci.lb, beta.ci.lb), atransf, targs), sapply(c(ci.ub, beta.ci.ub), atransf, targs))
+              if (missing(y)) {
+                annotext <- cbind(sapply(c(yi, beta), atransf, targs), sapply(c(ci.lb, beta.ci.lb), atransf, targs), sapply(c(ci.ub, beta.ci.ub), atransf, targs))
+              } else {
+                annotext <- cbind(sapply(c(yi, beta, beta.y), atransf, targs), sapply(c(ci.lb, beta.ci.lb, beta.ci.lb.y), atransf, targs), sapply(c(ci.ub, beta.ci.ub, beta.ci.ub.y), atransf, targs))
+              }
             } else {
                annotext <- cbind(sapply(yi, atransf, targs), sapply(ci.lb, atransf, targs), sapply(ci.ub, atransf, targs))
             }
@@ -1129,7 +1186,11 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       } else {
 
          if (addfit && x$int.only) {
-            annotext <- cbind(c(yi, beta), c(ci.lb, beta.ci.lb), c(ci.ub, beta.ci.ub))
+           if (missing(y)) {
+             annotext <- cbind(c(yi, beta), c(ci.lb, beta.ci.lb), c(ci.ub, beta.ci.ub))
+           } else {
+             annotext <- cbind(c(yi, beta, beta.y), c(ci.lb, beta.ci.lb, beta.ci.lb.y), c(ci.ub, beta.ci.ub, beta.ci.ub.y))
+           }
          } else {
             annotext <- cbind(yi, ci.lb, ci.ub)
          }
@@ -1179,7 +1240,11 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       par(family=names(fonts)[2], font=fonts[2])
 
       if (addfit && x$int.only) {
-         ltext(textpos[2], c(rows,-1)+rowadj[2], labels=annotext, pos=2, cex=cex, ...)
+        if (missing(y)) {
+          ltext(ddd$textpos[2], c(rows,-1), labels=annotext, pos=2, cex=cex, ...)
+        } else {
+          ltext(ddd$textpos[2], c(rows,-1,-2), labels=annotext, pos=2, cex=cex, ...)
+        }
       } else {
          ltext(textpos[2], rows+rowadj[2], labels=annotext, pos=2, cex=cex, ...)
       }
