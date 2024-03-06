@@ -1093,13 +1093,13 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
           if (beta.pi.lb.y >= alim[1]) {
             lsegments(beta.pi.lb.y, -1-(height/150)*cex*efac[1], beta.pi.lb.y, -1+(height/150)*cex*efac[1], col=col[2], ...)
           } else {
-            lpolygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(-1, -1+(height/150)*cex*efac[2], -1-(height/150)*cex*efac[2], -1), col=col[2], border=col[2], ...)
+            lpolygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(-2, -2+(height/150)*cex*efac[3], -2-(height/150)*cex*efac[3], -2), col=col[1], border=col[1], ...)
           }
 
           if (beta.pi.ub.y <= alim[2]) {
             lsegments(beta.pi.ub.y, -1-(height/150)*cex*efac[1], beta.pi.ub.y, -1+(height/150)*cex*efac[1], col=col[2], ...)
           } else {
-            lpolygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(-1, -1+(height/150)*cex*efac[2], -1-(height/150)*cex*efac[2], -1), col=col[2], border=col[2], ...)
+            lpolygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(-2, -2+(height/150)*cex*efac[3], -2-(height/150)*cex*efac[3], -2), col=col[1], border=col[1], ...)
           }
 
         }
