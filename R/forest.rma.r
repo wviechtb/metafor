@@ -964,12 +964,12 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       tmp <- .psort(beta.pi.lb, beta.pi.ub)
       beta.pi.lb <- tmp[,1]
       beta.pi.ub <- tmp[,2]
-
+      
       ### apply observation/outcome limits if specified
 
       if (!missing(olim)) {
-         pred[pred < olim[1]] <- olim[1]
-         pred[pred > olim[2]] <- olim[2]
+         beta[beta < olim[1]] <- olim[1]
+         beta[beta > olim[2]] <- olim[2]
          beta.ci.lb[beta.ci.lb < olim[1]] <- olim[1]
          beta.ci.ub[beta.ci.ub > olim[2]] <- olim[2]
          beta.pi.lb[beta.pi.lb < olim[1]] <- olim[1]
@@ -1017,7 +1017,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
         
         # obtain estimates for other model
         if (inherits(y, "rma.mv") && y$withG && y$tau2s > 1) {
-
+          
           if (!is.logical(addpred)) {
             ### for multiple tau^2 (and gamma^2) values, need to specify level(s) of the inner factor(s) to compute the PI
             ### this can be done via the addpred argument (i.e., instead of using a logical, one specifies the level(s))
@@ -1034,11 +1034,11 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
               temp <- predict(y, level=level, tau2.levels=1, gamma2.levels=1, pi.type=pi.type)
             }
           }
-
+          
         } else {
-
+          
           temp <- predict(y, level=level, pi.type=pi.type)
-
+          
         }
         
         beta.y       <- temp$pred
@@ -1076,8 +1076,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
         # apply observation/outcome limits if specified
         
         if (!missing(olim)) {
-          pred[pred < olim[1]] <- olim[1]
-          pred[pred > olim[2]] <- olim[2]
+          beta.y[beta.y < olim[1]] <- olim[1]
+          beta.y[beta.y > olim[2]] <- olim[2]
           beta.ci.lb.y[beta.ci.lb.y < olim[1]] <- olim[1]
           beta.ci.ub.y[beta.ci.ub.y > olim[2]] <- olim[2]
           beta.pi.lb.y[beta.pi.lb.y < olim[1]] <- olim[1]
@@ -1085,24 +1085,28 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
         }
         
         ### add prediction interval
-
+        
         if (!is.element(y$method, c("FE","EE","CE")) && addpred) {
-
-          lsegments(max(beta.pi.lb.y, alim[1]), -1, min(beta.pi.ub.y, alim[2]), -1, lty=lty[2], col=col[2], ...)
-
+          
+          lsegments(max(beta.pi.lb.y, alim[1]), -2, min(beta.pi.ub.y, alim[2]), -2, lty=lty[2], col=col[2], ...)
+          
           if (beta.pi.lb.y >= alim[1]) {
-            lsegments(beta.pi.lb.y, -1-(height/150)*cex*efac[1], beta.pi.lb.y, -1+(height/150)*cex*efac[1], col=col[2], ...)
+            lsegments(beta.pi.lb.y, -2-(height/150)*cex*efac[1], beta.pi.lb.y, -2+(height/150)*cex*efac[1], col=col[2], ...)
           } else {
-            lpolygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(-2, -2+(height/150)*cex*efac[3], -2-(height/150)*cex*efac[3], -2), col=col[1], border=col[1], ...)
+            lpolygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(-2, -2+(height/150)*cex*efac[2], -2-(height/150)*cex*efac[2], -2), col=col[2], border=col[2], ...)
           }
-
+          
           if (beta.pi.ub.y <= alim[2]) {
-            lsegments(beta.pi.ub.y, -1-(height/150)*cex*efac[1], beta.pi.ub.y, -1+(height/150)*cex*efac[1], col=col[2], ...)
+            lsegments(beta.pi.ub.y, -2-(height/150)*cex*efac[1], beta.pi.ub.y, -2+(height/150)*cex*efac[1], col=col[2], ...)
           } else {
-            lpolygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(-2, -2+(height/150)*cex*efac[3], -2-(height/150)*cex*efac[3], -2), col=col[1], border=col[1], ...)
+            lpolygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(-2, -2+(height/150)*cex*efac[2], -2-(height/150)*cex*efac[2], -2), col=col[2], border=col[2], ...)
           }
-
+          
         }
+        
+        ### polygon for the summary estimate
+        
+        lpolygon(x=c(beta.ci.lb.y, beta.y, beta.ci.ub.y, beta.y), y=c(-2, -2+(height/100)*cex*efac[3], -2, -2-(height/100)*cex*efac[3]), col=col[1], border=border, ...)
         
         # add labels
         
