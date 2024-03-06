@@ -1017,9 +1017,11 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
         
         # obtain estimates for other model
         temp <- predict(y, level=level, pi.type=pi.type)
+        
         beta.y       <- temp$pred
         beta.ci.lb.y <- temp$ci.lb
         beta.ci.ub.y <- temp$ci.ub
+        
         if (is.function(transf)) {
           if (is.null(targs)) {
             beta.y       <- sapply(beta.y, transf)
@@ -1031,26 +1033,33 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
             beta.ci.ub.y <- sapply(beta.ci.ub.y, transf, targs)
           }
         }
+        
         # make sure order of intervals is always increasing
+        
         tmp <- .psort(beta.ci.lb.y, beta.ci.ub.y)
         beta.ci.lb.y <- tmp[,1]
         beta.ci.ub.y <- tmp[,2]
+        
         # apply observation/outcome limits if specified
+        
         if (!missing(olim)) {
           beta.ci.lb.y[beta.ci.lb.y < olim[1]] <- olim[1]
           beta.ci.ub.y[beta.ci.ub.y > olim[2]] <- olim[2]
         }
         
         # add polygon #
+        
         lpolygon(x=c(beta.ci.lb.y, beta.y, beta.ci.ub.y, beta.y), y=c(-2, -2+(height/100)*cex*efac[3], -2, -2-(height/100)*cex*efac[3]), col=col[1], border=border, ...)
         
         # add labels
+        
         if (missing(mlab.y))
           mlab.y <- sapply(y$method, switch, "FE"="FE Model", "EE"="EE Model", "CE"="CE Model", "RE Model", USE.NAMES=FALSE)
+        
         if (is.list(mlab.y)) {
-          ltext(ddd$textpos[1], -2, mlab.y[[1]], pos=4, cex=cex, ...)
+          ltext(textpos[1], -2, mlab.y[[1]], pos=4, cex=cex, ...)
         } else {
-          ltext(ddd$textpos[1], -2, mlab.y, pos=4, cex=cex, ...)
+          ltext(textpos[1], -2, mlab.y, pos=4, cex=cex, ...)
         }
       }
 
@@ -1241,9 +1250,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
       if (addfit && x$int.only) {
         if (missing(y)) {
-          ltext(ddd$textpos[2], c(rows,-1), labels=annotext, pos=2, cex=cex, ...)
+          ltext(textpos[2], c(rows,-1)+rowadj[2], labels=annotext, pos=2, cex=cex, ...)
         } else {
-          ltext(ddd$textpos[2], c(rows,-1,-2), labels=annotext, pos=2, cex=cex, ...)
+          ltext(textpos[2], c(rows,-1,-2)+rowadj[2], labels=annotext, pos=2, cex=cex, ...)
         }
       } else {
          ltext(textpos[2], rows+rowadj[2], labels=annotext, pos=2, cex=cex, ...)
