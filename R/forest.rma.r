@@ -1,7 +1,7 @@
 forest.rma       <- function(x, y,
 annotate=TRUE, addfit=TRUE, addpred=FALSE, showweights=FALSE, header=FALSE,
 xlim, alim, olim, ylim, at, steps=5, level=x$level, refline=0, digits=2L, width,
-xlab, slab, mlab, ilab, ilab.xpos, ilab.pos, order,
+xlab, slab, mlab, mlab.y, ilab, ilab.xpos, ilab.pos, order,
 transf, atransf, targs, rows,
 efac=1, pch, psize, plim=c(0.5,1.5), colout, col, border, shade, colshade,
 lty, fonts, cex, cex.lab, cex.axis, ...) {
