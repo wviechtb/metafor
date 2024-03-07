@@ -588,12 +588,12 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       if (length(olim) != 2L)
          stop(mstyle$stop("Argument 'olim' must be of length 2."))
       olim <- sort(olim)
-      yi[yi < olim[1]] <- olim[1]
-      yi[yi > olim[2]] <- olim[2]
-      ci.lb[ci.lb < olim[1]] <- olim[1]
-      ci.ub[ci.ub > olim[2]] <- olim[2]
-      pred.ci.lb[pred.ci.lb < olim[1]] <- olim[1]
-      pred.ci.ub[pred.ci.ub > olim[2]] <- olim[2]
+      yi         <- .applyolim(yi, olim)
+      ci.lb      <- .applyolim(ci.lb, olim)
+      ci.ub      <- .applyolim(ci.ub, olim)
+      pred       <- .applyolim(pred, olim)
+      pred.ci.lb <- .applyolim(pred.ci.lb, olim)
+      pred.ci.ub <- .applyolim(pred.ci.ub, olim)
    }
 
    ### set default point sizes (if not specified by user)
@@ -972,12 +972,11 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       ### apply observation/outcome limits if specified
 
       if (!missing(olim)) {
-         pred[pred < olim[1]] <- olim[1]
-         pred[pred > olim[2]] <- olim[2]
-         beta.ci.lb[beta.ci.lb < olim[1]] <- olim[1]
-         beta.ci.ub[beta.ci.ub > olim[2]] <- olim[2]
-         beta.pi.lb[beta.pi.lb < olim[1]] <- olim[1]
-         beta.pi.ub[beta.pi.ub > olim[2]] <- olim[2]
+         beta       <- .applyolim(beta, olim)
+         beta.ci.lb <- .applyolim(beta.ci.lb, olim)
+         beta.ci.ub <- .applyolim(beta.ci.ub, olim)
+         beta.pi.lb <- .applyolim(beta.pi.lb, olim)
+         beta.pi.ub <- .applyolim(beta.pi.ub, olim)
       }
 
       ### add prediction interval

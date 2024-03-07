@@ -522,14 +522,12 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       if (length(olim) != 2L)
          stop(mstyle$stop("Argument 'olim' must be of length 2."))
       olim <- sort(olim)
-      yi[yi < olim[1]] <- olim[1]
-      yi[yi > olim[2]] <- olim[2]
-      pred[pred < olim[1]] <- olim[1]
-      pred[pred > olim[2]] <- olim[2]
-      ci.lb[ci.lb < olim[1]] <- olim[1]
-      ci.ub[ci.ub > olim[2]] <- olim[2]
-      pi.lb[pi.lb < olim[1]] <- olim[1]
-      pi.ub[pi.ub > olim[2]] <- olim[2]
+      yi     <- .applyolim(yi, olim)
+      ci.lb  <- .applyolim(ci.lb, olim)
+      ci.ub  <- .applyolim(ci.ub, olim)
+      pred   <- .applyolim(pred, olim)
+      pi.lb  <- .applyolim(pi.lb, olim)
+      pi.ub  <- .applyolim(pi.ub, olim)
    }
 
    ### set default point sizes (if not specified by user)

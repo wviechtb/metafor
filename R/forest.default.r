@@ -481,10 +481,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       if (length(olim) != 2L)
          stop(mstyle$stop("Argument 'olim' must be of length 2."))
       olim <- sort(olim)
-      yi[yi < olim[1]] <- olim[1]
-      yi[yi > olim[2]] <- olim[2]
-      ci.lb[ci.lb < olim[1]] <- olim[1]
-      ci.ub[ci.ub > olim[2]] <- olim[2]
+      yi    <- .applyolim(yi, olim)
+      ci.lb <- .applyolim(ci.lb, olim)
+      ci.ub <- .applyolim(ci.ub, olim)
    }
 
    if (showweights) {                           # inverse variance weights after ordering/subsetting and

@@ -106,10 +106,9 @@ H0=0, append=TRUE, replace=TRUE, level=95, olim, digits, transf, ...) {
       if (length(olim) != 2L)
          stop(mstyle$stop("Argument 'olim' must be of length 2."))
       olim <- sort(olim)
-      yi[yi < olim[1]] <- olim[1] # note: zi and pval are based on unconstrained yi
-      yi[yi > olim[2]] <- olim[2]
-      ci.lb[ci.lb < olim[1]] <- olim[1]
-      ci.ub[ci.ub > olim[2]] <- olim[2]
+      yi    <- .applyolim(yi, olim) # note: zi and pval are based on unconstrained yi
+      ci.lb <- .applyolim(ci.lb, olim)
+      ci.ub <- .applyolim(ci.ub, olim)
    }
 
    x[[yi.name]] <- yi

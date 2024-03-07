@@ -12,7 +12,9 @@
 
 - in `plot.gosh.rma()`, can also set `het="tau"` (to plot the square root of tau^2 as the measure of heterogeneity)
 
-- in the various `forest()` functions, argument `ylim` can also now only be a single value to specify the lower bound (while the upper bound is still set automatically)
+- in the various `forest()` functions, argument `ylim` can now only be a single value to specify the lower bound (while the upper bound is still set automatically)
+
+- in `forest()` and `regplot()`, observation limits set via `olim` are now properly applied to all elements
 
 - some internal refactoring of the code
 

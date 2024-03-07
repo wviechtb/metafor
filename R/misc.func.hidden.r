@@ -167,6 +167,16 @@
 
 ############################################################################
 
+### function for applying observation limits
+
+.applyolim <- function(x, olim) {
+   x[x < olim[1]] <- olim[1]
+   x[x > olim[2]] <- olim[2]
+   return(x)
+}
+
+############################################################################
+
 ### function to take the square root of a vector of numbers, giving NA for negative numbers (without a warning)
 
 .sqrt <- function(x)

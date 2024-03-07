@@ -48,8 +48,7 @@ simulate.rma <- function(object, nsim=1, seed=NULL, olim, ...) {
       if (length(olim) != 2L)
          stop(mstyle$stop("Argument 'olim' must be of length 2."))
       olim <- sort(olim)
-      val[val < olim[1]] <- olim[1]
-      val[val > olim[2]] <- olim[2]
+      val <- .applyolim(val, olim)
    }
 
    #########################################################################
