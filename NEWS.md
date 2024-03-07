@@ -1,4 +1,4 @@
-# metafor 4.5-9 (2024-03-04)
+# metafor 4.5-10 (2024-03-07)
 
 - the `steps` argument in the various `profile()` functions can now also be a numeric vector to specify for which parameter values the likelihood should be evaluated
 
@@ -11,6 +11,8 @@
 - calculation of the sampling variances for measures `"SMDH"`, `"SMD1H"`, and `"SMCRH"` was slightly adjusted for consistency
 
 - in `plot.gosh.rma()`, can also set `het="tau"` (to plot the square root of tau^2 as the measure of heterogeneity)
+
+- in the various `forest()` functions, argument `ylim` can also now only be a single value to specify the lower bound (while the upper bound is still set automatically)
 
 - some internal refactoring of the code
 

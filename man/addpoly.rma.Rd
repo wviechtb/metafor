@@ -54,7 +54,7 @@ forest(res, atransf=exp, xlim=c(-8,6), ylim=c(-2.5,15), header=TRUE, top=2)
 ### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### add summary estimate from the random-effects model to the forest plot
+### add the summary estimate from the random-effects model to the forest plot
 addpoly(res)
 
 ### forest plot with subgrouping of studies and summaries per subgroup

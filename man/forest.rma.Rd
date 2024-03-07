@@ -24,7 +24,7 @@
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function sets the horizontal plot limits to some sensible values.}
    \item{alim}{the x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.}
    \item{olim}{optional argument to specify observation/outcome limits. If unspecified, no limits are used.}
-   \item{ylim}{the y-axis limits of the plot. If unspecified, the function sets the y-axis limits to some sensible values.}
+   \item{ylim}{the y-axis limits of the plot. If unspecified, the function sets the y-axis limits to some sensible values. Can also be a single value to set the lower bound (while the upper bound is still set automatically).}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function sets the tick mark positions/labels to some sensible values.}
    \item{steps}{the number of tick marks for the x-axis (the default is 5). Ignored when the positions are specified via the \code{at} argument.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (see \link[=misc-options]{here} for details). The default is to take the value from the object.}

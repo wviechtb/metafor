@@ -394,26 +394,26 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    options(na.action = "na.pass") # using na.pass to get the entire vector (length of yi.f)
 
-      if (x$int.only) {
-         pred <- fitted(x)
-         pred.ci.lb <- rep(NA_real_, k)
-         pred.ci.ub <- rep(NA_real_, k)
+   if (x$int.only) {
+      pred <- fitted(x)
+      pred.ci.lb <- rep(NA_real_, k)
+      pred.ci.ub <- rep(NA_real_, k)
+   } else {
+      temp <- predict(x, level=level, pi.type=pi.type)
+      pred <- temp$pred
+      if (addpred) {
+         pred.ci.lb <- temp$pi.lb
+         pred.ci.ub <- temp$pi.ub
       } else {
-         temp <- predict(x, level=level, pi.type=pi.type)
-         pred <- temp$pred
-         if (addpred) {
-            pred.ci.lb <- temp$pi.lb
-            pred.ci.ub <- temp$pi.ub
-         } else {
-            pred.ci.lb <- temp$ci.lb
-            pred.ci.ub <- temp$ci.ub
-         }
+         pred.ci.lb <- temp$ci.lb
+         pred.ci.ub <- temp$ci.ub
       }
+   }
 
-      weights <- try(weights(x, type=weighttype), silent=TRUE) # does not work for rma.glmm and rma.uni.selmodel objects
+   weights <- try(weights(x, type=weighttype), silent=TRUE) # does not work for rma.glmm and rma.uni.selmodel objects
 
-      if (inherits(weights, "try-error"))
-         weights <- rep(1, k)
+   if (inherits(weights, "try-error"))
+      weights <- rep(1, k)
 
    ### sort the data if requested
 
@@ -778,7 +778,15 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          ylim <- c(0.5, max(rows, na.rm=TRUE)+top)
       }
    } else {
-      ylim <- sort(ylim)
+      if (length(ylim) == 1L) {
+         if (x$int.only && addfit) {
+            ylim <- c(ylim, max(rows, na.rm=TRUE)+top)
+         } else {
+            ylim <- c(ylim, max(rows, na.rm=TRUE)+top)
+         }
+      } else {
+         ylim <- sort(ylim)
+      }
    }
 
    #########################################################################
@@ -886,7 +894,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          if (is.na(pred[i]))
             next
 
-         lpolygon(x=c(max(pred.ci.lb[i], alim[1]), pred[i], min(pred.ci.ub[i], alim[2]), pred[i]), y=c(rows[i], rows[i]+(height/100)*cex*efac[3], rows[i], rows[i]-(height/100)*cex*efac[3]), col=col, border=border, ...)
+         lpolygon(x=c(max(pred.ci.lb[i], alim[1]), pred[i], min(pred.ci.ub[i], alim[2]), pred[i]),
+                  y=c(rows[i], rows[i]+(height/100)*cex*efac[3], rows[i], rows[i]-(height/100)*cex*efac[3]),
+                  col=col, border=border, ...)
 
          ### this would only draw intervals if bounds fall within alim range
          #if ((pred.ci.lb[i] > alim[1]) && (pred.ci.ub[i] < alim[2]))

@@ -536,7 +536,11 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (missing(ylim)) {
       ylim <- c(0.5, max(rows, na.rm=TRUE)+top)
    } else {
-      ylim <- sort(ylim)
+      if (length(ylim) == 1L) {
+         ylim <- c(ylim, max(rows, na.rm=TRUE)+top)
+      } else {
+         ylim <- sort(ylim)
+      }
    }
 
    #########################################################################

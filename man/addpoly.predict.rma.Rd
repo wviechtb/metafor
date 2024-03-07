@@ -62,7 +62,7 @@ res <- rma(yi, vi, mods = ~ 0 + alloc, data=dat)
 ### predicted log risk ratios for the different allocation methods
 x <- predict(res, newmods=diag(3))
 
-### add predicted average risk ratios to forest plot
+### add predicted average risk ratios to the forest plot
 addpoly(x, efac=1.3, col="gray", addpred=TRUE,
         mlab=c("Alternate Allocation", "Random Allocation", "Systematic Allocation"))
 abline(h=0)
