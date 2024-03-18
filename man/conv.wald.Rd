@@ -106,7 +106,7 @@ dat
 # 2     2        NA   183        NA   188      0.64 0.17 -0.4463 0.1058
 # 3     3         4    46         7    44        NA   NA -0.6864 0.4437}
 
-      Note that the back-calculated sampling variance for study 2 is not identical in these two examples, because the CI bounds and p-value are rounded to two decimal places, which introduces some inaccuracies. Also, if both (\code{ci.lb}, \code{ci.ub}) and either \code{zval} or {pval} is available for a study, then the back-calculation of \mjseqn{v_i} via the confidence interval is preferred.
+      Note that the back-calculated sampling variance for study 2 is not identical in these two examples, because the CI bounds and p-value are rounded to two decimal places, which introduces some inaccuracies. Also, if both (\code{ci.lb}, \code{ci.ub}) and either \code{zval} or \code{pval} is available for a study, then the back-calculation of \mjseqn{v_i} via the confidence interval is preferred.
 
    }
 

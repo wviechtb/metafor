@@ -57,7 +57,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time", "tau2", "beta", "skiphes", "skiphet", "skipintcheck", "scaleprec", "defmap", "mapfun", "mapinvfun"))
+   .chkdots(ddd, c("time", "tau2", "beta", "skiphes", "skiphet", "skipintcheck", "scaleprec", "defmap", "mapfun", "mapinvfun", "pval"))
 
    ### handle 'tau2' argument from ...
 
@@ -137,7 +137,25 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ### compute p-values
 
-   pvals <- .selmodel.pval(yi=yi, vi=vi, alternative=alternative)
+   if (is.null(ddd$pval)) {
+
+      pvals <- .selmodel.pval(yi=yi, vi=vi, alternative=alternative)
+
+   } else {
+
+      pvals <- ddd$pval
+
+      if (length(pvals) != x$k.all)
+         stop(mstyle$stop(paste0("Length of the 'pval' argument (", length(pvals), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
+
+      pvals <- .getsubset(pvals, x$subset)
+
+      if (anyNA(pvals))
+         stop(mstyle$stop(paste0("No missing values in 'pval' argument allowed.")))
+      if (any(pvals <= 0) || any(pvals > 1))
+         stop(mstyle$stop(paste0("One or more 'pval' values are <= 0 or > 1.")))
+
+   }
 
    ### checks on steps argument
 
@@ -158,8 +176,12 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
       steps <- unique(sort(steps))
 
-      if (type != "trunc" && steps[length(steps)] != 1)
-         steps <- c(steps, 1)
+      if (type != "trunc") {
+         if (steps[1] == 0)
+            stop(mstyle$stop("Lowest 'steps' value must be > 0."))
+         if (steps[length(steps)] != 1)
+            steps <- c(steps, 1)
+      }
 
    }
 

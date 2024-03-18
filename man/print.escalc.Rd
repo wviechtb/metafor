@@ -46,7 +46,7 @@
 \note{
    If some transformation function has been specified for the \code{transf} argument, then \code{yi}, \code{ci.lb}, and \code{ci.ub} will be transformed accordingly. However, \code{vi} and \code{sei} then still reflect the sampling variances and standard errors of the untransformed values.
 
-   The \code{summary.escalc} function computes \code{level} \% Wald-type confidence intervals, which may or may not be the most accurate method for computing confidence intervals for the chosen effect size or outcome measure.
+   The \code{summary.escalc} function computes \code{level}\% Wald-type confidence intervals, which may or may not be the most accurate method for computing confidence intervals for the chosen effect size or outcome measure.
 
    If the outcome measure used is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{olim} argument to enforce those observation/outcome limits (the observed outcomes and confidence intervals cannot exceed those bounds then).
 }

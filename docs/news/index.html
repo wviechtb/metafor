@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-11</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.5-10" id="metafor-45-10-2024-03-07">metafor 4.5-10 (2024-03-07)<a class="anchor" aria-label="anchor" href="#metafor-45-10-2024-03-07"></a></h2>
+<h2 class="page-header" data-toc-text="4.5-11" id="metafor-45-11-2024-03-18">metafor 4.5-11 (2024-03-18)<a class="anchor" aria-label="anchor" href="#metafor-45-11-2024-03-18"></a></h2>
 <ul><li><p>the <code>steps</code> argument in the various <code><a href="../reference/profile.rma.html">profile()</a></code> functions can now also be a numeric vector to specify for which parameter values the likelihood should be evaluated</p></li>
 <li><p>a few minor fixes to the dynamic theming of plots based on the foreground and background colors of the plotting device</p></li>
 <li><p>slightly improved flexibility for setting package options</p></li>
@@ -99,6 +99,7 @@
 <li><p>in <code><a href="../reference/plot.gosh.rma.html">plot.gosh.rma()</a></code>, can also set <code>het="tau"</code> (to plot the square root of tau^2 as the measure of heterogeneity)</p></li>
 <li><p>in the various <code><a href="../reference/forest.html">forest()</a></code> functions, argument <code>ylim</code> can now only be a single value to specify the lower bound (while the upper bound is still set automatically)</p></li>
 <li><p>in <code><a href="../reference/forest.html">forest()</a></code> and <code><a href="../reference/regplot.html">regplot()</a></code>, observation limits set via <code>olim</code> are now properly applied to all elements</p></li>
+<li><p>added the undocumented argument <code>pval</code> to <code><a href="../reference/selmodel.html">selmodel()</a></code> for passing p-values directly to the function (doing this is highly experimental)</p></li>
 <li><p>some internal refactoring of the code</p></li>
 <li><p>improved the documentation a bit</p></li>
 </ul></div>
