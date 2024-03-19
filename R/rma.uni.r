@@ -1180,11 +1180,11 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       if (!is.null(tau2) && !is.na(tau2) && !is.element(method[1], c("FE","EE","CE"))) { # if user has fixed the tau2 value
          tau2.fix <- TRUE
-         tau2.val <- tau2
+         tau2.arg <- tau2
          tau2.inf <- identical(tau2, Inf)
       } else {
          tau2.fix <- FALSE
-         tau2.val <- NA_real_
+         tau2.arg <- NA_real_
       }
 
       if (verbose > 1 && !tau2.fix && !is.element(method[1], c("FE","EE","CE")))
@@ -1224,9 +1224,9 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
             RSS   <- crossprod(Ymc,P) %*% Ymc
             if (method[1] == "HS") {
-               tau2 <- ifelse(tau2.fix, tau2.val, (RSS - k) / sum(wi))
+               tau2 <- ifelse(tau2.fix, tau2.arg, (RSS - k) / sum(wi))
             } else {
-               tau2 <- ifelse(tau2.fix, tau2.val, (k/(k-p)*RSS - k) / sum(wi))
+               tau2 <- ifelse(tau2.fix, tau2.arg, (k/(k-p)*RSS - k) / sum(wi))
             }
 
          }
@@ -1241,7 +1241,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             V     <- diag(vi, nrow=k, ncol=k)
             PV    <- P %*% V # note: this is not symmetric
             trPV  <- .tr(PV) # since PV needs to be computed anyway, can use .tr()
-            tau2  <- ifelse(tau2.fix, tau2.val, (RSS - trPV) / (k-p))
+            tau2  <- ifelse(tau2.fix, tau2.arg, (RSS - trPV) / (k-p))
 
          }
 
@@ -1258,7 +1258,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             P     <- W - W %*% X %*% stXWX %*% crossprod(X,W)
             RSS   <- crossprod(Ymc,P) %*% Ymc
             trP   <- .tr(P)
-            tau2  <- ifelse(tau2.fix, tau2.val, (RSS - (k-p)) / trP)
+            tau2  <- ifelse(tau2.fix, tau2.arg, (RSS - (k-p)) / trP)
 
          }
 
@@ -1291,7 +1291,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                trP   <- .tr(P)
                trPV  <- .tr(P %*% V)
                RSS   <- crossprod(Ymc,P) %*% Ymc
-               tau2  <- ifelse(tau2.fix, tau2.val, (RSS - trPV) / trP)
+               tau2  <- ifelse(tau2.fix, tau2.arg, (RSS - trPV) / trP)
                tau2[tau2 < con$tau2.min] <- con$tau2.min
                change <- abs(old2 - tau2)
 
@@ -1331,7 +1331,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             trP   <- .tr(P)
             trPV  <- .tr(PV)
             RSS   <- crossprod(Ymc,P) %*% Ymc
-            tau2  <- ifelse(tau2.fix, tau2.val, (RSS - trPV) / trP)
+            tau2  <- ifelse(tau2.fix, tau2.arg, (RSS - trPV) / trP)
 
          }
 
@@ -1394,7 +1394,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
             } else {
 
-               tau2 <- tau2.val
+               tau2 <- tau2.arg
 
             }
 
@@ -1417,7 +1417,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             RSS   <- crossprod(Ymc,P) %*% Ymc
             V     <- diag(vi, nrow=k, ncol=k)
             PV    <- P %*% V # note: this is not symmetric
-            tau2  <- ifelse(tau2.fix, tau2.val, tau2.0 * RSS / (k-p))
+            tau2  <- ifelse(tau2.fix, tau2.arg, tau2.0 * RSS / (k-p))
 
          }
 
@@ -1448,7 +1448,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                RSS    <- crossprod(Ymc,P) %*% Ymc
                V      <- diag(vi, nrow=k, ncol=k)
                PV     <- P %*% V # note: this is not symmetric
-               tau2   <- ifelse(tau2.fix, tau2.val, tau2 * RSS / (k-p))
+               tau2   <- ifelse(tau2.fix, tau2.arg, tau2 * RSS / (k-p))
                change <- abs(old2 - tau2)
 
                if (iter > con$maxiter) {
@@ -1525,7 +1525,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
             } else {
 
-               tau2 <- tau2.val
+               tau2 <- tau2.arg
 
             }
 
@@ -1577,7 +1577,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                while (tau2 + adj < con$tau2.min) # use step-halving if necessary
                   adj <- adj / 2
 
-               tau2   <- ifelse(tau2.fix, tau2.val, tau2 + adj)
+               tau2   <- ifelse(tau2.fix, tau2.arg, tau2 + adj)
                change <- abs(old2 - tau2)
 
                if (iter > con$maxiter) {
@@ -2019,7 +2019,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       if (link == "log") {
 
          optcall <- paste0(optimizer, "(", par.arg, "=c(beta.init, alpha.init), .ll.rma.ls, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
-                          "yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, beta.val=beta, verbose=verbose, digits=digits,
+                          "yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=verbose, digits=digits,
                           REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
                           tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
 
@@ -2029,25 +2029,25 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
          if (optimizer == "Rsolnp::solnp")
             optcall <- paste0("Rsolnp::solnp(pars=c(beta.init, alpha.init), fun=.ll.rma.ls, ineqfun=.rma.ls.ineqfun.pos, ineqLB=rep(0,k), ineqUB=rep(Inf,k),
-                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, beta.val=beta, verbose=verbose, digits=digits,
+                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=verbose, digits=digits,
                               REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
                               tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
 
          if (optimizer == "constrOptim")
             optcall <- paste0("constrOptim(theta=c(beta.init, alpha.init), f=.ll.rma.ls, grad=NULL, ui=Z, ci=rep(0,k),
-                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, beta.val=beta, verbose=verbose, digits=digits,
+                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=verbose, digits=digits,
                               REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
                               tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
 
          if (optimizer == "nloptr::nloptr")
             optcall <- paste0("nloptr::nloptr(x0=c(beta.init, alpha.init), eval_f=.ll.rma.ls, eval_g_ineq=.rma.ls.ineqfun.neg,
-                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, beta.val=beta, verbose=verbose, digits=digits,
+                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=verbose, digits=digits,
                               REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
                               tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
 
          if (optimizer == "alabama::constrOptim.nl")
             optcall <- paste0("alabama::constrOptim.nl(par=c(beta.init, alpha.init), fn=.ll.rma.ls, hin=.rma.ls.ineqfun.pos,
-                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, beta.val=beta, verbose=verbose, digits=digits,
+                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=verbose, digits=digits,
                               REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
                               tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
 
@@ -2104,12 +2104,12 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
          if (con$hesspack == "numDeriv")
             H <- try(numDeriv::hessian(func=.ll.rma.ls, x=opt.res$par, method.args=con$hessianCtrl, yi=yi, vi=vi, X=X,
-                                       Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, beta.val=beta, verbose=FALSE, digits=digits,
+                                       Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=FALSE, digits=digits,
                                        REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE,
                                        tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta), silent=TRUE)
          if (con$hesspack == "pracma")
             H <- try(pracma::hessian(f=.ll.rma.ls, x0=opt.res$par, yi=yi, vi=vi, X=X,
-                                     Z=Z, reml=reml, k=k, pX=p, alpha.val=alpha, beta.val=beta, verbose=FALSE, digits=digits,
+                                     Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=FALSE, digits=digits,
                                      REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE,
                                      tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta), silent=TRUE)
 
@@ -2144,8 +2144,8 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       ### get scale (and location) parameter estimates
 
-      alpha.val <- alpha
-      beta.val  <- beta
+      alpha.arg <- alpha
+      beta.arg  <- beta
 
       if (optbeta) {
          beta  <- cbind(opt.res$par[seq_len(p)])
@@ -2492,8 +2492,8 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       message(mstyle$message("Computing fit statistics and log-likelihood ..."))
 
    ### note: tau2 is not counted as a parameter when it was fixed by the user (same for fixed alpha values)
-   q.est <- ifelse(model == "rma.uni", 0, sum(is.na(alpha.val)))
-   parms <- ifelse(optbeta, sum(is.na(beta.val)), p) + ifelse(model == "rma.uni", ifelse(is.element(method[1], c("FE","EE","CE")) || tau2.fix, 0, 1), q.est)
+   q.est <- ifelse(model == "rma.uni", 0, sum(is.na(alpha.arg)))
+   parms <- ifelse(optbeta, sum(is.na(beta.arg)), p) + ifelse(model == "rma.uni", ifelse(is.element(method[1], c("FE","EE","CE")) || tau2.fix, 0, 1), q.est)
 
    ll.ML    <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS.f
    ll.REML  <- -1/2 * (k-p) * log(2*base::pi) + ifelse(con$REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
@@ -2714,11 +2714,11 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       res$pval.alpha     <- pval.alpha
       res$ci.lb.alpha    <- ci.lb.alpha
       res$ci.ub.alpha    <- ci.ub.alpha
-      res$alpha.fix      <- !is.na(alpha.val)
+      res$alpha.fix      <- !is.na(alpha.arg)
       res$optbeta        <- optbeta
       if (optbeta) {
          res$vba         <- vba
-         res$beta.fix    <- !is.na(beta.val)
+         res$beta.fix    <- !is.na(beta.arg)
       }
       res$q              <- q
       res$alphas         <- q

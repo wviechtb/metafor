@@ -57,7 +57,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time", "tau2", "beta", "skiphes", "skiphet", "skipintcheck", "scaleprec", "defmap", "mapfun", "mapinvfun", "pval"))
+   .chkdots(ddd, c("time", "tau2", "beta", "skiphes", "skiphet", "skipintcheck", "scaleprec", "defmap", "mapfun", "mapinvfun", "pval", "ptable"))
 
    ### handle 'tau2' argument from ...
 
@@ -210,7 +210,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
                delta.min = NULL,      # min possible value(s) for selection model parameter(s)
                delta.max = NULL,      # max possible value(s) for selection model parameter(s)
                tau2.max = Inf,        # max possible value for tau^2
-               tau2tol = min(vi/10, 1e-04), # threshold for treating tau^2 values as effectively equal to 0
+               tau2tol = min(vi/10, 1e-04), # threshold for treating tau^2 as effectively equal to 0 in the Hessian computation
+               deltatol = 1e-04,      # threshold for treating deltas as effectively equal to 0 in the Hessian computation (for stepfun)
                pval.min = NULL,       # minimum p-value to intergrate over (for selection models where this matters)
                optimizer = "optim",   # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel")
                optmethod = "BFGS",    # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
@@ -748,13 +749,14 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       ptable   <- table(factor(pgrp, levels=seq_along(steps), labels=psteps))
       ptable   <- data.frame(k=as.vector(ptable), row.names=names(ptable))
 
+      if (isTRUE(ddd$ptable))
+         return(ptable)
+
       if (any(ptable[["k"]] == 0L)) {
-         if (verbose >= 1)
-            print(ptable)
-         if (!isTRUE(ddd$skipintcheck) && type == "stepfun" && (any(ptable[["k"]] == 0L & is.na(delta))))
-            stop(mstyle$stop(paste0("One or more intervals do not contain any observed p-values", if (!verbose) " (use 'verbose=TRUE' to see which)", ".")))
+         if (!isTRUE(ddd$skipintcheck) && type == "stepfun" && any(is.na(delta[-1])))
+            warning(mstyle$warning(paste0("One or more intervals do not contain any observed p-values.")), call.=FALSE)
          if (!isTRUE(ddd$skipintcheck) && type != "stepfun")
-            stop(mstyle$stop(paste0("One of the intervals does not contain any observed p-values", if (!verbose) " (use 'verbose=TRUE' to see which)", ".")))
+            warning(mstyle$warning(paste0("One of the intervals does not contain any observed p-values.")), call.=FALSE)
       }
 
    } else {
@@ -816,8 +818,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    optcall <- paste0(optimizer, "(", par.arg, "=c(beta.init, tau2.init, delta.init), ",
       .selmodel.ll, ", ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
       "yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
-      deltas=deltas, delta.val=delta, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
-      tau2.val=tau2, tau2.transf=TRUE, tau2.max=tau2.max, beta.val=beta,
+      deltas=deltas, delta.arg=delta, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
+      tau2.arg=tau2, tau2.transf=TRUE, tau2.max=tau2.max, beta.arg=beta,
       wi.fun=wi.fun, steps=steps, pgrp=pgrp,
       alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=verbose, digits=digits, dofit=FALSE", ctrl.arg, ")\n")
 
@@ -844,16 +846,16 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ### save for Hessian computation
 
-   beta.val  <- beta
-   tau2.val  <- tau2
-   delta.val <- delta
+   beta.arg  <- beta
+   tau2.arg  <- tau2
+   delta.arg <- delta
 
    ### do the final model fit with estimated values
 
    fitcall <- paste0(.selmodel.ll, "(par=opt.res$par,
       yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
-      deltas=deltas, delta.val=delta, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
-      tau2.val=tau2, tau2.transf=TRUE, tau2.max=tau2.max, beta.val=beta,
+      deltas=deltas, delta.arg=delta, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
+      tau2.arg=tau2, tau2.transf=TRUE, tau2.max=tau2.max, beta.arg=beta,
       wi.fun=wi.fun, steps=steps, pgrp=pgrp,
       alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=FALSE, digits=digits, dofit=TRUE)\n")
 
@@ -884,19 +886,23 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (con$beta.fix) {
       beta.hes <- c(beta)
    } else {
-      beta.hes <- beta.val
+      beta.hes <- beta.arg
    }
 
    if (con$tau2.fix || tau2 < con$tau2tol) {
       tau2.hes <- tau2
    } else {
-      tau2.hes <- tau2.val
+      tau2.hes <- tau2.arg
    }
 
    if (con$delta.fix) {
       delta.hes <- delta
    } else {
-      delta.hes <- delta.val
+      if (type == "stepfun") {
+         delta.hes <- ifelse(delta < con$deltatol, delta, delta.arg)
+      } else {
+         delta.hes <- delta.arg
+      }
    }
 
    hest <- c(is.na(beta.hes), is.na(tau2.hes), is.na(delta.hes))
@@ -914,15 +920,15 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
          if (con$hesspack == "numDeriv")
             hescall <- paste0("numDeriv::hessian(", .selmodel.ll, ", x=opt.res$par, method.args=con$hessianCtrl,
                yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
-               deltas=deltas, delta.val=delta.hes, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
-               tau2.val=tau2.hes, tau2.transf=TRUE, tau2.max=tau2.max, beta.val=beta.hes,
+               deltas=deltas, delta.arg=delta.hes, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
+               tau2.arg=tau2.hes, tau2.transf=TRUE, tau2.max=tau2.max, beta.arg=beta.hes,
                wi.fun=wi.fun, steps=steps, pgrp=pgrp,
                alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n")
       if (con$hesspack == "pracma")
             hescall <- paste0("pracma::hessian(", .selmodel.ll, ", x0=opt.res$par,
                yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
-               deltas=deltas, delta.val=delta.hes, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
-               tau2.val=tau2.hes, tau2.transf=TRUE, tau2.max=tau2.max, beta.val=beta.hes,
+               deltas=deltas, delta.arg=delta.hes, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
+               tau2.arg=tau2.hes, tau2.transf=TRUE, tau2.max=tau2.max, beta.arg=beta.hes,
                wi.fun=wi.fun, steps=steps, pgrp=pgrp,
                alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n")
 
@@ -931,15 +937,15 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
          if (con$hesspack == "numDeriv")
             hescall <- paste0("numDeriv::hessian(", .selmodel.ll, ", x=c(beta, tau2, delta), method.args=con$hessianCtrl,
                yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
-               deltas=deltas, delta.val=delta.hes, delta.transf=FALSE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
-               tau2.val=tau2.hes, tau2.transf=FALSE, tau2.max=tau2.max, beta.val=beta.hes,
+               deltas=deltas, delta.arg=delta.hes, delta.transf=FALSE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
+               tau2.arg=tau2.hes, tau2.transf=FALSE, tau2.max=tau2.max, beta.arg=beta.hes,
                wi.fun=wi.fun, steps=steps, pgrp=pgrp,
                alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n")
       if (con$hesspack == "pracma")
             hescall <- paste0("pracma::hessian(", .selmodel.ll, ", x0=c(beta, tau2, delta),
                yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
-               deltas=deltas, delta.val=delta.hes, delta.transf=FALSE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
-               tau2.val=tau2.hes, tau2.transf=FALSE, tau2.max=tau2.max, beta.val=beta.hes,
+               deltas=deltas, delta.arg=delta.hes, delta.transf=FALSE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
+               tau2.arg=tau2.hes, tau2.transf=FALSE, tau2.max=tau2.max, beta.arg=beta.hes,
                wi.fun=wi.fun, steps=steps, pgrp=pgrp,
                alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n")
 
@@ -1081,8 +1087,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       optcall <- paste0(optimizer, "(", par.arg, "=c(beta.init, tau2.init, delta.init), ",
          .selmodel.ll, ", ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
          "yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
-         deltas=deltas, delta.val=delta.val, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
-         tau2.val=0, tau2.transf=FALSE, tau2.max=tau2.max, beta.val=beta.val,
+         deltas=deltas, delta.arg=delta.arg, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
+         tau2.arg=0, tau2.transf=FALSE, tau2.max=tau2.max, beta.arg=beta.arg,
          wi.fun=wi.fun, steps=steps, pgrp=pgrp,
          alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 4, verbose, 0), digits=digits", ctrl.arg, ")\n")
 
@@ -1095,8 +1101,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
          fitcall <- paste0(.selmodel.ll, "(par=opt.res$par,
             yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
-            deltas=deltas, delta.val=delta.val, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
-            tau2.val=0, tau2.transf=FALSE, tau2.max=tau2.max, beta.val=beta.val,
+            deltas=deltas, delta.arg=delta.arg, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max,
+            tau2.arg=0, tau2.transf=FALSE, tau2.max=tau2.max, beta.arg=beta.arg,
             wi.fun=wi.fun, steps=steps, pgrp=pgrp,
             alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=FALSE, digits=digits, dofit=TRUE)\n")
 
@@ -1121,7 +1127,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ll0   <- c(logLik(x, REML=FALSE))
    LRT   <- max(0, -2 * (ll0 - ll))
-   LRTdf <- sum(is.na(delta.val) & delta.LRT)
+   LRTdf <- sum(is.na(delta.arg) & delta.LRT)
    LRTp  <- ifelse(LRTdf > 0, pchisq(LRT, df=LRTdf, lower.tail=FALSE), NA_real_)
 
    ############################################################################
@@ -1132,7 +1138,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       message(mstyle$message("Computing fit statistics and log-likelihood ..."))
 
    ### note: tau2 and delta are not counted as parameters when they were fixed by the user
-   parms <- p + ifelse(is.element(x$method, c("FE","EE","CE")) || x$tau2.fix, 0, 1) + sum(is.na(delta.val))
+   parms <- p + ifelse(is.element(x$method, c("FE","EE","CE")) || x$tau2.fix, 0, 1) + sum(is.na(delta.arg))
 
    ll.ML   <- ll
    dev.ML  <- -2 * ll.ML
@@ -1187,7 +1193,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    res$ci.lb.delta <- ci.lb.delta
    res$ci.ub.delta <- ci.ub.delta
    res$deltas      <- deltas
-   res$delta.fix   <- !is.na(delta.val)
+   res$delta.fix   <- !is.na(delta.arg)
 
    res$hessian <- H
    res$hest    <- hest

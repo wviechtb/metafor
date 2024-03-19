@@ -171,7 +171,7 @@
 ### -1 times the log-likelihood (regular or restricted) for location-scale model
 
 .ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX,
-                       alpha.val, beta.val, verbose, digits,
+                       alpha.arg, beta.arg, verbose, digits,
                        REMLf, link, mZ, alpha.min, alpha.max, alpha.transf,
                        tau2.min, tau2.max, optbeta) {
 
@@ -179,7 +179,7 @@
 
    if (optbeta) {
       beta  <- par[seq_len(pX)]
-      beta  <- ifelse(is.na(beta.val), beta, beta.val)
+      beta  <- ifelse(is.na(beta.arg), beta, beta.arg)
       alpha <- par[-seq_len(pX)]
    } else {
       alpha <- par
@@ -188,7 +188,7 @@
    if (alpha.transf)
       alpha <- mapply(.mapfun.alpha, alpha, alpha.min, alpha.max)
 
-   alpha <- ifelse(is.na(alpha.val), alpha, alpha.val)
+   alpha <- ifelse(is.na(alpha.arg), alpha, alpha.arg)
 
    ### compute predicted tau2 values
 
@@ -269,7 +269,7 @@
 
 }
 
-.rma.ls.ineqfun.pos <- function(par, yi, vi, X, Z, reml, k, pX, alpha.val, beta.val, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, tau2.min, tau2.max, optbeta) {
+.rma.ls.ineqfun.pos <- function(par, yi, vi, X, Z, reml, k, pX, alpha.arg, beta.arg, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, tau2.min, tau2.max, optbeta) {
 
    if (optbeta) {
       alpha <- par[-seq_len(pX)]
@@ -280,7 +280,7 @@
    if (alpha.transf)
       alpha <- mapply(.mapfun.alpha, alpha, alpha.min, alpha.max)
 
-   alpha <- ifelse(is.na(alpha.val), alpha, alpha.val)
+   alpha <- ifelse(is.na(alpha.arg), alpha, alpha.arg)
 
    tau2 <- c(Z %*% alpha)
 
@@ -288,7 +288,7 @@
 
 }
 
-.rma.ls.ineqfun.neg <- function(par, yi, vi, X, Z, reml, k, pX, alpha.val, beta.val, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, tau2.min, tau2.max, optbeta) {
+.rma.ls.ineqfun.neg <- function(par, yi, vi, X, Z, reml, k, pX, alpha.arg, beta.arg, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, tau2.min, tau2.max, optbeta) {
 
    if (optbeta) {
       alpha <- par[-seq_len(pX)]
@@ -299,7 +299,7 @@
    if (alpha.transf)
       alpha <- mapply(.mapfun.alpha, alpha, alpha.min, alpha.max)
 
-   alpha <- ifelse(is.na(alpha.val), alpha, alpha.val)
+   alpha <- ifelse(is.na(alpha.arg), alpha, alpha.arg)
 
    tau2 <- -c(Z %*% alpha)
 

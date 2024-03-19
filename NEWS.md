@@ -1,4 +1,4 @@
-# metafor 4.5-11 (2024-03-18)
+# metafor 4.5-12 (2024-03-19)
 
 - the `steps` argument in the various `profile()` functions can now also be a numeric vector to specify for which parameter values the likelihood should be evaluated
 
@@ -15,6 +15,8 @@
 - in the various `forest()` functions, argument `ylim` can now only be a single value to specify the lower bound (while the upper bound is still set automatically)
 
 - in `forest()` and `regplot()`, observation limits set via `olim` are now properly applied to all elements
+
+- `selmodel()` no longer automatically stops with an error when one or more intervals defined by the `steps` argument do not contain any observed p-values; instead a warning is issued and model fitting proceeds (but may fail)
 
 - added the undocumented argument `pval` to `selmodel()` for passing p-values directly to the function (doing this is highly experimental)
 

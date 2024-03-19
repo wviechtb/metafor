@@ -45,8 +45,8 @@
 }
 
 .selmodel.ll.cont <- function(par, yi, vi, X, preci, k, pX, pvals,
-                              deltas, delta.val, delta.transf, mapfun, delta.min, delta.max,
-                              tau2.val, tau2.transf, tau2.max, beta.val,
+                              deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max,
+                              tau2.arg, tau2.transf, tau2.max, beta.arg,
                               wi.fun, steps, pgrp,
                               alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
 
@@ -56,12 +56,12 @@
    tau2  <- par[pX+1]
    delta <- par[(pX+2):(pX+1+deltas)]
 
-   beta <- ifelse(is.na(beta.val), beta, beta.val)
+   beta <- ifelse(is.na(beta.arg), beta, beta.arg)
 
    if (tau2.transf)
       tau2 <- exp(tau2)
 
-   tau2[!is.na(tau2.val)] <- tau2.val
+   tau2[!is.na(tau2.arg)] <- tau2.arg
 
    tau2[tau2 < .Machine$double.eps*10] <- 0
    tau2[tau2 > tau2.max] <- tau2.max
@@ -69,7 +69,7 @@
    if (delta.transf)
       delta <- mapply(.mapfun, delta, delta.min, delta.max, mapfun)
 
-   delta <- ifelse(is.na(delta.val), delta, delta.val)
+   delta <- ifelse(is.na(delta.arg), delta, delta.arg)
 
    yhat <- c(X %*% beta)
 
@@ -108,8 +108,8 @@
 ############################################################################
 
 .selmodel.ll.stepfun <- function(par, yi, vi, X, preci, k, pX, pvals,
-                                 deltas, delta.val, delta.transf, mapfun, delta.min, delta.max,
-                                 tau2.val, tau2.transf, tau2.max, beta.val,
+                                 deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max,
+                                 tau2.arg, tau2.transf, tau2.max, beta.arg,
                                  wi.fun, steps, pgrp,
                                  alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
 
@@ -119,12 +119,12 @@
    tau2  <- par[pX+1]
    delta <- par[(pX+2):(pX+1+deltas)]
 
-   beta <- ifelse(is.na(beta.val), beta, beta.val)
+   beta <- ifelse(is.na(beta.arg), beta, beta.arg)
 
    if (tau2.transf)
       tau2 <- exp(tau2)
 
-   tau2[!is.na(tau2.val)] <- tau2.val
+   tau2[!is.na(tau2.arg)] <- tau2.arg
 
    tau2[tau2 < .Machine$double.eps*10] <- 0
    tau2[tau2 > tau2.max] <- tau2.max
@@ -132,7 +132,7 @@
    if (delta.transf)
       delta <- mapply(.mapfun, delta, delta.min, delta.max, mapfun)
 
-   delta <- ifelse(is.na(delta.val), delta, delta.val)
+   delta <- ifelse(is.na(delta.arg), delta, delta.arg)
 
    yhat <- c(X %*% beta)
 
@@ -206,8 +206,8 @@
 ############################################################################
 
 .selmodel.ll.trunc <- function(par, yi, vi, X, preci, k, pX, pvals,
-                               deltas, delta.val, delta.transf, mapfun, delta.min, delta.max,
-                               tau2.val, tau2.transf, tau2.max, beta.val,
+                               deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max,
+                               tau2.arg, tau2.transf, tau2.max, beta.arg,
                                wi.fun, steps, pgrp,
                                alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
 
@@ -217,12 +217,12 @@
    tau2  <- par[pX+1]
    delta <- par[(pX+2):(pX+1+deltas)]
 
-   beta <- ifelse(is.na(beta.val), beta, beta.val)
+   beta <- ifelse(is.na(beta.arg), beta, beta.arg)
 
    if (tau2.transf)
       tau2 <- exp(tau2)
 
-   tau2[!is.na(tau2.val)] <- tau2.val
+   tau2[!is.na(tau2.arg)] <- tau2.arg
 
    tau2[tau2 < .Machine$double.eps*10] <- 0
    tau2[tau2 > tau2.max] <- tau2.max
@@ -230,7 +230,7 @@
    if (delta.transf)
       delta <- mapply(.mapfun, delta, delta.min, delta.max, mapfun)
 
-   delta <- ifelse(is.na(delta.val), delta, delta.val)
+   delta <- ifelse(is.na(delta.arg), delta, delta.arg)
 
    yhat <- c(X %*% beta)
 
