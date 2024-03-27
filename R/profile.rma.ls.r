@@ -8,7 +8,7 @@ profile.rma.ls <- function(fitted, alpha,
    x <- fitted
 
    if (x$optbeta)
-      stop(mstyle$stop("Profiling not yet implemented for 'optbeta=TRUE'."))
+      stop(mstyle$stop("Profiling not yet implemented for models fitted with 'optbeta=TRUE'."))
 
    if (anyNA(steps))
       stop(mstyle$stop("No missing values allowed in 'steps' argument."))

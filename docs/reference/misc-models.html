@@ -31,7 +31,7 @@ However, the question then remains what the real fixed-effects model is all abou
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.5-13</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@ However, the question then remains what the real fixed-effects model is all abou
 <h3 id="fixed-effects-model">Fixed-Effects Model<a class="anchor" aria-label="anchor" href="#fixed-effects-model"></a></h3>
 
 
-<p>Assume we have a set of <em></em>\(i = 1, \ldots, k\) independent studies and let <em></em>\(y_i\) denote the observed value of the effect size or outcome measure in the <em></em>\(i\textrm{th}\) study. Let <em></em>\(\theta_i\) denote the corresponding (unknown) true effect/outcome, such that \[y_i | \theta_i \sim N(\theta_i, v_i).\] In other words, the observed effect sizes or outcomes are assumed to be unbiased and normally distributed estimates of the corresponding true effects/outcomes with sampling variances equal to <em></em>\(v_i\). The <em></em>\(v_i\) values are assumed to be known.</p>
+<p>Assume we have a set of <em></em>\(i = 1, \ldots, k\) independent studies and let <em></em>\(y_i\) denote the observed value of the effect size or outcome measure in the <em></em>\(i\textrm{th}\) study. Let <em></em>\(\theta_i\) denote the corresponding (unknown) true effect/outcome, such that \[y_i \mid \theta_i \sim N(\theta_i, v_i).\] In other words, the observed effect sizes or outcomes are assumed to be unbiased and normally distributed estimates of the corresponding true effects/outcomes with sampling variances equal to <em></em>\(v_i\). The <em></em>\(v_i\) values are assumed to be known.</p>
 <p>The fixed-effects model is simply given by \[y_i = \theta_i + \varepsilon_i,\] where the <em></em>\(\theta_i\) values are the (fixed) true effects/outcomes of the <em></em>\(k\) studies. Therefore, the model ‘conditions’ on the true effects/outcomes and provides a <em>conditional inference</em> about the <em></em>\(k\) studies included in the meta-analysis.</p>
 <p>When using weighted estimation (the default in <code><a href="rma.uni.html">rma.uni</a></code> when <code>method="FE"</code>), this implies that the fitted model provides an estimate of \[\bar{\theta}_w = \frac{\sum_{i=1}^k w_i \theta_i}{\sum_{i=1}^k w_i},\] that is, the <em>weighted average</em> of the true effects/outcomes in the <em></em>\(k\) studies, with weights equal to <em></em>\(w_i = 1/v_i\).</p>
 <p>As an example, consider the meta-analysis by Bangert-Drowns et al. (2004) on the effectiveness of writing-to-learn interventions on academic achievement. The dataset (<code><a href="https://wviechtb.github.io/metadat/reference/dat.bangertdrowns2004.html" class="external-link">dat.bangertdrowns2004</a></code>) includes the observed standardized mean differences (variable <code>yi</code>) and the corresponding sampling variances (variable <code>vi</code>) of 48 studies that have examined such an intervention. We can fit a fixed-effects model to these data with:</p>

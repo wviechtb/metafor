@@ -93,7 +93,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist", "time", "dist", "abbrev", "restart", "beta", "vccon"))
+   .chkdots(ddd, c("tdist", "outlist", "time", "dist", "abbrev", "restart", "beta", "vccon", "retopt"))
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 
@@ -233,7 +233,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    yi     <- .getx("yi",     mf=mf, data=data)
    V      <- .getx("V",      mf=mf, data=data)
    W      <- .getx("W",      mf=mf, data=data)
-   ni     <- .getx("ni",     mf=mf, data=data) ### not yet possible to specify this
+   ni     <- .getx("ni",     mf=mf, data=data) # not yet possible to specify this
    slab   <- .getx("slab",   mf=mf, data=data)
    subset <- .getx("subset", mf=mf, data=data)
    mods   <- .getx("mods",   mf=mf, data=data)
@@ -243,15 +243,15 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (inherits(yi, "formula")) {
       formula.yi <- yi
       formula.mods <- formula.yi[-2]
-      options(na.action = "na.pass")                   ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
-      mods <- model.matrix(yi, data=data)              ### extract model matrix (now mods is no longer a formula, so [a] further below is skipped)
-      attr(mods, "assign") <- NULL                     ### strip assign attribute (not needed at the moment)
-      attr(mods, "contrasts") <- NULL                  ### strip contrasts attribute (not needed at the moment)
-      yi <- model.response(model.frame(yi, data=data)) ### extract yi values from model frame
-      options(na.action = na.act)                      ### set na.action back to na.act
-      names(yi) <- NULL                                ### strip names (1:k) from yi (so res$yi is the same whether yi is a formula or not)
-      intercept <- FALSE                               ### set to FALSE since formula now controls whether the intercept is included or not
-   }                                                   ### note: code further below ([b]) actually checks whether intercept is included or not
+      options(na.action = "na.pass")                   # set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
+      mods <- model.matrix(yi, data=data)              # extract model matrix (now mods is no longer a formula, so [a] further below is skipped)
+      attr(mods, "assign") <- NULL                     # strip assign attribute (not needed at the moment)
+      attr(mods, "contrasts") <- NULL                  # strip contrasts attribute (not needed at the moment)
+      yi <- model.response(model.frame(yi, data=data)) # extract yi values from model frame
+      options(na.action = na.act)                      # set na.action back to na.act
+      names(yi) <- NULL                                # strip names (1:k) from yi (so res$yi is the same whether yi is a formula or not)
+      intercept <- FALSE                               # set to FALSE since formula now controls whether the intercept is included or not
+   }                                                   # note: code further below ([b]) actually checks whether intercept is included or not
 
    ### in case user passed a data frame to yi, convert it to a vector (if possible)
 
@@ -287,7 +287,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    measure <- "GEN"
 
-   if (!is.null(attr(yi, "measure"))) ### take 'measure' from yi (if it is there)
+   if (!is.null(attr(yi, "measure"))) # take 'measure' from yi (if it is there)
       measure <- attr(yi, "measure")
 
    ### add measure attribute (back) to the yi vector
@@ -361,7 +361,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (!V0 && !.is.square(V))
       stop(mstyle$stop("'V' must be a square matrix."))
 
-   if (!V0 && !isSymmetric(V)) ### note: copy of V is made when doing this
+   if (!V0 && !isSymmetric(V)) # note: copy of V is made when doing this
       stop(mstyle$stop("'V' must be a symmetric matrix."))
 
    ### check length of yi and V
@@ -471,13 +471,13 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
          mods <- matrix(1, nrow=k, ncol=1)
          intercept <- FALSE
       } else {
-         options(na.action = "na.pass")        ### set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
-         mods <- model.matrix(mods, data=data) ### extract model matrix
-         attr(mods, "assign") <- NULL          ### strip assign attribute (not needed at the moment)
-         attr(mods, "contrasts") <- NULL       ### strip contrasts attribute (not needed at the moment)
-         options(na.action = na.act)           ### set na.action back to na.act
-         intercept <- FALSE                    ### set to FALSE since formula now controls whether the intercept is included or not
-      }                                        ### note: code further below ([b]) actually checks whether intercept is included or not
+         options(na.action = "na.pass")        # set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
+         mods <- model.matrix(mods, data=data) # extract model matrix
+         attr(mods, "assign") <- NULL          # strip assign attribute (not needed at the moment)
+         attr(mods, "contrasts") <- NULL       # strip contrasts attribute (not needed at the moment)
+         options(na.action = na.act)           # set na.action back to na.act
+         intercept <- FALSE                    # set to FALSE since formula now controls whether the intercept is included or not
+      }                                        # note: code further below ([b]) actually checks whether intercept is included or not
    }
 
    ### turn a vector for mods into a column vector
@@ -828,8 +828,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
       k <- length(yi)
 
-      attr(yi, "measure") <- measure ### add measure attribute back
-      attr(yi, "ni")      <- ni      ### add ni attribute back
+      attr(yi, "measure") <- measure # add measure attribute back
+      attr(yi, "ni")      <- ni      # add ni attribute back
 
    }
 
@@ -873,7 +873,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
       ### get variables names in mf.s
 
-      s.names <- sapply(mf.s, names) ### one name per term
+      s.names <- sapply(mf.s, names) # one name per term
 
       ### turn each variable in mf.s into a factor (and turn each column vector into just a vector)
       ### if a variable was a factor to begin with, this drops any unused levels, but order of existing levels is preserved
@@ -1193,7 +1193,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
          ni   <- ni[not.na]
          mods <- mods[not.na,,drop=FALSE]
          mf.r <- lapply(mf.r, function(x) x[not.na,,drop=FALSE])
-         mf.s <- lapply(mf.s, function(x) x[not.na]) ### note: mf.s is a list of vectors at this point
+         mf.s <- lapply(mf.s, function(x) x[not.na]) # note: mf.s is a list of vectors at this point
          mf.g <- mf.g[not.na,,drop=FALSE]
          mf.h <- mf.h[not.na,,drop=FALSE]
          if (is.element(struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD"))) {
@@ -1211,8 +1211,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
          k    <- length(yi)
          warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "rows", "row"), "with NAs omitted from model fitting.")), call.=FALSE)
 
-         attr(yi, "measure") <- measure ### add measure attribute back
-         attr(yi, "ni")      <- ni      ### add ni attribute back
+         attr(yi, "measure") <- measure # add measure attribute back
+         attr(yi, "ni")      <- ni      # add ni attribute back
 
          ### note: slab is always of the same length as the full yi vector (after subsetting), so missings are not removed and slab is not added back to yi
 
@@ -1236,8 +1236,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
          warning(mstyle$warning("There are outcomes with non-positive sampling variances."), call.=FALSE)
       vi.neg <- vi < 0
       if (any(vi.neg)) {
-         V[vi.neg,] <- 0 ### note: entire row set to 0 (so covariances are also 0)
-         V[,vi.neg] <- 0 ### note: entire col set to 0 (so covariances are also 0)
+         V[vi.neg,] <- 0 # note: entire row set to 0 (so covariances are also 0)
+         V[,vi.neg] <- 0 # note: entire col set to 0 (so covariances are also 0)
          vi[vi.neg] <- 0
          warning(mstyle$warning("Negative sampling variances constrained to zero."), call.=FALSE)
       }
@@ -1305,9 +1305,9 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (any(is.int)) {
       int.incl <- TRUE
       int.indx <- which(is.int, arr.ind=TRUE)
-      X        <- cbind(intrcpt=1,   X[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
-      X.f      <- cbind(intrcpt=1, X.f[,-int.indx, drop=FALSE]) ### this removes any duplicate intercepts
-      intercept <- TRUE ### set intercept appropriately so that the predict() function works
+      X        <- cbind(intrcpt=1,   X[,-int.indx, drop=FALSE]) # this removes any duplicate intercepts
+      X.f      <- cbind(intrcpt=1, X.f[,-int.indx, drop=FALSE]) # this removes any duplicate intercepts
+      intercept <- TRUE # set intercept appropriately so that the predict() function works
    } else {
       int.incl <- FALSE
    }
@@ -1333,7 +1333,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    ### set/check 'btt' argument
 
    btt <- .set.btt(btt, p, int.incl, colnames(X))
-   m <- length(btt) ### number of betas to test (m = p if all betas are tested)
+   m <- length(btt) # number of betas to test (m = p if all betas are tested)
 
    ### check which beta elements are estimated versus fixed
 
@@ -1383,9 +1383,9 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             Z.S[[j]] <- cbind(rep(1,k))
          } else {
             if (sparse) {
-               Z.S[[j]] <- sparse.model.matrix(~ mf.s[[j]] - 1) ### cannot use this for factors with a single level
+               Z.S[[j]] <- sparse.model.matrix(~ mf.s[[j]] - 1) # cannot use this for factors with a single level
             } else {
-               Z.S[[j]] <- model.matrix(~ mf.s[[j]] - 1) ### cannot use this for factors with a single level
+               Z.S[[j]] <- model.matrix(~ mf.s[[j]] - 1) # cannot use this for factors with a single level
             }
          }
          attr(Z.S[[j]], "assign")    <- NULL
@@ -1749,13 +1749,13 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ### use of Cholesky factorization only applicable for models with "UN", "UNR", and "GEN" structure
 
-   if (!withG) ### in case user sets cholesky=TRUE and struct="UN", struct="UNR", or struct="GEN" even though there is no 1st 'inner | outer' term
+   if (!withG) # in case user sets cholesky=TRUE and struct="UN", struct="UNR", or struct="GEN" even though there is no 1st 'inner | outer' term
       con$cholesky[1] <- FALSE
 
    if (con$cholesky[1] && !is.element(struct[1], c("UN","UNR","GEN")))
       con$cholesky[1] <- FALSE
 
-   if (!withH) ### in case user sets cholesky=TRUE and struct="UN", struct="UNR", or struct="GEN" even though there is no 2nd 'inner | outer' term
+   if (!withH) # in case user sets cholesky=TRUE and struct="UN", struct="UNR", or struct="GEN" even though there is no 2nd 'inner | outer' term
       con$cholesky[2] <- FALSE
 
    if (con$cholesky[2] && !is.element(struct[2], c("UN","UNR","GEN")))
@@ -1791,8 +1791,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       if (struct[1] == "UNR") {
          con$tau2.init <- log(tau2.init)
       } else {
-         con$tau2.init <- diag(G)        ### note: con$tau2.init and con$rho.init are the 'choled' values of the initial G matrix, so con$rho.init really
-         con$rho.init <- G[lower.tri(G)] ### contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
+         con$tau2.init <- diag(G)        # note: con$tau2.init and con$rho.init are the 'choled' values of the initial G matrix, so con$rho.init really
+         con$rho.init <- G[lower.tri(G)] # contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
       }
       if (length(con$rho.init) == 0L)
          con$rho.init <- 0
@@ -1811,8 +1811,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       H <- try(chol(H), silent=TRUE)
       if (inherits(H, "try-error") || anyNA(H))
          stop(mstyle$stop("Cannot take Choleski decomposition of initial 'H' matrix."))
-      con$gamma2.init <- diag(H)      ### note: con$gamma2.init and con$phi.init are the 'choled' values of the initial H matrix, so con$phi.init really
-      con$phi.init <- H[lower.tri(H)] ### contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
+      con$gamma2.init <- diag(H)      # note: con$gamma2.init and con$phi.init are the 'choled' values of the initial H matrix, so con$phi.init really
+      con$phi.init <- H[lower.tri(H)] # contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
       if (length(con$phi.init) == 0L)
          con$phi.init <- 0
    } else {
@@ -1836,7 +1836,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    parallel   <- con$parallel
    cl         <- con$cl
    ncpus      <- con$ncpus
-   optcontrol <- control[is.na(con.pos)] ### get arguments that are control arguments for optimizer
+   optcontrol <- control[is.na(con.pos)] # get arguments that are control arguments for optimizer
 
    if (length(optcontrol) == 0L)
       optcontrol <- list()
@@ -2035,7 +2035,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             opt.res <- try(suppressWarnings(eval(str2lang(optcall))), silent=!verbose)
          }
 
-         #return(opt.res)
+         if (isTRUE(ddd$retopt))
+            return(opt.res)
 
          ### convergence checks (if verbose print optimParallel log, if verbose > 2 print opt.res, and unify opt.res$par)
 

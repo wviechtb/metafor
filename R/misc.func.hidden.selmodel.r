@@ -20,7 +20,11 @@
 
 .mapfun <- function(x, lb, ub, fun=NA) {
    if (is.na(fun)) {
-      lb + (ub-lb) / (1 + exp(-x)) # map (-inf,inf) to (lb,ub)
+      if (lb==0 && ub==1) {
+         plogis(x)
+      } else {
+         lb + (ub-lb) / (1 + exp(-x)) # map (-inf,inf) to (lb,ub)
+      }
    } else {
       x <- sapply(x, fun)
       pmin(pmax(x, lb), ub)
@@ -29,7 +33,11 @@
 
 .mapinvfun <- function(x, lb, ub, fun=NA) {
    if (is.na(fun)) {
-      log((x-lb)/(ub-x))
+      if (lb==0 && ub==1) {
+         qlogis(x)
+      } else {
+         log((x-lb)/(ub-x)) # map (lb,ub) to (-inf,inf)
+      }
    } else {
       sapply(x, fun)
    }
@@ -45,7 +53,7 @@
 }
 
 .selmodel.ll.cont <- function(par, yi, vi, X, preci, k, pX, pvals,
-                              deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max,
+                              deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max, decreasing,
                               tau2.arg, tau2.transf, tau2.max, beta.arg,
                               wi.fun, steps, pgrp,
                               alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
@@ -108,7 +116,7 @@
 ############################################################################
 
 .selmodel.ll.stepfun <- function(par, yi, vi, X, preci, k, pX, pvals,
-                                 deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max,
+                                 deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max, decreasing,
                                  tau2.arg, tau2.transf, tau2.max, beta.arg,
                                  wi.fun, steps, pgrp,
                                  alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
@@ -129,10 +137,25 @@
    tau2[tau2 < .Machine$double.eps*10] <- 0
    tau2[tau2 > tau2.max] <- tau2.max
 
-   if (delta.transf)
-      delta <- mapply(.mapfun, delta, delta.min, delta.max, mapfun)
+   if (decreasing) {
+
+      if (delta.transf) {
+         delta <- exp(delta)
+         delta <- cumsum(c(0, -delta[-1]))
+         delta <- exp(delta)
+      }
+
+   } else {
+
+      if (delta.transf)
+         delta <- mapply(.mapfun, delta, delta.min, delta.max, mapfun)
+
+   }
 
    delta <- ifelse(is.na(delta.arg), delta, delta.arg)
+
+   if (decreasing && any(!is.na(delta.arg[-1])))
+      delta <- rev(cummax(rev(delta)))
 
    yhat <- c(X %*% beta)
 
@@ -206,7 +229,7 @@
 ############################################################################
 
 .selmodel.ll.trunc <- function(par, yi, vi, X, preci, k, pX, pvals,
-                               deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max,
+                               deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max, decreasing,
                                tau2.arg, tau2.transf, tau2.max, beta.arg,
                                wi.fun, steps, pgrp,
                                alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
@@ -267,6 +290,44 @@
       .selmodel.verbose(ll=llval, beta=beta, tau2=tau2, delta=delta, mstyle=mstyle, digits=digits)
 
    return(-1*llval)
+
+}
+
+############################################################################
+
+.rma.selmodel.ineqfun.pos <- function(par, yi, vi, X, preci, k, pX, pvals,
+                                      deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max, decreasing,
+                                      tau2.arg, tau2.transf, tau2.max, beta.arg,
+                                      wi.fun, steps, pgrp, alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
+
+   delta <- par[-seq_len(pX+1)]
+
+   if (delta.transf)
+      delta <- mapply(.mapfun, delta, delta.min, delta.max, mapfun)
+
+   delta <- ifelse(is.na(delta.arg), delta, delta.arg)
+
+   diffs <- -diff(delta) # -1 * differences (delta1-delta2, delta2-delta3, ...) must be positive
+
+   return(diffs)
+
+}
+
+.rma.selmodel.ineqfun.neg <- function(par, yi, vi, X, preci, k, pX, pvals,
+                                      deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max, decreasing,
+                                      tau2.arg, tau2.transf, tau2.max, beta.arg,
+                                      wi.fun, steps, pgrp, alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
+
+   delta <- par[-seq_len(pX+1)]
+
+   if (delta.transf)
+      delta <- mapply(.mapfun, delta, delta.min, delta.max, mapfun)
+
+   delta <- ifelse(is.na(delta.arg), delta, delta.arg)
+
+   diffs <- diff(delta) # differences (delta1-delta2, delta2-delta3, ...) must be negative
+
+   return(diffs)
 
 }
 

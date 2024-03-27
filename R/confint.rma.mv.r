@@ -304,15 +304,15 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       }
       if (comp == "rho") {
          if (is.element(x$struct[1], c("CS","HCS")))
-            con$vc.min <- -1                                  ### this will fail most of the time but with retries, this may get closer to actual lower bound
-            #con$vc.min <- min(-1/(x$g.nlevels.f[1] - 1), vc) ### this guarantees that cor matrix is semi-positive definite, but since V gets added, this is actually too strict
+            con$vc.min <- -1                                  # this will fail most of the time but with retries, this may get closer to actual lower bound
+            #con$vc.min <- min(-1/(x$g.nlevels.f[1] - 1), vc) # this guarantees that cor matrix is semi-positive definite, but since V gets added, this is actually too strict
          if (is.element(x$struct[1], c("AR","HAR","CAR")))
-            con$vc.min <- min(0, vc)                          ### negative autocorrelation parameters not considered (not even sensible for CAR)
+            con$vc.min <- min(0, vc)                          # negative autocorrelation parameters not considered (not even sensible for CAR)
          if (is.element(x$struct[1], c("UN","UNR","GEN")))
-            con$vc.min <- -1                                  ### TODO: this will often fail! (but with retries, this should still work)
+            con$vc.min <- -1                                  # TODO: this will often fail! (but with retries, this should still work)
          con$vc.max <- 1
          if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
-            con$vc.min <- 0                                   ### TODO: 0 basically always fails
+            con$vc.min <- 0                                   # TODO: 0 basically always fails
             con$vc.max <- max(10, vc*10)
          }
          if (is.element(x$struct[1], c("PHYPL","PHYPD"))) {
@@ -322,15 +322,15 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       }
       if (comp == "phi") {
          if (is.element(x$struct[2], c("CS","HCS")))
-            con$vc.min <- -1                                  ### this will fail most of the time but with retries, this may get closer to actual lower bound
-            #con$vc.min <- min(-1/(x$h.nlevels.f[1] - 1), vc) ### this guarantees that cor matrix is semi-positive definite, but since V gets added, this is actually too strict
+            con$vc.min <- -1                                  # this will fail most of the time but with retries, this may get closer to actual lower bound
+            #con$vc.min <- min(-1/(x$h.nlevels.f[1] - 1), vc) # this guarantees that cor matrix is semi-positive definite, but since V gets added, this is actually too strict
          if (is.element(x$struct[2], c("AR","HAR","CAR")))
-            con$vc.min <- min(0, vc)                          ### negative autocorrelation parameters not considered (not even sensible for CAR)
+            con$vc.min <- min(0, vc)                          # negative autocorrelation parameters not considered (not even sensible for CAR)
          if (is.element(x$struct[2], c("UN","UNR","GEN")))
-            con$vc.min <- -1                                  ### TODO: this will often fail! (but with retries, this should still work)
+            con$vc.min <- -1                                  # TODO: this will often fail! (but with retries, this should still work)
          con$vc.max <- 1
          if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH"))) {
-            con$vc.min <- 0                                   ### TODO: 0 basically always fails
+            con$vc.min <- 0                                   # TODO: 0 basically always fails
             con$vc.max <- max(10, vc*10)
          }
          if (is.element(x$struct[2], c("PHYPL","PHYPD"))) {
@@ -351,11 +351,11 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
       vc.lb <- NA_real_
       vc.ub <- NA_real_
-      ci.null <- FALSE ### logical if CI is a null set
-      lb.conv <- FALSE ### logical if search converged for lower bound (LB)
-      ub.conv <- FALSE ### logical if search converged for upper bound (UB)
-      lb.sign <- ""    ### for sign in case LB must be below vc.min ("<") or above vc.max (">")
-      ub.sign <- ""    ### for sign in case UB must be below vc.min ("<") or above vc.max (">")
+      ci.null <- FALSE # logical if CI is a null set
+      lb.conv <- FALSE # logical if search converged for lower bound (LB)
+      ub.conv <- FALSE # logical if search converged for upper bound (UB)
+      lb.sign <- ""    # for sign in case LB must be below vc.min ("<") or above vc.max (">")
+      ub.sign <- ""    # for sign in case UB must be below vc.min ("<") or above vc.max (">")
 
       ######################################################################
       ######################################################################
@@ -410,6 +410,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                   }
 
                   ### check if uniroot method converged
+
                   if (!inherits(res, "try-error")) {
                      vc.lb <- res
                      lb.conv <- TRUE
@@ -466,6 +467,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                   }
 
                   ### check if uniroot method converged
+
                   if (!inherits(res, "try-error")) {
                      vc.ub <- res
                      ub.conv <- TRUE

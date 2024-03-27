@@ -13,7 +13,7 @@ However, the question then remains what the real fixed-effects model is all abou
 
    \subsection{Fixed-Effects Model}{
 
-      Assume we have a set of \mjseqn{i = 1, \ldots, k} independent studies and let \mjseqn{y_i} denote the observed value of the effect size or outcome measure in the \mjeqn{i\textrm{th}}{ith} study. Let \mjseqn{\theta_i} denote the corresponding (unknown) true effect/outcome, such that \mjdeqn{y_i | \theta_i \sim N(\theta_i, v_i).}{y_i | \theta_i ~ N(\theta_i, v_i).} In other words, the observed effect sizes or outcomes are assumed to be unbiased and normally distributed estimates of the corresponding true effects/outcomes with sampling variances equal to \mjseqn{v_i}. The \mjseqn{v_i} values are assumed to be known.
+      Assume we have a set of \mjseqn{i = 1, \ldots, k} independent studies and let \mjseqn{y_i} denote the observed value of the effect size or outcome measure in the \mjeqn{i\textrm{th}}{ith} study. Let \mjseqn{\theta_i} denote the corresponding (unknown) true effect/outcome, such that \mjdeqn{y_i \mid \theta_i \sim N(\theta_i, v_i).}{y_i | \theta_i ~ N(\theta_i, v_i).} In other words, the observed effect sizes or outcomes are assumed to be unbiased and normally distributed estimates of the corresponding true effects/outcomes with sampling variances equal to \mjseqn{v_i}. The \mjseqn{v_i} values are assumed to be known.
 
       The fixed-effects model is simply given by \mjdeqn{y_i = \theta_i + \varepsilon_i,}{y_i = \theta_i + \epsilon_i,} where the \mjseqn{\theta_i} values are the (fixed) true effects/outcomes of the \mjseqn{k} studies. Therefore, the model \sQuote{conditions} on the true effects/outcomes and provides a \emph{conditional inference} about the \mjseqn{k} studies included in the meta-analysis.
 

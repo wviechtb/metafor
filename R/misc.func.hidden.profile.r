@@ -259,7 +259,7 @@
 
       res <- try(suppressWarnings(
          selmodel(obj, obj$type, alternative=obj$alternative, prec=obj$prec, scaleprec=obj$scaleprec,
-                  tau2=tau2.arg, delta=delta.arg, steps=obj$steps, verbose=FALSE, control=obj$control,
+                  tau2=tau2.arg, delta=delta.arg, steps=obj$steps, decreasing=obj$decreasing, verbose=FALSE, control=obj$control,
                   skiphes=confint, skiphet=TRUE, defmap=obj$defmap, mapfun=obj$mapfun, mapinvfun=obj$mapinvfun)), silent=TRUE)
 
    }

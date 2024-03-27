@@ -4,9 +4,9 @@
 ^_pkgdown\.yml$
 ^docs$
 ^docs_old$
-^vignettes/pkgdown$
 ^data-raw$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^CITATION.cff$
+^CITATION\.cff$
 ^tests/testthat/images
+^vignettes/pkgdown$

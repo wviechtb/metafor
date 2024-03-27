@@ -126,11 +126,11 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
       tau2.lb <- NA_real_
       tau2.ub <- NA_real_
-      ci.null <- FALSE ### logical if CI is a null set
-      lb.conv <- FALSE ### logical if search converged for lower bound (LB)
-      ub.conv <- FALSE ### logical if search converged for upper bound (UB)
-      lb.sign <- ""    ### for sign in case LB must be below tau2.min ("<") or above tau2.max (">")
-      ub.sign <- ""    ### for sign in case UB must be below tau2.min ("<") or above tau2.max (">")
+      ci.null <- FALSE # logical if CI is a null set
+      lb.conv <- FALSE # logical if search converged for lower bound (LB)
+      ub.conv <- FALSE # logical if search converged for upper bound (UB)
+      lb.sign <- ""    # for sign in case LB must be below tau2.min ("<") or above tau2.max (">")
+      ub.sign <- ""    # for sign in case UB must be below tau2.min ("<") or above tau2.max (">")
 
       ######################################################################
 

@@ -77,7 +77,7 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
 
    ps <- seq(xlim[1], xlim[2], length.out=n)
 
-   if (x$type == "stepfun") {
+   if (is.element(x$type, c("stepfun","stepcon"))) {
       ps <- unique(sort(c(ps, steps))) # make sure that the 'steps' values are part of 'ps'
       ps <- ps[ps >= xlim[1]]          # but only keep ps >= xlim[1]
       ps <- ps[ps <= xlim[2]]          #               ps <= xlim[2]
@@ -96,7 +96,7 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
    if (ci && citype == "wald" && all(is.na(x$ci.lb.delta)) && all(is.na(x$ci.ub.delta)))
       ci <- FALSE
 
-   if (ci && citype == "wald" && x$type != "stepfun" && sum(!x$delta.fix) >= 2L)
+   if (ci && citype == "wald" && !is.element(x$type, c("stepfun","stepcon")) && sum(!x$delta.fix) >= 2L)
       stop(mstyle$stop("Cannot compute Wald-type confidence intervals for this selection model."))
 
    if (ci) {
@@ -133,7 +133,7 @@ plot.rma.uni.selmodel <- function(x, xlim, ylim, n=1000, prec="max", scale=FALSE
          ci.lb.delta <- x$ci.lb.delta
          ci.ub.delta <- x$ci.ub.delta
 
-         if (x$type == "stepfun") {
+         if (is.element(x$type, c("stepfun","stepcon"))) {
             ci.lb.delta[x$delta.fix] <- delta[x$delta.fix]
             ci.ub.delta[x$delta.fix] <- delta[x$delta.fix]
          }

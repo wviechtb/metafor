@@ -1585,15 +1585,21 @@
 
 ############################################################################
 
-.chkopt <- function(optimizer, optcontrol) {
+.chkopt <- function(optimizer, optcontrol, ineq=FALSE) {
 
    mstyle <- .get.mstyle()
 
-   ### set NLOPT_LN_BOBYQA as the default algorithm for nloptr optimizer
+   ### set NLOPT_LN_BOBYQA as the default algorithm for the nloptr optimizer when ineq=FALSE
+   ### and otherwise use NLOPT_LN_COBYLA to allow for nonlinear inequality constraints
    ### and by default use a relative convergence criterion of 1e-8 on the function value
 
-   if (optimizer == "nloptr" && !is.element("algorithm", names(optcontrol)))
-      optcontrol$algorithm <- "NLOPT_LN_BOBYQA"
+   if (optimizer == "nloptr" && !is.element("algorithm", names(optcontrol))) {
+      if (ineq) {
+         optcontrol$algorithm <- "NLOPT_LN_COBYLA"
+      } else {
+         optcontrol$algorithm <- "NLOPT_LN_BOBYQA"
+      }
+   }
 
    if (optimizer == "nloptr" && !is.element("ftol_rel", names(optcontrol)))
       optcontrol$ftol_rel <- 1e-8

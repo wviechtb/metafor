@@ -10,6 +10,9 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
    if (x$betaspec) # TODO: consider allowing profiling over beta values as well
       stop(mstyle$stop("Cannot profile when one or more beta values were fixed."))
 
+   if (x$decreasing || x$type == "stepcon")
+      stop(mstyle$stop("Method not currently implemented for this type of model."))
+
    if (anyNA(steps))
       stop(mstyle$stop("No missing values allowed in 'steps' argument."))
 

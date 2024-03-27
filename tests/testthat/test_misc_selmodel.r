@@ -34,6 +34,18 @@ test_that("results are correct for a step function model.", {
    expect_equivalent(tmp[[3]]$random[1,], c(0.977543, 0.209558, 5.386044), tolerance=.tol[["coef"]])
    expect_equivalent(tmp[[4]]$random[1,], c(0.396713, 0.040198, 4.119681), tolerance=.tol[["coef"]])
 
+   # with ptable=TRUE
+   sav <- selmodel(res, type="stepfun", steps=c(0.05, 0.10, 0.50, 1.00), ptable=TRUE)
+   expect_equal(sav$k, c(7, 8, 16, 6))
+
+   # force delta <= 1
+   expect_warning(sav <- selmodel(res, type="stepfun", steps=c(0.05, 0.10, 0.50, 1.00), control=list(delta.max=1)))
+   expect_equivalent(coef(sav)$delta, c(1, 0.999950, 0.442783, 0.148181), tolerance=.tol[["coef"]])
+
+   # with decreasing=TRUE
+   sav <- selmodel(res, type="stepfun", steps=c(0.05, 0.10, 0.50, 1.00), decreasing=TRUE)
+   expect_equivalent(coef(sav)$delta, c(1, 0.999966, 0.442781, 0.148179), tolerance=.tol[["coef"]])
+
 })
 
 test_that("results are correct for the beta function model.", {
@@ -119,7 +131,7 @@ test_that("results are correct for the various exponential function models.", {
 
    expect_true(.vistest("images/test_misc_selmodel_profile_1_test.png", "images/test_misc_selmodel_profile_1.png"))
 
-   expect_equivalent(tmp$ll, c(NA, -6.569986, -6.35659, -6.210436, -6.121035, -6.07939, -6.077928, -6.110356, -6.171488, -6.257068, -6.363607, -6.488238, -6.628599, -6.782733, -6.949015, -7.126075, -7.312763, -7.508097, -7.711241, -7.921472), tolerance=.tol[["fit"]])
+   expect_equivalent(tmp$ll, c(-6.862544, -6.569986, -6.35659, -6.210436, -6.121035, -6.07939, -6.077928, -6.110356, -6.171488, -6.257068, -6.363607, -6.488238, -6.628599, -6.782733, -6.949015, -7.126075, -7.312763, -7.508097, -7.711241, -7.921472), tolerance=.tol[["fit"]])
 
    sav1 <- selmodel(res, type="halfnorm", prec="sei", alternative=alternative, scaleprec=FALSE)
    sav2 <- selmodel(res, type="negexp",   prec="sei", alternative=alternative, scaleprec=FALSE)

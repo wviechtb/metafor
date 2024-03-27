@@ -9,8 +9,11 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
    x <- object
 
-   if (x$betaspec) ### TODO: consider providing CIs also for this case
+   if (x$betaspec) # TODO: consider providing CIs also for this case
       stop(mstyle$stop("Cannot obtain confidence intervals when one or more beta values were fixed."))
+
+   if (x$decreasing || x$type == "stepcon")
+      stop(mstyle$stop("Method not currently implemented for this type of model."))
 
    k <- x$k
    p <- x$p
@@ -210,11 +213,11 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
       vc.lb <- NA_real_
       vc.ub <- NA_real_
-      ci.null <- FALSE ### logical if CI is a null set
-      lb.conv <- FALSE ### logical if search converged for lower bound (LB)
-      ub.conv <- FALSE ### logical if search converged for upper bound (UB)
-      lb.sign <- ""    ### for sign in case LB must be below vc.min ("<") or above vc.max (">")
-      ub.sign <- ""    ### for sign in case UB must be below vc.min ("<") or above vc.max (">")
+      ci.null <- FALSE # logical if CI is a null set
+      lb.conv <- FALSE # logical if search converged for lower bound (LB)
+      ub.conv <- FALSE # logical if search converged for upper bound (UB)
+      lb.sign <- ""    # for sign in case LB must be below vc.min ("<") or above vc.max (">")
+      ub.sign <- ""    # for sign in case UB must be below vc.min ("<") or above vc.max (">")
 
       ######################################################################
       ######################################################################
@@ -268,6 +271,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
                   }
 
                   ### check if uniroot method converged
+
                   if (!inherits(res, "try-error")) {
                      vc.lb <- res
                      lb.conv <- TRUE
@@ -321,6 +325,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
                   }
 
                   ### check if uniroot method converged
+
                   if (!inherits(res, "try-error")) {
                      vc.ub <- res
                      ub.conv <- TRUE

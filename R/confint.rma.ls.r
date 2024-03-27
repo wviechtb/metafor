@@ -47,7 +47,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
    }
 
    if (x$optbeta)
-      stop(mstyle$stop("CI calculation not yet implemented when model was fit with 'optbeta=TRUE'."))
+      stop(mstyle$stop("CI calculation not yet implemented for models fitted with 'optbeta=TRUE'."))
 
    ### check if user has specified alpha argument
 
@@ -187,11 +187,11 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
       vc.lb <- NA_real_
       vc.ub <- NA_real_
-      ci.null <- FALSE ### logical if CI is a null set
-      lb.conv <- FALSE ### logical if search converged for lower bound (LB)
-      ub.conv <- FALSE ### logical if search converged for upper bound (UB)
-      lb.sign <- ""    ### for sign in case LB must be below vc.min ("<") or above vc.max (">")
-      ub.sign <- ""    ### for sign in case UB must be below vc.min ("<") or above vc.max (">")
+      ci.null <- FALSE # logical if CI is a null set
+      lb.conv <- FALSE # logical if search converged for lower bound (LB)
+      ub.conv <- FALSE # logical if search converged for upper bound (UB)
+      lb.sign <- ""    # for sign in case LB must be below vc.min ("<") or above vc.max (">")
+      ub.sign <- ""    # for sign in case UB must be below vc.min ("<") or above vc.max (">")
 
       ######################################################################
       ######################################################################
@@ -238,6 +238,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
                   }
 
                   ### check if uniroot method converged
+
                   if (!inherits(res, "try-error")) {
                      vc.lb <- res
                      lb.conv <- TRUE
@@ -286,6 +287,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
                   }
 
                   ### check if uniroot method converged
+
                   if (!inherits(res, "try-error")) {
                      vc.ub <- res
                      ub.conv <- TRUE
