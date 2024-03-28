@@ -1,3 +1,7 @@
+# metafor 4.7-0 (2024-03-28)
+
+- new devel version
+
 # metafor 4.6-0 (2024-03-28)
 
 - the `steps` argument in the various `profile()` functions can now also be a numeric vector to specify for which parameter values the likelihood should be evaluated
