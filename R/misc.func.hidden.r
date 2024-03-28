@@ -8,14 +8,14 @@
 
    if (missing(btt) || is.null(btt)) {
 
-      if (p > 1L) {                       ### if the model matrix has more than one column
+      if (p > 1L) {                       # if the model matrix has more than one column
          if (int.incl) {
-            btt <- seq.int(from=2, to=p)     ### and the model has an intercept term, test all coefficients except the intercept
+            btt <- seq.int(from=2, to=p)     # and the model has an intercept term, test all coefficients except the intercept
          } else {
-            btt <- seq_len(p)                ### and the model does not have an intercept term, test all coefficients
+            btt <- seq_len(p)                # and the model does not have an intercept term, test all coefficients
          }
       } else {
-         btt <- 1L                        ### if the model matrix has a single column, test that single coefficient
+         btt <- 1L                        # if the model matrix has a single column, test that single coefficient
       }
 
    } else {

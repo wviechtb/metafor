@@ -4,7 +4,7 @@
 ### Liao, J. G. & Rosen, O. (2001). Fast and stable algorithms for computing and sampling from the
 ### noncentral hypergeometric distribution. The American Statistician, 55, 366-369.
 
-.dnoncenhypergeom <- function (x=NA_real_, n1, n2, m1, psi) { ### x=ai, n1=ai+bi, n2=ci+di, m1=ai+ci, psi=ORi
+.dnoncenhypergeom <- function (x=NA_real_, n1, n2, m1, psi) { # x=ai, n1=ai+bi, n2=ci+di, m1=ai+ci, psi=ORi
 
    mstyle <- .get.mstyle()
 
@@ -114,8 +114,8 @@
 
    p    <- ncol(X.fit)
    k    <- length(ai)
-   beta <- parms[seq_len(p)]                  ### first p elemenets in parms are the model coefficients
-   tau2 <- ifelse(random, exp(parms[p+1]), 0) ### next value is tau^2 -- optimize over exp(tau^2) value or hold at 0 if random=FALSE
+   beta <- parms[seq_len(p)]                  # first p elemenets in parms are the model coefficients
+   tau2 <- ifelse(random, exp(parms[p+1]), 0) # next value is tau^2 -- optimize over exp(tau^2) value or hold at 0 if random=FALSE
    mu.i <- X.fit %*% cbind(beta)
 
    lli  <- rep(NA_real_, k)

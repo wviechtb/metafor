@@ -854,11 +854,11 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    W.f    <- A
    ni.f   <- ni
    mods.f <- mods
-   #mf.g.f <- mf.g ### copied further below
-   #mf.h.f <- mf.h ### copied further below
-   #mf.s.f <- mf.s ### copied further below
+   #mf.g.f <- mf.g # copied further below
+   #mf.h.f <- mf.h # copied further below
+   #mf.s.f <- mf.s # copied further below
 
-   k.f <- k ### total number of observed outcomes including all NAs
+   k.f <- k # total number of observed outcomes including all NAs
 
    #########################################################################
    #########################################################################
@@ -1074,7 +1074,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    }
 
-   #mf.s.f <- mf.s ### not needed at the moment
+   #mf.s.f <- mf.s # not needed at the moment
 
    ### copy s.nlevels and s.levels (needed for ranef())
 
@@ -1122,7 +1122,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    }
 
-   mf.g.f <- mf.g ### needed for predict()
+   mf.g.f <- mf.g # needed for predict()
 
    #########################################################################
 
@@ -1165,7 +1165,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    }
 
-   mf.h.f <- mf.h ### needed for predict()
+   mf.h.f <- mf.h # needed for predict()
 
    # return(list(Z.G1=Z.G1, Z.G2=Z.G2, g.nlevels=g.nlevels, g.levels=g.levels, g.values=g.values, tau2=tau2, rho=rho,
    #             Z.H1=Z.H1, Z.H2=Z.H2, h.nlevels=h.nlevels, h.levels=h.levels, h.values=h.values, gamma2=gamma2, phi=phi))

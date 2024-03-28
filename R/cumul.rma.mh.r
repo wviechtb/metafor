@@ -133,7 +133,7 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
 
    ### if requested, apply transformation function
 
-   if (.isTRUE(transf) && is.element(x$measure, c("OR","RR","IRR"))) ### if transf=TRUE, apply exp transformation to ORs, RRs, and IRRs
+   if (.isTRUE(transf) && is.element(x$measure, c("OR","RR","IRR"))) # if transf=TRUE, apply exp transformation to ORs, RRs, and IRRs
       transf <- exp
 
    if (is.function(transf)) {

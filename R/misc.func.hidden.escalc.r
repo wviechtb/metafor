@@ -256,8 +256,8 @@
 }
 
 #integrate(function(x) .dcor(x, n=5, rho=.8), lower=-1, upper=1)
-#integrate(function(x) x*.dcor(x, n=5, rho=.8), lower=-1, upper=1) ### should not be rho due to bias!
-#integrate(function(x) x*.Fcalc(1/2, 1/2, (5-2)/2, 1-x^2)*.dcor(x, n=5, rho=.8), lower=-1, upper=1) ### should be ~rho
+#integrate(function(x) x*.dcor(x, n=5, rho=.8), lower=-1, upper=1) # should not be rho due to bias!
+#integrate(function(x) x*.Fcalc(1/2, 1/2, (5-2)/2, 1-x^2)*.dcor(x, n=5, rho=.8), lower=-1, upper=1) # should be ~rho
 
 ### pdf of ZCOR
 

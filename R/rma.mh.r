@@ -1,6 +1,6 @@
 rma.mh   <- function(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, measure="OR",
 data, slab, subset,
-add=1/2, to="only0", drop00=TRUE, ### for add/to/drop00, 1st element for escalc(), 2nd for MH method
+add=1/2, to="only0", drop00=TRUE, # for add/to/drop00, 1st element for escalc(), 2nd for MH method
 correct=TRUE, level=95, verbose=FALSE, digits, ...) {
 
    #########################################################################
@@ -117,7 +117,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       if (is.null(di)) di <- n2i - ci
       ni <- ai + bi + ci + di
 
-      k <- length(ai) ### number of outcomes before subsetting
+      k <- length(ai) # number of outcomes before subsetting
       k.all <- k
 
       if (length(ai)==0L || length(bi)==0L || length(ci)==0L || length(di)==0L)
@@ -179,8 +179,8 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       ### calculate observed effect estimates and sampling variances
 
       dat <- .do.call(escalc, measure=measure, ai=ai, bi=bi, ci=ci, di=di, add=add[1], to=to[1], drop00=drop00[1], onlyo1=onlyo1, addyi=addyi, addvi=addvi)
-      yi <- dat$yi ### one or more yi/vi pairs may be NA/NA
-      vi <- dat$vi ### one or more yi/vi pairs may be NA/NA
+      yi <- dat$yi # one or more yi/vi pairs may be NA/NA
+      vi <- dat$vi # one or more yi/vi pairs may be NA/NA
 
       ### if drop00[2]=TRUE, set counts to NA for studies that have no events (or all events) in both arms
 
@@ -201,7 +201,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       vi.f <- vi
       ni.f <- ni
 
-      k.f <- k ### total number of tables including all NAs
+      k.f <- k # total number of tables including all NAs
 
       ### check for NAs in table data and act accordingly
 
@@ -249,8 +249,8 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
             ni <- ni[not.na.yivi]
             warning(mstyle$warning("Some yi/vi values are NA."), call.=FALSE)
 
-            attr(yi, "measure") <- measure ### add measure attribute back
-            attr(yi, "ni")      <- ni      ### add ni attribute back
+            attr(yi, "measure") <- measure # add measure attribute back
+            attr(yi, "ni")      <- ni      # add ni attribute back
 
          }
 
@@ -259,7 +259,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
 
       }
 
-      k.yi <- length(yi) ### number of yi/vi pairs that are not NA (needed for QE df and fit.stats calculation)
+      k.yi <- length(yi) # number of yi/vi pairs that are not NA (needed for QE df and fit.stats calculation)
 
       ### add/to procedures for the 2x2 tables for the actual meta-analysis
       ### note: technically, nothing needs to be added, but Stata/RevMan add 1/2 by default for only0 studies (but drop studies with no/all events)
@@ -326,7 +326,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
 
       ni  <- t1i + t2i
 
-      k <- length(x1i) ### number of outcomes before subsetting
+      k <- length(x1i) # number of outcomes before subsetting
       k.all <- k
 
       if (length(x1i)==0L || length(x2i)==0L || length(t1i)==0L || length(t2i)==0L)
@@ -385,8 +385,8 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       ### calculate observed effect estimates and sampling variances
 
       dat <- .do.call(escalc, measure=measure, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, add=add[1], to=to[1], drop00=drop00[1], onlyo1=onlyo1, addyi=addyi, addvi=addvi)
-      yi  <- dat$yi ### one or more yi/vi pairs may be NA/NA
-      vi  <- dat$vi ### one or more yi/vi pairs may be NA/NA
+      yi  <- dat$yi # one or more yi/vi pairs may be NA/NA
+      vi  <- dat$vi # one or more yi/vi pairs may be NA/NA
 
       ### if drop00[2]=TRUE, set counts to NA for studies that have no events in both arms
 
@@ -405,7 +405,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       vi.f <- vi
       ni.f <- ni
 
-      k.f <- k ### total number of tables including all NAs
+      k.f <- k # total number of tables including all NAs
 
       ### check for NAs in table data and act accordingly
 
@@ -453,8 +453,8 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
             ni <- ni[not.na.yivi]
             warning(mstyle$warning("Some yi/vi values are NA."), call.=FALSE)
 
-            attr(yi, "measure") <- measure ### add measure attribute back
-            attr(yi, "ni")      <- ni      ### add ni attribute back
+            attr(yi, "measure") <- measure # add measure attribute back
+            attr(yi, "ni")      <- ni      # add ni attribute back
 
          }
 
@@ -463,7 +463,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
 
       }
 
-      k.yi <- length(yi) ### number of yi/vi pairs that are not NA (needed for QE df and fitstats calculation)
+      k.yi <- length(yi) # number of yi/vi pairs that are not NA (needed for QE df and fitstats calculation)
 
       ### add/to procedures for the 2x2 tables for the actual meta-analysis
       ### note: technically, nothing needs to be added
@@ -539,7 +539,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       } else {
          beta.exp <- R/S
          beta     <- log(beta.exp)
-         se       <- sqrt(1/2 * (sum(Pi*Ri)/R^2 + sum(Pi*Si + Qi*Ri)/(R*S) + sum(Qi*Si)/S^2)) ### based on Robins et al. (1986)
+         se       <- sqrt(1/2 * (sum(Pi*Ri)/R^2 + sum(Pi*Si + Qi*Ri)/(R*S) + sum(Qi*Si)/S^2)) # based on Robins et al. (1986)
          zval     <- beta / se
          pval     <- 2*pnorm(abs(zval), lower.tail=FALSE)
          ci.lb    <- beta - qnorm(level/2, lower.tail=FALSE) * se
@@ -632,8 +632,8 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
    if (measure == "RD") {
 
       beta  <- sum(ai*(n2i/Ni) - ci*(n1i/Ni)) / sum(n1i*(n2i/Ni))
-      se    <- sqrt((beta * (sum(ci*(n1i/Ni)^2 - ai*(n2i/Ni)^2 + (n1i/Ni)*(n2i/Ni)*(n2i-n1i)/2)) + sum(ai*(n2i-ci)/Ni + ci*(n1i-ai)/Ni)/2) / sum(n1i*(n2i/Ni))^2) ### equation in: Sato, Greenland, & Robins (1989)
-      #se   <- sqrt(sum(((ai/Ni^2)*bi*(n2i^2/n1i) + (ci/Ni^2)*di*(n1i^2/n2i))) / sum(n1i*(n2i/Ni))^2) ### equation in: Greenland & Robins (1985)
+      se    <- sqrt((beta * (sum(ci*(n1i/Ni)^2 - ai*(n2i/Ni)^2 + (n1i/Ni)*(n2i/Ni)*(n2i-n1i)/2)) + sum(ai*(n2i-ci)/Ni + ci*(n1i-ai)/Ni)/2) / sum(n1i*(n2i/Ni))^2) # equation in: Sato, Greenland, & Robins (1989)
+      #se   <- sqrt(sum(((ai/Ni^2)*bi*(n2i^2/n1i) + (ci/Ni^2)*di*(n1i^2/n2i))) / sum(n1i*(n2i/Ni))^2) # equation in: Greenland & Robins (1985)
       zval  <- beta / se
       pval  <- 2*pnorm(abs(zval), lower.tail=FALSE)
       ci.lb <- beta - qnorm(level/2, lower.tail=FALSE) * se
@@ -686,7 +686,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
    if (measure == "IRD") {
 
       beta  <- sum((x1i*t2i - x2i*t1i)/Ti) / sum((t1i/Ti)*t2i)
-      se    <- sqrt(sum(((t1i/Ti)*t2i)^2*(x1i/t1i^2+x2i/t2i^2))) / sum((t1i/Ti)*t2i) ### from Rothland et al. (2008), chapter 15
+      se    <- sqrt(sum(((t1i/Ti)*t2i)^2*(x1i/t1i^2+x2i/t2i^2))) / sum((t1i/Ti)*t2i) # from Rothland et al. (2008), chapter 15
       zval  <- beta / se
       pval  <- 2*pnorm(abs(zval), lower.tail=FALSE)
       ci.lb <- beta - qnorm(level/2, lower.tail=FALSE) * se

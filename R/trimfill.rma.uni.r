@@ -57,15 +57,15 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
    k <- length(yi)
 
    k0.sav <- -1
-   k0     <-  0 ### estimated number of missing studies
-   iter   <-  0 ### iteration counter
+   k0     <-  0 # estimated number of missing studies
+   iter   <-  0 # iteration counter
 
    if (verbose)
       cat("\n")
 
    while (abs(k0 - k0.sav) > 0) {
 
-      k0.sav <- k0 ### save current value of k0
+      k0.sav <- k0 # save current value of k0
 
       iter <- iter + 1
 
@@ -85,9 +85,9 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
 
       beta <- c(res$beta)
 
-      yi.c     <- yi - beta                            ### centered values
-      yi.c.r   <- rank(abs(yi.c), ties.method="first") ### ranked absolute centered values
-      yi.c.r.s <- sign(yi.c) * yi.c.r                  ### signed ranked centered values
+      yi.c     <- yi - beta                            # centered values
+      yi.c.r   <- rank(abs(yi.c), ties.method="first") # ranked absolute centered values
+      yi.c.r.s <- sign(yi.c) * yi.c.r                  # signed ranked centered values
 
       ### estimate the number of missing studies with the R0 estimator
 

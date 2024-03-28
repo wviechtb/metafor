@@ -74,7 +74,7 @@
 
    ### get variables names in mf.g
 
-   g.names <- names(mf.g) ### names for inner and outer factors/variables
+   g.names <- names(mf.g) # names for inner and outer factors/variables
 
    ### check that inner variable is a factor (or character variable) for structures that require this (no longer required)
 
@@ -107,7 +107,7 @@
 
    ### get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
 
-   #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]])) ### works only for factors
+   #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]])) # works only for factors
    if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG"))) {
       g.nlevels <- c(length(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), length(unique(mf.g[[nvars]])))
    } else {
@@ -116,7 +116,7 @@
 
    ### get levels of each variable in mf.g
 
-   #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]])) ### works only for factors
+   #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]])) # works only for factors
    if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG"))) {
       g.levels <- list(sort(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), sort(unique((mf.g[[nvars]]))))
    } else {
@@ -279,7 +279,7 @@
 
    ### redo: get number of levels of each variable in mf.g (vector with two values, for the inner and outer factor)
 
-   #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]])) ### works only for factors
+   #g.nlevels <- c(nlevels(mf.g[[1]]), nlevels(mf.g[[2]])) # works only for factors
    if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG"))) {
       g.nlevels <- c(length(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), length(unique(mf.g[[nvars]])))
    } else {
@@ -288,7 +288,7 @@
 
    ### redo: get levels of each variable in mf.g
 
-   #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]])) ### works only for factors
+   #g.levels <- list(levels(mf.g[[1]]), levels(mf.g[[2]])) # works only for factors
    if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG"))) {
       g.levels <- list(sort(unique(apply(mf.g[-nvars], 1, paste, collapse=" + "))), sort(unique((mf.g[[nvars]]))))
    } else {
@@ -613,7 +613,7 @@
    if (any(g.levels.r) && struct == "UNR") {
       G[g.levels.r,] <- 0
       G[,g.levels.r] <- 0
-      diag(G) <- tau2 ### don't really need this
+      diag(G) <- tau2 # don't really need this
       rho <- G[lower.tri(G)]
       warning(mstyle$warning(paste0("Fixed ", ifelse(isG, 'rho', 'phi'), " value(s) to 0 for removed level(s).")), call.=FALSE)
    }

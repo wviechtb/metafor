@@ -52,7 +52,7 @@ ranef.rma.uni <- function(object, level, digits, transf, targs, ...) {
 
    li <- ifelse(is.infinite(x$tau2.f), 1, x$tau2.f / (x$tau2.f + x$vi.f))
 
-   for (i in seq_len(x$k.f)[x$not.na]) { ### note: skipping NA cases
+   for (i in seq_len(x$k.f)[x$not.na]) { # note: skipping NA cases
       Xi <- matrix(x$X.f[i,], nrow=1)
       if (is.element(x$method, c("FE","EE","CE"))) {
          pred[i]  <- 0

@@ -43,8 +43,8 @@ transf, targs, pch=21, col, bg, back, arc.res=100, cex, cex.lab, cex.axis, ...) 
       beta <- c(x$beta)
       ci.lb <- x$ci.lb
       ci.ub <- x$ci.ub
-      tau2 <- 1/mean(1/x$tau2) ### geometric mean of tau^2 values (hackish solution for models with multiple tau^2 values)
-                               ### note: this works for 1/mean(1/0) = 0; TODO: consider something more sophisticated here
+      tau2 <- 1/mean(1/x$tau2) # geometric mean of tau^2 values (hackish solution for models with multiple tau^2 values)
+                               # note: this works for 1/mean(1/0) = 0; TODO: consider something more sophisticated here
       if (is.null(aty)) {
          atyis <- range(yi)
       } else {
@@ -82,18 +82,18 @@ transf, targs, pch=21, col, bg, back, arc.res=100, cex, cex.lab, cex.axis, ...) 
    ### set x-axis limits if none are specified
 
    if (missing(xlim)) {
-      xlims <- c(0, (1.30*max(xi)))                   ### add 30% to upper bound
+      xlims <- c(0, (1.30*max(xi)))                   # add 30% to upper bound
    } else {
       xlims <- sort(xlim)
    }
 
    ### x-axis position of the confidence interval
 
-   ci.xpos <- xlims[2] + 0.12*(xlims[2]-xlims[1])     ### add 12% of range to upper bound
+   ci.xpos <- xlims[2] + 0.12*(xlims[2]-xlims[1])     # add 12% of range to upper bound
 
    ### x-axis position of the y-axis on the right
 
-   ya.xpos <- xlims[2] + 0.14*(xlims[2]-xlims[1])     ### add 14% of range to upper bound
+   ya.xpos <- xlims[2] + 0.14*(xlims[2]-xlims[1])     # add 14% of range to upper bound
 
    xaxismax <- xlims[2]
 

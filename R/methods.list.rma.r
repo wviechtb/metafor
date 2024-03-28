@@ -19,7 +19,7 @@
    if (length(out[[1]]) == 0L)
       return(NULL)
 
-   #out <- out[j] ### this causes all kinds of problems, so left out for now (TODO: check if this is really a problem)
+   #out <- out[j] # this causes all kinds of problems, so left out for now (TODO: check if this is really a problem)
 
    out$slab <- x$slab[i]
 

@@ -19,7 +19,7 @@ hatvalues.rma.mv <- function(model, type="diagonal", ...) {
       W     <- chol2inv(chol(x$M))
       stXWX <- chol2inv(chol(as.matrix(t(x$X) %*% W %*% x$X)))
       H     <- as.matrix(x$X %*% stXWX %*% crossprod(x$X,W))
-      #H <- as.matrix(x$X %*% x$vb %*% crossprod(x$X,W)) ### x$vb may have been changed through robust()
+      #H <- as.matrix(x$X %*% x$vb %*% crossprod(x$X,W)) # x$vb may have been changed through robust()
    } else {
       A     <- x$W
       stXAX <- chol2inv(chol(as.matrix(t(x$X) %*% A %*% x$X)))
@@ -33,7 +33,7 @@ hatvalues.rma.mv <- function(model, type="diagonal", ...) {
 
       hii <- rep(NA_real_, x$k.f)
       hii[x$not.na] <- as.vector(diag(H))
-      hii[hii > 1 - 10 * .Machine$double.eps] <- 1 ### as in lm.influence()
+      hii[hii > 1 - 10 * .Machine$double.eps] <- 1 # as in lm.influence()
       names(hii) <- x$slab
 
       if (na.act == "na.omit")

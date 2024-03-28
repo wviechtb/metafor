@@ -180,7 +180,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             diag(G.info) <- "-"
 
             vc <- cbind(G, "", G.info)
-            colnames(vc) <- c(paste0("rho.", abbreviate(x$g.levels.f[[1]])), "", abbreviate(x$g.levels.f[[1]])) ### FIXME: x$g.levels.f[[1]] may be numeric, in which case a wrapping 'header' is not recognized
+            colnames(vc) <- c(paste0("rho.", abbreviate(x$g.levels.f[[1]])), "", abbreviate(x$g.levels.f[[1]])) # FIXME: x$g.levels.f[[1]] may be numeric, in which case a wrapping 'header' is not recognized
             rownames(vc) <- x$g.levels.f[[1]]
             tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
             .print.table(tmp, mstyle)
@@ -311,7 +311,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             diag(H.info) <- "-"
 
             vc <- cbind(H, "", H.info)
-            colnames(vc) <- c(paste0("phi.", abbreviate(x$h.levels.f[[1]])), "", abbreviate(x$h.levels.f[[1]])) ### FIXME: x$h.levels.f[[1]] may be numeric, in which case a wrapping 'header' is not recognized
+            colnames(vc) <- c(paste0("phi.", abbreviate(x$h.levels.f[[1]])), "", abbreviate(x$h.levels.f[[1]])) # FIXME: x$h.levels.f[[1]] may be numeric, in which case a wrapping 'header' is not recognized
             rownames(vc) <- x$h.levels.f[[1]]
             tmp <- capture.output(print(vc, quote=FALSE, right=right, print.gap=2))
             .print.table(tmp, mstyle)

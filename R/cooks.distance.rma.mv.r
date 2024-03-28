@@ -4,7 +4,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    .chkclass(class(model), must="rma.mv")
 
-   #if (inherits(model, "robust.rma")) ### can compute Cook's distance also for 'robust.rma' objects
+   #if (inherits(model, "robust.rma")) # can compute Cook's distance also for 'robust.rma' objects
    #   stop(mstyle$stop("Method not available for objects of class \"robust.rma\"."))
 
    na.act <- getOption("na.action")

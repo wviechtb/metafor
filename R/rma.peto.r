@@ -1,6 +1,6 @@
 rma.peto <- function(ai, bi, ci, di, n1i, n2i,
 data, slab, subset,
-add=1/2, to="only0", drop00=TRUE, ### for add/to/drop00, 1st element for escalc(), 2nd for Peto's method
+add=1/2, to="only0", drop00=TRUE, # for add/to/drop00, 1st element for escalc(), 2nd for Peto's method
 level=95, verbose=FALSE, digits, ...) {
 
    #########################################################################
@@ -48,7 +48,7 @@ level=95, verbose=FALSE, digits, ...) {
 
    .chkdots(ddd, c("outlist", "time"))
 
-   measure <- "PETO" ### set measure here so that it can be added below
+   measure <- "PETO" # set measure here so that it can be added below
 
    ### set defaults for digits
 
@@ -104,7 +104,7 @@ level=95, verbose=FALSE, digits, ...) {
    if (is.null(di)) di <- n2i - ci
    ni <- ai + bi + ci + di
 
-   k <- length(ai) ### number of outcomes before subsetting
+   k <- length(ai) # number of outcomes before subsetting
    k.all <- k
 
    if (length(ai)==0L || length(bi)==0L || length(ci)==0L || length(di)==0L)
@@ -166,8 +166,8 @@ level=95, verbose=FALSE, digits, ...) {
    ### calculate observed effect estimates and sampling variances
 
    dat <- .do.call(escalc, measure="PETO", ai=ai, bi=bi, ci=ci, di=di, add=add[1], to=to[1], drop00=drop00[1])
-   yi <- dat$yi ### one or more yi/vi pairs may be NA/NA
-   vi <- dat$vi ### one or more yi/vi pairs may be NA/NA
+   yi <- dat$yi # one or more yi/vi pairs may be NA/NA
+   vi <- dat$vi # one or more yi/vi pairs may be NA/NA
 
    ### if drop00[2]=TRUE, set counts to NA for studies that have no events (or all events) in both arms
 
@@ -188,7 +188,7 @@ level=95, verbose=FALSE, digits, ...) {
    vi.f <- vi
    ni.f <- ni
 
-   k.f <- k ### total number of tables including all NAs
+   k.f <- k # total number of tables including all NAs
 
    ### check for NAs in table data and act accordingly
 
@@ -236,8 +236,8 @@ level=95, verbose=FALSE, digits, ...) {
          ni <- ni[not.na.yivi]
          warning(mstyle$warning("Some yi/vi values are NA."), call.=FALSE)
 
-         attr(yi, "measure") <- measure ### add measure attribute back
-         attr(yi, "ni")      <- ni      ### add ni attribute back
+         attr(yi, "measure") <- measure # add measure attribute back
+         attr(yi, "ni")      <- ni      # add ni attribute back
 
       }
 
@@ -246,7 +246,7 @@ level=95, verbose=FALSE, digits, ...) {
 
    }
 
-   k.yi <- length(yi) ### number of yi/vi pairs that are not NA (needed for QE df and fit.stats calculation)
+   k.yi <- length(yi) # number of yi/vi pairs that are not NA (needed for QE df and fit.stats calculation)
 
    ### add/to procedures for the 2x2 tables for the actual meta-analysis
    ### note: technically, nothing needs to be added, but Stata/RevMan add 1/2 by default for only0 studies (but drop studies with no/all events)
@@ -305,14 +305,14 @@ level=95, verbose=FALSE, digits, ...) {
    if (verbose)
       message(mstyle$message("Model fitting ..."))
 
-   xt <- ai + ci ### frequency of outcome1 in both groups combined
-   yt <- bi + di ### frequency of outcome2 in both groups combined
+   xt <- ai + ci # frequency of outcome1 in both groups combined
+   yt <- bi + di # frequency of outcome2 in both groups combined
    Ei <- xt * n1i / Ni
-   Vi <- xt * yt * (n1i/Ni) * (n2i/Ni) / (Ni - 1) ### 0 when xt = 0 or yt = 0 in a table
+   Vi <- xt * yt * (n1i/Ni) * (n2i/Ni) / (Ni - 1) # 0 when xt = 0 or yt = 0 in a table
 
    sumVi <- sum(Vi)
 
-   if (sumVi == 0L) ### sumVi = 0 when xt or yt = 0 in *all* tables
+   if (sumVi == 0L) # sumVi = 0 when xt or yt = 0 in *all* tables
       stop(mstyle$stop("One of the two outcomes never occurred in any of the tables. Peto's method cannot be used."))
 
    beta  <- sum(ai - Ei) / sumVi
@@ -332,8 +332,8 @@ level=95, verbose=FALSE, digits, ...) {
    if (verbose)
       message(mstyle$message("Heterogeneity testing ..."))
 
-   k.pos <- sum(Vi > 0)    ### number of tables with positive sampling variance
-   Vi[Vi == 0] <- NA_real_ ### set 0 sampling variances to NA
+   k.pos <- sum(Vi > 0)    # number of tables with positive sampling variance
+   Vi[Vi == 0] <- NA_real_ # set 0 sampling variances to NA
    QE <- max(0, sum((ai - Ei)^2 / Vi, na.rm=TRUE) - sum(ai - Ei)^2 / sum(Vi, na.rm=TRUE))
 
    if (k.pos > 1L) {

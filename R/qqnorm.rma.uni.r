@@ -35,7 +35,7 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
       bg <- .coladj(par("bg","fg"), dark=0.35, light=-0.35)
 
    if (missing(lty)) {
-      lty <- c("solid", "dotted") ### 1st value = diagonal line, 2nd value = pseudo confidence envelope
+      lty <- c("solid", "dotted") # 1st value = diagonal line, 2nd value = pseudo confidence envelope
    } else {
       if (length(lty) == 1L)
          lty <- c(lty, lty)
@@ -94,11 +94,11 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
       ei  <- ImH %*% dat
       ei  <- apply(ei, 2, sort)
       if (bonferroni) {
-         lb <- apply(ei, 1, quantile,   (level/2)/x$k) ### consider using rowQuantiles() from matrixStats package
-         ub <- apply(ei, 1, quantile, 1-(level/2)/x$k) ### consider using rowQuantiles() from matrixStats package
+         lb <- apply(ei, 1, quantile,   (level/2)/x$k) # consider using rowQuantiles() from matrixStats package
+         ub <- apply(ei, 1, quantile, 1-(level/2)/x$k) # consider using rowQuantiles() from matrixStats package
       } else {
-         lb <- apply(ei, 1, quantile,   (level/2)) ### consider using rowQuantiles() from matrixStats package
-         ub <- apply(ei, 1, quantile, 1-(level/2)) ### consider using rowQuantiles() from matrixStats package
+         lb <- apply(ei, 1, quantile,   (level/2)) # consider using rowQuantiles() from matrixStats package
+         ub <- apply(ei, 1, quantile, 1-(level/2)) # consider using rowQuantiles() from matrixStats package
       }
 
       temp.lb <- qqnorm(lb, plot.it=FALSE)

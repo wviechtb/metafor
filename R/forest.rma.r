@@ -920,7 +920,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
             if (length(addpred) == 1L)
                addpred <- c(addpred, addpred)
             temp <- predict(x, level=level, tau2.levels=addpred[1], gamma2.levels=addpred[2], pi.type=pi.type)
-            addpred <- TRUE ### set addpred to TRUE, so if (!is.element(x$method, c("FE","EE","CE")) && addpred) further below works
+            addpred <- TRUE # set addpred to TRUE, so if (!is.element(x$method, c("FE","EE","CE")) && addpred) further below works
          } else {
             if (addpred) {
                ### here addpred=TRUE, but user has not specified the level, so throw an error

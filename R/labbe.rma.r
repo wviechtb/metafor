@@ -137,7 +137,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    t1i[yi.is.na] <- NA_real_
    t2i[yi.is.na] <- NA_real_
 
-   options(na.action = "na.pass") ### to make sure dat.t and dat.c are of the same length
+   options(na.action = "na.pass") # to make sure dat.t and dat.c are of the same length
 
    measure <- switch(x$measure, "RR"="PLN", "OR"="PLO", "RD"="PR", "AS"="PAS", "IRR"="IRLN", "IRD"="IR", "IRSD"="IRS")
 

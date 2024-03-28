@@ -65,7 +65,7 @@ rstandard.rma.mv <- function(model, digits, cluster, ...) {
    ei <- c(x$yi - x$X %*% x$beta)
 
    ei[abs(ei) < 100 * .Machine$double.eps] <- 0
-   #ei[abs(ei) < 100 * .Machine$double.eps * median(abs(ei), na.rm=TRUE)] <- 0 ### see lm.influence
+   #ei[abs(ei) < 100 * .Machine$double.eps * median(abs(ei), na.rm=TRUE)] <- 0 # see lm.influence
 
    ### don't allow this; the SEs of the residuals cannot be estimated consistently for "robust.rma" objects
    #if (inherits(x, "robust.rma")) {

@@ -337,7 +337,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       ### allow easy setting of vi to a single value
 
       if (length(vi) == 1L)
-         vi <- rep(vi, k) ### note: k is number of outcomes before subsetting
+         vi <- rep(vi, k) # note: k is number of outcomes before subsetting
 
       ### check length of yi and vi
 
@@ -900,7 +900,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    mods.f    <- mods
    Z.f       <- Z
 
-   k.f <- k ### total number of observed outcomes including all NAs
+   k.f <- k # total number of observed outcomes including all NAs
 
    ### check for NAs and act accordingly
 
@@ -1017,7 +1017,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       int.incl <- FALSE
    }
 
-   p <- NCOL(X) ### number of columns in X (including the intercept if it is included)
+   p <- NCOL(X) # number of columns in X (including the intercept if it is included)
 
    ### make sure variable names in X and Z are unique
 
@@ -1052,7 +1052,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    ### set/check 'btt' argument
 
    btt <- .set.btt(btt, p, int.incl, colnames(X))
-   m <- length(btt) ### number of betas to test (m = p if all betas are tested)
+   m <- length(btt) # number of betas to test (m = p if all betas are tested)
 
    #########################################################################
 
@@ -2187,7 +2187,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       ### set/check 'att' argument
 
       att <- .set.btt(att, q, Z.int.incl, colnames(Z))
-      m.alpha <- length(att) ### number of alphas to test (m = q if all alphas are tested)
+      m.alpha <- length(att) # number of alphas to test (m = q if all alphas are tested)
 
       ### ddf calculation
 
@@ -2453,7 +2453,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       if (k > p) {
 
          wi    <- 1/vi
-         W.FE  <- diag(wi, nrow=k, ncol=k) ### note: ll.REML below involves W, so cannot overwrite W
+         W.FE  <- diag(wi, nrow=k, ncol=k) # note: ll.REML below involves W, so cannot overwrite W
          stXWX <- .invcalc(X=X, W=W.FE, k=k)
          P     <- W.FE - W.FE %*% X %*% stXWX %*% crossprod(X,W.FE) # need P below for calculation of I^2
          QE    <- max(0, c(crossprod(Ymc,P) %*% Ymc))

@@ -96,7 +96,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       if (!.equal.length(yi, vi))
          stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
-      k <- length(yi) ### number of outcomes before subsetting
+      k <- length(yi) # number of outcomes before subsetting
 
       ### subsetting
 
@@ -146,7 +146,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
       if (any(c(n1i < 0, n2i < 0), na.rm=TRUE))
          stop(mstyle$stop("One or more group sizes are negative."))
 
-      k <- length(ai) ### number of outcomes before subsetting
+      k <- length(ai) # number of outcomes before subsetting
 
       ### note studies that have at least one zero cell
 
@@ -179,8 +179,8 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
       dat <- .do.call(escalc, measure="OR", ai=ai, bi=bi, ci=ci, di=di, drop00=drop00, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
 
-      yi <- dat$yi ### one or more yi/vi pairs may be NA/NA
-      vi <- dat$vi ### one or more yi/vi pairs may be NA/NA
+      yi <- dat$yi # one or more yi/vi pairs may be NA/NA
+      vi <- dat$vi # one or more yi/vi pairs may be NA/NA
 
    }
 

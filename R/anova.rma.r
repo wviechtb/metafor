@@ -215,8 +215,8 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
             ### omnibus test of all hypotheses (only possible if 'Z' is of full rank)
 
-            QS  <- NA_real_ ### need this in case QS cannot be calculated below
-            QSp <- NA_real_ ### need this in case QSp cannot be calculated below
+            QS  <- NA_real_ # need this in case QS cannot be calculated below
+            QSp <- NA_real_ # need this in case QSp cannot be calculated below
 
             if (rankMatrix(Z) == m) {
 
@@ -240,24 +240,24 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
             hyp <- rep("", m)
             for (j in seq_len(m)) {
-               Zj <- round(Z[j,], digits[["est"]]) ### coefficients for the jth contrast
-               sel <- Zj != 0 ### TRUE if coefficient is != 0
-               hyp[j] <- paste(paste(Zj[sel], rownames(x$alpha)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...
-               hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) ### turn '+1' into '+' and '-1' into '-'
-               hyp[j] <- gsub("+ -", "- ", hyp[j], fixed=TRUE) ### turn '+ -' into '-'
+               Zj <- round(Z[j,], digits[["est"]]) # coefficients for the jth contrast
+               sel <- Zj != 0 # TRUE if coefficient is != 0
+               hyp[j] <- paste(paste(Zj[sel], rownames(x$alpha)[sel], sep="*"), collapse=" + ") # coefficient*variable + coefficient*variable ...
+               hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) # turn '+1' into '+' and '-1' into '-'
+               hyp[j] <- gsub("+ -", "- ", hyp[j], fixed=TRUE) # turn '+ -' into '-'
             }
             if (identical(rhs, rep(0,m))) {
-               hyp <- paste0(hyp, " = 0") ### add '= 0' at the right
+               hyp <- paste0(hyp, " = 0") # add '= 0' at the right
             } else {
                if (length(unique(rhs)) == 1L) {
-                  hyp <- paste0(hyp, " = ", round(rhs, digits=digits[["est"]])) ### add '= rhs' at the right
+                  hyp <- paste0(hyp, " = ", round(rhs, digits=digits[["est"]])) # add '= rhs' at the right
                } else {
-                  hyp <- paste0(hyp, " = ", fmtx(rhs, digits=digits[["est"]])) ### add '= rhs' at the right
+                  hyp <- paste0(hyp, " = ", fmtx(rhs, digits=digits[["est"]])) # add '= rhs' at the right
                }
             }
             hyp <- data.frame(hyp, stringsAsFactors=FALSE)
             colnames(hyp) <- ""
-            rownames(hyp) <- paste0(seq_len(m), ":") ### add '1:', '2:', ... as row names
+            rownames(hyp) <- paste0(seq_len(m), ":") # add '1:', '2:', ... as row names
 
             res <- list(QS=QS, QSdf=QSdf, QSp=QSp, hyp=hyp, Za=Za, se=se, zval=zval, pval=pval, k=x$k, q=x$q, m=m, test=x$test, ddf=x$ddf.alpha, digits=digits, type="Wald.Za")
 
@@ -400,24 +400,24 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
             hyp <- rep("", m)
             for (j in seq_len(m)) {
-               Xj <- round(X[j,], digits[["est"]]) ### coefficients for the jth contrast
-               sel <- Xj != 0 ### TRUE if coefficient is != 0
-               hyp[j] <- paste(paste(Xj[sel], rownames(x$beta)[sel], sep="*"), collapse=" + ") ### coefficient*variable + coefficient*variable ...
-               hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) ### turn '+1' into '+' and '-1' into '-'
-               hyp[j] <- gsub("+ -", "- ", hyp[j], fixed=TRUE) ### turn '+ -' into '-'
+               Xj <- round(X[j,], digits[["est"]]) # coefficients for the jth contrast
+               sel <- Xj != 0 # TRUE if coefficient is != 0
+               hyp[j] <- paste(paste(Xj[sel], rownames(x$beta)[sel], sep="*"), collapse=" + ") # coefficient*variable + coefficient*variable ...
+               hyp[j] <- gsub("1*", "", hyp[j], fixed=TRUE) # turn '+1' into '+' and '-1' into '-'
+               hyp[j] <- gsub("+ -", "- ", hyp[j], fixed=TRUE) # turn '+ -' into '-'
             }
             if (identical(rhs, rep(0,m))) {
-               hyp <- paste0(hyp, " = 0") ### add '= 0' at the right
+               hyp <- paste0(hyp, " = 0") # add '= 0' at the right
             } else {
                if (length(unique(rhs)) == 1L) {
-                  hyp <- paste0(hyp, " = ", round(rhs, digits=digits[["est"]])) ### add '= rhs' at the right
+                  hyp <- paste0(hyp, " = ", round(rhs, digits=digits[["est"]])) # add '= rhs' at the right
                } else {
-                  hyp <- paste0(hyp, " = ", fmtx(rhs,  digits=digits[["est"]])) ### add '= rhs' at the right
+                  hyp <- paste0(hyp, " = ", fmtx(rhs,  digits=digits[["est"]])) # add '= rhs' at the right
                }
             }
             hyp <- data.frame(hyp, stringsAsFactors=FALSE)
             colnames(hyp) <- ""
-            rownames(hyp) <- paste0(seq_len(m), ":") ### add '1:', '2:', ... as row names
+            rownames(hyp) <- paste0(seq_len(m), ":") # add '1:', '2:', ... as row names
 
             res <- list(QM=QM, QMdf=QMdf, QMp=QMp, hyp=hyp, Xb=Xb, se=se, zval=zval, pval=pval, k=x$k, p=x$p, m=m, test=x$test, ddf=ddf, digits=digits, type="Wald.Xb")
 

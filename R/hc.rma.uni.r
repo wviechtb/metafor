@@ -48,7 +48,7 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
    ### original code by Henmi & Copas (2012), modified by Michael Dewey, small adjustments
    ### for consistency with other functions in the metafor package by Wolfgang Viechtbauer
 
-   wi <- 1/vi ### fixed effects weights
+   wi <- 1/vi # fixed effects weights
 
    W1 <- sum(wi)
    W2 <- sum(wi^2) / W1

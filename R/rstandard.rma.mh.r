@@ -22,7 +22,7 @@ rstandard.rma.mh <- function(model, digits, ...) {
    resid <- c(x$yi.f - x$beta)
 
    resid[abs(resid) < 100 * .Machine$double.eps] <- 0
-   #resid[abs(resid) < 100 * .Machine$double.eps * median(abs(resid), na.rm=TRUE)] <- 0 ### see lm.influence
+   #resid[abs(resid) < 100 * .Machine$double.eps * median(abs(resid), na.rm=TRUE)] <- 0 # see lm.influence
 
    ### note: these are like Pearson (or semi-standardized) residuals
 
