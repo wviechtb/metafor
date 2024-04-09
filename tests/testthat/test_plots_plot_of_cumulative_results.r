@@ -12,26 +12,31 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   png("images/test_plots_plot_of_cumulative_results_test.png", res=200, width=1800, height=1600, type="cairo")
-
-   ### decrease margins so the more space is used
-   par(mar=c(5,5,2,2))
-
-   ### calculate log risk ratios and corresponding sampling variances
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
-
-   ### fit random-effects models
    res <- rma(yi, vi, data=dat)
-
-   ### cumulative meta-analysis (in the order of publication year)
    tmp <- cumul(res, order=year)
 
-   ### plot of cumulative results
+   png("images/test_plots_plot_of_cumulative_results_light_test.png", res=200, width=1800, height=1600, type="cairo")
+
+   par(mar=c(5,5,2,2))
    plot(tmp, transf=exp, xlim=c(0.25,0.5), lwd=3, cex=1.3)
 
    dev.off()
 
-   expect_true(.vistest("images/test_plots_plot_of_cumulative_results_test.png", "images/test_plots_plot_of_cumulative_results.png"))
+   expect_true(.vistest("images/test_plots_plot_of_cumulative_results_light_test.png", "images/test_plots_plot_of_cumulative_results_light.png"))
+
+   png("images/test_plots_plot_of_cumulative_results_dark_test.png", res=200, width=1800, height=1600, type="cairo")
+
+   setmfopt(theme="dark")
+
+   par(mar=c(5,5,2,2))
+   plot(tmp, transf=exp, xlim=c(0.25,0.5), lwd=3, cex=1.3)
+
+   setmfopt(theme="default")
+
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_plot_of_cumulative_results_dark_test.png", "images/test_plots_plot_of_cumulative_results_dark.png"))
 
 })
 

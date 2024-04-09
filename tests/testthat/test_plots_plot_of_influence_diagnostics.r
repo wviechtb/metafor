@@ -12,26 +12,37 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   ### fit random-effects model with r-to-z transformed correlations
    res <- rma(ri=ri, ni=ni, measure="ZCOR", data=dat.mcdaniel1994)
-
-   ### calculate influence diagnostics
    inf <- influence(res)
+   out <- capture.output(print(inf)) # so that print.infl.rma.uni() is run (at least once)
 
-   ### plot the influence diagnostics
-   png("images/test_plots_plot_of_influence_diagnostics_1_test.png", res=200, width=1800, height=3600, type="cairo")
+   png("images/test_plots_plot_of_influence_diagnostics_1_light_test.png", res=200, width=1800, height=3600, type="cairo")
    plot(inf, layout=c(8,1))
    dev.off()
 
-   expect_true(.vistest("images/test_plots_plot_of_influence_diagnostics_1_test.png", "images/test_plots_plot_of_influence_diagnostics_1.png"))
+   expect_true(.vistest("images/test_plots_plot_of_influence_diagnostics_1_light_test.png", "images/test_plots_plot_of_influence_diagnostics_1_light.png"))
 
-   png("images/test_plots_plot_of_influence_diagnostics_2_test.png", res=200, width=1800, height=1800, type="cairo")
+   png("images/test_plots_plot_of_influence_diagnostics_1_dark_test.png", res=200, width=1800, height=3600, type="cairo")
+   setmfopt(theme="dark")
+   plot(inf, layout=c(8,1))
+   setmfopt(theme="default")
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_plot_of_influence_diagnostics_1_dark_test.png", "images/test_plots_plot_of_influence_diagnostics_1_dark.png"))
+
+   png("images/test_plots_plot_of_influence_diagnostics_2_light_test.png", res=200, width=1800, height=1800, type="cairo")
    plot(inf, plotinf=FALSE, plotdfbs=TRUE)
    dev.off()
 
-   expect_true(.vistest("images/test_plots_plot_of_influence_diagnostics_2_test.png", "images/test_plots_plot_of_influence_diagnostics_2.png"))
+   expect_true(.vistest("images/test_plots_plot_of_influence_diagnostics_2_light_test.png", "images/test_plots_plot_of_influence_diagnostics_2_light.png"))
 
-   out <- capture.output(print(inf)) # so that print.infl.rma.uni() is run (at least once)
+   png("images/test_plots_plot_of_influence_diagnostics_2_dark_test.png", res=200, width=1800, height=1800, type="cairo")
+   setmfopt(theme="dark")
+   plot(inf, plotinf=FALSE, plotdfbs=TRUE)
+   setmfopt(theme="default")
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_plot_of_influence_diagnostics_2_dark_test.png", "images/test_plots_plot_of_influence_diagnostics_2_dark.png"))
 
 })
 

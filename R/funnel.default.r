@@ -34,8 +34,12 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    if (missing(shade))
       shade <- .coladj(par("bg","fg"), dark=c(0.2,-0.8), light=c(0,1))
 
-   if (length(level) > 1L && length(shade) == 1L)
-      shade <- rep(shade, length(level))
+   if (length(level) > 1L && length(shade) == 1L) {
+      #shade <- rep(shade, length(level))
+      shade2 <- .coladj(par("bg","fg"), dark=c(0.5,-0.3), light=c(-0.5,0.3))
+      shade <- colorRampPalette(c(shade,shade2))(length(level))
+      shade[-1] <- rev(shade[-1])
+   }
 
    if (missing(hlines))
       hlines <- .coladj(par("bg","fg"), dark=c(0,-0.9), light=c(0,1))

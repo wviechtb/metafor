@@ -12,20 +12,29 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   png("images/test_plots_radial_plot_test.png", res=200, width=1800, height=1800, type="cairo")
-
-   ### adjust margins so the space is better used
-   par(mar=c(5,4,0,3))
-
-   ### fit equal-effects model
    res <- rma(yi, vi, data=dat.hackshaw1998, method="EE")
 
-   ### draw radial plot
+   png("images/test_plots_radial_plot_light_test.png", res=200, width=1800, height=1800, type="cairo")
+
+   par(mar=c(5,4,0,3))
    radial(res)
 
    dev.off()
 
-   expect_true(.vistest("images/test_plots_radial_plot_test.png", "images/test_plots_radial_plot.png"))
+   expect_true(.vistest("images/test_plots_radial_plot_light_test.png", "images/test_plots_radial_plot_light.png"))
+
+   png("images/test_plots_radial_plot_dark_test.png", res=200, width=1800, height=1800, type="cairo")
+
+   setmfopt(theme="dark")
+
+   par(mar=c(5,4,0,3))
+   radial(res)
+
+   setmfopt(theme="default")
+
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_radial_plot_dark_test.png", "images/test_plots_radial_plot_dark.png"))
 
 })
 

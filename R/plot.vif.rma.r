@@ -17,7 +17,7 @@ plot.vif.rma <- function(x,
       border <- .coladj(par("bg"), dark=0.1, light=-0.1)
 
    if (missing(col.out))
-      col.out <- rgb(1,0,0,0.5)
+      col.out <- ifelse(.is.dark(), rgb(0.7,0.15,0.15,0.5), rgb(1,0,0,0.5))
 
    if (missing(col.density))
       col.density <- ifelse(.is.dark(), "dodgerblue", "blue")

@@ -315,7 +315,7 @@
    if (!is.numeric(level))
       stop(mstyle$stop(paste0("The '", argname, "' argument must be numeric.")), call.=FALSE)
 
-   ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > .5, 1-level, level)))
+   ifelse(level == 0, 1, ifelse(level >= 1, (100-level)/100, ifelse(level > 0.5, 1-level, level)))
 
 }
 

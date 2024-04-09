@@ -185,7 +185,7 @@ test_that("location-scale model works correctly for multiple predictors", {
    expect_equivalent(res7$alpha,  c(-1.08867491, -0.03415188, 2.09213170, -0.28436838), tolerance=.tol[["coef"]])
    expect_equivalent(res8$alpha,  c(-1.08825988, -0.03429568, 2.09198084, -0.28439174), tolerance=.tol[["coef"]])
    expect_equivalent(res9$alpha,  c(-1.08826216, -0.03429383, 2.09197932, -0.28439198), tolerance=.tol[["coef"]])
-   expect_equivalent(res10$alpha, c(-1.08847719, -0.03428306, 2.09219886, -0.28439198), tolerance=.tol[["coef"]])
+   expect_equivalent(res10$alpha, c(-1.08825730, -0.03429256, 2.09197369, -0.28439170), tolerance=.tol[["coef"]])
    expect_equivalent(res11$alpha, c(-1.08826074, -0.03429341, 2.09197437, -0.28439162), tolerance=.tol[["coef"]])
    expect_equivalent(res11$alpha, c(-1.08824263, -0.03429451, 2.09195305, -0.28439121), tolerance=.tol[["coef"]])
 
@@ -205,11 +205,19 @@ test_that("permutation tests work correctly for a location-scale model", {
    expect_equivalent(sav$pval, 0.01, tolerance=.tol[["pval"]])
    expect_equivalent(sav$pval.alpha, c(0.81, 0.95, 0.02, 0.04), tolerance=.tol[["coef"]])
 
-   png(filename="images/test_misc_rma_ls_permutest_test.png", res=200, width=1800, height=1800, type="cairo")
-   plot(sav)
+   png(filename="images/test_misc_rma_ls_permutest_light_test.png", res=200, width=1800, height=1800, type="cairo")
+   plot(sav, QS=TRUE, alpha=1:4)
    dev.off()
 
-   expect_true(.vistest("images/test_misc_rma_ls_permutest_test.png", "images/test_misc_rma_ls_permutest.png"))
+   expect_true(.vistest("images/test_misc_rma_ls_permutest_light_test.png", "images/test_misc_rma_ls_permutest_light.png"))
+
+   png(filename="images/test_misc_rma_ls_permutest_dark_test.png", res=200, width=1800, height=1800, type="cairo")
+   setmfopt(theme="dark")
+   plot(sav, QS=TRUE, alpha=1:4)
+   setmfopt(theme="default")
+   dev.off()
+
+   expect_true(.vistest("images/test_misc_rma_ls_permutest_dark_test.png", "images/test_misc_rma_ls_permutest_dark.png"))
 
 })
 

@@ -12,27 +12,33 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   ### create Baujat plot
-   png("images/test_plots_baujat_plot_test.png", res=200, width=1800, height=1800, type="cairo")
+   doplot <- function() {
 
-   ### adjust margins so the space is better used
-   par(mar=c(5,4,2,2))
+      par(mar=c(5,4,2,2))
 
-   ### load data from Pignon et al. (2000)
-   dat <- dat.pignon2000
+      dat <- dat.pignon2000
+      dat$yi <- with(dat, OmE/V)
+      dat$vi <- with(dat, 1/V)
 
-   ### compute estimated log hazard ratios and sampling variances
-   dat$yi <- with(dat, OmE/V)
-   dat$vi <- with(dat, 1/V)
+      res <- rma(yi, vi, data=dat, method="EE", slab=id)
 
-   ### meta-analysis based on all 65 trials
-   res <- rma(yi, vi, data=dat, method="EE", slab=id)
+      baujat(res, xlim=c(0,20), ylim=c(0,0.2), bty="l", las=1)
 
-   baujat(res, xlim=c(0,20), ylim=c(0,0.2), bty="l", las=1)
+   }
 
+   png("images/test_plots_baujat_plot_light_test.png", res=200, width=1800, height=1800, type="cairo")
+   doplot()
    dev.off()
 
-   expect_true(.vistest("images/test_plots_baujat_plot_test.png", "images/test_plots_baujat_plot.png"))
+   expect_true(.vistest("images/test_plots_baujat_plot_light_test.png", "images/test_plots_baujat_plot_light.png"))
+
+   png("images/test_plots_baujat_plot_dark_test.png", res=200, width=1800, height=1800, type="cairo")
+   setmfopt(theme="dark")
+   doplot()
+   setmfopt(theme="default")
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_baujat_plot_dark_test.png", "images/test_plots_baujat_plot_dark.png"))
 
 })
 

@@ -12,21 +12,32 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   png("images/test_plots_contour_enhanced_funnel_plot_test.png", res=200, width=1800, height=1500, type="cairo")
-
-   ### decrease margins so the full space is used
-   par(mar=c(5,4,1,2))
-
-   ### fit random-effects model
    res <- rma(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, measure="RR",
               slab=paste(author, year, sep=", "), method="REML")
 
-   ### create contour enhanced funnel plot (with funnel centered at 0)
-   funnel(res, level=c(90, 95, 99), shade=c("white", "gray55", "gray75"), refline=0, legend=TRUE)
+   png("images/test_plots_contour_enhanced_funnel_plot_light_test.png", res=200, width=1800, height=1500, type="cairo")
+
+   par(mar=c(5,4,1,2))
+
+   funnel(res, level=c(90, 95, 99), refline=0, legend=TRUE)
 
    dev.off()
 
-   expect_true(.vistest("images/test_plots_contour_enhanced_funnel_plot_test.png", "images/test_plots_contour_enhanced_funnel_plot.png"))
+   expect_true(.vistest("images/test_plots_contour_enhanced_funnel_plot_light_test.png", "images/test_plots_contour_enhanced_funnel_plot_light.png"))
+
+   png("images/test_plots_contour_enhanced_funnel_plot_dark_test.png", res=200, width=1800, height=1500, type="cairo")
+
+   setmfopt(theme="dark")
+
+   par(mar=c(5,4,1,2))
+
+   funnel(res, level=c(90, 95, 99), refline=0, legend=TRUE)
+
+   setmfopt(theme="default")
+
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_contour_enhanced_funnel_plot_dark_test.png", "images/test_plots_contour_enhanced_funnel_plot_dark.png"))
 
 })
 

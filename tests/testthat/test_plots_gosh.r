@@ -22,11 +22,19 @@ test_that("plot can be drawn.", {
    ### create GOSH plot
    ### red points for subsets that include and blue points
    ### for subsets that exclude study 16 (the ISIS-4 trial)
-   png("images/test_plots_gosh_1_test.png", res=200, width=1800, height=1800, type="cairo")
+   png("images/test_plots_gosh_1_light_test.png", res=200, width=1800, height=1800, type="cairo")
    plot(sav, out=16, breaks=100)
    dev.off()
 
-   expect_true(.vistest("images/test_plots_gosh_1_test.png", "images/test_plots_gosh_1.png"))
+   expect_true(.vistest("images/test_plots_gosh_1_light_test.png", "images/test_plots_gosh_1_light.png"))
+
+   png("images/test_plots_gosh_1_dark_test.png", res=200, width=1800, height=1800, type="cairo")
+   setmfopt(theme="dark")
+   plot(sav, out=16, breaks=100)
+   setmfopt(theme="default")
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_gosh_1_dark_test.png", "images/test_plots_gosh_1_dark.png"))
 
    ### fit EE model to random subsets (with parallel processing)
    sav <- gosh(res, progbar=FALSE, parallel="snow", subsets=1000)
@@ -36,11 +44,19 @@ test_that("plot can be drawn.", {
    sav <- gosh(res, progbar=FALSE)
 
    ### create GOSH plot
-   png("images/test_plots_gosh_2_test.png", res=200, width=1800, height=1800, type="cairo")
+   png("images/test_plots_gosh_2_light_test.png", res=200, width=1800, height=1800, type="cairo")
    plot(sav, out=8, breaks=40)
    dev.off()
 
-   expect_true(.vistest("images/test_plots_gosh_2_test.png", "images/test_plots_gosh_2.png"))
+   expect_true(.vistest("images/test_plots_gosh_2_light_test.png", "images/test_plots_gosh_2_light.png"))
+
+   png("images/test_plots_gosh_2_dark_test.png", res=200, width=1800, height=1800, type="cairo")
+   setmfopt(theme="dark")
+   plot(sav, out=8, breaks=40)
+   setmfopt(theme="default")
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_gosh_2_dark_test.png", "images/test_plots_gosh_2_dark.png"))
 
    ### fit EE model to all possible subsets (with parallel processing)
    sav <- gosh(res, progbar=FALSE, parallel="snow", subsets=1000)
@@ -50,11 +66,19 @@ test_that("plot can be drawn.", {
    sav <- gosh(res, progbar=FALSE)
 
    ### create GOSH plot
-   png("images/test_plots_gosh_3_test.png", res=200, width=1800, height=1800, type="cairo")
+   png("images/test_plots_gosh_3_light_test.png", res=200, width=1800, height=1800, type="cairo")
    plot(sav, out=8, breaks=40)
    dev.off()
 
-   expect_true(.vistest("images/test_plots_gosh_3_test.png", "images/test_plots_gosh_3.png"))
+   expect_true(.vistest("images/test_plots_gosh_3_light_test.png", "images/test_plots_gosh_3_light.png"))
+
+   png("images/test_plots_gosh_3_dark_test.png", res=200, width=1800, height=1800, type="cairo")
+   setmfopt(theme="dark")
+   plot(sav, out=8, breaks=40)
+   setmfopt(theme="default")
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_gosh_3_dark_test.png", "images/test_plots_gosh_3_dark.png"))
 
    ### fit EE model to all possible subsets (with parallel processing)
    sav <- gosh(res, progbar=FALSE, parallel="snow", subsets=1000)

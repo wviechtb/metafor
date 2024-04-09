@@ -1,6 +1,8 @@
-# metafor 4.7-0 (2024-03-28)
+# metafor 4.7-1 (2024-04-09)
 
-- new devel version
+- argument `shade` in `funnel()` now automatically uses a color gradient for the regions when multiple `level` values are specified
+
+- added more tests
 
 # metafor 4.6-0 (2024-03-28)
 

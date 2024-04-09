@@ -110,13 +110,23 @@ test_that("results are correct for the mixed-effects model.", {
 
    ### regplot
 
-   png(filename="images/test_analysis_example_raudenbush1985_scatterplot_test.png", res=200, width=1800, height=1600, type="cairo")
+   png(filename="images/test_analysis_example_raudenbush1985_scatterplot_light_test.png", res=200, width=1800, height=1600, type="cairo")
    par(mar=c(5,5,1,2))
    regplot(res, xlab="Weeks of Prior Contact", bty="l", las=1, digits=1, refline=0, xaxt="n")
    axis(side=1, at=c(0,1,2,3), labels=c("0", "1", "2", ">2"))
    dev.off()
 
-   expect_true(.vistest("images/test_analysis_example_raudenbush1985_scatterplot_test.png", "images/test_analysis_example_raudenbush1985_scatterplot.png"))
+   expect_true(.vistest("images/test_analysis_example_raudenbush1985_scatterplot_light_test.png", "images/test_analysis_example_raudenbush1985_scatterplot_light.png"))
+
+   png(filename="images/test_analysis_example_raudenbush1985_scatterplot_dark_test.png", res=200, width=1800, height=1600, type="cairo")
+   setmfopt(theme="dark")
+   par(mar=c(5,5,1,2))
+   regplot(res, xlab="Weeks of Prior Contact", bty="l", las=1, digits=1, refline=0, xaxt="n")
+   axis(side=1, at=c(0,1,2,3), labels=c("0", "1", "2", ">2"))
+   setmfopt(theme="default")
+   dev.off()
+
+   expect_true(.vistest("images/test_analysis_example_raudenbush1985_scatterplot_dark_test.png", "images/test_analysis_example_raudenbush1985_scatterplot_dark.png"))
 
 })
 

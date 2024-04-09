@@ -73,7 +73,7 @@ test_that("results are correct for the mixed-effects model.", {
 
    skip_on_cran()
 
-   png(filename="images/test_analysis_example_viechtbauer2007b_test.png", res=200, width=1800, height=1600, type="cairo")
+   png(filename="images/test_analysis_example_viechtbauer2007b_light_test.png", res=200, width=1800, height=1600, type="cairo")
 
    par(mar=c(4,4,1,1))
 
@@ -89,7 +89,29 @@ test_that("results are correct for the mixed-effects model.", {
 
    dev.off()
 
-   expect_true(.vistest("images/test_analysis_example_viechtbauer2007b_test.png", "images/test_analysis_example_viechtbauer2007b.png"))
+   expect_true(.vistest("images/test_analysis_example_viechtbauer2007b_light_test.png", "images/test_analysis_example_viechtbauer2007b_light.png"))
+
+   png(filename="images/test_analysis_example_viechtbauer2007b_dark_test.png", res=200, width=1800, height=1600, type="cairo")
+
+   setmfopt(theme="dark")
+
+   par(mar=c(4,4,1,1))
+
+   xvals   <- seq(12, 24, by=0.1) - 20
+   modvals <- cbind(0, cbind(xvals, 0))
+   preds   <- predict(res, modvals)
+
+   regplot(res, mod=3, pred=preds, xvals=xvals,
+           shade=FALSE, bty="l", las=1, digits=1, transf=exp,
+           xlim=c(12,24)-20, ylim=c(0.5,4), xaxt="n",
+           xlab="Baseline HRSD Score", ylab="Relative Rate")
+   axis(side=1, at=seq(12, 24, by=2) - 20, labels=seq(12, 24, by=2))
+
+   setmfopt(theme="default")
+
+   dev.off()
+
+   expect_true(.vistest("images/test_analysis_example_viechtbauer2007b_dark_test.png", "images/test_analysis_example_viechtbauer2007b_dark.png"))
 
    ### check results for all tau^2 estimators
 

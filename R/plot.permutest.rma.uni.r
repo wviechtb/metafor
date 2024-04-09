@@ -17,7 +17,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
       border <- .coladj(par("bg"), dark=0.1, light=-0.1)
 
    if (missing(col.out))
-      col.out <- rgb(1,0,0,0.5)
+      col.out <- ifelse(.is.dark(), rgb(0.7,0.15,0.15,0.5), rgb(1,0,0,0.5))
 
    if (missing(col.ref))
       col.ref <- .coladj(par("fg"), dark=-0.3, light=0.3)
@@ -102,7 +102,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
          if (x$Z.int.only) {
             alpha <- 1
          } else {
-            if (x$int.incl) {
+            if (x$Z.int.incl) {
                alpha <- 2:x$q
             } else {
                alpha <- 1:x$q
@@ -273,7 +273,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
       if (lwd[2] == 0 && lwd[3] == 0) {
 
          tmp <- lhist(pdist, breaks=breaks, col=col, border=border,
-                      main=ifelse(x$int.only, "", paste0(ifelse(inherits(x, "permutest.rma.ls"), "Location Coefficient: ", "Coefficient: "), names(perm1)[i])),
+                      main=ifelse(np==1L, "", paste0(ifelse(inherits(x, "permutest.rma.ls"), "Location Coefficient: ", "Coefficient: "), names(perm1)[i])),
                       xlab=ifelse(stat == "test", "Value of Test Statistic", "Value of Coefficient"),
                       freq=freq, ...)
 
@@ -284,7 +284,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
          ylim <- c(0, max(ifelse(lwd[2] == 0, 0, max(ys)), ifelse(lwd[3] == 0, 0, max(den$y)), max(tmp$density)))
 
          tmp <- lhist(pdist, breaks=breaks, col=col, border=border,
-                      main=ifelse(x$int.only, "", paste0(ifelse(inherits(x, "permutest.rma.ls"), "Location Coefficient: ", "Coefficient: "), names(perm1)[i])),
+                      main=ifelse(np==1L, "", paste0(ifelse(inherits(x, "permutest.rma.ls"), "Location Coefficient: ", "Coefficient: "), names(perm1)[i])),
                       xlab=ifelse(stat == "test", "Value of Test Statistic", "Value of Coefficient"),
                       freq=freq, ylim=ylim, ...)
 
@@ -427,7 +427,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
          if (lwd[2] == 0 && lwd[3] == 0) {
 
             tmp <- lhist(pdist, breaks=breaks, col=col, border=border,
-                         main=ifelse(x$Z.int.only, "", paste0("Scale Coefficient: ", names(perm2)[i])),
+                         main=ifelse(np==1L, "", paste0("Scale Coefficient: ", names(perm2)[i])),
                          xlab=ifelse(stat == "test", "Value of Test Statistic", "Value of Coefficient"),
                          freq=freq, ...)
 
@@ -438,7 +438,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
             ylim <- c(0, max(ifelse(lwd[2] == 0, 0, max(ys)), ifelse(lwd[3] == 0, 0, max(den$y)), max(tmp$density)))
 
             tmp <- lhist(pdist, breaks=breaks, col=col, border=border,
-                         main=ifelse(x$Z.int.only, "", paste0("Scale Coefficient: ", names(perm2)[i])),
+                         main=ifelse(np==1L, "", paste0("Scale Coefficient: ", names(perm2)[i])),
                          xlab=ifelse(stat == "test", "Value of Test Statistic", "Value of Coefficient"),
                          freq=freq, ylim=ylim, ...)
 

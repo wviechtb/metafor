@@ -12,25 +12,31 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   png("images/test_plots_funnel_plot_with_trim_and_fill_test.png", res=200, width=1800, height=1500, type="cairo")
-
-   ### decrease margins so the full space is used
-   par(mar=c(5,4,1,2))
-
-   ### fit random-effects model
    res <- rma(yi, vi, data=dat.hackshaw1998, measure="OR")
-
-   ### carry out trim-and-fill analysis
    taf <- trimfill(res)
+   out <- capture.output(print(taf))
 
-   ### draw funnel plot with missing studies filled in
+   png("images/test_plots_funnel_plot_with_trim_and_fill_light_test.png", res=200, width=1800, height=1500, type="cairo")
+
+   par(mar=c(5,4,1,2))
    funnel(taf, legend=list(show="cis"))
 
    dev.off()
 
-   expect_true(.vistest("images/test_plots_funnel_plot_with_trim_and_fill_test.png", "images/test_plots_funnel_plot_with_trim_and_fill.png"))
+   expect_true(.vistest("images/test_plots_funnel_plot_with_trim_and_fill_light_test.png", "images/test_plots_funnel_plot_with_trim_and_fill_light.png"))
 
-   out <- capture.output(print(taf))
+   png("images/test_plots_funnel_plot_with_trim_and_fill_dark_test.png", res=200, width=1800, height=1500, type="cairo")
+
+   setmfopt(theme="dark")
+
+   par(mar=c(5,4,1,2))
+   funnel(taf, legend=list(show="cis"))
+
+   setmfopt(theme="default")
+
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_funnel_plot_with_trim_and_fill_dark_test.png", "images/test_plots_funnel_plot_with_trim_and_fill_dark.png"))
 
 })
 

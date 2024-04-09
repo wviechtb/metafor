@@ -71,7 +71,8 @@
          lvals <- length(level)
 
          scipen <- options(scipen=100)
-         lchars <- max(nchar(level))-2L
+         level  <- signif(level, digits=8)
+         lchars <- pmax(0, max(nchar(level))-2L)
          options(scipen=scipen$scipen)
 
          ltxt <- sapply(seq_len(lvals), function(i) {
@@ -96,7 +97,7 @@
          lvals <- length(level)
 
          scipen <- options(scipen=100)
-         lchars <- max(nchar(level))-2L
+         lchars <- pmax(0, max(nchar(level))-3L)
          options(scipen=scipen$scipen)
 
          ltxt <- sapply(seq_len(lvals), function(i) as.expression(bquote(paste(.(ci)*"% CI Region"), list(ci=fmtx(level[i], lchars)))))

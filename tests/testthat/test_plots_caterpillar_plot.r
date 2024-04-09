@@ -21,34 +21,41 @@ test_that("plot can be drawn.", {
    ### fit RE model
    res <- rma(yi, vi)
 
-   png("images/test_plots_caterpillar_plot_test.png", res=200, width=1800, height=1500, type="cairo")
+   doplot <- function() {
 
-   ### decrease margins so the full space is used
-   par(mar=c(5,1,1,1))
+      par(mar=c(5,1,1,1))
 
-   ### create plot
-   forest(yi, vi,
-          xlim=c(-2.5,3.5),        ### adjust horizontal plot region limits
-          order=yi,                ### order by size of yi
-          slab=NA, annotate=FALSE, ### remove study labels and annotations
-          efac=0,                  ### remove vertical bars at end of CIs
-          pch=19,                  ### changing point symbol to filled circle
-          col="gray40",            ### change color of points/CIs
-          psize=2,                 ### increase point size
-          cex.lab=1, cex.axis=1,   ### increase size of x-axis title/labels
-          lty=c("solid","blank"))  ### remove horizontal line at top of plot
+      forest(yi, vi,
+             xlim=c(-2.5,3.5),
+             order=yi,
+             slab=NA, annotate=FALSE,
+             efac=0,
+             pch=19,
+             col="gray40",
+             psize=2,
+             cex.lab=1, cex.axis=1,
+             lty=c("solid","blank"))
 
-   ### draw points one more time to make them easier to see
-   points(sort(yi), k:1, pch=19, cex=0.5)
+      points(sort(yi), k:1, pch=19, cex=0.5)
 
-   ### add summary polygon at bottom and text
-   addpoly(res, mlab="", cex=1)
-   text(-2, -2, "RE Model", pos=4, offset=0, cex=1)
+      addpoly(res, mlab="", cex=1)
+      text(-2, -2, "RE Model", pos=4, offset=0, cex=1)
 
+   }
+
+   png("images/test_plots_caterpillar_plot_light_test.png", res=200, width=1800, height=1500, type="cairo")
+   doplot()
    dev.off()
 
-   expect_true(.vistest("images/test_plots_caterpillar_plot_test.png", "images/test_plots_caterpillar_plot.png"))
+   expect_true(.vistest("images/test_plots_caterpillar_plot_light_test.png", "images/test_plots_caterpillar_plot_light.png"))
 
+   png("images/test_plots_caterpillar_plot_dark_test.png", res=200, width=1800, height=1500, type="cairo")
+   setmfopt(theme="dark")
+   doplot()
+   setmfopt(theme="default")
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_caterpillar_plot_dark_test.png", "images/test_plots_caterpillar_plot_dark.png"))
 
 })
 

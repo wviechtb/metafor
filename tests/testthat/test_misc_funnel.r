@@ -30,7 +30,7 @@ test_that("funnel() works correctly.", {
    dat <- escalc(measure="ZCOR", ri=ri, ni=ni) ### compute r-to-z transformed correlations
    res <- rma(yi, vi, data=dat, method="EE")
 
-   png(filename="images/test_misc_funnel_1_test.png", res=200, width=1800, height=2000, type="cairo")
+   png(filename="images/test_misc_funnel_1_light_test.png", res=200, width=1800, height=2000, type="cairo")
 
    par(mfrow=c(5,2), mar=c(5,4,1,1), cex=0.5)
 
@@ -47,9 +47,32 @@ test_that("funnel() works correctly.", {
 
    dev.off()
 
-   expect_true(.vistest("images/test_misc_funnel_1_test.png", "images/test_misc_funnel_1.png"))
+   expect_true(.vistest("images/test_misc_funnel_1_light_test.png", "images/test_misc_funnel_1_light.png"))
 
-   png(filename="images/test_misc_funnel_2_test.png", res=200, width=1800, height=2000, type="cairo")
+   png(filename="images/test_misc_funnel_1_dark_test.png", res=200, width=1800, height=2000, type="cairo")
+
+   setmfopt(theme="dark")
+
+   par(mfrow=c(5,2), mar=c(5,4,1,1), cex=0.5)
+
+   funnel(res, yaxis="sei")
+   funnel(res, yaxis="vi")
+   funnel(res, yaxis="seinv")
+   funnel(res, yaxis="vinv")
+   funnel(res, yaxis="ni")
+   funnel(res, yaxis="ninv")
+   funnel(res, yaxis="sqrtni")
+   funnel(res, yaxis="sqrtninv")
+   funnel(res, yaxis="lni")
+   funnel(res, yaxis="wi")
+
+   setmfopt(theme="default")
+
+   dev.off()
+
+   expect_true(.vistest("images/test_misc_funnel_1_dark_test.png", "images/test_misc_funnel_1_dark.png"))
+
+   png(filename="images/test_misc_funnel_2_light_test.png", res=200, width=1800, height=2000, type="cairo")
 
    par(mfrow=c(5,2), mar=c(5,4,1,1), cex=0.5)
 
@@ -66,7 +89,30 @@ test_that("funnel() works correctly.", {
 
    dev.off()
 
-   expect_true(.vistest("images/test_misc_funnel_2_test.png", "images/test_misc_funnel_2.png"))
+   expect_true(.vistest("images/test_misc_funnel_2_light_test.png", "images/test_misc_funnel_2_light.png"))
+
+   png(filename="images/test_misc_funnel_2_dark_test.png", res=200, width=1800, height=2000, type="cairo")
+
+   setmfopt(theme="dark")
+
+   par(mfrow=c(5,2), mar=c(5,4,1,1), cex=0.5)
+
+   funnel(dat$yi, dat$vi, yaxis="sei")
+   funnel(dat$yi, dat$vi, yaxis="vi")
+   funnel(dat$yi, dat$vi, yaxis="seinv")
+   funnel(dat$yi, dat$vi, yaxis="vinv")
+   funnel(dat$yi, dat$vi, yaxis="ni")
+   funnel(dat$yi, dat$vi, yaxis="ninv")
+   funnel(dat$yi, dat$vi, yaxis="sqrtni")
+   funnel(dat$yi, dat$vi, yaxis="sqrtninv")
+   funnel(dat$yi, dat$vi, yaxis="lni")
+   funnel(dat$yi, dat$vi, yaxis="wi")
+
+   setmfopt(theme="default")
+
+   dev.off()
+
+   expect_true(.vistest("images/test_misc_funnel_2_dark_test.png", "images/test_misc_funnel_2_dark.png"))
 
 })
 

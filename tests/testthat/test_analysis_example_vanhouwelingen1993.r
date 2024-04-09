@@ -13,13 +13,23 @@ test_that("the log likelihood plot can be created.", {
 
    skip_on_cran()
 
-   png(filename="images/test_analysis_example_vanhouwelingen1993_llplot_test.png", res=200, width=1800, height=1200, type="cairo")
+   png(filename="images/test_analysis_example_vanhouwelingen1993_llplot_light_test.png", res=200, width=1800, height=1200, type="cairo")
    par(mar=c(5,5,1,2))
    expect_warning(llplot(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat,
                   xlim=c(-4,4), lwd=1, col="black", refline=NA, drop00=FALSE))
    dev.off()
 
-   expect_true(.vistest("images/test_analysis_example_vanhouwelingen1993_llplot_test.png", "images/test_analysis_example_vanhouwelingen1993_llplot.png"))
+   expect_true(.vistest("images/test_analysis_example_vanhouwelingen1993_llplot_light_test.png", "images/test_analysis_example_vanhouwelingen1993_llplot_light.png"))
+
+   png(filename="images/test_analysis_example_vanhouwelingen1993_llplot_dark_test.png", res=200, width=1800, height=1200, type="cairo")
+   setmfopt(theme="dark")
+   par(mar=c(5,5,1,2))
+   expect_warning(llplot(measure="OR", ai=b.xci, n1i=nci, ci=b.xti, n2i=nti, data=dat,
+                  xlim=c(-4,4), lwd=1, col="white", refline=NA, drop00=FALSE))
+   setmfopt(theme="default")
+   dev.off()
+
+   expect_true(.vistest("images/test_analysis_example_vanhouwelingen1993_llplot_dark_test.png", "images/test_analysis_example_vanhouwelingen1993_llplot_dark.png"))
 
 })
 

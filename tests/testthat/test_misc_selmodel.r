@@ -22,11 +22,19 @@ test_that("results are correct for a step function model.", {
    expect_identical(sav$LRTdf, 3L)
    expect_equivalent(sav$tau2, 0.03071325, tolerance=.tol[["var"]])
 
-   png(filename="images/test_misc_selmodel_1_test.png", res=200, width=1800, height=1600, type="cairo")
-   plot(sav)
+   png(filename="images/test_misc_selmodel_1_light_test.png", res=200, width=1800, height=1600, type="cairo")
+   plot(sav, ci="wald")
    dev.off()
 
-   expect_true(.vistest("images/test_misc_selmodel_1_test.png", "images/test_misc_selmodel_1.png"))
+   expect_true(.vistest("images/test_misc_selmodel_1_light_test.png", "images/test_misc_selmodel_1_light.png"))
+
+   png(filename="images/test_misc_selmodel_1_dark_test.png", res=200, width=1800, height=1600, type="cairo")
+   setmfopt(theme="dark")
+   plot(sav, ci="wald")
+   setmfopt(theme="default")
+   dev.off()
+
+   expect_true(.vistest("images/test_misc_selmodel_1_dark_test.png", "images/test_misc_selmodel_1_dark.png"))
 
    tmp <- confint(sav)
    expect_equivalent(tmp[[1]]$random[1,], c(0.030713, 0.000224, 0.135284), tolerance=.tol[["var"]])
@@ -76,11 +84,19 @@ test_that("results are correct for the beta function model.", {
    expect_identical(sav$LRTdf, 2L)
    expect_equivalent(sav$tau2, 0.00000243, tolerance=.tol[["var"]])
 
-   png(filename="images/test_misc_selmodel_2_test.png", res=200, width=1800, height=1600, type="cairo")
-   plot(sav)
+   png(filename="images/test_misc_selmodel_2_light_test.png", res=200, width=1800, height=1600, type="cairo")
+   plot(sav, ylim=c(0,50), ci=TRUE, bty="l", seed=1234)
    dev.off()
 
-   expect_true(.vistest("images/test_misc_selmodel_2_test.png", "images/test_misc_selmodel_2.png"))
+   expect_true(.vistest("images/test_misc_selmodel_2_light_test.png", "images/test_misc_selmodel_2_light.png"))
+
+   png(filename="images/test_misc_selmodel_2_dark_test.png", res=200, width=1800, height=1600, type="cairo")
+   setmfopt(theme="dark")
+   plot(sav, ylim=c(0,50), ci=TRUE, bty="l", seed=1234)
+   setmfopt(theme="default")
+   dev.off()
+
+   expect_true(.vistest("images/test_misc_selmodel_2_dark_test.png", "images/test_misc_selmodel_2_dark.png"))
 
    res <- rma(yi, sei^2, mods = ~ xi, method="ML")
 
