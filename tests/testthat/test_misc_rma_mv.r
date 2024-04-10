@@ -133,10 +133,13 @@ test_that("rma.mv() correctly handles 'beta' argument", {
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
    res <- rma(yi, vi, scale = ~ 1, data=dat, optbeta=TRUE, beta=0)
    ll1 <- logLik(res)
-   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, beta=0)
+   res <- rma(yi, vi, scale = ~ 1, data=dat, optbeta=TRUE, beta=0, link="identity")
    ll2 <- logLik(res)
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, beta=0)
+   ll3 <- logLik(res)
 
    expect_equivalent(ll1, ll2, tolerance=.tol[["fit"]])
+   expect_equivalent(ll1, ll3, tolerance=.tol[["fit"]])
 
 })
 

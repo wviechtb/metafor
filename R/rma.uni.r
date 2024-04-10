@@ -1746,26 +1746,15 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       if (optimizer == "alabama")
          optimizer <- "constrOptim.nl"
 
-      ### when using an identity link, automatically set 'constrOptim' as the default optimizer (but 'solnp' by default when optbeta=TRUE)
+      ### when using an identity link, automatically set 'constrOptim' as the default optimizer
 
       if (link == "identity") {
-         if (optbeta) {
-            if (optimizer == "nlminb") {
-               optimizer <- "solnp"
-            } else {
-               if (!is.element(optimizer, c("solnp","nloptr","constrOptim.nl"))) {
-                  optimizer <- "solnp"
-                  warning(mstyle$warning(paste0("Can only use optimizers 'solnp', 'nloptr', or 'constrOptim.nl' when link='identity' and optbeta=TRUE (resetting to '", optimizer, "').")), call.=FALSE)
-               }
-            }
+         if (optimizer == "nlminb") {
+            optimizer <- "constrOptim"
          } else {
-            if (optimizer == "nlminb") {
+            if (!is.element(optimizer, c("constrOptim","solnp","nloptr","constrOptim.nl"))) {
                optimizer <- "constrOptim"
-            } else {
-               if (!is.element(optimizer, c("constrOptim","solnp","nloptr","constrOptim.nl"))) {
-                  optimizer <- "constrOptim"
-                  warning(mstyle$warning(paste0("Can only use optimizers 'constrOptim', 'solnp', 'nloptr', or 'constrOptim.nl' when link='identity' (resetting to '", optimizer, "').")), call.=FALSE)
-               }
+               warning(mstyle$warning(paste0("Can only use optimizers 'constrOptim', 'solnp', 'nloptr', or 'constrOptim.nl' when link='identity' (resetting to '", optimizer, "').")), call.=FALSE)
             }
          }
       }
@@ -1841,6 +1830,15 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             if (length(beta) != p)
                stop(mstyle$stop(paste0("Length of 'beta' argument (", length(beta), ") does not match actual number of parameters (", p, ").")))
          }
+
+         ### needed for constrOptim() when optbeta=TRUE
+
+         X0 <- X
+         X0[] <- 0
+
+      } else {
+
+         X0 <- NULL
 
       }
 
@@ -2042,7 +2040,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       if (link == "identity") {
 
          if (optimizer == "constrOptim")
-            optcall <- paste0("constrOptim(theta=c(beta.init, alpha.init), f=.ll.rma.ls, grad=NULL, ui=Z, ci=rep(0,k),
+            optcall <- paste0("constrOptim(theta=c(beta.init, alpha.init), f=.ll.rma.ls, grad=NULL, ui=cbind(X0,Z), ci=rep(0,k),
                               yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=verbose, digits=digits,
                               REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
                               tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
