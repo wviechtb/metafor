@@ -41,7 +41,7 @@ test_that("results of the equal-effects conditional logistic model are correct."
 
    ### compare with results on page 2275 (in text)
    expect_equivalent(coef(res), 0.1216, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.0995, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.0995, tolerance=.tol[["se"]])
    expect_equivalent(res$ci.lb, -0.0734, tolerance=.tol[["ci"]])
    expect_equivalent(res$ci.ub, 0.3165, tolerance=.tol[["ci"]]) ### 0.31 in paper (rounded a bit more heavily, so 32-bit and 64-bit versions give same result)
    expect_equivalent(c(logLik(res)), -53.6789, tolerance=.tol[["fit"]])
@@ -51,7 +51,7 @@ test_that("results of the equal-effects conditional logistic model are correct."
 
    ### some very minor discrepancies
    expect_equivalent(coef(res), 0.1216, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.0996, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.0996, tolerance=.tol[["se"]])
    expect_equivalent(res$ci.lb, -0.0735, tolerance=.tol[["ci"]])
    expect_equivalent(res$ci.ub, 0.3167, tolerance=.tol[["ci"]])
    expect_equivalent(c(logLik(res)), -53.6789, tolerance=.tol[["fit"]])
@@ -66,7 +66,7 @@ test_that("results of the random-effects conditional logistic model are correct.
 
    ### compare with results on page 2277 (in text)
    expect_equivalent(coef(res), 0.1744, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.1364, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.1364, tolerance=.tol[["se"]])
    expect_equivalent(res$ci.lb, -0.0929, tolerance=.tol[["ci"]])
    expect_equivalent(res$ci.ub, 0.4417, tolerance=.tol[["ci"]])
    expect_equivalent(c(logLik(res)), -52.99009, tolerance=.tol[["fit"]])
@@ -77,7 +77,7 @@ test_that("results of the random-effects conditional logistic model are correct.
 
    ### no discrepancies
    expect_equivalent(coef(res), 0.1744, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.1364, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.1364, tolerance=.tol[["se"]])
    expect_equivalent(res$ci.lb, -0.0930, tolerance=.tol[["ci"]])
    expect_equivalent(res$ci.ub, 0.4418, tolerance=.tol[["ci"]])
    expect_equivalent(c(logLik(res)), -52.99009, tolerance=.tol[["fit"]])

@@ -178,7 +178,7 @@ test_that("results for the bivariate model are correct.", {
 
    ### compare with results on pages 604-605 (in text)
    expect_equivalent(coef(res), c(-4.0960, -0.7378), tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, c(0.4347, 0.1797), tolerance=.tol[["se"]])
+   expect_equivalent(se(res), c(0.4347, 0.1797), tolerance=.tol[["se"]])
 
    ### estimated odds ratio
    tmp <- predict(res, newmods=1, intercept=FALSE, transf=exp, digits=3)
@@ -212,7 +212,7 @@ test_that("results for the meta-regression analyses are correct.", {
 
    ### compare with results on pages 608-609 (in text)
    expect_equivalent(coef(res), c(0.3710, -0.0327), tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, c(0.1061, 0.0034), tolerance=.tol[["se"]])
+   expect_equivalent(se(res), c(0.1061, 0.0034), tolerance=.tol[["se"]])
    expect_equivalent(res$tau2, 0.0040, tolerance=.tol[["var"]])
    expect_equivalent(res$R2, 98.6691, tolerance=.tol[["r2"]])
 
@@ -220,7 +220,7 @@ test_that("results for the meta-regression analyses are correct.", {
 
    ### compare with results on pages 612-613 (in text)
    expect_equivalent(coef(res), c(-4.1174, -4.8257, 0.0725, 0.0391), tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, c(0.3061, 0.3129, 0.0219, 0.0224), tolerance=.tol[["se"]])
+   expect_equivalent(se(res), c(0.3061, 0.3129, 0.0219, 0.0224), tolerance=.tol[["se"]])
    expect_equivalent(res$tau2, c(1.1819, 1.2262), tolerance=.tol[["var"]])
    expect_equivalent(res$rho, 1.0000, tolerance=.tol[["cor"]])
 
@@ -228,7 +228,7 @@ test_that("results for the meta-regression analyses are correct.", {
 
    ### compare with results on pages 612-613 (in text)
    expect_equivalent(coef(res), c(-4.1174, -0.7083, 0.0725, -0.0333), tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, c(0.3061, 0.0481, 0.0219, 0.0028), tolerance=.tol[["se"]])
+   expect_equivalent(se(res), c(0.3061, 0.0481, 0.0219, 0.0028), tolerance=.tol[["se"]])
    expect_equivalent(res$tau2, c(1.1819, 1.2262), tolerance=.tol[["var"]])
    expect_equivalent(res$rho, 1.0000, tolerance=.tol[["cor"]])
 

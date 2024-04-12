@@ -4,7 +4,7 @@ context("Checking misc: vcalc() function")
 
 source("settings.r")
 
-test_that("vcov() works correctly for 'dat.assink2016' example.", {
+test_that("vcalc() works correctly for 'dat.assink2016' example.", {
 
    dat <- dat.assink2016
 
@@ -26,7 +26,7 @@ test_that("vcov() works correctly for 'dat.assink2016' example.", {
 
 })
 
-test_that("vcov() works correctly for 'dat.ishak2007' example.", {
+test_that("vcalc() works correctly for 'dat.ishak2007' example.", {
 
    dat <- dat.ishak2007
 
@@ -49,7 +49,7 @@ test_that("vcov() works correctly for 'dat.ishak2007' example.", {
 
 })
 
-test_that("vcov() works correctly for 'dat.kalaian1996' example.", {
+test_that("vcalc() works correctly for 'dat.kalaian1996' example.", {
 
    dat <- dat.kalaian1996
 
@@ -63,7 +63,7 @@ test_that("vcov() works correctly for 'dat.kalaian1996' example.", {
 
 })
 
-test_that("vcov() works correctly for 'dat.berkey1998' example.", {
+test_that("vcalc() works correctly for 'dat.berkey1998' example.", {
 
    dat <- dat.berkey1998
 
@@ -78,7 +78,7 @@ test_that("vcov() works correctly for 'dat.berkey1998' example.", {
 
 })
 
-test_that("vcov() works correctly for 'dat.knapp2017' example.", {
+test_that("vcalc() works correctly for 'dat.knapp2017' example.", {
 
    dat <- dat.knapp2017
 

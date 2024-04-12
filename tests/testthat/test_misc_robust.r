@@ -55,7 +55,7 @@ test_that("robust() works correctly for 'rma' objects with moderators.", {
    res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
 
    sav <- robust(res, cluster=trial)
-   expect_equivalent(sav$se, c(23.910483, 0.007857, 0.012079), tolerance=.tol[["se"]])
+   expect_equivalent(se(sav), c(23.910483, 0.007857, 0.012079), tolerance=.tol[["se"]])
    expect_equivalent(sav$dfs, 10, tolerance=.tol[["misc"]])
    expect_equivalent(sav$zval, c(-0.148282, -3.564978, 0.157928), tolerance=.tol[["test"]])
    expect_equivalent(sav$QM, 11.8546, tolerance=.tol[["test"]])
@@ -68,7 +68,7 @@ test_that("robust() works correctly for 'rma' objects with moderators.", {
    expect_equivalent(tmp$pi.ub, 1.1744580, tolerance=.tol[["ci"]])
 
    sav <- robust(res, cluster=trial, clubSandwich=TRUE)
-   expect_equivalent(sav$se, c(33.655367, 0.011994, 0.016963), tolerance=.tol[["se"]])
+   expect_equivalent(se(sav), c(33.655367, 0.011994, 0.016963), tolerance=.tol[["se"]])
    expect_equivalent(sav$dfs, c(2.724625, 2.112895, 2.745919), tolerance=.tol[["misc"]])
    expect_equivalent(sav$zval, c(-0.105347, -2.335398, 0.112456), tolerance=.tol[["test"]])
    expect_equivalent(sav$QM, 6.708996, tolerance=.tol[["test"]])

@@ -29,14 +29,14 @@ test_that("rstudent() yields the same results as a mean shift outlier model for 
    res <- rma(yi, vi, mods = ~ trial1, data=dat)
 
    expect_equivalent(coef(res)[2], sav$resid[1], tolerance=.tol[["coef"]])
-   expect_equivalent(res$se[2], sav$se[1], tolerance=.tol[["se"]])
+   expect_equivalent(se(res)[2], sav$se[1], tolerance=.tol[["se"]])
 
    res <- rma(yi, vi, data=dat, test="knha")
    sav <- rstudent(res)
    res <- rma(yi, vi, mods = ~ trial1, data=dat, test="knha")
 
    expect_equivalent(coef(res)[2], sav$resid[1], tolerance=.tol[["pred"]])
-   expect_equivalent(res$se[2], sav$se[1], tolerance=.tol[["se"]])
+   expect_equivalent(se(res)[2], sav$se[1], tolerance=.tol[["se"]])
 
 })
 

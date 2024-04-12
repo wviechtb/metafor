@@ -15,7 +15,7 @@ test_that("results for rma() and lm() match.", {
    expect_equivalent(coef(res1), coef(res2))
 
    ### standard errors should be the same
-   expect_equivalent(res1$se, coef(summary(res2))[1,2])
+   expect_equivalent(se(res1), se(res2))
 
 })
 
@@ -31,7 +31,7 @@ test_that("results for rma.mv() and lm() match.", {
    expect_equivalent(coef(res1), coef(res2))
 
    ### standard errors should be the same
-   expect_equivalent(res1$se, coef(summary(res2))[1,2])
+   expect_equivalent(se(res1), se(res2))
 
    ### get profile likelihood CI for sigma^2
    sav <- confint(res1)
@@ -44,7 +44,7 @@ test_that("results for rma.mv() and lm() match.", {
    expect_equivalent(coef(res1), coef(res2))
 
    ### standard errors should be the same
-   expect_equivalent(res1$se, coef(summary(res2))[1,2])
+   expect_equivalent(se(res1), se(res2))
 
    ### get profile likelihood CI for sigma^2
    sav <- confint(res1)

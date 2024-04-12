@@ -48,7 +48,7 @@ test_that("results are correct for the CLASP example.", {
    results <- rbind(
    tau = sapply(res.all, function(x) sqrt(x$tau2)),
    mu  = sapply(res.all, coef),
-   se  = sapply(res.all, function(x) sqrt(vcov(x))))
+   se  = sapply(res.all, se))
    colnames(results) <- c("PM", "CA", "DL", "CA2", "DL2", "EB", "ML", "REML", "HS", "SJ", "SJ2", "HSk", "GENQM", "PMM")
    tmp <- t(results)
 

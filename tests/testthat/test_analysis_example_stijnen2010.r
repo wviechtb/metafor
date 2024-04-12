@@ -15,7 +15,7 @@ test_that("results for the normal-normal model are correct (measure=='PLO')", {
 
    ### compare with results on page 3050 (Table II)
    expect_equivalent(coef(res), -3.3018, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.2378, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.2378, tolerance=.tol[["se"]])
    expect_equivalent(res$tau2, 0.6629, tolerance=.tol[["var"]])
    tmp <- predict(res, transf=transf.ilogit)
    expect_equivalent(tmp$pred, 0.0355, tolerance=.tol[["pred"]]) ### 0.035 in paper
@@ -26,7 +26,7 @@ test_that("results for the normal-normal model are correct (measure=='PLO')", {
 
    ### compare with results on page 3050 (Table II)
    expect_equivalent(coef(res), -4.2604, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.2589, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.2589, tolerance=.tol[["se"]])
    expect_equivalent(res$tau2, 0.3928, tolerance=.tol[["var"]])
    tmp <- predict(res, transf=transf.ilogit)
    expect_equivalent(tmp$pred, 0.0139, tolerance=.tol[["pred"]])
@@ -43,7 +43,7 @@ test_that("results for the binomial-normal normal are correct (measure=='PLO')",
 
    ### compare with results on page 3050 (Table II)
    expect_equivalent(coef(res), -3.4964, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.2570, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.2570, tolerance=.tol[["se"]])
    expect_equivalent(res$tau2, 0.8124, tolerance=.tol[["var"]])
    tmp <- predict(res, transf=transf.ilogit)
    expect_equivalent(tmp$pred, 0.0294, tolerance=.tol[["pred"]])
@@ -54,7 +54,7 @@ test_that("results for the binomial-normal normal are correct (measure=='PLO')",
 
    ### compare with results on page 3050 (Table II)
    expect_equivalent(coef(res), -4.8121, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.3555, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.3555, tolerance=.tol[["se"]])
    expect_equivalent(res$tau2, 0.8265, tolerance=.tol[["var"]])
    tmp <- predict(res, transf=transf.ilogit)
    expect_equivalent(tmp$pred, 0.0081, tolerance=.tol[["pred"]])
@@ -69,7 +69,7 @@ test_that("results for the normal-normal model are correct (measure=='OR')", {
 
    ### compare with results on page 3052 (Table III)
    expect_equivalent(coef(res), -0.9804, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.2435, tolerance=.tol[["se"]]) ### 0.244 in paper
+   expect_equivalent(se(res), 0.2435, tolerance=.tol[["se"]]) ### 0.244 in paper
    expect_equivalent(sqrt(res$tau2), 0.1886, tolerance=.tol[["var"]])
    tmp <- predict(res, transf=exp)
    expect_equivalent(tmp$pred, 0.3752, tolerance=.tol[["pred"]])
@@ -87,7 +87,7 @@ test_that("results for the conditional logistic model with exact likelihood are 
 
    ### compare with results on page 3052 (Table III)
    expect_equivalent(coef(res), -1.3532, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.3511, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.3511, tolerance=.tol[["se"]])
    expect_equivalent(sqrt(res$tau2), 0.8327, tolerance=.tol[["var"]])
    tmp <- predict(res, transf=exp)
    expect_equivalent(tmp$pred, 0.2584, tolerance=.tol[["pred"]]) ### 0.25 in paper
@@ -104,7 +104,7 @@ test_that("results for the conditional logistic model with approximate likelihoo
 
    ### compare with results on page 3052 (Table III)
    expect_equivalent(coef(res), -1.3027, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.3386, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.3386, tolerance=.tol[["se"]])
    expect_equivalent(sqrt(res$tau2), 0.7750, tolerance=.tol[["var"]]) ### 0.77 in paper
    tmp <- predict(res, transf=exp)
    expect_equivalent(tmp$pred, 0.2718, tolerance=.tol[["pred"]])
@@ -128,7 +128,7 @@ test_that("results for the normal-normal model are correct (measure=='IRLN')", {
 
    ### compare with results on page 3054 (Table VII)
    expect_equivalent(coef(res), 1.4676, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.2425, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.2425, tolerance=.tol[["se"]])
    expect_equivalent(res$tau2, 0.3699, tolerance=.tol[["var"]])
    tmp <- predict(res, transf=exp)
    expect_equivalent(tmp$pred, 4.3389, tolerance=.tol[["pred"]])
@@ -139,7 +139,7 @@ test_that("results for the normal-normal model are correct (measure=='IRLN')", {
 
    ### compare with results on page 3054 (Table VII)
    expect_equivalent(coef(res), 0.9808, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.3259, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.3259, tolerance=.tol[["se"]])
    expect_equivalent(res$tau2, 0.6393, tolerance=.tol[["var"]])
    tmp <- predict(res, transf=exp)
    expect_equivalent(tmp$pred, 2.6667, tolerance=.tol[["pred"]])
@@ -156,7 +156,7 @@ test_that("results for the Poisson-normal model are correct (measure=='IRLN')", 
 
    ### compare with results on page 3054 (Table VII)
    expect_equivalent(coef(res), 1.4007, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.2310, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.2310, tolerance=.tol[["se"]])
    expect_equivalent(res$tau2, 0.3165, tolerance=.tol[["var"]]) ### 0.316 in paper
    tmp <- predict(res, transf=exp)
    expect_equivalent(tmp$pred, 4.0580, tolerance=.tol[["pred"]])
@@ -167,7 +167,7 @@ test_that("results for the Poisson-normal model are correct (measure=='IRLN')", 
 
    ### compare with results on page 3054 (Table VII)
    expect_equivalent(coef(res), 0.8494, tolerance=.tol[["coef"]]) ### 0.850 in paper
-   expect_equivalent(res$se, 0.3303, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.3303, tolerance=.tol[["se"]])
    expect_equivalent(res$tau2, 0.6543, tolerance=.tol[["var"]])
    tmp <- predict(res, transf=exp)
    expect_equivalent(tmp$pred, 2.3383, tolerance=.tol[["pred"]])
@@ -182,7 +182,7 @@ test_that("results for the normal-normal model are correct (measure=='IRR')", {
 
    ### compare with results on page 3055 (Table VIII)
    expect_equivalent(coef(res), -0.3963, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.2268, tolerance=.tol[["se"]]) ### 0.223 in paper
+   expect_equivalent(se(res), 0.2268, tolerance=.tol[["se"]]) ### 0.223 in paper
    expect_equivalent(sqrt(res$tau2), 0.3060, tolerance=.tol[["var"]])
    tmp <- predict(res, transf=exp)
    expect_equivalent(tmp$pred, 0.6728, tolerance=.tol[["pred"]])
@@ -199,7 +199,7 @@ test_that("results for the Poisson-normal model are correct (measure=='IRR')", {
 
    ### compare with results on page 3055 (Table VIII)
    expect_equivalent(coef(res), -0.4762, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.2377, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.2377, tolerance=.tol[["se"]])
    expect_equivalent(sqrt(res$tau2), 0.3501, tolerance=.tol[["var"]])
    tmp <- predict(res, transf=exp)
    expect_equivalent(tmp$pred, 0.6211, tolerance=.tol[["pred"]])

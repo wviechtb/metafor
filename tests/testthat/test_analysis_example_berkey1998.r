@@ -20,7 +20,7 @@ test_that("results are correct for the multiple outcomes random-effects model.",
 
    ### (results for this model not given in paper)
    expect_equivalent(coef(res), c(-0.3379, 0.3448), tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, c(0.0798, 0.0495), tolerance=.tol[["se"]])
+   expect_equivalent(se(res), c(0.0798, 0.0495), tolerance=.tol[["se"]])
    expect_equivalent(res$tau2, c(0.0261, 0.0070), tolerance=.tol[["var"]])
    expect_equivalent(res$rho, 0.6992, tolerance=.tol[["cor"]])
 
@@ -33,7 +33,7 @@ test_that("results are correct for the multiple outcomes mixed-effects (meta-reg
 
    ### compare with results on page 2545 (Table II)
    expect_equivalent(coef(res), c(-0.3351, 0.3479, -0.0108, 0.0010), tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, c(0.0787, 0.0520, 0.0243, 0.0154), tolerance=.tol[["se"]])
+   expect_equivalent(se(res), c(0.0787, 0.0520, 0.0243, 0.0154), tolerance=.tol[["se"]])
    expect_equivalent(res$tau2, c(0.0250, 0.0080), tolerance=.tol[["var"]])
    expect_equivalent(res$rho, 0.6587, tolerance=.tol[["cor"]])
 
@@ -46,7 +46,7 @@ test_that("results are correct for the multiple outcomes mixed-effects (meta-reg
 
    ### (results for this model not given in paper)
    expect_equivalent(coef(res), c(-0.3351, 0.3479, -0.0108, 0.0118), tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, c(0.0787, 0.0520, 0.0243, 0.0199), tolerance=.tol[["se"]])
+   expect_equivalent(se(res), c(0.0787, 0.0520, 0.0243, 0.0199), tolerance=.tol[["se"]])
    expect_equivalent(res$pval, c(0.0000, 0.0000, 0.6563, 0.5534), tolerance=.tol[["pval"]])
 
 })

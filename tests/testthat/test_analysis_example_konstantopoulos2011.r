@@ -14,7 +14,7 @@ test_that("results are correct for the two-level random-effects model fitted wit
 
    ### compare with results on page 70 (Table 4)
    expect_equivalent(coef(res), 0.1279, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.0439, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.0439, tolerance=.tol[["se"]])
    expect_equivalent(res$tau2, 0.0884, tolerance=.tol[["var"]])
    expect_equivalent(res$se.tau2, 0.0202, tolerance=.tol[["sevar"]])
 
@@ -32,7 +32,7 @@ test_that("results are correct for the two-level mixed-effects model fitted with
 
    ### compare with results on page 70 (Table 4)
    expect_equivalent(coef(res), c(0.1258, 0.0052), tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, c(0.0440, 0.0044), tolerance=.tol[["se"]]) ### 0.043 in paper
+   expect_equivalent(se(res), c(0.0440, 0.0044), tolerance=.tol[["se"]]) ### 0.043 in paper
    expect_equivalent(res$tau2, 0.0889, tolerance=.tol[["var"]]) ### 0.088 in paper
    expect_equivalent(res$se.tau2, 0.0205, tolerance=.tol[["sevar"]])
 
@@ -49,7 +49,7 @@ test_that("results are correct for the two-level random-effects model fitted wit
 
    ### compare with results on page 70 (Table 4)
    expect_equivalent(coef(res), 0.1279, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.0439, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.0439, tolerance=.tol[["se"]])
    expect_equivalent(res$sigma2, 0.0884, tolerance=.tol[["var"]])
 
 })
@@ -63,7 +63,7 @@ test_that("results are correct for the three-level random-effects model fitted w
 
    ### compare with results on page 71 (Table 5)
    expect_equivalent(coef(res.ml), 0.1845, tolerance=.tol[["coef"]])
-   expect_equivalent(res.ml$se, 0.0805, tolerance=.tol[["se"]])
+   expect_equivalent(se(res.ml), 0.0805, tolerance=.tol[["se"]])
    expect_equivalent(res.ml$sigma2, c(0.0577, 0.0329), tolerance=.tol[["var"]])
 
    sav <- predict(res.ml)
@@ -79,7 +79,7 @@ test_that("results are correct for the three-level mixed-effects model fitted wi
 
    ### compare with results on page 71 (Table 5)
    expect_equivalent(coef(res.ml), c(0.1780, 0.0051), tolerance=.tol[["coef"]]) ### intercept is given as 0.183 in paper, but this seems to be a misprint
-   expect_equivalent(res.ml$se, c(0.0805, 0.0085), tolerance=.tol[["se"]])
+   expect_equivalent(se(res.ml), c(0.0805, 0.0085), tolerance=.tol[["se"]])
    expect_equivalent(res.ml$sigma2, c(0.0565, 0.0329), tolerance=.tol[["var"]])
 
 })
@@ -92,7 +92,7 @@ test_that("results are correct for the three-level random-effects model fitted w
 
    ### (results for this not given in paper)
    expect_equivalent(coef(res.ml), 0.1847, tolerance=.tol[["coef"]])
-   expect_equivalent(res.ml$se, 0.0846, tolerance=.tol[["se"]])
+   expect_equivalent(se(res.ml), 0.0846, tolerance=.tol[["se"]])
    expect_equivalent(res.ml$sigma2, c(0.0651, 0.0327), tolerance=.tol[["var"]])
 
    ### ICC
@@ -150,7 +150,7 @@ test_that("results are correct for the three-level random-effects model when usi
 
    ### (results for this not given in paper)
    expect_equivalent(coef(res.mv), 0.1847, tolerance=.tol[["coef"]])
-   expect_equivalent(res.mv$se, 0.0846, tolerance=.tol[["se"]])
+   expect_equivalent(se(res.mv), 0.0846, tolerance=.tol[["se"]])
    expect_equivalent(res.mv$tau2, 0.0978, tolerance=.tol[["var"]])
    expect_equivalent(res.mv$rho, 0.6653, tolerance=.tol[["cor"]])
 
@@ -215,7 +215,7 @@ test_that("restarting with 'restart=TRUE' works.", {
    res <- rma.mv(yi, vi, random = ~ 1 | district/study, data=dat, control=list(maxiter=4), restart=TRUE)
 
    expect_equivalent(coef(res), 0.1847132, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.08455592, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.08455592, tolerance=.tol[["se"]])
    expect_equivalent(res$sigma2, c(0.06506194, 0.03273652), tolerance=.tol[["var"]])
 
 })
@@ -233,7 +233,7 @@ test_that("results are correct when allowing for different tau^2 per district.",
    out <- capture.output(print(summary(res, digits=4)))
 
    expect_equivalent(coef(res), 0.1270, tolerance=.tol[["coef"]])
-   expect_equivalent(res$se, 0.0588, tolerance=.tol[["se"]])
+   expect_equivalent(se(res), 0.0588, tolerance=.tol[["se"]])
    expect_equivalent(res$tau2, c(0.0000, 0.0402, 0.0000, 0.0582, 0.0082, 0.0000, 0.5380, 0.0008, 0.0606, 0.1803, 0.0000), tolerance=.tol[["var"]])
 
    ### check that output is also correct

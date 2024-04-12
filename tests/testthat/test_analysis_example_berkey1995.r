@@ -22,7 +22,7 @@ test_that("results are correct for the random-effects model.", {
 
    ### compare with results on page 408
    expect_equivalent(coef(res.RE), -0.5429, tolerance=.tol[["coef"]])
-   expect_equivalent(res.RE$se, 0.1842, tolerance=.tol[["se"]])
+   expect_equivalent(se(res.RE), 0.1842, tolerance=.tol[["se"]])
    expect_equivalent(res.RE$tau2, 0.2682, tolerance=.tol[["var"]])
 
 })
@@ -38,7 +38,7 @@ test_that("results are correct for the mixed-effects meta-regression model.", {
 
    ### compare with results on page 408
    expect_equivalent(coef(res.ME), c(-0.6303, -0.0268), tolerance=.tol[["coef"]]) ### -0.6304 in article
-   expect_equivalent(res.ME$se, c(0.1591, 0.0110), tolerance=.tol[["se"]])
+   expect_equivalent(se(res.ME), c(0.1591, 0.0110), tolerance=.tol[["se"]])
    expect_equivalent(res.ME$tau2, 0.1572, tolerance=.tol[["var"]])
    expect_warning(tmp <- anova(res.RE, res.ME))
    expect_equivalent(tmp$R2, 41.3844, tolerance=.tol[["r2"]])
@@ -58,7 +58,7 @@ test_that("results are correct for the fixed-effects meta-regression model.", {
 
    ### compare with results on page 408
    expect_equivalent(coef(res.FE), c(-0.5949, -0.0282), tolerance=.tol[["coef"]]) ### -0.5950 in article
-   expect_equivalent(res.FE$se, c(0.0696, 0.0040), tolerance=.tol[["se"]]) ### 0.0039 in article
+   expect_equivalent(se(res.FE), c(0.0696, 0.0040), tolerance=.tol[["se"]]) ### 0.0039 in article
 
    ### predicted risk ratios based on the fixed-effects model
    tmp <- predict(res.FE, newmods=c(33.46,42)-33.46, transf=exp, digits=2)
