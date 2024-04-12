@@ -1,6 +1,8 @@
-# metafor 4.7-2 (2024-04-10)
+# metafor 4.7-3 (2024-04-12)
 
 - argument `shade` in `funnel()` now automatically uses a color gradient for the regions when multiple `level` values are specified
+
+- added extractor for function `se()` for extracting standard errors from model objects
 
 - added more tests
 

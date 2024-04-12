@@ -197,6 +197,7 @@ reference:
       - coef.rma
       - coef.permutest.rma.uni
       - vcov.rma
+      - se.rma
       - model.matrix.rma
       - formula.rma
       - coef.matreg
