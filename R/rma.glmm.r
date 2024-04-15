@@ -833,10 +833,15 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             stop(mstyle$stop("Please install the 'BB' package to use this optimizer."))
       }
 
+      if (is.element(optimizer, c("Rcgmin","Rvmmin"))) {
+         if (!requireNamespace("optimx", quietly=TRUE))
+            stop(mstyle$stop(paste0("Please install the 'optimx' package to use this optimizer.")))
+      }
+
       if (is.element(optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","Rcgmin","Rvmmin"))) {
          con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma"))
          if (!requireNamespace(con$hesspack, quietly=TRUE))
-         stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to fit this model.")))
+            stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to fit this model.")))
          if (con$dnchgcalc == "dFNCHypergeo") {
             if (!requireNamespace("BiasedUrn", quietly=TRUE))
                stop(mstyle$stop("Please install the 'BiasedUrn' package to fit this model."))
@@ -1643,16 +1648,16 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
             if (optimizer == "Rcgmin") {
                par.arg <- "par"
-               optimizer <- "Rcgmin::Rcgmin"
-               #ctrl.arg <- ", gr='grnd', control=optCtrl"
-               ctrl.arg <- ", control=optCtrl"
+               optimizer <- "optimx::Rcgmin"
+               ctrl.arg <- ", gr='grnd', control=optCtrl"
+               #ctrl.arg <- ", control=optCtrl"
             }
 
             if (optimizer == "Rvmmin") {
                par.arg <- "par"
-               optimizer <- "Rvmmin::Rvmmin"
-               #ctrl.arg <- ", gr='grnd', control=optCtrl"
-               ctrl.arg <- ", control=optCtrl"
+               optimizer <- "optimx::Rvmmin"
+               ctrl.arg <- ", gr='grnd', control=optCtrl"
+               #ctrl.arg <- ", control=optCtrl"
             }
 
             if (optimizer == "optimParallel") {
@@ -1727,7 +1732,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
             ### convergence checks
 
-            if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rcgmin::Rcgmin","Rvmmin:Rvmmin","optimParallel::optimParallel")) && res.FE$convergence != 0)
+            if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","optimx::Rcgmin","optimx::Rvmmin","optimParallel::optimParallel")) && res.FE$convergence != 0)
                stop(mstyle$stop(paste0("Cannot fit FE model. Optimizer (", optimizer, ") did not achieve convergence (convergence = ", res.FE$convergence, ").")))
 
             if (is.element(optimizer, c("dfoptim::mads")) && res.FE$convergence > optCtrl$tol)
@@ -1766,7 +1771,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
             ### log-likelihood
 
-            if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","dfoptim::mads","ucminf::ucminf","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rcgmin::Rcgmin","Rvmmin:Rvmmin","optimParallel::optimParallel")))
+            if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","dfoptim::mads","ucminf::ucminf","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","optimx::Rcgmin","optimx::Rvmmin","optimParallel::optimParallel")))
                ll.FE <- -1 * res.FE$value
             if (is.element(optimizer, c("nlminb","nloptr::nloptr")))
                ll.FE <- -1 * res.FE$objective
@@ -1822,7 +1827,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
                   ### convergence checks
 
-                  if (QEconv && is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rcgmin::Rcgmin","Rvmmin:Rvmmin","optimParallel::optimParallel")) && res.QE$convergence != 0) {
+                  if (QEconv && is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","optimx::Rcgmin","optimx:Rvmmin","optimParallel::optimParallel")) && res.QE$convergence != 0) {
                      warning(mstyle$warning(paste0("Cannot fit saturated model. Optimizer (", optimizer, ") did not achieve convergence (convergence = ", res.QE$convergence, ").")), call.=FALSE)
                      QEconv <- FALSE
                      ll.QE <- NA_real_
@@ -1887,7 +1892,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
                ### log-likelihood
 
-               if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","dfoptim::mads","ucminf::ucminf","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rcgmin::Rcgmin","Rvmmin:Rvmmin","optimParallel::optimParallel")))
+               if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","dfoptim::mads","ucminf::ucminf","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","optimx::Rcgmin","optimx::Rvmmin","optimParallel::optimParallel")))
                   ll.QE <- -1 * res.QE$value
                if (is.element(optimizer, c("nlminb","nloptr::nloptr")))
                   ll.QE <- -1 * res.QE$objective
@@ -2067,7 +2072,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
             ### convergence checks
 
-            if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rcgmin::Rcgmin","Rvmmin:Rvmmin","optimParallel::optimParallel")) && res.ML$convergence != 0)
+            if (is.element(optimizer, c("optim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","optimx::Rcgmin","optimx::Rvmmin","optimParallel::optimParallel")) && res.ML$convergence != 0)
                stop(mstyle$stop(paste0("Cannot fit ML model. Optimizer (", optimizer, ") did not achieve convergence (convergence = ", res.ML$convergence, ").")))
 
             if (is.element(optimizer, c("dfoptim::mads")) && res.ML$convergence > optCtrl$tol)
@@ -2111,7 +2116,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
             ### log-likelihood
 
-            if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","dfoptim::mads","ucminf::ucminf","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rcgmin::Rcgmin","Rvmmin:Rvmmin","optimParallel::optimParallel")))
+            if (is.element(optimizer, c("optim","dfoptim::hjk","dfoptim::nmk","dfoptim::mads","ucminf::ucminf","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","optimx::Rcgmin","optimx:Rvmmin","optimParallel::optimParallel")))
                ll.ML <- -1 * res.ML$value
             if (is.element(optimizer, c("nlminb","nloptr::nloptr")))
                ll.ML <- -1 * res.ML$objective

@@ -1,4 +1,6 @@
-# metafor 4.7-3 (2024-04-12)
+# metafor 4.7-4 (2024-04-15)
+
+- made optimizers `Rcgmin` and `Rvmmin` available again via the `optimx` package
 
 - argument `shade` in `funnel()` now automatically uses a color gradient for the regions when multiple `level` values are specified
 

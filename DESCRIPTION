@@ -1,11 +1,11 @@
 Package: metafor
-Version: 4.7-3
-Date: 2024-04-12
+Version: 4.7-4
+Date: 2024-04-15
 Title: Meta-Analysis Package for R
 Authors@R: person(given = "Wolfgang", family = "Viechtbauer", role = c("aut","cre"), email = "wvb@metafor-project.org", comment = c(ORCID = "0000-0003-3463-4063"))
 Depends: R (>= 4.0.0), methods, Matrix, metadat, numDeriv
 Imports: stats, utils, graphics, grDevices, nlme, mathjaxr, pbapply
-Suggests: lme4, pracma, minqa, nloptr, dfoptim, ucminf, lbfgsb3c, subplex, BB, Rsolnp, alabama, optimParallel, CompQuadForm, mvtnorm, BiasedUrn, Epi, survival, GLMMadaptive, glmmTMB, multcomp, gsl, sp, ape, boot, clubSandwich, crayon, R.rsp, testthat, rmarkdown, wildmeta, emmeans, estmeansd, metaBLUE, rstudioapi
+Suggests: lme4, pracma, minqa, nloptr, dfoptim, ucminf, lbfgsb3c, subplex, BB, Rsolnp, alabama, optimParallel, optimx, CompQuadForm, mvtnorm, BiasedUrn, Epi, survival, GLMMadaptive, glmmTMB, multcomp, gsl, sp, ape, boot, clubSandwich, crayon, R.rsp, testthat, rmarkdown, wildmeta, emmeans, estmeansd, metaBLUE, rstudioapi
 Description: A comprehensive collection of functions for conducting meta-analyses in R. The package includes functions to calculate various effect sizes or outcome measures, fit equal-, fixed-, random-, and mixed-effects models to such data, carry out moderator and meta-regression analyses, and create various types of meta-analytical plots (e.g., forest, funnel, radial, L'Abbe, Baujat, bubble, and GOSH plots). For meta-analyses of binomial and person-time data, the package also provides functions that implement specialized methods, including the Mantel-Haenszel method, Peto's method, and a variety of suitable generalized linear (mixed-effects) models (i.e., mixed-effects logistic and Poisson regression models). Finally, the package provides functionality for fitting meta-analytic multivariate/multilevel models that account for non-independent sampling errors and/or true effects (e.g., due to the inclusion of multiple treatment studies, multiple endpoints, or other forms of clustering). Network meta-analyses and meta-analyses accounting for known correlation structures (e.g., due to phylogenetic relatedness) can also be conducted. An introduction to the package can be found in Viechtbauer (2010) <doi:10.18637/jss.v036.i03>.
 License: GPL (>=2)
 ByteCompile: TRUE

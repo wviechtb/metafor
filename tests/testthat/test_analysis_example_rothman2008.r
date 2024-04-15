@@ -379,21 +379,21 @@ test_that("results are correct for Mantel-Haenszel method.", {
    expect_equivalent(tmp$ci.ub, 10.0276, tolerance=.tol[["ci"]])
 
    ### conditional MLE of the odds ratio
-   res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", digits=2, level=90, model="CM.EL", method="EE", control=list(optimizer="bobyqa"))
-   #res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", digits=2, level=90, model="CM.EL", method="EE")
+   #res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", digits=2, level=90, model="CM.EL", method="EE", control=list(optimizer="bobyqa"))
+   res <- rma.glmm(ai=ai, bi=bi, ci=ci, di=di, data=dat, measure="OR", digits=2, level=90, model="CM.EL", method="EE")
 
    expect_equivalent(coef(res), 1.3257, tolerance=.tol[["coef"]])
-   expect_equivalent(res$ci.lb, 0.3563, tolerance=.tol[["ci"]])
-   expect_equivalent(res$ci.ub, 2.2950, tolerance=.tol[["ci"]])
-   expect_equivalent(res$QE.Wld,  0.1323, tolerance=.tol[["test"]])
-   expect_equivalent(res$QEp.Wld, 0.7161, tolerance=.tol[["pval"]])
+   expect_equivalent(res$ci.lb, 0.3559, tolerance=.tol[["ci"]])
+   expect_equivalent(res$ci.ub, 2.2954, tolerance=.tol[["ci"]])
+   expect_equivalent(res$QE.Wld,  0.1327, tolerance=.tol[["test"]])
+   expect_equivalent(res$QEp.Wld, 0.7156, tolerance=.tol[["pval"]])
    expect_equivalent(res$QE.LRT,  0.1188, tolerance=.tol[["test"]])
    expect_equivalent(res$QEp.LRT, 0.7304, tolerance=.tol[["pval"]])
 
    tmp <- predict(res, transf=exp)
    expect_equivalent(tmp$pred,  3.7647, tolerance=.tol[["pred"]])
-   expect_equivalent(tmp$ci.lb, 1.4280, tolerance=.tol[["ci"]])
-   expect_equivalent(tmp$ci.ub, 9.9246, tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$ci.lb, 1.4274, tolerance=.tol[["ci"]])
+   expect_equivalent(tmp$ci.ub, 9.9287, tolerance=.tol[["ci"]])
 
 })
 

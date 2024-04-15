@@ -175,6 +175,8 @@ test_that("location-scale model works correctly for multiple predictors", {
    expect_warning(res10 <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="lbfgsb3c")))
    expect_warning(res11 <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="subplex")))
    expect_warning(res12 <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="BBoptim")))
+   expect_warning(res13 <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="Rcgmin")))
+   expect_warning(res14 <- rma(yi, vi, data=dat, scale = ~ grade + meta + sqrt(ni), control=list(optimizer="Rvmmin")))
 
    expect_equivalent(res1$alpha,  c(-1.08826059, -0.03429344, 2.09197456, -0.28439165), tolerance=.tol[["coef"]])
    expect_equivalent(res2$alpha,  c(-1.08879415, -0.03426271, 2.09166227, -0.28432946), tolerance=.tol[["coef"]])
@@ -187,7 +189,9 @@ test_that("location-scale model works correctly for multiple predictors", {
    expect_equivalent(res9$alpha,  c(-1.08826216, -0.03429383, 2.09197932, -0.28439198), tolerance=.tol[["coef"]])
    expect_equivalent(res10$alpha, c(-1.08825730, -0.03429256, 2.09197369, -0.28439170), tolerance=.tol[["coef"]])
    expect_equivalent(res11$alpha, c(-1.08826074, -0.03429341, 2.09197437, -0.28439162), tolerance=.tol[["coef"]])
-   expect_equivalent(res11$alpha, c(-1.08824263, -0.03429451, 2.09195305, -0.28439121), tolerance=.tol[["coef"]])
+   expect_equivalent(res12$alpha, c(-1.08823316, -0.03429494, 2.09194049, -0.28439102), tolerance=.tol[["coef"]])
+   expect_equivalent(res13$alpha, c(-1.08826085, -0.03429338, 2.09197445, -0.28439162), tolerance=.tol[["coef"]])
+   expect_equivalent(res14$alpha, c(-1.08826091, -0.03429340, 2.09197450, -0.28439161), tolerance=.tol[["coef"]])
 
 })
 

@@ -118,6 +118,8 @@ test_that("rma.glmm() works correctly for 'CM.EL' model.", {
    expect_warning(res10 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="lbfgsb3c")))
    expect_warning(res11 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="subplex", hessianCtrl=list(r=4))))
    expect_warning(res12 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="BBoptim")))
+   expect_warning(res13 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="Rcgmin")))
+   expect_warning(res14 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="Rvmmin")))
 
    expect_equivalent(coef(res1),  -1.353158, tolerance=.tol[["coef"]])
    expect_equivalent(coef(res2),  -1.354041, tolerance=.tol[["coef"]])
@@ -131,6 +133,8 @@ test_that("rma.glmm() works correctly for 'CM.EL' model.", {
    expect_equivalent(coef(res10), -1.353170, tolerance=.tol[["coef"]])
    expect_equivalent(coef(res11), -1.354171, tolerance=.tol[["coef"]])
    expect_equivalent(coef(res12), -1.353158, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res13), -1.353158, tolerance=.tol[["coef"]])
+   expect_equivalent(coef(res14), -1.353158, tolerance=.tol[["coef"]])
 
    expect_equivalent(c(vcov(res1)),  0.1232445, tolerance=.tol[["var"]])
    expect_equivalent(c(vcov(res2)),  0.1227803, tolerance=.tol[["var"]])
@@ -144,6 +148,8 @@ test_that("rma.glmm() works correctly for 'CM.EL' model.", {
    expect_equivalent(c(vcov(res10)), 0.1232348, tolerance=.tol[["var"]])
    expect_equivalent(c(vcov(res11)), 0.0404973, tolerance=.tol[["var"]]) # :(
    expect_equivalent(c(vcov(res12)), 0.1233028, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res13)), 0.1232885, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res14)), 0.1231726, tolerance=.tol[["var"]])
 
    expect_equivalent(res1$tau2,  0.6935, tolerance=.tol[["var"]])
    expect_equivalent(res2$tau2,  0.6945, tolerance=.tol[["var"]])
@@ -157,6 +163,8 @@ test_that("rma.glmm() works correctly for 'CM.EL' model.", {
    expect_equivalent(res10$tau2, 0.6935, tolerance=.tol[["var"]])
    expect_equivalent(res11$tau2, 0.6944, tolerance=.tol[["var"]])
    expect_equivalent(res12$tau2, 0.6935, tolerance=.tol[["var"]])
+   expect_equivalent(res13$tau2, 0.6935, tolerance=.tol[["var"]])
+   expect_equivalent(res14$tau2, 0.6935, tolerance=.tol[["var"]])
 
 })
 

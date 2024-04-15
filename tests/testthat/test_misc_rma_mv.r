@@ -115,6 +115,10 @@ test_that("rma.mv() works correctly with different optimizers", {
    expect_equivalent(res$sigma2, 0.3131, tolerance=.tol[["var"]])
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="ucminf"), sparse=.sparse)
    expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="Rcgmin"), sparse=.sparse)
+   expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
+   res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="Rvmmin"), sparse=.sparse)
+   expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
 
 })
 

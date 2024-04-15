@@ -160,7 +160,7 @@
    if (as.list) {
       return(list(x=x.flip, y=y.flip))
    } else {
-      return(cbind(x.flip, y.flip))
+      return(unname(cbind(x.flip, y.flip)))
    }
 
 }
@@ -1659,14 +1659,9 @@
          stop(mstyle$stop("Please install the 'alabama' package to use this optimizer."), call.=FALSE)
    }
 
-   if (optimizer == "Rcgmin") {
-      if (!requireNamespace(optimizer, quietly=TRUE))
-         stop(mstyle$stop(paste0("Please install the '", optimizer, "' package to use this optimizer.")), call.=FALSE)
-   }
-
-   if (optimizer == "Rvmmin") {
-      if (!requireNamespace(optimizer, quietly=TRUE))
-         stop(mstyle$stop(paste0("Please install the '", optimizer, "' package to use this optimizer.")), call.=FALSE)
+   if (is.element(optimizer, c("Rcgmin","Rvmmin"))) {
+      if (!requireNamespace("optimx", quietly=TRUE))
+         stop(mstyle$stop(paste0("Please install the 'optimx' package to use this optimizer.")), call.=FALSE)
    }
 
    #########################################################################
@@ -1741,16 +1736,16 @@
 
    if (optimizer == "Rcgmin") {
       par.arg <- "par"
-      optimizer <- "Rcgmin::Rcgmin"
-      #ctrl.arg <- ", gr='grnd', control=optcontrol"
-      ctrl.arg <- ", control=optcontrol"
+      optimizer <- "optimx::Rcgmin"
+      ctrl.arg <- ", gr='grnd', control=optcontrol"
+      #ctrl.arg <- ", control=optcontrol"
    }
 
    if (optimizer == "Rvmmin") {
       par.arg <- "par"
-      optimizer <- "Rvmmin::Rvmmin"
-      #ctrl.arg <- ", gr='grnd', control=optcontrol"
-      ctrl.arg <- ", control=optcontrol"
+      optimizer <- "optimx::Rvmmin"
+      ctrl.arg <- ", gr='grnd', control=optcontrol"
+      #ctrl.arg <- ", control=optcontrol"
    }
 
    if (optimizer == "optimParallel") {
@@ -1780,7 +1775,7 @@
    if (optimizer == "lbfgsb3c::lbfgsb3c" && is.null(opt.res$convergence)) # special provision for lbfgsb3c in case 'convergence' is missing
       opt.res$convergence <- -99
 
-   if (is.element(optimizer, c("optim","constrOptim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rsolnp::solnp","alabama::constrOptim.nl","Rcgmin::Rcgmin","Rvmmin:Rvmmin","optimParallel::optimParallel")) && opt.res$convergence != 0)
+   if (is.element(optimizer, c("optim","constrOptim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rsolnp::solnp","alabama::constrOptim.nl","optimx::Rcgmin","optimx:Rvmmin","optimParallel::optimParallel")) && opt.res$convergence != 0)
       stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")), call.=FALSE)
 
    if (is.element(optimizer, c("dfoptim::mads")) && opt.res$convergence > optcontrol$tol)
