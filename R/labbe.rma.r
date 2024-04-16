@@ -1,4 +1,4 @@
-labbe.rma <- function(x, xlim, ylim, xlab, ylab,
+labbe.rma <- function(x, xlim, ylim, lim, xlab, ylab,
 add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid=FALSE, lty, ...) {
 
    mstyle <- .get.mstyle()
@@ -9,7 +9,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
       stop(mstyle$stop("L'Abbe plots can only be drawn for models without moderators."))
 
    if (!is.element(x$measure, c("RR","OR","RD","AS","IRR","IRD","IRSD")))
-      stop(mstyle$stop("Argument 'measure' must be set to one of the following: 'RR','OR','RD','AS','IRR','IRD','IRSD'."))
+      stop(mstyle$stop("Argument 'measure' must have been set to one of the following: 'RR','OR','RD','AS','IRR','IRD','IRSD'."))
 
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act), add=TRUE)
@@ -64,6 +64,14 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
       gridcol <- grid
       grid <- TRUE
    }
+
+   llim <- ddd$llim
+
+   lplot     <- function(..., addyi, addvi, llim) plot(...)
+   lbox      <- function(..., addyi, addvi, llim) box(...)
+   lsegments <- function(..., addyi, addvi, llim) segments(...)
+   llines    <- function(..., addyi, addvi, llim) lines(...)
+   lpoints   <- function(..., addyi, addvi, llim) points(...)
 
    #########################################################################
 
@@ -175,7 +183,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    }
 
    if (length(dat.t$yi)==0L || length(dat.c$yi)==0L)
-      stop(mstyle$stop("No information in object to compute arm-level outcomes."))
+      stop(mstyle$stop("No information in object to compute the arm-level outcomes."))
 
    #########################################################################
 
@@ -218,26 +226,43 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    max.yi <- max(c(dat.t$yi, dat.c$yi))
    rng.yi <- max.yi - min.yi
 
-   len <- 1000
+   len <- 10000
 
    intrcpt <- x$beta[1]
 
-   if (x$measure == "RD")
-      c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)
-   if (x$measure == "RR")
-      c.vals <- seq(min.yi-rng.yi, ifelse(intrcpt>0, 0-intrcpt, 0), length.out=len)
-   if (x$measure == "OR")
-      c.vals <- seq(min.yi-rng.yi, max.yi+rng.yi, length.out=len)
-   if (x$measure == "AS")
-      c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, asin(sqrt(1))-intrcpt, asin(sqrt(1))), length.out=len)
-   if (x$measure == "IRR")
-      c.vals <- seq(min.yi-rng.yi, ifelse(intrcpt>0, 0-intrcpt, 0), length.out=len)
-   if (x$measure == "IRD")
-      c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)
-   if (x$measure == "IRSD")
-      c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)
+   if (is.null(llim)) {
+
+      if (x$measure == "RD")
+         c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)
+      if (x$measure == "RR")
+         c.vals <- seq(min.yi-rng.yi, ifelse(intrcpt>0, -intrcpt, 0), length.out=len)
+      if (x$measure == "OR")
+         c.vals <- seq(min.yi-rng.yi, max.yi+rng.yi, length.out=len)
+      if (x$measure == "AS")
+         c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, asin(sqrt(1))-intrcpt, asin(sqrt(1))), length.out=len)
+      if (x$measure == "IRR")
+         c.vals <- seq(min.yi-rng.yi, ifelse(intrcpt>0, -intrcpt, 0), length.out=len)
+      if (x$measure == "IRD")
+         c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)
+      if (x$measure == "IRSD")
+         c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)
+
+   } else {
+
+      if (length(llim) != 2L)
+         stop(mstyle$stop("Argument 'llim' must be of length 2."))
+
+      c.vals <- seq(llim[1], llim[2], length.out=len)
+
+   }
 
    t.vals <- intrcpt + 1*c.vals
+
+   if (!is.null(llim)) {
+      sel.c  <- c.vals >= llim[1] & c.vals <= llim[2]
+      sel.ct <- t.vals >= llim[1] & c.vals >= llim[1] & t.vals <= llim[2] & c.vals <= llim[2]
+      c.vals <- c.vals[sel.c]
+   }
 
    if (is.function(transf)) {
       if (is.null(targs)) {
@@ -253,14 +278,25 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
       }
    }
 
+   #print(round(cbind(c.vals, t.vals), 3))
+
    min.yi <- min(c(dat.t$yi, dat.c$yi))
    max.yi <- max(c(dat.t$yi, dat.c$yi))
 
-   if (missing(xlim))
-      xlim <- c(min.yi, max.yi)
+   if (missing(lim)) {
 
-   if (missing(ylim))
-      ylim <- c(min.yi, max.yi)
+      if (missing(xlim))
+         xlim <- c(min.yi, max.yi)
+
+      if (missing(ylim))
+         ylim <- c(min.yi, max.yi)
+
+   } else {
+
+      xlim <- lim
+      ylim <- lim
+
+   }
 
    ### order points by psize
 
@@ -287,23 +323,32 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
       ylab <- paste(ylab, "(Group 2)")
    }
 
-   plot(NA, NA, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, ...)
+   lplot(NA, NA, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, ...)
 
    ### add grid (and redraw box)
 
    if (.isTRUE(grid)) {
       grid(col=gridcol)
-      box(...)
+      lbox(...)
    }
 
-   ### add diagonal and estimated effects lines
+   ### add diagonal reference line
 
-   abline(a=0, b=1, lty=lty[1], ...)
-   lines(c.vals, t.vals, lty=lty[2], ...)
+   #abline(a=0, b=1, lty=lty[1], ...)
+   lsegments(min(c.vals), min(c.vals), max(c.vals), max(c.vals), lty=lty[1], ...)
+
+   ### add estimated effects line
+
+   if (!is.null(llim)) {
+      c.vals <- c.vals[sel.ct]
+      t.vals <- t.vals[sel.ct]
+   }
+
+   llines(c.vals, t.vals, lty=lty[2], ...)
 
    ### add points
 
-   points(x=dat.c$yi.o, y=dat.t$yi.o, cex=psize.o, pch=pch.o, col=col.o, bg=bg.o, ...)
+   lpoints(x=dat.c$yi.o, y=dat.t$yi.o, cex=psize.o, pch=pch.o, col=col.o, bg=bg.o, ...)
 
    #########################################################################
 

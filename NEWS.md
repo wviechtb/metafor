@@ -1,4 +1,4 @@
-# metafor 4.7-4 (2024-04-15)
+# metafor 4.7-5 (2024-04-16)
 
 - made optimizers `Rcgmin` and `Rvmmin` available again via the `optimx` package
 

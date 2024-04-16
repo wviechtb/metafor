@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-5</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">labbe</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for rma</span></span>
-<span><span class="fu">labbe</span><span class="op">(</span><span class="va">x</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>,</span>
+<span><span class="fu">labbe</span><span class="op">(</span><span class="va">x</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">lim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>,</span>
 <span>      add<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">add</span>, to<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">to</span>, <span class="va">transf</span>, <span class="va">targs</span>,</span>
 <span>      pch<span class="op">=</span><span class="fl">21</span>, <span class="va">psize</span>, plim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>,<span class="fl">3.5</span><span class="op">)</span>,</span>
 <span>      <span class="va">col</span>, <span class="va">bg</span>, grid<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">lty</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -114,6 +114,9 @@
 
    <dt>ylim</dt>
 <dd><p>y-axis limits. If unspecified, the function sets the y-axis limits to some sensible values.</p></dd>
+
+   <dt>lim</dt>
+<dd><p>axis limits. If specified, this is used for both <code>xlim</code> and <code>ylim</code>.</p></dd>
 
    <dt>xlab</dt>
 <dd><p>title for the x-axis. If unspecified, the function sets an appropriate axis title.</p></dd>

@@ -8,7 +8,7 @@
 \usage{
 labbe(x, \dots)
 
-\method{labbe}{rma}(x, xlim, ylim, xlab, ylab,
+\method{labbe}{rma}(x, xlim, ylim, lim, xlab, ylab,
       add=x$add, to=x$to, transf, targs,
       pch=21, psize, plim=c(0.5,3.5),
       col, bg, grid=FALSE, lty, \dots)
@@ -17,6 +17,7 @@ labbe(x, \dots)
    \item{x}{an object of class \code{"rma"}.}
    \item{xlim}{x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.}
    \item{ylim}{y-axis limits. If unspecified, the function sets the y-axis limits to some sensible values.}
+   \item{lim}{axis limits. If specified, this is used for both \code{xlim} and \code{ylim}.}
    \item{xlab}{title for the x-axis. If unspecified, the function sets an appropriate axis title.}
    \item{ylab}{title for the y-axis. If unspecified, the function sets an appropriate axis title.}
    \item{add}{See the documentation of the \code{\link{escalc}} function for more details.}
