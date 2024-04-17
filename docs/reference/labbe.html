@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-6</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">labbe</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for rma</span></span>
-<span><span class="fu">labbe</span><span class="op">(</span><span class="va">x</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">lim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>,</span>
+<span><span class="fu">labbe</span><span class="op">(</span><span class="va">x</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">lim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>, ci<span class="op">=</span><span class="cn">FALSE</span>,</span>
 <span>      add<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">add</span>, to<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">to</span>, <span class="va">transf</span>, <span class="va">targs</span>,</span>
 <span>      pch<span class="op">=</span><span class="fl">21</span>, <span class="va">psize</span>, plim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>,<span class="fl">3.5</span><span class="op">)</span>,</span>
 <span>      <span class="va">col</span>, <span class="va">bg</span>, grid<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">lty</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -123,6 +123,9 @@
 
    <dt>ylab</dt>
 <dd><p>title for the y-axis. If unspecified, the function sets an appropriate axis title.</p></dd>
+
+   <dt>ci</dt>
+<dd><p>logical to indicate whether the confidence interval region should be shown in the plot (the default is <code>FALSE</code>). Can also be a string to specify the color for shading the confidence region.</p></dd>
 
    <dt>add</dt>
 <dd><p>See the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
@@ -152,10 +155,10 @@
 <dd><p>optional character string to specify the background color of open plot symbols. Can also be a vector. Set to <code>NA</code> to make the plotting symbols transparent.</p></dd>
 
    <dt>grid</dt>
-<dd><p>logical to specify whether a grid should be added to the plot. Can also be a color name.</p></dd>
+<dd><p>logical to specify whether a grid should be added to the plot (the default is <code>FALSE</code>). Can also be a color name.</p></dd>
 
    <dt>lty</dt>
-<dd><p>optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model. If unspecified, the function sets this to <code>c("solid","dashed")</code> by default (use <code>"blank"</code> to suppress a line).</p></dd>
+<dd><p>optional character vector to specify the line type for the diagonal reference line of no effect, the line that indicates the estimated effect based on the fitted model, and the corresponding confidence interval region. If unspecified, the function sets this to <code>c("solid","dashed","dotted")</code> by default (use <code>"blank"</code> to suppress a line).</p></dd>
 
    <dt>...</dt>
 <dd><p>other arguments.</p></dd>
@@ -166,8 +169,8 @@
     <p>The model specified via <code>x</code> must be a model without moderators (i.e., either an equal- or a random-effects model) fitted with either the <code><a href="rma.uni.html">rma.uni</a></code>, <code><a href="rma.mh.html">rma.mh</a></code>, <code><a href="rma.peto.html">rma.peto</a></code>, or <code><a href="rma.glmm.html">rma.glmm</a></code> functions. Moreover, the model must have been fitted with <code>measure</code> set equal to <code>"RD"</code> (for risk differences), <code>"RR"</code> (for risk ratios), <code>"OR"</code> (for odds ratios), <code>"AS"</code> (for arcsine square root transformed risk differences), <code>"IRR"</code> (for incidence rate ratios), <code>"IRD"</code> (for incidence rate differences), or <code>"IRSD"</code> (for square root transformed incidence rate differences).</p>
 <p>The function calculates the arm-level outcomes for the two groups (e.g., treatment and control) and plots them against each other. In particular, the function plots the raw proportions of the two groups against each other when analyzing risk differences, the log of the proportions when analyzing (log) risk ratios, the log odds when analyzing (log) odds ratios, the arcsine square root transformed proportions when analyzing arcsine square root transformed risk differences, the raw incidence rates when analyzing incidence rate differences, the log of the incidence rates when analyzing (log) incidence rate ratios, and the square root transformed incidence rates when analyzing square root transformed incidence rate differences. The <code>transf</code> argument can be used to transform these values (e.g., <code>transf=exp</code> to transform the log of the proportions back to raw proportions; see also <a href="transf.html">transf</a>).</p>
 <p>As described under the documentation for the <code><a href="escalc.html">escalc</a></code> function, zero cells can lead to problems when calculating particular outcomes. Adding a small constant to the cells of the <em></em>\(2 \times 2\) tables is a common solution to this problem. By default, the functions adopts the same method for handling zero cells as was used when fitting the model.</p>
-<p>By default (i.e., when <code>psize</code> is not specified), the point sizes are a function of the precision (i.e., inverse standard errors) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard errors of the estimates, their areas are proportional to the inverse sampling variances, which corresponds to the weights they would receive in an equal-effects model. However, the point sizes are rescaled so that the smallest point size is <code>plim[1]</code> and the largest point size is <code>plim[2]</code>. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set <code>plim[2]</code> to <code>NA</code>, in which case the points are rescaled so that the smallest point size corresponds to <code>plim[1]</code> and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set <code>plim[1]</code> to <code>NA</code>, in which case the points are rescaled so that the largest point size corresponds to <code>plim[2]</code> and all other points are scaled accordingly.</p>
-<p>The solid line corresponds to identical outcomes in the two groups (i.e., the absence of a difference between the two groups). The dashed line indicates the estimated effect based on the fitted model.</p>
+<p>By default (i.e., when <code>psize</code> is not specified), the point sizes are a function of the precision (i.e., inverse standard errors) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard errors of the estimates, their areas are proportional to the inverse sampling variances, which corresponds to the weights they would receive in an equal-effects model. However, the point sizes are rescaled so that the smallest point size is <code>plim[1]</code> and the largest point size is <code>plim[2]</code>. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set <code>plim[2]</code> to <code>NA</code>, in which case the points are rescaled so that the smallest point size corresponds to <code>plim[1]</code> and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set <code>plim[1]</code> to <code>NA</code>, in which case the points are rescaled so that the largest point size corresponds to <code>plim[2]</code> and all other points are scaled accordingly. As a result, the smallest point may be very small. To avoid the latter, one can also set <code>plim[3]</code>, which enforces a minimal point size.</p>
+<p>The solid line corresponds to identical outcomes in the two groups (i.e., the absence of a difference between the two groups). The dashed line indicates the estimated effect based on the fitted model. If <code>ci=TRUE</code>, then the shaded region indicates the corresponding confidence interval.</p>
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -223,8 +226,8 @@
 <span class="r-in"><span><span class="fu">labbe</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="labbe-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### funnel plot with risk values on the x- and y-axis and add grid</span></span></span>
-<span class="r-in"><span><span class="fu">labbe</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span>, grid<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">### plot with risk values on the x- and y-axis, a grid, and the CI region</span></span></span>
+<span class="r-in"><span><span class="fu">labbe</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span>, grid<span class="op">=</span><span class="cn">TRUE</span>, ci<span class="op">=</span><span class="cn">TRUE</span>, bty<span class="op">=</span><span class="st">"l"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="labbe-2.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>

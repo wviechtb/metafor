@@ -1,10 +1,12 @@
-# metafor 4.7-5 (2024-04-16)
+# metafor 4.7-6 (2024-04-17)
 
 - made optimizers `Rcgmin` and `Rvmmin` available again via the `optimx` package
 
 - argument `shade` in `funnel()` now automatically uses a color gradient for the regions when multiple `level` values are specified
 
 - added extractor for function `se()` for extracting standard errors from model objects
+
+- added `lim` and `ci` arguments to `labbe()`
 
 - added more tests
 

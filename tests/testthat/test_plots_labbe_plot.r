@@ -14,21 +14,37 @@ test_that("plot can be drawn.", {
 
    res <- rma(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, measure="RR")
 
-   png("images/test_plots_labbe_plot_light_test.png", res=200, width=1800, height=1600, type="cairo")
+   png("images/test_plots_labbe_plot_1_light_test.png", res=200, width=1800, height=1600, type="cairo")
    par(mar=c(5,4,1,2))
    labbe(res, las=1, bty="l")
    dev.off()
 
-   expect_true(.vistest("images/test_plots_labbe_plot_light_test.png", "images/test_plots_labbe_plot_light.png"))
+   expect_true(.vistest("images/test_plots_labbe_plot_1_light_test.png", "images/test_plots_labbe_plot_1_light.png"))
 
-   png("images/test_plots_labbe_plot_dark_test.png", res=200, width=1800, height=1600, type="cairo")
+   png("images/test_plots_labbe_plot_1_dark_test.png", res=200, width=1800, height=1600, type="cairo")
    setmfopt(theme="dark")
    par(mar=c(5,4,1,2))
    labbe(res, las=1, bty="l")
    setmfopt(theme="default")
    dev.off()
 
-   expect_true(.vistest("images/test_plots_labbe_plot_dark_test.png", "images/test_plots_labbe_plot_dark.png"))
+   expect_true(.vistest("images/test_plots_labbe_plot_1_dark_test.png", "images/test_plots_labbe_plot_1_dark.png"))
+
+   png("images/test_plots_labbe_plot_2_light_test.png", res=200, width=1800, height=1600, type="cairo")
+   par(mar=c(5,4,1,2))
+   labbe(res, las=1, bty="l", ci=TRUE, grid=TRUE)
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_labbe_plot_2_light_test.png", "images/test_plots_labbe_plot_2_light.png"))
+
+   png("images/test_plots_labbe_plot_2_dark_test.png", res=200, width=1800, height=1600, type="cairo")
+   setmfopt(theme="dark")
+   par(mar=c(5,4,1,2))
+   labbe(res, las=1, bty="l", ci=TRUE, grid=TRUE)
+   setmfopt(theme="default")
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_labbe_plot_2_dark_test.png", "images/test_plots_labbe_plot_2_dark.png"))
 
 })
 

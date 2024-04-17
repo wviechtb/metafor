@@ -1,4 +1,4 @@
-labbe.rma <- function(x, xlim, ylim, lim, xlab, ylab,
+labbe.rma <- function(x, xlim, ylim, lim, xlab, ylab, ci=FALSE,
 add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid=FALSE, lty, ...) {
 
    mstyle <- .get.mstyle()
@@ -40,10 +40,20 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
       psize <- NULL
 
    if (missing(lty)) {
-      lty <- c("solid", "dashed") # 1st value = diagonal line, 2nd value = estimated effect line
+      lty <- c("solid", "dashed", "dotted") # 1 = diagonal line, 2 = estimated effect line, 3 = ci lines
    } else {
       if (length(lty) == 1L)
-         lty <- c(lty, lty)
+         lty <- c(lty, lty, lty)
+      if (length(lty) == 2L)
+         lty <- c(lty, lty, "dotted")
+   }
+
+   if (is.logical(ci))
+      cicol <- .coladj(par("bg","fg"), dark=0.15, light=-0.15)
+
+   if (is.character(ci)) {
+      cicol <- ci
+      ci <- TRUE
    }
 
    ### get ... argument
@@ -72,6 +82,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    lsegments <- function(..., addyi, addvi, llim) segments(...)
    llines    <- function(..., addyi, addvi, llim) lines(...)
    lpoints   <- function(..., addyi, addvi, llim) points(...)
+   lpolygon  <- function(..., addyi, addvi, llim) polygon(...)
 
    #########################################################################
 
@@ -123,40 +134,40 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    ### these vectors may contain NAs
 
-   ai  <- x$outdat.f$ai
-   bi  <- x$outdat.f$bi
-   ci  <- x$outdat.f$ci
-   di  <- x$outdat.f$di
-   x1i <- x$outdat.f$x1i
-   x2i <- x$outdat.f$x2i
-   t1i <- x$outdat.f$t1i
-   t2i <- x$outdat.f$t2i
+   x.ai  <- x$outdat.f$ai
+   x.bi  <- x$outdat.f$bi
+   x.ci  <- x$outdat.f$ci
+   x.di  <- x$outdat.f$di
+   x.x1i <- x$outdat.f$x1i
+   x.x2i <- x$outdat.f$x2i
+   x.t1i <- x$outdat.f$t1i
+   x.t2i <- x$outdat.f$t2i
 
    ### drop00=TRUE may induce that the contrast-based yi value is NA; so
    ### make sure that the corresponding arm-based yi values are also NA
 
    yi.is.na <- is.na(x$yi.f)
-   ai[yi.is.na]  <- NA_real_
-   bi[yi.is.na]  <- NA_real_
-   ci[yi.is.na]  <- NA_real_
-   di[yi.is.na]  <- NA_real_
-   x1i[yi.is.na] <- NA_real_
-   x2i[yi.is.na] <- NA_real_
-   t1i[yi.is.na] <- NA_real_
-   t2i[yi.is.na] <- NA_real_
+   x.ai[yi.is.na]  <- NA_real_
+   x.bi[yi.is.na]  <- NA_real_
+   x.ci[yi.is.na]  <- NA_real_
+   x.di[yi.is.na]  <- NA_real_
+   x.x1i[yi.is.na] <- NA_real_
+   x.x2i[yi.is.na] <- NA_real_
+   x.t1i[yi.is.na] <- NA_real_
+   x.t2i[yi.is.na] <- NA_real_
 
    options(na.action = "na.pass") # to make sure dat.t and dat.c are of the same length
 
    measure <- switch(x$measure, "RR"="PLN", "OR"="PLO", "RD"="PR", "AS"="PAS", "IRR"="IRLN", "IRD"="IR", "IRSD"="IRS")
 
    if (is.element(x$measure, c("RR","OR","RD","AS"))) {
-      args.t <- list(measure=measure, xi=ai, mi=bi, add=add, to=to, addyi=addyi, addvi=addvi)
-      args.c <- list(measure=measure, xi=ci, mi=di, add=add, to=to, addyi=addyi, addvi=addvi)
+      args.t <- list(measure=measure, xi=x.ai, mi=x.bi, add=add, to=to, addyi=addyi, addvi=addvi)
+      args.c <- list(measure=measure, xi=x.ci, mi=x.di, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    if (is.element(x$measure, c("IRR","IRD","IRSD"))) {
-      args.t <- list(measure=measure, xi=x1i, ti=t1i, add=add, to=to, addyi=addyi, addvi=addvi)
-      args.c <- list(measure=measure, xi=x2i, ti=t2i, add=add, to=to, addyi=addyi, addvi=addvi)
+      args.t <- list(measure=measure, xi=x.x1i, ti=x.t1i, add=add, to=to, addyi=addyi, addvi=addvi)
+      args.c <- list(measure=measure, xi=x.x2i, ti=x.t2i, add=add, to=to, addyi=addyi, addvi=addvi)
    }
 
    dat.t <- .do.call(escalc, args.t)
@@ -256,25 +267,28 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    }
 
-   t.vals <- intrcpt + 1*c.vals
+   t.vals    <- intrcpt + 1*c.vals
 
-   if (!is.null(llim)) {
-      sel.c  <- c.vals >= llim[1] & c.vals <= llim[2]
-      sel.ct <- t.vals >= llim[1] & c.vals >= llim[1] & t.vals <= llim[2] & c.vals <= llim[2]
-      c.vals <- c.vals[sel.c]
-   }
+   tmp <- predict(x)
+
+   t.vals.ci.lb <- tmp$ci.lb + 1*c.vals
+   t.vals.ci.ub <- tmp$ci.ub + 1*c.vals
 
    if (is.function(transf)) {
       if (is.null(targs)) {
-         dat.t$yi <- sapply(dat.t$yi, transf)
-         dat.c$yi <- sapply(dat.c$yi, transf)
-         c.vals   <- sapply(c.vals, transf)
-         t.vals   <- sapply(t.vals, transf)
+         dat.t$yi     <- sapply(dat.t$yi, transf)
+         dat.c$yi     <- sapply(dat.c$yi, transf)
+         c.vals       <- sapply(c.vals, transf)
+         t.vals       <- sapply(t.vals, transf)
+         t.vals.ci.lb <- sapply(t.vals.ci.lb, transf)
+         t.vals.ci.ub <- sapply(t.vals.ci.ub, transf)
       } else {
-         dat.t$yi <- sapply(dat.t$yi, transf, targs)
-         dat.c$yi <- sapply(dat.c$yi, transf, targs)
-         c.vals   <- sapply(c.vals, transf, targs)
-         t.vals   <- sapply(t.vals, transf, targs)
+         dat.t$yi     <- sapply(dat.t$yi, transf, targs)
+         dat.c$yi     <- sapply(dat.c$yi, transf, targs)
+         c.vals       <- sapply(c.vals, transf, targs)
+         t.vals       <- sapply(t.vals, transf, targs)
+         t.vals.ci.lb <- sapply(t.vals.ci.lb, transf, targs)
+         t.vals.ci.ub <- sapply(t.vals.ci.ub, transf, targs)
       }
    }
 
@@ -325,6 +339,14 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    lplot(NA, NA, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, ...)
 
+   ### add CI bounds
+
+   if (ci) {
+      lpolygon(c(c.vals,rev(c.vals)), c(t.vals.ci.lb,rev(t.vals.ci.ub)), col=cicol, border=NA, ...)
+      llines(c.vals, t.vals.ci.lb, lty=lty[3], ...)
+      llines(c.vals, t.vals.ci.ub, lty=lty[3], ...)
+   }
+
    ### add grid (and redraw box)
 
    if (.isTRUE(grid)) {
@@ -339,11 +361,6 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    ### add estimated effects line
 
-   if (!is.null(llim)) {
-      c.vals <- c.vals[sel.ct]
-      t.vals <- t.vals[sel.ct]
-   }
-
    llines(c.vals, t.vals, lty=lty[2], ...)
 
    ### add points
@@ -354,7 +371,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    ### prepare data frame to return
 
-   sav <- data.frame(x=dat.c$yi, y=dat.t$yi, cex=psize, pch=pch, col=col, bg=bg, ids=x$ids[not.na], slab=x$slab[not.na], stringsAsFactors=FALSE)
+   sav <- data.frame(x=dat.c$yi, y=dat.t$yi, cex=psize, pch=pch, col=col, bg=bg, ids=x$ids[not.na], slab=x$slab[not.na])
 
    invisible(sav)
 

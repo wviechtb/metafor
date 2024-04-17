@@ -667,6 +667,8 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    labline(h=refline, col=lcol[4], lty=lty[4], lwd=lwd[4], ...)
 
+   ### add predicted line
+
    if (addpred)
       llines(xs, pred, col=lcol[1], lty=lty[1], lwd=lwd[1], ...)
 
