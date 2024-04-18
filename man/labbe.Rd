@@ -64,6 +64,8 @@ labbe(x, \dots)
    Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
 }
 \references{
+   Jiménez, F. J., Guallar, E., & Martín-Moreno, J. M. (1997). A graphical display useful for meta-analysis. \emph{European Journal of Public Health}, \bold{7}(1), 101--105. \verb{https://doi.org/10.1093/eurpub/8.1.92}
+
    \enc{L'Abbé}{L'Abbe}, K. A., Detsky, A. S., & O'Rourke, K. (1987). Meta-analysis in clinical research. \emph{Annals of Internal Medicine}, \bold{107}(2), 224--233. \verb{https://doi.org/10.7326/0003-4819-107-2-224}
 
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
