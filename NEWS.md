@@ -1,4 +1,4 @@
-# metafor 4.7-7 (2024-04-18)
+# metafor 4.7-8 (2024-04-18)
 
 - made optimizers `Rcgmin` and `Rvmmin` available again via the `optimx` package
 
@@ -6,7 +6,7 @@
 
 - added extractor for function `se()` for extracting standard errors from model objects
 
-- added `lim` and `ci` arguments to `labbe()`
+- added `lim`, `ci`, `pi`, and `legend` arguments to `labbe()`
 
 - added more tests
 

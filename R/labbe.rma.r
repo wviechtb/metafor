@@ -1,4 +1,4 @@
-labbe.rma <- function(x, xlim, ylim, lim, xlab, ylab, ci=FALSE,
+labbe.rma <- function(x, xlim, ylim, lim, xlab, ylab, ci=FALSE, pi=FALSE, legend=FALSE,
 add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid=FALSE, lty, ...) {
 
    mstyle <- .get.mstyle()
@@ -40,12 +40,10 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
       psize <- NULL
 
    if (missing(lty)) {
-      lty <- c("solid", "dashed", "dotted") # 1 = diagonal line, 2 = estimated effect line, 3 = ci lines
+      lty <- c("solid", "dashed") # 1 = diagonal line, 2 = estimated effect line
    } else {
       if (length(lty) == 1L)
-         lty <- c(lty, lty, lty)
-      if (length(lty) == 2L)
-         lty <- c(lty, lty, "dotted")
+         lty <- c(lty, lty)
    }
 
    if (is.logical(ci))
@@ -54,6 +52,14 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    if (is.character(ci)) {
       cicol <- ci
       ci <- TRUE
+   }
+
+   if (is.logical(pi))
+      picol <- .coladj(par("bg","fg"), dark=0.05, light=-0.05)
+
+   if (is.character(pi)) {
+      picol <- pi
+      pi <- TRUE
    }
 
    ### get ... argument
@@ -273,6 +279,8 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    t.vals.ci.lb <- tmp$ci.lb + 1*c.vals
    t.vals.ci.ub <- tmp$ci.ub + 1*c.vals
+   t.vals.pi.lb <- tmp$pi.lb + 1*c.vals
+   t.vals.pi.ub <- tmp$pi.ub + 1*c.vals
 
    if (is.function(transf)) {
       if (is.null(targs)) {
@@ -282,6 +290,8 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
          t.vals       <- sapply(t.vals, transf)
          t.vals.ci.lb <- sapply(t.vals.ci.lb, transf)
          t.vals.ci.ub <- sapply(t.vals.ci.ub, transf)
+         t.vals.pi.lb <- sapply(t.vals.pi.lb, transf)
+         t.vals.pi.ub <- sapply(t.vals.pi.ub, transf)
       } else {
          dat.t$yi     <- sapply(dat.t$yi, transf, targs)
          dat.c$yi     <- sapply(dat.c$yi, transf, targs)
@@ -289,10 +299,10 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
          t.vals       <- sapply(t.vals, transf, targs)
          t.vals.ci.lb <- sapply(t.vals.ci.lb, transf, targs)
          t.vals.ci.ub <- sapply(t.vals.ci.ub, transf, targs)
+         t.vals.pi.lb <- sapply(t.vals.pi.lb, transf, targs)
+         t.vals.pi.ub <- sapply(t.vals.pi.ub, transf, targs)
       }
    }
-
-   #print(round(cbind(c.vals, t.vals), 3))
 
    min.yi <- min(c(dat.t$yi, dat.c$yi))
    max.yi <- max(c(dat.t$yi, dat.c$yi))
@@ -339,13 +349,15 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    lplot(NA, NA, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, ...)
 
+   ### add PI bounds
+
+   if (pi)
+      lpolygon(c(c.vals,rev(c.vals)), c(t.vals.pi.lb,rev(t.vals.pi.ub)), col=picol, border=NA, ...)
+
    ### add CI bounds
 
-   if (ci) {
+   if (ci)
       lpolygon(c(c.vals,rev(c.vals)), c(t.vals.ci.lb,rev(t.vals.ci.ub)), col=cicol, border=NA, ...)
-      llines(c.vals, t.vals.ci.lb, lty=lty[3], ...)
-      llines(c.vals, t.vals.ci.ub, lty=lty[3], ...)
-   }
 
    ### add grid (and redraw box)
 
@@ -366,6 +378,38 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    ### add points
 
    lpoints(x=dat.c$yi.o, y=dat.t$yi.o, cex=psize.o, pch=pch.o, col=col.o, bg=bg.o, ...)
+
+   ### add legend
+
+   if (is.logical(legend) && isTRUE(legend))
+      lpos <- ifelse(intrcpt > 0, "bottomright", "topleft")
+
+   if (is.character(legend)) {
+      lpos <- legend
+      legend <- TRUE
+   }
+
+   if (legend) {
+
+      lvl <- round(100*(1-x$level), x$digits[["ci"]])
+      ltxt <- c("Reference Line of No Effect", "Line for the Estimated Effect",
+                paste0(lvl, "% Confidence Interval"), paste0(lvl, "% Prediction Interval"))
+      lpch <- c(NA,NA,22,22)
+      if (is.numeric(lty)) {
+         llty <- c(lty[1],lty[2],0,0)
+      } else {
+         llty <- c(lty[1],lty[2],"blank","blank")
+      }
+      lpt.bg <- c(NA,NA,cicol,picol)
+
+      sel <- c(lty != "blank" & lty != 0, ci, pi)
+
+      if (any(sel)) {
+         legend(lpos, inset=0.01, bg=.coladj(par("bg"), dark=0, light=0), pch=lpch[sel],
+                pt.cex=2.5, pt.lwd=0, pt.bg=lpt.bg[sel], lty=llty[sel], legend=ltxt[sel])
+      }
+
+   }
 
    #########################################################################
 

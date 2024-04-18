@@ -12,11 +12,12 @@ test_that("plot can be drawn.", {
 
    skip_on_cran()
 
-   res <- rma(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, measure="RR")
+   dat <- dat.damico2009
+   res <- rma(measure="OR", ai=xt, n1i=nt, ci=xc, n2i=nc, data=dat)
 
    png("images/test_plots_labbe_plot_1_light_test.png", res=200, width=1800, height=1600, type="cairo")
    par(mar=c(5,4,1,2))
-   labbe(res, las=1, bty="l")
+   labbe(res)
    dev.off()
 
    expect_true(.vistest("images/test_plots_labbe_plot_1_light_test.png", "images/test_plots_labbe_plot_1_light.png"))
@@ -24,7 +25,7 @@ test_that("plot can be drawn.", {
    png("images/test_plots_labbe_plot_1_dark_test.png", res=200, width=1800, height=1600, type="cairo")
    setmfopt(theme="dark")
    par(mar=c(5,4,1,2))
-   labbe(res, las=1, bty="l")
+   labbe(res)
    setmfopt(theme="default")
    dev.off()
 
@@ -32,7 +33,8 @@ test_that("plot can be drawn.", {
 
    png("images/test_plots_labbe_plot_2_light_test.png", res=200, width=1800, height=1600, type="cairo")
    par(mar=c(5,4,1,2))
-   labbe(res, las=1, bty="l", ci=TRUE, grid=TRUE)
+   labbe(res, ci=TRUE, pi=TRUE, grid=TRUE, legend=TRUE, bty="l",
+         transf=exp, xlab="Odds (Control Group)", ylab="Odds (Treatment Group)")
    dev.off()
 
    expect_true(.vistest("images/test_plots_labbe_plot_2_light_test.png", "images/test_plots_labbe_plot_2_light.png"))
@@ -40,11 +42,32 @@ test_that("plot can be drawn.", {
    png("images/test_plots_labbe_plot_2_dark_test.png", res=200, width=1800, height=1600, type="cairo")
    setmfopt(theme="dark")
    par(mar=c(5,4,1,2))
-   labbe(res, las=1, bty="l", ci=TRUE, grid=TRUE)
+   labbe(res, ci=TRUE, pi=TRUE, grid=TRUE, legend=TRUE, bty="l",
+         transf=exp, xlab="Odds (Control Group)", ylab="Odds (Treatment Group)")
    setmfopt(theme="default")
    dev.off()
 
    expect_true(.vistest("images/test_plots_labbe_plot_2_dark_test.png", "images/test_plots_labbe_plot_2_dark.png"))
+
+   png("images/test_plots_labbe_plot_3_light_test.png", res=200, width=1800, height=1600, type="cairo")
+   par(mar=c(5,4,1,2))
+   labbe(res, ci=TRUE, pi=TRUE, grid=TRUE, legend=TRUE, bty="l",
+         transf=plogis, lim=c(0,1), xlab="Risk (Control Group)",
+         ylab="Risk (Treatment Group)")
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_labbe_plot_3_light_test.png", "images/test_plots_labbe_plot_3_light.png"))
+
+   png("images/test_plots_labbe_plot_3_dark_test.png", res=200, width=1800, height=1600, type="cairo")
+   setmfopt(theme="dark")
+   par(mar=c(5,4,1,2))
+   labbe(res, ci=TRUE, pi=TRUE, grid=TRUE, legend=TRUE, bty="l",
+         transf=plogis, lim=c(0,1), xlab="Risk (Control Group)",
+         ylab="Risk (Treatment Group)")
+   setmfopt(theme="default")
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_labbe_plot_3_dark_test.png", "images/test_plots_labbe_plot_3_dark.png"))
 
 })
 

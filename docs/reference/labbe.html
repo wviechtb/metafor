@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-8</span>
       </span>
     </div>
 
@@ -98,7 +98,8 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">labbe</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for rma</span></span>
-<span><span class="fu">labbe</span><span class="op">(</span><span class="va">x</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">lim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>, ci<span class="op">=</span><span class="cn">FALSE</span>,</span>
+<span><span class="fu">labbe</span><span class="op">(</span><span class="va">x</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">lim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>,</span>
+<span>      ci<span class="op">=</span><span class="cn">FALSE</span>, pi<span class="op">=</span><span class="cn">FALSE</span>, legend<span class="op">=</span><span class="cn">FALSE</span>,</span>
 <span>      add<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">add</span>, to<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">to</span>, <span class="va">transf</span>, <span class="va">targs</span>,</span>
 <span>      pch<span class="op">=</span><span class="fl">21</span>, <span class="va">psize</span>, plim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>,<span class="fl">3.5</span><span class="op">)</span>,</span>
 <span>      <span class="va">col</span>, <span class="va">bg</span>, grid<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">lty</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -126,6 +127,12 @@
 
    <dt>ci</dt>
 <dd><p>logical to indicate whether the confidence interval region should be shown in the plot (the default is <code>FALSE</code>). Can also be a string to specify the color for shading the confidence region.</p></dd>
+
+   <dt>legend</dt>
+<dd><p>logical to indicate whether a legend should be added to the plot (the default is <code>FALSE</code>). Can also be a keyword to indicate the position of the legend (see <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code>).</p></dd>
+
+   <dt>pi</dt>
+<dd><p>logical to indicate whether the prediction interval region should be shown in the plot (the default is <code>FALSE</code>). Can also be a string to specify the color for shading the prediction region.</p></dd>
 
    <dt>add</dt>
 <dd><p>See the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
@@ -158,7 +165,7 @@
 <dd><p>logical to specify whether a grid should be added to the plot (the default is <code>FALSE</code>). Can also be a color name.</p></dd>
 
    <dt>lty</dt>
-<dd><p>optional character vector to specify the line type for the diagonal reference line of no effect, the line that indicates the estimated effect based on the fitted model, and the corresponding confidence interval region. If unspecified, the function sets this to <code>c("solid","dashed","dotted")</code> by default (use <code>"blank"</code> to suppress a line).</p></dd>
+<dd><p>optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model. If unspecified, the function sets this to <code>c("solid","dashed")</code> by default (use <code>"blank"</code> to suppress a line).</p></dd>
 
    <dt>...</dt>
 <dd><p>other arguments.</p></dd>
@@ -170,7 +177,7 @@
 <p>The function calculates the arm-level outcomes for the two groups (e.g., treatment and control) and plots them against each other. In particular, the function plots the raw proportions of the two groups against each other when analyzing risk differences, the log of the proportions when analyzing (log) risk ratios, the log odds when analyzing (log) odds ratios, the arcsine square root transformed proportions when analyzing arcsine square root transformed risk differences, the raw incidence rates when analyzing incidence rate differences, the log of the incidence rates when analyzing (log) incidence rate ratios, and the square root transformed incidence rates when analyzing square root transformed incidence rate differences. The <code>transf</code> argument can be used to transform these values (e.g., <code>transf=exp</code> to transform the log of the proportions back to raw proportions; see also <a href="transf.html">transf</a>).</p>
 <p>As described under the documentation for the <code><a href="escalc.html">escalc</a></code> function, zero cells can lead to problems when calculating particular outcomes. Adding a small constant to the cells of the <em></em>\(2 \times 2\) tables is a common solution to this problem. By default, the functions adopts the same method for handling zero cells as was used when fitting the model.</p>
 <p>By default (i.e., when <code>psize</code> is not specified), the point sizes are a function of the precision (i.e., inverse standard errors) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard errors of the estimates, their areas are proportional to the inverse sampling variances, which corresponds to the weights they would receive in an equal-effects model. However, the point sizes are rescaled so that the smallest point size is <code>plim[1]</code> and the largest point size is <code>plim[2]</code>. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set <code>plim[2]</code> to <code>NA</code>, in which case the points are rescaled so that the smallest point size corresponds to <code>plim[1]</code> and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set <code>plim[1]</code> to <code>NA</code>, in which case the points are rescaled so that the largest point size corresponds to <code>plim[2]</code> and all other points are scaled accordingly. As a result, the smallest point may be very small. To avoid the latter, one can also set <code>plim[3]</code>, which enforces a minimal point size.</p>
-<p>The solid line corresponds to identical outcomes in the two groups (i.e., the absence of a difference between the two groups). The dashed line indicates the estimated effect based on the fitted model. If <code>ci=TRUE</code>, then the shaded region indicates the corresponding confidence interval.</p>
+<p>The solid line corresponds to identical outcomes in the two groups (i.e., the absence of a difference between the two groups). The dashed line indicates the estimated effect based on the fitted model. If <code>ci=TRUE</code>, then the darker shaded region indicates the corresponding confidence interval. If <code>pi=TRUE</code>, then the lighter shaded region indicates the corresponding prediction interval.</p>
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -219,19 +226,44 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### meta-analysis of the log risk ratios using a random-effects model</span></span></span>
-<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### meta-analysis of log odds ratios using a random-effects model</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.damico2009.html" class="external-link">dat.damico2009</a></span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">xt</span>, n1i<span class="op">=</span><span class="va">nt</span>, ci<span class="op">=</span><span class="va">xc</span>, n2i<span class="op">=</span><span class="va">nc</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 16; tau^2 estimator: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of total heterogeneity): 0.2337 (SE = 0.1574)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):      0.4835</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (total heterogeneity / total variability):   61.81%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (total variability / sampling variability):  2.62</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Q(df = 15) = 33.5329, p-val = 0.0040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se     zval    pval    ci.lb    ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  -1.3001  0.1700  -7.6483  &lt;.0001  -1.6333  -0.9669  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### default plot</span></span></span>
+<span class="r-in"><span><span class="co">### default plot with log odds on the x- and y-axis</span></span></span>
 <span class="r-in"><span><span class="fu">labbe</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="labbe-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### plot with risk values on the x- and y-axis and some further customization</span></span></span>
-<span class="r-in"><span><span class="fu">labbe</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span>, grid<span class="op">=</span><span class="cn">TRUE</span>, ci<span class="op">=</span><span class="cn">TRUE</span>, bty<span class="op">=</span><span class="st">"l"</span>, lty<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topleft"</span>, inset<span class="op">=</span><span class="fl">0.02</span>, bg<span class="op">=</span><span class="st">"white"</span>, pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>,<span class="cn">NA</span>,<span class="fl">22</span><span class="op">)</span>, pt.cex<span class="op">=</span><span class="fl">2.5</span>, pt.lwd<span class="op">=</span><span class="fl">0</span>,</span></span>
-<span class="r-in"><span>       pt.bg<span class="op">=</span><span class="st">"lightgray"</span>, lty<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span>, legend<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Reference Line of No Effect"</span>,</span></span>
-<span class="r-in"><span>       <span class="st">"Line for the Estimated Effect"</span>, <span class="st">"95% Confidence Interval"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">### plot with odds values on the x- and y-axis and some further customization</span></span></span>
+<span class="r-in"><span><span class="fu">labbe</span><span class="op">(</span><span class="va">res</span>, ci<span class="op">=</span><span class="cn">TRUE</span>, pi<span class="op">=</span><span class="cn">TRUE</span>, grid<span class="op">=</span><span class="cn">TRUE</span>, legend<span class="op">=</span><span class="cn">TRUE</span>, bty<span class="op">=</span><span class="st">"l"</span>,</span></span>
+<span class="r-in"><span>      transf<span class="op">=</span><span class="va">exp</span>, xlab<span class="op">=</span><span class="st">"Odds (Control Group)"</span>, ylab<span class="op">=</span><span class="st">"Odds (Treatment Group)"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="labbe-2.png" alt="" width="864" height="768"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### plot with risk values on the x- and y-axis and some further customization</span></span></span>
+<span class="r-in"><span><span class="fu">labbe</span><span class="op">(</span><span class="va">res</span>, ci<span class="op">=</span><span class="cn">TRUE</span>, pi<span class="op">=</span><span class="cn">TRUE</span>, grid<span class="op">=</span><span class="cn">TRUE</span>, legend<span class="op">=</span><span class="cn">TRUE</span>, bty<span class="op">=</span><span class="st">"l"</span>,</span></span>
+<span class="r-in"><span>      transf<span class="op">=</span><span class="va">plogis</span>, lim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, xlab<span class="op">=</span><span class="st">"Risk (Control Group)"</span>,</span></span>
+<span class="r-in"><span>      ylab<span class="op">=</span><span class="st">"Risk (Treatment Group)"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="labbe-3.png" alt="" width="864" height="768"></span>
 </code></pre></div>
     </div>
   </div>

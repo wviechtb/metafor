@@ -8,7 +8,8 @@
 \usage{
 labbe(x, \dots)
 
-\method{labbe}{rma}(x, xlim, ylim, lim, xlab, ylab, ci=FALSE,
+\method{labbe}{rma}(x, xlim, ylim, lim, xlab, ylab,
+      ci=FALSE, pi=FALSE, legend=FALSE,
       add=x$add, to=x$to, transf, targs,
       pch=21, psize, plim=c(0.5,3.5),
       col, bg, grid=FALSE, lty, \dots)
@@ -21,6 +22,8 @@ labbe(x, \dots)
    \item{xlab}{title for the x-axis. If unspecified, the function sets an appropriate axis title.}
    \item{ylab}{title for the y-axis. If unspecified, the function sets an appropriate axis title.}
    \item{ci}{logical to indicate whether the confidence interval region should be shown in the plot (the default is \code{FALSE}). Can also be a string to specify the color for shading the confidence region.}
+   \item{legend}{logical to indicate whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to indicate the position of the legend (see \code{\link{legend}}).}
+   \item{pi}{logical to indicate whether the prediction interval region should be shown in the plot (the default is \code{FALSE}). Can also be a string to specify the color for shading the prediction region.}
    \item{add}{See the documentation of the \code{\link{escalc}} function for more details.}
    \item{to}{See the documentation of the \code{\link{escalc}} function for more details.}
    \item{transf}{optional argument to specify a function to transform the outcomes (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
@@ -31,7 +34,7 @@ labbe(x, \dots)
    \item{col}{optional character string to specify the (border) color of the points. Can also be a vector.}
    \item{bg}{optional character string to specify the background color of open plot symbols. Can also be a vector. Set to \code{NA} to make the plotting symbols transparent.}
    \item{grid}{logical to specify whether a grid should be added to the plot (the default is \code{FALSE}). Can also be a color name.}
-   \item{lty}{optional character vector to specify the line type for the diagonal reference line of no effect, the line that indicates the estimated effect based on the fitted model, and the corresponding confidence interval region. If unspecified, the function sets this to \code{c("solid","dashed","dotted")} by default (use \code{"blank"} to suppress a line).}
+   \item{lty}{optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model. If unspecified, the function sets this to \code{c("solid","dashed")} by default (use \code{"blank"} to suppress a line).}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -43,7 +46,7 @@ labbe(x, \dots)
 
    By default (i.e., when \code{psize} is not specified), the point sizes are a function of the precision (i.e., inverse standard errors) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard errors of the estimates, their areas are proportional to the inverse sampling variances, which corresponds to the weights they would receive in an equal-effects model. However, the point sizes are rescaled so that the smallest point size is \code{plim[1]} and the largest point size is \code{plim[2]}. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set \code{plim[2]} to \code{NA}, in which case the points are rescaled so that the smallest point size corresponds to \code{plim[1]} and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set \code{plim[1]} to \code{NA}, in which case the points are rescaled so that the largest point size corresponds to \code{plim[2]} and all other points are scaled accordingly. As a result, the smallest point may be very small. To avoid the latter, one can also set \code{plim[3]}, which enforces a minimal point size.
 
-   The solid line corresponds to identical outcomes in the two groups (i.e., the absence of a difference between the two groups). The dashed line indicates the estimated effect based on the fitted model. If \code{ci=TRUE}, then the shaded region indicates the corresponding confidence interval.
+   The solid line corresponds to identical outcomes in the two groups (i.e., the absence of a difference between the two groups). The dashed line indicates the estimated effect based on the fitted model. If \code{ci=TRUE}, then the darker shaded region indicates the corresponding confidence interval. If \code{pi=TRUE}, then the lighter shaded region indicates the corresponding prediction interval.
 }
 \value{
    A data frame with components:
@@ -69,16 +72,21 @@ labbe(x, \dots)
    \code{\link{rma.uni}}, \code{\link{rma.mh}}, \code{\link{rma.peto}}, and \code{\link{rma.glmm}} for functions to fit models for which \enc{L'Abbé}{L'Abbe} plots can be drawn.
 }
 \examples{
-### meta-analysis of the log risk ratios using a random-effects model
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+### meta-analysis of log odds ratios using a random-effects model
+dat <- dat.damico2009
+res <- rma(measure="OR", ai=xt, n1i=nt, ci=xc, n2i=nc, data=dat)
+res
 
-### default plot
+### default plot with log odds on the x- and y-axis
 labbe(res)
 
+### plot with odds values on the x- and y-axis and some further customization
+labbe(res, ci=TRUE, pi=TRUE, grid=TRUE, legend=TRUE, bty="l",
+      transf=exp, xlab="Odds (Control Group)", ylab="Odds (Treatment Group)")
+
 ### plot with risk values on the x- and y-axis and some further customization
-labbe(res, transf=exp, grid=TRUE, ci=TRUE, bty="l", lty=c(1,2,0))
-legend("topleft", inset=0.02, bg="white", pch=c(NA,NA,22), pt.cex=2.5, pt.lwd=0,
-       pt.bg="lightgray", lty=c(1,2,0), legend=c("Reference Line of No Effect",
-       "Line for the Estimated Effect", "95\% Confidence Interval"))
+labbe(res, ci=TRUE, pi=TRUE, grid=TRUE, legend=TRUE, bty="l",
+      transf=plogis, lim=c(0,1), xlab="Risk (Control Group)",
+      ylab="Risk (Treatment Group)")
 }
 \keyword{hplot}
