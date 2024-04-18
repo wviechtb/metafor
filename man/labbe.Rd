@@ -75,7 +75,10 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 ### default plot
 labbe(res)
 
-### plot with risk values on the x- and y-axis, a grid, and the CI region
-labbe(res, transf=exp, grid=TRUE, ci=TRUE, bty="l")
+### plot with risk values on the x- and y-axis and some further customization
+labbe(res, transf=exp, grid=TRUE, ci=TRUE, bty="l", lty=c(1,2,0))
+legend("topleft", inset=0.02, bg="white", pch=c(NA,NA,22), pt.cex=2.5, pt.lwd=0,
+       pt.bg="lightgray", lty=c(1,2,0), legend=c("Reference Line of No Effect",
+       "Line for the Estimated Effect", "95\% Confidence Interval"))
 }
 \keyword{hplot}
