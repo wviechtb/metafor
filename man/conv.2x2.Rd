@@ -15,7 +15,7 @@ conv.2x2(ori, ri, x2i, ni, n1i, n2i, correct=TRUE, data, include,
    \item{ni}{vector with the total sample sizes.}
    \item{n1i}{vector with the marginal counts for the outcome of interest on the first variable.}
    \item{n2i}{vector with the marginal counts for the outcome of interest on the second variable.}
-   \item{correct}{optional logical (or vector thereof) to indicate whether chi-square statistics were computed using Yates's correction for continuity (the default is \code{TRUE}).}
+   \item{correct}{optional logical (or vector thereof) to specify whether chi-square statistics were computed using Yates's correction for continuity (the default is \code{TRUE}).}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{include}{optional (logical or numeric) vector to specify the subset of studies for which the cell frequencies should be reconstructed.}
    \item{var.names}{character vector with four elements to specify the names of the variables for the reconstructed cell frequencies (the default is \code{c("ai","bi","ci","di")}).}

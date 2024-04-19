@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-9</span>
       </span>
     </div>
 
@@ -189,7 +189,7 @@
 <h3 id="simulating-the-distribution-of-g-vifs-under-independence">Simulating the Distribution of (G)VIFs Under Independence<a class="anchor" aria-label="anchor" href="#simulating-the-distribution-of-g-vifs-under-independence"></a></h3>
 
 
-<p>As a more principled approach, we can simulate the distribution of a particular (G)VIF under independence and then examine how extreme the actually observed (G)VIF value is under this distribution. The distribution is simulated by randomly reshuffling the columns of the model matrix (to break any dependence between the moderators) and recomputing the (G)VIF. When setting <code>sim=TRUE</code>, this is done 1000 times (but one can also set <code>sim</code> to an integer to indicate how many (G)VIF values should be simulated).</p>
+<p>As a more principled approach, we can simulate the distribution of a particular (G)VIF under independence and then examine how extreme the actually observed (G)VIF value is under this distribution. The distribution is simulated by randomly reshuffling the columns of the model matrix (to break any dependence between the moderators) and recomputing the (G)VIF. When setting <code>sim=TRUE</code>, this is done 1000 times (but one can also set <code>sim</code> to an integer to specify how many (G)VIF values should be simulated).</p>
 <p>The way the model matrix is reshuffled depends on how the model was fitted. When the model was specified as a formula via the <code>mods</code> argument and the data was supplied via the <code>data</code> argument, then each column of the data frame specified via <code>data</code> is reshuffled and the formula is evaluated within the reshuffled data (creating the corresponding reshuffled model matrix). This way, factor/character variables are properly reshuffled and derived terms (e.g., interactions, polynomials, splines) are correct constructed. This is the recommended approach.</p>
 <p>On the other hand, if the model matrix was directly supplied to the <code>mods</code> argument, then each column of the matrix is directly reshuffled. This is not recommended, since this approach cannot account for any inherent relationships between variables in the model matrix (e.g., an interaction term is the product of two variables and should not be reshuffled by itself).</p>
 <p>Once the distribution of a (G)VIF under independence has been simulated, the proportion of simulated values that are smaller than the actually observed (G)VIF value is computed. If the proportion is close to 1, then this indicates that the actually observed (G)VIF value is extreme.</p>
@@ -369,7 +369,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

@@ -21,10 +21,10 @@ regplot(x, \dots)
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}, \code{"rma.mv"}, or \code{"rma.glmm"} including one or multiple moderators (or an object of class \code{"regplot"} for \code{points}).}
    \item{mod}{either a scalar to specify the position of the moderator variable in the model or a character string to specify the name of the moderator variable.}
-   \item{pred}{logical to indicate whether the (marginal) regression line based on the moderator should be added to the plot (the default is \code{TRUE}). Can also be an object from \code{\link[=predict.rma]{predict}}. See \sQuote{Details}.}
-   \item{ci}{logical to indicate whether the corresponding confidence interval bounds should be added to the plot (the default is \code{TRUE}).}
-   \item{pi}{logical to indicate whether the corresponding prediction interval bounds should be added to the plot (the default is \code{FALSE}).}
-   \item{shade}{logical to indicate whether the confidence/prediction interval regions should be shaded (the default is \code{TRUE}). Can also be a two-element character vector to specify the colors for shading the confidence and prediction interval regions (if shading only the former, a single color can also be specified).}
+   \item{pred}{logical to specify whether the (marginal) regression line based on the moderator should be added to the plot (the default is \code{TRUE}). Can also be an object from \code{\link[=predict.rma]{predict}}. See \sQuote{Details}.}
+   \item{ci}{logical to specify whether the corresponding confidence interval bounds should be added to the plot (the default is \code{TRUE}).}
+   \item{pi}{logical to specify whether the corresponding prediction interval bounds should be added to the plot (the default is \code{FALSE}).}
+   \item{shade}{logical to specify whether the confidence/prediction interval regions should be shaded (the default is \code{TRUE}). Can also be a two-element character vector to specify the colors for shading the confidence and prediction interval regions (if shading only the former, a single color can also be specified).}
    \item{xlim}{x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.}
    \item{ylim}{y-axis limits. If unspecified, the function sets the y-axis limits to some sensible values.}
    \item{predlim}{optional argument to specify the limits of the (marginal) regression line. If unspecified, the limits are based on the range of the moderator variable.}
@@ -51,7 +51,7 @@ regplot(x, \dots)
    \item{lcol}{optional vector of (up to) four elements to specify the color of the regression line, of the confidence interval bounds, of the prediction interval bounds, and of the horizontal reference line.}
    \item{lty}{optional vector of (up to) four elements to specify the line type of the regression line, of the confidence interval bounds, of the prediction interval bounds, and of the horizontal reference line.}
    \item{lwd}{optional vector of (up to) four elements to specify the line width of the regression line, of the confidence interval bounds, of the prediction interval bounds, and of the horizontal reference line.}
-   \item{legend}{logical to indicate whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to indicate the position of the legend (see \code{\link{legend}}).}
+   \item{legend}{logical to specify whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to specify the position of the legend (see \code{\link{legend}}).}
    \item{xvals}{optional numeric vector to specify the values of the moderator for which predicted values should be computed. Needs to be specified when passing an object from \code{\link[=predict.rma]{predict}} to the \code{pred} argument. See \sQuote{Details}.}
    \item{\dots}{other arguments.}
 }

@@ -8,11 +8,11 @@
 \usage{
 labbe(x, \dots)
 
-\method{labbe}{rma}(x, xlim, ylim, lim, xlab, ylab,
-      ci=FALSE, pi=FALSE, legend=FALSE,
+\method{labbe}{rma}(x, xlim, ylim, lim, xlab, ylab, flip=FALSE,
+      ci=FALSE, pi=FALSE, grid=FALSE, legend=FALSE,
       add=x$add, to=x$to, transf, targs,
       pch=21, psize, plim=c(0.5,3.5),
-      col, bg, grid=FALSE, lty, \dots)
+      col, bg, lty, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
@@ -21,9 +21,11 @@ labbe(x, \dots)
    \item{lim}{axis limits. If specified, this is used for both \code{xlim} and \code{ylim}.}
    \item{xlab}{title for the x-axis. If unspecified, the function sets an appropriate axis title.}
    \item{ylab}{title for the y-axis. If unspecified, the function sets an appropriate axis title.}
-   \item{ci}{logical to indicate whether the confidence interval region should be shown in the plot (the default is \code{FALSE}). Can also be a string to specify the color for shading the confidence region.}
-   \item{legend}{logical to indicate whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to indicate the position of the legend (see \code{\link{legend}}).}
-   \item{pi}{logical to indicate whether the prediction interval region should be shown in the plot (the default is \code{FALSE}). Can also be a string to specify the color for shading the prediction region.}
+   \item{flip}{logical to specify whether the groups to plot on the x- and y-axis should be flipped (the default is \code{FALSE}).}
+   \item{ci}{logical to specify whether the confidence interval region should be shown in the plot (the default is \code{FALSE}). Can also be a color name.}
+   \item{pi}{logical to specify whether the prediction interval region should be shown in the plot (the default is \code{FALSE}). Can also be a color name.}
+   \item{grid}{logical to specify whether a grid should be added to the plot (the default is \code{FALSE}). Can also be a color name.}
+   \item{legend}{logical to specify whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to specify the position of the legend (see \code{\link{legend}}).}
    \item{add}{See the documentation of the \code{\link{escalc}} function for more details.}
    \item{to}{See the documentation of the \code{\link{escalc}} function for more details.}
    \item{transf}{optional argument to specify a function to transform the outcomes (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
@@ -33,7 +35,6 @@ labbe(x, \dots)
    \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
    \item{col}{optional character string to specify the (border) color of the points. Can also be a vector.}
    \item{bg}{optional character string to specify the background color of open plot symbols. Can also be a vector. Set to \code{NA} to make the plotting symbols transparent.}
-   \item{grid}{logical to specify whether a grid should be added to the plot (the default is \code{FALSE}). Can also be a color name.}
    \item{lty}{optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model. If unspecified, the function sets this to \code{c("solid","dashed")} by default (use \code{"blank"} to suppress a line).}
    \item{\dots}{other arguments.}
 }
@@ -82,11 +83,11 @@ res
 ### default plot with log odds on the x- and y-axis
 labbe(res)
 
-### plot with odds values on the x- and y-axis and some further customization
+### plot with odds values on the x- and y-axis and some customization
 labbe(res, ci=TRUE, pi=TRUE, grid=TRUE, legend=TRUE, bty="l",
       transf=exp, xlab="Odds (Control Group)", ylab="Odds (Treatment Group)")
 
-### plot with risk values on the x- and y-axis and some further customization
+### plot with risk values on the x- and y-axis and some customization
 labbe(res, ci=TRUE, pi=TRUE, grid=TRUE, legend=TRUE, bty="l",
       transf=plogis, lim=c(0,1), xlab="Risk (Control Group)",
       ylab="Risk (Treatment Group)")

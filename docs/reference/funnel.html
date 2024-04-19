@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-9</span>
       </span>
     </div>
 
@@ -133,7 +133,7 @@
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the plot. Only relevant when passing a vector via <code>x</code>.</p></dd>
 
    <dt>yaxis</dt>
-<dd><p>either <code>"sei"</code>, <code>"vi"</code>, <code>"seinv"</code>, <code>"vinv"</code>, <code>"ni"</code>, <code>"ninv"</code>, <code>"sqrtni"</code>, <code>"sqrtninv"</code>, <code>"lni"</code>, or <code>"wi"</code> to indicate what values should be placed on the y-axis. See ‘Details’.</p></dd>
+<dd><p>either <code>"sei"</code>, <code>"vi"</code>, <code>"seinv"</code>, <code>"vinv"</code>, <code>"ni"</code>, <code>"ninv"</code>, <code>"sqrtni"</code>, <code>"sqrtninv"</code>, <code>"lni"</code>, or <code>"wi"</code> to specify what values should be placed on the y-axis. See ‘Details’.</p></dd>
 
    <dt>xlim</dt>
 <dd><p>x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.</p></dd>
@@ -169,7 +169,7 @@
 <dd><p>numeric value between 0 and 100 to specify the level of the pseudo confidence interval region (see <a href="misc-options.html">here</a> for details). For <code>"rma"</code> objects, the default is to take the value from the object. May also be a vector of values to obtain multiple regions. See ‘Examples’.</p></dd>
 
    <dt>addtau2</dt>
-<dd><p>logical to indicate whether the amount of heterogeneity should be accounted for when drawing the pseudo confidence interval region (the default is <code>FALSE</code>). Ignored when <code>x</code> is a meta-regression model and residuals are plotted. See ‘Details’.</p></dd>
+<dd><p>logical to specify whether the amount of heterogeneity should be accounted for when drawing the pseudo confidence interval region (the default is <code>FALSE</code>). Ignored when <code>x</code> is a meta-regression model and residuals are plotted. See ‘Details’.</p></dd>
 
    <dt>type</dt>
 <dd><p>either <code>"rstandard"</code> (default) or <code>"rstudent"</code> to specify whether the usual or deleted residuals should be used in creating the funnel plot when <code>x</code> is a meta-regression model. See ‘Details’.</p></dd>
@@ -208,7 +208,7 @@
 <dd><p>argument to control the distance between the points and the corresponding labels.</p></dd>
 
    <dt>legend</dt>
-<dd><p>logical to indicate whether a legend should be added to the plot (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
+<dd><p>logical to specify whether a legend should be added to the plot (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
 
    <dt>...</dt>
 <dd><p>other arguments.</p></dd>
@@ -234,7 +234,7 @@
 <p>One can also directly pass a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances (via <code>vi</code>), standard errors (via <code>sei</code>), and/or sample sizes (via <code>ni</code>) to the function. By default, the vertical reference line is then drawn at zero.</p>
 <p>The arguments <code>back</code>, <code>shade</code>, and <code>hlines</code> can be set to <code>NULL</code> to suppress the shading and the horizontal reference line. One can also suppress the funnel by setting <code>refline</code> to <code>NULL</code>.</p>
 <p>With the <code>label</code> argument, one can control whether points in the plot will be labeled. If <code>label="all"</code> (or <code>label=TRUE</code>), all points in the plot will be labeled. If <code>label="out"</code>, points falling outside of the pseudo confidence region will be labeled. Finally, one can also set this argument to a numeric value (between 1 and <em></em>\(k\)) to specify how many of the most extreme points should be labeled (e.g., with <code>label=1</code> only the most extreme point are labeled, while with <code>label=3</code>, the most extreme, and the second and third most extreme points are labeled). With the <code>offset</code> argument, one can adjust the distance between the labels and the corresponding points.</p>
-<p>By setting the <code>legend</code> argument to <code>TRUE</code>, a legend is added to the plot. One can also specify a keyword for this argument to indicate the position of the legend (e.g., <code>legend="topleft"</code>; see <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code> for options). Finally, this argument can also be a list, with elements <code>x</code>, <code>y</code>, <code>inset</code>, <code>bty</code>, and <code>bg</code>, which are passed on as the corresponding arguments to the <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code> function for even more control (elements not specified are set to defaults). The list can also include elements <code>studies</code> (a logical to indicate whether to include ‘Studies’ in the legend; default is <code>TRUE</code>) and <code>show</code> (either <code>"pvals"</code> to show the p-values corresponding to the shade regions, <code>"cis"</code> to show the confidence interval levels corresponding to the shade regions, or <code>NA</code> to show neither; default is <code>"pvals"</code>).</p>
+<p>By setting the <code>legend</code> argument to <code>TRUE</code>, a legend is added to the plot. One can also use a keyword for this argument to specify the position of the legend (e.g., <code>legend="topleft"</code>; see <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code> for options). Finally, this argument can also be a list, with elements <code>x</code>, <code>y</code>, <code>inset</code>, <code>bty</code>, and <code>bg</code>, which are passed on as the corresponding arguments to the <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code> function for even more control (elements not specified are set to defaults). The list can also include elements <code>studies</code> (a logical to specify whether to include ‘Studies’ in the legend; default is <code>TRUE</code>) and <code>show</code> (either <code>"pvals"</code> to show the p-values corresponding to the shade regions, <code>"cis"</code> to show the confidence interval levels corresponding to the shade regions, or <code>NA</code> to show neither; default is <code>"pvals"</code>).</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -394,7 +394,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

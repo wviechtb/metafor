@@ -34,7 +34,7 @@ gosh(x, \dots)
 }
 \value{
    An object of class \code{"gosh.rma"}. The object is a list containing the following components:
-   \item{res}{a data frame with the results for each subset (various heterogeneity statistics and the model coefficient(s)).}
+   \item{res}{a data frame with the results for each subset (including various heterogeneity statistics and the model coefficient(s)).}
    \item{incl}{a matrix indicating which studies were included in which subset.}
    \item{\dots}{some additional elements/values.}
 

@@ -11,7 +11,7 @@
 \arguments{
    \item{x}{an object of class \code{"vif.rma"} obtained with \code{\link[=vif.rma]{vif}}.}
    \item{breaks}{argument to be passed on to the corresponding argument of \code{\link{hist}} to set (the method for determining) the (number of) breakpoints.}
-   \item{freq}{logical to indicate whether frequencies or probability densities should be plotted (the default is \code{FALSE} to plot densities).}
+   \item{freq}{logical to specify whether frequencies (if \code{TRUE}) or probability densities should be plotted (the default is \code{FALSE}).}
    \item{col}{optional character string to specify the color of the histogram bars.}
    \item{border}{optional character string to specify the color of the borders around the bars.}
    \item{col.out}{optional character string to specify the color of the bars that are more extreme than the observed (G)VIF value (the default is a semi-transparent shade of red).}

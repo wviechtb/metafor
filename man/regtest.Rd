@@ -15,8 +15,8 @@ regtest(x, vi, sei, ni, subset, data,
    \item{ni}{optional vector with the corresponding sample sizes (only relevant when using the sample sizes (or a transformation thereof) as predictor).}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the test (ignored if \code{x} is an object of class \code{"rma"}).}
    \item{data}{optional data frame containing the variables given to the arguments above.}
-   \item{model}{either \code{"rma"} or \code{"lm"} to indicate the type of model to use for the regression test. See \sQuote{Details}.}
-   \item{predictor}{either \code{"sei"} \code{"vi"}, \code{"ni"}, \code{"ninv"}, \code{"sqrtni"}, or \code{"sqrtninv"} to indicate the predictor to use for the regression test. See \sQuote{Details}.}
+   \item{model}{either \code{"rma"} or \code{"lm"} to specify the type of model to use for the regression test. See \sQuote{Details}.}
+   \item{predictor}{either \code{"sei"} \code{"vi"}, \code{"ni"}, \code{"ninv"}, \code{"sqrtni"}, or \code{"sqrtninv"} to specify the predictor to use for the regression test. See \sQuote{Details}.}
    \item{ret.fit}{logical to specify whether the full results from the fitted model should also be returned.}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded.}
    \item{\dots}{other arguments.}

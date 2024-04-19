@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-9</span>
       </span>
     </div>
 
@@ -243,10 +243,10 @@
 <p></p><ul><li><p><code>order="obs"</code>: the studies are ordered by the observed outcomes,</p></li>
 <li><p><code>order="prec"</code>: the studies are ordered by their sampling variances.</p></li>
 </ul><p>Alternatively, it is also possible to set <code>order</code> equal to a variable based on which the studies will be ordered (see ‘Examples’).</p>
-<p>Additional columns with information about the studies can be added to the plot via the <code>ilab</code> argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The <code>ilab.xpos</code> argument can then also be specified to indicate the horizontal position of the variables specified via <code>ilab</code>.</p>
+<p>Additional columns with information about the studies can be added to the plot via the <code>ilab</code> argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The <code>ilab.xpos</code> argument can then also be used to specify the horizontal position of the variables specified via <code>ilab</code>.</p>
 <p>Summary estimates can be added to the plot with the <code><a href="addpoly.html">addpoly</a></code> function. See the documentation for that function for examples.</p>
 <p>By default (i.e., when <code>psize</code> is not specified), the point sizes are a function of the precision (i.e., inverse standard errors) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard errors of the estimates, their areas are proportional to the inverse sampling variances, which corresponds to the weights they would receive in an equal-effects model. However, the point sizes are rescaled so that the smallest point size is <code>plim[1]</code> and the largest point size is <code>plim[2]</code>. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set <code>plim[2]</code> to <code>NA</code>, in which case the points are rescaled so that the smallest point size corresponds to <code>plim[1]</code> and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set <code>plim[1]</code> to <code>NA</code>, in which case the points are rescaled so that the largest point size corresponds to <code>plim[2]</code> and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set <code>plim[3]</code>, which enforces a minimal point size.</p>
-<p>With the <code>shade</code> argument, one can shade rows of the plot. The argument can be set to one of the following character strings: <code>"zebra"</code> (same as <code>shade=TRUE</code>) or <code>"zebra2"</code> to use zebra-style shading (starting either at the first or second study) or to <code>"all"</code> in which case all rows are shaded. Alternatively, the argument can be set to a logical or numeric vector to indicates which rows should be shaded. The <code>colshade</code> argument can be used to set the color of shaded rows.</p>
+<p>With the <code>shade</code> argument, one can shade rows of the plot. The argument can be set to one of the following character strings: <code>"zebra"</code> (same as <code>shade=TRUE</code>) or <code>"zebra2"</code> to use zebra-style shading (starting either at the first or second study) or to <code>"all"</code> in which case all rows are shaded. Alternatively, the argument can be set to a logical or numeric vector to specify which rows should be shaded. The <code>colshade</code> argument can be used to set the color of shaded rows.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -338,7 +338,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

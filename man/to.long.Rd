@@ -38,7 +38,7 @@ to.long(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{to}{see the documentation of the \code{\link{escalc}} function.}
    \item{drop00}{see the documentation of the \code{\link{escalc}} function.}
    \item{vlong}{optional logical whether a very long format should be used (only relevant for \mjeqn{2 \times 2}{2x2} or \mjeqn{1 \times 2}{1x2} table data).}
-   \item{append}{logical to specify whether the data frame specified via the \code{data} argument (if one has been specified) should be returned together with the long format data (the default is \code{TRUE}). Can also be a character or numeric vector to indicate which variables from \code{data} to append.}
+   \item{append}{logical to specify whether the data frame specified via the \code{data} argument (if one has been specified) should be returned together with the long format data (the default is \code{TRUE}). Can also be a character or numeric vector to specify which variables from \code{data} to append.}
    \item{var.names}{optional character vector with variable names (the length depends on the data type). If unspecified, the function sets appropriate variable names by default.}
 }
 \details{

@@ -18,7 +18,7 @@ fsn(x, vi, sei, subset, data, type, alpha=.05, target,
    \item{alpha}{target alpha level for the Rosenthal, Rosenberg, and General methods (the default is .05).}
    \item{target}{target average effect size or outcome for the Orwin and General methods.}
    \item{method}{optional character string to specify the model fitting method for \code{type="General"} (if unspecified, either \code{"REML"} by default or the method that was used in fitting the \code{"rma"} model). See \code{\link{rma.uni}} for options.}
-   \item{exact}{logical to indicate whether the general method should be based on exact (but slower) or approximate (but faster) calculations.}
+   \item{exact}{logical to specify whether the general method should be based on exact (but slower) or approximate (but faster) calculations.}
    \item{verbose}{logical to specify whether output should be generated on the progress of the calculations for \code{type="General"} (the default is \code{FALSE}).}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded.}
    \item{\dots}{other arguments.}

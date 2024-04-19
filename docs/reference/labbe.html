@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-9</span>
       </span>
     </div>
 
@@ -98,11 +98,11 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">labbe</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for rma</span></span>
-<span><span class="fu">labbe</span><span class="op">(</span><span class="va">x</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">lim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>,</span>
-<span>      ci<span class="op">=</span><span class="cn">FALSE</span>, pi<span class="op">=</span><span class="cn">FALSE</span>, legend<span class="op">=</span><span class="cn">FALSE</span>,</span>
+<span><span class="fu">labbe</span><span class="op">(</span><span class="va">x</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, <span class="va">lim</span>, <span class="va">xlab</span>, <span class="va">ylab</span>, flip<span class="op">=</span><span class="cn">FALSE</span>,</span>
+<span>      ci<span class="op">=</span><span class="cn">FALSE</span>, pi<span class="op">=</span><span class="cn">FALSE</span>, grid<span class="op">=</span><span class="cn">FALSE</span>, legend<span class="op">=</span><span class="cn">FALSE</span>,</span>
 <span>      add<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">add</span>, to<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">to</span>, <span class="va">transf</span>, <span class="va">targs</span>,</span>
 <span>      pch<span class="op">=</span><span class="fl">21</span>, <span class="va">psize</span>, plim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>,<span class="fl">3.5</span><span class="op">)</span>,</span>
-<span>      <span class="va">col</span>, <span class="va">bg</span>, grid<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">lty</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>      <span class="va">col</span>, <span class="va">bg</span>, <span class="va">lty</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -125,14 +125,20 @@
    <dt>ylab</dt>
 <dd><p>title for the y-axis. If unspecified, the function sets an appropriate axis title.</p></dd>
 
-   <dt>ci</dt>
-<dd><p>logical to indicate whether the confidence interval region should be shown in the plot (the default is <code>FALSE</code>). Can also be a string to specify the color for shading the confidence region.</p></dd>
+   <dt>flip</dt>
+<dd><p>logical to specify whether the groups to plot on the x- and y-axis should be flipped (the default is <code>FALSE</code>).</p></dd>
 
-   <dt>legend</dt>
-<dd><p>logical to indicate whether a legend should be added to the plot (the default is <code>FALSE</code>). Can also be a keyword to indicate the position of the legend (see <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code>).</p></dd>
+   <dt>ci</dt>
+<dd><p>logical to specify whether the confidence interval region should be shown in the plot (the default is <code>FALSE</code>). Can also be a color name.</p></dd>
 
    <dt>pi</dt>
-<dd><p>logical to indicate whether the prediction interval region should be shown in the plot (the default is <code>FALSE</code>). Can also be a string to specify the color for shading the prediction region.</p></dd>
+<dd><p>logical to specify whether the prediction interval region should be shown in the plot (the default is <code>FALSE</code>). Can also be a color name.</p></dd>
+
+   <dt>grid</dt>
+<dd><p>logical to specify whether a grid should be added to the plot (the default is <code>FALSE</code>). Can also be a color name.</p></dd>
+
+   <dt>legend</dt>
+<dd><p>logical to specify whether a legend should be added to the plot (the default is <code>FALSE</code>). Can also be a keyword to specify the position of the legend (see <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code>).</p></dd>
 
    <dt>add</dt>
 <dd><p>See the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
@@ -160,9 +166,6 @@
 
    <dt>bg</dt>
 <dd><p>optional character string to specify the background color of open plot symbols. Can also be a vector. Set to <code>NA</code> to make the plotting symbols transparent.</p></dd>
-
-   <dt>grid</dt>
-<dd><p>logical to specify whether a grid should be added to the plot (the default is <code>FALSE</code>). Can also be a color name.</p></dd>
 
    <dt>lty</dt>
 <dd><p>optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model. If unspecified, the function sets this to <code>c("solid","dashed")</code> by default (use <code>"blank"</code> to suppress a line).</p></dd>
@@ -255,12 +258,12 @@
 <span class="r-in"><span><span class="fu">labbe</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="labbe-1.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### plot with odds values on the x- and y-axis and some further customization</span></span></span>
+<span class="r-in"><span><span class="co">### plot with odds values on the x- and y-axis and some customization</span></span></span>
 <span class="r-in"><span><span class="fu">labbe</span><span class="op">(</span><span class="va">res</span>, ci<span class="op">=</span><span class="cn">TRUE</span>, pi<span class="op">=</span><span class="cn">TRUE</span>, grid<span class="op">=</span><span class="cn">TRUE</span>, legend<span class="op">=</span><span class="cn">TRUE</span>, bty<span class="op">=</span><span class="st">"l"</span>,</span></span>
 <span class="r-in"><span>      transf<span class="op">=</span><span class="va">exp</span>, xlab<span class="op">=</span><span class="st">"Odds (Control Group)"</span>, ylab<span class="op">=</span><span class="st">"Odds (Treatment Group)"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="labbe-2.png" alt="" width="864" height="768"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### plot with risk values on the x- and y-axis and some further customization</span></span></span>
+<span class="r-in"><span><span class="co">### plot with risk values on the x- and y-axis and some customization</span></span></span>
 <span class="r-in"><span><span class="fu">labbe</span><span class="op">(</span><span class="va">res</span>, ci<span class="op">=</span><span class="cn">TRUE</span>, pi<span class="op">=</span><span class="cn">TRUE</span>, grid<span class="op">=</span><span class="cn">TRUE</span>, legend<span class="op">=</span><span class="cn">TRUE</span>, bty<span class="op">=</span><span class="st">"l"</span>,</span></span>
 <span class="r-in"><span>      transf<span class="op">=</span><span class="va">plogis</span>, lim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, xlab<span class="op">=</span><span class="st">"Risk (Control Group)"</span>,</span></span>
 <span class="r-in"><span>      ylab<span class="op">=</span><span class="st">"Risk (Treatment Group)"</span><span class="op">)</span></span></span>
@@ -279,7 +282,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

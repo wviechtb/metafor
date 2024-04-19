@@ -10,7 +10,7 @@ dfround(x, digits, drop0=TRUE)
 \arguments{
    \item{x}{a data frame.}
    \item{digits}{either a single integer or a numeric vector of the same length as there are columns in \code{x}.}
-   \item{drop0}{logical (or a vector thereof) indicating if trailing zeros after the decimal mark should be removed (the default is \code{TRUE}).}
+   \item{drop0}{logical (or a vector thereof) to specify whether trailing zeros after the decimal mark should be removed (the default is \code{TRUE}).}
 }
 \details{
    A simple convenience function to round the numeric variables in a data frame, possibly to different numbers of digits. Hence, \code{digits} can either be a single integer (which will then be used to round all numeric variables to the specified number of digits) or a numeric vector (of the same length as there are columns in \code{x}) to specify the number of digits to which each variable should be rounded.

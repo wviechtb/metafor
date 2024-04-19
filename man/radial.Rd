@@ -17,7 +17,7 @@ galbraith(x, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
-   \item{center}{logical to indicate whether the plot should be centered horizontally at the model estimate (the default is \code{FALSE}).}
+   \item{center}{logical to specify whether the plot should be centered horizontally at the model estimate (the default is \code{FALSE}).}
    \item{xlim}{x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.}
    \item{zlim}{z-axis limits. If unspecified, the function sets the z-axis limits to some sensible values (note that the z-axis limits are the actual vertical limit of the plotting region).}
    \item{xlab}{title for the x-axis. If unspecified, the function sets an appropriate axis title.}

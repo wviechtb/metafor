@@ -64,7 +64,7 @@ vif(x, \dots)
 
    \subsection{Simulating the Distribution of (G)VIFs Under Independence}{
 
-      As a more principled approach, we can simulate the distribution of a particular (G)VIF under independence and then examine how extreme the actually observed (G)VIF value is under this distribution. The distribution is simulated by randomly reshuffling the columns of the model matrix (to break any dependence between the moderators) and recomputing the (G)VIF. When setting \code{sim=TRUE}, this is done 1000 times (but one can also set \code{sim} to an integer to indicate how many (G)VIF values should be simulated).
+      As a more principled approach, we can simulate the distribution of a particular (G)VIF under independence and then examine how extreme the actually observed (G)VIF value is under this distribution. The distribution is simulated by randomly reshuffling the columns of the model matrix (to break any dependence between the moderators) and recomputing the (G)VIF. When setting \code{sim=TRUE}, this is done 1000 times (but one can also set \code{sim} to an integer to specify how many (G)VIF values should be simulated).
 
       The way the model matrix is reshuffled depends on how the model was fitted. When the model was specified as a formula via the \code{mods} argument and the data was supplied via the \code{data} argument, then each column of the data frame specified via \code{data} is reshuffled and the formula is evaluated within the reshuffled data (creating the corresponding reshuffled model matrix). This way, factor/character variables are properly reshuffled and derived terms (e.g., interactions, polynomials, splines) are correct constructed. This is the recommended approach.
 

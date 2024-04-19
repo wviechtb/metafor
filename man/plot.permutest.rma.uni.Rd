@@ -16,7 +16,7 @@
    \item{QM}{logical to specify whether the permutation distribution of the omnibus test of the (location) coefficients should be plotted (the default is \code{FALSE}).}
    \item{QS}{logical to specify whether the permutation distribution of the omnibus test of the scale coefficients should be plotted (the default is \code{FALSE}). Only relevant for location-scale models (see \code{\link{rma.uni}}).}
    \item{breaks}{argument to be passed on to the corresponding argument of \code{\link{hist}} to set (the method for determining) the (number of) breakpoints.}
-   \item{freq}{logical to indicate whether frequencies or probability densities should be plotted (the default is \code{FALSE} to plot densities).}
+   \item{freq}{logical to specify whether frequencies or probability densities should be plotted (the default is \code{FALSE} to plot densities).}
    \item{col}{optional character string to specify the color of the histogram bars.}
    \item{border}{optional character string to specify the color of the borders around the bars.}
    \item{col.out}{optional character string to specify the color of the bars that are more extreme than the observed test statistic (the default is a semi-transparent shade of red).}
@@ -26,7 +26,7 @@
    \item{adjust}{numeric value to be passed on to the corresponding argument of \code{\link{density}} (for adjusting the bandwidth of the kernel density estimate).}
    \item{lwd}{numeric vector to specify the width of the vertical lines corresponding to the value of the observed test statistic, of the theoretical reference/null distribution, of the density estimate, and of the vertical line at 0 (note: by default, the theoretical reference/null distribution and the density estimate both have a line width of 0 and are therefore not plotted).}
    \item{layout}{optional vector of two numbers to specify the number of rows and columns for the layout of the figure.}
-   \item{legend}{logical to indicate whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to indicate the position of the legend (see \code{\link{legend}}).}
+   \item{legend}{logical to specify whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to specify the position of the legend (see \code{\link{legend}}).}
    \item{\dots}{other arguments.}
 }
 \details{

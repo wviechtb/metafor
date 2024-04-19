@@ -1,5 +1,6 @@
-labbe.rma <- function(x, xlim, ylim, lim, xlab, ylab, ci=FALSE, pi=FALSE, legend=FALSE,
-add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid=FALSE, lty, ...) {
+labbe.rma <- function(x, xlim, ylim, lim, xlab, ylab, flip=FALSE,
+ci=FALSE, pi=FALSE, grid=FALSE, legend=FALSE,
+add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, lty, ...) {
 
    mstyle <- .get.mstyle()
 
@@ -140,56 +141,66 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    ### these vectors may contain NAs
 
-   x.ai  <- x$outdat.f$ai
-   x.bi  <- x$outdat.f$bi
-   x.ci  <- x$outdat.f$ci
-   x.di  <- x$outdat.f$di
-   x.x1i <- x$outdat.f$x1i
-   x.x2i <- x$outdat.f$x2i
-   x.t1i <- x$outdat.f$t1i
-   x.t2i <- x$outdat.f$t2i
+   dat.ai  <- x$outdat.f$ai
+   dat.bi  <- x$outdat.f$bi
+   dat.ci  <- x$outdat.f$ci
+   dat.di  <- x$outdat.f$di
+   dat.x1i <- x$outdat.f$x1i
+   dat.x2i <- x$outdat.f$x2i
+   dat.y1i <- x$outdat.f$t1i
+   dat.y2i <- x$outdat.f$t2i
 
    ### drop00=TRUE may induce that the contrast-based yi value is NA; so
    ### make sure that the corresponding arm-based yi values are also NA
 
    yi.is.na <- is.na(x$yi.f)
-   x.ai[yi.is.na]  <- NA_real_
-   x.bi[yi.is.na]  <- NA_real_
-   x.ci[yi.is.na]  <- NA_real_
-   x.di[yi.is.na]  <- NA_real_
-   x.x1i[yi.is.na] <- NA_real_
-   x.x2i[yi.is.na] <- NA_real_
-   x.t1i[yi.is.na] <- NA_real_
-   x.t2i[yi.is.na] <- NA_real_
+   dat.ai[yi.is.na]  <- NA_real_
+   dat.bi[yi.is.na]  <- NA_real_
+   dat.ci[yi.is.na]  <- NA_real_
+   dat.di[yi.is.na]  <- NA_real_
+   dat.x1i[yi.is.na] <- NA_real_
+   dat.x2i[yi.is.na] <- NA_real_
+   dat.y1i[yi.is.na] <- NA_real_
+   dat.y2i[yi.is.na] <- NA_real_
 
-   options(na.action = "na.pass") # to make sure dat.t and dat.c are of the same length
+   options(na.action = "na.pass") # to make sure dat.x and dat.y are of the same length
 
    measure <- switch(x$measure, "RR"="PLN", "OR"="PLO", "RD"="PR", "AS"="PAS", "IRR"="IRLN", "IRD"="IR", "IRSD"="IRS")
 
    if (is.element(x$measure, c("RR","OR","RD","AS"))) {
-      args.t <- list(measure=measure, xi=x.ai, mi=x.bi, add=add, to=to, addyi=addyi, addvi=addvi)
-      args.c <- list(measure=measure, xi=x.ci, mi=x.di, add=add, to=to, addyi=addyi, addvi=addvi)
+      if (flip) {
+         args.x <- list(measure=measure, xi=dat.ai, mi=dat.bi, add=add, to=to, addyi=addyi, addvi=addvi)
+         args.y <- list(measure=measure, xi=dat.ci, mi=dat.di, add=add, to=to, addyi=addyi, addvi=addvi)
+      } else {
+         args.x <- list(measure=measure, xi=dat.ci, mi=dat.di, add=add, to=to, addyi=addyi, addvi=addvi)
+         args.y <- list(measure=measure, xi=dat.ai, mi=dat.bi, add=add, to=to, addyi=addyi, addvi=addvi)
+      }
    }
 
    if (is.element(x$measure, c("IRR","IRD","IRSD"))) {
-      args.t <- list(measure=measure, xi=x.x1i, ti=x.t1i, add=add, to=to, addyi=addyi, addvi=addvi)
-      args.c <- list(measure=measure, xi=x.x2i, ti=x.t2i, add=add, to=to, addyi=addyi, addvi=addvi)
+      if (flip) {
+         args.x <- list(measure=measure, xi=dat.x1i, ti=dat.y1i, add=add, to=to, addyi=addyi, addvi=addvi)
+         args.y <- list(measure=measure, xi=dat.x2i, ti=dat.y2i, add=add, to=to, addyi=addyi, addvi=addvi)
+      } else {
+         args.x <- list(measure=measure, xi=dat.x2i, ti=dat.y2i, add=add, to=to, addyi=addyi, addvi=addvi)
+         args.y <- list(measure=measure, xi=dat.x1i, ti=dat.y1i, add=add, to=to, addyi=addyi, addvi=addvi)
+      }
    }
 
-   dat.t <- .do.call(escalc, args.t)
-   dat.c <- .do.call(escalc, args.c)
+   dat.x <- .do.call(escalc, args.x)
+   dat.y <- .do.call(escalc, args.y)
 
    options(na.action = na.act)
 
    ### check for NAs in yi/vi pairs and filter out
 
-   has.na <- apply(is.na(dat.t), 1, any) | apply(is.na(dat.c), 1, any)
+   has.na <- apply(is.na(dat.x), 1, any) | apply(is.na(dat.y), 1, any)
    not.na <- !has.na
 
    if (any(has.na)) {
 
-      dat.t <- dat.t[not.na,]
-      dat.c <- dat.c[not.na,]
+      dat.x <- dat.x[not.na,]
+      dat.y <- dat.y[not.na,]
       pch   <- pch[not.na]
       col   <- col[not.na]
       bg    <- bg[not.na]
@@ -199,14 +210,14 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    }
 
-   if (length(dat.t$yi)==0L || length(dat.c$yi)==0L)
+   if (length(dat.x$yi)==0L || length(dat.y$yi)==0L)
       stop(mstyle$stop("No information in object to compute the arm-level outcomes."))
 
    #########################################################################
 
    ### determine point sizes
 
-   vi <- dat.t$vi + dat.c$vi
+   vi <- dat.x$vi + dat.y$vi
 
    k <- length(vi)
 
@@ -239,8 +250,8 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    ### determine x/y values for line that indicates the estimated effect
 
-   min.yi <- min(c(dat.t$yi, dat.c$yi))
-   max.yi <- max(c(dat.t$yi, dat.c$yi))
+   min.yi <- min(c(dat.x$yi, dat.y$yi))
+   max.yi <- max(c(dat.x$yi, dat.y$yi))
    rng.yi <- max.yi - min.yi
 
    len <- 10000
@@ -250,62 +261,70 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    if (is.null(llim)) {
 
       if (x$measure == "RD")
-         c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)
+         x.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)
       if (x$measure == "RR")
-         c.vals <- seq(min.yi-rng.yi, ifelse(intrcpt>0, -intrcpt, 0), length.out=len)
+         x.vals <- seq(min.yi-rng.yi, ifelse(intrcpt>0, -intrcpt, 0), length.out=len)
       if (x$measure == "OR")
-         c.vals <- seq(min.yi-rng.yi, max.yi+rng.yi, length.out=len)
+         x.vals <- seq(min.yi-rng.yi, max.yi+rng.yi, length.out=len)
       if (x$measure == "AS")
-         c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, asin(sqrt(1))-intrcpt, asin(sqrt(1))), length.out=len)
+         x.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, asin(sqrt(1))-intrcpt, asin(sqrt(1))), length.out=len)
       if (x$measure == "IRR")
-         c.vals <- seq(min.yi-rng.yi, ifelse(intrcpt>0, -intrcpt, 0), length.out=len)
+         x.vals <- seq(min.yi-rng.yi, ifelse(intrcpt>0, -intrcpt, 0), length.out=len)
       if (x$measure == "IRD")
-         c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)
+         x.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)
       if (x$measure == "IRSD")
-         c.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)
+         x.vals <- seq(ifelse(intrcpt>0, 0, -intrcpt), ifelse(intrcpt>0, 1-intrcpt, 1), length.out=len)
 
    } else {
 
       if (length(llim) != 2L)
          stop(mstyle$stop("Argument 'llim' must be of length 2."))
 
-      c.vals <- seq(llim[1], llim[2], length.out=len)
+      x.vals <- seq(llim[1], llim[2], length.out=len)
 
    }
 
-   t.vals    <- intrcpt + 1*c.vals
+   y.vals <- intrcpt + 1*x.vals
 
-   tmp <- predict(x)
+   if (ci || pi) {
 
-   t.vals.ci.lb <- tmp$ci.lb + 1*c.vals
-   t.vals.ci.ub <- tmp$ci.ub + 1*c.vals
-   t.vals.pi.lb <- tmp$pi.lb + 1*c.vals
-   t.vals.pi.ub <- tmp$pi.ub + 1*c.vals
+      tmp <- predict(x)
+
+      y.vals.ci.lb <- tmp$ci.lb + 1*x.vals
+      y.vals.ci.ub <- tmp$ci.ub + 1*x.vals
+      y.vals.pi.lb <- tmp$pi.lb + 1*x.vals
+      y.vals.pi.ub <- tmp$pi.ub + 1*x.vals
+
+   } else {
+
+      y.vals.ci.lb <- y.vals.ci.ub <- y.vals.pi.lb <- y.vals.pi.ub <- NULL
+
+   }
 
    if (is.function(transf)) {
       if (is.null(targs)) {
-         dat.t$yi     <- sapply(dat.t$yi, transf)
-         dat.c$yi     <- sapply(dat.c$yi, transf)
-         c.vals       <- sapply(c.vals, transf)
-         t.vals       <- sapply(t.vals, transf)
-         t.vals.ci.lb <- sapply(t.vals.ci.lb, transf)
-         t.vals.ci.ub <- sapply(t.vals.ci.ub, transf)
-         t.vals.pi.lb <- sapply(t.vals.pi.lb, transf)
-         t.vals.pi.ub <- sapply(t.vals.pi.ub, transf)
+         dat.x$yi     <- sapply(dat.x$yi, transf)
+         dat.y$yi     <- sapply(dat.y$yi, transf)
+         x.vals       <- sapply(x.vals, transf)
+         y.vals       <- sapply(y.vals, transf)
+         y.vals.ci.lb <- sapply(y.vals.ci.lb, transf)
+         y.vals.ci.ub <- sapply(y.vals.ci.ub, transf)
+         y.vals.pi.lb <- sapply(y.vals.pi.lb, transf)
+         y.vals.pi.ub <- sapply(y.vals.pi.ub, transf)
       } else {
-         dat.t$yi     <- sapply(dat.t$yi, transf, targs)
-         dat.c$yi     <- sapply(dat.c$yi, transf, targs)
-         c.vals       <- sapply(c.vals, transf, targs)
-         t.vals       <- sapply(t.vals, transf, targs)
-         t.vals.ci.lb <- sapply(t.vals.ci.lb, transf, targs)
-         t.vals.ci.ub <- sapply(t.vals.ci.ub, transf, targs)
-         t.vals.pi.lb <- sapply(t.vals.pi.lb, transf, targs)
-         t.vals.pi.ub <- sapply(t.vals.pi.ub, transf, targs)
+         dat.x$yi     <- sapply(dat.x$yi, transf, targs)
+         dat.y$yi     <- sapply(dat.y$yi, transf, targs)
+         x.vals       <- sapply(x.vals, transf, targs)
+         y.vals       <- sapply(y.vals, transf, targs)
+         y.vals.ci.lb <- sapply(y.vals.ci.lb, transf, targs)
+         y.vals.ci.ub <- sapply(y.vals.ci.ub, transf, targs)
+         y.vals.pi.lb <- sapply(y.vals.pi.lb, transf, targs)
+         y.vals.pi.ub <- sapply(y.vals.pi.ub, transf, targs)
       }
    }
 
-   min.yi <- min(c(dat.t$yi, dat.c$yi))
-   max.yi <- max(c(dat.t$yi, dat.c$yi))
+   min.yi <- min(c(dat.x$yi, dat.y$yi))
+   max.yi <- max(c(dat.x$yi, dat.y$yi))
 
    if (missing(lim)) {
 
@@ -326,8 +345,8 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    order.vec <- order(psize, decreasing=TRUE)
 
-   dat.t$yi.o  <- dat.t$yi[order.vec]
-   dat.c$yi.o  <- dat.c$yi[order.vec]
+   dat.x$yi.o  <- dat.x$yi[order.vec]
+   dat.y$yi.o  <- dat.y$yi[order.vec]
    pch.o       <- pch[order.vec]
    col.o       <- col[order.vec]
    bg.o        <- bg[order.vec]
@@ -352,12 +371,12 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    ### add PI bounds
 
    if (pi)
-      lpolygon(c(c.vals,rev(c.vals)), c(t.vals.pi.lb,rev(t.vals.pi.ub)), col=picol, border=NA, ...)
+      lpolygon(c(x.vals,rev(x.vals)), c(y.vals.pi.lb,rev(y.vals.pi.ub)), col=picol, border=NA, ...)
 
    ### add CI bounds
 
    if (ci)
-      lpolygon(c(c.vals,rev(c.vals)), c(t.vals.ci.lb,rev(t.vals.ci.ub)), col=cicol, border=NA, ...)
+      lpolygon(c(x.vals,rev(x.vals)), c(y.vals.ci.lb,rev(y.vals.ci.ub)), col=cicol, border=NA, ...)
 
    ### add grid (and redraw box)
 
@@ -369,15 +388,15 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
    ### add diagonal reference line
 
    #abline(a=0, b=1, lty=lty[1], ...)
-   lsegments(min(c.vals), min(c.vals), max(c.vals), max(c.vals), lty=lty[1], ...)
+   lsegments(min(x.vals), min(x.vals), max(x.vals), max(x.vals), lty=lty[1], ...)
 
    ### add estimated effects line
 
-   llines(c.vals, t.vals, lty=lty[2], ...)
+   llines(x.vals, y.vals, lty=lty[2], ...)
 
    ### add points
 
-   lpoints(x=dat.c$yi.o, y=dat.t$yi.o, cex=psize.o, pch=pch.o, col=col.o, bg=bg.o, ...)
+   lpoints(x=dat.x$yi.o, y=dat.y$yi.o, cex=psize.o, pch=pch.o, col=col.o, bg=bg.o, ...)
 
    ### add legend
 
@@ -415,7 +434,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, grid
 
    ### prepare data frame to return
 
-   sav <- data.frame(x=dat.c$yi, y=dat.t$yi, cex=psize, pch=pch, col=col, bg=bg, ids=x$ids[not.na], slab=x$slab[not.na])
+   sav <- data.frame(x=dat.x$yi, y=dat.y$yi, cex=psize, pch=pch, col=col, bg=bg, ids=x$ids[not.na], slab=x$slab[not.na])
 
    invisible(sav)
 

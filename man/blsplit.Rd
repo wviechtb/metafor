@@ -12,7 +12,7 @@ blsplit(x, cluster, fun, args, sort=FALSE)
    \item{cluster}{vector to specify the clustering variable to use for splitting.}
    \item{fun}{optional argument to specify a function to apply to each sub-matrix.}
    \item{args}{optional argument to specify any additional argument(s) for the function specified via \code{fun}.}
-   \item{sort}{logical to indicate whether to sort the list by the unique cluster values (the default is \code{FALSE}).}
+   \item{sort}{logical to specify whether to sort the list by the unique cluster values (the default is \code{FALSE}).}
 }
 \value{
    A list of one or more sub-matrices.
