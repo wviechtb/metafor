@@ -623,7 +623,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    #########################################################################
 
-   ### set default control parameters
+   ### set defaults for control parameters
 
    con <- list(verbose = FALSE,            # also passed on to glm/glmer/optim/nlminb/minqa (uobyqa/newuoa/bobyqa)
                package="lme4",             # package for fitting logistic mixed-effects models ("lme4", "GLMMadaptive", "glmmTMB")

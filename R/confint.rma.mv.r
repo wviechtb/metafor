@@ -293,8 +293,8 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
       ######################################################################
 
-      ### set control parameters for uniroot() and possibly replace with user-defined values
-      ### set vc.min and vc.max and possibly replace with user-defined values
+      ### set defaults for control parameters for uniroot() and replace with any user-defined values
+      ### set vc.min and vc.max and possibly replace with any user-defined values
 
       con <- list(tol=.Machine$double.eps^0.25, maxiter=1000, verbose=FALSE, eptries=10)
 

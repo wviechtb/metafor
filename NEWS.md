@@ -1,4 +1,6 @@
-# metafor 4.7-9 (2024-04-19)
+# metafor 4.7-10 (2024-04-29)
+
+- `rma.mv()` now counts the number of levels of a random effect more appropriately; this may trigger more often the check whether the number of levels is equal to 1, in which case the corresponding variance component is automatically fixed to 0; this check can be omitted with `control=list(check.k.gtr.1=FALSE)`
 
 - made optimizers `Rcgmin` and `Rvmmin` available again via the `optimx` package
 

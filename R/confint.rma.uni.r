@@ -97,8 +97,8 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
       ######################################################################
 
-      ### set control parameters for uniroot() and possibly replace with user-defined values
-      ### set tau2.min and tau2.max and possibly replace with user-defined values
+      ### set defaults for control parameters for uniroot() and replace with any user-defined values
+      ### set tau2.min and tau2.max and replace with any user-defined values
       ### note: default tau2.min is smaller of 0 or tau2, since tau2 could in principle be negative
       ### note: default tau2.max must be larger than tau2 and tau2.min and really should be much larger (at least 100)
 

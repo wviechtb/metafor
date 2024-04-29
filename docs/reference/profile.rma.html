@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-10</span>
       </span>
     </div>
 
@@ -306,15 +306,15 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### profile over tau^2</span></span></span>
 <span class="r-in"><span><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, progbar<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="profile.rma-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="profile.rma-1.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### adjust xlim</span></span></span>
 <span class="r-in"><span><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="profile.rma-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="profile.rma-2.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### specify tau^2 values at which to profile the likelihood</span></span></span>
 <span class="r-in"><span><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, steps<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.2</span>,length<span class="op">=</span><span class="fl">20</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0.3</span>,<span class="fl">1</span>,by<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="profile.rma-3.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="profile.rma-3.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### change data into long format</span></span></span>
 <span class="r-in"><span><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="to.long.html">to.long</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, append<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
@@ -400,13 +400,13 @@
 <span class="r-in"><span><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, tau2<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, rho<span class="op">=</span><span class="fl">1</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.90</span>, <span class="fl">0.98</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="profile.rma-4.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="profile.rma-4.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### an example where the peak of the likelihood profile is at 0</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RD"</span>, n1i<span class="op">=</span><span class="va">n1i</span>, n2i<span class="op">=</span><span class="va">n2i</span>, ai<span class="op">=</span><span class="va">ai</span>, ci<span class="op">=</span><span class="va">ci</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.hine1989.html" class="external-link">dat.hine1989</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">profile</span><span class="op">(</span><span class="va">res</span>, progbar<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="profile.rma-5.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="profile.rma-5.png" alt="" width="1728" height="1536"></span>
 </code></pre></div>
     </div>
   </div>

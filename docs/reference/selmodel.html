@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-10</span>
       </span>
     </div>
 
@@ -421,7 +421,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># funnel plot</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.6</span><span class="op">)</span>, xlab<span class="op">=</span><span class="st">"Standardized Mean Difference"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="selmodel-1.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="selmodel-1.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># fit beta selection model</span></span></span>
 <span class="r-in"><span><span class="va">sel</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"beta"</span><span class="op">)</span></span></span>
@@ -455,7 +455,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># plot the selection function</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">40</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="selmodel-2.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="selmodel-2.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># fit mixed-effects meta-regression model with 'blind' dummy variable as moderator</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">smd</span>, <span class="va">se</span><span class="op">^</span><span class="fl">2</span>, data<span class="op">=</span><span class="va">dat</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">blind</span>, method<span class="op">=</span><span class="st">"ML"</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
@@ -613,7 +613,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># funnel plot</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res</span>, atransf<span class="op">=</span><span class="va">exp</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.01</span>,<span class="fl">0.1</span>,<span class="fl">1</span>,<span class="fl">10</span>,<span class="fl">100</span><span class="op">)</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="selmodel-3.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="selmodel-3.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># fit half-normal, negative-exponential, logistic, and power selection models</span></span></span>
 <span class="r-in"><span><span class="va">sel1</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"halfnorm"</span>, alternative<span class="op">=</span><span class="st">"less"</span><span class="op">)</span></span></span>
@@ -630,7 +630,7 @@
 <span class="r-in"><span><span class="co"># add legend</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topright"</span>, inset<span class="op">=</span><span class="fl">0.02</span>, lty<span class="op">=</span><span class="st">"solid"</span>, lwd<span class="op">=</span><span class="fl">2</span>, col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>,<span class="st">"blue"</span>,<span class="st">"red"</span>,<span class="st">"green"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>       legend<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Half-normal"</span>, <span class="st">"Negative-exponential"</span>, <span class="st">"Logistic"</span>, <span class="st">"Power"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="selmodel-4.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="selmodel-4.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># show estimates of delta (and corresponding SEs)</span></span></span>
 <span class="r-in"><span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">sel1</span><span class="op">$</span><span class="va">delta</span>, <span class="va">sel2</span><span class="op">$</span><span class="va">delta</span>, <span class="va">sel3</span><span class="op">$</span><span class="va">delta</span>, <span class="va">sel4</span><span class="op">$</span><span class="va">delta</span><span class="op">)</span>,</span></span>
@@ -788,7 +788,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># funnel plot</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res</span>, atransf<span class="op">=</span><span class="va">exp</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.25</span>,<span class="fl">0.5</span>,<span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">4</span>,<span class="fl">8</span><span class="op">)</span><span class="op">)</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.8</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="selmodel-5.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="selmodel-5.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># step function selection model</span></span></span>
 <span class="r-in"><span><span class="va">sel</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"stepfun"</span>, alternative<span class="op">=</span><span class="st">"greater"</span>, steps<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.025</span>,<span class="fl">.10</span>,<span class="fl">.50</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
@@ -824,7 +824,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># plot the selection function</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="selmodel-6.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="selmodel-6.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># truncated distribution selection model (with steps=0 by default)</span></span></span>
 <span class="r-in"><span><span class="va">sel</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"trunc"</span><span class="op">)</span></span></span>
@@ -943,7 +943,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># funnel plot</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="funnel.html">funnel</a></span><span class="op">(</span><span class="va">res</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.4</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="selmodel-7.png" alt="" width="864" height="768"></span>
+<span class="r-plt img"><img src="selmodel-7.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># selection functions from Vevea &amp; Woods (2005)</span></span></span>
 <span class="r-in"><span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>

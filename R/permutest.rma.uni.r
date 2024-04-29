@@ -95,7 +95,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
    if (!X.exact)
       seed <- as.integer(runif(1)*2e9)
 
-   ### set control parameters and possibly replace with user-defined values
+   ### set defaults for control parameters and replace with any user-defined values
 
    if (missing(control))
       control <- list()

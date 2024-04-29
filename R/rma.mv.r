@@ -200,6 +200,32 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (inherits(verbose, "try-error") || is.function(verbose) || length(verbose) != 1L || !(is.logical(verbose) || is.numeric(verbose)))
       stop(mstyle$stop("Argument 'verbose' must be a scalar (logical or numeric/integer)."))
 
+   ### set defaults for control parameters (part 1)
+
+   con <- list(verbose = FALSE,
+               optimizer = "nlminb",      # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","Rcgmin","Rvmmin")
+               optmethod = "BFGS",        # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
+               parallel = list(),         # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
+               cl = NULL,                 # arguments for optimParallel()
+               ncpus = 1L,                # arguments for optimParallel()
+               REMLf = TRUE,              # full REML likelihood (including all constants)
+               evtol = 1e-07,             # lower bound for eigenvalues to determine if model matrix is positive definite
+               nearpd = FALSE,            # to force G and H matrix to become positive definite
+               hessianCtrl = list(r=8),   # arguments passed on to 'method.args' of hessian()
+               hesstol = .Machine$double.eps^0.5, # threshold for detecting fixed elements in Hessian
+               hesspack = "numDeriv",     # package for computing the Hessian (numDeriv or pracma)
+               check.k.gtr.1 = TRUE)      # check that s.nlevels > 1 and g.levels.k > 1
+
+   ### replace defaults with any user-defined values
+
+   con.pos <- pmatch(names(control), names(con))
+   con[c(na.omit(con.pos))] <- control[!is.na(con.pos)]
+
+   if (verbose)
+      con$verbose <- verbose
+
+   verbose <- con$verbose
+
    ### set options(warn=1) if verbose > 2
 
    if (verbose > 2) {
@@ -1239,7 +1265,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
          V[vi.neg,] <- 0 # note: entire row set to 0 (so covariances are also 0)
          V[,vi.neg] <- 0 # note: entire col set to 0 (so covariances are also 0)
          vi[vi.neg] <- 0
-         warning(mstyle$warning("Negative sampling variances constrained to zero."), call.=FALSE)
+         warning(mstyle$warning("Negative sampling variances constrained to 0."), call.=FALSE)
       }
    } else {
       allvipos <- TRUE
@@ -1312,6 +1338,11 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       int.incl <- FALSE
    }
 
+   ### check whether model matrix is of full rank
+
+   if (!.chkpd(crossprod(X), tol=con$evtol))
+      stop(mstyle$stop("Model matrix not of full rank. Cannot fit model."))
+
    ### number of columns in X (including the intercept if it is included)
 
    p <- NCOL(X)
@@ -1369,7 +1400,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
       ### for any single-level factor with unfixed sigma2, fix the sigma2 value to 0
 
-      if (any(is.na(sigma2) & s.nlevels == 1)) {
+      if (any(is.na(sigma2) & s.nlevels == 1) && con$check.k.gtr.1) {
          sigma2[is.na(sigma2) & s.nlevels == 1] <- 0
          warning(mstyle$warning("Single-level factor(s) found in 'random' argument. Corresponding 'sigma2' value(s) fixed to 0."), call.=FALSE)
       }
@@ -1477,7 +1508,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    if (withG) {
 
-      tmp <- .process.G.afterrmna(mf.g, g.nlevels, g.levels, g.values, struct[1], formulas[[1]], tau2, rho, Z.G1, Z.G2, isG=TRUE, sparse, ddd$dist[[1]], verbose)
+      tmp <- .process.G.afterrmna(mf.g, g.nlevels, g.levels, g.values, struct[1], formulas[[1]], tau2, rho, Z.G1, Z.G2, isG=TRUE, sparse, ddd$dist[[1]], con$check.k.gtr.1, verbose)
 
       mf.g <- tmp$mf.g
 
@@ -1515,7 +1546,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    if (withH) {
 
-      tmp <- .process.G.afterrmna(mf.h, h.nlevels, h.levels, h.values, struct[2], formulas[[2]], gamma2, phi, Z.H1, Z.H2, isG=FALSE, sparse, ddd$dist[[2]], verbose)
+      tmp <- .process.G.afterrmna(mf.h, h.nlevels, h.levels, h.values, struct[2], formulas[[2]], gamma2, phi, Z.H1, Z.H2, isG=FALSE, sparse, ddd$dist[[2]], con$check.k.gtr.1, verbose)
 
       mf.h <- tmp$mf.g
 
@@ -1628,36 +1659,19 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    #########################################################################
 
-   ### set default control parameters
+   ### set default control parameters (part 2)
 
-   con <- list(verbose = FALSE,
-               optimizer = "nlminb",      # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","Rcgmin","Rvmmin")
-               optmethod = "BFGS",        # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
-               parallel = list(),         # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
-               cl = NULL,                 # arguments for optimParallel()
-               ncpus = 1L,                # arguments for optimParallel()
-               sigma2.init = sigma2.init, # initial value(s) for sigma2
-               tau2.init = tau2.init,     # initial value(s) for tau2
-               rho.init = rho.init,       # initial value(s) for rho
-               gamma2.init = gamma2.init, # initial value(s) for gamma2
-               phi.init = phi.init,       # initial value(s) for phi
-               REMLf = TRUE,              # full REML likelihood (including all constants)
-               evtol = 1e-07,             # lower bound for eigenvalues to determine if model matrix is positive definite
-               cholesky = ifelse(is.element(struct, c("UN","UNR","GEN")), TRUE, FALSE), # by default, use Cholesky factorization for G and H matrix for "UN", "UNR", and "GEN" structures
-               nearpd = FALSE,            # to force G and H matrix to become positive definite
-               hessianCtrl = list(r=8),   # arguments passed on to 'method.args' of hessian()
-               hesstol = .Machine$double.eps^0.5, # threshold for detecting fixed elements in Hessian
-               hesspack = "numDeriv")     # package for computing the Hessian (numDeriv or pracma)
+   con <- c(con, list(sigma2.init = sigma2.init, # initial value(s) for sigma2
+                      tau2.init = tau2.init,     # initial value(s) for tau2
+                      rho.init = rho.init,       # initial value(s) for rho
+                      gamma2.init = gamma2.init, # initial value(s) for gamma2
+                      phi.init = phi.init,       # initial value(s) for phi
+                      cholesky = ifelse(is.element(struct, c("UN","UNR","GEN")), TRUE, FALSE))) # by default, use Cholesky factorization for G and H matrix for "UN", "UNR", and "GEN" structures
 
    ### replace defaults with any user-defined values
 
    con.pos <- pmatch(names(control), names(con))
    con[c(na.omit(con.pos))] <- control[!is.na(con.pos)]
-
-   if (verbose)
-      con$verbose <- verbose
-
-   verbose <- con$verbose
 
    ### when restart=TRUE, restart at current estimates
 
@@ -1892,11 +1906,6 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    }
 
    #########################################################################
-
-   ### check whether model matrix is of full rank
-
-   if (!.chkpd(crossprod(X), tol=con$evtol))
-      stop(mstyle$stop("Model matrix not of full rank. Cannot fit model."))
 
    ### which variance components are fixed? (TRUE/FALSE or NA if not applicable = not included)
 

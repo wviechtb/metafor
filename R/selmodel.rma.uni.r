@@ -210,7 +210,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    ############################################################################
 
-   ### set default control parameters
+   ### set defaults for control parameters
 
    con <- list(verbose = FALSE,
                delta.init = NULL,     # initial value(s) for selection model parameter(s)

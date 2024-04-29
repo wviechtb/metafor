@@ -252,7 +252,7 @@
 
 ############################################################################
 
-.process.G.afterrmna <- function(mf.g, g.nlevels, g.levels, g.values, struct, formula, tau2, rho, Z.G1, Z.G2, isG, sparse, distspec, verbose) {
+.process.G.afterrmna <- function(mf.g, g.nlevels, g.levels, g.values, struct, formula, tau2, rho, Z.G1, Z.G2, isG, sparse, distspec, check.k.gtr.1, verbose) {
 
    mstyle <- .get.mstyle()
 
@@ -327,18 +327,18 @@
    if (is.element(struct, c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG"))) {
       g.levels.k <- table(factor(apply(mf.g[-nvars], 1, paste, collapse=" + "), levels=g.levels.f[[1]]))
    } else {
-      g.levels.k <- table(factor(mf.g[[1]], levels=g.levels.f[[1]]))
+      #g.levels.k <- table(factor(mf.g[[1]], levels=g.levels.f[[1]]))
+      g.levels.k <- apply(table(factor(mf.g[[1]], levels=g.levels.f[[1]]), mf.g[[2]]), 1, function(x) sum(x>0L))
    }
 
    ### for "HCS","UN","DIAG","HAR": if a particular level of the inner factor only occurs once, then set corresponding tau2 value to 0 (if not already fixed)
-   ### note: no longer done; variance component should still be (weakly) identifiable
 
-   #if (is.element(struct, c("HCS","UN","DIAG","HAR"))) {
-   #   if (any(is.na(tau2) & g.levels.k == 1)) {
-   #      tau2[is.na(tau2) & g.levels.k == 1] <- 0
-   #      warning(mstyle$warning("Inner factor has k=1 for one or more levels. Corresponding 'tau2' value(s) fixed to 0."), call.=FALSE)
-   #   }
-   #}
+   if (is.element(struct, c("HCS","UN","DIAG","HAR")) && check.k.gtr.1) {
+      if (any(is.na(tau2) & g.levels.k == 1)) {
+         tau2[is.na(tau2) & g.levels.k == 1] <- 0
+         warning(mstyle$warning("Inner factor has k=1 for one or more levels. Corresponding 'tau2' value(s) fixed to 0."), call.=FALSE)
+      }
+   }
 
    ### check if each study has only a single arm (could be different arms!)
    ### for "CS","HCS","AR","HAR","CAR" must then fix rho to 0 (if not already fixed)

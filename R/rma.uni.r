@@ -950,7 +950,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       vi.neg <- vi < 0
       if (any(vi.neg)) {
          vi[vi.neg] <- 0
-         warning(mstyle$warning("Negative sampling variances constrained to zero."), call.=FALSE)
+         warning(mstyle$warning("Negative sampling variances constrained to 0."), call.=FALSE)
       }
    } else {
       allvipos <- TRUE
@@ -1056,7 +1056,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    #########################################################################
 
-   ### set default control parameters
+   ### set defaults for control parameters
 
    con <- list(verbose = FALSE,
                evtol = 1e-07,                  # lower bound for eigenvalues to determine if model matrix is positive definite (also for checking if vimaxmin >= 1/con$evtol)

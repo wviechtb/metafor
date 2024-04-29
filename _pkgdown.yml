@@ -32,13 +32,13 @@ home:
 
 figures:
   dev: grDevices::png
-  dpi: 96
+  dpi: 192
   dev.args: []
   fig.ext: png
   fig.width: 9
   fig.height: 8
   fig.retina: 2
-  fig.asp: 1
+  fig.asp: ~
 
 #figures:
 #  dev: ragg::agg_png

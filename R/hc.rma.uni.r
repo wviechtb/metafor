@@ -38,7 +38,8 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
 
    #########################################################################
 
-   ### set control parameters for uniroot() and possibly replace with user-defined values
+   ### set defaults for control parameters for uniroot() and replace with any user-defined values
+
    con <- list(tol=.Machine$double.eps^0.25, maxiter=1000, verbose=FALSE)
    con.pos <- pmatch(names(control), names(con))
    con[c(na.omit(con.pos))] <- control[!is.na(con.pos)]
