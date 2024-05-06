@@ -133,8 +133,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, 
 
    if (is.numeric(symbol)) {
 
-      if (length(symbol) == 1L)
-         symbol <- rep(symbol, x$k.all)
+      symbol <- .expand1(symbol, x$k.all)
 
       if (length(symbol) != x$k.all)
          stop(mstyle$stop(paste0("Length of the 'symbol' argument (", length(symbol), ") does not correspond to the size of the original dataset (", x$k.all, ").")))

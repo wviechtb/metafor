@@ -336,8 +336,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       ### allow easy setting of vi to a single value
 
-      if (length(vi) == 1L)
-         vi <- rep(vi, k) # note: k is number of outcomes before subsetting
+      vi <- .expand1(vi, k) # note: k is number of outcomes before subsetting
 
       ### check length of yi and vi
 
@@ -741,8 +740,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    ### allow easy setting of weights to a single value
 
-   if (length(weights) == 1L)
-      weights <- rep(weights, k) # note: k is number of outcomes before subsetting
+   weights <- .expand1(weights, k) # note: k is number of outcomes before subsetting
 
    ### check length of yi and weights (only if weights is not NULL)
 
@@ -1812,8 +1810,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       if (missing(alpha) || is.null(alpha) || all(is.na(alpha))) {
          alpha <- rep(NA_real_, q)
       } else {
-         if (length(alpha) == 1L)
-            alpha <- rep(alpha, q)
+         alpha <- .expand1(alpha, q)
          if (length(alpha) != q)
             stop(mstyle$stop(paste0("Length of 'alpha' argument (", length(alpha), ") does not match actual number of parameters (", q, ").")))
       }
@@ -1825,8 +1822,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          if (missing(beta) || is.null(beta) || all(is.na(beta))) {
             beta <- rep(NA_real_, p)
          } else {
-            if (length(beta) == 1L)
-               beta <- rep(beta, p)
+            beta <- .expand1(beta, p)
             if (length(beta) != p)
                stop(mstyle$stop(paste0("Length of 'beta' argument (", length(beta), ") does not match actual number of parameters (", p, ").")))
          }
@@ -1951,11 +1947,8 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       ### set potential constraints on alpha values
 
-      if (length(con$alpha.min) == 1L)
-            con$alpha.min <- rep(con$alpha.min, q)
-
-      if (length(con$alpha.max) == 1L)
-            con$alpha.max <- rep(con$alpha.max, q)
+      con$alpha.min <- .expand1(con$alpha.min, q)
+      con$alpha.max <- .expand1(con$alpha.max, q)
 
       if (length(con$alpha.min) != q)
          stop(mstyle$stop(paste0("Length of 'alpha.min' argument (", length(alpha.min), ") does not match actual number of parameters (", q, ").")))

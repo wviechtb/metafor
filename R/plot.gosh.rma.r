@@ -24,8 +24,7 @@ xlim, ylim, xhist=TRUE, yhist=TRUE, hh=0.3, breaks, adjust, lwd, labels, ...) {
       trim <- ddd$trim
 
       if (!is.list(trim)) {
-         if (length(trim) == 1L)
-            trim <- rep(trim, ncol(x$res)-4L)
+         trim <- .expand1(trim, ncol(x$res)-4L)
          trim <- as.list(trim)
       }
 

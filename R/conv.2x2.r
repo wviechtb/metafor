@@ -70,8 +70,7 @@ conv.2x2 <- function(ori, ri, x2i, ni, n1i, n2i, correct=TRUE, data, include,
 
    ### handle correct argument
 
-   if (length(correct) == 1L)
-      correct <- rep(correct, k)
+   correct <- .expand1(correct, k)
 
    if (length(correct) != k)
       stop(mstyle$stop(paste0("Length of 'correct' argument (", length(correct), ") does not match length of data (", k, ").")))

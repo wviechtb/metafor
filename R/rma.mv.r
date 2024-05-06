@@ -418,8 +418,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
          ### allow easy setting of W to a single value
 
-         if (length(W) == 1L)
-            W <- rep(W, k)
+         W <- .expand1(W, k)
 
          A <- diag(W, nrow=length(W), ncol=length(W))
 
@@ -922,8 +921,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
       ### allow quickly setting all sigma2 values to a fixed value
 
-      if (length(sigma2) == 1L)
-         sigma2 <- rep(sigma2, sigma2s)
+      sigma2 <- .expand1(sigma2, sigma2s)
 
       ### check if sigma2 is of the correct length
 
@@ -1718,16 +1716,11 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ### expand initial values to correct length
 
-   if (length(con$sigma2.init) == 1L)
-      con$sigma2.init <- rep(con$sigma2.init, sigma2s)
-   if (length(con$tau2.init) == 1L)
-      con$tau2.init <- rep(con$tau2.init, tau2s)
-   if (length(con$rho.init) == 1L)
-      con$rho.init <- rep(con$rho.init, rhos)
-   if (length(con$gamma2.init) == 1L)
-      con$gamma2.init <- rep(con$gamma2.init, gamma2s)
-   if (length(con$phi.init) == 1L)
-      con$phi.init <- rep(con$phi.init, phis)
+   con$sigma2.init <- .expand1(con$sigma2.init, sigma2s)
+   con$tau2.init   <- .expand1(con$tau2.init,   tau2s)
+   con$rho.init    <- .expand1(con$rho.init,    rhos)
+   con$gamma2.init <- .expand1(con$gamma2.init, gamma2s)
+   con$phi.init    <- .expand1(con$phi.init,    phis)
 
    ### checks on initial values set by the user (the initial values computed by the function are replaced by the user defined ones at this point)
 
@@ -1758,8 +1751,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ### in case user manually sets con$cholesky and specifies only a single value
 
-   if (length(con$cholesky) == 1L)
-      con$cholesky <- rep(con$cholesky, 2L)
+   con$cholesky <- .expand1(con$cholesky, 2L)
 
    ### use of Cholesky factorization only applicable for models with "UN", "UNR", and "GEN" structure
 

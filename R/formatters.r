@@ -36,8 +36,7 @@ fmtx <- function(x, digits=4, flag="", quote=FALSE, ...) {
 
    if (length(dim(x)) == 2L) {
 
-      if (length(digits) == 1L)
-         digits <- rep(digits, ncol(x))
+      digits <- .expand1(digits, ncol(x))
 
       out <- matrix("", nrow=nrow(x), ncol=ncol(x))
 

@@ -27,8 +27,7 @@ replmiss <- function(x, y, data) {
 
    ### in case user specifies a constant to use for replacement
 
-   if (length(y) == 1L)
-      y <- rep(y, length(x))
+   y <- .expand1(y, length(x))
 
    ### check that x and y are of the same length
 

@@ -167,13 +167,11 @@
 
    ### allow quickly setting all tau2 values to a fixed value
 
-   if (length(tau2) == 1L)
-      tau2 <- rep(tau2, tau2s)
+   tau2 <- .expand1(tau2, tau2s)
 
    ### allow quickly setting all rho values to a fixed value
 
-   if (length(rho) == 1L)
-      rho <- rep(rho, rhos)
+   rho <- .expand1(rho, rhos)
 
    ### check if tau2 and rho are of correct length
 
@@ -1361,8 +1359,7 @@
 
       if (is.numeric(dfs)) {
          ddf <- dfs
-         if (length(ddf) == 1L)
-            ddf <- rep(ddf, p)
+         ddf <- .expand1(ddf, p)
          if (length(ddf) != p)
             stop(mstyle$stop(paste0("Length of 'dfs' argument (", length(dfs), ") does not match the number of model coefficient (", p, ").")), call.=FALSE)
       }

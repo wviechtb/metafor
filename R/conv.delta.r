@@ -139,8 +139,7 @@ conv.delta <- function(yi, vi, ni, data, include, transf, var.names, append=TRUE
 
    for (i in seq_along(dotargs)) {
       dotarglist[[i]] <- .getx(dotargs[i], mf=mf, data=x, checknumeric=TRUE)
-      if (length(dotarglist[[i]]) == 1L)
-         dotarglist[[i]] <- rep(dotarglist[[i]], k)
+      dotarglist[[i]] <- .expand1(dotarglist[[i]], k)
       names(dotarglist)[i] <- dotargs[i]
    }
 

@@ -128,8 +128,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    ### note: digits can also be a list (e.g., digits=list(2L,3)); trailing 0's are dropped for integers
 
-   if (length(lty) == 1L)
-      lty <- rep(lty, 2L) # 1st value = funnel lines, 2nd value = reference line
+   lty <- .expand1(lty, 2L) # 1st value = funnel lines, 2nd value = reference line
 
    ### note: slab, pch, col, and bg (if vectors) must be of the same length as the original dataset
    ###       so we have to apply the same subsetting (if necessary) and removing of NAs as was

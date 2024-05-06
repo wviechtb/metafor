@@ -128,8 +128,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    if (missing(lcol)) {
       lcol <- c(rep(par("fg"), 3), .coladj(par("bg","fg"), dark=0.5, light=-0.5))
    } else {
-      if (length(lcol) == 1L)
-         lcol <- rep(lcol, 4L)
+      lcol <- .expand1(lcol, 4L)
       if (length(lcol) == 2L)
          lcol <- c(lcol[c(1,2,2)], .coladj(par("bg","fg"), dark=0.5, light=-0.5))
       if (length(lcol) == 3L)
@@ -139,8 +138,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    if (missing(lty)) {
       lty <- c("solid", "dashed", "dotted", "solid")
    } else {
-      if (length(lty) == 1L)
-         lty <- rep(lty, 4L)
+      lty <- .expand1(lty, 4L)
       if (length(lty) == 2L)
          lty <- c(lty[c(1,2,2)], "solid")
       if (length(lty) == 3L)
@@ -150,8 +148,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    if (missing(lwd)) {
       lwd <- c(3,1,1,2)
    } else {
-      if (length(lwd) == 1L)
-         lwd <- rep(lwd, 4L)
+      lwd <- .expand1(lwd, 4L)
       if (length(lwd) == 2L)
          lwd <- c(lwd[c(1,2,2)], 2)
       if (length(lwd) == 3L)
@@ -246,8 +243,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    ###       so we have to apply the same subsetting (if necessary) and removing of NAs as was
    ###       done during the model fitting (note: NAs are removed further below)
 
-   if (length(pch) == 1L)
-      pch <- rep(pch, x$k.all)
+   pch <- .expand1(pch, x$k.all)
 
    if (length(pch) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'pch' argument (", length(pch), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
@@ -272,8 +268,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
       } else {
 
-         if (length(psize) == 1L)
-            psize <- rep(psize, x$k.all)
+         psize <- .expand1(psize, x$k.all)
 
          if (length(psize) != x$k.all)
             stop(mstyle$stop(paste0("Length of the 'psize' argument (", length(psize), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
@@ -284,16 +279,14 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    }
 
-   if (length(col) == 1L)
-      col <- rep(col, x$k.all)
+   col <- .expand1(col, x$k.all)
 
    if (length(col) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'col' argument (", length(col), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
    col <- .getsubset(col, x$subset)
 
-   if (length(bg) == 1L)
-      bg <- rep(bg, x$k.all)
+   bg <- .expand1(bg, x$k.all)
 
    if (length(bg) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'bg' argument (", length(bg), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
@@ -319,8 +312,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          #if (!is.logical(label))
          #   stop(mstyle$stop("Argument 'label' must be a logical vector (or a single character string)."))
 
-         if (length(label) == 1L)
-            label <- rep(label, x$k.all)
+         label <- .expand1(label, x$k.all)
 
          if (length(label) != x$k.all)
             stop(mstyle$stop(paste0("Length of the 'label' argument (", length(label), ") does not correspond to the size of the original dataset (", x$k.all, ").")))

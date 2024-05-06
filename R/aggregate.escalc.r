@@ -12,8 +12,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
    if (missing(cluster))
       stop(mstyle$stop("Must specify 'cluster' variable."))
 
-   if (length(na.rm) == 1L)
-      na.rm <- c(na.rm, na.rm)
+   na.rm <- .expand1(na.rm, 2L)
 
    k <- nrow(x)
 
@@ -102,8 +101,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
          if (missing(rho))
             stop(mstyle$stop("Must specify 'rho' for this var-cov structure."))
 
-         if (length(rho) == 1L)
-            rho <- rep(rho, n)
+         rho <- .expand1(rho, n)
 
          if (length(rho) != n)
             stop(mstyle$stop(paste0("Length of 'rho' (", length(rho), ") does not match the number of clusters (", n, ").")))
@@ -118,8 +116,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
          if (missing(phi))
             stop(mstyle$stop("Must specify 'phi' for this var-cov structure."))
 
-         if (length(phi) == 1L)
-            phi <- rep(phi, n)
+         phi <- .expand1(phi, n)
 
          if (length(phi) != n)
             stop(mstyle$stop(paste0("Length of 'phi' (", length(phi), ") does not match the number of clusters (", n, ").")))
@@ -195,8 +192,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
 
       if (.is.vector(V)) {
 
-         if (length(V) == 1L)
-            V <- rep(V, k)
+         V <- .expand1(V, k)
 
          if (length(V) != k)
             stop(mstyle$stop(paste0("Length of 'V' (", length(V), ") does not match length of data frame (", k, ").")))

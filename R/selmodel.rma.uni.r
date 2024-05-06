@@ -692,8 +692,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (missing(delta)) {
       delta <- rep(NA_real_, deltas)
    } else {
-      if (length(delta) == 1L)
-         delta <- rep(delta, deltas)
+      delta <- .expand1(delta, deltas)
       if (length(delta) != deltas)
          stop(mstyle$stop(paste0("Argument 'delta' should be of length ", deltas, " for this type of selection model.")))
       for (j in seq_len(deltas)) {
@@ -724,8 +723,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (!is.null(con$delta.min))
       delta.min <- con$delta.min
 
-   if (length(delta.min) == 1L)
-      delta.min <- rep(delta.min, deltas)
+   delta.min <- .expand1(delta.min, deltas)
    if (length(delta.min) != deltas)
       stop(mstyle$stop(paste0("Argument 'delta.min' should be of length ", deltas, " for this type of selection model.")))
    if (anyNA(delta.min))
@@ -748,8 +746,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (!is.null(con$delta.max))
       delta.max <- con$delta.max
 
-   if (length(delta.max) == 1L)
-      delta.max <- rep(delta.max, deltas)
+   delta.max <- .expand1(delta.max, deltas)
    if (length(delta.max) != deltas)
       stop(mstyle$stop(paste0("Argument 'delta.max' should be of length ", deltas, " for this type of selection model.")))
    if (anyNA(delta.max))
@@ -775,8 +772,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (!is.null(con$delta.init))
       delta.init <- con$delta.init
 
-   if (length(delta.init) == 1L)
-      delta.init <- rep(delta.init, deltas)
+   delta.init <- .expand1(delta.init, deltas)
    if (length(delta.init) != deltas)
       stop(mstyle$stop(paste0("Argument 'delta.init' should be of length ", deltas, " for this type of selection model.")))
    if (anyNA(delta.init))

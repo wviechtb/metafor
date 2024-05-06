@@ -341,8 +341,8 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             } else {
                yi <- p1i.u - p2i.u
             }
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -416,8 +416,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             yi <- (ai*di - bi*ci)/sqrt((ai+bi)*(ci+di)*(ai+ci)*(bi+di))
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -866,8 +865,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             yi <- m1i - m2i
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -897,8 +895,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             cmi <- .cmicalc(mi, correct=correct)
             yi <- cmi * di
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -938,8 +935,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             di   <- (m1i - m2i) / sdpi
             yi   <- cmi * di
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -983,8 +979,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             yi <- log(m1i/m2i)
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -1030,8 +1025,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             if (is.element(measure, c("RPB","ZPB"))) { # this only applies when measure="RPB/ZPB"
 
-               if (length(vtype) == 1L)
-                  vtype <- rep(vtype, k)
+               vtype <- .expand1(vtype, k)
 
                vi <- rep(NA_real_, k)
 
@@ -1173,8 +1167,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          if (is.element(measure, c("COR","UCOR"))) {
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -1283,8 +1276,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             yi <- ri
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -1320,8 +1312,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             yi <- ri
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -1408,8 +1399,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             yi <- r2i
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -1557,8 +1547,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                yi <- pri.u
             }
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -1614,8 +1603,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                yi <- log(pri.u)
             }
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -1663,8 +1651,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                yi <- log(pri.u/(1-pri.u))
             }
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -1908,8 +1895,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             yi <- mi
             sdpi <- sqrt(.wmean(sdi^2, ni-1, na.rm=TRUE))
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -2101,8 +2087,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             di <- (m1i - m2i) / sddiffi
             yi <- cmi * di
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -2135,8 +2120,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             di <- (m1i - m2i) / sd1i
             yi <- cmi * di
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -2172,8 +2156,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             di <- (m1i - m2i) / sd1i
             yi <- cmi * di
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -2206,8 +2189,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             di <- (m1i - m2i) / sdpi
             yi <- cmi * di
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 
@@ -2233,8 +2215,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             di <- (m1i - m2i) / sdpi
             yi <- cmi * di
 
-            if (length(vtype) == 1L)
-               vtype <- rep(vtype, k)
+            vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
 

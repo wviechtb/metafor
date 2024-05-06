@@ -239,8 +239,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
             }
 
             ### allow quick setting of all levels
-            if (length(tau2.levels) == 1L)
-               tau2.levels <- rep(tau2.levels, k.new)
+            tau2.levels <- .expand1(tau2.levels, k.new)
 
             ### check length of tau2.levels argument
             if (length(tau2.levels) != k.new)
@@ -280,8 +279,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
             }
 
             ### allow quick setting of all levels
-            if (length(gamma2.levels) == 1L)
-               gamma2.levels <- rep(gamma2.levels, k.new)
+            gamma2.levels <- .expand1(gamma2.levels, k.new)
 
             ### check length of gamma2.levels argument
             if (length(gamma2.levels) != k.new)
@@ -387,8 +385,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       newvi <- 0
    } else {
       newvi <- ddd$newvi
-      if (length(newvi) == 1L)
-         newvi <- rep(newvi, k.new)
+      newvi <- .expand1(newvi, k.new)
       if (length(newvi) != k.new)
          stop(mstyle$stop(paste0("Length of 'newvi' argument (", length(newvi), ") does not match the number of predicted values (", k.new, ").")))
    }

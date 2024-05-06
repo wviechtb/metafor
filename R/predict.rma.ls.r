@@ -358,8 +358,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          newvi <- 0
       } else {
          newvi <- ddd$newvi
-         if (length(newvi) == 1L)
-            newvi <- rep(newvi, k.new)
+         newvi <- .expand1(newvi, k.new)
          if (length(newvi) != k.new)
             stop(mstyle$stop(paste0("Length of 'newvi' argument (", length(newvi), ") does not match the number of predicted values (", k.new, ").")))
       }

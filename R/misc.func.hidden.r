@@ -266,6 +266,12 @@
 
 }
 
+.expand1 <- function(x, k) {
+   if (length(x) == 1L)
+      x <- rep(x, k)
+   return(x)
+}
+
 ############################################################################
 
 ### function to format p-values (no longer used; use fmtp() instead)

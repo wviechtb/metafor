@@ -182,13 +182,11 @@ profile.rma.ls <- function(fitted, alpha,
       ### apply alpha.min/alpha.max limits (if they exist) on vc.lb/vc.ub as well
 
       if (!is.null(x$control$alpha.min)) {
-         if (length(x$control$alpha.min) == 1L)
-            x$control$alpha.min <- rep(x$control$alpha.min, x$q)
+         x$control$alpha.min <- .expand1(x$control$alpha.min, x$q)
          vc.lb <- max(vc.lb, x$con$alpha.min[alpha])
       }
       if (!is.null(x$control$alpha.max)) {
-         if (length(x$control$alpha.max) == 1L)
-            x$control$alpha.max <- rep(x$control$alpha.max, x$q)
+         x$control$alpha.max <- .expand1(x$control$alpha.max, x$q)
          vc.ub <- min(vc.ub, x$con$alpha.max[alpha])
       }
 

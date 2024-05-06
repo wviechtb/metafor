@@ -103,8 +103,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### vertical expansion factor: 1st = CI end lines, 2nd = arrows
 
-   if (length(efac) == 1L)
-      efac <- rep(efac, 2L)
+   efac <- .expand1(efac, 2L)
 
    efac[efac == 0] <- NA
 
@@ -278,22 +277,20 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    }
 
-   if (length(pch) == 1L)
-      pch <- rep(pch, k)                        # pch can be a single value (which is then repeated)
+   pch <- .expand1(pch, k) # pch can be a single value (which is then repeated)
 
    if (length(pch) != k)
       stop(mstyle$stop(paste0("Length of the 'pch' argument (", length(pch), ") does not correspond to the number of outcomes (", k, ").")))
 
    if (!is.null(psize)) {
-      if (length(psize) == 1L)                  # psize can be a single value (which is then repeated)
-         psize <- rep(psize, k)
+      if (length(psize) == 1L)
+      psize <- .expand1(psize, k) # psize can be a single value (which is then repeated)
       if (length(psize) != k)
          stop(mstyle$stop(paste0("Length of the 'psize' argument (", length(psize), ") does not correspond to the number of outcomes (", k, ").")))
    }
 
    if (!is.null(col)) {
-      if (length(col) == 1L)                    # col can be a single value (which is then repeated)
-         col <- rep(col, k)
+      col <- .expand1(col, k) # col can be a single value (which is then repeated)
       if (length(col) != k)
          stop(mstyle$stop(paste0("Length of the 'col' argument (", length(col), ") does not correspond to the number of outcomes (", k, ").")))
    } else {
@@ -893,8 +890,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       if (missing(width)) {
          width <- apply(annotext, 2, function(x) max(nchar(x)))
       } else {
-         if (length(width) == 1L)
-            width <- rep(width, ncol(annotext))
+         width <- .expand1(width, ncol(annotext))
          if (length(width) != ncol(annotext))
             stop(mstyle$stop(paste0("Length of 'width' argument (", length(width), ") does not match the number of annotation columns (", ncol(annotext), ").")))
       }

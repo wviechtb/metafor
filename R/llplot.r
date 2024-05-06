@@ -194,30 +194,21 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    ### if any of these arguments is not a single value, it must have the same length as the data before subsetting
 
    if (!is.null(lty)) {
-      if (length(lty) == 1L) {
-         lty <- rep(lty, k)
-      } else {
-         if (length(lty) != k)
-            stop(mstyle$stop(paste0("Length of 'lty' argument (", length(lty), ") does not match length of data (", k, ").")))
-      }
+      lty <- .expand1(lty, k)
+      if (length(lty) != k)
+         stop(mstyle$stop(paste0("Length of 'lty' argument (", length(lty), ") does not match length of data (", k, ").")))
    }
 
    if (!is.null(lwd)) {
-      if (length(lwd) == 1L) {
-         lwd <- rep(lwd, k)
-      } else {
-         if (length(lwd) != k)
+      lwd <- .expand1(lwd, k)
+      if (length(lwd) != k)
          stop(mstyle$stop(paste0("Length of 'lwd' argument (", length(lwd), ") does not match length of data (", k, ").")))
-      }
    }
 
    if (!is.null(col)) {
-      if (length(col) == 1L) {
-         col <- rep(col, k)
-      } else {
-         if (length(col) != k)
-            stop(mstyle$stop(paste0("Length of 'col' argument (", length(col), ") does not match length of data (", k, ").")))
-      }
+      col <- .expand1(col, k)
+      if (length(col) != k)
+         stop(mstyle$stop(paste0("Length of 'col' argument (", length(col), ") does not match length of data (", k, ").")))
    }
 
    ### if a subset of studies is specified

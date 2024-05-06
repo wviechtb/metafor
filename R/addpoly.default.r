@@ -93,8 +93,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
    if (is.null(mlab)) {
       mlab <- rep("", k)
    } else {
-      if (length(mlab) == 1L)
-         mlab <- rep(mlab, k)
+      mlab <- .expand1(mlab, k)
       if (length(mlab) != k)
          stop(mstyle$stop(paste0("Length of the 'mlab' argument (", length(mlab), ") does not correspond to the number of polygons to be plotted (", k, ").")))
    }
@@ -127,8 +126,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
    if (is.null(fonts)) {
       fonts <- rep(par("family"), 2L)
    } else {
-      if (length(fonts) == 1L)
-         fonts <- rep(fonts, 2L)
+      fonts <- .expand1(fonts, 2L)
    }
 
    if (is.null(names(fonts)))
@@ -334,8 +332,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
       if (is.null(width)) {
          width <- apply(annotext, 2, function(x) max(nchar(x)))
       } else {
-         if (length(width) == 1L)
-            width <- rep(width, ncol(annotext))
+         width <- .expand1(width, ncol(annotext))
       }
 
       for (j in seq_len(ncol(annotext))) {
@@ -354,14 +351,9 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
    }
 
-   if (length(col) == 1L)
-      col <- rep(col, k)
-
-   if (length(border) == 1L)
-      border <- rep(border, k)
-
-   if (length(lcol) == 1L)
-      lcol <- rep(lcol, k)
+   col    <- .expand1(col, k)
+   border <- .expand1(border, k)
+   lcol   <- .expand1(lcol, k)
 
    if (isTRUE(constarea)) {
       areas <- (ci.ub - ci.lb) * (height/100)*cex*efac[1]

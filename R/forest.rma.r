@@ -147,8 +147,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### vertical expansion factor: 1st = CI/PI end lines, 2nd = arrows, 3rd = summary polygon or fitted polygons
 
-   if (length(efac) == 1L)
-      efac <- rep(efac, 3L)
+   efac <- .expand1(efac, 3L)
 
    if (length(efac) == 2L)
       efac <- c(efac[1], efac[1], efac[2]) # if 2 values specified: 1st = CI/PI end lines and arrows, 2nd = summary polygon or fitted polygons
@@ -334,8 +333,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    }
 
-   if (length(pch) == 1L)
-      pch <- rep(pch, x$k.all)
+   pch <- .expand1(pch, x$k.all)
 
    if (length(pch) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'pch' argument (", length(pch), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
@@ -344,8 +342,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    if (!is.null(psize)) {
 
-      if (length(psize) == 1L)
-         psize <- rep(psize, x$k.all)
+      psize <- .expand1(psize, x$k.all)
 
       if (length(psize) != x$k.all)
          stop(mstyle$stop(paste0("Length of the 'psize' argument (", length(psize), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
@@ -354,8 +351,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    }
 
-   if (length(colout) == 1L)
-      colout <- rep(colout, x$k.all)
+   colout <- .expand1(colout, x$k.all)
 
    if (length(colout) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'colout' argument (", length(colout), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
@@ -1161,8 +1157,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       if (missing(width)) {
          width <- apply(annotext, 2, function(x) max(nchar(x)))
       } else {
-         if (length(width) == 1L)
-            width <- rep(width, ncol(annotext))
+         width <- .expand1(width, ncol(annotext))
          if (length(width) != ncol(annotext))
             stop(mstyle$stop(paste0("Length of 'width' argument (", length(width), ") does not match the number of annotation columns (", ncol(annotext), ").")))
       }

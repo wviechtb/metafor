@@ -45,8 +45,7 @@ blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
    ### see Appendix in: Raudenbush, S. W., & Bryk, A. S. (1985). Empirical
    ### Bayes meta-analysis. Journal of Educational Statistics, 10(2), 75-98
 
-   if (length(x$tau2.f) == 1L)
-      x$tau2.f <- rep(x$tau2.f, length(x$yi.f))
+   x$tau2.f <- .expand1(x$tau2.f, length(x$yi.f))
 
    li <- ifelse(is.infinite(x$tau2.f), 1, x$tau2.f / (x$tau2.f + x$vi.f))
 

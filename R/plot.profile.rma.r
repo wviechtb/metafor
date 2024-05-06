@@ -91,8 +91,7 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
          if (missing.xlab) {
             xlab <- x[[j]]$xlab
          } else {
-            if (length(xlab) == 1L)
-               xlab <- rep(xlab, x$comps)
+            xlab <- .expand1(xlab, x$comps)
          }
 
          if (missing.ylab) {
@@ -102,16 +101,13 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
                ylab <- paste0(ifelse(x$method=="REML", "Restricted ", ""), "Log-Likelihood")
             }
          } else {
-            if (length(ylab) == 1L)
-               ylab <- rep(ylab, x$comps)
+            ylab <- .expand1(ylab, x$comps)
          }
 
          if (missing.main) {
             main <- x[[j]]$title
          } else {
-            if (length(main) == 1L) {
-               main <- rep(main, x$comps)
-            }
+            main <- .expand1(main, x$comps)
          }
 
          lplot(x[[j]], xlim=xlim, ylim=ylim, pch=pch,

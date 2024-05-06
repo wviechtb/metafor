@@ -69,8 +69,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
             if (missing(rhs)) {
                rhs <- rep(0, m)
             } else {
-               if (length(rhs) == 1L)
-                  rhs <- rep(rhs, m)
+               rhs <- .expand1(rhs, m)
                if (length(rhs) != m)
                   stop(mstyle$stop(paste0("Length of 'rhs' (", length(rhs), ") does not match the number of coefficients tested (", m, ").")))
             }
@@ -118,8 +117,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
             if (missing(rhs)) {
                rhs <- rep(0, m)
             } else {
-               if (length(rhs) == 1L)
-                  rhs <- rep(rhs, m)
+               rhs <- .expand1(rhs, m)
                if (length(rhs) != m)
                   stop(mstyle$stop(paste0("Length of 'rhs' (", length(rhs), ") does not match the number of coefficients tested (", m, ").")))
             }
@@ -193,8 +191,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
             if (missing(rhs)) {
                rhs <- rep(0, m)
             } else {
-               if (length(rhs) == 1L)
-                  rhs <- rep(rhs, m)
+               rhs <- .expand1(rhs, m)
                if (length(rhs) != m)
                   stop(mstyle$stop(paste0("Length of 'rhs' (", length(rhs), ") does not match the number of linear combinations (", m, ").")))
             }
@@ -345,8 +342,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                if (missing(rhs)) {
                   rhs <- rep(0, m)
                } else {
-                  if (length(rhs) == 1L)
-                     rhs <- rep(rhs, m)
+                  rhs <- .expand1(rhs, m)
                   if (length(rhs) != m)
                      stop(mstyle$stop(paste0("Length of 'rhs' (", length(rhs), ") does not match the number of linear combinations (", m, ").")))
                }

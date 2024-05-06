@@ -87,8 +87,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
 
    ### handle dist argument
 
-   if (length(dist) == 1L)
-      dist <- rep(dist, k)
+   dist <- .expand1(dist, k)
 
    if (length(dist) != k)
       stop(mstyle$stop(paste0("Length of 'dist' argument (", length(dist), ") does not match length of data (", k, ").")))
@@ -132,8 +131,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
 
    method <- tolower(method)
 
-   if (length(method) == 1L)
-      method <- c(method, method)
+   method <- .expand1(method, 2L)
 
    method1.options <- c("default", "luo/wan/shi", "qe", "bc", "mln", "blue", "hozo2005", "wan2014", "bland2015", "luo2016", "walter2007")
    method2.options <- c("default", "luo/wan/shi", "qe", "bc", "mln", "blue", "hozo2005", "wan2014", "bland2015", "shi2020", "walter2007")
@@ -184,7 +182,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
    tval  <- rep(NA_real_, k)
    crit  <- rep(NA_real_, k)
    sig   <- rep(NA,       k)
-   dists <- rep("norm", k)
+   dists <- rep("norm",   k)
 
    for (i in seq_len(k)) {
 

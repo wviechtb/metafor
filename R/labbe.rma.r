@@ -97,8 +97,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, lty,
    ###       so we have to apply the same subsetting (if necessary) and removing of NAs as was
    ###       done during the model fitting (note: NAs are removed further below)
 
-   if (length(pch) == 1L)
-      pch <- rep(pch, x$k.all)
+   pch <- .expand1(pch, x$k.all)
 
    if (length(pch) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'pch' argument (", length(pch), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
@@ -108,8 +107,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, lty,
    ### if user has set the point sizes
 
    if (!is.null(psize)) {
-      if (length(psize) == 1L)
-         psize <- rep(psize, x$k.all)
+      psize <- .expand1(psize, x$k.all)
       if (length(psize) != x$k.all)
          stop(mstyle$stop(paste0("Length of the 'psize' argument (", length(psize), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
       psize <- .getsubset(psize, x$subset)
@@ -118,8 +116,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, lty,
    if (missing(col))
       col <- par("fg")
 
-   if (length(col) == 1L)
-      col <- rep(col, x$k.all)
+   col <- .expand1(col, x$k.all)
 
    if (length(col) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'col' argument (", length(col), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
@@ -129,8 +126,7 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, lty,
    if (missing(bg))
       bg <- .coladj(par("bg","fg"), dark=0.35, light=-0.35)
 
-   if (length(bg) == 1L)
-      bg <- rep(bg, x$k.all)
+   bg <- .expand1(bg, x$k.all)
 
    if (length(bg) != x$k.all)
       stop(mstyle$stop(paste0("Length of the 'bg' argument (", length(bg), ") does not correspond to the size of the original dataset (", x$k.all, ").")))

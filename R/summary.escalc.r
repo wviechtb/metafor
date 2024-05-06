@@ -71,8 +71,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, olim, digits, transf, ...) {
 
    k <- length(yi)
 
-   if (length(H0) == 1L)
-      H0 <- rep(H0, k)
+   H0 <- .expand1(H0, k)
 
    ### compute sei, zi, and lower/upper CI bounds; when applying a transformation, compute the transformed outcome and CI bounds
 
