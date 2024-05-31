@@ -49,7 +49,7 @@
 
    In addition to reading the paper, carefully read this page and then the help pages for the \code{\link{escalc}} and the \code{\link{rma.uni}} functions (or the \code{\link{rma.mh}}, \code{\link{rma.peto}}, \code{\link{rma.glmm}}, and/or \code{\link{rma.mv}} functions if you intend to use these methods). The help pages for these functions provide links to many additional functions, which can be used after fitting a model. You can also read the entire documentation online at \url{https://wviechtb.github.io/metafor/} (where it is nicely formatted and the output from all examples is provided).
 
-   A (pdf) diagram showing the various functions in the metafor package (and how they are related to each other) can be opened with the command \code{vignette("diagram")}.
+   A (pdf) diagram showing the various functions in the metafor package (and how they are related to each other) can be opened with the command \code{vignette("diagram", package="metafor")}.
 
    Finally, additional information about the package, several detailed analysis examples, examples of plots and figures provided by the package (with the corresponding code), some additional tips and notes, and a FAQ can be found on the package website at \url{https://www.metafor-project.org}.
 }

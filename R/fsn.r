@@ -220,6 +220,7 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
       z.avg  <- abs(sum(zi) / sqrt(k))
       pval   <- pnorm(z.avg, lower.tail=FALSE)
       fsnum  <- max(0, k * (z.avg / qnorm(alpha, lower.tail=FALSE))^2 - k)
+      fsnum  <- .rnd.fsn(fsnum)
       target <- NA_real_
 
    }
@@ -237,6 +238,7 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
          if (inherits(fsnum, "try-error"))
             stop(mstyle$stop("Could not find fail-safe N using Fisher's method for pooling p-values."))
       }
+      fsnum  <- .rnd.fsn(fsnum)
       target <- NA_real_
 
    }
@@ -255,6 +257,7 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
             pvalnew <- binom.test(kpos + fsnum/2, k + fsnum)$p.value
          }
       }
+      fsnum  <- .rnd.fsn(fsnum)
       target <- NA_real_
 
    }
@@ -275,6 +278,8 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
          fsnum <- max(0, k * (est - target) / target)
       }
 
+      fsnum <- .rnd.fsn(fsnum)
+
    }
 
    if (type == "Rosenberg") {
@@ -287,6 +292,7 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
       #w.p   <- (sum(wi*yi) / qnorm(alpha/2, lower.tail=FALSE))^2 - sum(wi)
       #fsnum <- max(0, k*w.p/sum(wi))
       fsnum  <- max(0, ((sum(wi*yi) / qnorm(alpha/2, lower.tail=FALSE))^2 - sum(wi)) * vt)
+      fsnum  <- .rnd.fsn(fsnum)
       target <- NA_real_
 
    }
@@ -362,6 +368,8 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
             if (fsnum > maxint)
                fsnum <- maxint
 
+            fsnum <- .rnd.fsn(fsnum)
+
             tmp <- .fsn.gen(fsnum, yi=yi, vi=vi, vt=vt, est=est, tau2=tau2, tau2fix=tau2fix,
                             test=test, weighted=weighted, target=target, alpha=alpha, exact=exact,
                             method=method, mumiss=mumiss, upperint=max(interval), maxint=maxint, newest=TRUE)
@@ -392,6 +400,8 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
             if (fsnum > maxint)
                fsnum <- maxint
 
+            fsnum <- .rnd.fsn(fsnum)
+
             tmp <- .fsn.gen(fsnum, yi=yi, vi=vi, vt=vt, est=est, tau2=tau2, tau2fix=tau2fix,
                             test=test, weighted=weighted, target=target, alpha=alpha, exact=exact,
                             method=method, mumiss=mumiss, upperint=max(interval), maxint=maxint, newest=TRUE)
@@ -416,12 +426,6 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
    }
 
    #########################################################################
-
-   if (is.finite(fsnum) && abs(fsnum - round(fsnum)) >= .Machine$double.eps^0.5) {
-      fsnum <- ceiling(fsnum)
-   } else {
-      fsnum <- round(fsnum)
-   }
 
    res <- list(type=type, fsnum=fsnum, est=est, tau2=tau2, meanes=est, pval=pval, alpha=alpha, target=target,
                method=ifelse(type=="General", method, NA), est.fsn=est.fsn, tau2.fsn=tau2.fsn, pval.fsn=pval.fsn,

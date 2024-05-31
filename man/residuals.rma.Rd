@@ -65,7 +65,7 @@
    \item{se}{corresponding standard errors.}
    \item{z}{standardized residuals (internally standardized for \code{rstandard} or externally standardized for \code{rstudent}).}
 
-   When a clustering variable is specified for \code{"rma.mv"} objects, the returned object is a list with the first element (named \code{obs}) as described above and a second element (named \code{cluster} of class \code{"list.rma"} with:
+   When a clustering variable is specified for \code{"rma.mv"} objects, the returned object is a list with the first element (named \code{obs}) as described above and a second element (named \code{cluster}) of class \code{"list.rma"} with:
    \item{X2}{cluster-level multivariate standardized residuals.}
    \item{k}{number of observed effect sizes or outcomes within the clusters.}
 

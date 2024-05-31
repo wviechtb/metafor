@@ -153,3 +153,17 @@
 }
 
 ############################################################################
+
+.rnd.fsn <- function(fsnum) {
+
+   if (is.finite(fsnum) && abs(fsnum - round(fsnum)) >= .Machine$double.eps^0.5) {
+      fsnum <- ceiling(fsnum)
+   } else {
+      fsnum <- round(fsnum)
+   }
+
+   return(fsnum)
+
+}
+
+############################################################################
