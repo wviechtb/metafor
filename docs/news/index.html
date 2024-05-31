@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-13</span>
       </span>
     </div>
 
@@ -90,12 +90,13 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.7-11" id="metafor-47-11-2024-05-06">metafor 4.7-11 (2024-05-06)<a class="anchor" aria-label="anchor" href="#metafor-47-11-2024-05-06"></a></h2>
+<h2 class="page-header" data-toc-text="4.7-13" id="metafor-47-13-2024-05-31">metafor 4.7-13 (2024-05-31)<a class="anchor" aria-label="anchor" href="#metafor-47-13-2024-05-31"></a></h2>
 <ul><li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now counts the number of levels of a random effect more appropriately; this may trigger more often the check whether the number of levels is equal to 1, in which case the corresponding variance component is automatically fixed to 0; this check can be omitted with <code>control=list(check.k.gtr.1=FALSE)</code></p></li>
 <li><p>made optimizers <code>Rcgmin</code> and <code>Rvmmin</code> available again via the <code>optimx</code> package</p></li>
 <li><p>argument <code>shade</code> in <code><a href="../reference/funnel.html">funnel()</a></code> now automatically uses a color gradient for the regions when multiple <code>level</code> values are specified</p></li>
 <li><p>added extractor for function <code><a href="../reference/se.html">se()</a></code> for extracting standard errors from model objects</p></li>
 <li><p>added <code>lim</code>, <code>ci</code>, <code>pi</code>, <code>legend</code>, and <code>flip</code> arguments to <code><a href="../reference/labbe.html">labbe()</a></code></p></li>
+<li><p><code>fsn(..., type="General")</code> now computes the final estimates after rounding the fail-safe N value (not before)</p></li>
 <li><p>added more tests</p></li>
 </ul></div>
     <div class="section level2">
@@ -161,7 +162,7 @@
 <li><p>added <code><a href="../reference/conv.wald.html">conv.wald()</a></code> function for converting Wald-type confidence intervals and test statistics to sampling variances</p></li>
 <li><p>added <code><a href="../reference/conv.fivenum.html">conv.fivenum()</a></code> function for estimating means and standard deviations from five-number summary values</p></li>
 <li><p>added <code><a href="../reference/conv.delta.html">conv.delta()</a></code> function for transforming observed effect sizes or outcomes and their sampling variances using the delta method</p></li>
-<li><p>added <code><a href="../reference/emmprep.html">emmprep()</a></code> function to create a reference grid for use with the <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans()</a></code> function from the package of the same name</p></li>
+<li><p>added <code><a href="../reference/emmprep.html">emmprep()</a></code> function to create a reference grid for use with the <code><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans()</a></code> function from the package of the same name</p></li>
 <li><p>exposed formatter functions <code><a href="../reference/formatters.html">fmtp()</a></code>, <code><a href="../reference/formatters.html">fmtx()</a></code>, and <code><a href="../reference/formatters.html">fmtt()</a></code></p></li>
 <li><p>package <code>numDeriv</code> moved from <code>Suggests</code> to <code>Depends</code></p></li>
 <li><p><code><a href="../reference/model.matrix.rma.html">model.matrix.rma()</a></code> gains <code>asdf</code> argument</p></li>

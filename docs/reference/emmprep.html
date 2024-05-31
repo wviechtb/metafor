@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-13</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Function to create a reference grid for use with the <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></code> function from the package of the same name. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
+    <p>Function to create a reference grid for use with the <code><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></code> function from the package of the same name. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
     </div>
 
     <div id="ref-usage">
@@ -107,27 +107,27 @@
 <dd><p>logical to specify whether information on some (extracted) settings should be printed when creating the reference grid (the default is <code>FALSE</code>).</p></dd>
 
    <dt>...</dt>
-<dd><p>other arguments that will be passed on to the <code><a href="https://rdrr.io/pkg/emmeans/man/qdrg.html" class="external-link">qdrg</a></code> function.</p></dd>
+<dd><p>other arguments that will be passed on to the <code><a href="https://rvlenth.github.io/emmeans/reference/qdrg.html" class="external-link">qdrg</a></code> function.</p></dd>
 
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The <a href="https://cran.r-project.org/package=emmeans" class="external-link">emmeans</a> package is a popular package that facilitates the computation of 'estimated marginal means'. The function is a wrapper around the <code><a href="https://rdrr.io/pkg/emmeans/man/qdrg.html" class="external-link">qdrg</a></code> function from the <code>emmeans</code> package to make <code>"rma"</code> objects compatible with the latter. Unless one needs to pass additional arguments to the <code><a href="https://rdrr.io/pkg/emmeans/man/qdrg.html" class="external-link">qdrg</a></code> function, one simply applies this function to the <code>"rma"</code> object and then the <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></code> function (or one of the other functions that can be applied to <code>"emmGrid"</code> objects) to the resulting object to obtain the desired estimated marginal means.</p>
+    <p>The <a href="https://cran.r-project.org/package=emmeans" class="external-link">emmeans</a> package is a popular package that facilitates the computation of 'estimated marginal means'. The function is a wrapper around the <code><a href="https://rvlenth.github.io/emmeans/reference/qdrg.html" class="external-link">qdrg</a></code> function from the <code>emmeans</code> package to make <code>"rma"</code> objects compatible with the latter. Unless one needs to pass additional arguments to the <code><a href="https://rvlenth.github.io/emmeans/reference/qdrg.html" class="external-link">qdrg</a></code> function, one simply applies this function to the <code>"rma"</code> object and then the <code><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></code> function (or one of the other functions that can be applied to <code>"emmGrid"</code> objects) to the resulting object to obtain the desired estimated marginal means.</p>
     </div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>An <code>"emmGrid"</code> object as created by the <code><a href="https://rdrr.io/pkg/emmeans/man/qdrg.html" class="external-link">qdrg</a></code> function from the <code>emmeans</code> package.</p>
+<p>An <code>"emmGrid"</code> object as created by the <code><a href="https://rvlenth.github.io/emmeans/reference/qdrg.html" class="external-link">qdrg</a></code> function from the <code>emmeans</code> package.</p>
 
 
-<p>The resulting object will typically be used in combination with the <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></code> function.</p>
+<p>The resulting object will typically be used in combination with the <code><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></code> function.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
     <p>When creating the reference grid, the function extracts the degrees of freedom for tests/confidence intervals from the model object (if the model was fitted with <code>test="t"</code>, <code>test="knha"</code>, <code>test="hksj"</code>, or <code>test="adhoc"</code>; otherwise the degrees of freedom are infinity). In some cases, there is not just a single value for the degrees of freedom, but an entire vector (e.g., for models fitted with <code><a href="rma.mv.html">rma.mv</a></code>). In this case, the smallest value will be used (as a conservative option). One can set a different/custom value for the degrees of freedom with <code>emmprep(..., df=value)</code>.</p>
-<p>When the model object contains information about the outcome measure used in the analysis (which should be the case if the observed outcomes were computed with <code><a href="escalc.html">escalc</a></code> or if the <code>measure</code> argument was set when fitting the model), then information about the appropriate back-transformation (if available) is stored as part of the returned object. If so, the back-transformation is automatically applied when calling <code><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></code> with <code>type="response"</code>.</p>
-<p>The function also tries to extract the estimated value of <em></em>\(\tau^2\) (or more precisely, its square root) from the model object (when the model is a random/mixed-effects model). This value is only needed when computing prediction intervals (i.e., when <code>interval="predict"</code> in <code><a href="https://rdrr.io/pkg/emmeans/man/summary.emmGrid.html" class="external-link">predict.emmGrid</a></code>) or when applying the bias adjustment in the back-transformation (i.e., when <code>bias.adjust=TRUE</code> in <code><a href="https://rdrr.io/pkg/emmeans/man/summary.emmGrid.html" class="external-link">summary.emmGrid</a></code>). For some models (e.g., those fitted with <code><a href="rma.mv.html">rma.mv</a></code>), it is not possible to automatically extract the estimate. In this case, one can manually set the value with <code>emmprep(..., sigma=value)</code> (note: the argument is called <code>sigma</code>, following the conventions of <code><a href="https://rdrr.io/pkg/emmeans/man/summary.emmGrid.html" class="external-link">summary.emmGrid</a></code> and one must supply the square root of the <em></em>\(\tau^2\) estimate).</p>
+<p>When the model object contains information about the outcome measure used in the analysis (which should be the case if the observed outcomes were computed with <code><a href="escalc.html">escalc</a></code> or if the <code>measure</code> argument was set when fitting the model), then information about the appropriate back-transformation (if available) is stored as part of the returned object. If so, the back-transformation is automatically applied when calling <code><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></code> with <code>type="response"</code>.</p>
+<p>The function also tries to extract the estimated value of <em></em>\(\tau^2\) (or more precisely, its square root) from the model object (when the model is a random/mixed-effects model). This value is only needed when computing prediction intervals (i.e., when <code>interval="predict"</code> in <code><a href="https://rvlenth.github.io/emmeans/reference/summary.emmGrid.html" class="external-link">predict.emmGrid</a></code>) or when applying the bias adjustment in the back-transformation (i.e., when <code>bias.adjust=TRUE</code> in <code><a href="https://rvlenth.github.io/emmeans/reference/summary.emmGrid.html" class="external-link">summary.emmGrid</a></code>). For some models (e.g., those fitted with <code><a href="rma.mv.html">rma.mv</a></code>), it is not possible to automatically extract the estimate. In this case, one can manually set the value with <code>emmprep(..., sigma=value)</code> (note: the argument is called <code>sigma</code>, following the conventions of <code><a href="https://rvlenth.github.io/emmeans/reference/summary.emmGrid.html" class="external-link">summary.emmGrid</a></code> and one must supply the square root of the <em></em>\(\tau^2\) estimate).</p>
 <p>By default, the reference grid is created based on the data used for fitting the original model (which is typically the sensible thing to do). One can specify a different dataset with <code>emmprep(..., data=obj)</code>, where <code>obj</code> must be a data frame that contains the same variables as used in the original model fitted.</p>
 <p>If the original model fitted involved redundant predictors that were dropped from the model (due to ‘rank deficiencies’), then the function cannot be used. In this case, one should remove any redundancies in the original model fitted before using this function.</p>
     </div>
@@ -182,9 +182,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### estimated marginal mean (back-transformed to the risk ratio scale)</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"1"</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://rvlenth.github.io/emmeans/" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"1"</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: emmeans</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Welcome to emmeans.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Caution: You lose important information if you filter this package's results.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> See '? untidy'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1       response     SE  df asymp.LCL asymp.UCL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  overall    0.486 0.0523 Inf     0.393       0.6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -231,8 +234,8 @@
 <span class="r-in"><span><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">emmprep</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### estimated marginal mean using proportional cell weighting</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"1"</span>, type<span class="op">=</span><span class="st">"response"</span>, weights<span class="op">=</span><span class="st">"proportional"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://rvlenth.github.io/emmeans/" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"1"</span>, type<span class="op">=</span><span class="st">"response"</span>, weights<span class="op">=</span><span class="st">"proportional"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1       response    SE  df asymp.LCL asymp.UCL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  overall    0.481 0.092 Inf     0.331       0.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -241,8 +244,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Intervals are back-transformed from the log scale </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### estimated marginal mean using equal cell weighting (this is actually the default)</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"1"</span>, type<span class="op">=</span><span class="st">"response"</span>, weights<span class="op">=</span><span class="st">"equal"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://rvlenth.github.io/emmeans/" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"1"</span>, type<span class="op">=</span><span class="st">"response"</span>, weights<span class="op">=</span><span class="st">"equal"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1       response    SE  df asymp.LCL asymp.UCL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  overall    0.529 0.109 Inf     0.352     0.793</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -297,8 +300,8 @@
 <span class="r-in"><span><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">emmprep</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### estimated marginal mean using equal cell weighting</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"1"</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://rvlenth.github.io/emmeans/" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"1"</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1       response     SE  df asymp.LCL asymp.UCL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  overall    0.502 0.0718 Inf     0.379     0.664</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -318,8 +321,8 @@
 <span class="r-in"><span><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu">emmprep</span><span class="op">(</span><span class="va">res</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ablat<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>,<span class="fl">30</span>,<span class="fl">50</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### estimated marginal means at the three ablat values</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"1"</span>, by<span class="op">=</span><span class="st">"ablat"</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://rvlenth.github.io/emmeans/" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"1"</span>, by<span class="op">=</span><span class="st">"ablat"</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ablat = 10:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1       response     SE  df asymp.LCL asymp.UCL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  overall    0.952 0.2302 Inf     0.593     1.529</span>
@@ -402,8 +405,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### estimated marginal mean (back-transformed to the correlation scale)</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"1"</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://rvlenth.github.io/emmeans/" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"1"</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1       response     SE  df lower.CL upper.CL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  overall    0.222 0.0269 154    0.168    0.274</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -419,8 +422,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### estimated marginal means for the three interview types</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"type"</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://rvlenth.github.io/emmeans/" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"type"</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  type response     SE  df lower.CL upper.CL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  j       0.243 0.0184 154   0.2058    0.279</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  p       0.124 0.0567 154   0.0109    0.234</span>
@@ -478,8 +481,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### estimated marginal mean (back-transformed to the correlation scale)</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvlenth/emmeans" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"1"</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://rvlenth.github.io/emmeans/" class="external-link">emmeans</a></span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">sav</span>, specs<span class="op">=</span><span class="st">"1"</span>, type<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1       response     SE  df lower.CL upper.CL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  overall    0.222 0.0258 154     0.17    0.272</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

@@ -12,7 +12,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("test", "L", "verbose", "fixed"))
+   .chkdots(ddd, c("test", "L", "verbose", "fixed", "df"))
 
    if (!is.null(ddd$L))
       X <- ddd$L
@@ -440,6 +440,10 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
       test <- .chkddd(ddd$test, "LRT", match.arg(ddd$test, c("LRT", "Wald")))
 
+      ### get df value (NULL if not specified)
+
+      df <- ddd$df
+
       ### assume 'object' is the full model and 'object2' the reduced model
 
       model.f <- object
@@ -452,12 +456,12 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
       ### check if they have the same number of parameters
 
-      if (parms.f == parms.r)
+      if (is.null(df) && parms.f == parms.r)
          stop(mstyle$stop("Models have the same number of parameters. LRT not meaningful."))
 
-      ### if parms.f < parms.r, then let 'object' be the reduced model and 'object2' the full model
+      ### if parms.f < parms.r, then let 'object' be the reduced model and 'object2' the full model (only do this if 'df' is not specified)
 
-      if (parms.f < parms.r) {
+      if (is.null(df) && parms.f < parms.r) {
          model.f <- object2
          model.r <- object
          parms.f <- model.f$parms
@@ -470,12 +474,23 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
       if (inherits(object, "rma.uni")) {
          if (!(identical(as.vector(model.f$yi), as.vector(model.r$yi)) && isTRUE(all.equal(as.vector(model.f$vi), as.vector(model.r$vi)))))
-            stop(mstyle$stop("Observed outcomes and/or sampling variances not equal in the full and reduced model."))
+            stop(mstyle$stop("The observed outcomes and/or sampling variances are not equal in the full and reduced model."))
       }
 
-      if (inherits(object, "rma.mv")) {
-         if (!(identical(as.vector(model.f$yi), as.vector(model.r$yi)) && isTRUE(all.equal(as.matrix(model.f$V), as.matrix(model.r$V)))))
-            stop(mstyle$stop("Observed outcomes and/or sampling variances/covariances not equal in the full and reduced model."))
+      if (is.null(df)) {
+
+         if (inherits(object, "rma.mv")) {
+            if (!(identical(as.vector(model.f$yi), as.vector(model.r$yi)) && isTRUE(all.equal(as.matrix(model.f$V), as.matrix(model.r$V)))))
+               stop(mstyle$stop("The observed outcomes and/or sampling variances/covariances are not equal in the full and reduced model."))
+         }
+
+      } else {
+
+         if (inherits(object, "rma.mv")) {
+            if (!(identical(as.vector(model.f$yi), as.vector(model.r$yi))))
+               stop(mstyle$stop("The observed outcomes are not equal in the full and reduced model."))
+         }
+
       }
 
       ### for Wald-type test, both models should be fitted using the same method
@@ -483,7 +498,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
       if (test == "Wald" && (model.f$method != model.r$method))
          stop(mstyle$stop("Full and reduced model must use the same 'method' for the model fitting."))
 
-      ### for LRTs, reduced model may use method="FE/EE/CE" and full model method="(RE)ML" but the other way around doesn't really make sense
+      ### for LRTs, reduced model may use method="FE/EE/CE" and full model method="(RE)ML" but the other way around is not allowed
 
       if (is.element(model.f$method, c("FE","EE","CE")) && !is.element(model.r$method, c("FE","EE","CE")))
          stop(mstyle$stop("Full model uses a fixed- and reduced model uses a random/mixed-effects model."))
@@ -499,6 +514,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
          warning(mstyle$warning("LRTs should be based on ML/REML estimation."), call.=FALSE)
 
       ### for LRTs based on REML estimation, check if fixed effects differ
+
       if (test == "LRT" && model.f$method == "REML" && (!identical(model.f$X, model.r$X))) {
          if (refit) {
             #message(mstyle$message("Refitting models with ML (instead of REML) estimation ..."))
@@ -586,7 +602,12 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
       if (test == "LRT") {
 
-         parms.diff <- parms.f - parms.r
+         if (is.null(df)) {
+            parms.diff <- parms.f - parms.r
+         } else {
+            parms.f <- parms.f + df
+            parms.diff <- df
+         }
 
          if (model.f$method == "REML") {
 
