@@ -1,7 +1,7 @@
 forest.rma       <- function(x,
 annotate=TRUE, addfit=TRUE, addpred=FALSE, showweights=FALSE, header=FALSE,
 xlim, alim, olim, ylim, at, steps=5, level=x$level, refline=0, digits=2L, width,
-xlab, slab, mlab, ilab, ilab.xpos, ilab.pos, order,
+xlab, slab, mlab, ilab, ilab.lab, ilab.xpos, ilab.pos, order,
 transf, atransf, targs, rows,
 efac=1, pch, psize, plim=c(0.5,1.5), colout, col, border, shade, colshade,
 lty, fonts, cex, cex.lab, cex.axis, ...) {
@@ -45,6 +45,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    } else {
       ilab <- .getx("ilab", mf=mf, data=x$data)
    }
+
+   if (missing(ilab.lab))
+      ilab.lab <- NULL
 
    if (missing(ilab.xpos))
       ilab.xpos <- NULL
@@ -1097,9 +1100,13 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol.ilab, ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ").")))
       if (!is.null(ilab.pos) && length(ilab.pos) == 1L)
          ilab.pos <- rep(ilab.pos, ncol.ilab)
+      if (!is.null(ilab.lab) && length(ilab.lab) != ncol.ilab)
+         stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol.ilab, ") does not match length of 'ilab.lab' argument (", length(ilab.lab), ").")))
       par(family=names(fonts)[3], font=fonts[3])
       for (l in seq_len(ncol.ilab)) {
          ltext(ilab.xpos[l], rows+rowadj[3], ilab[,l], pos=ilab.pos[l], cex=cex, ...)
+         if (!is.null(ilab.lab))
+            ltext(ilab.xpos[l], ylim[2]-(top-1)+1+rowadj[3], ilab.lab[l], pos=ilab.pos[l], font=2, cex=cex, ...)
       }
       par(family=names(fonts)[1], font=fonts[1])
    }
@@ -1216,8 +1223,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### add header
 
-   ltext(textpos[1], ylim[2]-(top-1)+1, header.left,  pos=4, font=2, cex=cex, ...)
-   ltext(textpos[2], ylim[2]-(top-1)+1, header.right, pos=2, font=2, cex=cex, ...)
+   ltext(textpos[1], ylim[2]-(top-1)+1+rowadj[1], header.left,  pos=4, font=2, cex=cex, ...)
+   ltext(textpos[2], ylim[2]-(top-1)+1+rowadj[2], header.right, pos=2, font=2, cex=cex, ...)
 
    #########################################################################
 

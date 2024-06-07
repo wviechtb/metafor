@@ -9,7 +9,7 @@
        showweights=FALSE, header=FALSE,
        xlim, alim, olim, ylim, at, steps=5,
        level=x$level, refline=0, digits=2L, width,
-       xlab, slab, mlab, ilab, ilab.xpos, ilab.pos,
+       xlab, slab, mlab, ilab, ilab.lab, ilab.xpos, ilab.pos,
        order, transf, atransf, targs, rows,
        efac=1, pch, psize, plim=c(0.5,1.5), colout, col, border,
        shade, colshade, lty, fonts, cex, cex.lab, cex.axis, \dots)
@@ -35,8 +35,9 @@
    \item{slab}{optional vector with labels for the \mjseqn{k} studies. If unspecified, the function tries to extract study labels from \code{x} or simple labels are created within the function. To suppress labels, set this argument to \code{NA}.}
    \item{mlab}{optional character string giving a label to the summary estimate from an equal- or a random-effects model. If unspecified, the label is created within the function.}
    \item{ilab}{optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.}
-   \item{ilab.xpos}{numeric vector to specify the horizontal position(s) of the variable(s) given via \code{ilab}.}
-   \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via \code{ilab} (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.}
+   \item{ilab.lab}{optional character vector with (column) labels for the variable(s) given via \code{ilab}.}
+   \item{ilab.xpos}{optional numeric vector to specify the horizontal position(s) of the variable(s) given via \code{ilab}.}
+   \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) to specify the alignment of the variable(s) given via \code{ilab} (2 means right, 4 means left aligned). If unspecified, the default is to center the values.}
    \item{order}{optional character string to specify how the studies should be ordered. Can also be a variable based on which the studies will be ordered. See \sQuote{Details}.}
    \item{transf}{optional argument to specify a function to transform the observed outcomes, summary estimates, fitted values, and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument to specify a function to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
@@ -83,7 +84,7 @@
 
    Alternatively, it is also possible to set \code{order} equal to a variable based on which the studies will be ordered (see \sQuote{Examples}).
 
-   Additional columns with information about the studies can be added to the plot via the \code{ilab} argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The \code{ilab.xpos} argument can then also be used to specify the horizontal position of the variables specified via \code{ilab}.
+   Additional columns with information about the studies can be added to the plot via the \code{ilab} argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The \code{ilab.xpos} argument can be used to specify the horizontal position of the variables specified via \code{ilab}. The \code{ilab.pos} argument can be used to specify how the variables should be aligned.
 
    \if{html}{The figure below illustrates how the elements in a forest plot can be arranged and the meaning of the some of the arguments such as \code{xlim}, \code{alim} or \code{at}, \code{ilab}, and \code{ilab.xpos}.}
 
@@ -136,7 +137,7 @@ text(c(-8.75,-5.25),     res$k+3, c("Vaccinated", "Control"),    cex=0.75, font=
    There are some additional optional arguments that can be passed to the function via \code{...} (hence, they cannot be abbreviated):
    \describe{
    \item{top}{single numeric value to specify the amount of space (in terms of number of rows) to leave empty at the top of the plot (e.g., for adding headers). The default is 3.}
-   \item{annosym}{vector of length 3 to select the left bracket, separation, and right bracket symbols for the annotations. The default is \code{c(" [", ", ", "]")}. Can also include a 4th element to adjust the look of the minus symbol, for example to use a proper minus sign (\ifelse{latex}{\mjseqn{-}}{\enc{−}{-}}) instead of a hyphen-minus (-). Can also include a 5th element that should be a space-like symbol (e.g., an \sQuote{en space}) that is used in place of numbers (only relevant when trying to line up numbers exactly). For example, \code{annosym=c(" [", ", ", "]", "\u2212", "\u2002")} would use a proper minus sign and an \sQuote{en space} for the annotations.}
+   \item{annosym}{vector of length 3 to select the left bracket, separation, and right bracket symbols for the annotations. The default is \code{c(" [", ", ", "]")}. Can also include a 4th element to adjust the look of the minus symbol, for example to use a proper minus sign (\ifelse{latex}{\mjseqn{-}}{\enc{−}{-}}) instead of a hyphen-minus (-). Can also include a 5th element that should be a space-like symbol (e.g., an \sQuote{en space}) that is used in place of numbers (only relevant when trying to line up numbers exactly). For example, \code{annosym=c(" [", ", ", "]", "\u2212", "\u2002")} would use a proper minus sign and an \sQuote{en space} for the annotations. The decimal point character can be adjusted via the \code{OutDec} argument of the \code{\link{options}} function before creating the plot (e.g., \code{options(OutDec=",")}).}
    \item{tabfig}{single numeric value (either a 1, 2, or 3) to set \code{annosym} automatically to a vector that will exactly align the numbers in the annotations when using a font that provides \sQuote{tabular figures}. Value 1 corresponds to using \code{"\u2212"} (a minus) and \code{"\u2002"} (an \sQuote{en space}) in \code{annoyym} as shown above. Value 2 corresponds to \code{"\u2013"} (an \sQuote{en dash}) and \code{"\u2002"} (an \sQuote{en space}). Value 3 corresponds to \code{"\u2212"} (a minus) and \code{"\u2007"} (a \sQuote{figure space}). The appropriate value for this argument depends on the font used. For example, for fonts Calibri and Carlito, 1 or 2 should work; for fonts Source Sans 3 and Palatino Linotype, 1, 2, and 3 should all work; for Computer/Latin Modern and Segoe UI, 2 should work; for Lato, Roboto, and Open Sans (and maybe Arial), 3 should work. Other fonts may work as well, but this is untested.}
    \item{textpos}{numeric vector of length 2 to specify the placement of the study labels and the annotations. The default is to use the horizontal limits of the plot region, i.e., the study labels to the right of \code{xlim[1]} and the annotations to the left of \code{xlim[2]}.}
    \item{rowadj}{numeric vector of length 3 to vertically adjust the position of the study labels, the annotations, and the extra information (if specified via \code{ilab}). This is useful for fine-tuning the position of text added with different positional alignments (i.e., argument \code{pos} in the \code{\link{text}} function).}
@@ -211,22 +212,18 @@ forest(res, header=TRUE, shade=c(1,5,10))
 ### forest plot with extra annotations
 ### note: may need to widen plotting device to avoid overlapping text
 forest(res, atransf=exp, at=log(c(0.05, 0.25, 1, 4)), xlim=c(-16,6),
-       ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
-       cex=0.75, header="Author(s) and Year")
-op <- par(cex=0.75, font=2)
-text(c(-9.5,-8,-6,-4.5), res$k+2, c("TB+", "TB-", "TB+", "TB-"))
-text(c(-8.75,-5.25),     res$k+3, c("Vaccinated", "Control"))
-par(op)
+       ilab=cbind(tpos, tneg, cpos, cneg), ilab.lab=c("TB+","TB-","TB+","TB-"),
+       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=0.75, header="Author(s) and Year")
+text(c(-8.75,-5.25), res$k+3, c("Vaccinated", "Control"), cex=0.75, font=2)
 
 ### mixed-effects model with absolute latitude as moderator
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, mods = ~ ablat,
            data=dat.bcg, slab=paste(author, year, sep=", "))
 
 ### forest plot with observed and fitted values
-forest(res, xlim=c(-9,5), order="fit", cex=0.8, ilab=ablat,
-       ilab.xpos=-4, atransf=exp, at=log(c(0.05,0.25,1,4)),
+forest(res, xlim=c(-9,5), at=log(c(0.05,0.25,1,4)), order="fit", cex=0.8,
+       ilab=ablat, ilab.xpos=-4, ilab.lab="Latitude", atransf=exp,
        header="Author(s) and Year")
-text(-4, res$k+2, "Latitude", cex=0.8, font=2)
 
 ### meta-analysis of the log risk ratios using a random-effects model
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
@@ -241,16 +238,14 @@ forest(res, ylim=c(-1.5, 20), rows=c(17:15, 12:6, 3:1)) # set positions
 ### forest plot with subgrouping of studies
 ### note: may need to widen plotting device to avoid overlapping text
 tmp <- forest(res, xlim=c(-16, 4.6), at=log(c(0.05, 0.25, 1, 4)), atransf=exp,
-              ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
-              cex=0.75, ylim=c(0.5, 21),
+              ilab=cbind(tpos, tneg, cpos, cneg), ilab.lab=c("TB+","TB-","TB+","TB-"),
+              ilab.xpos=c(-9.5,-8,-6,-4.5), cex=0.75, ylim=c(0.5, 21),
               order=alloc, rows=c(1:2,5:11,14:17),
               header="Author(s) and Year", shade=c(3,12,18))
-op <- par(cex=0.75, font=2)
-text(c(-9.5,-8,-6,-4.5), tmp$ylim[2]-1, c("TB+", "TB-", "TB+", "TB-"))
-text(c(-8.75,-5.25),     tmp$ylim[2],   c("Vaccinated", "Control"))
-par(font=4)
+op <- par(cex=tmp$cex)
+text(c(-8.75,-5.25), tmp$ylim[2], c("Vaccinated", "Control"), font=2)
 text(-16, c(18,12,3), c("Systematic Allocation", "Random Allocation",
-                        "Alternate Allocation"), pos=4)
+                        "Alternate Allocation"), font=4, pos=4)
 par(op)
 
 ### see also the addpoly.rma function for an example where summaries

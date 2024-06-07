@@ -1,7 +1,7 @@
 forest.default   <- function(x, vi, sei, ci.lb, ci.ub,
 annotate=TRUE,                             showweights=FALSE, header=FALSE,
 xlim, alim, olim, ylim, at, steps=5, level=95,      refline=0, digits=2L, width,
-xlab, slab,       ilab, ilab.xpos, ilab.pos, order, subset,
+xlab, slab,       ilab, ilab.lab, ilab.xpos, ilab.pos, order, subset,
 transf, atransf, targs, rows,
 efac=1, pch, psize, plim=c(0.5,1.5),         col,         shade, colshade,
 lty, fonts, cex, cex.lab, cex.axis, ...) {
@@ -39,6 +39,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    if (missing(ilab))
       ilab <- NULL
+
+   if (missing(ilab.lab))
+      ilab.lab <- NULL
 
    if (missing(ilab.xpos))
       ilab.xpos <- NULL
@@ -847,13 +850,17 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          if (ncol.ilab >= 4L)
             ilab.xpos <- seq(xlim[1] + dist*0.5, xlim[1] + dist*0.9, length.out=ncol.ilab)
       }
-      if (length(ilab.xpos) != ncol(ilab))
-         stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol(ilab), ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ").")))
+      if (length(ilab.xpos) != ncol.ilab)
+         stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol.ilab, ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ").")))
       if (!is.null(ilab.pos) && length(ilab.pos) == 1L)
-         ilab.pos <- rep(ilab.pos, ncol(ilab))
+         ilab.pos <- rep(ilab.pos, ncol.ilab)
+      if (!is.null(ilab.lab) && length(ilab.lab) != ncol.ilab)
+         stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol.ilab, ") does not match length of 'ilab.lab' argument (", length(ilab.lab), ").")))
       par(family=names(fonts)[3], font=fonts[3])
-      for (l in seq_len(ncol(ilab))) {
+      for (l in seq_len(ncol.ilab)) {
          ltext(ilab.xpos[l], rows+rowadj[3], ilab[,l], pos=ilab.pos[l], cex=cex, ...)
+         if (!is.null(ilab.lab))
+            ltext(ilab.xpos[l], ylim[2]-(top-1)+1+rowadj[3], ilab.lab[l], pos=ilab.pos[l], font=2, cex=cex, ...)
       }
       par(family=names(fonts)[1], font=fonts[1])
    }
@@ -935,8 +942,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### add header
 
-   ltext(textpos[1], ylim[2]-(top-1)+1, header.left,  pos=4, font=2, cex=cex, ...)
-   ltext(textpos[2], ylim[2]-(top-1)+1, header.right, pos=2, font=2, cex=cex, ...)
+   ltext(textpos[1], ylim[2]-(top-1)+1+rowadj[1], header.left,  pos=4, font=2, cex=cex, ...)
+   ltext(textpos[2], ylim[2]-(top-1)+1+rowadj[2], header.right, pos=2, font=2, cex=cex, ...)
 
    #########################################################################
 

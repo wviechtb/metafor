@@ -61,7 +61,7 @@ res <- rma(yi, vi, mods = ~ ablat, slab=paste(author, year, sep=", "), data=dat)
 
 ### forest plot of the observed risk ratios
 forest(res, addfit=FALSE, atransf=exp, xlim=c(-9,5), ylim=c(-4.5,15), cex=0.9,
-       order=ablat, ilab=ablat, ilab.xpos=-4.5,
+       order=ablat, ilab=ablat, ilab.lab="Lattitude", ilab.xpos=-4.5,
        header="Author(s) and Year", top=2)
 
 ### predicted average log risk ratios for 10, 30, and 50 degrees absolute latitude
@@ -71,6 +71,5 @@ x <- predict(res, newmods=c(10, 30, 50))
 addpoly(x$pred, sei=x$se, rows=-2, mlab=c("- at 10 Degrees", "- at 30 Degrees", "- at 50 Degrees"))
 abline(h=0)
 text(-9, -1, "Model-Based Estimates:", pos=4, cex=0.9)
-text(-4.5, res$k+2, "Latitude", cex=0.9, font=2)
 }
 \keyword{aplot}

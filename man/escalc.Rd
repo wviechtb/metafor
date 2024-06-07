@@ -303,7 +303,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          \itemize{
          \item \code{"MN"} for the \emph{raw mean},
-         \item \code{"SMN"} for the \emph{single-group standardized mean},
+         \item \code{"SMN"} for the \emph{single-group standardized mean (difference)},
          \item \code{"MNLN"} for the \emph{log transformed mean},
          \item \code{"CVLN"} for the \emph{log transformed coefficient of variation},
          \item \code{"SDLN"} for the \emph{log transformed standard deviation}.

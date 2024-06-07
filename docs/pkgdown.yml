@@ -3,7 +3,7 @@ pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   diagram: pkgdown/diagram.html
-last_built: 2024-05-31T10:15Z
+last_built: 2024-06-07T12:42Z
 urls:
   reference: https://wviechtb.github.io/metafor/reference
   article: https://wviechtb.github.io/metafor/articles

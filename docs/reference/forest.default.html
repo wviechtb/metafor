@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-14</span>
       </span>
     </div>
 
@@ -100,7 +100,7 @@
 <span>       annotate<span class="op">=</span><span class="cn">TRUE</span>, showweights<span class="op">=</span><span class="cn">FALSE</span>, header<span class="op">=</span><span class="cn">FALSE</span>,</span>
 <span>       <span class="va">xlim</span>, <span class="va">alim</span>, <span class="va">olim</span>, <span class="va">ylim</span>, <span class="va">at</span>, steps<span class="op">=</span><span class="fl">5</span>,</span>
 <span>       level<span class="op">=</span><span class="fl">95</span>, refline<span class="op">=</span><span class="fl">0</span>, digits<span class="op">=</span><span class="fl">2L</span>, <span class="va">width</span>,</span>
-<span>       <span class="va">xlab</span>, <span class="va">slab</span>, <span class="va">ilab</span>, <span class="va">ilab.xpos</span>, <span class="va">ilab.pos</span>,</span>
+<span>       <span class="va">xlab</span>, <span class="va">slab</span>, <span class="va">ilab</span>, <span class="va">ilab.lab</span>, <span class="va">ilab.xpos</span>, <span class="va">ilab.pos</span>,</span>
 <span>       <span class="va">order</span>, <span class="va">subset</span>, <span class="va">transf</span>, <span class="va">atransf</span>, <span class="va">targs</span>, <span class="va">rows</span>,</span>
 <span>       efac<span class="op">=</span><span class="fl">1</span>, <span class="va">pch</span>, <span class="va">psize</span>, plim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>,<span class="fl">1.5</span><span class="op">)</span>, <span class="va">col</span>,</span>
 <span>       <span class="va">shade</span>, <span class="va">colshade</span>, <span class="va">lty</span>, <span class="va">fonts</span>, <span class="va">cex</span>, <span class="va">cex.lab</span>, <span class="va">cex.axis</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -171,11 +171,14 @@
    <dt>ilab</dt>
 <dd><p>optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.</p></dd>
 
+   <dt>ilab.lab</dt>
+<dd><p>optional character vector with (column) labels for the variable(s) given via <code>ilab</code>.</p></dd>
+
    <dt>ilab.xpos</dt>
-<dd><p>numeric vector to specify the horizontal position(s) of the variable(s) given via <code>ilab</code>.</p></dd>
+<dd><p>optional numeric vector to specify the horizontal position(s) of the variable(s) given via <code>ilab</code>.</p></dd>
 
    <dt>ilab.pos</dt>
-<dd><p>integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via <code>ilab</code> (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.</p></dd>
+<dd><p>integer(s) (either 1, 2, 3, or 4) to specify the alignment of the variable(s) given via <code>ilab</code> (2 means right, 4 means left aligned). If unspecified, the default is to center the values.</p></dd>
 
    <dt>order</dt>
 <dd><p>optional character string to specify how the studies should be ordered. Can also be a variable based on which the studies will be ordered. See ‘Details’.</p></dd>
@@ -243,7 +246,7 @@
 <p></p><ul><li><p><code>order="obs"</code>: the studies are ordered by the observed outcomes,</p></li>
 <li><p><code>order="prec"</code>: the studies are ordered by their sampling variances.</p></li>
 </ul><p>Alternatively, it is also possible to set <code>order</code> equal to a variable based on which the studies will be ordered (see ‘Examples’).</p>
-<p>Additional columns with information about the studies can be added to the plot via the <code>ilab</code> argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The <code>ilab.xpos</code> argument can then also be used to specify the horizontal position of the variables specified via <code>ilab</code>.</p>
+<p>Additional columns with information about the studies can be added to the plot via the <code>ilab</code> argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The <code>ilab.xpos</code> argument can be used to specify the horizontal position of the variables specified via <code>ilab</code>. The <code>ilab.pos</code> argument can be used to specify how the variables should be aligned.</p>
 <p>Summary estimates can be added to the plot with the <code><a href="addpoly.html">addpoly</a></code> function. See the documentation for that function for examples.</p>
 <p>By default (i.e., when <code>psize</code> is not specified), the point sizes are a function of the precision (i.e., inverse standard errors) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard errors of the estimates, their areas are proportional to the inverse sampling variances, which corresponds to the weights they would receive in an equal-effects model. However, the point sizes are rescaled so that the smallest point size is <code>plim[1]</code> and the largest point size is <code>plim[2]</code>. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set <code>plim[2]</code> to <code>NA</code>, in which case the points are rescaled so that the smallest point size corresponds to <code>plim[1]</code> and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set <code>plim[1]</code> to <code>NA</code>, in which case the points are rescaled so that the largest point size corresponds to <code>plim[2]</code> and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set <code>plim[3]</code>, which enforces a minimal point size.</p>
 <p>With the <code>shade</code> argument, one can shade rows of the plot. The argument can be set to one of the following character strings: <code>"zebra"</code> (same as <code>shade=TRUE</code>) or <code>"zebra2"</code> to use zebra-style shading (starting either at the first or second study) or to <code>"all"</code> in which case all rows are shaded. Alternatively, the argument can be set to a logical or numeric vector to specify which rows should be shaded. The <code>colshade</code> argument can be used to set the color of shaded rows.</p>
@@ -262,7 +265,7 @@
 <dd><p>single numeric value to specify the amount of space (in terms of number of rows) to leave empty at the top of the plot (e.g., for adding headers). The default is 3.</p></dd>
 
    <dt>annosym</dt>
-<dd><p>vector of length 3 to select the left bracket, separation, and right bracket symbols for the annotations. The default is <code>c(" [", ", ", "]")</code>. Can also include a 4th element to adjust the look of the minus symbol, for example to use a proper minus sign (−) instead of a hyphen-minus (-). Can also include a 5th element that should be a space-like symbol (e.g., an ‘en space’) that is used in place of numbers (only relevant when trying to line up numbers exactly). For example, <code>annosym=c(" [", ", ", "]", "\u2212", "\u2002")</code> would use a proper minus sign and an ‘en space’ for the annotations.</p></dd>
+<dd><p>vector of length 3 to select the left bracket, separation, and right bracket symbols for the annotations. The default is <code>c(" [", ", ", "]")</code>. Can also include a 4th element to adjust the look of the minus symbol, for example to use a proper minus sign (−) instead of a hyphen-minus (-). Can also include a 5th element that should be a space-like symbol (e.g., an ‘en space’) that is used in place of numbers (only relevant when trying to line up numbers exactly). For example, <code>annosym=c(" [", ", ", "]", "\u2212", "\u2002")</code> would use a proper minus sign and an ‘en space’ for the annotations. The decimal point character can be adjusted via the <code>OutDec</code> argument of the <code><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></code> function before creating the plot (e.g., <code>options(OutDec=",")</code>).</p></dd>
 
    <dt>tabfig</dt>
 <dd><p>single numeric value (either a 1, 2, or 3) to set <code>annosym</code> automatically to a vector that will exactly align the numbers in the annotations when using a font that provides ‘tabular figures’. Value 1 corresponds to using <code>"\u2212"</code> (a minus) and <code>"\u2002"</code> (an ‘en space’) in <code>annoyym</code> as shown above. Value 2 corresponds to <code>"\u2013"</code> (an ‘en dash’) and <code>"\u2002"</code> (an ‘en space’). Value 3 corresponds to <code>"\u2212"</code> (a minus) and <code>"\u2007"</code> (a ‘figure space’). The appropriate value for this argument depends on the font used. For example, for fonts Calibri and Carlito, 1 or 2 should work; for fonts Source Sans 3 and Palatino Linotype, 1, 2, and 3 should all work; for Computer/Latin Modern and Segoe UI, 2 should work; for Lato, Roboto, and Open Sans (and maybe Arial), 3 should work. Other fonts may work as well, but this is untested.</p></dd>

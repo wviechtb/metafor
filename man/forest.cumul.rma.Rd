@@ -8,7 +8,7 @@
 \method{forest}{cumul.rma}(x, annotate=TRUE, header=FALSE,
        xlim, alim, olim, ylim, at, steps=5,
        level=x$level, refline=0, digits=2L, width,
-       xlab, ilab, ilab.xpos, ilab.pos,
+       xlab, ilab, ilab.lab, ilab.xpos, ilab.pos,
        transf, atransf, targs, rows,
        efac=1, pch, psize, col, shade, colshade,
        lty, fonts, cex, cex.lab, cex.axis, \dots)
@@ -29,8 +29,9 @@
    \item{width}{optional integer to manually adjust the width of the columns for the annotations (either a single integer or a vector of the same length as the number of annotation columns).}
    \item{xlab}{title for the x-axis. If unspecified, the function sets an appropriate axis title. Can also be a vector of three/two values (to also/only add labels at the end points of the x-axis limits).}
    \item{ilab}{optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.}
-   \item{ilab.xpos}{numeric vector to specify the horizontal position(s) of the variable(s) given via \code{ilab}.}
-   \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via \code{ilab} (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.}
+   \item{ilab.lab}{optional character vector with (column) labels for the variable(s) given via \code{ilab}.}
+   \item{ilab.xpos}{optional numeric vector to specify the horizontal position(s) of the variable(s) given via \code{ilab}.}
+   \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) to specify the alignment of the variable(s) given via \code{ilab} (2 means right, 4 means left aligned). If unspecified, the default is to center the values.}
    \item{transf}{optional argument to specify a function to transform the estimates and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument to specify a function to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}

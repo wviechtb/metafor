@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-14</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@
 <span><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">x</span>, annotate<span class="op">=</span><span class="cn">TRUE</span>, header<span class="op">=</span><span class="cn">FALSE</span>,</span>
 <span>       <span class="va">xlim</span>, <span class="va">alim</span>, <span class="va">olim</span>, <span class="va">ylim</span>, <span class="va">at</span>, steps<span class="op">=</span><span class="fl">5</span>,</span>
 <span>       level<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">level</span>, refline<span class="op">=</span><span class="fl">0</span>, digits<span class="op">=</span><span class="fl">2L</span>, <span class="va">width</span>,</span>
-<span>       <span class="va">xlab</span>, <span class="va">ilab</span>, <span class="va">ilab.xpos</span>, <span class="va">ilab.pos</span>,</span>
+<span>       <span class="va">xlab</span>, <span class="va">ilab</span>, <span class="va">ilab.lab</span>, <span class="va">ilab.xpos</span>, <span class="va">ilab.pos</span>,</span>
 <span>       <span class="va">transf</span>, <span class="va">atransf</span>, <span class="va">targs</span>, <span class="va">rows</span>,</span>
 <span>       efac<span class="op">=</span><span class="fl">1</span>, <span class="va">pch</span>, <span class="va">psize</span>, <span class="va">col</span>, <span class="va">shade</span>, <span class="va">colshade</span>,</span>
 <span>       <span class="va">lty</span>, <span class="va">fonts</span>, <span class="va">cex</span>, <span class="va">cex.lab</span>, <span class="va">cex.axis</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -152,11 +152,14 @@
    <dt>ilab</dt>
 <dd><p>optional vector, matrix, or data frame providing additional information about the studies that should be added to the plot.</p></dd>
 
+   <dt>ilab.lab</dt>
+<dd><p>optional character vector with (column) labels for the variable(s) given via <code>ilab</code>.</p></dd>
+
    <dt>ilab.xpos</dt>
-<dd><p>numeric vector to specify the horizontal position(s) of the variable(s) given via <code>ilab</code>.</p></dd>
+<dd><p>optional numeric vector to specify the horizontal position(s) of the variable(s) given via <code>ilab</code>.</p></dd>
 
    <dt>ilab.pos</dt>
-<dd><p>integer(s) (either 1, 2, 3, or 4) to specify the alignment of the vector(s) given via <code>ilab</code> (2 means right, 4 mean left aligned). If unspecified, the default is to center the labels.</p></dd>
+<dd><p>integer(s) (either 1, 2, 3, or 4) to specify the alignment of the variable(s) given via <code>ilab</code> (2 means right, 4 means left aligned). If unspecified, the default is to center the values.</p></dd>
 
    <dt>transf</dt>
 <dd><p>optional argument to specify a function to transform the estimates and confidence interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>

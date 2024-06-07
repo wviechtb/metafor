@@ -1,6 +1,6 @@
 Package: metafor
-Version: 4.7-13
-Date: 2024-05-31
+Version: 4.7-14
+Date: 2024-06-07
 Title: Meta-Analysis Package for R
 Authors@R: person(given = "Wolfgang", family = "Viechtbauer", role = c("aut","cre"), email = "wvb@metafor-project.org", comment = c(ORCID = "0000-0003-3463-4063"))
 Depends: R (>= 4.0.0), methods, Matrix, metadat, numDeriv

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-14</span>
       </span>
     </div>
 
@@ -391,7 +391,7 @@
 <p>The goal of a meta-analysis may be to characterize individual groups, where the response, characteristic, or dependent variable assessed in the individual studies is measured on some quantitative scale. In the simplest case, the raw mean for the quantitative variable is reported for each group, which then becomes the observed outcome for the meta-analysis. Here, one needs to specify <code>mi</code>, <code>sdi</code>, and <code>ni</code> for the observed means, the observed standard deviations, and the sample sizes, respectively. One can also compute the ‘single-group standardized mean’, where the mean is divided by the standard deviation (when first subtracting some fixed constant from each mean, then this is the ‘single-group standardized mean difference’). For ratio scale measurements, the log transformed mean or the log transformed coefficient of variation (with bias correction) may also be of interest (Nakagawa et al., 2015). If focus is solely on the variability of the measurements, then the log transformed standard deviation (with bias correction) is a useful measure (Nakagawa et al., 2015; Raudenbush &amp; Bryk, 1987). For the latter, one only needs to specify <code>sdi</code> and <code>ni</code>.</p>
 <p>The options for the <code>measure</code> argument are:</p>
 <p></p><ul><li><p><code>"MN"</code> for the <em>raw mean</em>,</p></li>
-<li><p><code>"SMN"</code> for the <em>single-group standardized mean</em>,</p></li>
+<li><p><code>"SMN"</code> for the <em>single-group standardized mean (difference)</em>,</p></li>
 <li><p><code>"MNLN"</code> for the <em>log transformed mean</em>,</p></li>
 <li><p><code>"CVLN"</code> for the <em>log transformed coefficient of variation</em>,</p></li>
 <li><p><code>"SDLN"</code> for the <em>log transformed standard deviation</em>.</p></li>

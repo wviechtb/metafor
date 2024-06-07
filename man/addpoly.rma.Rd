@@ -58,27 +58,24 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 addpoly(res)
 
 ### forest plot with subgrouping of studies and summaries per subgroup
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
-           slab=paste(author, year, sep=", "))
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
+              slab=paste(author, year, sep=", "))
+res <- rma(yi, vi, data=dat)
 tmp <- forest(res, xlim=c(-16, 4.6), at=log(c(0.05, 0.25, 1, 4)), atransf=exp,
-              ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
-              cex=0.75, ylim=c(-1, 27), order=alloc, rows=c(3:4,9:15,20:23),
-              mlab="RE Model for All Studies", header="Author(s) and Year")
-op <- par(cex=0.75, font=2)
-text(c(-9.5,-8,-6,-4.5), tmp$ylim[2]-1, c("TB+", "TB-", "TB+", "TB-"))
-text(c(-8.75,-5.25),     tmp$ylim[2],   c("Vaccinated", "Control"))
-par(font=4)
+              ilab=cbind(tpos, tneg, cpos, cneg), ilab.lab=c("TB+","TB-","TB+","TB-"),
+              ilab.xpos=c(-9.5,-8,-6,-4.5), cex=0.75, ylim=c(-1, 27), order=alloc,
+              rows=c(3:4,9:15,20:23), mlab="RE Model for All Studies",
+              header="Author(s) and Year")
+op <- par(cex=tmp$cex)
+text(c(-8.75,-5.25), tmp$ylim[2], c("Vaccinated", "Control"), font=2)
 text(-16, c(24,16,5), c("Systematic Allocation", "Random Allocation",
-                        "Alternate Allocation"), pos=4)
+                        "Alternate Allocation"), font=4, pos=4)
 par(op)
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
-           subset=(alloc=="systematic"))
+res <- rma(yi, vi, data=dat, subset=(alloc=="systematic"))
 addpoly(res, row=18.5, mlab="RE Model for Subgroup")
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
-           subset=(alloc=="random"))
+res <- rma(yi, vi, data=dat, subset=(alloc=="random"))
 addpoly(res, row=7.5, mlab="RE Model for Subgroup")
-res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
-           subset=(alloc=="alternate"))
+res <- rma(yi, vi, data=dat, subset=(alloc=="alternate"))
 addpoly(res, row=1.5, mlab="RE Model for Subgroup")
 }
 \keyword{aplot}

@@ -1,4 +1,4 @@
-# metafor 4.7-13 (2024-05-31)
+# metafor 4.7-14 (2024-06-07)
 
 - `rma.mv()` now counts the number of levels of a random effect more appropriately; this may trigger more often the check whether the number of levels is equal to 1, in which case the corresponding variance component is automatically fixed to 0; this check can be omitted with `control=list(check.k.gtr.1=FALSE)`
 
@@ -9,6 +9,8 @@
 - added extractor for function `se()` for extracting standard errors from model objects
 
 - added `lim`, `ci`, `pi`, `legend`, and `flip` arguments to `labbe()`
+
+- added `ilab.lab` argument to the various `forest()` functions
 
 - `fsn(..., type="General")` now computes the final estimates after rounding the fail-safe N value (not before)
 
