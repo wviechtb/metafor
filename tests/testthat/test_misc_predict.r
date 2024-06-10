@@ -59,4 +59,74 @@ test_that("predict() gives correct results when vcov=TRUE", {
 
 })
 
+test_that("predict() correctly handles in/exclusion of the intercept term", {
+
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+
+   #########################################################################
+
+   # single quantitative predictor model with intercept included
+   res <- rma(yi ~ ablat, vi, data=dat)
+
+   # predicted average effect at ablat=0,10,...,60
+   pred1 <- predict(res, newmods=seq(0,60,by=10))
+   pred2 <- predict(res, newmods=cbind(1,seq(0,60,by=10)))
+   expect_equivalent(pred1, pred2)
+
+   # exclude the intercept from the prediction (i.e., assume it is 0)
+   pred1 <- predict(res, newmods=seq(0,60,by=10), intercept=FALSE)
+   pred2 <- predict(res, newmods=cbind(0,seq(0,60,by=10)))
+   expect_equivalent(pred1, pred2)
+
+   expect_warning(pred2 <- predict(res, newmods=cbind(0,seq(0,60,by=10)), intercept=FALSE))
+
+   #########################################################################
+
+   # single quantitative predictor model with intercept excluded
+   res <- rma(yi ~ 0 + ablat, vi, data=dat)
+
+   # predicted average effect at ablat=0,10,...,60
+   pred1 <- predict(res, newmods=seq(0,60,by=10))
+   pred2 <- predict(res, newmods=cbind(seq(0,60,by=10)))
+   expect_equivalent(pred1, pred2)
+
+   #########################################################################
+
+   # multiple predictors one of which is categorical with intercept included/excluded
+   res1 <- rma(yi ~ 1 + ablat + alloc, vi, data=dat)
+   res0 <- rma(yi ~ 0 + ablat + alloc, vi, data=dat)
+
+   # predicted average effect at ablat=20 for alloc='random'
+   pred1 <- predict(res1, newmods=c(20,1,0))
+   pred0 <- predict(res0, newmods=c(20,0,1,0))
+   expect_equivalent(pred1, pred0)
+   pred2 <- predict(res1, newmods=cbind(1,20,1,0))
+   expect_equivalent(pred1, pred2)
+   pred2 <- predict(res0, newmods=cbind(20,0,1,0))
+   expect_equivalent(pred1, pred2)
+
+   pred1 <- predict(res1, newmods=cbind(20,1,0))
+   pred0 <- predict(res0, newmods=cbind(20,0,1,0))
+   expect_equivalent(pred1, pred0)
+
+   # predicted average effect at ablat=0,10,...,60 for alloc='random'
+   pred1 <- predict(res1, newmods=cbind(seq(0,60,by=10),1,0))
+   pred0 <- predict(res0, newmods=cbind(seq(0,60,by=10),0,1,0))
+   expect_equivalent(pred1, pred0)
+   pred2 <- predict(res1, newmods=cbind(1,seq(0,60,by=10),1,0))
+   expect_equivalent(pred1, pred2)
+
+   # contrast between alloc='random' and alloc='systematic' holding ablat constant
+   pred1 <- predict(res1, newmods=c(0,1,-1), intercept=FALSE)
+   pred0 <- predict(res0, newmods=c(0,0,1,-1), intercept=FALSE)
+   expect_equivalent(pred1, pred0)
+   pred2 <- predict(res1, newmods=cbind(0,0,1,-1))
+   expect_equivalent(pred1, pred2)
+   pred2 <- predict(res0, newmods=cbind(0,0,1,-1))
+   expect_equivalent(pred1, pred2)
+
+   #########################################################################
+
+})
+
 rm(list=ls())

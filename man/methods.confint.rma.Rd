@@ -46,7 +46,7 @@ dat <- dat.berkey1998
 V <- vcalc(vi=1, cluster=author, rvars=c(v1i, v2i), data=dat)
 
 ### fit multivariate model
-res <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="UN", data=dat)
+res <- rma.mv(yi, V, mods = ~ 0 + outcome, random = ~ outcome | trial, struct="UN", data=dat)
 
 ### get 95\% CI for variance components and correlation
 sav <- confint(res)

@@ -247,6 +247,9 @@ test_that("predict() works correctly for location-scale models", {
    pred <- predict(res, newmods=0:1)
    expect_equivalent(pred$pred, c(pred0$pred, pred1$pred), tolerance=.tol[["pred"]])
 
+   pred2 <- predict(res, newmods=cbind(1,0:1))
+   expect_equivalent(pred, pred2)
+
    pred <- predict(res, newmods=0:1, newscale=0:1)
 
    expect_equivalent(pred$pred,  c(pred0$pred,  pred1$pred), tolerance=.tol[["pred"]])
@@ -255,6 +258,13 @@ test_that("predict() works correctly for location-scale models", {
    expect_equivalent(pred$ci.ub, c(pred0$ci.ub, pred1$ci.ub), tolerance=.tol[["pred"]])
    expect_equivalent(pred$pi.lb, c(pred0$pi.lb, pred1$pi.lb), tolerance=.tol[["pred"]])
    expect_equivalent(pred$pi.ub, c(pred0$pi.ub, pred1$pi.ub), tolerance=.tol[["pred"]])
+
+   pred2 <- predict(res, newmods=cbind(1,0:1), newscale=0:1)
+   expect_equivalent(pred, pred2)
+   pred2 <- predict(res, newmods=0:1, newscale=cbind(1,0:1))
+   expect_equivalent(pred, pred2)
+   pred2 <- predict(res, newmods=cbind(1,0:1), newscale=cbind(1,0:1))
+   expect_equivalent(pred, pred2)
 
    pred <- predict(res, newscale=0:1, transf=exp)
    expect_equivalent(pred$pred, c(res0$tau2, res1$tau2), tolerance=.tol[["var"]])
@@ -292,11 +302,15 @@ test_that("anova() works correctly for location-scale models", {
    expect_equivalent(sav$QMp, 0.03463035, tolerance=.tol[["pval"]])
    tmp <- predict(res1, newmods=c(1,-1,0,0,0), intercept=FALSE)
    expect_equivalent(sav$Xb[1,1], tmp$pred, tolerance=.tol[["test"]])
+   tmp <- predict(res1, newmods=cbind(0,1,-1,0,0,0))
+   expect_equivalent(sav$Xb[1,1], tmp$pred, tolerance=.tol[["test"]])
 
    sav <- anova(res1, Z=c(0,1,-1,0,0,0))
    expect_equivalent(sav$QS,  0.3679934, tolerance=.tol[["test"]])
    expect_equivalent(sav$QSp, 0.5441001, tolerance=.tol[["pval"]])
    tmp <- predict(res1, newscale=c(1,-1,0,0,0), intercept=FALSE)
+   expect_equivalent(sav$Za[1,1], tmp$pred, tolerance=.tol[["test"]])
+   tmp <- predict(res1, newscale=cbind(0,1,-1,0,0,0))
    expect_equivalent(sav$Za[1,1], tmp$pred, tolerance=.tol[["test"]])
 
    expect_error(anova(res1, X=c(0,1,-1,0,0,0), Z=c(0,1,-1,0,0,0)))

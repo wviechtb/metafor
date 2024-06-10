@@ -14,11 +14,22 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    x <- object
 
+   mf <- match.call()
+
+   if (any(grepl("pairwise(", as.character(mf), fixed=TRUE))) {
+      try(assign("pairwise", object, envir=.metafor), silent=TRUE)
+      on.exit(suppressWarnings(rm("pairwise", envir=.metafor)))
+   }
+
    if (missing(newmods))
       newmods <- NULL
 
-   if (missing(intercept))
+   if (missing(intercept)) {
       intercept <- x$intercept
+      int.spec <- FALSE
+   } else {
+      int.spec <- TRUE
+   }
 
    if (missing(tau2.levels))
       tau2.levels <- NULL
@@ -141,25 +152,27 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       if (!(.is.vector(newmods) || inherits(newmods, "matrix")))
          stop(mstyle$stop(paste0("Argument 'newmods' should be a vector or matrix, but is of class '", class(newmods)[1], "'.")))
 
-      if ((!x$int.incl && x$p == 1L) || (x$int.incl && x$p == 2L)) { # if single moderator (multiple k.new possible) (either without or with intercept in the model)
-         k.new <- length(newmods)                                    #
-         X.new <- cbind(c(newmods))                                  #
-         if (.is.vector(newmods)) {                                  #
-            rnames <- names(newmods)                                 #
-         } else {                                                    #
-            rnames <- rownames(newmods)                              #
-         }                                                           #
-      } else {                                                       # in case the model has more than one predictor:
-         if (.is.vector(newmods) || nrow(newmods) == 1L) {           #   # if user gives one vector or one row matrix (only one k.new):
-            k.new <- 1L                                              #
-            X.new <- rbind(newmods)                                  #
-            if (inherits(newmods, "matrix"))                         #
-               rnames <- rownames(newmods)                           #
-         } else {                                                    #   # if user gives multiple rows and columns (multiple k.new):
-            k.new <- nrow(newmods)                                   #
-            X.new <- cbind(newmods)                                  #
-            rnames <- rownames(newmods)                              #
-         }                                                           #
+      singlemod <- (NCOL(newmods) == 1L) && ((!x$int.incl && x$p == 1L) || (x$int.incl && x$p == 2L))
+
+      if (singlemod) {                                                           # if single moderator (multiple k.new possible) (either without or with intercept in the model)
+         k.new <- length(newmods)                                                # (but when specifying a matrix, it must be a column vector for this work)
+         X.new <- cbind(c(newmods))                                              #
+         if (.is.vector(newmods)) {                                              #
+            rnames <- names(newmods)                                             #
+         } else {                                                                #
+            rnames <- rownames(newmods)                                          #
+         }                                                                       #
+      } else {                                                                   # in case the model has more than one predictor:
+         if (.is.vector(newmods) || nrow(newmods) == 1L) {                       #   # if user gives one vector or one row matrix (only one k.new):
+            k.new <- 1L                                                          #
+            X.new <- rbind(newmods)                                              #
+            if (inherits(newmods, "matrix"))                                     #
+               rnames <- rownames(newmods)                                       #
+         } else {                                                                #   # if user gives multiple rows and columns (multiple k.new):
+            k.new <- nrow(newmods)                                               #
+            X.new <- cbind(newmods)                                              #
+            rnames <- rownames(newmods)                                          #
+         }                                                                       #
          ### allow matching of terms by names (note: only possible if all columns in X.new and x$X have colnames)
          if (!is.null(colnames(X.new)) && all(colnames(X.new) != "") && !is.null(colnames(x$X)) && all(colnames(x$X) != "")) {
             colnames.mod <- colnames(x$X)
@@ -196,14 +209,26 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          stop(mstyle$stop("Argument 'newmods' should only contain numeric variables."))
 
       ### if the user has specified newmods and an intercept was included in the original model, add the intercept to X.new
-      ### but user can also decide to remove the intercept from the predictions with intercept=FALSE
+      ### but user can also decide to remove the intercept from the predictions with intercept=FALSE (but only do this when
+      ### newmods was not a matrix with p columns)
 
-      if (x$int.incl) {
-         if (intercept) {
-            X.new <- cbind(intrcpt=1, X.new)
-         } else {
-            X.new <- cbind(intrcpt=0, X.new)
+      if (inherits(newmods, "matrix") && ncol(newmods) == x$p) {
+
+         if (int.spec)
+            warning(mstyle$warning("Arguments 'intercept' ignored when 'newmods' includes 'p' columns."), call.=FALSE)
+
+      } else {
+
+         if (x$int.incl) {
+
+            if (intercept) {
+               X.new <- cbind(intrcpt=1, X.new)
+            } else {
+               X.new <- cbind(intrcpt=0, X.new)
+            }
+
          }
+
       }
 
       if (ncol(X.new) != x$p)

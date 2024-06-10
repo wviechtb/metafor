@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-15</span>
       </span>
     </div>
 
@@ -115,7 +115,14 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">metafor.news</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 4.7-14 (2024-06-07)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 4.7-15 (2024-06-10)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - the predict.rma() and predict.rma.ls() functions now also accept a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     matrix as input that includes a column for the intercept term (in</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     which case the intercept argument is ignored)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - added pairwise() function to construct a matrix of pairwise</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     contrasts</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - rma.mv() now counts the number of levels of a random effect more</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     appropriately; this may trigger more often the check whether the</span>
@@ -126,11 +133,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - made optimizers Rcgmin and Rvmmin available again via the optimx</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     package</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - argument shade in funnel() now automatically uses a color gradient</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     for the regions when multiple level values are specified</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - when unspecified, argument shade in funnel() now automatically uses</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     a color gradient for the regions when multiple level values are</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     specified</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - added extractor for function se() for extracting standard errors</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     from model objects</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - added extractor function se() for extracting standard errors from</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     model objects</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added lim, ci, pi, legend, and flip arguments to labbe()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

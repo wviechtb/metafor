@@ -1920,7 +1920,7 @@
 
    }
 
-   if (themeopt != "default")
+   if (themeopt != "default" && isFALSE(par("new")))
       par(fg=fg, bg=bg, col=fg, col.axis=fg, col.lab=fg, col.main=fg, col.sub=fg)
 
    invisible()

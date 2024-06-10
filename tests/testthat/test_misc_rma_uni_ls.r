@@ -4,7 +4,7 @@ context("Checking misc: rma() function with location-scale models")
 
 source("settings.r")
 
-test_that("location-scale model results are correct for in intercept-only model", {
+test_that("location-scale model results are correct for an intercept-only model", {
 
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
@@ -20,8 +20,8 @@ test_that("location-scale model results are correct for a categorical predictor"
 
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-   res1 <- rma(yi ~ alloc, vi, scale = ~ alloc - 1, data=dat)
-   res2 <- rma(yi ~ alloc, vi, scale = ~ alloc - 1, link = "identity", data=dat, control=list(optimizer="solnp"))
+   res1 <- rma(yi ~ alloc, vi, scale = ~ 0 + alloc, data=dat)
+   res2 <- rma(yi ~ alloc, vi, scale = ~ 0 + alloc, link = "identity", data=dat, control=list(optimizer="solnp"))
    res3 <- rma.mv(yi ~ alloc, vi, random = ~ alloc | trial, struct="DIAG", data=dat, sparse=.sparse)
    expect_equivalent(as.vector(exp(coef(res1)$alpha)), as.vector(coef(res2)$alpha), tolerance=.tol[["var"]])
    expect_equivalent(as.vector(exp(coef(res1)$alpha)), res3$tau2, tolerance=.tol[["var"]])
@@ -35,7 +35,7 @@ test_that("location-scale model results are correct for a continuous predictor",
    dat$ni <- dat$n1i + dat$n2i
    dat$ni[dat$study == "Whitlock"] <- dat$ni[dat$study == "Whitlock"] + 2
 
-   res <- suppressWarnings(rma(yi, vi, scale = ~ I(1/ni) - 1, link="identity", data=dat, method="ML"))
+   res <- suppressWarnings(rma(yi, vi, scale = ~ 0 + I(1/ni), link="identity", data=dat, method="ML"))
    expect_equivalent(as.vector(coef(res)$alpha), 79.07531, tolerance=.tol[["var"]])
    expect_equivalent(exp(c(res$beta, res$ci.lb, res$ci.ub)), c(0.8539, 0.5482, 1.3302), tolerance=.tol[["coef"]])
 
@@ -43,7 +43,7 @@ test_that("location-scale model results are correct for a continuous predictor",
    expect_equivalent(as.vector(coef(res)$alpha), c(0.274623, 31.523043), tolerance=.tol[["var"]])
    expect_equivalent(exp(c(res$beta, res$ci.lb, res$ci.ub)), c(1.0161589, 0.6214663, 1.6615205), tolerance=.tol[["coef"]])
 
-   res <- rma(yi, vi, scale = ~ I(1/ni) - 1, data=dat)
+   res <- rma(yi, vi, scale = ~ 0 + I(1/ni), data=dat)
    expect_equivalent(as.vector(coef(res)$alpha), -34.5187, tolerance=.tol[["var"]])
    expect_equivalent(exp(c(res$beta, res$ci.lb, res$ci.ub)), c(1.1251, 0.6381, 1.9839), tolerance=.tol[["coef"]])
 

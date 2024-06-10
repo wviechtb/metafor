@@ -15,7 +15,7 @@ V <- bldiag(lapply(split(dat[,c("v1i", "v2i")], dat$trial), as.matrix))
 test_that("results are correct for the multiple outcomes random-effects model.", {
 
    ### multiple outcomes random-effects model (with ML estimation)
-   res <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="UN", data=dat, method="ML", sparse=.sparse)
+   res <- rma.mv(yi, V, mods = ~ 0 + outcome, random = ~ outcome | trial, struct="UN", data=dat, method="ML", sparse=.sparse)
    out <- capture.output(print(res)) ### so that print.rma.mv() is run (at least once)
 
    ### (results for this model not given in paper)
@@ -29,7 +29,7 @@ test_that("results are correct for the multiple outcomes random-effects model.",
 test_that("results are correct for the multiple outcomes mixed-effects (meta-regression) model.", {
 
    ### multiple outcomes mixed-effects (meta-regression) model (with ML estimation)
-   res <- rma.mv(yi, V, mods = ~ outcome + outcome:I(year - 1983) - 1, random = ~ outcome | trial, struct="UN", data=dat, method="ML", sparse=.sparse)
+   res <- rma.mv(yi, V, mods = ~ 0 + outcome + outcome:I(year - 1983), random = ~ outcome | trial, struct="UN", data=dat, method="ML", sparse=.sparse)
 
    ### compare with results on page 2545 (Table II)
    expect_equivalent(coef(res), c(-0.3351, 0.3479, -0.0108, 0.0010), tolerance=.tol[["coef"]])
@@ -42,7 +42,7 @@ test_that("results are correct for the multiple outcomes mixed-effects (meta-reg
    expect_equivalent(tmp, 0.0093, tolerance=.tol[["cov"]])
 
    ### test the difference in slopes
-   res <- rma.mv(yi, V, mods = ~ outcome*I(year - 1983) - 1, random = ~ outcome | trial, struct="UN", data=dat, method="ML", sparse=.sparse)
+   res <- rma.mv(yi, V, mods = ~ 0 + outcome*I(year - 1983), random = ~ outcome | trial, struct="UN", data=dat, method="ML", sparse=.sparse)
 
    ### (results for this model not given in paper)
    expect_equivalent(coef(res), c(-0.3351, 0.3479, -0.0108, 0.0118), tolerance=.tol[["coef"]])
@@ -54,8 +54,8 @@ test_that("results are correct for the multiple outcomes mixed-effects (meta-reg
 test_that("results are correct when testing var-cov structures against each other with LRTs.", {
 
    ### test whether the amount of heterogeneity is the same in the two outcomes
-   res1 <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="UN", data=dat, method="ML", sparse=.sparse)
-   res0 <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="CS", data=dat, method="ML", sparse=.sparse)
+   res1 <- rma.mv(yi, V, mods = ~ 0 + outcome, random = ~ outcome | trial, struct="UN", data=dat, method="ML", sparse=.sparse)
+   res0 <- rma.mv(yi, V, mods = ~ 0 + outcome, random = ~ outcome | trial, struct="CS", data=dat, method="ML", sparse=.sparse)
    tmp <- anova(res0, res1)
    out <- capture.output(print(tmp)) ### so that print.anova.rma() is run (at least once)
 
@@ -63,8 +63,8 @@ test_that("results are correct when testing var-cov structures against each othe
    expect_equivalent(tmp$pval, 0.2597, tolerance=.tol[["pval"]])
 
    ### test the correlation among the true effects
-   res1 <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="UN", data=dat, method="ML", sparse=.sparse)
-   res0 <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | trial, struct="UN", data=dat, method="ML", rho=0, sparse=.sparse)
+   res1 <- rma.mv(yi, V, mods = ~ 0 + outcome, random = ~ outcome | trial, struct="UN", data=dat, method="ML", sparse=.sparse)
+   res0 <- rma.mv(yi, V, mods = ~ 0 + outcome, random = ~ outcome | trial, struct="UN", data=dat, method="ML", rho=0, sparse=.sparse)
    tmp <- anova(res0, res1)
 
    ### (results for this not given in paper)

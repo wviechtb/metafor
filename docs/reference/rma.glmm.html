@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-15</span>
       </span>
     </div>
 
@@ -244,7 +244,7 @@
 <p>When analyzing proportions (i.e., <code>measure="PLO"</code>) or incidence rates (i.e., <code>measure="IRLN"</code>) of individual groups, the model type is always a (mixed-effects) logistic or Poisson regression model, respectively (i.e., the <code>model</code> argument is not relevant here).</p>
 <p>Aside from choosing the general model type, one has to decide whether to fit an equal- or a random-effects model to the data. An <em>equal-effects model</em> is fitted by setting <code>method="EE"</code>. A <em>random-effects model</em> is fitted by setting <code>method="ML"</code> (the default). Note that random-effects models with dichotomous data are often referred to as ‘binomial-normal’ models in the meta-analytic literature. Analogously, for event count data, such models could be referred to as ‘Poisson-normal’ models.</p>
 <p>One or more moderators can be included in a model via the <code>mods</code> argument. A single moderator can be given as a (row or column) vector of length <em></em>\(k\) specifying the values of the moderator. Multiple moderators are specified by giving an appropriate model matrix (i.e., <em></em>\(X\)) with <em></em>\(k\) rows and as many columns as there are moderator variables (e.g., <code>mods = cbind(mod1, mod2, mod3)</code>, where <code>mod1</code>, <code>mod2</code>, and <code>mod3</code> correspond to the names of the variables for three moderator variables). The intercept is added to the model matrix by default unless <code>intercept=FALSE</code>.</p>
-<p>Alternatively, one can use standard <code><a href="formula.rma.html">formula</a></code> syntax to specify the model. In this case, the <code>mods</code> argument should be set equal to a one-sided formula of the form <code>mods = ~ model</code> (e.g., <code>mods = ~ mod1 + mod2 + mod3</code>). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the <code>mods</code> argument, the <code>intercept</code> argument is ignored. Instead, the inclusion/exclusion of the intercept is controlled by the specified formula (e.g., <code>mods = ~ mod1 + mod2 + mod3 - 1</code> would lead to the removal of the intercept).</p>
+<p>Alternatively, one can use standard <code><a href="formula.rma.html">formula</a></code> syntax to specify the model. In this case, the <code>mods</code> argument should be set equal to a one-sided formula of the form <code>mods = ~ model</code> (e.g., <code>mods = ~ mod1 + mod2 + mod3</code>). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the <code>mods</code> argument, the <code>intercept</code> argument is ignored. Instead, the inclusion/exclusion of the intercept is controlled by the specified formula (e.g., <code>mods = ~ 0 + mod1 + mod2 + mod3</code> or <code>mods = ~ mod1 + mod2 + mod3 - 1</code> would lead to the removal of the intercept).</p>
 <p></p>
 </div>
 

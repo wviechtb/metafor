@@ -84,7 +84,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
       The function can be used to fit equal-, fixed-, and random-effects models, as well as (mixed-effects) meta-regression models including one or multiple moderators (the difference between the various models is described in detail on the introductory \pkg{\link{metafor-package}} help page).
 
-      Assuming the observed effect sizes or outcomes and corresponding sampling variances are supplied via the \code{yi} and \code{vi} arguments, an \emph{equal-effects model} can be fitted with \code{rma(yi, vi, method="EE")}. Setting \code{method="FE"} fits a \emph{fixed-effects model} (see \link[=misc-models]{here} for a discussion of this model). Weighted estimation (with inverse-variance weights) is used by default. User-defined weights can be supplied via the \code{weights} argument. Unweighted estimation can be used by setting \code{weighted=FALSE} (which is the same as setting the weights equal to a constant).
+      Assuming the observed effect sizes or outcomes and corresponding sampling variances are supplied via the \code{yi} and \code{vi} arguments, an \emph{equal-effects model} can be fitted with \code{rma(yi, vi, method="EE")}. Setting \code{method="FE"} fits a \emph{fixed-effects model} (see \link[=misc-models]{here} for a discussion of this model and how the interpretation of these models differ despite yielding identical results). Weighted estimation (with inverse-variance weights) is used by default. User-defined weights can be supplied via the \code{weights} argument. Unweighted estimation can be used by setting \code{weighted=FALSE} (which is the same as setting the weights equal to a constant).
 
       A \emph{random-effects model} can be fitted with the same code but setting the \code{method} argument to one of the various estimators for the amount of heterogeneity:
 
@@ -107,7 +107,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
       One or more moderators can be included in a model via the \code{mods} argument. A single moderator can be given as a (row or column) vector of length \mjseqn{k} specifying the values of the moderator. Multiple moderators are specified by giving an appropriate model matrix (i.e., \mjseqn{X}) with \mjseqn{k} rows and as many columns as there are moderator variables (e.g., \code{mods = cbind(mod1, mod2, mod3)}, where \code{mod1}, \code{mod2}, and \code{mod3} correspond to the names of the variables for three moderator variables). The intercept is added to the model matrix by default unless \code{intercept=FALSE}.
 
-      Alternatively, one can use standard \code{\link{formula}} syntax to specify the model. In this case, the \code{mods} argument should be set equal to a one-sided formula of the form \code{mods = ~ model} (e.g., \code{mods = ~ mod1 + mod2 + mod3}). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the \code{mods} argument, the \code{intercept} argument is ignored. Instead, the inclusion/exclusion of the intercept is controlled by the specified formula (e.g., \code{mods = ~ mod1 + mod2 + mod3 - 1} would lead to the removal of the intercept).
+      Alternatively, one can use standard \code{\link{formula}} syntax to specify the model. In this case, the \code{mods} argument should be set equal to a one-sided formula of the form \code{mods = ~ model} (e.g., \code{mods = ~ mod1 + mod2 + mod3}). Interactions, polynomial terms, and factors can be easily added to the model in this manner. When specifying a model formula via the \code{mods} argument, the \code{intercept} argument is ignored. Instead, the inclusion/exclusion of the intercept is controlled by the specified formula (e.g., \code{mods = ~ 0 + mod1 + mod2 + mod3} or \code{mods = ~ mod1 + mod2 + mod3 - 1} would lead to the removal of the intercept).
 
       When the observed effect sizes or outcomes and corresponding sampling variances are supplied via the \code{yi} and \code{vi} (or \code{sei}) arguments, one can also specify moderators via the \code{yi} argument (e.g., \code{rma(yi ~ mod1 + mod2 + mod3, vi)}). In that case, the \code{mods} argument is ignored and the inclusion/exclusion of the intercept again is controlled by the specified formula.
 
@@ -350,12 +350,8 @@ rma(yi, vi, mods = ~ factor(alloc) + year + ablat, data=dat, btt=2:3)
 ### factor() is not needed as character variables are automatically converted to factors
 rma(yi, vi, mods = ~ alloc + year + ablat, data=dat, btt=2:3)
 
-### test all pairwise differences with Holm's method (using the 'multcomp' package if installed)
-res <- rma(yi, vi, mods = ~ factor(alloc) - 1, data=dat)
-res
-if (require(multcomp))
-   summary(glht(res, linfct=contrMat(c("alternate"=1,"random"=1,"systematic"=1),
-           type="Tukey")), test=adjusted("holm"))
+### test all pairwise differences between the 'alloc' levels
+anova(res, X=pairwise(btt="alloc"))
 
 ### subgrouping versus using a single model with a factor (subgrouping provides
 ### an estimate of tau^2 within each subgroup, but the number of studies in each
@@ -368,7 +364,7 @@ res.s <- rma(yi, vi, data=dat, subset=(alloc=="systematic"))
 res.a
 res.r
 res.s
-res <- rma(yi, vi, mods = ~ factor(alloc) - 1, data=dat)
+res <- rma(yi, vi, mods = ~ 0 + factor(alloc), data=dat)
 res
 
 ############################################################################

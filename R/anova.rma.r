@@ -12,7 +12,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("test", "L", "verbose", "fixed", "df"))
+   .chkdots(ddd, c("test", "L", "verbose", "fixed", "df", "abbrev"))
 
    if (!is.null(ddd$L))
       X <- ddd$L
@@ -25,9 +25,12 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
    if (!missing(Z) && !inherits(object, "rma.ls"))
       stop(mstyle$stop("Can only specify 'Z' for location-scale models."))
 
-   #mf <- match.call()
-   #if (any(grepl("pairwise(", as.character(mf), fixed=TRUE)))
-   #   try(assign("pairwise", object, envir=.metafor), silent=TRUE)
+   mf <- match.call()
+
+   if (any(grepl("pairwise(", as.character(mf), fixed=TRUE))) {
+      try(assign("pairwise", object, envir=.metafor), silent=TRUE)
+      on.exit(suppressWarnings(rm("pairwise", envir=.metafor)))
+   }
 
    if (missing(object2)) {
 
@@ -256,6 +259,13 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
             colnames(hyp) <- ""
             rownames(hyp) <- paste0(seq_len(m), ":") # add '1:', '2:', ... as row names
 
+            ### abbreviate some hyp elements
+
+            if (.isTRUE(ddd$abbrev)) {
+               hyp[,1] <- gsub("factor(", "", hyp[,1], fixed=TRUE)
+               hyp[,1] <- gsub(")", "", hyp[,1], fixed=TRUE)
+            }
+
             res <- list(QS=QS, QSdf=QSdf, QSp=QSp, hyp=hyp, Za=Za, se=se, zval=zval, pval=pval, k=x$k, q=x$q, m=m, test=x$test, ddf=x$ddf.alpha, digits=digits, type="Wald.Za")
 
          } else {
@@ -414,6 +424,13 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
             hyp <- data.frame(hyp, stringsAsFactors=FALSE)
             colnames(hyp) <- ""
             rownames(hyp) <- paste0(seq_len(m), ":") # add '1:', '2:', ... as row names
+
+            ### abbreviate some hyp elements
+
+            if (.isTRUE(ddd$abbrev)) {
+               hyp[,1] <- gsub("factor(", "", hyp[,1], fixed=TRUE)
+               hyp[,1] <- gsub(")", "", hyp[,1], fixed=TRUE)
+            }
 
             res <- list(QM=QM, QMdf=QMdf, QMp=QMp, hyp=hyp, Xb=Xb, se=se, zval=zval, pval=pval, k=x$k, p=x$p, m=m, test=x$test, ddf=ddf, digits=digits, type="Wald.Xb")
 

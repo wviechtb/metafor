@@ -14,11 +14,22 @@ level, digits, transf, targs, vcov=FALSE, ...) {
 
    x <- object
 
+   mf <- match.call()
+
+   if (any(grepl("pairwise(", as.character(mf), fixed=TRUE))) {
+      try(assign("pairwise", object, envir=.metafor), silent=TRUE)
+      on.exit(suppressWarnings(rm("pairwise", envir=.metafor)))
+   }
+
    if (missing(newmods))
       newmods <- NULL
 
-   if (missing(intercept))
+   if (missing(intercept)) {
       intercept <- x$intercept
+      int.spec <- FALSE
+   } else {
+      int.spec <- TRUE
+   }
 
    if (missing(newscale))
       newscale <- NULL
@@ -63,8 +74,10 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       if (!(.is.vector(newmods) || inherits(newmods, "matrix")))
          stop(mstyle$stop(paste0("Argument 'newmods' should be a vector or matrix, but is of class '", class(newmods), "'.")))
 
-      if ((!x$int.incl && x$p == 1L) || (x$int.incl && x$p == 2L)) {
-         k.new <- length(newmods)                                # if single moderator (multiple k.new possible) (either without or with intercept in the model)
+      singlemod <- (NCOL(newmods) == 1L) && ((!x$int.incl && x$p == 1L) || (x$int.incl && x$p == 2L))
+
+      if (singlemod) {                                           # if single moderator (multiple k.new possible) (either without or with intercept in the model)
+         k.new <- length(newmods)                                # (but when specifying a matrix, it must be a column vector for this work)
          X.new <- cbind(c(newmods))                              #
          if (.is.vector(newmods)) {                              #
             rnames <- names(newmods)                             #
@@ -121,12 +134,23 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       ### but user can also decide to remove the intercept from the predictions with intercept=FALSE
       ### one special case: when the location model is an intercept-only model, one can set newmods=1 to obtain the predicted intercept
 
-      if (x$int.incl && !(x$int.only && ncol(X.new) == 1L && nrow(X.new) == 1L && X.new[1,1] == 1)) {
-         if (intercept) {
-            X.new <- cbind(intrcpt=1, X.new)
-         } else {
-            X.new <- cbind(intrcpt=0, X.new)
+      if (inherits(newmods, "matrix") && ncol(newmods) == x$p) {
+
+         if (int.spec)
+            warning(mstyle$warning("Arguments 'intercept' ignored when 'newmods' includes 'p' columns."), call.=FALSE)
+
+      } else {
+
+         if (x$int.incl && !(x$int.only && ncol(X.new) == 1L && nrow(X.new) == 1L && X.new[1,1] == 1)) {
+
+            if (intercept) {
+               X.new <- cbind(intrcpt=1, X.new)
+            } else {
+               X.new <- cbind(intrcpt=0, X.new)
+            }
+
          }
+
       }
 
       if (ncol(X.new) != x$p)
@@ -139,8 +163,10 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       if (!(.is.vector(newscale) || inherits(newscale, "matrix")))
          stop(mstyle$stop(paste0("Argument 'newscale' should be a vector or matrix, but is of class '", class(newscale), "'.")))
 
-      if ((!x$Z.int.incl && x$q == 1L) || (x$Z.int.incl && x$q == 2L)) {
-         Z.k.new <- length(newscale)                             # if single moderator (multiple k.new possible) (either without or with intercept in the model)
+      singlescale <- (NCOL(newscale) == 1L) && ((!x$Z.int.incl && x$q == 1L) || (x$Z.int.incl && x$q == 2L))
+
+      if (singlescale) {                                         # if single moderator (multiple k.new possible) (either without or with intercept in the model)
+         Z.k.new <- length(newscale)                             #
          Z.new <- cbind(c(newscale))                             #
          if (is.null(rnames)) {                                  #
             if (.is.vector(newscale)) {                          #
@@ -201,16 +227,25 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       ### one special case: when the scale model is an intercept-only model, one can set newscale=1 to obtain the predicted intercept
       ### (which can be converted to tau^2 with transf=exp when using a log link)
 
-      if (x$Z.int.incl && !(x$Z.int.only && ncol(Z.new) == 1L && nrow(Z.new) == 1L && Z.new[1,1] == 1)) {
-         if (is.null(newmods)) {
-            if (intercept) {
-               Z.new <- cbind(intrcpt=1, Z.new)
+      if (inherits(newscale, "matrix") && ncol(newscale) == x$q) {
+
+         if (int.spec)
+            warning(mstyle$warning("Arguments 'intercept' ignored when 'newscale' includes 'q' columns."), call.=FALSE)
+
+      } else {
+
+         if (x$Z.int.incl && !(x$Z.int.only && ncol(Z.new) == 1L && nrow(Z.new) == 1L && Z.new[1,1] == 1)) {
+            if (is.null(newmods)) {
+               if (intercept) {
+                  Z.new <- cbind(intrcpt=1, Z.new)
+               } else {
+                  Z.new <- cbind(intrcpt=0, Z.new)
+               }
             } else {
-               Z.new <- cbind(intrcpt=0, Z.new)
+               Z.new <- cbind(intrcpt=1, Z.new)
             }
-         } else {
-            Z.new <- cbind(intrcpt=1, Z.new)
          }
+
       }
 
       if (ncol(Z.new) != x$q)
@@ -271,7 +306,12 @@ level, digits, transf, targs, vcov=FALSE, ...) {
             }
          }
 
-         if (length(tau2.f) == 1L) {
+         if (k.new == 1L && Z.k.new > 1L) {
+            X.new <- X.new[rep(1,Z.k.new),,drop=FALSE]
+            k.new <- Z.k.new
+         }
+
+         if (length(tau2.f) == 1L && k.new > 1L) {
             Z.new  <- Z.new[rep(1,k.new),,drop=FALSE]
             tau2.f <- rep(tau2.f, k.new)
          }

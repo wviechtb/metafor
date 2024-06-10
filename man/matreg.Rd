@@ -1,8 +1,8 @@
 \name{matreg}
 \alias{matreg}
-\title{Fit Regression Models based on Correlation and Covariance Matrices}
+\title{Fit Regression Models based on a Correlation and Covariance Matrix}
 \description{
-   Function to fit regression models based on correlation and covariance matrices. \loadmathjax
+   Function to fit regression models based on a correlation and covariance matrix. \loadmathjax
 }
 \usage{
 matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE,
@@ -124,7 +124,7 @@ dat$var1.var2 <- factor(dat$var1.var2,
    levels=c("acog.perf", "asom.perf", "conf.perf", "acog.asom", "acog.conf", "asom.conf"))
 
 ### multivariate random-effects model
-res <- rma.mv(yi, V, mods = ~ var1.var2 - 1, random = ~ var1.var2 | study, struct="UN", data=dat)
+res <- rma.mv(yi, V, mods = ~ 0 + var1.var2, random = ~ var1.var2 | study, struct="UN", data=dat)
 res
 
 ### restructure estimated mean correlations into a 4x4 matrix
@@ -149,7 +149,7 @@ V <- tmp$V
 dat <- tmp$dat
 dat$var1.var2 <- factor(dat$var1.var2,
    levels=c("acog.perf", "asom.perf", "conf.perf", "acog.asom", "acog.conf", "asom.conf"))
-res <- rma.mv(yi, V, mods = ~ var1.var2 - 1, random = ~ var1.var2 | study, struct="UN", data=dat)
+res <- rma.mv(yi, V, mods = ~ 0 + var1.var2, random = ~ var1.var2 | study, struct="UN", data=dat)
 R <- vec2mat(coef(res))
 rownames(R) <- colnames(R) <- c("perf", "acog", "asom", "conf")
 matreg(1, 2:4, R=R, V=vcov(res), ztor=TRUE)
@@ -167,7 +167,7 @@ levels(dat.long$group) <- c("CON", "EXP")
 dat.long
 
 ### fit bivariate model
-res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | study, struct="UN",
+res <- rma.mv(yi, vi, mods = ~ 0 + group, random = ~ group | study, struct="UN",
               data=dat.long, method="ML")
 res
 
@@ -178,7 +178,7 @@ matreg(y=2, x=1, R=res$G, cov=TRUE, means=coef(res), n=res$g.levels.comb.k)
 ### it was a var-cov matrix computed from raw data based on res$g.levels.comb.k (= 13) data points
 
 ### fit bivariate model and get the var-cov matrix of the estimates in res$G
-res <- rma.mv(yi, vi, mods = ~ group - 1, random = ~ group | study, struct="UN",
+res <- rma.mv(yi, vi, mods = ~ 0 + group, random = ~ group | study, struct="UN",
               data=dat.long, method="ML", cvvc="varcov", control=list(nearpd=TRUE))
 
 ### now use res$vvc as the var-cov matrix of the estimates in res$G
