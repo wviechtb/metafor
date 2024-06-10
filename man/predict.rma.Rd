@@ -36,7 +36,7 @@
 
    For models including one or more moderators, \code{predict(object)} returns the estimated (average) outcomes for values of the moderator(s) equal to those of the \mjseqn{k} studies included in the meta-analysis (i.e., the \sQuote{fitted values} for the \mjseqn{k} studies).
 
-   For models including \mjseqn{p'} moderator variables, new moderator values (for \mjeqn{k_{new}}{k_new} hypothetical new studies) can be specified by setting \code{newmods} equal to a \mjeqn{k_{new} \times p'}{k_new x p'} matrix with the corresponding new moderator values (if \code{newmods} is a vector, then only a single predicted value is computed unless the model only includes a single moderator variable, in which case predicted values corresponding to all the vector values are computed). If the model object included an intercept, then it should not be explicitly specified under \code{newmods}, as it will be added by default (unless one sets \code{intercept=FALSE}). Also, any factors in the original model get turned into the appropriate contrast variables within the \code{rma} function, so that \code{newmods} should actually include the values for the contrast variables. If the matrix specified via \code{newmods} has row names, then these are used to label the predicted values in the output. Examples are shown below.
+   For models including \mjseqn{p'} moderator variables, new moderator values (for \mjeqn{k_{new}}{k_new} hypothetical new studies) can be specified by setting \code{newmods} equal to a \mjeqn{k_{new} \times p'}{k_new x p'} matrix with the corresponding new moderator values (if \code{newmods} is a vector, then only a single predicted value is computed unless the model only includes a single moderator variable, in which case predicted values corresponding to all the vector values are computed). If the model object includes an intercept, then it will be automatically added to \code{newmods} unless one sets \code{intercept=FALSE}; alternatively, if \code{newmods} is a \mjeqn{k_{new} \times (p'+1)}{k_new x (p'+1)} matrix, then the \code{intercept} argument is ignored and the first column of the matrix determines whether the intercept is included when computing the predicted values or not. Note that any factors in the original model get turned into the appropriate contrast variables within the \code{rma} function, so that \code{newmods} should actually include the values for the contrast variables. If the matrix specified via \code{newmods} has row names, then these are used to label the predicted values in the output. Examples are shown below.
 
    For random/mixed-effects models, a prediction interval is also computed (Riley et al., 2011). The interval estimates where \code{level}\% of the true effect sizes or outcomes fall in the hypothetical population of studies (and hence where the true effect or outcome of a new study from the population of studies should fall in \code{level}\% of the cases).
 
@@ -95,8 +95,16 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 ### fit random-effects model
 res <- rma(yi, vi, data=dat)
 
-### average risk ratio with 95\% CI
-predict(res, transf=exp)
+### estimated average log risk ratio with 95\% CI/PI
+predict(res, digits=2)
+
+### estimated average risk ratio with 95\% CI/PI
+predict(res, transf=exp, digits=2)
+
+### note: strictly speaking, the value obtained is the estimated median risk ratio
+### because exponentiation is a non-linear transformation; but we can estimate the
+### average risk ratio by using the integral transformation
+predict(res, transf=transf.exp.int, targs=res$tau2, digits=2)
 
 ### fit mixed-effects model with absolute latitude as a moderator
 res <- rma(yi, vi, mods = ~ ablat, data=dat)
@@ -106,6 +114,9 @@ predict(res, transf=exp, addx=TRUE)
 
 ### predicted average risk ratios for 10-60 degrees absolute latitude
 predict(res, newmods=c(10, 20, 30, 40, 50, 60), transf=exp, addx=TRUE)
+
+### can also include the intercept term in the 'newmods' matrix
+predict(res, newmods=cbind(1, c(10, 20, 30, 40, 50, 60)), transf=exp, addx=TRUE)
 
 ### fit mixed-effects model with absolute latitude and publication year as moderators
 res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
@@ -124,9 +135,9 @@ predict(res, addx=TRUE)
 
 ### predicted average risk ratios at 30 degrees for the three factor levels
 ### note: the contrast (dummy) variables need to specified explicitly here
-predict(res, newmods=c(30, 0, 0), addx=TRUE)   # for alternate  allocation
-predict(res, newmods=c(30, 1, 0), addx=TRUE)   # for random     allocation
-predict(res, newmods=c(30, 0, 1), addx=TRUE)   # for systematic allocation
+predict(res, newmods=c(30, 0, 0), addx=TRUE) # for alternate  allocation
+predict(res, newmods=c(30, 1, 0), addx=TRUE) # for random     allocation
+predict(res, newmods=c(30, 0, 1), addx=TRUE) # for systematic allocation
 
 ### can also use a named vector with arbitrary order and abbreviated variable names
 predict(res, newmods=c(sys=0, ran=0, abl=30))
