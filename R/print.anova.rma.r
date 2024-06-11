@@ -60,6 +60,12 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
       }
       rownames(res.table) <- paste0(seq_len(x$m), ":")
 
+      if (getOption("show.signif.stars")) {
+         signif <- symnum(x$pval, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
+         res.table <- cbind(res.table, signif)
+         colnames(res.table)[ncol(res.table)] <- ""
+      }
+
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
       .print.table(tmp, mstyle)
 
@@ -102,6 +108,12 @@ print.anova.rma <- function(x, digits=x$digits, ...) {
          res.table <- data.frame(estimate=fmtx(c(x$Za), digits[["est"]]), se=fmtx(x$se, digits[["se"]]), zval=fmtx(x$zval, digits[["test"]]), pval=fmtp(x$pval, digits[["pval"]]), stringsAsFactors=FALSE)
       }
       rownames(res.table) <- paste0(seq_len(x$m), ":")
+
+      if (getOption("show.signif.stars")) {
+         signif <- symnum(x$pval, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
+         res.table <- cbind(res.table, signif)
+         colnames(res.table)[ncol(res.table)] <- ""
+      }
 
       tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
       .print.table(tmp, mstyle)

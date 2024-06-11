@@ -4,12 +4,12 @@ pairwise <- function(x, btt, btt2, ...) {
 
    if (missing(x)) {
       x <- .getfromenv("pairwise", envir=.metafor)
-   }# else {
-   #   if (is.atomic(x)) {
-   #      btt <- x
-   #      x <- .getfromenv("pairwise", envir=.metafor)
-   #   }
-   #}
+   } else {
+      if (is.atomic(x)) {
+         btt <- x
+         x <- .getfromenv("pairwise", envir=.metafor)
+      }
+   }
 
    if (is.null(x))
       stop(mstyle$stop("Need to specify 'x' argument."), call.=FALSE)

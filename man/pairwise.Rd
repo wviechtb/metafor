@@ -54,6 +54,9 @@ anova(res, X=pairwise(btt="alloc"))
 ### obtain the corresponding confidence intervals
 predict(res, newmods=pairwise(btt="alloc"))
 
+### test all pairwise contrasts adjusting for multiple testing
+anova(res, X=pairwise(btt="alloc"), adjust="bonf")
+
 ### fit the same model, but including the intercept term; then 'alternate' is the
 ### reference level and the coefficients for 'random' and 'systematic' already
 ### represent pairwise contrasts with this reference level
@@ -93,5 +96,8 @@ anova(res, X=pairwise(btt="grade"))
 
 ### obtain the corresponding confidence intervals
 predict(res, newmods=pairwise(btt="grade"))
+
+### test all pairwise contrasts adjusting for multiple testing
+anova(res, X=pairwise(btt="grade"), adjust="bonf")
 }
 \keyword{models}

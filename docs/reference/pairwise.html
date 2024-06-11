@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-17</span>
       </span>
     </div>
 
@@ -198,10 +198,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3:    -allocrandom + allocsystematic = 0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.4478 0.5158 -0.8682 0.3853 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0890 0.5600  0.1590 0.8737 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.5369 0.4364  1.2303 0.2186 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.4478 0.5158 -0.8682 0.3853   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0890 0.5600  0.1590 0.8737   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.5369 0.4364  1.2303 0.2186   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -211,10 +211,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3:    -allocrandom + allocsystematic = 0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.4478 0.5158 -0.8682 0.3853 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0890 0.5600  0.1590 0.8737 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.5369 0.4364  1.2303 0.2186 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.4478 0.5158 -0.8682 0.3853   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0890 0.5600  0.1590 0.8737   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.5369 0.4364  1.2303 0.2186   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### obtain the corresponding confidence intervals</span></span></span>
@@ -224,6 +224,21 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocalternate-allocrandom     -0.4478 0.5158 -1.4588 0.5632 -2.0005 1.1049 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocalternate-allocsystematic  0.0890 0.5600 -1.0086 1.1867 -1.5214 1.6995 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocrandom-allocsystematic     0.5369 0.4364 -0.3184 1.3921 -0.9192 1.9929 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### test all pairwise contrasts adjusting for multiple testing</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span>, adjust<span class="op">=</span><span class="st">"bonf"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hypotheses:                                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:     -allocalternate + allocrandom = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: -allocalternate + allocsystematic = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:    -allocrandom + allocsystematic = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.4478 0.5158 -0.8682 1.0000   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0890 0.5600  0.1590 1.0000   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.5369 0.4364  1.2303 0.6557   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit the same model, but including the intercept term; then 'alternate' is the</span></span></span>
@@ -279,10 +294,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3: -allocrandom + allocsystematic = 0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.4478 0.5158 -0.8682 0.3853 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0890 0.5600  0.1590 0.8737 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.5369 0.4364  1.2303 0.2186 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.4478 0.5158 -0.8682 0.3853   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0890 0.5600  0.1590 0.8737   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.5369 0.4364  1.2303 0.2186   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span>, btt2<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -292,10 +307,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3: -allocrandom + allocsystematic = 0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.4478 0.5158 -0.8682 0.3853 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0890 0.5600  0.1590 0.8737 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.5369 0.4364  1.2303 0.2186 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.4478 0.5158 -0.8682 0.3853   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0890 0.5600  0.1590 0.8737   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.5369 0.4364  1.2303 0.2186   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### obtain the corresponding confidence intervals</span></span></span>
@@ -346,10 +361,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3: -allocrandom + allocsystematic = 0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.2675 0.3504 -0.7633 0.4453 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0585 0.3795  0.1540 0.8776 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.3260 0.3104  1.0501 0.2937 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.2675 0.3504 -0.7633 0.4453   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0585 0.3795  0.1540 0.8776   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.3260 0.3104  1.0501 0.2937   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span>, btt2<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -359,10 +374,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3: -allocrandom + allocsystematic = 0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.2675 0.3504 -0.7633 0.4453 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0585 0.3795  0.1540 0.8776 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.3260 0.3104  1.0501 0.2937 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.2675 0.3504 -0.7633 0.4453   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0585 0.3795  0.1540 0.8776   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.3260 0.3104  1.0501 0.2937   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### obtain the corresponding confidence intervals</span></span></span>
@@ -416,13 +431,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6: -factor(grade)3 + factor(grade)4 = 0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.3727 0.1705 -2.1856 0.0288 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0248 0.1364  0.1821 0.8555 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3:  -0.0155 0.1160 -0.1338 0.8935 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4:   0.3975 0.1777  2.2375 0.0253 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5:   0.3572 0.1625  2.1977 0.0280 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6:  -0.0404 0.1263 -0.3197 0.7492 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.3727 0.1705 -2.1856 0.0288 * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0248 0.1364  0.1821 0.8555   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:  -0.0155 0.1160 -0.1338 0.8935   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:   0.3975 0.1777  2.2375 0.0253 * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:   0.3572 0.1625  2.1977 0.0280 * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:  -0.0404 0.1263 -0.3197 0.7492   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### obtain the corresponding confidence intervals</span></span></span>
@@ -435,6 +450,27 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> factor(grade)2-factor(grade)3  0.3975 0.1777  0.0493  0.7458 -0.1756 0.9707 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> factor(grade)2-factor(grade)4  0.3572 0.1625  0.0386  0.6757 -0.1984 0.9127 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> factor(grade)3-factor(grade)4 -0.0404 0.1263 -0.2879  0.2071 -0.5585 0.4778 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### test all pairwise contrasts adjusting for multiple testing</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"grade"</span><span class="op">)</span>, adjust<span class="op">=</span><span class="st">"bonf"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hypotheses:                                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1: -factor(grade)1 + factor(grade)2 = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: -factor(grade)1 + factor(grade)3 = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3: -factor(grade)1 + factor(grade)4 = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4: -factor(grade)2 + factor(grade)3 = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5: -factor(grade)2 + factor(grade)4 = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6: -factor(grade)3 + factor(grade)4 = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.3727 0.1705 -2.1856 0.1731   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0248 0.1364  0.1821 1.0000   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:  -0.0155 0.1160 -0.1338 1.0000   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:   0.3975 0.1777  2.2375 0.1515   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:   0.3572 0.1625  2.1977 0.1678   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:  -0.0404 0.1263 -0.3197 1.0000   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

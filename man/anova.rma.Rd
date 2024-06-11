@@ -6,7 +6,7 @@
    For two (nested) models of class \code{"rma.uni"} or \code{"rma.mv"}, the function provides a full versus reduced model comparison in terms of model fit statistics and a likelihood ratio test. When a single model is specified, a Wald-type test of one or more model coefficients or linear combinations thereof is carried out. \loadmathjax
 }
 \usage{
-\method{anova}{rma}(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE, \dots)
+\method{anova}{rma}(object, object2, btt, X, att, Z, rhs, digits, adjust, refit=FALSE, \dots)
 }
 \arguments{
    \item{object}{an object of class \code{"rma.uni"} or \code{"rma.mv"}.}
@@ -17,6 +17,7 @@
    \item{Z}{optional numeric vector or matrix to specify one or more linear combinations of the scale coefficients in the model that should be tested. See \sQuote{Details}. Only relevant for location-scale models (see \code{\link{rma.uni}}).}
    \item{rhs}{optional scalar or vector of values for the right-hand side of the null hypothesis when testing a set of coefficients (via \code{btt} or \code{att}) or linear combinations thereof (via \code{X} or \code{Z}). If unspecified, this defaults to a vector of zeros of the appropriate length. See \sQuote{Details}.}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
+   \item{adjust}{optional argument to specify (as a character string) a method for adjusting the p-values of Wald-type tests for multiple testing. See \code{\link{p.adjust}} for possible options. Can be abbreviated.}
    \item{refit}{logical to specify whether models fitted with REML estimation and differing in their fixed effects should be refitted with ML estimation when conducting a likelihood ratio test (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
@@ -139,6 +140,12 @@ anova(res2, X=c(1,35,1970))
 ### use predict() to obtain the same linear combination (with its CI)
 predict(res2, newmods=c(35,1970))
 
+### Wald-type tests of several linear combinations
+anova(res2, X=cbind(1,seq(0,60,by=10),1970))
+
+### adjust for multiple testing with the Bonferroni method
+anova(res2, X=cbind(1,seq(0,60,by=10),1970), adjust="bonf")
+
 ### mixed-effects model with three moderators
 res3 <- rma(yi, vi, mods = ~ ablat + year + alloc, data=dat, method="ML")
 res3
@@ -151,6 +158,9 @@ anova(res3, btt="alloc")
 
 ### specify a list for the 'btt' argument
 anova(res3, btt=list(2,3,4:5))
+
+### adjust for multiple testing with the Bonferroni method
+anova(res3, btt=list(2,3,4:5), adjust="bonf")
 
 ############################################################################
 

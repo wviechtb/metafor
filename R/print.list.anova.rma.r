@@ -17,7 +17,14 @@ print.list.anova.rma <- function(x, digits=x[[1]]$digits, ...) {
    if ("Fval" %in% names(res.table))
       res.table$Fval <- fmtx(res.table$Fval, digits[["test"]])
 
+   signif <- symnum(res.table$pval, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
+
    res.table$pval <- fmtp(res.table$pval, digits[["pval"]])
+
+   if (getOption("show.signif.stars")) {
+      res.table <- cbind(res.table, signif)
+      colnames(res.table)[ncol(res.table)] <- ""
+   }
 
    tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE))
    .print.table(tmp, mstyle)

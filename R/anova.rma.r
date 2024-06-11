@@ -1,4 +1,4 @@
-anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE, ...) {
+anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, adjust, refit=FALSE, ...) {
 
    mstyle <- .get.mstyle()
 
@@ -24,6 +24,14 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
 
    if (!missing(Z) && !inherits(object, "rma.ls"))
       stop(mstyle$stop("Can only specify 'Z' for location-scale models."))
+
+   if (missing(adjust)) {
+      adjust <- NULL
+   } else {
+      adjust <- try(match.arg(adjust, choices=p.adjust.methods), silent=TRUE)
+      if (inherits(adjust, "try-error"))
+         stop(mstyle$stop("Unknown 'adjust' method specified (see help(p.adjust) for options)."))
+   }
 
    mf <- match.call()
 
@@ -60,6 +68,11 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                   if (!missing(rhs))
                      stop(mstyle$stop("Cannot use 'rhs' argument when specifying a list for 'att'."))
                   sav <- lapply(att, function(attj) anova(x, att=attj, digits=digits, fixed=fixed))
+                  if (!is.null(adjust)) {
+                     QSp <- sapply(sav, function(x) x$QSp)
+                     QSp <- p.adjust(QSp, method=adjust)
+                     sav <- mapply(function(x,y) {x$QSp <- y; return(x)}, sav, QSp, SIMPLIFY=FALSE)
+                  }
                   names(sav) <- sapply(att, .format.btt)
                   class(sav) <- "list.anova.rma"
                   return(sav)
@@ -93,6 +106,9 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                QSp  <- pchisq(QS, df=QSdf[1], lower.tail=FALSE)
             }
 
+            if (!is.null(adjust))
+               QSp <- p.adjust(QSp, method=adjust)
+
             res <- list(QS=QS, QSdf=QSdf, QSp=QSp, att=att, k=x$k, q=x$q, m=m, test=x$test, digits=digits, type="Wald.att")
 
          } else {
@@ -108,6 +124,11 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                   if (!missing(rhs))
                      stop(mstyle$stop("Cannot use 'rhs' argument when specifying a list for 'btt'."))
                   sav <- lapply(btt, function(bttj) anova(x, btt=bttj, digits=digits, fixed=fixed))
+                  if (!is.null(adjust)) {
+                     QMp <- sapply(sav, function(x) x$QMp)
+                     QMp <- p.adjust(QMp, method=adjust)
+                     sav <- mapply(function(x,y) {x$QMp <- y; return(x)}, sav, QMp, SIMPLIFY=FALSE)
+                  }
                   names(sav) <- sapply(btt, .format.btt)
                   class(sav) <- "list.anova.rma"
                   return(sav)
@@ -156,6 +177,9 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                }
 
             }
+
+            if (!is.null(adjust))
+               QMp <- p.adjust(QMp, method=adjust)
 
             res <- list(QM=QM, QMdf=QMdf, QMp=QMp, btt=btt, k=x$k, p=x$p, m=m, test=x$test, digits=digits, type="Wald.btt", class=class(x))
 
@@ -265,6 +289,9 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                hyp[,1] <- gsub("factor(", "", hyp[,1], fixed=TRUE)
                hyp[,1] <- gsub(")", "", hyp[,1], fixed=TRUE)
             }
+
+            if (!is.null(adjust))
+               pval <- p.adjust(pval, method=adjust)
 
             res <- list(QS=QS, QSdf=QSdf, QSp=QSp, hyp=hyp, Za=Za, se=se, zval=zval, pval=pval, k=x$k, q=x$q, m=m, test=x$test, ddf=x$ddf.alpha, digits=digits, type="Wald.Za")
 
@@ -431,6 +458,9 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, refit=FALSE,
                hyp[,1] <- gsub("factor(", "", hyp[,1], fixed=TRUE)
                hyp[,1] <- gsub(")", "", hyp[,1], fixed=TRUE)
             }
+
+            if (!is.null(adjust))
+               pval <- p.adjust(pval, method=adjust)
 
             res <- list(QM=QM, QMdf=QMdf, QMp=QMp, hyp=hyp, Xb=Xb, se=se, zval=zval, pval=pval, k=x$k, p=x$p, m=m, test=x$test, ddf=ddf, digits=digits, type="Wald.Xb")
 

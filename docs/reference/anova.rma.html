@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-16</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-17</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for rma</span></span>
-<span><span class="fu">anova</span><span class="op">(</span><span class="va">object</span>, <span class="va">object2</span>, <span class="va">btt</span>, <span class="va">X</span>, <span class="va">att</span>, <span class="va">Z</span>, <span class="va">rhs</span>, <span class="va">digits</span>, refit<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">anova</span><span class="op">(</span><span class="va">object</span>, <span class="va">object2</span>, <span class="va">btt</span>, <span class="va">X</span>, <span class="va">att</span>, <span class="va">Z</span>, <span class="va">rhs</span>, <span class="va">digits</span>, <span class="va">adjust</span>, refit<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -124,6 +124,9 @@
 
    <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
+
+   <dt>adjust</dt>
+<dd><p>optional argument to specify (as a character string) a method for adjusting the p-values of Wald-type tests for multiple testing. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">p.adjust</a></code> for possible options. Can be abbreviated.</p></dd>
 
    <dt>refit</dt>
 <dd><p>logical to specify whether models fitted with REML estimation and differing in their fixed effects should be refitted with ML estimation when conducting a likelihood ratio test (the default is <code>FALSE</code>).</p></dd>
@@ -340,9 +343,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2:  year = 0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.0308 0.0063 -4.9057 &lt;.0001 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2:  -0.0032 0.0092 -0.3471 0.7285 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.0308 0.0063 -4.9057 &lt;.0001 *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:  -0.0032 0.0092 -0.3471 0.7285     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Omnibus Test of Hypotheses:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 2) = 33.9192, p-val &lt; .0001</span>
@@ -363,8 +366,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: intrcpt + 35*ablat + 1970*year = 0 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.7533 0.0837 -9.0039 &lt;.0001 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:  -0.7533 0.0837 -9.0039 &lt;.0001 *** </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Test of Hypothesis:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 1) = 81.0700, p-val &lt; .0001</span>
@@ -375,6 +378,52 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     pred     se   ci.lb   ci.ub   pi.lb   pi.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  -0.7533 0.0837 -0.9173 -0.5893 -1.1142 -0.3925 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### Wald-type tests of several linear combinations</span></span></span>
+<span class="r-in"><span><span class="fu">anova</span><span class="op">(</span><span class="va">res2</span>, X<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span>,by<span class="op">=</span><span class="fl">10</span><span class="op">)</span>,<span class="fl">1970</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hypotheses:                                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:            intrcpt + 1970*year = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: intrcpt + 10*ablat + 1970*year = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3: intrcpt + 20*ablat + 1970*year = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4: intrcpt + 30*ablat + 1970*year = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5: intrcpt + 40*ablat + 1970*year = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6: intrcpt + 50*ablat + 1970*year = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7: intrcpt + 60*ablat + 1970*year = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:   0.3264 0.2027  1.6104 0.1073     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0179 0.1465  0.1224 0.9025     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:  -0.2906 0.0987 -2.9431 0.0032  ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:  -0.5991 0.0771 -7.7740 &lt;.0001 *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:  -0.9076 0.1002 -9.0580 &lt;.0001 *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:  -1.2161 0.1485 -8.1895 &lt;.0001 *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7:  -1.5246 0.2049 -7.4419 &lt;.0001 *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### adjust for multiple testing with the Bonferroni method</span></span></span>
+<span class="r-in"><span><span class="fu">anova</span><span class="op">(</span><span class="va">res2</span>, X<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">60</span>,by<span class="op">=</span><span class="fl">10</span><span class="op">)</span>,<span class="fl">1970</span><span class="op">)</span>, adjust<span class="op">=</span><span class="st">"bonf"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hypotheses:                                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:            intrcpt + 1970*year = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2: intrcpt + 10*ablat + 1970*year = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3: intrcpt + 20*ablat + 1970*year = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4: intrcpt + 30*ablat + 1970*year = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5: intrcpt + 40*ablat + 1970*year = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6: intrcpt + 50*ablat + 1970*year = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7: intrcpt + 60*ablat + 1970*year = 0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se    zval   pval     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1:   0.3264 0.2027  1.6104 0.7512     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0179 0.1465  0.1224 1.0000     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3:  -0.2906 0.0987 -2.9431 0.0227   * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4:  -0.5991 0.0771 -7.7740 &lt;.0001 *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5:  -0.9076 0.1002 -9.0580 &lt;.0001 *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6:  -1.2161 0.1485 -8.1895 &lt;.0001 *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7:  -1.5246 0.2049 -7.4419 &lt;.0001 *** </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### mixed-effects model with three moderators</span></span></span>
@@ -425,10 +474,19 @@
 <span class="r-in"><span><span class="co">### specify a list for the 'btt' argument</span></span></span>
 <span class="r-in"><span><span class="fu">anova</span><span class="op">(</span><span class="va">res3</span>, btt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   coefs      QM df   pval </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1     2 15.4434  1 &lt;.0001 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2     3  0.1911  1 0.6620 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   4:5  1.4674  2 0.4801 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   coefs      QM df   pval     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     2 15.4434  1 &lt;.0001 *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     3  0.1911  1 0.6620     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   4:5  1.4674  2 0.4801     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### adjust for multiple testing with the Bonferroni method</span></span></span>
+<span class="r-in"><span><span class="fu">anova</span><span class="op">(</span><span class="va">res3</span>, btt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, adjust<span class="op">=</span><span class="st">"bonf"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   coefs      QM df   pval     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1     2 15.4434  1 0.0003 *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2     3  0.1911  1 1.0000     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   4:5  1.4674  2 1.0000     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">############################################################################</span></span></span>
