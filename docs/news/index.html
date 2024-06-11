@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-15</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-16</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.7-15" id="metafor-47-15-2024-06-10">metafor 4.7-15 (2024-06-10)<a class="anchor" aria-label="anchor" href="#metafor-47-15-2024-06-10"></a></h2>
+<h2 class="page-header" data-toc-text="4.7-16" id="metafor-47-16-2024-06-11">metafor 4.7-16 (2024-06-11)<a class="anchor" aria-label="anchor" href="#metafor-47-16-2024-06-11"></a></h2>
 <ul><li><p>the <code><a href="../reference/predict.rma.html">predict.rma()</a></code> and <code><a href="../reference/predict.rma.html">predict.rma.ls()</a></code> functions now also accept a matrix as input that includes a column for the intercept term (in which case the <code>intercept</code> argument is ignored)</p></li>
 <li><p>added <code><a href="../reference/pairwise.html">pairwise()</a></code> function to construct a matrix of pairwise contrasts</p></li>
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now counts the number of levels of a random effect more appropriately; this may trigger more often the check whether the number of levels is equal to 1, in which case the corresponding variance component is automatically fixed to 0; this check can be omitted with <code>control=list(check.k.gtr.1=FALSE)</code></p></li>

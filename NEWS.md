@@ -1,4 +1,4 @@
-# metafor 4.7-15 (2024-06-10)
+# metafor 4.7-16 (2024-06-11)
 
 - the `predict.rma()` and `predict.rma.ls()` functions now also accept a matrix as input that includes a column for the intercept term (in which case the `intercept` argument is ignored)
 

@@ -348,7 +348,8 @@ rma(yi, vi, mods = ~ alloc.random + alloc.systematic + year + ablat, data=dat, b
 rma(yi, vi, mods = ~ factor(alloc) + year + ablat, data=dat, btt=2:3)
 
 ### factor() is not needed as character variables are automatically converted to factors
-rma(yi, vi, mods = ~ alloc + year + ablat, data=dat, btt=2:3)
+res <- rma(yi, vi, mods = ~ alloc + year + ablat, data=dat, btt=2:3)
+res
 
 ### test all pairwise differences between the 'alloc' levels
 anova(res, X=pairwise(btt="alloc"))
