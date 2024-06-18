@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-17</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-18</span>
       </span>
     </div>
 
@@ -98,11 +98,11 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">permutest</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for rma.uni</span></span>
-<span><span class="fu">permutest</span><span class="op">(</span><span class="va">x</span>, exact<span class="op">=</span><span class="cn">FALSE</span>, iter<span class="op">=</span><span class="fl">1000</span>, permci<span class="op">=</span><span class="cn">FALSE</span>,</span>
-<span>          progbar<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">permutest</span><span class="op">(</span><span class="va">x</span>, exact<span class="op">=</span><span class="cn">FALSE</span>, iter<span class="op">=</span><span class="fl">1000</span>, btt<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">btt</span>,</span>
+<span>          permci<span class="op">=</span><span class="cn">FALSE</span>, progbar<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for rma.ls</span></span>
-<span><span class="fu">permutest</span><span class="op">(</span><span class="va">x</span>, exact<span class="op">=</span><span class="cn">FALSE</span>, iter<span class="op">=</span><span class="fl">1000</span>,</span>
+<span><span class="fu">permutest</span><span class="op">(</span><span class="va">x</span>, exact<span class="op">=</span><span class="cn">FALSE</span>, iter<span class="op">=</span><span class="fl">1000</span>, btt<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">btt</span>, att<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">att</span>,</span>
 <span>          progbar<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -116,6 +116,12 @@
 
    <dt>iter</dt>
 <dd><p>integer to specify the number of iterations for the permutation test when not doing an exact test (the default is <code>1000</code>).</p></dd>
+
+   <dt>btt</dt>
+<dd><p>optional vector of indices (or list thereof) to specify which coefficients should be included in the Wald-type test. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for.</p></dd>
+
+   <dt>att</dt>
+<dd><p>optional vector of indices (or list thereof) to specify which scale coefficients should be included in the Wald-type test. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for.</p></dd>
 
    <dt>permci</dt>
 <dd><p>logical to specify whether permutation-based confidence intervals (CIs) should also be constructed (the default is <code>FALSE</code>). Can also be a vector of indices to specify for which coefficients a permutation-based CI should be obtained.</p></dd>

@@ -1,4 +1,4 @@
-permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, control, ...) {
+permutest.rma.ls <- function(x, exact=FALSE, iter=1000, btt=x$btt, att=x$att, progbar=TRUE, digits, control, ...) {
 
    mstyle <- .get.mstyle()
 
@@ -12,10 +12,12 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tol", "time", "seed", "verbose", "permci", "skip.beta", "skip.alpha"))
+   .chkdots(ddd, c("tol", "time", "seed", "verbose", "permci", "skip.beta", "skip.alpha", "fixed"))
 
    if (!is.null(ddd$tol)) # in case user specifies comptol in the old manner
       comptol <- ddd$tol
+
+   fixed <- .chkddd(ddd$fixed, FALSE, .isTRUE(ddd$fixed))
 
    if (.isTRUE(ddd$permci))
       warning(mstyle$warning("Permutation-based CIs for location-scale models not currently available."), call.=FALSE)
@@ -69,6 +71,18 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, progbar=TRUE, digits, co
    if (is.character(exact) && exact == "i") {
       skip.beta  <- TRUE
       skip.alpha <- TRUE
+   }
+
+   if (!missing(btt) || !missing(att)) {
+
+      btt <- .set.btt(btt, x$p, x$int.incl, colnames(x$X), fixed=fixed)
+      att <- .set.btt(att, x$q, x$Z.int.incl, colnames(x$Z), fixed=fixed)
+
+      args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=X, intercept=FALSE, scale=x$Z, link=x$link, method=x$method,
+                   weighted=x$weighted, test=x$test, level=x$level, btt=btt, att=att, alpha=ifelse(x$alpha.fix, x$alpha, NA),
+                   optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA), control=x$control)
+      x <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
+
    }
 
    #########################################################################

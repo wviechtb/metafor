@@ -25,7 +25,6 @@ test_that("predict() correctly matches named vectors in 'newmods'", {
    expect_equivalent(pred1, pred7)
 
    expect_error(predict(res, newmods = c(30, 0))) # not the right length
-   expect_error(predict(res, newmods = c(30, 0, 0, 0))) # not the right length
    expect_error(predict(res, newmods = c(abl = 30, random = 0))) # not the right length
    expect_error(predict(res, newmods = c(abl = 30, alloc = 0, sys = 1))) # alloc matches up equally to allocrandom and allocsystem
    expect_error(predict(res, newmods = c(abl = 30, ran = 0, year = 1970))) # year not in the model
@@ -118,7 +117,7 @@ test_that("predict() correctly handles in/exclusion of the intercept term", {
 
    # contrast between alloc='random' and alloc='systematic' holding ablat constant
    pred1 <- predict(res1, newmods=c(0,1,-1), intercept=FALSE)
-   pred0 <- predict(res0, newmods=c(0,0,1,-1), intercept=FALSE)
+   pred0 <- predict(res0, newmods=c(0,0,1,-1))
    expect_equivalent(pred1, pred0)
    pred2 <- predict(res1, newmods=cbind(0,0,1,-1))
    expect_equivalent(pred1, pred2)

@@ -34,7 +34,7 @@
 
    For a random-effects model, \code{predict(object)} returns the estimated (average) outcome in the hypothetical population of studies from which the set of studies included in the meta-analysis are assumed to be a random selection. This is the same as the estimated intercept in the random-effects model (i.e., \mjseqn{\hat{\mu}}).
 
-   For models including one or more moderators, \code{predict(object)} returns the estimated (average) outcomes for values of the moderator(s) equal to those of the \mjseqn{k} studies included in the meta-analysis (i.e., the \sQuote{fitted values} for the \mjseqn{k} studies).
+   For models including one or more moderators, \code{predict(object)} returns \mjseqn{\hat{y} = Xb}, where \mjseqn{X} denotes the model matrix (see \code{\link[=model.matrix.rma]{model.matrix}}) and \mjseqn{b} the estimated model coefficient (see \code{\link[=coef.rma]{coef}}), or in words, the estimated (average) outcomes for values of the moderator(s) equal to those of the \mjseqn{k} studies included in the meta-analysis (i.e., the \sQuote{fitted values} for the \mjseqn{k} studies).
 
    For models including \mjseqn{p'} moderator variables, new moderator values (for \mjeqn{k_{new}}{k_new} hypothetical new studies) can be specified by setting \code{newmods} equal to a \mjeqn{k_{new} \times p'}{k_new x p'} matrix with the corresponding new moderator values (if \code{newmods} is a vector, then only a single predicted value is computed unless the model only includes a single moderator variable, in which case predicted values corresponding to all the vector values are computed). If the model object includes an intercept, then it will be automatically added to \code{newmods} unless one sets \code{intercept=FALSE}; alternatively, if \code{newmods} is a \mjeqn{k_{new} \times (p'+1)}{k_new x (p'+1)} matrix, then the \code{intercept} argument is ignored and the first column of the matrix determines whether the intercept is included when computing the predicted values or not. Note that any factors in the original model get turned into the appropriate contrast variables within the \code{rma} function, so that \code{newmods} should actually include the values for the contrast variables. If the matrix specified via \code{newmods} has row names, then these are used to label the predicted values in the output. Examples are shown below.
 
@@ -86,7 +86,7 @@
    Viechtbauer, W., & \enc{López-López}{Lopez-Lopez}, J. A. (2022). Location-scale models for meta-analysis. \emph{Research Synthesis Methods}. \bold{13}(6), 697--715. \verb{https://doi.org/10.1002/jrsm.1562}
 }
 \seealso{
-   \code{\link[=fitted.rma]{fitted}} for a function to extract the fitted values, \code{\link[=blup.rma.uni]{blup}} for a function to compute BLUPs that combine the fitted values and predicted random effects, and \code{\link[=addpoly.predict.rma]{addpoly}} to add polygons based on predicted values to a forest plot.
+   \code{\link[=fitted.rma]{fitted}} for a function to (only) extract the fitted values, \code{\link[=blup.rma.uni]{blup}} for a function to compute BLUPs that combine the fitted values and predicted random effects, and \code{\link[=addpoly.predict.rma]{addpoly}} to add polygons based on predicted values to a forest plot.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

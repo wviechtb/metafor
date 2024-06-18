@@ -134,7 +134,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       ### but user can also decide to remove the intercept from the predictions with intercept=FALSE
       ### one special case: when the location model is an intercept-only model, one can set newmods=1 to obtain the predicted intercept
 
-      if (inherits(newmods, "matrix") && ncol(newmods) == x$p) {
+      if (!singlemod && ncol(X.new) == x$p) {
 
          if (int.spec)
             warning(mstyle$warning("Arguments 'intercept' ignored when 'newmods' includes 'p' columns."), call.=FALSE)
@@ -227,7 +227,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       ### one special case: when the scale model is an intercept-only model, one can set newscale=1 to obtain the predicted intercept
       ### (which can be converted to tau^2 with transf=exp when using a log link)
 
-      if (inherits(newscale, "matrix") && ncol(newscale) == x$q) {
+      if (!singlescale && ncol(Z.new) == x$q) {
 
          if (int.spec)
             warning(mstyle$warning("Arguments 'intercept' ignored when 'newscale' includes 'q' columns."), call.=FALSE)

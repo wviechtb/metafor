@@ -212,7 +212,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       ### but user can also decide to remove the intercept from the predictions with intercept=FALSE (but only do this when
       ### newmods was not a matrix with p columns)
 
-      if (inherits(newmods, "matrix") && ncol(newmods) == x$p) {
+      if (!singlemod && ncol(X.new) == x$p) {
 
          if (int.spec)
             warning(mstyle$warning("Arguments 'intercept' ignored when 'newmods' includes 'p' columns."), call.=FALSE)

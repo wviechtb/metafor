@@ -44,7 +44,7 @@
 
          ### make sure that at least one valid value is left
          if (length(btt) == 0L)
-            stop(mstyle$stop("Non-existent coefficients specified via 'btt'."), call.=FALSE)
+            stop(mstyle$stop("Non-existent coefficient(s) specified via 'btt'."), call.=FALSE)
 
       }
 

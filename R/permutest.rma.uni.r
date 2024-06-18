@@ -1,4 +1,4 @@
-permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=TRUE, digits, control, ...) {
+permutest.rma.uni <- function(x, exact=FALSE, iter=1000, btt=x$btt, permci=FALSE, progbar=TRUE, digits, control, ...) {
 
    mstyle <- .get.mstyle()
 
@@ -12,10 +12,12 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tol", "time", "seed", "verbose"))
+   .chkdots(ddd, c("tol", "time", "seed", "verbose", "fixed"))
 
    if (!is.null(ddd$tol)) # in case user specifies comptol in the old manner
       comptol <- ddd$tol
+
+   fixed <- .chkddd(ddd$fixed, FALSE, .isTRUE(ddd$fixed))
 
    iter <- round(iter)
 
@@ -24,6 +26,16 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, permci=FALSE, progbar=T
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
+
+   if (!missing(btt)) {
+
+      btt <- .set.btt(btt, x$p, x$int.incl, colnames(x$X), fixed=fixed)
+
+      args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, method=x$method, weighted=x$weighted,
+                   test=x$test, level=x$level, btt=btt, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE)
+      x <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
+
+   }
 
    #########################################################################
    #########################################################################

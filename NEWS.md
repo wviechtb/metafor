@@ -1,4 +1,4 @@
-# metafor 4.7-17 (2024-06-12)
+# metafor 4.7-18 (2024-06-18)
 
 - the `predict.rma()` and `predict.rma.ls()` functions now also accept a matrix as input that includes a column for the intercept term (in which case the `intercept` argument is ignored)
 
@@ -21,6 +21,8 @@
 - added `ilab.lab` argument to the various `forest()` functions
 
 - `fsn(..., type="General")` now computes the final estimates after rounding the fail-safe N value (not before)
+
+- `permutest.rma.uni()` gains a `btt` argument and `permutest.rma.ls()` gains `btt` and `att` arguments
 
 - added more tests
 

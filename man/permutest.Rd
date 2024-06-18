@@ -9,16 +9,18 @@
 \usage{
 permutest(x, \dots)
 
-\method{permutest}{rma.uni}(x, exact=FALSE, iter=1000, permci=FALSE,
-          progbar=TRUE, digits, control, \dots)
+\method{permutest}{rma.uni}(x, exact=FALSE, iter=1000, btt=x$btt,
+          permci=FALSE, progbar=TRUE, digits, control, \dots)
 
-\method{permutest}{rma.ls}(x, exact=FALSE, iter=1000,
+\method{permutest}{rma.ls}(x, exact=FALSE, iter=1000, btt=x$btt, att=x$att,
           progbar=TRUE, digits, control, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"} or \code{"rma.ls"}.}
    \item{exact}{logical to specify whether an exact permutation test should be carried out (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{iter}{integer to specify the number of iterations for the permutation test when not doing an exact test (the default is \code{1000}).}
+   \item{btt}{optional vector of indices (or list thereof) to specify which coefficients should be included in the Wald-type test. Can also be a string to \code{\link{grep}} for.}
+   \item{att}{optional vector of indices (or list thereof) to specify which scale coefficients should be included in the Wald-type test. Can also be a string to \code{\link{grep}} for.}
    \item{permci}{logical to specify whether permutation-based confidence intervals (CIs) should also be constructed (the default is \code{FALSE}). Can also be a vector of indices to specify for which coefficients a permutation-based CI should be obtained.}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{TRUE}).}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
