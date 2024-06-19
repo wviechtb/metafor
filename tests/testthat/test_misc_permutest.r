@@ -22,12 +22,11 @@ test_that("permutest() gives correct results for a random-effects model.", {
 
    expect_equivalent(sav$pval, 0.0625)
 
-   out <- capture.output(print(sav)) ### so that print.permutest.rma.uni() is run (at least once)
+   out <- capture.output(print(sav)) # so that print.permutest.rma.uni() is run (at least once)
 
    tmp <- coef(sav)
    expected <- structure(list(estimate = 0.029444, se = 0.013068, zval = 2.253107, pval = 0.0625, ci.lb = 0.003831, ci.ub = 0.055058),
                          .Names = c("estimate", "se", "zval", "pval", "ci.lb", "ci.ub"), row.names = "intrcpt", class = "data.frame")
-
    expect_equivalent(tmp, expected, tolerance=.tol[["misc"]])
 
    ### approximate permutation test
@@ -88,6 +87,27 @@ test_that("permutest() gives correct results for example in Follmann & Proschan 
    expect_equivalent(sav$pval, 10/256)
    expect_equivalent(sav$ci.lb, -0.3677, tolerance=.tol[["ci"]])
    expect_equivalent(sav$ci.ub, -0.0020, tolerance=.tol[["ci"]])
+
+})
+
+test_that("permutest() works correctly when specifying the 'btt' argument.", {
+
+   skip_on_cran()
+
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+
+   set.seed(1234)
+   res1 <- rma(yi, vi, mods = ~ alloc + ablat, data=dat)
+   sav1 <- permutest(res1, iter=99, btt=2:3, progbar=FALSE)
+
+   set.seed(1234)
+   res2 <- rma(yi, vi, mods = ~ alloc + ablat, data=dat, btt=2:3)
+   sav2 <- permutest(res2, iter=99, progbar=FALSE)
+
+   expect_equivalent(sav1$QM, sav2$QM)
+   expect_equivalent(sav1$QM.perm, sav2$QM.perm)
+   expect_equivalent(sav1$b.perm, sav2$b.perm)
+   expect_equivalent(sav1$zval.perm, sav2$zval.perm)
 
 })
 

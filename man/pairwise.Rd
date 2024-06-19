@@ -31,7 +31,7 @@ pairwise(x, btt, btt2, \dots)
 \seealso{
    \code{\link{rma.uni}}, \code{\link{rma.glmm}}, and \code{\link{rma.mv}} for functions to fit meta-regression models for which pairwise contrasts may be useful.
 
-   \code{\link[=anova.rma]{anova}} for a function to carry out tests of the pairwise contrasts.
+   \code{\link[=anova.rma]{anova}} for a function to carry out tests of the pairwise contrasts and \code{\link[=predict.rma]{predict}} to obtain corresponding confidence/prediction intervals.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

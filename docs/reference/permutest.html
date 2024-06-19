@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-18</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-19</span>
       </span>
     </div>
 
@@ -142,13 +142,13 @@
     <div id="details">
     <h2>Details</h2>
     <p>For models without moderators, the permutation test is carried out by permuting the signs of the observed effect sizes or outcomes. The (two-sided) p-value of the permutation test is then equal to the proportion of times that the absolute value of the test statistic under the permuted data is as extreme or more extreme than under the actually observed data. See Follmann and Proschan (1999) for more details.</p>
-<p>For models with moderators, the permutation test is carried out by permuting the rows of the model matrix (i.e., <em></em>\(X\)). The (two-sided) p-value for a particular model coefficient is then equal to the proportion of times that the absolute value of the test statistic for the coefficient under the permuted data is as extreme or more extreme than under the actually observed data. Similarly, for the omnibus test, the p-value is the proportion of times that the test statistic for the omnibus test is as extreme or more extreme than the actually observed one. See Higgins and Thompson (2004) and Viechtbauer et al. (2015) for more details.</p>
+<p>For models with moderators, the permutation test is carried out by permuting the rows of the model matrix (i.e., <em></em>\(X\)). The (two-sided) p-value for a particular model coefficient is then equal to the proportion of times that the absolute value of the test statistic for the coefficient under the permuted data is as extreme or more extreme than under the actually observed data. Similarly, for the omnibus test, the p-value is the proportion of times that the test statistic for the omnibus test is as extreme or more extreme than the actually observed one (argument <code>btt</code> can be used to specify which coefficients should be included in this test). See Higgins and Thompson (2004) and Viechtbauer et al. (2015) for more details.</p>
 <p></p><div class="section">
 <h3 id="exact-versus-approximate-permutation-tests">Exact versus Approximate Permutation Tests<a class="anchor" aria-label="anchor" href="#exact-versus-approximate-permutation-tests"></a></h3>
 
 
 <p>If <code>exact=TRUE</code>, the function will try to carry out an exact permutation test. An exact permutation test requires fitting the model to each possible permutation. However, the number of possible permutations increases rapidly with the number of outcomes/studies (i.e., <em></em>\(k\)). For models without moderators, there are <em></em>\(2^k\) possible permutations of the signs. Therefore, for <em></em>\(k=5\), there are 32 possible permutations, for <em></em>\(k=10\), there are already 1024, and for <em></em>\(k=20\), there are over one million such permutations.</p>
-<p>For models with moderators, the increase in the number of possible permutations may be even more severe. The total number of possible permutations of the model matrix is <em></em>\(k!\). Therefore, for <em></em>\(k=5\), there are 120 possible permutations, for <em></em>\(k=10\), there are 3,628,800, and for <em></em>\(k=20\), there are over <em></em>\(10^{18}\) permutations of the model matrix.</p>
+<p>For models with moderators, the increase in the number of possible permutations is even more severe. The total number of possible permutations of the model matrix is <em></em>\(k!\). Therefore, for <em></em>\(k=5\), there are 120 possible permutations, for <em></em>\(k=10\), there are 3,628,800, and for <em></em>\(k=20\), there are over <em></em>\(10^{18}\) permutations of the model matrix.</p>
 <p>Therefore, going through all possible permutations may become infeasible. Instead of using an exact permutation test, one can set <code>exact=FALSE</code> (which is also the default). In that case, the function approximates the exact permutation-based p-value(s) by going through a smaller number (as specified by the <code>iter</code> argument) of <em>random</em> permutations. Therefore, running the function twice on the same data can yield (slightly) different p-values. Setting <code>iter</code> sufficiently large ensures that the results become stable. For full reproducibility, one can also set the seed of the random number generator before running the function (see ‘Examples’). Note that if <code>exact=FALSE</code> and <code>iter</code> is actually larger than the number of iterations required for an exact permutation test, then an exact test will automatically be carried out.</p>
 <p>For models with moderators, the exact permutation test actually only requires fitting the model to each <em>unique</em> permutation of the model matrix. The number of unique permutations will be smaller than <em></em>\(k!\) when the model matrix contains recurring rows. This may be the case when only including categorical moderators (i.e., factors) in the model or when any quantitative moderators included in the model can only take on a small number of unique values. When <code>exact=TRUE</code>, the function therefore uses an algorithm to restrict the test to only the unique permutations of the model matrix, which may make the use of the exact test feasible even when <em></em>\(k\) is large.</p>
 <p>One can also set <code>exact="i"</code> in which case the function just returns the number of iterations required for an exact permutation test.</p>
@@ -211,7 +211,7 @@
     <p>The p-values obtained with permutation tests cannot reach conventional levels of statistical significance (i.e., <em></em>\(p \le .05\)) when <em></em>\(k\) is very small. In particular, for models without moderators, the smallest possible (two-sided) p-value is .0625 when <em></em>\(k=5\) and .03125 when <em></em>\(k=6\). Therefore, the permutation test is only able to reject the null hypothesis at <em></em>\(\alpha=.05\) when <em></em>\(k\) is at least equal to 6. For models with moderators, the smallest possible (two-sided) p-value for a particular model coefficient is .0833 when <em></em>\(k=4\) and .0167 when <em></em>\(k=5\) (assuming that each row in the model matrix is unique). Therefore, the permutation test is only able to reject the null hypothesis at <em></em>\(\alpha=.05\) when <em></em>\(k\) is at least equal to 5. Consequently, permutation-based CIs can also only be obtained when <em></em>\(k\) is sufficiently large.</p>
 <p>When the number of permutations required for the exact test is so large as to be essentially indistinguishable from infinity (e.g., <code>factorial(200)</code>), the function will terminate with an error.</p>
 <p>Determining whether a test statistic under the permuted data is as extreme or more extreme than under the actually observed data requires making <code>&gt;=</code> or <code>&lt;=</code> comparisons. To avoid problems due to the finite precision with which computers generally represent numbers (see <a href="https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-doesn_0027t-R-think-these-numbers-are-equal_003f" class="external-link">this</a> FAQ for details), the function uses a numerical tolerance (<code>control</code> argument <code>comptol</code>, which is set equal to <code>.Machine$double.eps^0.5</code> by default) when making such comparisons (e.g., instead of <code>sqrt(3)^2 &gt;= 3</code>, which may evaluate to <code>FALSE</code>, we use <code>sqrt(3)^2 &gt;= 3 - .Machine$double.eps^0.5</code>, which should evaluate to <code>TRUE</code>).</p>
-<p>When obtaining permutation-based CIs, the function makes use of <code><a href="https://rdrr.io/r/stats/uniroot.html" class="external-link">uniroot</a></code>. By default, the desired accuracy is set equal to <code>.Machine$double.eps^0.25</code> and the maximum number of iterations to <code>100</code>. The desired accuracy and the maximum number of iterations can be adjusted with the <code>control</code> argument (i.e., <code>control=list(tol=value, maxiter=value)</code>). Also, the interval searched for the CI bounds may be too narrow, leading to <code>NA</code> for a bound. In this case, one can try setting <code>control=list(distfac=value)</code> with a value larger than 1 to extend the interval (the value indicating a multiplicative factor by which to extend the width of the interval searched) or <code>control=list(extendInt="yes")</code> to allow <code><a href="https://rdrr.io/r/stats/uniroot.html" class="external-link">uniroot</a></code> to extend the interval dynamically (in which case it can happen that a bound may try to drift towards <em></em>\(\pm \infty\)).</p>
+<p>When obtaining permutation-based CIs, the function makes use of <code><a href="https://rdrr.io/r/stats/uniroot.html" class="external-link">uniroot</a></code>. By default, the desired accuracy is set equal to <code>.Machine$double.eps^0.25</code> and the maximum number of iterations to <code>100</code>. The desired accuracy and the maximum number of iterations can be adjusted with the <code>control</code> argument (i.e., <code>control=list(tol=value, maxiter=value)</code>). Also, the interval searched for the CI bounds may be too narrow, leading to <code>NA</code> for a bound. In this case, one can try setting <code>control=list(distfac=value)</code> with a value larger than 1 to extend the interval (the value indicating a multiplicative factor by which to extend the width of the interval searched) or <code>control=list(extendInt="yes")</code> to allow <code><a href="https://rdrr.io/r/stats/uniroot.html" class="external-link">uniroot</a></code> to extend the interval dynamically (in which case it can happen that a bound may try to drift to <em></em>\(\pm \infty\)).</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -352,6 +352,58 @@
 <span class="r-in"><span><span class="co">### than under a standard normal density (hence, the larger p-value)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">permres</span>, beta<span class="op">=</span><span class="fl">2</span>, lwd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">3</span>,<span class="fl">4</span><span class="op">)</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="permutest-1.png" alt="" width="1728" height="1536"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### mixed-effects model with a categorical and a quantitative moderator</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span> <span class="op">+</span> <span class="va">alloc</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of residual heterogeneity):     0.1446 (SE = 0.1124)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):             0.3803</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (residual heterogeneity / unaccounted variability): 70.11%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (unaccounted variability / sampling variability):   3.35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R^2 (amount of heterogeneity accounted for):            53.84%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Residual Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QE(df = 9) = 26.2034, p-val = 0.0019</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 2:4):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 3) = 11.0605, p-val = 0.0114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  estimate      se     zval    pval    ci.lb    ci.ub     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt            0.2932  0.4050   0.7239  0.4691  -0.5006   1.0870     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ablat             -0.0273  0.0092  -2.9650  0.0030  -0.0453  -0.0092  ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> allocrandom       -0.2675  0.3504  -0.7633  0.4453  -0.9543   0.4193     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> allocsystematic    0.0585  0.3795   0.1540  0.8776  -0.6854   0.8023     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### permutation test testing the allocation factor coefficients</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span> <span class="co"># for reproducibility</span></span></span>
+<span class="r-in"><span><span class="fu">permutest</span><span class="op">(</span><span class="va">res</span>, btt<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Running 1000 iterations for an approximate permutation test.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 3:4):¹</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 2) = 1.2850, p-val = 0.5530</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  estimate      se     zval    pval¹    ci.lb    ci.ub    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt            0.2932  0.4050   0.7239  0.6710   -0.5006   1.0870    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ablat             -0.0273  0.0092  -2.9650  0.0230   -0.0453  -0.0092  * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> allocrandom       -0.2675  0.3504  -0.7633  0.4700   -0.9543   0.4193    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> allocsystematic    0.0585  0.3795   0.1540  0.8700   -0.6854   0.8023    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1) p-values based on permutation testing</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </div>
