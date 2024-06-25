@@ -96,6 +96,7 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
          pgamma(finv(r/x), scale=scale(SDR*r), shape=shape(SDR*r))*dnorm(r)
       }
       integral <- integrate(integrand, lower=x, upper=Inf)$value
+      #integral <- cubintegrate(integrand, lower=x, upper=Inf)$integral
       val <- integral - level / 2
       #cat(val, "\n")
       val

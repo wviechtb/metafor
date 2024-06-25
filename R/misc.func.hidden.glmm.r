@@ -136,10 +136,12 @@
       for (i in seq_len(k)) {
 
          res <- try(integrate(.dnchgi, lower=intCtrl$lower, upper=intCtrl$upper, ai=ai[i], bi=bi[i], ci=ci[i], di=di[i], mu.i=mu.i[i], tau2=tau2, random=random, dnchgcalc=dnchgcalc, dnchgprec=dnchgprec, rel.tol=intCtrl$rel.tol, subdivisions=intCtrl$subdivisions, stop.on.error=FALSE), silent=!verbose)
+         #res <- try(cubintegrate(.dnchgi, lower=intCtrl$lower, upper=intCtrl$upper, ai=ai[i], bi=bi[i], ci=ci[i], di=di[i], mu.i=mu.i[i], tau2=tau2, random=random, dnchgcalc=dnchgcalc, dnchgprec=dnchgprec), silent=!verbose)
 
          if (inherits(res, "try-error")) {
             stop(mstyle$stop(paste0("Could not integrate over density of non-central hypergeometric distribution in study ", i, ".")), call.=FALSE)
          } else {
+            #res$value <- res$integral
             if (res$value > 0) {
                lli[i] <- log(res$value)
             } else {

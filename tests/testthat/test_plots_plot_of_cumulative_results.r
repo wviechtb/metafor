@@ -1,6 +1,6 @@
 ### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true"); Sys.setenv(RUN_VIS_TESTS="true")
 
-### see also: https://www.metafor-project.org/doku.php/plots:plot_of_cumulative_results
+### see: https://www.metafor-project.org/doku.php/plots:plot_of_cumulative_results
 
 source("settings.r")
 

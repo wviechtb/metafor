@@ -12,7 +12,7 @@
           cov   = .01, # covariances
           sevar = .01, # SEs of variance components
           fit   = .01, # fit statistics
-          r2    = .01, # R^2 type values
+          r2    = .01, # R^2 type values, model importances
           het   = .01, # heterogeneity statistics (and CIs thereof)
           inf   = .01, # influence statistics, hat values
           den   = .01, # density

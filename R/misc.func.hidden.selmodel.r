@@ -88,6 +88,9 @@
                            yi=yi[i], vi=vi[i], preci=preci[i], yhat=yhat[i], wi.fun=wi.fun,
                            delta=delta, tau2=tau2, alternative=alternative, pval.min=pval.min, steps=steps,
                            subdivisions=intCtrl$subdivisions, rel.tol=intCtrl$rel.tol)$value, silent=TRUE)
+      #tmp <- try(cubintegrate(.selmodel.int, lower=intCtrl$lower, upper=intCtrl$upper,
+      #                        yi=yi[i], vi=vi[i], preci=preci[i], yhat=yhat[i], wi.fun=wi.fun,
+      #                        delta=delta, tau2=tau2, alternative=alternative, pval.min=pval.min, steps=steps)$integral, silent=TRUE)
       if (inherits(tmp, "try-error"))
          stop(mstyle$stop(paste0("Could not integrate over density in study ", i, ".")), call.=FALSE)
       Ai[i] <- tmp
