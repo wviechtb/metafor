@@ -23,6 +23,8 @@ jobs:
         run: sudo apt-get install -y libcurl4-openssl-dev
       - name: Install TeX Live
         run: sudo apt-get install -y texlive texlive-fonts-extra
+      - name: Install Java
+        run: sudo apt-get install -y default-jre default-jdk
       - name: Query dependencies
         run: |
           install.packages("remotes")
