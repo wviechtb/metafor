@@ -8,17 +8,18 @@
 \usage{
 selmodel(x, \dots)
 
-\method{selmodel}{rma.uni}(x, type, alternative="greater", prec, delta,
+\method{selmodel}{rma.uni}(x, type, alternative="greater", prec, subset, delta,
          steps, decreasing=FALSE, verbose=FALSE, digits, control, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}.}
-   \item{type}{character string to specify the type of selection model. Possible options are \code{"beta"}, \code{"halfnorm"}, \code{"negexp"}, \code{"logistic"}, \code{"power"}, \code{"negexppow"}, \code{"stepfun"}, \code{"trunc"}, and \code{"truncest"}. Can be abbreviated. See \sQuote{Details}.}
+   \item{type}{character string to specify the type of selection model. Possible options are \code{"beta"}, \code{"halfnorm"}, \code{"negexp"}, \code{"logistic"}, \code{"power"}, \code{"negexppow"}, \code{"stepfun"}, \code{"trunc"}, and \code{"truncest"}. Can be abbreviated.}
    \item{alternative}{character string to specify the sidedness of the hypothesis when testing the observed outcomes. Possible options are \code{"greater"} (the default), \code{"less"}, or \code{"two.sided"}. Can be abbreviated.}
-   \item{prec}{optional character string to specify the measure of precision (only relevant for selection models that can incorporate this into the selection function). Possible options are \code{"sei"}, \code{"vi"}, \code{"ninv"}, or \code{"sqrtninv"}. See \sQuote{Details}.}
-   \item{delta}{optional numeric vector (of the same length as the number of selection model parameters) to fix the corresponding \mjseqn{\delta} value(s). A \mjseqn{\delta} value can be fixed by setting the corresponding element of this argument to the desired value. A \mjseqn{\delta} value will be estimated if the corresponding element is set equal to \code{NA}. See \sQuote{Details}.}
-   \item{steps}{numeric vector of one or more values that can or must be specified for certain selection functions. See \sQuote{Details}.}
-   \item{decreasing}{logical to specify whether the \mjseqn{\delta} values in a step function selection model must be a monotonically decreasing function of the p-values (the default is \code{FALSE}). Only relevant when \code{type="stepfun"}. See \sQuote{Details}.}
+   \item{prec}{optional character string to specify the measure of precision (only relevant for selection models that can incorporate this into the selection function). Possible options are \code{"sei"}, \code{"vi"}, \code{"ninv"}, or \code{"sqrtninv"}.}
+   \item{subset}{optional (logical or numeric) vector to specify the subset of studies to which the selection function applies.}
+   \item{delta}{optional numeric vector (of the same length as the number of selection model parameters) to fix the corresponding \mjseqn{\delta} value(s). A \mjseqn{\delta} value can be fixed by setting the corresponding element of this argument to the desired value. A \mjseqn{\delta} value will be estimated if the corresponding element is set equal to \code{NA}.}
+   \item{steps}{numeric vector of one or more values that can or must be specified for certain selection functions.}
+   \item{decreasing}{logical to specify whether the \mjseqn{\delta} values in a step function selection model must be a monotonically decreasing function of the p-values (the default is \code{FALSE}). Only relevant when \code{type="stepfun"}.}
    \item{verbose}{logical to specify whether output should be generated on the progress of the model fitting (the default is \code{FALSE}). Can also be an integer. Values > 1 generate more verbose output. See \sQuote{Note}.}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{control}{optional list of control values for the estimation algorithm. See \sQuote{Note}.}
@@ -148,6 +149,12 @@ selmodel(x, \dots)
 
    }
 
+   \subsection{Subsets of Studies Affected and Unaffected by Publication Bias}{
+
+      In some meta-analyses, some of the studies are known (or are assumed) to be free of publication bias (e.g., preregistered studies). In this case, the selection function should only apply to a subset of the studies (e.g., the non-registered studies). Using the \code{subset} argument, one can specify to which subset of studies the selection function should apply (note though that all studies are still included in the model fitting). The argument can either be a logical or a numeric vector, but note that what is specified is applied to the set of data originally passed to the \code{\link{rma.uni}} function, so a logical vector must be of the same length as the original dataset (and if the \code{data} argument was used in the original model fit, then any variables specified in creating a logical vector will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.
+
+   }
+
 }
 \value{
    An object of class \code{c("rma.uni","rma")}. The object is a list containing the same components as a regular \code{c("rma.uni","rma")} object, but the parameter estimates are based on the selection model. Most importantly, the following elements are modified based on the selection model:
@@ -256,6 +263,10 @@ sel
 
 # plot the selection function
 plot(sel, ylim=c(0,40))
+
+# only apply the selection function to studies with a quality score below 10
+sel <- selmodel(res, type="beta", subset=score<10)
+sel
 }
 
 # fit mixed-effects meta-regression model with 'blind' dummy variable as moderator

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-21</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">selmodel</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for rma.uni</span></span>
-<span><span class="fu">selmodel</span><span class="op">(</span><span class="va">x</span>, <span class="va">type</span>, alternative<span class="op">=</span><span class="st">"greater"</span>, <span class="va">prec</span>, <span class="va">delta</span>,</span>
+<span><span class="fu">selmodel</span><span class="op">(</span><span class="va">x</span>, <span class="va">type</span>, alternative<span class="op">=</span><span class="st">"greater"</span>, <span class="va">prec</span>, <span class="va">subset</span>, <span class="va">delta</span>,</span>
 <span>         <span class="va">steps</span>, decreasing<span class="op">=</span><span class="cn">FALSE</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -108,22 +108,25 @@
 <dd><p>an object of class <code>"rma.uni"</code>.</p></dd>
 
    <dt>type</dt>
-<dd><p>character string to specify the type of selection model. Possible options are <code>"beta"</code>, <code>"halfnorm"</code>, <code>"negexp"</code>, <code>"logistic"</code>, <code>"power"</code>, <code>"negexppow"</code>, <code>"stepfun"</code>, <code>"trunc"</code>, and <code>"truncest"</code>. Can be abbreviated. See ‘Details’.</p></dd>
+<dd><p>character string to specify the type of selection model. Possible options are <code>"beta"</code>, <code>"halfnorm"</code>, <code>"negexp"</code>, <code>"logistic"</code>, <code>"power"</code>, <code>"negexppow"</code>, <code>"stepfun"</code>, <code>"trunc"</code>, and <code>"truncest"</code>. Can be abbreviated.</p></dd>
 
    <dt>alternative</dt>
 <dd><p>character string to specify the sidedness of the hypothesis when testing the observed outcomes. Possible options are <code>"greater"</code> (the default), <code>"less"</code>, or <code>"two.sided"</code>. Can be abbreviated.</p></dd>
 
    <dt>prec</dt>
-<dd><p>optional character string to specify the measure of precision (only relevant for selection models that can incorporate this into the selection function). Possible options are <code>"sei"</code>, <code>"vi"</code>, <code>"ninv"</code>, or <code>"sqrtninv"</code>. See ‘Details’.</p></dd>
+<dd><p>optional character string to specify the measure of precision (only relevant for selection models that can incorporate this into the selection function). Possible options are <code>"sei"</code>, <code>"vi"</code>, <code>"ninv"</code>, or <code>"sqrtninv"</code>.</p></dd>
+
+   <dt>subset</dt>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies to which the selection function applies.</p></dd>
 
    <dt>delta</dt>
-<dd><p>optional numeric vector (of the same length as the number of selection model parameters) to fix the corresponding <em></em>\(\delta\) value(s). A <em></em>\(\delta\) value can be fixed by setting the corresponding element of this argument to the desired value. A <em></em>\(\delta\) value will be estimated if the corresponding element is set equal to <code>NA</code>. See ‘Details’.</p></dd>
+<dd><p>optional numeric vector (of the same length as the number of selection model parameters) to fix the corresponding <em></em>\(\delta\) value(s). A <em></em>\(\delta\) value can be fixed by setting the corresponding element of this argument to the desired value. A <em></em>\(\delta\) value will be estimated if the corresponding element is set equal to <code>NA</code>.</p></dd>
 
    <dt>steps</dt>
-<dd><p>numeric vector of one or more values that can or must be specified for certain selection functions. See ‘Details’.</p></dd>
+<dd><p>numeric vector of one or more values that can or must be specified for certain selection functions.</p></dd>
 
    <dt>decreasing</dt>
-<dd><p>logical to specify whether the <em></em>\(\delta\) values in a step function selection model must be a monotonically decreasing function of the p-values (the default is <code>FALSE</code>). Only relevant when <code>type="stepfun"</code>. See ‘Details’.</p></dd>
+<dd><p>logical to specify whether the <em></em>\(\delta\) values in a step function selection model must be a monotonically decreasing function of the p-values (the default is <code>FALSE</code>). Only relevant when <code>type="stepfun"</code>.</p></dd>
 
    <dt>verbose</dt>
 <dd><p>logical to specify whether output should be generated on the progress of the model fitting (the default is <code>FALSE</code>). Can also be an integer. Values &gt; 1 generate more verbose output. See ‘Note’.</p></dd>
@@ -217,6 +220,14 @@
 <p>When <code>type="trunc"</code>, the model assumes that the relative likelihood of selection depends not on the p-value but on the value of the observed effect size or outcome of a study. Let <em></em>\(y_c\) denote a single cutpoint (which can be specified via argument <code>steps</code> and which is assumed to be 0 when unspecified). Let \[w(y_i) = \left\{ \begin{matrix} \; 1 &amp; \textrm{if} \; y_i &gt; y_c \\ \; \delta_1 &amp; \textrm{if} \; y_i \le y_c \\ \end{matrix} \right.\] denote the selection function when <code>alternative="greater"</code> and \[w(y_i) = \left\{ \begin{matrix} \; 1 &amp; \textrm{if} \; y_i &lt; y_c \\ \; \delta_1 &amp; \textrm{if} \; y_i \ge y_c \\ \end{matrix} \right.\] when <code>alternative="less"</code> (note that <code>alternative="two.sided"</code> is not an option for this type of selection model). Therefore, when <code>alternative="greater"</code>, <em></em>\(\delta_1\) denotes the likelihood of selection for observed effect sizes or outcomes that fall below the chosen cutpoint relative to those that fall above it (and vice-versa when <code>alternative="less"</code>). Hence, the null hypothesis <em></em>\(\mbox{H}_0{:}\; \delta_1 = 1\) implies no selection.</p>
 <p>In principle, it is also possible to obtain a maximum likelihood estimate of the cutpoint. For this, one can set <code>type="truncest"</code>, in which case the selection function is given by \[w(y_i) = \left\{ \begin{matrix} \; 1 &amp; \textrm{if} \; y_i &gt; \delta_2 \\ \; \delta_1 &amp; \textrm{if} \; y_i \le \delta_2 \\ \end{matrix} \right.\] when <code>alternative="greater"</code> and analogously when <code>alternative="less"</code>. Therefore, instead of specifying the cutpoint via the <code>steps</code> argument, it is estimated via <em></em>\(\delta_2\). Note that estimating both <em></em>\(\delta_1\) and <em></em>\(\delta_2\) simultaneously is typically very difficult (the likelihood surface is often quite rugged with multiple local optima) and will require a large number of studies. The implementation of this selection function should be considered experimental.</p>
 <p>Models similar to those described above were proposed by Rust et al. (1990) and Formann (2008), but made various simplifying assumptions (e.g., Formann assumed <em></em>\(\delta_1 = 0\)) and did not account for the heteroscedastic nature of the sampling variances of the observed effect sizes or outcomes, nor did they allow for heterogeneity in the true effects or the influence of moderators.</p>
+<p></p>
+</div>
+
+<p></p><div class="section">
+<h3 id="subsets-of-studies-affected-and-unaffected-by-publication-bias">Subsets of Studies Affected and Unaffected by Publication Bias<a class="anchor" aria-label="anchor" href="#subsets-of-studies-affected-and-unaffected-by-publication-bias"></a></h3>
+
+
+<p>In some meta-analyses, some of the studies are known (or are assumed) to be free of publication bias (e.g., preregistered studies). In this case, the selection function should only apply to a subset of the studies (e.g., the non-registered studies). Using the <code>subset</code> argument, one can specify to which subset of studies the selection function should apply (note though that all studies are still included in the model fitting). The argument can either be a logical or a numeric vector, but note that what is specified is applied to the set of data originally passed to the <code><a href="rma.uni.html">rma.uni</a></code> function, so a logical vector must be of the same length as the original dataset (and if the <code>data</code> argument was used in the original model fit, then any variables specified in creating a logical vector will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.</p>
 <p></p>
 </div>
 
@@ -456,6 +467,36 @@
 <span class="r-in"><span><span class="co"># plot the selection function</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sel</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">40</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="selmodel-2.png" alt="" width="1728" height="1536"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># only apply the selection function to studies with a quality score below 10</span></span></span>
+<span class="r-in"><span><span class="va">sel</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"beta"</span>, subset<span class="op">=</span><span class="va">score</span><span class="op">&lt;</span><span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sel</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 23; tau^2 estimator: ML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of total heterogeneity): 0.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):      0.002</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LRT(df = 1) = 0.000, p-val = 1.000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate     se   zval   pval  ci.lb  ci.ub    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    0.303  0.124  2.452  0.014  0.061  0.545  * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Selection Model Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LRT(df = 2) = 5.871, p-val = 0.053</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selection Model Results (k_subset = 19):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate     se    zval   pval  ci.lb  ci.ub    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> delta.1     0.691  0.207  -1.493  0.135  0.286  1.097    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> delta.2     4.251  2.527   1.287  0.198  0.000  9.204    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># fit mixed-effects meta-regression model with 'blind' dummy variable as moderator</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">smd</span>, <span class="va">se</span><span class="op">^</span><span class="fl">2</span>, data<span class="op">=</span><span class="va">dat</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">blind</span>, method<span class="op">=</span><span class="st">"ML"</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>

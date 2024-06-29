@@ -362,7 +362,11 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          res.table <- res.table[1,]
 
       cat("\n")
-      cat(mstyle$section("Selection Model Results:"))
+      if (x$k == x$k1) {
+         cat(mstyle$section("Selection Model Results:"))
+      } else {
+         cat(mstyle$section("Selection Model Results (k_subset = ", x$k1, "):"))
+      }
       cat("\n\n")
 
       if (length(x$delta) == 1L) {

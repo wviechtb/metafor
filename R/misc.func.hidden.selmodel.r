@@ -43,6 +43,24 @@
    }
 }
 
+.ptable <- function(pvals, steps, subset) {
+
+   pvals[!subset] <- NA
+
+   pgrp     <- sapply(pvals, function(p) which(p <= steps)[1])
+   psteps.l <- as.character(c(0,steps[-length(steps)]))
+   psteps.r <- as.character(steps)
+   len.l    <- nchar(psteps.l)
+   pad.l    <- sapply(max(len.l) - len.l, function(x) paste0(rep(" ", x), collapse=""))
+   psteps.l <- paste0(psteps.l, pad.l)
+   psteps   <- paste0(psteps.l, " < p <= ", psteps.r)
+   ptable   <- table(factor(pgrp, levels=seq_along(steps), labels=psteps))
+   ptable   <- data.frame(k=as.vector(ptable), row.names=names(ptable))
+
+   return(list(pgrp=pgrp, ptable=ptable))
+
+}
+
 ############################################################################
 
 .selmodel.int <- function(yvals, yi, vi, preci, yhat, wi.fun, delta, tau2, alternative, pval.min, steps) {
@@ -52,7 +70,7 @@
    wi.fun(pval, delta, yi, vi, preci, alternative, steps) * dnorm(yvals, yhat, sqrt(vi+tau2))
 }
 
-.selmodel.ll.cont <- function(par, yi, vi, X, preci, k, pX, pvals,
+.selmodel.ll.cont <- function(par, yi, vi, X, preci, subset, k, pX, pvals,
                               deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max, decreasing,
                               tau2.arg, tau2.transf, tau2.max, beta.arg,
                               wi.fun, steps, pgrp,
@@ -83,7 +101,7 @@
 
    Ai <- rep(NA_real_, k)
 
-   for (i in seq_len(k)) {
+   for (i in seq_len(k)[subset]) {
       tmp <- try(integrate(.selmodel.int, lower=intCtrl$lower, upper=intCtrl$upper,
                            yi=yi[i], vi=vi[i], preci=preci[i], yhat=yhat[i], wi.fun=wi.fun,
                            delta=delta, tau2=tau2, alternative=alternative, pval.min=pval.min, steps=steps,
@@ -96,7 +114,10 @@
       Ai[i] <- tmp
    }
 
-   llval <- sum(log(wi.fun(pvals, delta, yi, vi, preci, alternative, steps)) + dnorm(yi, yhat, sqrt(vi+tau2), log=TRUE) - log(Ai))
+   #llval <- sum(log(wi.fun(pvals, delta, yi, vi, preci, alternative, steps)) + dnorm(yi, yhat, sqrt(vi+tau2), log=TRUE) - log(Ai))
+   llval0 <- sum(                                                                                                   dnorm(yi[!subset], yhat[!subset], sqrt(vi[!subset]+tau2), log=TRUE))
+   llval1 <- sum(log(wi.fun(pvals[ subset], delta, yi[ subset], vi[ subset], preci[ subset], alternative, steps)) + dnorm(yi[ subset], yhat[ subset], sqrt(vi[ subset]+tau2), log=TRUE) - log(Ai[subset]))
+   llval  <- llval0 + llval1
 
    if (dofit) {
       res <- list(ll=llval, beta=beta, tau2=tau2, delta=delta)
@@ -118,7 +139,7 @@
 
 ############################################################################
 
-.selmodel.ll.stepfun <- function(par, yi, vi, X, preci, k, pX, pvals,
+.selmodel.ll.stepfun <- function(par, yi, vi, X, preci, subset, k, pX, pvals,
                                  deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max, decreasing,
                                  tau2.arg, tau2.transf, tau2.max, beta.arg,
                                  wi.fun, steps, pgrp,
@@ -162,14 +183,14 @@
 
    yhat <- c(X %*% beta)
 
-   sei <- sqrt(vi+tau2)
+   sei <- sqrt(vi + tau2)
 
    N <- length(steps)
 
    Ai <- rep(NA_real_, k)
 
    if (alternative == "greater") {
-      for (i in seq_len(k)) {
+      for (i in seq_len(k)[subset]) {
          Ai[i] <- pnorm(qnorm(steps[1], 0, sqrt(vi[i]), lower.tail=FALSE), yhat[i], sei[i], lower.tail=FALSE)
          for (j in 2:N) {
             if (j < N) {
@@ -182,7 +203,7 @@
    }
 
    if (alternative == "less") {
-      for (i in seq_len(k)) {
+      for (i in seq_len(k)[subset]) {
          Ai[i] <- pnorm(qnorm(steps[1], 0, sqrt(vi[i]), lower.tail=TRUE), yhat[i], sei[i], lower.tail=TRUE)
          for (j in 2:N) {
             if (j < N) {
@@ -195,7 +216,7 @@
    }
 
    if (alternative == "two.sided") {
-      for (i in seq_len(k)) {
+      for (i in seq_len(k)[subset]) {
          Ai[i] <- pnorm(qnorm(steps[1]/2, 0, sqrt(vi[i]), lower.tail=FALSE), yhat[i], sei[i], lower.tail=FALSE) + pnorm(qnorm(steps[1]/2, 0, sqrt(vi[i]), lower.tail=TRUE), yhat[i], sei[i], lower.tail=TRUE)
          for (j in 2:N) {
             if (j < N) {
@@ -207,7 +228,10 @@
       }
    }
 
-   llval <- sum(log(delta[pgrp] / preci) + dnorm(yi, yhat, sei, log=TRUE) - log(Ai))
+   #llval <- sum(log(delta[pgrp] / preci) + dnorm(yi, yhat, sei, log=TRUE) - log(Ai))
+   llval0 <- sum(                                             dnorm(yi[!subset], yhat[!subset], sei[!subset], log=TRUE))
+   llval1 <- sum(log(delta[pgrp[ subset]] / preci[ subset]) + dnorm(yi[ subset], yhat[ subset], sei[ subset], log=TRUE) - log(Ai[subset]))
+   llval  <- llval0 + llval1
 
    if (dofit) {
 
@@ -231,7 +255,7 @@
 
 ############################################################################
 
-.selmodel.ll.trunc <- function(par, yi, vi, X, preci, k, pX, pvals,
+.selmodel.ll.trunc <- function(par, yi, vi, X, preci, subset, k, pX, pvals,
                                deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max, decreasing,
                                tau2.arg, tau2.transf, tau2.max, beta.arg,
                                wi.fun, steps, pgrp,
@@ -260,27 +284,22 @@
 
    yhat <- c(X %*% beta)
 
-   sei <- sqrt(vi+tau2)
+   sei <- sqrt(vi + tau2)
 
-   if (is.na(steps)) {
+   if (is.na(steps))
+      steps <- delta[2]
 
-      if (alternative == "greater")
-         lli <- ifelse(yi > delta[2], 0, log(delta[1])) + dnorm(yi, yhat, sei, log=TRUE) - log(1 - (1-delta[1]) * pnorm(delta[2], yhat, sei, lower.tail=TRUE))
-
-      if (alternative == "less")
-         lli <- ifelse(yi < delta[2], 0, log(delta[1])) + dnorm(yi, yhat, sei, log=TRUE) - log(1 - (1-delta[1]) * pnorm(delta[2], yhat, sei, lower.tail=FALSE))
-
-   } else {
-
-      if (alternative == "greater")
-         lli <- ifelse(yi > steps, 0, log(delta[1])) + dnorm(yi, yhat, sei, log=TRUE) - log(1 - (1-delta[1]) * pnorm(steps, yhat, sei, lower.tail=TRUE))
-
-      if (alternative == "less")
-         lli <- ifelse(yi < steps, 0, log(delta[1])) + dnorm(yi, yhat, sei, log=TRUE) - log(1 - (1-delta[1]) * pnorm(steps, yhat, sei, lower.tail=FALSE))
-
+   if (alternative == "greater") {
+      ll0i <- dnorm(yi[!subset], yhat[!subset], sei[!subset], log=TRUE)
+      ll1i <- ifelse(yi[subset] > steps, 0, log(delta[1])) + dnorm(yi[subset], yhat[subset], sei[subset], log=TRUE) - log(1 - (1-delta[1]) * pnorm(steps, yhat[subset], sei[subset], lower.tail=TRUE))
    }
 
-   llval <- sum(lli)
+   if (alternative == "less") {
+      ll0i <- dnorm(yi[!subset], yhat[!subset], sei[!subset], log=TRUE)
+      ll1i <- ifelse(yi[subset] < steps, 0, log(delta[1])) + dnorm(yi[subset], yhat[subset], sei[subset], log=TRUE) - log(1 - (1-delta[1]) * pnorm(steps, yhat[subset], sei[subset], lower.tail=FALSE))
+   }
+
+   llval <- sum(ll0i) + sum(ll1i)
 
    if (dofit) {
 

@@ -1,4 +1,4 @@
-selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps, decreasing=FALSE, verbose=FALSE, digits, control, ...) {
+selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta, steps, decreasing=FALSE, verbose=FALSE, digits, control, ...) {
 
    # TODO: add a H0 argument? since p-value may not be based on H0: theta_i = 0
    # TODO: argument for which deltas to include in LRT (a delta may also not be constrained under H0, so it should not be included in the LRT then)
@@ -150,7 +150,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    } else {
 
-      # can pass p-values directly to the function via 'pvals' argument from ... (this is highly experimental)
+      # can pass p-values directly to the function via 'pval' argument from ... (this is highly experimental)
 
       pvals <- ddd$pval
 
@@ -158,6 +158,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
          stop(mstyle$stop(paste0("Length of the 'pval' argument (", length(pvals), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
       pvals <- .getsubset(pvals, x$subset)
+      pvals <- pvals[x$not.na]
 
       if (anyNA(pvals))
          stop(mstyle$stop(paste0("No missing values in 'pval' argument allowed.")))
@@ -206,6 +207,19 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (is.element(type, c("trunc","truncest")) && verbose > 2) {
       warning(mstyle$warning("Cannot use 'verbose > 2' for this type of selection model (setting verbose=2)."), call.=FALSE)
       verbose <- 2
+   }
+
+
+   if (missing(subset)) {
+      subset <- rep(TRUE, k)
+      subset.spec <- FALSE
+   } else {
+      mf <- match.call()
+      subset <- .getx("subset", mf=mf, data=x$data)
+      subset <- .chksubset(subset, x$k.all)
+      subset <- .getsubset(subset, x$subset)
+      subset <- subset[x$not.na]
+      subset.spec <- TRUE
    }
 
    ############################################################################
@@ -834,8 +848,13 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    if (!is.null(con$pval.min))
       pval.min <- con$pval.min
 
-   if (k < p + ifelse(is.element(x$method, c("FE","EE","CE")) || x$tau2.fix, 0, 1) + sum(is.na(delta)))
-      stop(mstyle$stop(paste0("Number of studies (k=", k, ") is too small to fit the selection model.")))
+   if (subset.spec) {
+      if (sum(subset) < p + ifelse(is.element(x$method, c("FE","EE","CE")) || x$tau2.fix, 0, 1) + sum(is.na(delta)))
+         stop(mstyle$stop(paste0("Number of studies (k_subset=", sum(subset), ") is too small to fit the selection model.")))
+   } else {
+      if (k < p + ifelse(is.element(x$method, c("FE","EE","CE")) || x$tau2.fix, 0, 1) + sum(is.na(delta)))
+         stop(mstyle$stop(paste0("Number of studies (k=", k, ") is too small to fit the selection model.")))
+   }
 
    ############################################################################
 
@@ -844,15 +863,9 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
    if (type != "trunc" && stepsspec) {
 
-      pgrp     <- sapply(pvals, function(p) which(p <= steps)[1])
-      psteps.l <- as.character(c(0,steps[-length(steps)]))
-      psteps.r <- as.character(steps)
-      len.l    <- nchar(psteps.l)
-      pad.l    <- sapply(max(len.l) - len.l, function(x) paste0(rep(" ", x), collapse=""))
-      psteps.l <- paste0(psteps.l, pad.l)
-      psteps   <- paste0(psteps.l, " < p <= ", psteps.r)
-      ptable   <- table(factor(pgrp, levels=seq_along(steps), labels=psteps))
-      ptable   <- data.frame(k=as.vector(ptable), row.names=names(ptable))
+      tmp <- .ptable(pvals, steps, subset)
+      pgrp <- tmp$pgrp
+      ptable <- tmp$ptable
 
       if (isTRUE(ddd$ptable))
          return(ptable)
@@ -927,7 +940,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       if (optimizer == "Rsolnp::solnp")
          optcall <- paste0("Rsolnp::solnp(pars=c(beta.init, tau2.init, delta.init), fun=.selmodel.ll.stepfun,
             ineqfun=.rma.selmodel.ineqfun.pos, ineqLB=rep(0,deltas-1), ineqUB=rep(1,deltas-1),
-            yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
+            yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
             deltas=deltas, delta.arg=delta, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
             tau2.arg=tau2, tau2.transf=TRUE, tau2.max=tau2.max, beta.arg=beta,
             wi.fun=wi.fun, steps=steps, pgrp=pgrp,
@@ -936,7 +949,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       if (optimizer == "nloptr::nloptr")
          optcall <- paste0("nloptr::nloptr(x0=c(beta.init, tau2.init, delta.init), eval_f=.selmodel.ll.stepfun,
             eval_g_ineq=.rma.selmodel.ineqfun.neg,
-            yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
+            yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
             deltas=deltas, delta.arg=delta, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
             tau2.arg=tau2, tau2.transf=TRUE, tau2.max=tau2.max, beta.arg=beta,
             wi.fun=wi.fun, steps=steps, pgrp=pgrp,
@@ -945,7 +958,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       if (optimizer == "alabama::constrOptim.nl")
          optcall <- paste0("alabama::constrOptim.nl(par=c(beta.init, tau2.init, delta.init), fn=.selmodel.ll.stepfun,
             hin=.rma.selmodel.ineqfun.pos,
-            yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
+            yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
             deltas=deltas, delta.arg=delta, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
             tau2.arg=tau2, tau2.transf=TRUE, tau2.max=tau2.max, beta.arg=beta,
             wi.fun=wi.fun, steps=steps, pgrp=pgrp,
@@ -955,7 +968,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
       optcall <- paste0(optimizer, "(", par.arg, "=c(beta.init, tau2.init, delta.init), ",
          .selmodel.ll, ", ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
-         "yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
+         "yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
          deltas=deltas, delta.arg=delta, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
          tau2.arg=tau2, tau2.transf=TRUE, tau2.max=tau2.max, beta.arg=beta,
          wi.fun=wi.fun, steps=steps, pgrp=pgrp,
@@ -994,7 +1007,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    ### do the final model fit with estimated values
 
    fitcall <- paste0(.selmodel.ll, "(par=opt.res$par,
-      yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
+      yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
       deltas=deltas, delta.arg=delta, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
       tau2.arg=tau2, tau2.transf=TRUE, tau2.max=tau2.max, beta.arg=beta,
       wi.fun=wi.fun, steps=steps, pgrp=pgrp,
@@ -1060,7 +1073,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
          if (con$hesspack == "numDeriv")
             hescall <- paste0("numDeriv::hessian(", .selmodel.ll, ", x=opt.res$par, method.args=con$hessianCtrl,
-               yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
+               yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
                deltas=deltas, delta.arg=delta.hes, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
                tau2.arg=tau2.hes, tau2.transf=TRUE, tau2.max=tau2.max, beta.arg=beta.hes,
                wi.fun=wi.fun, steps=steps, pgrp=pgrp,
@@ -1068,7 +1081,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
          if (con$hesspack == "pracma")
             hescall <- paste0("pracma::hessian(", .selmodel.ll, ", x0=opt.res$par,
-               yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
+               yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
                deltas=deltas, delta.arg=delta.hes, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
                tau2.arg=tau2.hes, tau2.transf=TRUE, tau2.max=tau2.max, beta.arg=beta.hes,
                wi.fun=wi.fun, steps=steps, pgrp=pgrp,
@@ -1080,7 +1093,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
          if (con$hesspack == "numDeriv")
             hescall <- paste0("numDeriv::hessian(", .selmodel.ll, ", x=c(beta, tau2, delta), method.args=con$hessianCtrl,
-               yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
+               yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
                deltas=deltas, delta.arg=delta.hes, delta.transf=FALSE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
                tau2.arg=tau2.hes, tau2.transf=FALSE, tau2.max=tau2.max, beta.arg=beta.hes,
                wi.fun=wi.fun, steps=steps, pgrp=pgrp,
@@ -1088,7 +1101,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
          if (con$hesspack == "pracma")
             hescall <- paste0("pracma::hessian(", .selmodel.ll, ", x0=c(beta, tau2, delta),
-               yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
+               yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
                deltas=deltas, delta.arg=delta.hes, delta.transf=FALSE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
                tau2.arg=tau2.hes, tau2.transf=FALSE, tau2.max=tau2.max, beta.arg=beta.hes,
                wi.fun=wi.fun, steps=steps, pgrp=pgrp,
@@ -1236,7 +1249,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
 
       optcall <- paste0(optimizer, "(", par.arg, "=c(beta.init, tau2.init, delta.init), ",
          .selmodel.ll, ", ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
-         "yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
+         "yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
          deltas=deltas, delta.arg=delta.arg, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
          tau2.arg=0, tau2.transf=FALSE, tau2.max=tau2.max, beta.arg=beta.arg,
          wi.fun=wi.fun, steps=steps, pgrp=pgrp,
@@ -1250,7 +1263,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
       if (!inherits(opt.res, "try-error")) {
 
          fitcall <- paste0(.selmodel.ll, "(par=opt.res$par,
-            yi=yi, vi=vi, X=X, preci=preci, k=k, pX=p, pvals=pvals,
+            yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
             deltas=deltas, delta.arg=delta.arg, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
             tau2.arg=0, tau2.transf=FALSE, tau2.max=tau2.max, beta.arg=beta.arg,
             wi.fun=wi.fun, steps=steps, pgrp=pgrp,
@@ -1371,6 +1384,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, delta, steps,
    res$stepsspec   <- stepsspec
    res$pgrp        <- pgrp
    res$ptable      <- ptable
+   res$k0          <- sum(!subset)
+   res$k1          <- sum(subset)
    res$alternative <- alternative
    res$pval.min    <- pval.min
    res$prec        <- prec

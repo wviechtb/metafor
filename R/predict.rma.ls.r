@@ -376,7 +376,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    if (pred.mui) {
 
       if (vcov)
-         vcovpred <- X.new %*% x$vb %*% t(X.new)
+         vcovpred <- symmpart(X.new %*% x$vb %*% t(X.new))
 
       if (pi.type == "simple") {
          crit <- qnorm(level/2, lower.tail=FALSE)
@@ -411,7 +411,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
    } else {
 
       if (vcov)
-         vcovpred <- Z.new %*% x$va %*% t(Z.new)
+         vcovpred <- symmpart(Z.new %*% x$va %*% t(Z.new))
 
       pi.lb <- NA_real_
       pi.ub <- NA_real_
