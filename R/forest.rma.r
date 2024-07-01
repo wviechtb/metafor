@@ -121,7 +121,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          col <- c(par("fg"), .coladj(par("fg"), dark=-0.3, light=0.3)) # 1st = summary polygon, 2nd = PI
       } else {
          if (length(col) == 1L) # if user only specified one value, assume it is for the summary polygon
-            col <- c(col, .coladj(col, dark=-0.3, light=0.3))
+            col <- c(col, .coladj(par("fg"), dark=-0.3, light=0.3))
       }
 
       if (missing(border))

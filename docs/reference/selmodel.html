@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-22</span>
       </span>
     </div>
 
@@ -891,6 +891,145 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se     zval    pval   ci.lb   ci.ub     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   0.3818  0.2236  -2.7652  0.0057  0.0000  0.8200  ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### meta-analysis on the effect of the color red on attractiveness ratings</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># copy data into 'dat', select only results for male raters, and examine data</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.lehmann2018.html" class="external-link">dat.lehmann2018</a></span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">dat</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">Gender</span> <span class="op">==</span> <span class="st">"Males"</span>,<span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">6</span>,<span class="fl">48</span><span class="op">:</span><span class="fl">49</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                               Short_Title      Preregistered          yi          vi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2                            Roberts et al., 2010 - Exp 2 Not Pre-Registered  0.40140989 0.016037663</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4             Gilston &amp; Privitera, 2016 - Exp 1 - Healthy Not Pre-Registered  1.91636755 0.037967265</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6                            Roberts et al., 2010 - Exp 1 Not Pre-Registered  0.18521296 0.005905064</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7                            Roberts et al., 2010 - Exp 3 Not Pre-Registered -0.07521478 0.006513145</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9                   Young, 2015 - Exp 1 - More Attractive Not Pre-Registered  0.13756419 0.004182208</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10                  Young, 2015 - Exp 2 - More Attractive Not Pre-Registered  0.10038754 0.001196496</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11                             Pazda et al., 2017 - Exp 1 Not Pre-Registered  0.17390851 0.002914105</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12                             Pazda et al., 2017 - Exp 2     Pre-Registered  0.09948184 0.001749773</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16                          Seibt &amp; Klement, 2015 - Exp 1 Not Pre-Registered  0.19656583 0.155504946</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19                          Costello et al., 2017 - Exp 1 Not Pre-Registered -0.12471327 0.031069900</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20               O'Mara et al., 2016 - Exp 2 - Long Shirt Not Pre-Registered  0.44777911 0.136466242</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22                                      Lin, 2014 - Exp 1 Not Pre-Registered  1.53467244 0.129440244</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23                 O'Mara et al., 2016 - Exp 2 - Tank Top Not Pre-Registered -0.31843818 0.143905188</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24                                    Seibt, 2015 - Exp 1 Not Pre-Registered  0.19652340 0.046351337</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 30                             Pazda et al., 2012 - Exp 2 Not Pre-Registered  0.63094089 0.086553689</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 31                                  Gueguen, 2012 - Exp 1 Not Pre-Registered  0.73851566 0.046716967</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 32               O'Mara et al., 2016 - Exp 1 - Long Shirt Not Pre-Registered  0.46807729 0.066024574</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37                 O'Mara et al., 2016 - Exp 1 - Tank Top Not Pre-Registered  0.09736644 0.058051891</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 40                             Pazda et al., 2014 - Exp 1 Not Pre-Registered  0.32014826 0.017393318</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 42                          Sullivan et al., 2016 - Exp 1 Not Pre-Registered  0.42424573 0.044023214</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 43              Lehmann &amp; Calin-Jageman, 2015 - Class Exp Not Pre-Registered -0.23427621 0.039865319</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 46                          Elliot &amp; Niesta, 2008 - Exp 4 Not Pre-Registered  0.61911019 0.135348883</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 48                          Elliot &amp; Niesta, 2008 - Exp 3 Not Pre-Registered  0.66521276 0.114803368</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 53                          Elliot &amp; Niesta, 2008 - Exp 5 Not Pre-Registered  0.84272904 0.189681386</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 55                          Elliot &amp; Niesta, 2008 - Exp 2 Not Pre-Registered  0.75415459 0.133886705</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 57     Schwarz &amp; Singer, 2013 - Exp 1 - Adults Rate Young Not Pre-Registered  0.19094046 0.066970485</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 58                  Williams &amp; Neelon, 2013 - Exp 1 - All Not Pre-Registered  0.57970525 0.134586960</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 60                          Sullivan et al., 2016 - Exp 2 Not Pre-Registered  0.01713415 0.119051813</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 62                     Purdy, 2009 - Exp 1 - High Arousal Not Pre-Registered  0.30214822 0.155601799</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 63                          Elliot &amp; Niesta, 2008 - Exp 1 Not Pre-Registered  1.08120844 0.171648364</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 64                           Bigelow et al., 2013 - Exp 1 Not Pre-Registered -0.73259462 0.533543430</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 65                      Purdy, 2009 - Exp 1 - Low Arousal Not Pre-Registered  0.01111323 0.153848529</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 67                         Stefan &amp; Gueguen, 2013 - Exp 1 Not Pre-Registered  0.61658647 0.123646421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 68                  Lehmann &amp; Calin-Jageman, 2017 - Exp 2     Pre-Registered  0.09812924 0.019072274</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 69           Peperkoorn et al., 2016 - Exp 1 - Short Term Not Pre-Registered -0.42730137 0.060166077</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 70           Peperkoorn et al., 2016 - Exp 2 - Short Term Not Pre-Registered -0.10469267 0.058160232</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 71     Schwarz &amp; Singer, 2013 - Exp 1 - UGrads Rate Young Not Pre-Registered -0.15120389 0.066857188</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 73                    Kirsch, 2015 - Exp 1 - Heterosexual Not Pre-Registered  0.32006349 0.038865006</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 74                                   Kirsch, 2015 - Exp 2 Not Pre-Registered  0.02798718 0.071435565</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 75                  Lehmann &amp; Calin-Jageman, 2017 - Exp 1     Pre-Registered  0.00000000 0.138528139</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 76 Williams &amp; Neelon, 2013 - Exp 2 - Positive and Neutral Not Pre-Registered -0.13013126 0.077085905</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 77                 O'Mara et al., 2016 - Exp 3 - Tank Top Not Pre-Registered -0.12154628 0.037859348</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 78               O'Mara et al., 2016 - Exp 3 - Long Shirt Not Pre-Registered -0.13650517 0.033494516</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 79                            Elliot et al., 2013 - Exp 1 Not Pre-Registered  0.64366707 0.100170325</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80            Wen et al., 2014 - Exp 1 - Feminine Females Not Pre-Registered  0.15882531 0.068372920</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># fit random-effects model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, method<span class="op">=</span><span class="st">"ML"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 45; tau^2 estimator: ML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of total heterogeneity): 0.1334 (SE = 0.0405)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):      0.3652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (total heterogeneity / total variability):   88.58%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (total variability / sampling variability):  8.76</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Q(df = 44) = 172.4651, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se    zval    pval   ci.lb   ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.2604  0.0665  3.9139  &lt;.0001  0.1300  0.3908  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># step function selection model (3PSM)</span></span></span>
+<span class="r-in"><span><span class="va">sel</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"stepfun"</span>, alternative<span class="op">=</span><span class="st">"greater"</span>, steps<span class="op">=</span><span class="fl">.025</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sel</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 45; tau^2 estimator: ML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of total heterogeneity): 0.1235 (SE = 0.0417)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):      0.3515</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LRT(df = 1) = 45.8737, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se    zval    pval   ci.lb   ci.ub    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.2074  0.1001  2.0724  0.0382  0.0113  0.4036  * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Selection Model Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LRT(df = 1) = 0.4455, p-val = 0.5045</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selection Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      k  estimate      se     zval    pval   ci.lb   ci.ub    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0     &lt; p &lt;= 0.025  16    1.0000     ---      ---     ---     ---     ---    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.025 &lt; p &lt;= 1      29    0.6974  0.3764  -0.8039  0.4214  0.0000  1.4352    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># step function selection model that only applies to the non-preregistered studies</span></span></span>
+<span class="r-in"><span><span class="va">sel</span> <span class="op">&lt;-</span> <span class="fu">selmodel</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"stepfun"</span>, alternative<span class="op">=</span><span class="st">"greater"</span>, steps<span class="op">=</span><span class="fl">.025</span>,</span></span>
+<span class="r-in"><span>                subset<span class="op">=</span><span class="va">Preregistered</span><span class="op">==</span><span class="st">"Not Pre-Registered"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sel</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 45; tau^2 estimator: ML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of total heterogeneity): 0.1212 (SE = 0.0409)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):      0.3481</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LRT(df = 1) = 45.2965, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se    zval    pval   ci.lb   ci.ub    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.1992  0.0941  2.1162  0.0343  0.0147  0.3837  * </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Selection Model Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> LRT(df = 1) = 0.7203, p-val = 0.3960</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Selection Model Results (k_subset = 42):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      k  estimate      se     zval    pval   ci.lb   ci.ub    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0     &lt; p &lt;= 0.025  15    1.0000     ---      ---     ---     ---     ---    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.025 &lt; p &lt;= 1      27    0.6371  0.3381  -1.0735  0.2830  0.0000  1.2997    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>

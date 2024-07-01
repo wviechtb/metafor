@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-22</span>
       </span>
     </div>
 
@@ -173,7 +173,7 @@
 <h3 id="general-method">General Method<a class="anchor" aria-label="anchor" href="#general-method"></a></h3>
 
 
-<p>This method is a generalization of the methods by Orwin and Rosenberg. By default (i.e., when <code>target</code> is not specified), it calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on a chosen model) to a particular alpha level, which can be specified via the <code>alpha</code> argument (.05 by default). The type of model that is used in the calculation is chosen via the <code>method</code> argument. If this is unspecified, then a random-effects model is automatically used (using <code>method="REML"</code>) or the method that was used in fitting the <code>"rma"</code> model (see <code><a href="rma.uni.html">rma.uni</a></code> for options). Therefore, when setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Rosenberg's method.</p>
+<p>This method is a generalization of the methods by Orwin and Rosenberg (see Viechtbauer, 2024). By default (i.e., when <code>target</code> is not specified), it calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on a chosen model) to a particular alpha level, which can be specified via the <code>alpha</code> argument (.05 by default). The type of model that is used in the calculation is chosen via the <code>method</code> argument. If this is unspecified, then a random-effects model is automatically used (using <code>method="REML"</code>) or the method that was used in fitting the <code>"rma"</code> model (see <code><a href="rma.uni.html">rma.uni</a></code> for options). Therefore, when setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Rosenberg's method.</p>
 <p>If <code>target</code> is specified, then the method calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the average effect size / outcome (as estimated based on a chosen model) to a target value (as specified via the <code>target</code> argument). As described above, the type of model that is used in the calculation is chosen via the <code>method</code> argument. When setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Orwin's method with inverse-variance weights.</p>
 <p>The method uses an iterative algorithm for calculating the fail-safe N, which can be computationally expensive especially when N is large. By default, the method uses approximate (but faster) calculations, but when setting <code>exact=TRUE</code>, the method uses exact (but slower) calculations. The difference between the two is typically negligible. If N is larger than <em></em>\(10^7\), then the calculated number is given as <code>&gt;1e+07</code>.</p>
 <p></p>
@@ -236,6 +236,7 @@
 <p>Orwin, R. G. (1983). A fail-safe N for effect size in meta-analysis. <em>Journal of Educational Statistics</em>, <b>8</b>(2), 157–159. <a href="https://doi.org/10.3102/10769986008002157" class="external-link">https://doi.org/10.3102/10769986008002157</a></p>
 <p>Rosenberg, M. S. (2005). The file-drawer problem revisited: A general weighted method for calculating fail-safe numbers in meta-analysis. <em>Evolution</em>, <b>59</b>(2), 464–468. <a href="https://doi.org/10.1111/j.0014-3820.2005.tb01004.x" class="external-link">https://doi.org/10.1111/j.0014-3820.2005.tb01004.x</a></p>
 <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1–48. <a href="https://doi.org/10.18637/jss.v036.i03" class="external-link">https://doi.org/10.18637/jss.v036.i03</a></p>
+<p>Viechtbauer, W. (2024). A fail-safe N computation based on the random-effects model. <em>Annual Meeting of the Society for Research Synthesis Methodology</em>, Amsterdam, The Netherlands. <a href="https://www.wvbauer.com/lib/exe/fetch.php/talks:2024_viechtbauer_srsm_fail_safe_n.pdf" class="external-link">https://www.wvbauer.com/lib/exe/fetch.php/talks:2024_viechtbauer_srsm_fail_safe_n.pdf</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

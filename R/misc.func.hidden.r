@@ -1510,6 +1510,9 @@
    if (length(x) == 0L)
       stop(mstyle$stop(paste0("Argument '", argname, "' is of length 0.")), call.=FALSE)
 
+   if (is.character(x))
+      stop(mstyle$stop(paste0("Argument '", argname, "' is not a logical or numeric vector.")), call.=FALSE)
+
    if (is.logical(x)) {
       if (length(x) != k)
          stop(mstyle$stop(paste0("Length of the '", argname, "' argument (", length(x), ") is not of length k = ", k, ".")), call.=FALSE)

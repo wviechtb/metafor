@@ -4,7 +4,8 @@ nobs.rma <- function(object, ...) {
 
    .chkclass(class(object), must="rma")
 
-   n.obs <- object$k.eff - ifelse(object$method == "REML", 1, 0) * object$p.eff
+   #n.obs <- object$k.eff - ifelse(object$method == "REML", 1, 0) * object$p.eff
+   n.obs <- object$k
 
    return(n.obs)
 

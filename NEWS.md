@@ -1,4 +1,4 @@
-# metafor 4.7-21 (2024-06-29)
+# metafor 4.7-22 (2024-07-01)
 
 - the `predict.rma()` and `predict.rma.ls()` functions now also accept a matrix as input that includes a column for the intercept term (in which case the `intercept` argument is ignored)
 
@@ -25,6 +25,8 @@
 - `permutest.rma.uni()` gains a `btt` argument and `permutest.rma.ls()` gains `btt` and `att` arguments
 
 - `selmodel()` gains a `subset` argument (to specify a subset of studies to which the selection function should apply)
+
+- `nobs()` now just returns the number of estimates, not the effective number of observations
 
 - added more tests
 
