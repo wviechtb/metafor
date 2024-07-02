@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-22</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-23</span>
       </span>
     </div>
 
@@ -90,10 +90,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.7-22" id="metafor-47-22-2024-07-01">metafor 4.7-22 (2024-07-01)<a class="anchor" aria-label="anchor" href="#metafor-47-22-2024-07-01"></a></h2>
+<h2 class="page-header" data-toc-text="4.7-23" id="metafor-47-23-2024-07-02">metafor 4.7-23 (2024-07-02)<a class="anchor" aria-label="anchor" href="#metafor-47-23-2024-07-02"></a></h2>
 <ul><li><p>the <code><a href="../reference/predict.rma.html">predict.rma()</a></code> and <code><a href="../reference/predict.rma.html">predict.rma.ls()</a></code> functions now also accept a matrix as input that includes a column for the intercept term (in which case the <code>intercept</code> argument is ignored)</p></li>
 <li><p>added <code><a href="../reference/pairwise.html">pairwise()</a></code> function to construct a matrix of pairwise contrasts</p></li>
-<li><p><code><a href="../reference/anova.rma.html">anova()</a></code> gains <code>adjust</code> argument for adjusting p-values for multiple testing</p></li>
+<li><p><code><a href="../reference/anova.rma.html">anova()</a></code> and <code><a href="../reference/predict.rma.html">predict()</a></code> gain <code>adjust</code> argument for adjusting p-values / interval bounds for multiple testing</p></li>
 <li><p><code><a href="../reference/print.anova.rma.html">print.anova.rma()</a></code> and <code><a href="../reference/print.anova.rma.html">print.list.anova.rma()</a></code> also print significance stars for some types of outcomes (unless <code>getOption("show.signif.stars")</code> is <code>FALSE</code>)</p></li>
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now counts the number of levels of a random effect more appropriately; this may trigger more often the check whether the number of levels is equal to 1, in which case the corresponding variance component is automatically fixed to 0; this check can be omitted with <code>control=list(check.k.gtr.1=FALSE)</code></p></li>
 <li><p>made optimizers <code>Rcgmin</code> and <code>Rvmmin</code> available again via the <code>optimx</code> package</p></li>

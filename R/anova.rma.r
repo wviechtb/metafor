@@ -1,4 +1,4 @@
-anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, adjust, refit=FALSE, ...) {
+anova.rma <- function(object, object2, btt, X, att, Z, rhs, adjust, digits, refit=FALSE, ...) {
 
    mstyle <- .get.mstyle()
 
@@ -28,6 +28,13 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, digits, adjust, refi
    if (missing(adjust)) {
       adjust <- NULL
    } else {
+      if (is.logical(adjust)) {
+         if (isTRUE(adjust)) {
+            adjust <- "bonferroni"
+         } else {
+            adjust <- "none"
+         }
+      }
       adjust <- try(match.arg(adjust, choices=p.adjust.methods), silent=TRUE)
       if (inherits(adjust, "try-error"))
          stop(mstyle$stop("Unknown 'adjust' method specified (see help(p.adjust) for options)."))

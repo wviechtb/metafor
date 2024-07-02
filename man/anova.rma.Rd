@@ -6,7 +6,7 @@
    For two (nested) models of class \code{"rma.uni"} or \code{"rma.mv"}, the function provides a full versus reduced model comparison in terms of model fit statistics and a likelihood ratio test. When a single model is specified, a Wald-type test of one or more model coefficients or linear combinations thereof is carried out. \loadmathjax
 }
 \usage{
-\method{anova}{rma}(object, object2, btt, X, att, Z, rhs, digits, adjust, refit=FALSE, \dots)
+\method{anova}{rma}(object, object2, btt, X, att, Z, rhs, adjust, digits, refit=FALSE, \dots)
 }
 \arguments{
    \item{object}{an object of class \code{"rma.uni"} or \code{"rma.mv"}.}
@@ -16,8 +16,8 @@
    \item{att}{optional vector of indices (or list thereof) to specify which scale coefficients should be included in the Wald-type test. Can also be a string to \code{\link{grep}} for. See \sQuote{Details}. Only relevant for location-scale models (see \code{\link{rma.uni}}).}
    \item{Z}{optional numeric vector or matrix to specify one or more linear combinations of the scale coefficients in the model that should be tested. See \sQuote{Details}. Only relevant for location-scale models (see \code{\link{rma.uni}}).}
    \item{rhs}{optional scalar or vector of values for the right-hand side of the null hypothesis when testing a set of coefficients (via \code{btt} or \code{att}) or linear combinations thereof (via \code{X} or \code{Z}). If unspecified, this defaults to a vector of zeros of the appropriate length. See \sQuote{Details}.}
+   \item{adjust}{optional argument to specify (as a character string) a method for adjusting the p-values of Wald-type tests for multiple testing. See \code{\link{p.adjust}} for possible options. Can be abbreviated. Can also be a logical and if \code{TRUE}, then a Bonferroni correction is used.}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
-   \item{adjust}{optional argument to specify (as a character string) a method for adjusting the p-values of Wald-type tests for multiple testing. See \code{\link{p.adjust}} for possible options. Can be abbreviated.}
    \item{refit}{logical to specify whether models fitted with REML estimation and differing in their fixed effects should be refitted with ML estimation when conducting a likelihood ratio test (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }

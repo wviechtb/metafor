@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-22</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-23</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for rma</span></span>
-<span><span class="fu">anova</span><span class="op">(</span><span class="va">object</span>, <span class="va">object2</span>, <span class="va">btt</span>, <span class="va">X</span>, <span class="va">att</span>, <span class="va">Z</span>, <span class="va">rhs</span>, <span class="va">digits</span>, <span class="va">adjust</span>, refit<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">anova</span><span class="op">(</span><span class="va">object</span>, <span class="va">object2</span>, <span class="va">btt</span>, <span class="va">X</span>, <span class="va">att</span>, <span class="va">Z</span>, <span class="va">rhs</span>, <span class="va">adjust</span>, <span class="va">digits</span>, refit<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -122,11 +122,11 @@
    <dt>rhs</dt>
 <dd><p>optional scalar or vector of values for the right-hand side of the null hypothesis when testing a set of coefficients (via <code>btt</code> or <code>att</code>) or linear combinations thereof (via <code>X</code> or <code>Z</code>). If unspecified, this defaults to a vector of zeros of the appropriate length. See ‘Details’.</p></dd>
 
+   <dt>adjust</dt>
+<dd><p>optional argument to specify (as a character string) a method for adjusting the p-values of Wald-type tests for multiple testing. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">p.adjust</a></code> for possible options. Can be abbreviated. Can also be a logical and if <code>TRUE</code>, then a Bonferroni correction is used.</p></dd>
+
    <dt>digits</dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
-
-   <dt>adjust</dt>
-<dd><p>optional argument to specify (as a character string) a method for adjusting the p-values of Wald-type tests for multiple testing. See <code><a href="https://rdrr.io/r/stats/p.adjust.html" class="external-link">p.adjust</a></code> for possible options. Can be abbreviated.</p></dd>
 
    <dt>refit</dt>
 <dd><p>logical to specify whether models fitted with REML estimation and differing in their fixed effects should be refitted with ML estimation when conducting a likelihood ratio test (the default is <code>FALSE</code>).</p></dd>

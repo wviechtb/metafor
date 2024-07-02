@@ -1,10 +1,10 @@
-# metafor 4.7-22 (2024-07-01)
+# metafor 4.7-23 (2024-07-02)
 
 - the `predict.rma()` and `predict.rma.ls()` functions now also accept a matrix as input that includes a column for the intercept term (in which case the `intercept` argument is ignored)
 
 - added `pairwise()` function to construct a matrix of pairwise contrasts
 
-- `anova()` gains `adjust` argument for adjusting p-values for multiple testing
+- `anova()` and `predict()` gain `adjust` argument for adjusting p-values / interval bounds for multiple testing
 
 - `print.anova.rma()` and `print.list.anova.rma()` also print significance stars for some types of outcomes (unless `getOption("show.signif.stars")` is `FALSE`)
 

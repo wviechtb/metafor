@@ -1,5 +1,5 @@
 predict.rma.ls <- function(object, newmods, intercept, addx=FALSE, newscale, addz=FALSE,
-level, digits, transf, targs, vcov=FALSE, ...) {
+level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
    #########################################################################
 
@@ -50,6 +50,9 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       targs <- NULL
 
    level <- .level(level)
+
+   if (!is.logical(adjust))
+      stop(mstyle$stop("Argument 'adjust' must be a logical."))
 
    ddd <- list(...)
 
@@ -343,9 +346,9 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       }
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         crit <- if (ddf > 0) qt(level/2, df=ddf, lower.tail=FALSE) else NA_real_
+         crit <- if (ddf > 0) qt(level/ifelse(adjust, 2*k.new, 2), df=ddf, lower.tail=FALSE) else NA_real_
       } else {
-         crit <- qnorm(level/2, lower.tail=FALSE)
+         crit <- qnorm(level/ifelse(adjust, 2*k.new, 2), lower.tail=FALSE)
       }
 
    } else {
@@ -359,9 +362,9 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       }
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         crit <- if (ddf > 0) qt(level/2, df=ddf, lower.tail=FALSE) else NA_real_
+         crit <- if (ddf > 0) qt(level/ifelse(adjust, 2*k.new, 2), df=ddf, lower.tail=FALSE) else NA_real_
       } else {
-         crit <- qnorm(level/2, lower.tail=FALSE)
+         crit <- qnorm(level/ifelse(adjust, 2*k.new, 2), lower.tail=FALSE)
       }
 
    }
@@ -379,7 +382,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          vcovpred <- symmpart(X.new %*% x$vb %*% t(X.new))
 
       if (pi.type == "simple") {
-         crit <- qnorm(level/2, lower.tail=FALSE)
+         crit <- qnorm(level/ifelse(adjust, 2*k.new, 2), lower.tail=FALSE)
          vpred <- 0
       }
 
@@ -391,7 +394,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
          if (pi.type == "t")
             pi.ddf <- x$k - x$p
          pi.ddf[pi.ddf < 1] <- 1
-         crit <- qt(level/2, df=pi.ddf, lower.tail=FALSE)
+         crit <- qt(level/ifelse(adjust, 2*k.new, 2), df=pi.ddf, lower.tail=FALSE)
       }
 
       if (is.null(ddd$newvi)) {

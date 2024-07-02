@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-22</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-23</span>
       </span>
     </div>
 
@@ -97,11 +97,11 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for rma</span></span>
 <span><span class="fu">predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">newmods</span>, <span class="va">intercept</span>, <span class="va">tau2.levels</span>, <span class="va">gamma2.levels</span>, addx<span class="op">=</span><span class="cn">FALSE</span>,</span>
-<span>        <span class="va">level</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, vcov<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span>        <span class="va">level</span>, adjust<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, vcov<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for rma.ls</span></span>
 <span><span class="fu">predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">newmods</span>, <span class="va">intercept</span>, addx<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">newscale</span>, addz<span class="op">=</span><span class="cn">FALSE</span>,</span>
-<span>        <span class="va">level</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, vcov<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>        <span class="va">level</span>, adjust<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, vcov<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -133,8 +133,11 @@
    <dt>level</dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence and prediction interval level (see <a href="misc-options.html">here</a> for details). If unspecified, the default is to take the value from the object.</p></dd>
 
+   <dt>adjust</dt>
+<dd><p>logical to specify whether the width of confidence/prediction intervals should be adjusted using a Bonferroni correction (the default is <code>FALSE</code>).</p></dd>
+
    <dt>digits</dt>
-<dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
+<dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded.</p></dd>
 
    <dt>transf</dt>
 <dd><p>optional argument to specify a function to transform the predicted values and interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
@@ -159,6 +162,7 @@
 <p>For random-effects models that were fitted with the <code><a href="rma.mv.html">rma.mv</a></code> function, the model may actually include multiple <em></em>\(\tau^2\) values (i.e., when the <code>random</code> argument includes an ‘<code>~ inner | outer</code>’ term and <code>struct="HCS"</code>, <code>struct="DIAG"</code>, <code>struct="HAR"</code>, or <code>struct="UN"</code>). In that case, the function will provide prediction intervals for each level of the inner factor (since the prediction intervals differ depending on the <em></em>\(\tau^2\) value). Alternatively, one can use the <code>tau2.levels</code> argument to specify for which level(s) the prediction interval should be provided. If the model includes a second ‘<code>~ inner | outer</code>’ term with multiple <em></em>\(\gamma^2\) values, prediction intervals for each combination of levels of the inner factors will be provided. Alternatively, one can use the <code>tau2.levels</code> and <code>gamma2.levels</code> arguments to specify for which level combination(s) the prediction interval should be provided.</p>
 <p>When using the <code>newmods</code> argument for mixed-effects models that were fitted with the <code><a href="rma.mv.html">rma.mv</a></code> function, if the model includes multiple <em></em>\(\tau^2\) (and multiple <em></em>\(\gamma^2\)) values, then one must use the <code>tau2.levels</code> (and <code>gamma2.levels</code>) argument to specify the levels of the inner factor(s) (i.e., a vector of length <em></em>\(k_{new}\)) to obtain the appropriate prediction interval(s).</p>
 <p>For location-scale models fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function, one can use <code>newmods</code> to specify the values of the <em></em>\(p'\) moderator variables included in the model and <code>newscale</code> to specify the values of the <em></em>\(q'\) scale variables included in the model. Whenever <code>newmods</code> is specified, the function computes predicted effects/outcomes for the specified moderators values. To obtain the corresponding prediction intervals, one must also specify the corresponding <code>newscale</code> values. If only <code>newscale</code> is specified (and not <code>newmods</code>), the function computes the predicted log-transformed <em></em>\(\tau^2\) values (when using a log link) for the specified scale values. By setting <code>transf=exp</code>, one can then obtain the predicted <em></em>\(\tau^2\) values.</p>
+<p>When computing multiple predicted values, one can set <code>adjust=TRUE</code> to obtain confidence/prediction intervals whose width is adjusted based on a Bonferroni correction (e.g., instead of 95% CIs, the function provides (100-5/<em></em>\(k_{new}\))% CIs, where <em></em>\(k_{new}\) denotes the number of predicted values computed).</p>
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -302,6 +306,18 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.4015 0.3151 0.5115 0.2218 0.7266         1      40 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.3001 0.2144 0.4201 0.1586 0.5678         1      50 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.2243 0.1423 0.3538 0.1105 0.4552         1      60 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### apply a Bonferroni correction for obtaining the interval bounds</span></span></span>
+<span class="r-in"><span><span class="fu">predict</span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">20</span>, <span class="fl">30</span>, <span class="fl">40</span>, <span class="fl">50</span>, <span class="fl">60</span><span class="op">)</span><span class="op">)</span>, transf<span class="op">=</span><span class="va">exp</span>, addx<span class="op">=</span><span class="cn">TRUE</span>, adjust<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     pred  ci.lb  ci.ub  pi.lb  pi.ub X.intrcpt X.ablat </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.9612 0.5875 1.5727 0.3988 2.3167         1      10 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.7185 0.5046 1.0232 0.3196 1.6155         1      20 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.5371 0.4051 0.7121 0.2458 1.1736         1      30 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.4015 0.2898 0.5562 0.1806 0.8922         1      40 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.3001 0.1908 0.4720 0.1272 0.7079         1      50 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.2243 0.1215 0.4142 0.0865 0.5815         1      60 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit mixed-effects model with absolute latitude and publication year as moderators</span></span></span>

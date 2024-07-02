@@ -8,10 +8,10 @@
 }
 \usage{
 \method{predict}{rma}(object, newmods, intercept, tau2.levels, gamma2.levels, addx=FALSE,
-        level, digits, transf, targs, vcov=FALSE, \dots)
+        level, adjust=FALSE, digits, transf, targs, vcov=FALSE, \dots)
 
 \method{predict}{rma.ls}(object, newmods, intercept, addx=FALSE, newscale, addz=FALSE,
-        level, digits, transf, targs, vcov=FALSE, \dots)
+        level, adjust=FALSE, digits, transf, targs, vcov=FALSE, \dots)
 }
 \arguments{
    \item{object}{an object of class \code{"rma"} or \code{"rma.ls"}.}
@@ -23,7 +23,8 @@
    \item{newscale}{optional vector or matrix to specify the values of the scale variables for which the predicted values should be calculated. Only relevant for location-scale models (see \code{\link{rma.uni}}). See \sQuote{Details}.}
    \item{addz}{logical to specify whether the values of the scale variables should be added to the returned object.}
    \item{level}{numeric value between 0 and 100 to specify the confidence and prediction interval level (see \link[=misc-options]{here} for details). If unspecified, the default is to take the value from the object.}
-   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
+   \item{adjust}{logical to specify whether the width of confidence/prediction intervals should be adjusted using a Bonferroni correction (the default is \code{FALSE}).}
+   \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded.}
    \item{transf}{optional argument to specify a function to transform the predicted values and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{vcov}{logical to specify whether the variance-covariance matrix of the predicted values should also be returned (the default is \code{FALSE}).}
@@ -45,6 +46,8 @@
    When using the \code{newmods} argument for mixed-effects models that were fitted with the \code{\link{rma.mv}} function, if the model includes multiple \mjseqn{\tau^2} (and multiple \mjseqn{\gamma^2}) values, then one must use the \code{tau2.levels} (and \code{gamma2.levels}) argument to specify the levels of the inner factor(s) (i.e., a vector of length \mjeqn{k_{new}}{k_new}) to obtain the appropriate prediction interval(s).
 
    For location-scale models fitted with the \code{\link{rma.uni}} function, one can use \code{newmods} to specify the values of the \mjseqn{p'} moderator variables included in the model and \code{newscale} to specify the values of the \mjseqn{q'} scale variables included in the model. Whenever \code{newmods} is specified, the function computes predicted effects/outcomes for the specified moderators values. To obtain the corresponding prediction intervals, one must also specify the corresponding \code{newscale} values. If only \code{newscale} is specified (and not \code{newmods}), the function computes the predicted log-transformed \mjseqn{\tau^2} values (when using a log link) for the specified scale values. By setting \code{transf=exp}, one can then obtain the predicted \mjseqn{\tau^2} values.
+
+   When computing multiple predicted values, one can set \code{adjust=TRUE} to obtain confidence/prediction intervals whose width is adjusted based on a Bonferroni correction (e.g., instead of 95\% CIs, the function provides (100-5/\mjeqn{k_{new}}{k_new})\% CIs, where \mjeqn{k_{new}}{k_new} denotes the number of predicted values computed).
 }
 \value{
    An object of class \code{c("predict.rma","list.rma")}. The object is a list containing the following components:
@@ -117,6 +120,9 @@ predict(res, newmods=c(10, 20, 30, 40, 50, 60), transf=exp, addx=TRUE)
 
 ### can also include the intercept term in the 'newmods' matrix
 predict(res, newmods=cbind(1, c(10, 20, 30, 40, 50, 60)), transf=exp, addx=TRUE)
+
+### apply a Bonferroni correction for obtaining the interval bounds
+predict(res, newmods=cbind(1, c(10, 20, 30, 40, 50, 60)), transf=exp, addx=TRUE, adjust=TRUE)
 
 ### fit mixed-effects model with absolute latitude and publication year as moderators
 res <- rma(yi, vi, mods = ~ ablat + year, data=dat)

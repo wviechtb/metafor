@@ -1,5 +1,5 @@
 predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, addx=FALSE,
-level, digits, transf, targs, vcov=FALSE, ...) {
+level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
    #########################################################################
 
@@ -53,6 +53,9 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       targs <- NULL
 
    level <- .level(level)
+
+   if (!is.logical(adjust))
+      stop(mstyle$stop("Argument 'adjust' must be a logical."))
 
    ddd <- list(...)
 
@@ -332,12 +335,13 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       if (inherits(cs.lc, "try-error"))
          stop(mstyle$stop("Could not obtain the linear contrast(s) (use verbose=TRUE for more details)."))
 
-      ddf  <- cs.lc$df
-      crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/2, df=ddf[j], lower.tail=FALSE) else NA_real_)
-
       pred  <- cs.lc$Est
       se    <- cs.lc$SE
       vpred <- se^2
+      ddf   <- cs.lc$df
+
+      crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/ifelse(adjust, 2*k.new, 2), df=ddf[j], lower.tail=FALSE) else NA_real_)
+
       #ci.lb <- pred - crit * se
       #ci.ub <- pred + crit * se
       ci.lb <- cs.lc$CI_L
@@ -373,9 +377,9 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       }
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
-         crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/2, df=ddf[j], lower.tail=FALSE) else NA_real_)
+         crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/ifelse(adjust, 2*k.new, 2), df=ddf[j], lower.tail=FALSE) else NA_real_)
       } else {
-         crit <- qnorm(level/2, lower.tail=FALSE)
+         crit <- qnorm(level/ifelse(adjust, 2*k.new, 2), lower.tail=FALSE)
       }
 
       vpred[vpred < 0] <- NA_real_
@@ -391,7 +395,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       vcovpred <- symmpart(X.new %*% x$vb %*% t(X.new))
 
    if (pi.type == "simple") {
-      crit <- qnorm(level/2, lower.tail=FALSE)
+      crit <- qnorm(level/ifelse(adjust, 2*k.new, 2), lower.tail=FALSE)
       vpred <- 0
    }
 
@@ -403,7 +407,7 @@ level, digits, transf, targs, vcov=FALSE, ...) {
       if (pi.type == "t")
          pi.ddf <- ddf
       pi.ddf[pi.ddf < 1] <- 1
-      crit <- sapply(seq_along(pi.ddf), function(j) if (pi.ddf[j] > 0) qt(level/2, df=pi.ddf[j], lower.tail=FALSE) else NA_real_)
+      crit <- sapply(seq_along(pi.ddf), function(j) if (pi.ddf[j] > 0) qt(level/ifelse(adjust, 2*k.new, 2), df=pi.ddf[j], lower.tail=FALSE) else NA_real_)
    }
 
    if (is.null(ddd$newvi)) {
