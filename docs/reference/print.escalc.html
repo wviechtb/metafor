@@ -15,7 +15,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-24</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -60,33 +60,33 @@
             <span class="fas fa-adjust fa-lg"></span>
           </a>
         </li>
-        
+
         <li>
   <a href="https://scholar.social/@wviechtb" class="external-link">Mastodon</a>
 </li>
 <li>
   <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>
 </li>
-        
-        
+
+
 
 
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Print and Summary Methods for 'escalc' Objects</h1>
-    
+
     <div class="hidden name"><code>print.escalc.Rd</code></div>
     </div>
 
@@ -95,60 +95,57 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for escalc</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'escalc'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">x</span>,<span class="st">"digits"</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for escalc</span></span>
+<span><span class="co"># S3 method for class 'escalc'</span></span>
 <span><span class="fu"><a href="print.rma.html">summary</a></span><span class="op">(</span><span class="va">object</span>, out.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sei"</span>,<span class="st">"zi"</span>,<span class="st">"pval"</span>,<span class="st">"ci.lb"</span>,<span class="st">"ci.ub"</span><span class="op">)</span>, <span class="va">var.names</span>,</span>
 <span>        H0<span class="op">=</span><span class="fl">0</span>, append<span class="op">=</span><span class="cn">TRUE</span>, replace<span class="op">=</span><span class="cn">TRUE</span>, level<span class="op">=</span><span class="fl">95</span>, <span class="va">olim</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+    <p></p>
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>an object of class <code>"escalc"</code> obtained with <code><a href="escalc.html">escalc</a></code>.</p></dd>
 
-   <dt>object</dt>
+   <dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
 <dd><p>an object of class <code>"escalc"</code> obtained with <code><a href="escalc.html">escalc</a></code>.</p></dd>
 
-   <dt>digits</dt>
+   <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
 <dd><p>integer to specify the number of decimal places to which the printed results should be rounded (the default is to take the value from the object).</p></dd>
 
-   <dt>out.names</dt>
+   <dt id="arg-out-names">out.names<a class="anchor" aria-label="anchor" href="#arg-out-names"></a></dt>
 <dd><p>character string with four elements to specify the variable names for the standard errors, test statistics, and lower/upper confidence interval bounds.</p></dd>
 
-   <dt>var.names</dt>
+   <dt id="arg-var-names">var.names<a class="anchor" aria-label="anchor" href="#arg-var-names"></a></dt>
 <dd><p>character string with two elements to specify the variable names for the observed effect sizes or outcomes and the sampling variances (the default is to take the value from the object if possible).</p></dd>
 
-   <dt>H0</dt>
+   <dt id="arg-h-">H0<a class="anchor" aria-label="anchor" href="#arg-h-"></a></dt>
 <dd><p>numeric value to specify the value of the effect size or outcome under the null hypothesis (the default is 0).</p></dd>
 
-   <dt>append</dt>
+   <dt id="arg-append">append<a class="anchor" aria-label="anchor" href="#arg-append"></a></dt>
 <dd><p>logical to specify whether the data frame specified via the <code>object</code> argument should be returned together with the additional variables that are calculated by the <code>summary</code> function (the default is <code>TRUE</code>).</p></dd>
 
-   <dt>replace</dt>
+   <dt id="arg-replace">replace<a class="anchor" aria-label="anchor" href="#arg-replace"></a></dt>
 <dd><p>logical to specify whether existing values for <code>sei</code>, <code>zi</code>, <code>ci.lb</code>, and <code>ci.ub</code> in the data frame should be replaced. Only relevant when the data frame already contains these variables. If <code>replace=TRUE</code> (the default), all of the existing values will be overwritten. If <code>replace=FALSE</code>, only <code>NA</code> values will be replaced.</p></dd>
 
-   <dt>level</dt>
+   <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95; see <a href="misc-options.html">here</a> for details).</p></dd>
 
-   <dt>olim</dt>
+   <dt id="arg-olim">olim<a class="anchor" aria-label="anchor" href="#arg-olim"></a></dt>
 <dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
 
-   <dt>transf</dt>
+   <dt id="arg-transf">transf<a class="anchor" aria-label="anchor" href="#arg-transf"></a></dt>
 <dd><p>optional argument to specify a function to transform the observed effect sizes or outcomes and interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via <code>...</code>.</p></dd>
 
-   <dt>...</dt>
+   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>The <code>print.escalc</code> function formats and prints the data frame, so that the observed effect sizes or outcomes and sampling variances are rounded (to the number of digits specified).</p>
-
-
+    <p>The <code>print.escalc</code> function formats and prints the data frame, so that the observed effect sizes or outcomes and sampling variances are rounded (to the number of digits specified).</p>
 <p>The <code>summary.escalc</code> function creates an object that is a data frame containing the original data (if <code>append=TRUE</code>) and the following components:</p>
 <dl><dt>yi</dt>
 <dd><p>observed effect sizes or outcomes (transformed if <code>transf</code> is specified).</p></dd>
@@ -173,11 +170,7 @@
 
 
 </dl><p>When the <code>transf</code> argument is specified, elements <code>vi</code>, <code>sei</code>, <code>zi</code>, and <code>pval</code> are not included (since these only apply to the untransformed effect sizes or outcomes).</p>
-
-
 <p>Note that the actual variable names above depend on the <code>out.names</code> (and <code>var.names</code>) arguments. If the data frame already contains variables with names as specified by the <code>out.names</code> argument, the values for these variables will be overwritten when <code>replace=TRUE</code> (which is the default). By setting <code>replace=FALSE</code>, only values that are <code>NA</code> will be replaced.</p>
-
-
 <p>The <code>print.escalc</code> function again formats and prints the data frame, rounding the added variables to the number of digits specified.</p>
     </div>
     <div id="note">
@@ -284,17 +277,17 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
     appId: 'SFWCWKDGL8',
-    
+
     apiKey: 'b56f56470243cf9799f796a3d6ecaedd',
     indexName: 'metafor',
     inputSelector: 'input#search-input.form-control',

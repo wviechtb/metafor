@@ -10,9 +10,9 @@
 \usage{
 cumul(x, \dots)
 
-\method{cumul}{rma.uni}(x, order, digits, transf, targs, progbar=FALSE, \dots)
-\method{cumul}{rma.mh}(x, order, digits, transf, targs, progbar=FALSE, \dots)
-\method{cumul}{rma.peto}(x, order, digits, transf, targs, progbar=FALSE, \dots)
+\method{cumul}{rma.uni}(x, order, digits, transf, targs, collapse=FALSE, progbar=FALSE, \dots)
+\method{cumul}{rma.mh}(x, order, digits, transf, targs, collapse=FALSE, progbar=FALSE, \dots)
+\method{cumul}{rma.peto}(x, order, digits, transf, targs, collapse=FALSE, progbar=FALSE, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, or \code{"rma.peto"}.}
@@ -20,6 +20,7 @@ cumul(x, \dots)
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{transf}{optional argument to specify a function to transform the model coefficients and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
+   \item{collapse}{logical to specify whether studies with the same value of the \code{order} variable should be added simultaneously (the default is \code{FALSE}).}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
@@ -28,10 +29,13 @@ cumul(x, \dots)
 
    If argument \code{order} is not specified, the studies are added according to their order in the original dataset.
 
-   When a variable is specified for \code{order}, the variable is assumed to be of the same length as the original dataset that was used in the model fitting (and if the \code{data} argument was used in the original model fit, then the variable will be searched for within this data frame first). Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the \code{order} argument. See \sQuote{Examples}.
+   When a variable is specified for \code{order}, the variable is assumed to be of the same length as the original dataset that was used in the model fitting (and if the \code{data} argument was used in the original model fit, then the variable will be searched for within this data frame first). Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the \code{order} argument.
+
+   By default, studies are added one at a time. However, if a variable is specified for the \code{order} argument and \code{collapse=TRUE}, then studies with the same value of the \code{order} variable are added simultaneously.
 }
 \value{
    An object of class \code{c("list.rma","cumul.rma")}. The object is a list containing the following components:
+   \item{k}{number of studies included in the analysis.}
    \item{estimate}{estimated (average) outcomes.}
    \item{se}{corresponding standard errors.}
    \item{zval}{corresponding test statistics.}
@@ -67,34 +71,47 @@ cumul(x, \dots)
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances
-dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
+              data=dat.bcg, slab=paste0(author, ", ", year))
 
 ### fit random-effects model
-res <- rma(yi, vi, data=dat)
+res <- rma(yi, vi, data=dat, digits=3)
 
 ### cumulative meta-analysis (in the order of publication year)
-cumul(res, transf=exp, order=year)
+cumul(res, order=year)
+cumul(res, order=year, transf=exp)
+
+### add studies with the same publication year simultaneously
+cumul(res, order=year, transf=exp, collapse=TRUE)
 
 ### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method
-res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
+              data=dat.bcg, slab=paste0(author, ", ", year), digits=3)
 
 ### cumulative meta-analysis
 cumul(res, order=year)
-cumul(res, order=year, transf=TRUE)
+cumul(res, order=year, transf=exp)
+
+### add studies with the same publication year simultaneously
+cumul(res, order=year, transf=exp, collapse=TRUE)
 
 ### meta-analysis of the (log) odds ratios using Peto's method
-res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg,
+                data=dat.bcg, slab=paste0(author, ", ", year), digits=3)
 
 ### cumulative meta-analysis
 cumul(res, order=year)
-cumul(res, order=year, transf=TRUE)
+cumul(res, order=year, transf=exp)
 
-### make first log risk ratio missing and fit model without study 2; then the
-### variable specified via 'order' should still be of the same length as the
-### original dataset; subsetting and removal of studies with missing values is
-### automatically done by the cumul() function
+### add studies with the same publication year simultaneously
+cumul(res, order=year, transf=exp, collapse=TRUE)
+
+### make the first log risk ratio missing and fit the model without study 2;
+### then the variable specified via 'order' should still be of the same length
+### as the original dataset; subsetting and removal of studies with missing
+### values is automatically done by the cumul() function
 dat$yi[1] <- NA
-res <- rma(yi, vi, data=dat, subset=-2)
+res <- rma(yi, vi, data=dat, subset=-2, digits=3)
 cumul(res, transf=exp, order=year)
 }
 \keyword{methods}

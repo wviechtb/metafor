@@ -15,7 +15,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-24</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -60,33 +60,33 @@
             <span class="fas fa-adjust fa-lg"></span>
           </a>
         </li>
-        
+
         <li>
   <a href="https://scholar.social/@wviechtb" class="external-link">Mastodon</a>
 </li>
 <li>
   <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>
 </li>
-        
-        
+
+
 
 
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Cumulative Meta-Analysis for 'rma' Objects</h1>
-    
+
     <div class="hidden name"><code>cumul.Rd</code></div>
     </div>
 
@@ -97,35 +97,39 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cumul</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for rma.uni</span></span>
-<span><span class="fu">cumul</span><span class="op">(</span><span class="va">x</span>, <span class="va">order</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
-<span><span class="co"># S3 method for rma.mh</span></span>
-<span><span class="fu">cumul</span><span class="op">(</span><span class="va">x</span>, <span class="va">order</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
-<span><span class="co"># S3 method for rma.peto</span></span>
-<span><span class="fu">cumul</span><span class="op">(</span><span class="va">x</span>, <span class="va">order</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># S3 method for class 'rma.uni'</span></span>
+<span><span class="fu">cumul</span><span class="op">(</span><span class="va">x</span>, <span class="va">order</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, collapse<span class="op">=</span><span class="cn">FALSE</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for class 'rma.mh'</span></span>
+<span><span class="fu">cumul</span><span class="op">(</span><span class="va">x</span>, <span class="va">order</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, collapse<span class="op">=</span><span class="cn">FALSE</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for class 'rma.peto'</span></span>
+<span><span class="fu">cumul</span><span class="op">(</span><span class="va">x</span>, <span class="va">order</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, collapse<span class="op">=</span><span class="cn">FALSE</span>, progbar<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+    <p></p>
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>an object of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, or <code>"rma.peto"</code>.</p></dd>
 
-   <dt>order</dt>
+   <dt id="arg-order">order<a class="anchor" aria-label="anchor" href="#arg-order"></a></dt>
 <dd><p>optional argument to specify a variable based on which the studies will be ordered for the cumulative meta-analysis.</p></dd>
 
-   <dt>digits</dt>
+   <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
 
-   <dt>transf</dt>
+   <dt id="arg-transf">transf<a class="anchor" aria-label="anchor" href="#arg-transf"></a></dt>
 <dd><p>optional argument to specify a function to transform the model coefficients and interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
 
-   <dt>targs</dt>
+   <dt id="arg-targs">targs<a class="anchor" aria-label="anchor" href="#arg-targs"></a></dt>
 <dd><p>optional arguments needed by the function specified under <code>transf</code>.</p></dd>
 
-   <dt>progbar</dt>
+   <dt id="arg-collapse">collapse<a class="anchor" aria-label="anchor" href="#arg-collapse"></a></dt>
+<dd><p>logical to specify whether studies with the same value of the <code>order</code> variable should be added simultaneously (the default is <code>FALSE</code>).</p></dd>
+
+   <dt id="arg-progbar">progbar<a class="anchor" aria-label="anchor" href="#arg-progbar"></a></dt>
 <dd><p>logical to specify whether a progress bar should be shown (the default is <code>FALSE</code>).</p></dd>
 
-   <dt>...</dt>
+   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments.</p></dd>
 
 </dl></div>
@@ -133,14 +137,16 @@
     <h2>Details</h2>
     <p>For <code>"rma.uni"</code> objects, the model specified via <code>x</code> must be a model without moderators (i.e., either an equal- or a random-effects model).</p>
 <p>If argument <code>order</code> is not specified, the studies are added according to their order in the original dataset.</p>
-<p>When a variable is specified for <code>order</code>, the variable is assumed to be of the same length as the original dataset that was used in the model fitting (and if the <code>data</code> argument was used in the original model fit, then the variable will be searched for within this data frame first). Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the <code>order</code> argument. See ‘Examples’.</p>
+<p>When a variable is specified for <code>order</code>, the variable is assumed to be of the same length as the original dataset that was used in the model fitting (and if the <code>data</code> argument was used in the original model fit, then the variable will be searched for within this data frame first). Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the <code>order</code> argument.</p>
+<p>By default, studies are added one at a time. However, if a variable is specified for the <code>order</code> argument and <code>collapse=TRUE</code>, then studies with the same value of the <code>order</code> variable are added simultaneously.</p>
     </div>
     <div id="value">
     <h2>Value</h2>
-    
+    <p>An object of class <code>c("list.rma","cumul.rma")</code>. The object is a list containing the following components:</p>
+<dl><dt>k</dt>
+<dd><p>number of studies included in the analysis.</p></dd>
 
-<p>An object of class <code>c("list.rma","cumul.rma")</code>. The object is a list containing the following components:</p>
-<dl><dt>estimate</dt>
+   <dt>estimate</dt>
 <dd><p>estimated (average) outcomes.</p></dd>
 
    <dt>se</dt>
@@ -178,8 +184,6 @@
 
 
 </dl><p>When the model was fitted with <code>test="t"</code>, <code>test="knha"</code>, <code>test="hksj"</code>, or <code>test="adhoc"</code>, then <code>zval</code> is called <code>tval</code> in the object that is returned by the function.</p>
-
-
 <p>The object is formatted and printed with the <code><a href="print.list.rma.html">print</a></code> function. To format the results as a data frame, one can use the <code><a href="methods.list.rma.html">as.data.frame</a></code> function. A forest plot showing the results from the cumulative meta-analysis can be obtained with <code><a href="forest.cumul.rma.html">forest</a></code>. Alternatively, <code><a href="plot.cumul.rma.html">plot</a></code> can also be used to visualize the results.</p>
     </div>
     <div id="note">
@@ -204,129 +208,217 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### calculate log risk ratios and corresponding sampling variances</span></span></span>
-<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>,</span></span>
+<span class="r-in"><span>              data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, slab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">author</span>, <span class="st">", "</span>, <span class="va">year</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit random-effects model</span></span></span>
-<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### cumulative meta-analysis (in the order of publication year)</span></span></span>
-<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate    zval  pvals  ci.lb  ci.ub        Q     Qp   tau2      I2      H2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    0.4109 -1.5586 0.1191 0.1343 1.2574   0.0000 1.0000 0.0000  0.0000  1.0000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    0.2658 -3.7967 0.0001 0.1341 0.5268   0.9315 0.3345 0.0000  0.0000  1.0000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    0.3783 -3.9602 0.0001 0.2338 0.6120   3.1879 0.2031 0.0872 40.7090  1.6866 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    0.3675 -4.5037 0.0000 0.2377 0.5681   3.8614 0.2768 0.0763 33.9750  1.5146 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   0.3324 -5.5164 0.0000 0.2248 0.4916   7.6415 0.1056 0.0858 48.4120  1.9384 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    0.3778 -5.1875 0.0000 0.2615 0.5457  10.1854 0.0702 0.1046 60.0008  2.5000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12   0.4061 -4.7250 0.0000 0.2794 0.5901  13.2116 0.0398 0.1205 59.9982  2.4999 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    0.4545 -4.0039 0.0001 0.3089 0.6686  19.5749 0.0066 0.1780 72.3904  3.6219 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    0.4208 -4.4107 0.0000 0.2864 0.6182  22.8208 0.0036 0.2023 73.5065  3.7745 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11   0.4560 -4.3588 0.0000 0.3204 0.6491  34.1203 0.0001 0.2005 81.4029  5.3772 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13   0.4925 -3.9701 0.0001 0.3472 0.6987  39.6122 0.0000 0.2281 83.0110  5.8862 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    0.4517 -4.4184 0.0000 0.3175 0.6426  67.9858 0.0000 0.2732 87.0314  7.7109 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    0.4894 -3.9744 0.0001 0.3441 0.6962 152.2330 0.0000 0.3132 92.2214 12.8558 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             k estimate    se   zval  pval  ci.lb  ci.ub       Q    Qp  tau2     I2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Aronson, 1948               1   -0.889 0.571 -1.559 0.119 -2.008  0.229   0.000 1.000 0.000  0.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ferguson &amp; Simes, 1949      2   -1.325 0.349 -3.797 0.000 -2.009 -0.641   0.931 0.334 0.000  0.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Stein &amp; Aronson, 1953       3   -0.972 0.245 -3.960 0.000 -1.453 -0.491   3.188 0.203 0.087 40.709 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1960       4   -1.001 0.222 -4.504 0.000 -1.437 -0.565   3.861 0.277 0.076 33.975 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1961       5   -1.101 0.200 -5.516 0.000 -1.493 -0.710   7.642 0.106 0.086 48.412 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coetzee &amp; Berjak, 1968      6   -0.973 0.188 -5.188 0.000 -1.341 -0.606  10.185 0.070 0.105 60.001 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock &amp; Webster, 1969    7   -0.901 0.191 -4.725 0.000 -1.275 -0.527  13.212 0.040 0.120 59.998 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Frimodt-Moller et al, 1973  8   -0.789 0.197 -4.004 0.000 -1.175 -0.403  19.575 0.007 0.178 72.390 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vandiviere et al, 1973      9   -0.866 0.196 -4.411 0.000 -1.250 -0.481  22.821 0.004 0.202 73.506 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1974       10   -0.785 0.180 -4.359 0.000 -1.138 -0.432  34.120 0.000 0.201 81.403 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1976       11   -0.708 0.178 -3.970 0.000 -1.058 -0.359  39.612 0.000 0.228 83.011 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hart &amp; Sutherland, 1977    12   -0.795 0.180 -4.418 0.000 -1.147 -0.442  67.986 0.000 0.273 87.031 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TPT Madras, 1980           13   -0.715 0.180 -3.974 0.000 -1.067 -0.362 152.233 0.000 0.313 92.221 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                H2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Aronson, 1948               1.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ferguson &amp; Simes, 1949      1.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Stein &amp; Aronson, 1953       1.687 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1960       1.515 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1961       1.938 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coetzee &amp; Berjak, 1968      2.500 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock &amp; Webster, 1969    2.500 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Frimodt-Moller et al, 1973  3.622 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vandiviere et al, 1973      3.775 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1974        5.377 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1976        5.886 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hart &amp; Sutherland, 1977     7.711 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TPT Madras, 1980           12.856 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             k estimate   zval  pval ci.lb ci.ub       Q    Qp  tau2     I2     H2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Aronson, 1948               1    0.411 -1.559 0.119 0.134 1.257   0.000 1.000 0.000  0.000  1.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ferguson &amp; Simes, 1949      2    0.266 -3.797 0.000 0.134 0.527   0.931 0.334 0.000  0.000  1.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Stein &amp; Aronson, 1953       3    0.378 -3.960 0.000 0.234 0.612   3.188 0.203 0.087 40.709  1.687 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1960       4    0.367 -4.504 0.000 0.238 0.568   3.861 0.277 0.076 33.975  1.515 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1961       5    0.332 -5.516 0.000 0.225 0.492   7.642 0.106 0.086 48.412  1.938 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coetzee &amp; Berjak, 1968      6    0.378 -5.188 0.000 0.262 0.546  10.185 0.070 0.105 60.001  2.500 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock &amp; Webster, 1969    7    0.406 -4.725 0.000 0.279 0.590  13.212 0.040 0.120 59.998  2.500 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Frimodt-Moller et al, 1973  8    0.454 -4.004 0.000 0.309 0.669  19.575 0.007 0.178 72.390  3.622 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vandiviere et al, 1973      9    0.421 -4.411 0.000 0.286 0.618  22.821 0.004 0.202 73.506  3.775 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1974       10    0.456 -4.359 0.000 0.320 0.649  34.120 0.000 0.201 81.403  5.377 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1976       11    0.493 -3.970 0.000 0.347 0.699  39.612 0.000 0.228 83.011  5.886 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hart &amp; Sutherland, 1977    12    0.452 -4.418 0.000 0.317 0.643  67.986 0.000 0.273 87.031  7.711 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TPT Madras, 1980           13    0.489 -3.974 0.000 0.344 0.696 152.233 0.000 0.313 92.221 12.856 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### add studies with the same publication year simultaneously</span></span></span>
+<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span>, transf<span class="op">=</span><span class="va">exp</span>, collapse<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       k estimate   zval  pval ci.lb ci.ub       Q    Qp  tau2     I2     H2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1948  1    0.411 -1.559 0.119 0.134 1.257   0.000 1.000 0.000  0.000  1.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1949  2    0.266 -3.797 0.000 0.134 0.527   0.931 0.334 0.000  0.000  1.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1953  3    0.378 -3.960 0.000 0.234 0.612   3.188 0.203 0.087 40.709  1.687 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1960  4    0.367 -4.504 0.000 0.238 0.568   3.861 0.277 0.076 33.975  1.515 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1961  5    0.332 -5.516 0.000 0.225 0.492   7.642 0.106 0.086 48.412  1.938 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1968  6    0.378 -5.188 0.000 0.262 0.546  10.185 0.070 0.105 60.001  2.500 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1969  7    0.406 -4.725 0.000 0.279 0.590  13.212 0.040 0.120 59.998  2.500 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1973  9    0.421 -4.411 0.000 0.286 0.618  22.821 0.004 0.202 73.506  3.775 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1974 10    0.456 -4.359 0.000 0.320 0.649  34.120 0.000 0.201 81.403  5.377 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1976 11    0.493 -3.970 0.000 0.347 0.699  39.612 0.000 0.228 83.011  5.886 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1977 12    0.452 -4.418 0.000 0.317 0.643  67.986 0.000 0.273 87.031  7.711 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1980 13    0.489 -3.974 0.000 0.344 0.696 152.233 0.000 0.313 92.221 12.856 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method</span></span></span>
-<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mh.html">rma.mh</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mh.html">rma.mh</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>,</span></span>
+<span class="r-in"><span>              data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, slab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">author</span>, <span class="st">", "</span>, <span class="va">year</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### cumulative meta-analysis</span></span></span>
 <span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2      H2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   -0.8893 0.5706  -1.5586 0.1191 -2.0077  0.2290   0.0000 1.0000  0.0000  1.0000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   -1.3517 0.3455  -3.9124 0.0001 -2.0289 -0.6746   0.9373 0.3330  0.0000  0.9373 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   -0.8273 0.0808 -10.2371 0.0000 -0.9857 -0.6689   3.2109 0.2008 37.7127  1.6055 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   -0.8379 0.0802 -10.4490 0.0000 -0.9951 -0.6807   3.8945 0.2731 22.9687  1.2982 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  -0.8940 0.0769 -11.6254 0.0000 -1.0447 -0.7433   7.7589 0.1008 48.4460  1.9397 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   -0.8507 0.0730 -11.6480 0.0000 -0.9938 -0.7075  10.2660 0.0680 51.2956  2.0532 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12  -0.8358 0.0725 -11.5275 0.0000 -0.9779 -0.6937  13.2768 0.0388 54.8084  2.2128 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   -0.7744 0.0688 -11.2623 0.0000 -0.9092 -0.6397  19.6127 0.0065 64.3088  2.8018 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   -0.7896 0.0680 -11.6188 0.0000 -0.9228 -0.6564  22.8443 0.0036 64.9803  2.8555 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11  -0.6660 0.0577 -11.5373 0.0000 -0.7792 -0.5529  34.1377 0.0001 73.6362  3.7931 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13  -0.6351 0.0563 -11.2811 0.0000 -0.7454 -0.5247  39.6232 0.0000 74.7622  3.9623 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   -0.7758 0.0520 -14.9267 0.0000 -0.8777 -0.6739  68.3763 0.0000 83.9126  6.2160 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   -0.4537 0.0393 -11.5338 0.0000 -0.5308 -0.3766 152.5676 0.0000 92.1346 12.7140 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             k estimate    se    zval  pval  ci.lb  ci.ub       Q    Qp     I2     H2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Aronson, 1948               1   -0.889 0.571  -1.559 0.119 -2.008  0.229   0.000 1.000  0.000  1.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ferguson &amp; Simes, 1949      2   -1.352 0.346  -3.912 0.000 -2.029 -0.675   0.937 0.333  0.000  0.937 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Stein &amp; Aronson, 1953       3   -0.827 0.081 -10.237 0.000 -0.986 -0.669   3.211 0.201 37.713  1.605 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1960       4   -0.838 0.080 -10.449 0.000 -0.995 -0.681   3.895 0.273 22.969  1.298 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1961       5   -0.894 0.077 -11.625 0.000 -1.045 -0.743   7.759 0.101 48.446  1.940 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coetzee &amp; Berjak, 1968      6   -0.851 0.073 -11.648 0.000 -0.994 -0.708  10.266 0.068 51.296  2.053 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock &amp; Webster, 1969    7   -0.836 0.073 -11.528 0.000 -0.978 -0.694  13.277 0.039 54.808  2.213 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Frimodt-Moller et al, 1973  8   -0.774 0.069 -11.262 0.000 -0.909 -0.640  19.613 0.006 64.309  2.802 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vandiviere et al, 1973      9   -0.790 0.068 -11.619 0.000 -0.923 -0.656  22.844 0.004 64.980  2.856 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1974       10   -0.666 0.058 -11.537 0.000 -0.779 -0.553  34.138 0.000 73.636  3.793 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1976       11   -0.635 0.056 -11.281 0.000 -0.745 -0.525  39.623 0.000 74.762  3.962 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hart &amp; Sutherland, 1977    12   -0.776 0.052 -14.927 0.000 -0.878 -0.674  68.376 0.000 83.913  6.216 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TPT Madras, 1980           13   -0.454 0.039 -11.534 0.000 -0.531 -0.377 152.568 0.000 92.135 12.714 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span>, transf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    0.4109  -1.5586 0.1191 0.1343 1.2574   0.0000 1.0000  0.0000  1.0000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    0.2588  -3.9124 0.0001 0.1315 0.5094   0.9373 0.3330  0.0000  0.9373 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    0.4372 -10.2371 0.0000 0.3732 0.5123   3.2109 0.2008 37.7127  1.6055 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    0.4326 -10.4490 0.0000 0.3697 0.5062   3.8945 0.2731 22.9687  1.2982 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   0.4090 -11.6254 0.0000 0.3518 0.4756   7.7589 0.1008 48.4460  1.9397 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    0.4271 -11.6480 0.0000 0.3702 0.4929  10.2660 0.0680 51.2956  2.0532 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12   0.4335 -11.5275 0.0000 0.3761 0.4997  13.2768 0.0388 54.8084  2.2128 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    0.4610 -11.2623 0.0000 0.4028 0.5275  19.6127 0.0065 64.3088  2.8018 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    0.4540 -11.6188 0.0000 0.3974 0.5187  22.8443 0.0036 64.9803  2.8555 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11   0.5138 -11.5373 0.0000 0.4588 0.5753  34.1377 0.0001 73.6362  3.7931 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13   0.5299 -11.2811 0.0000 0.4745 0.5917  39.6232 0.0000 74.7622  3.9623 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    0.4603 -14.9267 0.0000 0.4158 0.5097  68.3763 0.0000 83.9126  6.2160 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    0.6353 -11.5338 0.0000 0.5881 0.6862 152.5676 0.0000 92.1346 12.7140 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             k estimate    zval  pval ci.lb ci.ub       Q    Qp     I2     H2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Aronson, 1948               1    0.411  -1.559 0.119 0.134 1.257   0.000 1.000  0.000  1.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ferguson &amp; Simes, 1949      2    0.259  -3.912 0.000 0.131 0.509   0.937 0.333  0.000  0.937 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Stein &amp; Aronson, 1953       3    0.437 -10.237 0.000 0.373 0.512   3.211 0.201 37.713  1.605 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1960       4    0.433 -10.449 0.000 0.370 0.506   3.895 0.273 22.969  1.298 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1961       5    0.409 -11.625 0.000 0.352 0.476   7.759 0.101 48.446  1.940 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coetzee &amp; Berjak, 1968      6    0.427 -11.648 0.000 0.370 0.493  10.266 0.068 51.296  2.053 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock &amp; Webster, 1969    7    0.434 -11.528 0.000 0.376 0.500  13.277 0.039 54.808  2.213 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Frimodt-Moller et al, 1973  8    0.461 -11.262 0.000 0.403 0.527  19.613 0.006 64.309  2.802 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vandiviere et al, 1973      9    0.454 -11.619 0.000 0.397 0.519  22.844 0.004 64.980  2.856 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1974       10    0.514 -11.537 0.000 0.459 0.575  34.138 0.000 73.636  3.793 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1976       11    0.530 -11.281 0.000 0.475 0.592  39.623 0.000 74.762  3.962 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hart &amp; Sutherland, 1977    12    0.460 -14.927 0.000 0.416 0.510  68.376 0.000 83.913  6.216 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TPT Madras, 1980           13    0.635 -11.534 0.000 0.588 0.686 152.568 0.000 92.135 12.714 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### add studies with the same publication year simultaneously</span></span></span>
+<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span>, transf<span class="op">=</span><span class="va">exp</span>, collapse<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       k estimate    zval  pval ci.lb ci.ub       Q    Qp     I2     H2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1948  1    0.411  -1.559 0.119 0.134 1.257   0.000 1.000  0.000  1.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1949  2    0.259  -3.912 0.000 0.131 0.509   0.937 0.333  0.000  0.937 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1953  3    0.437 -10.237 0.000 0.373 0.512   3.211 0.201 37.713  1.605 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1960  4    0.433 -10.449 0.000 0.370 0.506   3.895 0.273 22.969  1.298 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1961  5    0.409 -11.625 0.000 0.352 0.476   7.759 0.101 48.446  1.940 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1968  6    0.427 -11.648 0.000 0.370 0.493  10.266 0.068 51.296  2.053 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1969  7    0.434 -11.528 0.000 0.376 0.500  13.277 0.039 54.808  2.213 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1973  9    0.454 -11.619 0.000 0.397 0.519  22.844 0.004 64.980  2.856 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1974 10    0.514 -11.537 0.000 0.459 0.575  34.138 0.000 73.636  3.793 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1976 11    0.530 -11.281 0.000 0.475 0.592  39.623 0.000 74.762  3.962 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1977 12    0.460 -14.927 0.000 0.416 0.510  68.376 0.000 83.913  6.216 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1980 13    0.635 -11.534 0.000 0.588 0.686 152.568 0.000 92.135 12.714 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### meta-analysis of the (log) odds ratios using Peto's method</span></span></span>
-<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.peto.html">rma.peto</a></span><span class="op">(</span>ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.peto.html">rma.peto</a></span><span class="op">(</span>ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>,</span></span>
+<span class="r-in"><span>                data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, slab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">author</span>, <span class="st">", "</span>, <span class="va">year</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### cumulative meta-analysis</span></span></span>
 <span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     se     zval   pval   ci.lb   ci.ub        Q     Qp      I2      H2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   -0.8604 0.5318  -1.6178 0.1057 -1.9027  0.1820   0.0000 1.0000  0.0000  1.0000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   -1.2401 0.2912  -4.2591 0.0000 -1.8107 -0.6694   0.7279 0.3936  0.0000  0.7279 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   -0.9570 0.0897 -10.6686 0.0000 -1.1328 -0.7812   1.7723 0.4122  0.0000  0.8861 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   -0.9642 0.0885 -10.8948 0.0000 -1.1377 -0.7908   2.0147 0.5694  0.0000  0.6716 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  -1.0003 0.0823 -12.1559 0.0000 -1.1616 -0.8390   3.2425 0.5181  0.0000  0.8106 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   -0.9410 0.0776 -12.1265 0.0000 -1.0931 -0.7889   7.9341 0.1599 36.9810  1.5868 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12  -0.9246 0.0771 -11.9872 0.0000 -1.0758 -0.7735  11.6730 0.0697 48.5992  1.9455 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   -0.8501 0.0730 -11.6515 0.0000 -0.9932 -0.7071  20.5359 0.0045 65.9133  2.9337 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   -0.8712 0.0724 -12.0301 0.0000 -1.0131 -0.7293  26.1159 0.0010 69.3673  3.2645 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11  -0.7268 0.0615 -11.8273 0.0000 -0.8472 -0.6064  40.3188 0.0000 77.6779  4.4799 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13  -0.6912 0.0599 -11.5417 0.0000 -0.8086 -0.5739  46.9968 0.0000 78.7220  4.6997 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   -0.8161 0.0531 -15.3842 0.0000 -0.9201 -0.7122  67.1837 0.0000 83.6270  6.1076 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   -0.4744 0.0407 -11.6689 0.0000 -0.5541 -0.3948 167.7302 0.0000 92.8457 13.9775 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             k estimate    se    zval  pval  ci.lb  ci.ub       Q    Qp     I2     H2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Aronson, 1948               1   -0.860 0.532  -1.618 0.106 -1.903  0.182   0.000 1.000  0.000  1.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ferguson &amp; Simes, 1949      2   -1.240 0.291  -4.259 0.000 -1.811 -0.669   0.728 0.394  0.000  0.728 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Stein &amp; Aronson, 1953       3   -0.957 0.090 -10.669 0.000 -1.133 -0.781   1.772 0.412  0.000  0.886 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1960       4   -0.964 0.089 -10.895 0.000 -1.138 -0.791   2.015 0.569  0.000  0.672 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1961       5   -1.000 0.082 -12.156 0.000 -1.162 -0.839   3.243 0.518  0.000  0.811 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coetzee &amp; Berjak, 1968      6   -0.941 0.078 -12.126 0.000 -1.093 -0.789   7.934 0.160 36.981  1.587 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock &amp; Webster, 1969    7   -0.925 0.077 -11.987 0.000 -1.076 -0.773  11.673 0.070 48.599  1.945 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Frimodt-Moller et al, 1973  8   -0.850 0.073 -11.652 0.000 -0.993 -0.707  20.536 0.005 65.913  2.934 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vandiviere et al, 1973      9   -0.871 0.072 -12.030 0.000 -1.013 -0.729  26.116 0.001 69.367  3.264 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1974       10   -0.727 0.061 -11.827 0.000 -0.847 -0.606  40.319 0.000 77.678  4.480 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1976       11   -0.691 0.060 -11.542 0.000 -0.809 -0.574  46.997 0.000 78.722  4.700 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hart &amp; Sutherland, 1977    12   -0.816 0.053 -15.384 0.000 -0.920 -0.712  67.184 0.000 83.627  6.108 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TPT Madras, 1980           13   -0.474 0.041 -11.669 0.000 -0.554 -0.395 167.730 0.000 92.846 13.978 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span>, transf<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span>, transf<span class="op">=</span><span class="va">exp</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate     zval   pval  ci.lb  ci.ub        Q     Qp      I2      H2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    0.4230  -1.6178 0.1057 0.1492 1.1996   0.0000 1.0000  0.0000  1.0000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    0.2894  -4.2591 0.0000 0.1635 0.5120   0.7279 0.3936  0.0000  0.7279 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    0.3840 -10.6686 0.0000 0.3221 0.4579   1.7723 0.4122  0.0000  0.8861 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    0.3813 -10.8948 0.0000 0.3206 0.4535   2.0147 0.5694  0.0000  0.6716 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   0.3678 -12.1559 0.0000 0.3130 0.4321   3.2425 0.5181  0.0000  0.8106 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    0.3902 -12.1265 0.0000 0.3352 0.4543   7.9341 0.1599 36.9810  1.5868 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12   0.3967 -11.9872 0.0000 0.3410 0.4614  11.6730 0.0697 48.5992  1.9455 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    0.4274 -11.6515 0.0000 0.3704 0.4931  20.5359 0.0045 65.9133  2.9337 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    0.4184 -12.0301 0.0000 0.3631 0.4823  26.1159 0.0010 69.3673  3.2645 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11   0.4835 -11.8273 0.0000 0.4286 0.5453  40.3188 0.0000 77.6779  4.4799 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13   0.5010 -11.5417 0.0000 0.4455 0.5633  46.9968 0.0000 78.7220  4.6997 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    0.4421 -15.3842 0.0000 0.3985 0.4906  67.1837 0.0000 83.6270  6.1076 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    0.6222 -11.6689 0.0000 0.5746 0.6738 167.7302 0.0000 92.8457 13.9775 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             k estimate    zval  pval ci.lb ci.ub       Q    Qp     I2     H2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Aronson, 1948               1    0.423  -1.618 0.106 0.149 1.200   0.000 1.000  0.000  1.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ferguson &amp; Simes, 1949      2    0.289  -4.259 0.000 0.164 0.512   0.728 0.394  0.000  0.728 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Stein &amp; Aronson, 1953       3    0.384 -10.669 0.000 0.322 0.458   1.772 0.412  0.000  0.886 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1960       4    0.381 -10.895 0.000 0.321 0.454   2.015 0.569  0.000  0.672 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1961       5    0.368 -12.156 0.000 0.313 0.432   3.243 0.518  0.000  0.811 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coetzee &amp; Berjak, 1968      6    0.390 -12.126 0.000 0.335 0.454   7.934 0.160 36.981  1.587 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock &amp; Webster, 1969    7    0.397 -11.987 0.000 0.341 0.461  11.673 0.070 48.599  1.945 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Frimodt-Moller et al, 1973  8    0.427 -11.652 0.000 0.370 0.493  20.536 0.005 65.913  2.934 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vandiviere et al, 1973      9    0.418 -12.030 0.000 0.363 0.482  26.116 0.001 69.367  3.264 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1974       10    0.483 -11.827 0.000 0.429 0.545  40.319 0.000 77.678  4.480 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1976       11    0.501 -11.542 0.000 0.445 0.563  46.997 0.000 78.722  4.700 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hart &amp; Sutherland, 1977    12    0.442 -15.384 0.000 0.398 0.491  67.184 0.000 83.627  6.108 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TPT Madras, 1980           13    0.622 -11.669 0.000 0.575 0.674 167.730 0.000 92.846 13.978 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### make first log risk ratio missing and fit model without study 2; then the</span></span></span>
-<span class="r-in"><span><span class="co">### variable specified via 'order' should still be of the same length as the</span></span></span>
-<span class="r-in"><span><span class="co">### original dataset; subsetting and removal of studies with missing values is</span></span></span>
-<span class="r-in"><span><span class="co">### automatically done by the cumul() function</span></span></span>
+<span class="r-in"><span><span class="co">### add studies with the same publication year simultaneously</span></span></span>
+<span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span>, transf<span class="op">=</span><span class="va">exp</span>, collapse<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       k estimate    zval  pval ci.lb ci.ub       Q    Qp     I2     H2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1948  1    0.423  -1.618 0.106 0.149 1.200   0.000 1.000  0.000  1.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1949  2    0.289  -4.259 0.000 0.164 0.512   0.728 0.394  0.000  0.728 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1953  3    0.384 -10.669 0.000 0.322 0.458   1.772 0.412  0.000  0.886 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1960  4    0.381 -10.895 0.000 0.321 0.454   2.015 0.569  0.000  0.672 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1961  5    0.368 -12.156 0.000 0.313 0.432   3.243 0.518  0.000  0.811 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1968  6    0.390 -12.126 0.000 0.335 0.454   7.934 0.160 36.981  1.587 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1969  7    0.397 -11.987 0.000 0.341 0.461  11.673 0.070 48.599  1.945 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1973  9    0.418 -12.030 0.000 0.363 0.482  26.116 0.001 69.367  3.264 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1974 10    0.483 -11.827 0.000 0.429 0.545  40.319 0.000 77.678  4.480 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1976 11    0.501 -11.542 0.000 0.445 0.563  46.997 0.000 78.722  4.700 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1977 12    0.442 -15.384 0.000 0.398 0.491  67.184 0.000 83.627  6.108 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1980 13    0.622 -11.669 0.000 0.575 0.674 167.730 0.000 92.846 13.978 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### make the first log risk ratio missing and fit the model without study 2;</span></span></span>
+<span class="r-in"><span><span class="co">### then the variable specified via 'order' should still be of the same length</span></span></span>
+<span class="r-in"><span><span class="co">### as the original dataset; subsetting and removal of studies with missing</span></span></span>
+<span class="r-in"><span><span class="co">### values is automatically done by the cumul() function</span></span></span>
 <span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span></span>
-<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">-</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span>, subset<span class="op">=</span><span class="op">-</span><span class="fl">2</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>1 study with NAs omitted from model fitting.</span>
 <span class="r-in"><span><span class="fu">cumul</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">exp</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    estimate    zval  pvals  ci.lb  ci.ub        Q     Qp   tau2      I2      H2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6    0.4556 -9.4599 0.0000 0.3871 0.5362   0.0000 1.0000 0.0000  0.0000  1.0000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    0.4514 -9.6497 0.0000 0.3841 0.5306   0.7478 0.3872 0.0000  0.0000  1.0000 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10   0.3504 -4.3207 0.0000 0.2178 0.5639   4.9051 0.0861 0.1008 59.6906  2.4808 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9    0.4100 -4.2685 0.0000 0.2722 0.6174   7.1487 0.0673 0.1034 66.8114  3.0131 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12   0.4480 -3.6703 0.0002 0.2918 0.6878  10.0666 0.0393 0.1304 66.7246  3.0052 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5    0.5075 -3.1669 0.0015 0.3335 0.7722  15.9241 0.0071 0.1704 75.5631  4.0922 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7    0.4584 -3.5536 0.0004 0.2981 0.7048  19.3442 0.0036 0.2132 77.6086  4.4660 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11   0.4970 -3.6803 0.0002 0.3425 0.7212  29.4342 0.0001 0.1880 83.2856  5.9829 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13   0.5390 -3.3443 0.0008 0.3752 0.7743  34.5952 0.0000 0.2077 84.0877  6.2845 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4    0.4835 -3.7288 0.0002 0.3300 0.7084  64.2052 0.0000 0.2831 89.1076  9.1808 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8    0.5262 -3.3578 0.0008 0.3618 0.7655 144.6390 0.0000 0.3139 93.3044 14.9352 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             k estimate   zval  pval ci.lb ci.ub       Q    Qp  tau2     I2     H2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Stein &amp; Aronson, 1953       1    0.456 -9.460 0.000 0.387 0.536   0.000 1.000 0.000  0.000  1.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1960       2    0.451 -9.650 0.000 0.384 0.531   0.748 0.387 0.000  0.000  1.000 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Rosenthal et al, 1961       3    0.350 -4.321 0.000 0.218 0.564   4.905 0.086 0.101 59.691  2.481 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coetzee &amp; Berjak, 1968      4    0.410 -4.268 0.000 0.272 0.617   7.149 0.067 0.103 66.811  3.013 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock &amp; Webster, 1969    5    0.448 -3.670 0.000 0.292 0.688  10.067 0.039 0.130 66.725  3.005 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Frimodt-Moller et al, 1973  6    0.507 -3.167 0.002 0.334 0.772  15.924 0.007 0.170 75.563  4.092 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Vandiviere et al, 1973      7    0.458 -3.554 0.000 0.298 0.705  19.344 0.004 0.213 77.609  4.466 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1974        8    0.497 -3.680 0.000 0.342 0.721  29.434 0.000 0.188 83.286  5.983 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Comstock et al, 1976        9    0.539 -3.344 0.001 0.375 0.774  34.595 0.000 0.208 84.088  6.284 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hart &amp; Sutherland, 1977    10    0.484 -3.729 0.000 0.330 0.708  64.205 0.000 0.283 89.108  9.181 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> TPT Madras, 1980           11    0.526 -3.358 0.001 0.362 0.765 144.639 0.000 0.314 93.304 14.935 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
@@ -342,17 +434,17 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
     appId: 'SFWCWKDGL8',
-    
+
     apiKey: 'b56f56470243cf9799f796a3d6ecaedd',
     indexName: 'metafor',
     inputSelector: 'input#search-input.form-control',

@@ -1,4 +1,6 @@
-# metafor 4.7-23 (2024-07-02)
+# metafor 4.7-24 (2024-07-09)
+
+- added `collapse` argument to the various `cumul()` functions
 
 - the `predict.rma()` and `predict.rma.ls()` functions now also accept a matrix as input that includes a column for the intercept term (in which case the `intercept` argument is ignored)
 

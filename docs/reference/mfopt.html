@@ -15,7 +15,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-24</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -60,33 +60,33 @@
             <span class="fas fa-adjust fa-lg"></span>
           </a>
         </li>
-        
+
         <li>
   <a href="https://scholar.social/@wviechtb" class="external-link">Mastodon</a>
 </li>
 <li>
   <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>
 </li>
-        
-        
+
+
 
 
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Getting and Setting Package Options</h1>
-    
+
     <div class="hidden name"><code>mfopt.Rd</code></div>
     </div>
 
@@ -101,13 +101,14 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+    <p></p>
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>The name of an option. If unspecified, all options are returned.</p></dd>
 
-   <dt>default</dt>
+   <dt id="arg-default">default<a class="anchor" aria-label="anchor" href="#arg-default"></a></dt>
 <dd><p>value to return if the option name does not exist.</p></dd>
 
-   <dt>...</dt>
+   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>one or more option names and the corresponding values to which they should be set.</p></dd>
 
 </dl></div>
@@ -133,13 +134,11 @@
       <dt><code>theme</code></dt>
 <dd><p>character string to specify how plots created by the package should be themed. The default is <code>"default"</code>, which means that the default foreground and background colors of plotting devices are used. Alternative options are <code>"light"</code> and <code>"dark"</code>, which forces plots to be drawn with a light or dark background, respectively. See <a href="misc-options.html">here</a> for further details. RStudio users can also set this to <code>"auto"</code>, in which case plotting colors are chosen depending on the RStudio theme used (for some themes, using <code>"auto2"</code> might be aesthetically more pleasing). One can also use <code>setmfopt(theme="custom", fg=&lt;color&gt;, bg=&lt;color&gt;)</code> to set the foreground and background colors to custom choices (depending on the colors chosen, using <code>"custom2"</code> might be aesthetically more pleasing).</p></dd>
 
-   
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>Either a vector with the value for the chosen option or a list with all options.</p>
+    <p>Either a vector with the value for the chosen option or a list with all options.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -209,17 +208,17 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
     appId: 'SFWCWKDGL8',
-    
+
     apiKey: 'b56f56470243cf9799f796a3d6ecaedd',
     indexName: 'metafor',
     inputSelector: 'input#search-input.form-control',

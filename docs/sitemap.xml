@@ -1,348 +1,118 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://wviechtb.github.io/metafor/404.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/ISSUE_TEMPLATE.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/articles/pkgdown/diagram.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/index.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/addpoly.default.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/addpoly.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/addpoly.predict.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/addpoly.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/aggregate.escalc.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/anova.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/baujat.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/bldiag.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/blsplit.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/blup.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/coef.permutest.rma.uni.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/coef.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/confint.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/contrmat.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/conv.2x2.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/conv.delta.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/conv.fivenum.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/conv.wald.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/cumul.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/dfround.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/emmprep.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/escalc.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/fitstats.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/fitted.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/forest.cumul.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/forest.default.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/forest.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/forest.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/formatters.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/formula.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/fsn.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/funnel.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/gosh.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/hc.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/influence.rma.mv.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/influence.rma.uni.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/labbe.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/leave1out.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/llplot.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/matreg.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/metafor-package.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/metafor.news.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/methods.anova.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/methods.confint.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/methods.escalc.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/methods.list.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/methods.matreg.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/methods.vif.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/mfopt.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/misc-models.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/misc-options.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/misc-recs.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/model.matrix.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/pairwise.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/permutest.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/plot.cumul.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/plot.gosh.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/plot.infl.rma.uni.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/plot.permutest.rma.uni.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/plot.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/plot.rma.uni.selmodel.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/plot.vif.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/predict.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/print.anova.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/print.confint.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/print.escalc.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/print.fsn.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/print.gosh.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/print.hc.rma.uni.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/print.list.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/print.matreg.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/print.permutest.rma.uni.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/print.ranktest.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/print.regtest.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/print.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/profile.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/qqnorm.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/radial.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/ranef.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/ranktest.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/rcalc.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/regplot.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/regtest.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/replmiss.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/reporter.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/residuals.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/rma.glmm.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/rma.mh.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/rma.mv.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/rma.peto.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/rma.uni.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/robust.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/se.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/selmodel.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/simulate.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/tes.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/to.long.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/to.table.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/to.wide.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/transf.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/trimfill.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/update.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/vcalc.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/vcov.rma.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/vec2mat.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/vif.html</loc>
-  </url>
-  <url>
-    <loc>https://wviechtb.github.io/metafor/reference/weights.rma.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://wviechtb.github.io/metafor/404.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/ISSUE_TEMPLATE.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/articles/index.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/articles/pkgdown/diagram.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/authors.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/index.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/news/index.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/addpoly.default.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/addpoly.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/addpoly.predict.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/addpoly.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/aggregate.escalc.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/anova.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/baujat.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/bldiag.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/blsplit.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/blup.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/coef.permutest.rma.uni.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/coef.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/confint.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/contrmat.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/conv.2x2.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/conv.delta.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/conv.fivenum.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/conv.wald.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/cumul.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/dfround.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/emmprep.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/escalc.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/fitstats.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/fitted.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/forest.cumul.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/forest.default.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/forest.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/forest.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/formatters.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/formula.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/fsn.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/funnel.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/gosh.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/hc.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/index.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/influence.rma.mv.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/influence.rma.uni.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/labbe.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/leave1out.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/llplot.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/matreg.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/metafor-package.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/metafor.news.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/methods.anova.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/methods.confint.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/methods.escalc.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/methods.list.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/methods.matreg.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/methods.vif.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/mfopt.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/misc-models.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/misc-options.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/misc-recs.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/model.matrix.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/pairwise.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/permutest.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/plot.cumul.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/plot.gosh.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/plot.infl.rma.uni.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/plot.permutest.rma.uni.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/plot.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/plot.rma.uni.selmodel.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/plot.vif.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/predict.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/print.anova.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/print.confint.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/print.escalc.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/print.fsn.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/print.gosh.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/print.hc.rma.uni.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/print.list.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/print.matreg.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/print.permutest.rma.uni.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/print.ranktest.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/print.regtest.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/print.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/profile.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/qqnorm.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/radial.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/ranef.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/ranktest.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/rcalc.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/regplot.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/regtest.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/replmiss.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/reporter.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/residuals.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/rma.glmm.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/rma.mh.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/rma.mv.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/rma.peto.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/rma.uni.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/robust.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/se.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/selmodel.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/simulate.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/tes.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/to.long.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/to.table.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/to.wide.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/transf.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/trimfill.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/update.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/vcalc.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/vcov.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/vec2mat.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/vif.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/weights.rma.html</loc></url>
 </urlset>
+

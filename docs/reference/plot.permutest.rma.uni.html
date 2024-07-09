@@ -15,7 +15,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-24</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -60,33 +60,33 @@
             <span class="fas fa-adjust fa-lg"></span>
           </a>
         </li>
-        
+
         <li>
   <a href="https://scholar.social/@wviechtb" class="external-link">Mastodon</a>
 </li>
 <li>
   <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>
 </li>
-        
-        
+
+
 
 
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Method for 'permutest.rma.uni' Objects</h1>
-    
+
     <div class="hidden name"><code>plot.permutest.rma.uni.Rd</code></div>
     </div>
 
@@ -95,7 +95,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for permutest.rma.uni</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'permutest.rma.uni'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">beta</span>, <span class="va">alpha</span>, QM<span class="op">=</span><span class="cn">FALSE</span>, QS<span class="op">=</span><span class="cn">FALSE</span>,</span>
 <span>     breaks<span class="op">=</span><span class="st">"Scott"</span>, freq<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">col</span>, <span class="va">border</span>, <span class="va">col.out</span>, <span class="va">col.ref</span>, <span class="va">col.density</span>,</span>
 <span>     trim<span class="op">=</span><span class="fl">0</span>, adjust<span class="op">=</span><span class="fl">1</span>, lwd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">4</span><span class="op">)</span>, <span class="va">layout</span>, legend<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -103,58 +103,59 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+    <p></p>
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>an object of class <code>"permutest.rma.uni"</code> obtained with <code><a href="permutest.html">permutest</a></code>.</p></dd>
 
-   <dt>beta</dt>
+   <dt id="arg-beta">beta<a class="anchor" aria-label="anchor" href="#arg-beta"></a></dt>
 <dd><p>optional vector of indices to specify which (location) coefficients should be plotted.</p></dd>
 
-   <dt>alpha</dt>
+   <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
 <dd><p>optional vector of indices to specify which scale coefficients should be plotted. Only relevant for location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code>).</p></dd>
 
-   <dt>QM</dt>
+   <dt id="arg-qm">QM<a class="anchor" aria-label="anchor" href="#arg-qm"></a></dt>
 <dd><p>logical to specify whether the permutation distribution of the omnibus test of the (location) coefficients should be plotted (the default is <code>FALSE</code>).</p></dd>
 
-   <dt>QS</dt>
+   <dt id="arg-qs">QS<a class="anchor" aria-label="anchor" href="#arg-qs"></a></dt>
 <dd><p>logical to specify whether the permutation distribution of the omnibus test of the scale coefficients should be plotted (the default is <code>FALSE</code>). Only relevant for location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code>).</p></dd>
 
-   <dt>breaks</dt>
+   <dt id="arg-breaks">breaks<a class="anchor" aria-label="anchor" href="#arg-breaks"></a></dt>
 <dd><p>argument to be passed on to the corresponding argument of <code><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></code> to set (the method for determining) the (number of) breakpoints.</p></dd>
 
-   <dt>freq</dt>
+   <dt id="arg-freq">freq<a class="anchor" aria-label="anchor" href="#arg-freq"></a></dt>
 <dd><p>logical to specify whether frequencies or probability densities should be plotted (the default is <code>FALSE</code> to plot densities).</p></dd>
 
-   <dt>col</dt>
+   <dt id="arg-col">col<a class="anchor" aria-label="anchor" href="#arg-col"></a></dt>
 <dd><p>optional character string to specify the color of the histogram bars.</p></dd>
 
-   <dt>border</dt>
+   <dt id="arg-border">border<a class="anchor" aria-label="anchor" href="#arg-border"></a></dt>
 <dd><p>optional character string to specify the color of the borders around the bars.</p></dd>
 
-   <dt>col.out</dt>
+   <dt id="arg-col-out">col.out<a class="anchor" aria-label="anchor" href="#arg-col-out"></a></dt>
 <dd><p>optional character string to specify the color of the bars that are more extreme than the observed test statistic (the default is a semi-transparent shade of red).</p></dd>
 
-   <dt>col.ref</dt>
+   <dt id="arg-col-ref">col.ref<a class="anchor" aria-label="anchor" href="#arg-col-ref"></a></dt>
 <dd><p>optional character string to specify the color of the theoretical reference/null distribution that is superimposed on top of the histogram (the default is a dark shade of gray).</p></dd>
 
-   <dt>col.density</dt>
+   <dt id="arg-col-density">col.density<a class="anchor" aria-label="anchor" href="#arg-col-density"></a></dt>
 <dd><p>optional character string to specify the color of the kernel density estimate of the permutation distribution that is superimposed on top of the histogram (the default is blue).</p></dd>
 
-   <dt>trim</dt>
+   <dt id="arg-trim">trim<a class="anchor" aria-label="anchor" href="#arg-trim"></a></dt>
 <dd><p>the fraction (up to 0.5) of observations to be trimmed from the tails of each permutation distribution before its histogram is plotted.</p></dd>
 
-   <dt>adjust</dt>
+   <dt id="arg-adjust">adjust<a class="anchor" aria-label="anchor" href="#arg-adjust"></a></dt>
 <dd><p>numeric value to be passed on to the corresponding argument of <code><a href="https://rdrr.io/r/stats/density.html" class="external-link">density</a></code> (for adjusting the bandwidth of the kernel density estimate).</p></dd>
 
-   <dt>lwd</dt>
+   <dt id="arg-lwd">lwd<a class="anchor" aria-label="anchor" href="#arg-lwd"></a></dt>
 <dd><p>numeric vector to specify the width of the vertical lines corresponding to the value of the observed test statistic, of the theoretical reference/null distribution, of the density estimate, and of the vertical line at 0 (note: by default, the theoretical reference/null distribution and the density estimate both have a line width of 0 and are therefore not plotted).</p></dd>
 
-   <dt>layout</dt>
+   <dt id="arg-layout">layout<a class="anchor" aria-label="anchor" href="#arg-layout"></a></dt>
 <dd><p>optional vector of two numbers to specify the number of rows and columns for the layout of the figure.</p></dd>
 
-   <dt>legend</dt>
+   <dt id="arg-legend">legend<a class="anchor" aria-label="anchor" href="#arg-legend"></a></dt>
 <dd><p>logical to specify whether a legend should be added to the plot (the default is <code>FALSE</code>). Can also be a keyword to specify the position of the legend (see <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code>).</p></dd>
 
-   <dt>...</dt>
+   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments.</p></dd>
 
 </dl></div>
@@ -305,17 +306,17 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
     appId: 'SFWCWKDGL8',
-    
+
     apiKey: 'b56f56470243cf9799f796a3d6ecaedd',
     indexName: 'metafor',
     inputSelector: 'input#search-input.form-control',

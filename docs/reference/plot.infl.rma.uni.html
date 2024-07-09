@@ -15,7 +15,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-24</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -60,33 +60,33 @@
             <span class="fas fa-adjust fa-lg"></span>
           </a>
         </li>
-        
+
         <li>
   <a href="https://scholar.social/@wviechtb" class="external-link">Mastodon</a>
 </li>
 <li>
   <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>
 </li>
-        
-        
+
+
 
 
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot Method for 'infl.rma.uni' Objects</h1>
-    
+
     <div class="hidden name"><code>plot.infl.rma.uni.Rd</code></div>
     </div>
 
@@ -95,50 +95,51 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for infl.rma.uni</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'infl.rma.uni'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, plotinf<span class="op">=</span><span class="cn">TRUE</span>, plotdfbs<span class="op">=</span><span class="cn">FALSE</span>, dfbsnew<span class="op">=</span><span class="cn">FALSE</span>, logcov<span class="op">=</span><span class="cn">TRUE</span>,</span>
 <span>     <span class="va">layout</span>, slab.style<span class="op">=</span><span class="fl">1</span>, las<span class="op">=</span><span class="fl">0</span>, pch<span class="op">=</span><span class="fl">21</span>, <span class="va">bg</span>, <span class="va">bg.infl</span>, <span class="va">col.na</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+    <p></p>
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>an object of class <code>"infl.rma.uni"</code> obtained with <code><a href="influence.rma.uni.html">influence</a></code>.</p></dd>
 
-   <dt>plotinf</dt>
+   <dt id="arg-plotinf">plotinf<a class="anchor" aria-label="anchor" href="#arg-plotinf"></a></dt>
 <dd><p>logical to specify whether the various case diagnostics should be plotted (the default is <code>TRUE</code>). Can also be a vector of up to 8 integers to specify which plots to draw. See ‘Details’ for the numbers corresponding to the various plots.</p></dd>
 
-   <dt>plotdfbs</dt>
+   <dt id="arg-plotdfbs">plotdfbs<a class="anchor" aria-label="anchor" href="#arg-plotdfbs"></a></dt>
 <dd><p>logical to specify whether the DFBETAS values should be plotted (the default is <code>FALSE</code>). Can also be a vector of integers to specify for which coefficient(s) to plot the DFBETAS values.</p></dd>
 
-   <dt>dfbsnew</dt>
+   <dt id="arg-dfbsnew">dfbsnew<a class="anchor" aria-label="anchor" href="#arg-dfbsnew"></a></dt>
 <dd><p>logical to specify whether a new device should be opened for plotting the DFBETAS values (the default is <code>FALSE</code>).</p></dd>
 
-   <dt>logcov</dt>
+   <dt id="arg-logcov">logcov<a class="anchor" aria-label="anchor" href="#arg-logcov"></a></dt>
 <dd><p>logical to specify whether the covariance ratios should be plotted on a log scale (the default is <code>TRUE</code>).</p></dd>
 
-   <dt>layout</dt>
+   <dt id="arg-layout">layout<a class="anchor" aria-label="anchor" href="#arg-layout"></a></dt>
 <dd><p>optional vector of two numbers to specify the number of rows and columns for the layout of the figure.</p></dd>
 
-   <dt>slab.style</dt>
+   <dt id="arg-slab-style">slab.style<a class="anchor" aria-label="anchor" href="#arg-slab-style"></a></dt>
 <dd><p>integer to specify the style of the x-axis labels: 1 = study number, 2 = study label, 3 = abbreviated study label. Note that study labels, even when abbreviated, may be too long to fit in the margins (see argument <code>mar</code> for <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></code> to adjust the margin sizes).</p></dd>
 
-   <dt>las</dt>
+   <dt id="arg-las">las<a class="anchor" aria-label="anchor" href="#arg-las"></a></dt>
 <dd><p>integer between 0 and 3 to specify the alignment of the axis labels (see <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></code>). The most useful alternative to 0 is 3, so that the x-axis labels are drawn vertical to the axis.</p></dd>
 
-   <dt>pch</dt>
+   <dt id="arg-pch">pch<a class="anchor" aria-label="anchor" href="#arg-pch"></a></dt>
 <dd><p>plotting symbol to use. By default, an open circle is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
 
-   <dt>bg</dt>
+   <dt id="arg-bg">bg<a class="anchor" aria-label="anchor" href="#arg-bg"></a></dt>
 <dd><p>optional character string to specify the background color of open plotting symbols. If unspecified, gray is used by default.</p></dd>
 
-   <dt>bg.infl</dt>
+   <dt id="arg-bg-infl">bg.infl<a class="anchor" aria-label="anchor" href="#arg-bg-infl"></a></dt>
 <dd><p>optional character string to specify the background color when the point is considered influential. If unspecified, red is used by default.</p></dd>
 
-   <dt>col.na</dt>
+   <dt id="arg-col-na">col.na<a class="anchor" aria-label="anchor" href="#arg-col-na"></a></dt>
 <dd><p>optional character string to specify the color for lines connecting two points with <code>NA</code> values in between. If unspecified, a light shade of gray is used by default.</p></dd>
 
-   <dt>...</dt>
+   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments.</p></dd>
 
 </dl></div>
@@ -212,17 +213,17 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
     appId: 'SFWCWKDGL8',
-    
+
     apiKey: 'b56f56470243cf9799f796a3d6ecaedd',
     indexName: 'metafor',
     inputSelector: 'input#search-input.form-control',

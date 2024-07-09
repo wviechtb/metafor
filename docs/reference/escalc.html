@@ -15,7 +15,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-24</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -60,33 +60,33 @@
             <span class="fas fa-adjust fa-lg"></span>
           </a>
         </li>
-        
+
         <li>
   <a href="https://scholar.social/@wviechtb" class="external-link">Mastodon</a>
 </li>
 <li>
   <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>
 </li>
-        
-        
+
+
 
 
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Calculate Effect Sizes and Outcome Measures</h1>
-    
+
     <div class="hidden name"><code>escalc.Rd</code></div>
     </div>
 
@@ -105,127 +105,128 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>measure</dt>
+    <p></p>
+<dl><dt id="arg-measure">measure<a class="anchor" aria-label="anchor" href="#arg-measure"></a></dt>
 <dd><p>a character string to specify which effect size or outcome measure should be calculated. See ‘Details’ for possible options and how the data needed to compute the selected effect size or outcome measure should then be specified (i.e., which of the following arguments need to be used).</p></dd>
 
-   <dt>ai</dt>
+   <dt id="arg-ai">ai<a class="anchor" aria-label="anchor" href="#arg-ai"></a></dt>
 <dd><p>vector with the <em></em>\(2 \times 2\) table frequencies (upper left cell).</p></dd>
 
-   <dt>bi</dt>
+   <dt id="arg-bi">bi<a class="anchor" aria-label="anchor" href="#arg-bi"></a></dt>
 <dd><p>vector with the <em></em>\(2 \times 2\) table frequencies (upper right cell).</p></dd>
 
-   <dt>ci</dt>
+   <dt id="arg-ci">ci<a class="anchor" aria-label="anchor" href="#arg-ci"></a></dt>
 <dd><p>vector with the <em></em>\(2 \times 2\) table frequencies (lower left cell).</p></dd>
 
-   <dt>di</dt>
+   <dt id="arg-di">di<a class="anchor" aria-label="anchor" href="#arg-di"></a></dt>
 <dd><p>vector with the <em></em>\(2 \times 2\) table frequencies (lower right cell).</p></dd>
 
-   <dt>n1i</dt>
+   <dt id="arg-n-i">n1i<a class="anchor" aria-label="anchor" href="#arg-n-i"></a></dt>
 <dd><p>vector with the group sizes or row totals (first group/row).</p></dd>
 
-   <dt>n2i</dt>
+   <dt id="arg-n-i">n2i<a class="anchor" aria-label="anchor" href="#arg-n-i"></a></dt>
 <dd><p>vector with the group sizes or row totals (second group/row).</p></dd>
 
-   <dt>x1i</dt>
+   <dt id="arg-x-i">x1i<a class="anchor" aria-label="anchor" href="#arg-x-i"></a></dt>
 <dd><p>vector with the number of events (first group).</p></dd>
 
-   <dt>x2i</dt>
+   <dt id="arg-x-i">x2i<a class="anchor" aria-label="anchor" href="#arg-x-i"></a></dt>
 <dd><p>vector with the number of events (second group).</p></dd>
 
-   <dt>t1i</dt>
+   <dt id="arg-t-i">t1i<a class="anchor" aria-label="anchor" href="#arg-t-i"></a></dt>
 <dd><p>vector with the total person-times (first group).</p></dd>
 
-   <dt>t2i</dt>
+   <dt id="arg-t-i">t2i<a class="anchor" aria-label="anchor" href="#arg-t-i"></a></dt>
 <dd><p>vector with the total person-times (second group).</p></dd>
 
-   <dt>m1i</dt>
+   <dt id="arg-m-i">m1i<a class="anchor" aria-label="anchor" href="#arg-m-i"></a></dt>
 <dd><p>vector with the means (first group or time point).</p></dd>
 
-   <dt>m2i</dt>
+   <dt id="arg-m-i">m2i<a class="anchor" aria-label="anchor" href="#arg-m-i"></a></dt>
 <dd><p>vector with the means (second group or time point).</p></dd>
 
-   <dt>sd1i</dt>
+   <dt id="arg-sd-i">sd1i<a class="anchor" aria-label="anchor" href="#arg-sd-i"></a></dt>
 <dd><p>vector with the standard deviations (first group or time point).</p></dd>
 
-   <dt>sd2i</dt>
+   <dt id="arg-sd-i">sd2i<a class="anchor" aria-label="anchor" href="#arg-sd-i"></a></dt>
 <dd><p>vector with the standard deviations (second group or time point).</p></dd>
 
-   <dt>xi</dt>
+   <dt id="arg-xi">xi<a class="anchor" aria-label="anchor" href="#arg-xi"></a></dt>
 <dd><p>vector with the frequencies of the event of interest.</p></dd>
 
-   <dt>mi</dt>
+   <dt id="arg-mi">mi<a class="anchor" aria-label="anchor" href="#arg-mi"></a></dt>
 <dd><p>vector with the frequencies of the complement of the event of interest or the group means.</p></dd>
 
-   <dt>ri</dt>
+   <dt id="arg-ri">ri<a class="anchor" aria-label="anchor" href="#arg-ri"></a></dt>
 <dd><p>vector with the raw correlation coefficients.</p></dd>
 
-   <dt>ti</dt>
+   <dt id="arg-ti">ti<a class="anchor" aria-label="anchor" href="#arg-ti"></a></dt>
 <dd><p>vector with the total person-times or t-test statistics.</p></dd>
 
-   <dt>fi</dt>
+   <dt id="arg-fi">fi<a class="anchor" aria-label="anchor" href="#arg-fi"></a></dt>
 <dd><p>vector with the F-test statistics.</p></dd>
 
-   <dt>pi</dt>
+   <dt id="arg-pi">pi<a class="anchor" aria-label="anchor" href="#arg-pi"></a></dt>
 <dd><p>vector with the (signed) p-values.</p></dd>
 
-   <dt>sdi</dt>
+   <dt id="arg-sdi">sdi<a class="anchor" aria-label="anchor" href="#arg-sdi"></a></dt>
 <dd><p>vector with the standard deviations.</p></dd>
 
-   <dt>r2i</dt>
+   <dt id="arg-r-i">r2i<a class="anchor" aria-label="anchor" href="#arg-r-i"></a></dt>
 <dd><p>vector with the <em></em>\(R^2\) values.</p></dd>
 
-   <dt>ni</dt>
+   <dt id="arg-ni">ni<a class="anchor" aria-label="anchor" href="#arg-ni"></a></dt>
 <dd><p>vector with the sample/group sizes.</p></dd>
 
-   <dt>yi</dt>
+   <dt id="arg-yi">yi<a class="anchor" aria-label="anchor" href="#arg-yi"></a></dt>
 <dd><p>vector with the observed effect sizes or outcomes.</p></dd>
 
-   <dt>vi</dt>
+   <dt id="arg-vi">vi<a class="anchor" aria-label="anchor" href="#arg-vi"></a></dt>
 <dd><p>vector with the corresponding sampling variances.</p></dd>
 
-   <dt>sei</dt>
+   <dt id="arg-sei">sei<a class="anchor" aria-label="anchor" href="#arg-sei"></a></dt>
 <dd><p>vector with the corresponding standard errors.</p></dd>
 
-   <dt>data</dt>
+   <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
 
-   <dt>slab</dt>
+   <dt id="arg-slab">slab<a class="anchor" aria-label="anchor" href="#arg-slab"></a></dt>
 <dd><p>optional vector with labels for the studies.</p></dd>
 
-   <dt>subset</dt>
+   <dt id="arg-subset">subset<a class="anchor" aria-label="anchor" href="#arg-subset"></a></dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that will be included in the data frame returned by the function.</p></dd>
 
-   <dt>include</dt>
+   <dt id="arg-include">include<a class="anchor" aria-label="anchor" href="#arg-include"></a></dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies for which the measure should be calculated. See the ‘Value’ section for more details.</p></dd>
 
-   <dt>add</dt>
+   <dt id="arg-add">add<a class="anchor" aria-label="anchor" href="#arg-add"></a></dt>
 <dd><p>a non-negative number to specify the amount to add to zero cells, counts, or frequencies. See ‘Details’.</p></dd>
 
-   <dt>to</dt>
+   <dt id="arg-to">to<a class="anchor" aria-label="anchor" href="#arg-to"></a></dt>
 <dd><p>a character string to specify when the values under <code>add</code> should be added (either <code>"all"</code>, <code>"only0"</code>, <code>"if0all"</code>, or <code>"none"</code>). See ‘Details’.</p></dd>
 
-   <dt>drop00</dt>
+   <dt id="arg-drop-">drop00<a class="anchor" aria-label="anchor" href="#arg-drop-"></a></dt>
 <dd><p>logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes. See ‘Details’.</p></dd>
 
-   <dt>vtype</dt>
+   <dt id="arg-vtype">vtype<a class="anchor" aria-label="anchor" href="#arg-vtype"></a></dt>
 <dd><p>a character string to specify the type of sampling variances to calculate. See ‘Details’.</p></dd>
 
-   <dt>var.names</dt>
+   <dt id="arg-var-names">var.names<a class="anchor" aria-label="anchor" href="#arg-var-names"></a></dt>
 <dd><p>character vector with two elements to specify the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (the defaults are <code>"yi"</code> and <code>"vi"</code>).</p></dd>
 
-   <dt>add.measure</dt>
+   <dt id="arg-add-measure">add.measure<a class="anchor" aria-label="anchor" href="#arg-add-measure"></a></dt>
 <dd><p>logical to specify whether a variable should be added to the data frame (with default name <code>"measure"</code>) that indicates the type of outcome measure computed. When using this option, <code>var.names</code> can have a third element to change this variable name.</p></dd>
 
-   <dt>append</dt>
+   <dt id="arg-append">append<a class="anchor" aria-label="anchor" href="#arg-append"></a></dt>
 <dd><p>logical to specify whether the data frame provided via the <code>data</code> argument should be returned together with the observed effect sizes or outcomes and corresponding sampling variances (the default is <code>TRUE</code>).</p></dd>
 
-   <dt>replace</dt>
+   <dt id="arg-replace">replace<a class="anchor" aria-label="anchor" href="#arg-replace"></a></dt>
 <dd><p>logical to specify whether existing values for <code>yi</code> and <code>vi</code> in the data frame should be replaced. Only relevant when <code>append=TRUE</code> and the data frame already contains the <code>yi</code> and <code>vi</code> variables. If <code>replace=TRUE</code> (the default), all of the existing values will be overwritten. If <code>replace=FALSE</code>, only <code>NA</code> values will be replaced. See the ‘Value’ section for more details.</p></dd>
 
-   <dt>digits</dt>
+   <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. Note that the values are stored without rounding in the returned object. See also <a href="misc-options.html">here</a> for further details on how to control the number of digits in the output.</p></dd>
 
-   <dt>...</dt>
+   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments.</p></dd>
 
 </dl></div>
@@ -550,9 +551,7 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>An object of class <code>c("escalc","data.frame")</code>. The object is a data frame containing the following components:</p>
+    <p>An object of class <code>c("escalc","data.frame")</code>. The object is a data frame containing the following components:</p>
 <dl><dt>yi</dt>
 <dd><p>vector with the observed effect sizes or outcomes.</p></dd>
 
@@ -561,17 +560,9 @@
 
 
 </dl><p>If a data frame was specified via the <code>data</code> argument and <code>append=TRUE</code>, then variables <code>yi</code> and <code>vi</code> are appended to this data frame. Note that the <code>var.names</code> argument actually specifies the names of these two variables (<code>"yi"</code> and <code>"vi"</code> are the defaults).</p>
-
-
 <p>If the data frame already contains two variables with names as specified by the <code>var.names</code> argument, the values for these two variables will be overwritten when <code>replace=TRUE</code> (which is the default). By setting <code>replace=FALSE</code>, only values that are <code>NA</code> will be replaced.</p>
-
-
 <p>The <code>subset</code> argument can be used to select the studies that will be included in the data frame returned by the function. On the other hand, the <code>include</code> argument simply selects for which studies the measure will be computed (if it shouldn't be computed for all of them).</p>
-
-
 <p>The object is formatted and printed with the <code><a href="print.escalc.html">print</a></code> function. The <code><a href="print.escalc.html">summary</a></code> function can be used to obtain confidence intervals for the individual outcomes. See <code><a href="methods.escalc.html">methods.escalc</a></code> for some additional method functions for <code>"escalc"</code> objects.</p>
-
-
 <p>With the <code><a href="aggregate.escalc.html">aggregate</a></code> function, one can aggregate multiple effect sizes or outcomes belonging to the same study (or some other clustering variable) into a single combined effect size or outcome.</p>
     </div>
     <div id="note">
@@ -881,17 +872,17 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
     appId: 'SFWCWKDGL8',
-    
+
     apiKey: 'b56f56470243cf9799f796a3d6ecaedd',
     indexName: 'metafor',
     inputSelector: 'input#search-input.form-control',

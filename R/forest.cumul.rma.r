@@ -1,6 +1,6 @@
 forest.cumul.rma <- function(x,
 annotate=TRUE,                                                header=FALSE,
-xlim, alim, olim, ylim, at, steps=5, level=x$level, refline=0, digits=2L, width,
+xlim, alim, olim, ylim, at, steps=5,                refline=0, digits=2L, width,
 xlab,             ilab, ilab.lab, ilab.xpos, ilab.pos,
 transf, atransf, targs, rows,
 efac=1, pch, psize,                          col,         shade, colshade,
@@ -16,6 +16,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
+
+   if (x$transf) # if results were transformed, need x$se not be missing below (not really used anyway)
+      x$se <- rep(0, length(x$estimate))
 
    if (missing(transf))
       transf <- FALSE
@@ -92,7 +95,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (missing(cex.axis))
       cex.axis <- NULL
 
-   level <- .level(level)
+   level <- .level(x$level)
 
    ### digits[1] for annotations, digits[2] for x-axis labels
    ### note: digits can also be a list (e.g., digits=list(2,3L)); trailing 0's on the x-axis labels
@@ -230,7 +233,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### note: ilab, pch, psize, col must be of the same length as yi (which may
    ###       or may not contain NAs; this is different than the other forest()
-   ###       functions but it would be tricky to make this fully consistent now
+   ###       functions but it would be tricky to make this fully consistent now)
 
    if (x$slab.null) {
       slab    <- paste("+ Study", x$ids)  # cumul() removes the studies with NAs when na.action="na.omit"

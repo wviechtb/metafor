@@ -444,7 +444,8 @@
    ux <- unique(x)
 
    for (i in seq_along(ux)) {
-      xiTF <- x == ux[i]
+      #xiTF <- x == ux[i]
+      xiTF <- x %in% ux[i] # works also with NAs in vector (multiple NAs are then NA.1, NA.2, ...)
       xi <- x[xiTF]
       if (length(xi) == 1L)
          next

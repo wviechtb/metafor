@@ -15,7 +15,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-24</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -60,33 +60,33 @@
             <span class="fas fa-adjust fa-lg"></span>
           </a>
         </li>
-        
+
         <li>
   <a href="https://scholar.social/@wviechtb" class="external-link">Mastodon</a>
 </li>
 <li>
   <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>
 </li>
-        
-        
+
+
 
 
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Fit Regression Models based on a Correlation and Covariance Matrix</h1>
-    
+
     <div class="hidden name"><code>matreg.Rd</code></div>
     </div>
 
@@ -101,40 +101,41 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>y</dt>
+    <p></p>
+<dl><dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
 <dd><p>index (or name given as a character string) of the outcome variable.</p></dd>
 
-   <dt>x</dt>
+   <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>indices (or names given as a character vector) of the predictor variables.</p></dd>
 
-   <dt>R</dt>
+   <dt id="arg-r">R<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
 <dd><p>correlation or covariance matrix (or only the lower triangular part including the diagonal).</p></dd>
 
-   <dt>n</dt>
+   <dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
 <dd><p>sample size based on which the elements in the correlation/covariance matrix were computed.</p></dd>
 
-   <dt>V</dt>
+   <dt id="arg-v">V<a class="anchor" aria-label="anchor" href="#arg-v"></a></dt>
 <dd><p>variance-covariance matrix of the lower triangular elements of the correlation/covariance matrix. Either <code>V</code> or <code>n</code> should be specified, not both. See ‘Details’.</p></dd>
 
-   <dt>cov</dt>
+   <dt id="arg-cov">cov<a class="anchor" aria-label="anchor" href="#arg-cov"></a></dt>
 <dd><p>logical to specify whether <code>R</code> is a covariance matrix (the default is <code>FALSE</code>).</p></dd>
 
-   <dt>means</dt>
+   <dt id="arg-means">means<a class="anchor" aria-label="anchor" href="#arg-means"></a></dt>
 <dd><p>optional vector to specify the means of the variables (only relevant when <code>cov=TRUE</code>).</p></dd>
 
-   <dt>ztor</dt>
+   <dt id="arg-ztor">ztor<a class="anchor" aria-label="anchor" href="#arg-ztor"></a></dt>
 <dd><p>logical to specify whether <code>R</code> is a matrix of r-to-z transformed correlations and hence should be back-transformed to raw correlations (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
 
-   <dt>nearpd</dt>
+   <dt id="arg-nearpd">nearpd<a class="anchor" aria-label="anchor" href="#arg-nearpd"></a></dt>
 <dd><p>logical to specify whether the <code><a href="https://rdrr.io/pkg/Matrix/man/nearPD.html" class="external-link">nearPD</a></code> function from the <a href="https://cran.r-project.org/package=Matrix" class="external-link">Matrix</a> package should be used when the <em></em>\(R_{x,x}\) matrix cannot be inverted. See ‘Note’.</p></dd>
 
-   <dt>level</dt>
+   <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95; see <a href="misc-options.html">here</a> for details).</p></dd>
 
-   <dt>digits</dt>
+   <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded.</p></dd>
 
-   <dt>...</dt>
+   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments.</p></dd>
 
 </dl></div>
@@ -148,9 +149,7 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>An object of class <code>"matreg"</code>. The object is a list containing the following components:</p>
+    <p>An object of class <code>"matreg"</code>. The object is a list containing the following components:</p>
 <dl><dt>tab</dt>
 <dd><p>a data frame with the estimated model coefficients, standard errors, test statistics, degrees of freedom (only for t-tests), p-values, and lower/upper confidence interval bounds.</p></dd>
 
@@ -571,17 +570,17 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
     appId: 'SFWCWKDGL8',
-    
+
     apiKey: 'b56f56470243cf9799f796a3d6ecaedd',
     indexName: 'metafor',
     inputSelector: 'input#search-input.form-control',

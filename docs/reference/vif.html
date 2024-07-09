@@ -15,7 +15,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-24</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -60,33 +60,33 @@
             <span class="fas fa-adjust fa-lg"></span>
           </a>
         </li>
-        
+
         <li>
   <a href="https://scholar.social/@wviechtb" class="external-link">Mastodon</a>
 </li>
 <li>
   <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>
 </li>
-        
-        
+
+
 
 
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Variance Inflation Factors for 'rma' Objects</h1>
-    
+
     <div class="hidden name"><code>vif.Rd</code></div>
     </div>
 
@@ -97,53 +97,54 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">vif</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for rma</span></span>
+<span><span class="co"># S3 method for class 'rma'</span></span>
 <span><span class="fu">vif</span><span class="op">(</span><span class="va">x</span>, <span class="va">btt</span>, <span class="va">att</span>, table<span class="op">=</span><span class="cn">FALSE</span>, reestimate<span class="op">=</span><span class="cn">FALSE</span>, sim<span class="op">=</span><span class="cn">FALSE</span>, progbar<span class="op">=</span><span class="cn">TRUE</span>,</span>
 <span>    seed<span class="op">=</span><span class="cn">NULL</span>, parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for vif.rma</span></span>
+<span><span class="co"># S3 method for class 'vif.rma'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+    <p></p>
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>an object of class <code>"rma"</code> (for <code>vif</code>) or <code>"vif.rma"</code> (for <code>print</code>).</p></dd>
 
-   <dt>btt</dt>
+   <dt id="arg-btt">btt<a class="anchor" aria-label="anchor" href="#arg-btt"></a></dt>
 <dd><p>optional vector of indices (or list thereof) to specify a set of coefficients for which a generalized variance inflation factor (GVIF) should be computed. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for.</p></dd>
 
-   <dt>att</dt>
+   <dt id="arg-att">att<a class="anchor" aria-label="anchor" href="#arg-att"></a></dt>
 <dd><p>optional vector of indices (or list thereof) to specify a set of scale coefficients for which a generalized variance inflation factor (GVIF) should be computed. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for. Only relevant for location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code>).</p></dd>
 
-   <dt>table</dt>
+   <dt id="arg-table">table<a class="anchor" aria-label="anchor" href="#arg-table"></a></dt>
 <dd><p>logical to specify whether the VIFs should be added to the model coefficient table (the default is <code>FALSE</code>). Only relevant when <code>btt</code> (or <code>att</code>) is not specified.</p></dd>
 
-   <dt>reestimate</dt>
+   <dt id="arg-reestimate">reestimate<a class="anchor" aria-label="anchor" href="#arg-reestimate"></a></dt>
 <dd><p>logical to specify whether the model should be reestimated when removing moderator variables from the model for computing a (G)VIF (the default is <code>FALSE</code>).</p></dd>
 
-   <dt>sim</dt>
+   <dt id="arg-sim">sim<a class="anchor" aria-label="anchor" href="#arg-sim"></a></dt>
 <dd><p>logical to specify whether the distribution of each (G)VIF under independence should be simulated (the default is <code>FALSE</code>). Can also be an integer to specify how many values to simulate (when <code>sim=TRUE</code>, the default is <code>1000</code>).</p></dd>
 
-   <dt>progbar</dt>
+   <dt id="arg-progbar">progbar<a class="anchor" aria-label="anchor" href="#arg-progbar"></a></dt>
 <dd><p>logical to specify whether a progress bar should be shown when <code>sim=TRUE</code> (the default is <code>TRUE</code>).</p></dd>
 
-   <dt>seed</dt>
+   <dt id="arg-seed">seed<a class="anchor" aria-label="anchor" href="#arg-seed"></a></dt>
 <dd><p>optional value to specify the seed of the random number generator when <code>sim=TRUE</code> (for reproducibility).</p></dd>
 
-   <dt>parallel</dt>
+   <dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
 <dd><p>character string to specify whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See ‘Note’.</p></dd>
 
-   <dt>ncpus</dt>
+   <dt id="arg-ncpus">ncpus<a class="anchor" aria-label="anchor" href="#arg-ncpus"></a></dt>
 <dd><p>integer to specify the number of processes to use in the parallel processing.</p></dd>
 
-   <dt>cl</dt>
+   <dt id="arg-cl">cl<a class="anchor" aria-label="anchor" href="#arg-cl"></a></dt>
 <dd><p>optional cluster to use if <code>parallel="snow"</code>. If unspecified, a cluster on the local machine is created for the duration of the call.</p></dd>
 
-   <dt>digits</dt>
+   <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
 
-   <dt>...</dt>
+   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments.</p></dd>
 
 </dl></div>
@@ -201,9 +202,7 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>An object of class <code>"vif.rma"</code>. The object is a list containing the following components:</p>
+    <p>An object of class <code>"vif.rma"</code>. The object is a list containing the following components:</p>
 <dl><dt>vif</dt>
 <dd><p>a list of data frames with the (G)VIFs and (G)SIFs and some additional information.</p></dd>
 
@@ -224,8 +223,6 @@
 
 
 </dl><p>When <code>x</code> was a location-scale model object and (G)VIFs can be computed for both the location and the scale coefficients, then the object is a list with elements <code>beta</code> and <code>alpha</code>, where each element is an <code>"vif.rma"</code> object as described above.</p>
-
-
 <p>The results are formatted and printed with the <code>print</code> function. To format the results as a data frame, one can use the <code><a href="methods.vif.rma.html">as.data.frame</a></code> function. When <code>sim=TRUE</code>, the distribution of each (G)VIF can be plotted with the <code><a href="plot.vif.rma.html">plot</a></code> function.</p>
     </div>
     <div id="note">
@@ -369,17 +366,17 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
     appId: 'SFWCWKDGL8',
-    
+
     apiKey: 'b56f56470243cf9799f796a3d6ecaedd',
     indexName: 'metafor',
     inputSelector: 'input#search-input.form-control',

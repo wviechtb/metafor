@@ -15,7 +15,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-24</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -60,33 +60,33 @@
             <span class="fas fa-adjust fa-lg"></span>
           </a>
         </li>
-        
+
         <li>
   <a href="https://scholar.social/@wviechtb" class="external-link">Mastodon</a>
 </li>
 <li>
   <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>
 </li>
-        
-        
+
+
 
 
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Transform Observed Effect Sizes or Outcomes and their Sampling Variances using the Delta Method</h1>
-    
+
     <div class="hidden name"><code>conv.delta.Rd</code></div>
     </div>
 
@@ -100,34 +100,35 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>yi</dt>
+    <p></p>
+<dl><dt id="arg-yi">yi<a class="anchor" aria-label="anchor" href="#arg-yi"></a></dt>
 <dd><p>vector with the observed effect sizes or outcomes.</p></dd>
 
-   <dt>vi</dt>
+   <dt id="arg-vi">vi<a class="anchor" aria-label="anchor" href="#arg-vi"></a></dt>
 <dd><p>vector with the corresponding sampling variances.</p></dd>
 
-   <dt>ni</dt>
+   <dt id="arg-ni">ni<a class="anchor" aria-label="anchor" href="#arg-ni"></a></dt>
 <dd><p>vector with the total sample sizes of the studies.</p></dd>
 
-   <dt>data</dt>
+   <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
 
-   <dt>include</dt>
+   <dt id="arg-include">include<a class="anchor" aria-label="anchor" href="#arg-include"></a></dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies for which the transformation should be carried out.</p></dd>
 
-   <dt>transf</dt>
+   <dt id="arg-transf">transf<a class="anchor" aria-label="anchor" href="#arg-transf"></a></dt>
 <dd><p>a function which should be used for the transformation.</p></dd>
 
-   <dt>var.names</dt>
+   <dt id="arg-var-names">var.names<a class="anchor" aria-label="anchor" href="#arg-var-names"></a></dt>
 <dd><p>character vector with two elements to specify the name of the variable for the transformed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (if <code>data</code> is an object of class <code>"escalc"</code>, the <code>var.names</code> are taken from the object; otherwise the defaults are <code>"yi"</code> and <code>"vi"</code>).</p></dd>
 
-   <dt>append</dt>
+   <dt id="arg-append">append<a class="anchor" aria-label="anchor" href="#arg-append"></a></dt>
 <dd><p>logical to specify whether the data frame provided via the <code>data</code> argument should be returned together with the estimated values (the default is <code>TRUE</code>).</p></dd>
 
-   <dt>replace</dt>
+   <dt id="arg-replace">replace<a class="anchor" aria-label="anchor" href="#arg-replace"></a></dt>
 <dd><p>character string or logical to specify how values in <code>var.names</code> should be replaced (only relevant when using the <code>data</code> argument and if variables in <code>var.names</code> already exist in the data frame). See the ‘Value’ section for more details.</p></dd>
 
-   <dt>...</dt>
+   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments for the transformation function.</p></dd>
 
 </dl></div>
@@ -140,14 +141,8 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>If the <code>data</code> argument was not specified or <code>append=FALSE</code>, a data frame of class <code>c("escalc","data.frame")</code> with two variables called <code>var.names[1]</code> (by default <code>"yi"</code>) and <code>var.names[2]</code> (by default <code>"vi"</code>) with the transformed observed effect sizes or outcomes and the corresponding sampling variances (computed as described above).</p>
-
-
+    <p>If the <code>data</code> argument was not specified or <code>append=FALSE</code>, a data frame of class <code>c("escalc","data.frame")</code> with two variables called <code>var.names[1]</code> (by default <code>"yi"</code>) and <code>var.names[2]</code> (by default <code>"vi"</code>) with the transformed observed effect sizes or outcomes and the corresponding sampling variances (computed as described above).</p>
 <p>If <code>data</code> was specified and <code>append=TRUE</code>, then the original data frame is returned. If <code>var.names[1]</code> is a variable in <code>data</code> and <code>replace="ifna"</code> (or <code>replace=FALSE</code>), then only missing values in this variable are replaced with the transformed observed effect sizes or outcomes (where possible) and otherwise a new variable called <code>var.names[1]</code> is added to the data frame. Similarly, if <code>var.names[2]</code> is a variable in <code>data</code> and <code>replace="ifna"</code> (or <code>replace=FALSE</code>), then only missing values in this variable are replaced with the sampling variances calculated as described above (where possible) and otherwise a new variable called <code>var.names[2]</code> is added to the data frame.</p>
-
-
 <p>If <code>replace="all"</code> (or <code>replace=TRUE</code>), then all values in <code>var.names[1]</code> and <code>var.names[2]</code> are replaced, even for cases where the value in <code>var.names[1]</code> and <code>var.names[2]</code> is not missing.</p>
     </div>
     <div id="author">
@@ -644,17 +639,17 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
     appId: 'SFWCWKDGL8',
-    
+
     apiKey: 'b56f56470243cf9799f796a3d6ecaedd',
     indexName: 'metafor',
     inputSelector: 'input#search-input.form-control',

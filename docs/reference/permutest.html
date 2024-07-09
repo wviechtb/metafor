@@ -15,7 +15,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-24</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -60,33 +60,33 @@
             <span class="fas fa-adjust fa-lg"></span>
           </a>
         </li>
-        
+
         <li>
   <a href="https://scholar.social/@wviechtb" class="external-link">Mastodon</a>
 </li>
 <li>
   <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>
 </li>
-        
-        
+
+
 
 
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Permutation Tests for 'rma.uni' Objects</h1>
-    
+
     <div class="hidden name"><code>permutest.Rd</code></div>
     </div>
 
@@ -97,45 +97,46 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">permutest</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for rma.uni</span></span>
+<span><span class="co"># S3 method for class 'rma.uni'</span></span>
 <span><span class="fu">permutest</span><span class="op">(</span><span class="va">x</span>, exact<span class="op">=</span><span class="cn">FALSE</span>, iter<span class="op">=</span><span class="fl">1000</span>, btt<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">btt</span>,</span>
 <span>          permci<span class="op">=</span><span class="cn">FALSE</span>, progbar<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for rma.ls</span></span>
+<span><span class="co"># S3 method for class 'rma.ls'</span></span>
 <span><span class="fu">permutest</span><span class="op">(</span><span class="va">x</span>, exact<span class="op">=</span><span class="cn">FALSE</span>, iter<span class="op">=</span><span class="fl">1000</span>, btt<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">btt</span>, att<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">att</span>,</span>
 <span>          progbar<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+    <p></p>
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>an object of class <code>"rma.uni"</code> or <code>"rma.ls"</code>.</p></dd>
 
-   <dt>exact</dt>
+   <dt id="arg-exact">exact<a class="anchor" aria-label="anchor" href="#arg-exact"></a></dt>
 <dd><p>logical to specify whether an exact permutation test should be carried out (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
 
-   <dt>iter</dt>
+   <dt id="arg-iter">iter<a class="anchor" aria-label="anchor" href="#arg-iter"></a></dt>
 <dd><p>integer to specify the number of iterations for the permutation test when not doing an exact test (the default is <code>1000</code>).</p></dd>
 
-   <dt>btt</dt>
+   <dt id="arg-btt">btt<a class="anchor" aria-label="anchor" href="#arg-btt"></a></dt>
 <dd><p>optional vector of indices (or list thereof) to specify which coefficients should be included in the Wald-type test. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for.</p></dd>
 
-   <dt>att</dt>
+   <dt id="arg-att">att<a class="anchor" aria-label="anchor" href="#arg-att"></a></dt>
 <dd><p>optional vector of indices (or list thereof) to specify which scale coefficients should be included in the Wald-type test. Can also be a string to <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></code> for.</p></dd>
 
-   <dt>permci</dt>
+   <dt id="arg-permci">permci<a class="anchor" aria-label="anchor" href="#arg-permci"></a></dt>
 <dd><p>logical to specify whether permutation-based confidence intervals (CIs) should also be constructed (the default is <code>FALSE</code>). Can also be a vector of indices to specify for which coefficients a permutation-based CI should be obtained.</p></dd>
 
-   <dt>progbar</dt>
+   <dt id="arg-progbar">progbar<a class="anchor" aria-label="anchor" href="#arg-progbar"></a></dt>
 <dd><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>).</p></dd>
 
-   <dt>digits</dt>
+   <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
 <dd><p>optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.</p></dd>
 
-   <dt>control</dt>
+   <dt id="arg-control">control<a class="anchor" aria-label="anchor" href="#arg-control"></a></dt>
 <dd><p>list of control values for numerical comparisons (<code>comptol</code>) and for <code><a href="https://rdrr.io/r/stats/uniroot.html" class="external-link">uniroot</a></code> (i.e., <code>tol</code> and <code>maxiter</code>). The latter is only relevant when <code>permci=TRUE</code>. See ‘Note’.</p></dd>
 
-   <dt>...</dt>
+   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments.</p></dd>
 
 </dl></div>
@@ -176,9 +177,7 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>An object of class <code>"permutest.rma.uni"</code>. The object is a list containing the following components:</p>
+    <p>An object of class <code>"permutest.rma.uni"</code>. The object is a list containing the following components:</p>
 <dl><dt>pval</dt>
 <dd><p>p-value(s) based on the permutation test.</p></dd>
 
@@ -418,17 +417,17 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
     appId: 'SFWCWKDGL8',
-    
+
     apiKey: 'b56f56470243cf9799f796a3d6ecaedd',
     indexName: 'metafor',
     inputSelector: 'input#search-input.form-control',

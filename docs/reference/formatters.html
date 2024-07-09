@@ -15,7 +15,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-24</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -60,33 +60,33 @@
             <span class="fas fa-adjust fa-lg"></span>
           </a>
         </li>
-        
+
         <li>
   <a href="https://scholar.social/@wviechtb" class="external-link">Mastodon</a>
 </li>
 <li>
   <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>
 </li>
-        
-        
+
+
 
 
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Formatter Functions</h1>
-    
+
     <div class="hidden name"><code>formatters.Rd</code></div>
     </div>
 
@@ -103,64 +103,66 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
-<p><em>Arguments for <code>fmtp</code>:</em></p>
-<dl><dt>p</dt>
+    <p><em>Arguments for <code>fmtp</code>:</em></p>
+<p></p>
+<dl><dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
 <dd><p>vector of p-values to be formatted.</p></dd>
 
-   <dt>digits</dt>
+   <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
 <dd><p>integer to specify the number of decimal places to which the values should be rounded. For <code>fmmt</code>, can be a vector of length 2, to specify the number of digits for the test statistic and the p-value, respectively.</p></dd>
 
-   <dt>pname</dt>
+   <dt id="arg-pname">pname<a class="anchor" aria-label="anchor" href="#arg-pname"></a></dt>
 <dd><p>string to add as a prefix to the p-value (e.g., something like <code>"p-val"</code> or just <code>"p"</code>).</p></dd>
 
-   <dt>equal</dt>
+   <dt id="arg-equal">equal<a class="anchor" aria-label="anchor" href="#arg-equal"></a></dt>
 <dd><p>logical to specify whether an equal symbol should be shown before the p-value (when it is larger than the rounding cutoff).</p></dd>
 
-   <dt>sep</dt>
+   <dt id="arg-sep">sep<a class="anchor" aria-label="anchor" href="#arg-sep"></a></dt>
 <dd><p>logical to specify whether a space should be added between <code>pname</code>, the equal/lesser symbol, and the p-value.</p></dd>
 
-   <dt>add0</dt>
+   <dt id="arg-add-">add0<a class="anchor" aria-label="anchor" href="#arg-add-"></a></dt>
 <dd><p>logical to specify whether a 0 should be shown before the decimal point when the p-value is below the rounding cutoff.</p></dd>
 
-   <dt>quote</dt>
+   <dt id="arg-quote">quote<a class="anchor" aria-label="anchor" href="#arg-quote"></a></dt>
 <dd><p>logical to specify whether formatted strings should be quoted when printed.</p></dd>
 
 
    </dl><p><em>Arguments specific for <code>fmtx</code>:</em></p>
-<dl><dt>x</dt>
+<p></p>
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>vector of numeric values to be formatted.</p></dd>
 
-   <dt>flag</dt>
+   <dt id="arg-flag">flag<a class="anchor" aria-label="anchor" href="#arg-flag"></a></dt>
 <dd><p>a character string giving a format modifier as defined for <code><a href="https://rdrr.io/r/base/formatc.html" class="external-link">formatC</a></code>.</p></dd>
 
 
    </dl><p><em>Arguments specific for <code>fmtt</code>:</em></p>
-<dl><dt>val</dt>
+<p></p>
+<dl><dt id="arg-val">val<a class="anchor" aria-label="anchor" href="#arg-val"></a></dt>
 <dd><p>test statistic value to be formatted.</p></dd>
 
-   <dt>tname</dt>
+   <dt id="arg-tname">tname<a class="anchor" aria-label="anchor" href="#arg-tname"></a></dt>
 <dd><p>character string for the name of the test statistic.</p></dd>
 
-   <dt>df</dt>
+   <dt id="arg-df">df<a class="anchor" aria-label="anchor" href="#arg-df"></a></dt>
 <dd><p>optional value for the degrees of freedom of the test statistic.</p></dd>
 
-   <dt>df1</dt>
+   <dt id="arg-df-">df1<a class="anchor" aria-label="anchor" href="#arg-df-"></a></dt>
 <dd><p>optional value for the numerator degrees of freedom of the test statistic.</p></dd>
 
-   <dt>df2</dt>
+   <dt id="arg-df-">df2<a class="anchor" aria-label="anchor" href="#arg-df-"></a></dt>
 <dd><p>optional value for the denominator degrees of freedom of the test statistic.</p></dd>
 
-   <dt>pval</dt>
+   <dt id="arg-pval">pval<a class="anchor" aria-label="anchor" href="#arg-pval"></a></dt>
 <dd><p>the p-value corresponding to the test statistic.</p></dd>
 
-   <dt>format</dt>
+   <dt id="arg-format">format<a class="anchor" aria-label="anchor" href="#arg-format"></a></dt>
 <dd><p>either <code>1</code> or <code>2</code> to denote whether the degrees of freedom should be given before the test statistic (in parentheses) or after the test statistic.</p></dd>
 
-   <dt>call</dt>
+   <dt id="arg-call">call<a class="anchor" aria-label="anchor" href="#arg-call"></a></dt>
 <dd><p>logical to specify whether the formatted test result should be returned as a call or not.</p></dd>
 
-   <dt>...</dt>
+   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments.</p></dd>
 
 </dl></div>
@@ -172,9 +174,7 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>A character vector with the formatted values. By default (i.e., when <code>quote=FALSE</code>), formatted strings are not quoted when printed.</p>
+    <p>A character vector with the formatted values. By default (i.e., when <code>quote=FALSE</code>), formatted strings are not quoted when printed.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -244,17 +244,17 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
     appId: 'SFWCWKDGL8',
-    
+
     apiKey: 'b56f56470243cf9799f796a3d6ecaedd',
     indexName: 'metafor',
     inputSelector: 'input#search-input.form-control',

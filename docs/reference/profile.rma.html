@@ -15,7 +15,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-24</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@
       <ul class="nav navbar-nav"><li>
   <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
-     
+
   </a>
 </li>
 <li>
@@ -60,33 +60,33 @@
             <span class="fas fa-adjust fa-lg"></span>
           </a>
         </li>
-        
+
         <li>
   <a href="https://scholar.social/@wviechtb" class="external-link">Mastodon</a>
 </li>
 <li>
   <a href="https://github.com/wviechtb/metafor" class="external-link">GitHub</a>
 </li>
-        
-        
+
+
 
 
       </ul><form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off"></div>
       </form>
-      
+
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Profile Likelihood Plots for 'rma' Objects</h1>
-    
+
     <div class="hidden name"><code>profile.rma.Rd</code></div>
     </div>
 
@@ -95,103 +95,104 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for rma.uni</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'rma.uni'</span></span>
 <span><span class="fu">profile</span><span class="op">(</span><span class="va">fitted</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, steps<span class="op">=</span><span class="fl">20</span>, lltol<span class="op">=</span><span class="fl">1e-03</span>,</span>
 <span>        progbar<span class="op">=</span><span class="cn">TRUE</span>, parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>, plot<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for rma.mv</span></span>
+<span><span class="co"># S3 method for class 'rma.mv'</span></span>
 <span><span class="fu">profile</span><span class="op">(</span><span class="va">fitted</span>, <span class="va">sigma2</span>, <span class="va">tau2</span>, <span class="va">rho</span>, <span class="va">gamma2</span>, <span class="va">phi</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, steps<span class="op">=</span><span class="fl">20</span>, lltol<span class="op">=</span><span class="fl">1e-03</span>,</span>
 <span>        progbar<span class="op">=</span><span class="cn">TRUE</span>, parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>, plot<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for rma.uni.selmodel</span></span>
+<span><span class="co"># S3 method for class 'rma.uni.selmodel'</span></span>
 <span><span class="fu">profile</span><span class="op">(</span><span class="va">fitted</span>, <span class="va">tau2</span>, <span class="va">delta</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, steps<span class="op">=</span><span class="fl">20</span>, lltol<span class="op">=</span><span class="fl">1e-03</span>,</span>
 <span>        progbar<span class="op">=</span><span class="cn">TRUE</span>, parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>, plot<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for rma.ls</span></span>
+<span><span class="co"># S3 method for class 'rma.ls'</span></span>
 <span><span class="fu">profile</span><span class="op">(</span><span class="va">fitted</span>, <span class="va">alpha</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, steps<span class="op">=</span><span class="fl">20</span>, lltol<span class="op">=</span><span class="fl">1e-03</span>,</span>
 <span>        progbar<span class="op">=</span><span class="cn">TRUE</span>, parallel<span class="op">=</span><span class="st">"no"</span>, ncpus<span class="op">=</span><span class="fl">1</span>, <span class="va">cl</span>, plot<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for profile.rma</span></span>
+<span><span class="co"># S3 method for class 'profile.rma'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
-<span><span class="co"># S3 method for profile.rma</span></span>
+<span><span class="co"># S3 method for class 'profile.rma'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">xlim</span>, <span class="va">ylim</span>, pch<span class="op">=</span><span class="fl">19</span>, <span class="va">xlab</span>, <span class="va">ylab</span>, <span class="va">main</span>, refline<span class="op">=</span><span class="cn">TRUE</span>, cline<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>fitted</dt>
+    <p></p>
+<dl><dt id="arg-fitted">fitted<a class="anchor" aria-label="anchor" href="#arg-fitted"></a></dt>
 <dd><p>an object of class <code>"rma.uni"</code>, <code>"rma.mv"</code>, <code>"rma.uni.selmodel"</code>, or <code>"rma.ls"</code>.</p></dd>
 
-   <dt>x</dt>
+   <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p>an object of class <code>"profile.rma"</code> (for <code>plot</code> and <code>print</code>).</p></dd>
 
-   <dt>sigma2</dt>
+   <dt id="arg-sigma-">sigma2<a class="anchor" aria-label="anchor" href="#arg-sigma-"></a></dt>
 <dd><p>optional integer to specify for which <em></em>\(\sigma^2\) parameter the likelihood should be profiled.</p></dd>
 
-   <dt>tau2</dt>
+   <dt id="arg-tau-">tau2<a class="anchor" aria-label="anchor" href="#arg-tau-"></a></dt>
 <dd><p>optional integer to specify for which <em></em>\(\tau^2\) parameter the likelihood should be profiled.</p></dd>
 
-   <dt>rho</dt>
+   <dt id="arg-rho">rho<a class="anchor" aria-label="anchor" href="#arg-rho"></a></dt>
 <dd><p>optional integer to specify for which <em></em>\(\rho\) parameter the likelihood should be profiled.</p></dd>
 
-   <dt>gamma2</dt>
+   <dt id="arg-gamma-">gamma2<a class="anchor" aria-label="anchor" href="#arg-gamma-"></a></dt>
 <dd><p>optional integer to specify for which <em></em>\(\gamma^2\) parameter the likelihood should be profiled.</p></dd>
 
-   <dt>phi</dt>
+   <dt id="arg-phi">phi<a class="anchor" aria-label="anchor" href="#arg-phi"></a></dt>
 <dd><p>optional integer to specify for which <em></em>\(\phi\) parameter the likelihood should be profiled.</p></dd>
 
-   <dt>delta</dt>
+   <dt id="arg-delta">delta<a class="anchor" aria-label="anchor" href="#arg-delta"></a></dt>
 <dd><p>optional integer to specify for which <em></em>\(\delta\) parameter the likelihood should be profiled.</p></dd>
 
-   <dt>alpha</dt>
+   <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
 <dd><p>optional integer to specify for which <em></em>\(\alpha\) parameter the likelihood should be profiled.</p></dd>
 
-   <dt>xlim</dt>
+   <dt id="arg-xlim">xlim<a class="anchor" aria-label="anchor" href="#arg-xlim"></a></dt>
 <dd><p>optional vector to specify the lower and upper limit of the parameter over which the profiling should be done. If unspecified, the function sets these limits automatically.</p></dd>
 
-   <dt>ylim</dt>
+   <dt id="arg-ylim">ylim<a class="anchor" aria-label="anchor" href="#arg-ylim"></a></dt>
 <dd><p>optional vector to specify the y-axis limits when plotting the profiled likelihood. If unspecified, the function sets these limits automatically.</p></dd>
 
-   <dt>steps</dt>
+   <dt id="arg-steps">steps<a class="anchor" aria-label="anchor" href="#arg-steps"></a></dt>
 <dd><p>number of points between <code>xlim[1]</code> and <code>xlim[2]</code> (inclusive) for which the likelihood should be evaluated (the default is 20). Can also be a numeric vector of length 2 or longer to specify for which parameter values the likelihood should be evaluated (in this case, <code>xlim</code> is automatically set to <code>range(steps)</code> if unspecified).</p></dd>
 
-   <dt>lltol</dt>
+   <dt id="arg-lltol">lltol<a class="anchor" aria-label="anchor" href="#arg-lltol"></a></dt>
 <dd><p>numerical tolerance used when comparing values of the profiled log-likelihood with the log-likelihood of the fitted model (the default is 1e-03).</p></dd>
 
-   <dt>progbar</dt>
+   <dt id="arg-progbar">progbar<a class="anchor" aria-label="anchor" href="#arg-progbar"></a></dt>
 <dd><p>logical to specify whether a progress bar should be shown (the default is <code>TRUE</code>).</p></dd>
 
-   <dt>parallel</dt>
+   <dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
 <dd><p>character string to specify whether parallel processing should be used (the default is <code>"no"</code>). For parallel processing, set to either <code>"snow"</code> or <code>"multicore"</code>. See ‘Details’.</p></dd>
 
-   <dt>ncpus</dt>
+   <dt id="arg-ncpus">ncpus<a class="anchor" aria-label="anchor" href="#arg-ncpus"></a></dt>
 <dd><p>integer to specify the number of processes to use in the parallel processing.</p></dd>
 
-   <dt>cl</dt>
+   <dt id="arg-cl">cl<a class="anchor" aria-label="anchor" href="#arg-cl"></a></dt>
 <dd><p>optional cluster to use if <code>parallel="snow"</code>. If unspecified, a cluster on the local machine is created for the duration of the call.</p></dd>
 
-   <dt>plot</dt>
+   <dt id="arg-plot">plot<a class="anchor" aria-label="anchor" href="#arg-plot"></a></dt>
 <dd><p>logical to specify whether the profile plot should be drawn after profiling is finished (the default is <code>TRUE</code>).</p></dd>
 
-   <dt>pch</dt>
+   <dt id="arg-pch">pch<a class="anchor" aria-label="anchor" href="#arg-pch"></a></dt>
 <dd><p>plotting symbol to use. By default, a filled circle is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
 
-   <dt>refline</dt>
+   <dt id="arg-refline">refline<a class="anchor" aria-label="anchor" href="#arg-refline"></a></dt>
 <dd><p>logical to specify whether the value of the parameter estimate should be indicated by a dotted vertical line and its log-likelihood value by a dotted horizontal line (the default is <code>TRUE</code>).</p></dd>
 
-   <dt>cline</dt>
+   <dt id="arg-cline">cline<a class="anchor" aria-label="anchor" href="#arg-cline"></a></dt>
 <dd><p>logical to specify whether a horizontal reference line should be added to the plot that indicates the log-likelihood value corresponding to the 95% profile confidence interval (the default is <code>FALSE</code>). Can also be a numeric value between 0 and 100 to specify the confidence interval level.</p></dd>
 
-   <dt>xlab</dt>
+   <dt id="arg-xlab">xlab<a class="anchor" aria-label="anchor" href="#arg-xlab"></a></dt>
 <dd><p>title for the x-axis. If unspecified, the function sets an appropriate axis title.</p></dd>
 
-   <dt>ylab</dt>
+   <dt id="arg-ylab">ylab<a class="anchor" aria-label="anchor" href="#arg-ylab"></a></dt>
 <dd><p>title for the y-axis. If unspecified, the function sets an appropriate axis title.</p></dd>
 
-   <dt>main</dt>
+   <dt id="arg-main">main<a class="anchor" aria-label="anchor" href="#arg-main"></a></dt>
 <dd><p>title for the plot. If unspecified, the function sets an appropriate title.</p></dd>
 
-   <dt>...</dt>
+   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments.</p></dd>
 
 </dl></div>
@@ -234,11 +235,7 @@
     </div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>An object of class <code>"profile.rma"</code>. The object is a list (or list of such lists) containing the following components:</p>
-
-
+    <p>An object of class <code>"profile.rma"</code>. The object is a list (or list of such lists) containing the following components:</p>
 <p>One of the following (depending on the parameter that was actually profiled):</p>
 <dl><dt>sigma2</dt>
 <dd><p>values of <em></em>\(\sigma^2\) over which the likelihood was profiled.</p></dd>
@@ -421,17 +418,17 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
       </footer></div>
 
-  
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script><script>
   docsearch({
     appId: 'SFWCWKDGL8',
-    
+
     apiKey: 'b56f56470243cf9799f796a3d6ecaedd',
     indexName: 'metafor',
     inputSelector: 'input#search-input.form-control',

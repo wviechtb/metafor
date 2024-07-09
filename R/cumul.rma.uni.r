@@ -1,4 +1,4 @@
-cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
+cumul.rma.uni <- function(x, order, digits, transf, targs, collapse=FALSE, progbar=FALSE, ...) {
 
    mstyle <- .get.mstyle()
 
@@ -8,6 +8,9 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
+
+   if (na.act == "na.fail" && any(!x$not.na))
+      stop(mstyle$stop("Missing values in data."))
 
    if (!x$int.only)
       stop(mstyle$stop("Method only applicable to models without moderators."))
@@ -36,75 +39,111 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    #########################################################################
 
    if (grepl("^order\\(", deparse1(substitute(order))))
-      warning(mstyle$warning("Use of order() in 'order' argument is probably erroneous."), call.=FALSE)
+      warning(mstyle$warning("Use of order() in the 'order' argument is probably erroneous."), call.=FALSE)
 
    if (missing(order)) {
-      order <- seq_len(x$k.all)
+
+      orvar <- seq_len(x$k.all)
+      collapse <- FALSE
+
    } else {
+
       mf <- match.call()
-      order <- .getx("order", mf=mf, data=x$data)
+      orvar <- .getx("order", mf=mf, data=x$data)
+
+      if (length(orvar) != x$k.all)
+         stop(mstyle$stop(paste0("Length of the 'order' argument (", length(orvar), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
+
    }
 
-   if (length(order) != x$k.all)
-      stop(mstyle$stop(paste0("Length of the 'order' argument (", length(order), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
-
    ### note: order variable must be of the same length as the original dataset
-   ###       so we have to apply the same subsetting (if necessary)
-   ###       as was done during model fitting
+   ###       so apply the same subsetting as was done during the model fitting
 
-   order <- .getsubset(order, x$subset)
+   orvar <- .getsubset(orvar, x$subset)
 
-   order <- order(order, decreasing=decreasing)
+   ### order data by the order variable (NAs in order variable are dropped)
 
-   yi.f      <- x$yi.f[order]
-   vi.f      <- x$vi.f[order]
-   weights.f <- x$weights.f[order]
-   not.na    <- x$not.na[order]
-   slab      <- x$slab[order]
-   ids       <- x$ids[order]
+   order <- base::order(orvar, decreasing=decreasing, na.last=NA)
+
+   yi      <- x$yi.f[order]
+   vi      <- x$vi.f[order]
+   weights <- x$weights.f[order]
+   not.na  <- x$not.na[order]
+   slab    <- x$slab[order]
+   ids     <- x$ids[order]
+   orvar   <- orvar[order]
+
    if (inherits(x$data, "environment")) {
       data <- NULL
    } else {
-      data <- x$data[order,]
+      data <- x$data[order,,drop=FALSE]
    }
 
-   beta  <- rep(NA_real_, x$k.f)
-   se    <- rep(NA_real_, x$k.f)
-   zval  <- rep(NA_real_, x$k.f)
-   pval  <- rep(NA_real_, x$k.f)
-   ci.lb <- rep(NA_real_, x$k.f)
-   ci.ub <- rep(NA_real_, x$k.f)
-   QE    <- rep(NA_real_, x$k.f)
-   QEp   <- rep(NA_real_, x$k.f)
-   tau2  <- rep(NA_real_, x$k.f)
-   I2    <- rep(NA_real_, x$k.f)
-   H2    <- rep(NA_real_, x$k.f)
+   if (collapse) {
+      uorvar <- unique(orvar)
+   } else {
+      uorvar <- orvar
+   }
+
+   k.o <- length(uorvar)
+
+   k     <- rep(NA_integer_, k.o)
+   beta  <- rep(NA_real_, k.o)
+   se    <- rep(NA_real_, k.o)
+   zval  <- rep(NA_real_, k.o)
+   pval  <- rep(NA_real_, k.o)
+   ci.lb <- rep(NA_real_, k.o)
+   ci.ub <- rep(NA_real_, k.o)
+   QE    <- rep(NA_real_, k.o)
+   QEp   <- rep(NA_real_, k.o)
+   tau2  <- rep(NA_real_, k.o)
+   I2    <- rep(NA_real_, k.o)
+   H2    <- rep(NA_real_, k.o)
+   show  <- rep(TRUE, k.o)
 
    ### elements that need to be returned
 
-   outlist <- "beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, QE=QE, QEp=QEp, tau2=tau2, I2=I2, H2=H2"
-
-   ### note: skipping NA cases
-   ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
+   outlist <- "k=k, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, QE=QE, QEp=QEp, tau2=tau2, I2=I2, H2=H2"
 
    if (progbar)
-      pbar <- pbapply::startpb(min=0, max=x$k.f)
+      pbar <- pbapply::startpb(min=0, max=k.o)
 
-   for (i in seq_len(x$k.f)) {
+   for (i in seq_len(k.o)) {
 
       if (progbar)
          pbapply::setpb(pbar, i)
 
-      if (!not.na[i])
-         next
+      if (collapse) {
 
-      args <- list(yi=yi.f, vi=vi.f, weights=weights.f, intercept=TRUE, method=x$method, weighted=x$weighted,
-                   test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=seq_len(i), outlist=outlist)
+         if (all(!not.na[is.element(orvar, uorvar[i])])) {
+            if (na.act == "na.omit")
+               show[i] <- FALSE # if all studies to be added are !not.na, don't show (but a fit failure is still shown)
+            next
+         }
+
+         incl <- is.element(orvar, uorvar[1:i])
+
+      } else {
+
+         if (!not.na[i]) {
+            if (na.act == "na.omit")
+               show[i] <- FALSE # if study to be added is !not.na, don't show (but a fit failure is still shown)
+            next
+         }
+
+         incl <- 1:i
+
+      }
+
+      args <- list(yi=yi, vi=vi, weights=weights, intercept=TRUE, method=x$method, weighted=x$weighted,
+                   test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=incl, outlist=outlist)
+
       res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
 
       if (inherits(res, "try-error"))
          next
 
+      k[i]     <- res$k
       beta[i]  <- res$beta
       se[i]    <- res$se
       zval[i]  <- res$zval
@@ -129,12 +168,12 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
    if (is.function(transf)) {
       if (is.null(targs)) {
          beta  <- sapply(beta, transf)
-         se    <- rep(NA_real_, x$k.f)
+         se    <- rep(NA_real_, k.o)
          ci.lb <- sapply(ci.lb, transf)
          ci.ub <- sapply(ci.ub, transf)
       } else {
          beta  <- sapply(beta, transf, targs)
-         se    <- rep(NA_real_, x$k.f)
+         se    <- rep(NA_real_, k.o)
          ci.lb <- sapply(ci.lb, transf, targs)
          ci.ub <- sapply(ci.ub, transf, targs)
       }
@@ -149,39 +188,37 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, progbar=FALSE, ...) {
 
    #########################################################################
 
-   if (na.act == "na.omit") {
-      out <- list(estimate=beta[not.na], se=se[not.na], zval=zval[not.na], pvals=pval[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], Q=QE[not.na], Qp=QEp[not.na], tau2=tau2[not.na], I2=I2[not.na], H2=H2[not.na])
-      out$slab <- slab[not.na]
-      out$ids  <- ids[not.na]
-      out$data <- data[not.na,]
+   out <- list(k=k[show], estimate=beta[show], se=se[show], zval=zval[show], pval=pval[show], ci.lb=ci.lb[show], ci.ub=ci.ub[show], Q=QE[show], Qp=QEp[show], tau2=tau2[show], I2=I2[show], H2=H2[show])
+
+   if (collapse) {
+      out$slab <- uorvar[show]
+      out$slab.null <- FALSE
+   } else {
+      out$slab <- slab[show]
+      out$ids  <- ids[show]
+      out$data <- data[show,,drop=FALSE]
+      out$slab.null <- x$slab.null
    }
 
-   if (na.act == "na.exclude" || na.act == "na.pass") {
-      out <- list(estimate=beta, se=se, zval=zval, pvals=pval, ci.lb=ci.lb, ci.ub=ci.ub, Q=QE, Qp=QEp, tau2=tau2, I2=I2, H2=H2)
-      out$slab <- slab
-      out$ids  <- ids
-      out$data <- data
-   }
-
-   if (na.act == "na.fail" && any(!x$not.na))
-      stop(mstyle$stop("Missing values in results."))
+   out$order <- uorvar[show]
 
    if (is.element(x$test, c("knha","adhoc","t")))
-      names(out)[3] <- "tval"
+      names(out)[4] <- "tval"
 
    ### remove tau2 for FE/EE/CE models
 
    if (is.element(x$method, c("FE","EE","CE")))
-      out <- out[-9]
+      out <- out[-10]
 
-   out$digits    <- digits
-   out$transf    <- transf
-   out$slab.null <- x$slab.null
-   out$level     <- x$level
-   out$measure   <- x$measure
-   out$test      <- x$test
+   out$digits <- digits
+   out$transf <- transf
+   out$level  <- x$level
+   out$test   <- x$test
 
-   attr(out$estimate, "measure") <- x$measure
+   if (!transf) {
+      out$measure <- x$measure
+      attr(out$estimate, "measure") <- x$measure
+   }
 
    if (.isTRUE(ddd$time)) {
       time.end <- proc.time()
