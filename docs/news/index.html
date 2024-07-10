@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-24</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-25</span>
       </span>
     </div>
 
@@ -90,22 +90,23 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.7-24" id="metafor-47-24-2024-07-09">metafor 4.7-24 (2024-07-09)<a class="anchor" aria-label="anchor" href="#metafor-47-24-2024-07-09"></a></h2>
-<ul><li><p>added <code>collapse</code> argument to the various <code><a href="../reference/cumul.html">cumul()</a></code> functions</p></li>
-<li><p>the <code><a href="../reference/predict.rma.html">predict.rma()</a></code> and <code><a href="../reference/predict.rma.html">predict.rma.ls()</a></code> functions now also accept a matrix as input that includes a column for the intercept term (in which case the <code>intercept</code> argument is ignored)</p></li>
+<h2 class="page-header" data-toc-text="4.7-25" id="metafor-47-25-2024-07-10">metafor 4.7-25 (2024-07-10)<a class="anchor" aria-label="anchor" href="#metafor-47-25-2024-07-10"></a></h2>
+<ul><li><p>the <code><a href="../reference/predict.rma.html">predict.rma()</a></code> and <code><a href="../reference/predict.rma.html">predict.rma.ls()</a></code> functions now also accept a matrix as input that includes a column for the intercept term (in which case the <code>intercept</code> argument is ignored)</p></li>
 <li><p>added <code><a href="../reference/pairwise.html">pairwise()</a></code> function to construct a matrix of pairwise contrasts</p></li>
+<li><p>added extractor function <code><a href="../reference/se.html">se()</a></code> for extracting standard errors from model objects</p></li>
 <li><p><code><a href="../reference/anova.rma.html">anova()</a></code> and <code><a href="../reference/predict.rma.html">predict()</a></code> gain <code>adjust</code> argument for adjusting p-values / interval bounds for multiple testing</p></li>
+<li><p>added <code>collapse</code> argument to the various <code><a href="../reference/cumul.html">cumul()</a></code> functions</p></li>
 <li><p><code><a href="../reference/print.anova.rma.html">print.anova.rma()</a></code> and <code><a href="../reference/print.anova.rma.html">print.list.anova.rma()</a></code> also print significance stars for some types of outcomes (unless <code>getOption("show.signif.stars")</code> is <code>FALSE</code>)</p></li>
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now counts the number of levels of a random effect more appropriately; this may trigger more often the check whether the number of levels is equal to 1, in which case the corresponding variance component is automatically fixed to 0; this check can be omitted with <code>control=list(check.k.gtr.1=FALSE)</code></p></li>
 <li><p>made optimizers <code>Rcgmin</code> and <code>Rvmmin</code> available again via the <code>optimx</code> package</p></li>
 <li><p>when unspecified, argument <code>shade</code> in <code><a href="../reference/funnel.html">funnel()</a></code> now automatically uses a color gradient for the regions when multiple <code>level</code> values are specified</p></li>
-<li><p>added extractor function <code><a href="../reference/se.html">se()</a></code> for extracting standard errors from model objects</p></li>
 <li><p>added <code>lim</code>, <code>ci</code>, <code>pi</code>, <code>legend</code>, and <code>flip</code> arguments to <code><a href="../reference/labbe.html">labbe()</a></code></p></li>
 <li><p>added <code>ilab.lab</code> argument to the various <code><a href="../reference/forest.html">forest()</a></code> functions</p></li>
 <li><p><code>fsn(..., type="General")</code> now computes the final estimates after rounding the fail-safe N value (not before)</p></li>
 <li><p><code><a href="../reference/permutest.html">permutest.rma.uni()</a></code> gains a <code>btt</code> argument and <code><a href="../reference/permutest.html">permutest.rma.ls()</a></code> gains <code>btt</code> and <code>att</code> arguments</p></li>
 <li><p><code><a href="../reference/selmodel.html">selmodel()</a></code> gains a <code>subset</code> argument (to specify a subset of studies to which the selection function should apply)</p></li>
 <li><p><code><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs()</a></code> now just returns the number of estimates, not the effective number of observations</p></li>
+<li><p><code><a href="../reference/escalc.html">escalc()</a></code> gains a <code>flip</code> argument</p></li>
 <li><p>added more tests</p></li>
 </ul></div>
     <div class="section level2">

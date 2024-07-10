@@ -6,8 +6,9 @@
 }
 \usage{
 escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
-       m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, fi, pi, sdi, r2i, ni, yi, vi, sei,
-       data, slab, subset, include,
+                m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, fi, pi,
+                sdi, r2i, ni, yi, vi, sei,
+       data, slab, flip, subset, include,
        add=1/2, to="only0", drop00=FALSE, vtype="LS",
        var.names=c("yi","vi"), add.measure=FALSE,
        append=TRUE, replace=TRUE, digits, \dots)
@@ -42,6 +43,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{sei}{vector with the corresponding standard errors.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{slab}{optional vector with labels for the studies.}
+   \item{flip}{optional logical to indicate whether to flip the sign of the effect sizes or outcomes. Can also be a vector. Can also be a numeric vector to specify a multiplier.}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that will be included in the data frame returned by the function.}
    \item{include}{optional (logical or numeric) vector to specify the subset of studies for which the measure should be calculated. See the \sQuote{Value} section for more details.}
    \item{add}{a non-negative number to specify the amount to add to zero cells, counts, or frequencies. See \sQuote{Details}.}
@@ -498,6 +500,16 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    }
 
+   \subsection{Other Arguments}{
+
+      Argument \code{slab} can be used to specify (study) labels for the effect sizes or outcomes. These labels are passed on to other functions and used as needed (e.g., for labeling the studies in a forest plot). Note that missing values in the study labels are not allowed.
+
+      The \code{flip} argument, when set to \code{TRUE}, can be used to flip the sign of the effect sizes or outcomes. This can also be a logical vector to indicate for which studies the sign should be flipped. The argument can also be a numeric vector to specify a multiplier for the effect sizes or outcomes (the corresponding sampling variances are adjusted accordingly).
+
+      The \code{subset} argument can be used to select the studies that will be included in the data frame returned by the function. On the other hand, the \code{include} argument simply selects for which studies the measure will be computed (if it shouldn't be computed for all of them).
+
+   }
+
 }
 \value{
    An object of class \code{c("escalc","data.frame")}. The object is a data frame containing the following components:
@@ -507,8 +519,6 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    If a data frame was specified via the \code{data} argument and \code{append=TRUE}, then variables \code{yi} and \code{vi} are appended to this data frame. Note that the \code{var.names} argument actually specifies the names of these two variables (\code{"yi"} and \code{"vi"} are the defaults).
 
    If the data frame already contains two variables with names as specified by the \code{var.names} argument, the values for these two variables will be overwritten when \code{replace=TRUE} (which is the default). By setting \code{replace=FALSE}, only values that are \code{NA} will be replaced.
-
-   The \code{subset} argument can be used to select the studies that will be included in the data frame returned by the function. On the other hand, the \code{include} argument simply selects for which studies the measure will be computed (if it shouldn't be computed for all of them).
 
    The object is formatted and printed with the \code{\link[=print.escalc]{print}} function. The \code{\link[=summary.escalc]{summary}} function can be used to obtain confidence intervals for the individual outcomes. See \code{\link{methods.escalc}} for some additional method functions for \code{"escalc"} objects.
 

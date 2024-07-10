@@ -11,11 +11,11 @@
          targs <- as.list(targs)
       } else {
          targs <- list(tau2=unname(targs[startsWith(names(targs), "t")]), lower=unname(targs[startsWith(names(targs), "l")]), upper=unname(targs[startsWith(names(targs), "u")]))
-         targs <- targs[sapply(targs, length) > 0L]
+         targs <- targs[lengths(targs) > 0L]
       }
    }
 
-   if (any(sapply(targs, length) > 1L))
+   if (any(lengths(targs) > 1L))
       stop("Elements of 'targs' arguments must be scalars.", call.=FALSE)
 
    if (is.null(targs$tau2))

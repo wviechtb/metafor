@@ -821,7 +821,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
          stop(mstyle$stop("NAs in study labels."))
 
       if (length(slab) != k)
-         stop(mstyle$stop("Study labels not of same length as data."))
+         stop(mstyle$stop(paste0("Length of the 'slab' argument (", length(slab), ") does not correspond to the size of the dataset (", k, ").")))
 
       if (is.factor(slab))
          slab <- as.character(slab)

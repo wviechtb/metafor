@@ -109,7 +109,7 @@ conv.delta <- function(yi, vi, ni, data, include, transf, var.names, append=TRUE
    if (is.null(include))
       include <- rep(TRUE, k)
 
-   ### turn numeric include vector into logical vector
+   ### turn numeric include vector into a logical vector
 
    include <- .chksubset(include, k, stoponk0=FALSE)
 

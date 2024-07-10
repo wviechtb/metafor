@@ -125,7 +125,7 @@ conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
    if (is.null(include))
       include <- rep(TRUE, k)
 
-   ### turn numeric include vector into logical vector
+   ### turn numeric include vector into a logical vector
 
    include <- .chksubset(include, k, stoponk0=FALSE)
 

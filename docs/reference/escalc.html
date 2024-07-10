@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-24</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-25</span>
       </span>
     </div>
 
@@ -96,8 +96,9 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">escalc</span><span class="op">(</span><span class="va">measure</span>, <span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">x1i</span>, <span class="va">x2i</span>, <span class="va">t1i</span>, <span class="va">t2i</span>,</span>
-<span>       <span class="va">m1i</span>, <span class="va">m2i</span>, <span class="va">sd1i</span>, <span class="va">sd2i</span>, <span class="va">xi</span>, <span class="va">mi</span>, <span class="va">ri</span>, <span class="va">ti</span>, <span class="va">fi</span>, <span class="va">pi</span>, <span class="va">sdi</span>, <span class="va">r2i</span>, <span class="va">ni</span>, <span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>,</span>
-<span>       <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>, <span class="va">include</span>,</span>
+<span>                <span class="va">m1i</span>, <span class="va">m2i</span>, <span class="va">sd1i</span>, <span class="va">sd2i</span>, <span class="va">xi</span>, <span class="va">mi</span>, <span class="va">ri</span>, <span class="va">ti</span>, <span class="va">fi</span>, <span class="va">pi</span>,</span>
+<span>                <span class="va">sdi</span>, <span class="va">r2i</span>, <span class="va">ni</span>, <span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>,</span>
+<span>       <span class="va">data</span>, <span class="va">slab</span>, <span class="va">flip</span>, <span class="va">subset</span>, <span class="va">include</span>,</span>
 <span>       add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"only0"</span>, drop00<span class="op">=</span><span class="cn">FALSE</span>, vtype<span class="op">=</span><span class="st">"LS"</span>,</span>
 <span>       var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"yi"</span>,<span class="st">"vi"</span><span class="op">)</span>, add.measure<span class="op">=</span><span class="cn">FALSE</span>,</span>
 <span>       append<span class="op">=</span><span class="cn">TRUE</span>, replace<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -192,6 +193,9 @@
 
    <dt id="arg-slab">slab<a class="anchor" aria-label="anchor" href="#arg-slab"></a></dt>
 <dd><p>optional vector with labels for the studies.</p></dd>
+
+   <dt id="arg-flip">flip<a class="anchor" aria-label="anchor" href="#arg-flip"></a></dt>
+<dd><p>optional logical to indicate whether to flip the sign of the effect sizes or outcomes. Can also be a vector. Can also be a numeric vector to specify a multiplier.</p></dd>
 
    <dt id="arg-subset">subset<a class="anchor" aria-label="anchor" href="#arg-subset"></a></dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that will be included in the data frame returned by the function.</p></dd>
@@ -547,6 +551,16 @@
 <p></p>
 </div>
 
+<p></p><div class="section">
+<h3 id="other-arguments">Other Arguments<a class="anchor" aria-label="anchor" href="#other-arguments"></a></h3>
+
+
+<p>Argument <code>slab</code> can be used to specify (study) labels for the effect sizes or outcomes. These labels are passed on to other functions and used as needed (e.g., for labeling the studies in a forest plot). Note that missing values in the study labels are not allowed.</p>
+<p>The <code>flip</code> argument, when set to <code>TRUE</code>, can be used to flip the sign of the effect sizes or outcomes. This can also be a logical vector to indicate for which studies the sign should be flipped. The argument can also be a numeric vector to specify a multiplier for the effect sizes or outcomes (the corresponding sampling variances are adjusted accordingly).</p>
+<p>The <code>subset</code> argument can be used to select the studies that will be included in the data frame returned by the function. On the other hand, the <code>include</code> argument simply selects for which studies the measure will be computed (if it shouldn't be computed for all of them).</p>
+<p></p>
+</div>
+
 
     </div>
     <div id="value">
@@ -561,7 +575,6 @@
 
 </dl><p>If a data frame was specified via the <code>data</code> argument and <code>append=TRUE</code>, then variables <code>yi</code> and <code>vi</code> are appended to this data frame. Note that the <code>var.names</code> argument actually specifies the names of these two variables (<code>"yi"</code> and <code>"vi"</code> are the defaults).</p>
 <p>If the data frame already contains two variables with names as specified by the <code>var.names</code> argument, the values for these two variables will be overwritten when <code>replace=TRUE</code> (which is the default). By setting <code>replace=FALSE</code>, only values that are <code>NA</code> will be replaced.</p>
-<p>The <code>subset</code> argument can be used to select the studies that will be included in the data frame returned by the function. On the other hand, the <code>include</code> argument simply selects for which studies the measure will be computed (if it shouldn't be computed for all of them).</p>
 <p>The object is formatted and printed with the <code><a href="print.escalc.html">print</a></code> function. The <code><a href="print.escalc.html">summary</a></code> function can be used to obtain confidence intervals for the individual outcomes. See <code><a href="methods.escalc.html">methods.escalc</a></code> for some additional method functions for <code>"escalc"</code> objects.</p>
 <p>With the <code><a href="aggregate.escalc.html">aggregate</a></code> function, one can aggregate multiple effect sizes or outcomes belonging to the same study (or some other clustering variable) into a single combined effect size or outcome.</p>
     </div>

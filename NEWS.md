@@ -1,12 +1,14 @@
-# metafor 4.7-24 (2024-07-09)
-
-- added `collapse` argument to the various `cumul()` functions
+# metafor 4.7-25 (2024-07-10)
 
 - the `predict.rma()` and `predict.rma.ls()` functions now also accept a matrix as input that includes a column for the intercept term (in which case the `intercept` argument is ignored)
 
 - added `pairwise()` function to construct a matrix of pairwise contrasts
 
+- added extractor function `se()` for extracting standard errors from model objects
+
 - `anova()` and `predict()` gain `adjust` argument for adjusting p-values / interval bounds for multiple testing
+
+- added `collapse` argument to the various `cumul()` functions
 
 - `print.anova.rma()` and `print.list.anova.rma()` also print significance stars for some types of outcomes (unless `getOption("show.signif.stars")` is `FALSE`)
 
@@ -15,8 +17,6 @@
 - made optimizers `Rcgmin` and `Rvmmin` available again via the `optimx` package
 
 - when unspecified, argument `shade` in `funnel()` now automatically uses a color gradient for the regions when multiple `level` values are specified
-
-- added extractor function `se()` for extracting standard errors from model objects
 
 - added `lim`, `ci`, `pi`, `legend`, and `flip` arguments to `labbe()`
 
@@ -29,6 +29,8 @@
 - `selmodel()` gains a `subset` argument (to specify a subset of studies to which the selection function should apply)
 
 - `nobs()` now just returns the number of estimates, not the effective number of observations
+
+- `escalc()` gains a `flip` argument
 
 - added more tests
 

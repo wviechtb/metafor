@@ -141,7 +141,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
             stop(mstyle$stop("NAs in study labels."))
 
          if (length(slab) != k)
-            stop(mstyle$stop("Study labels not of same length as data."))
+            stop(mstyle$stop(paste0("Length of the 'slab' argument (", length(slab), ") does not correspond to the size of the dataset (", k, ").")))
 
          if (is.factor(slab))
             slab <- as.character(slab)
@@ -350,7 +350,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
             stop(mstyle$stop("NAs in study labels."))
 
          if (length(slab) != k)
-            stop(mstyle$stop("Study labels not of same length as data."))
+            stop(mstyle$stop(paste0("Length of the 'slab' argument (", length(slab), ") does not correspond to the size of the dataset (", k, ").")))
 
          slab.null <- FALSE
 
