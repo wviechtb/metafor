@@ -266,10 +266,30 @@
 
 }
 
+### function that expands a scalar to length k; can also expand a scaler to
+### the length of the vector given to k or expand a scaler to the maximum
+### length of the list elements given to k
+
 .expand1 <- function(x, k) {
+
+   if (is.list(k)) {
+
+      k <- max(lengths(k, use.names=FALSE))
+
+   } else {
+
+      len <- length(k)
+
+      if (len > 1L)
+         k <- len
+
+   }
+
    if (length(x) == 1L)
       x <- rep(x, k)
+
    return(x)
+
 }
 
 ############################################################################

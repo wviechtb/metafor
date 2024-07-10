@@ -47,6 +47,7 @@ cumul(x, \dots)
    \item{tau2}{estimated amount of heterogeneity (only for random-effects models).}
    \item{I2}{values of \mjseqn{I^2}.}
    \item{H2}{values of \mjseqn{H^2}.}
+   \item{order}{values of the \code{order} variable (if specified).}
    \item{\dots}{other arguments.}
 
    When the model was fitted with \code{test="t"}, \code{test="knha"}, \code{test="hksj"}, or \code{test="adhoc"}, then \code{zval} is called \code{tval} in the object that is returned by the function.

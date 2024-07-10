@@ -150,7 +150,7 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
 
       ### allow easy setting of vi to a single value
 
-      vi <- .expand1(vi, length(yi))
+      vi <- .expand1(vi, yi)
 
       ### check length of yi and vi
 

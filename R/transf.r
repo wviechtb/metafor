@@ -340,7 +340,7 @@ transf.rpbtorbis <- function(xi, pi) {
    if (missing(pi)) {
       pi <- 0.5
    } else {
-      pi <- .expand1(pi, length(xi))
+      pi <- .expand1(pi, xi)
       if (length(xi) != length(pi))
          stop("Length of 'xi' does not match length of 'pi'.", call.=FALSE)
    }
@@ -353,7 +353,7 @@ transf.rtorpb <- function(xi, pi) {
    if (missing(pi)) {
       pi <- 0.5
    } else {
-      pi <- .expand1(pi, length(xi))
+      pi <- .expand1(pi, xi)
       if (length(xi) != length(pi))
          stop("Length of 'xi' does not match length of 'pi'.", call.=FALSE)
    }
@@ -397,7 +397,7 @@ transf.rpbtod <- function(xi, n1i, n2i) {
 }
 
 transf.lnortord <- function(xi, pc) {
-   pc <- .expand1(pc, length(xi))
+   pc <- .expand1(pc, xi)
    if (length(xi) != length(pc))
       stop("Length of 'xi' does not match length of 'pc'.", call.=FALSE)
    if (any(pc < 0) || any(pc > 1))
@@ -406,7 +406,7 @@ transf.lnortord <- function(xi, pc) {
 }
 
 transf.lnortorr <- function(xi, pc) {
-   pc <- .expand1(pc, length(xi))
+   pc <- .expand1(pc, xi)
    if (length(xi) != length(pc))
       stop("Length of 'xi' does not match length of 'pc'.", call.=FALSE)
    if (any(pc < 0) || any(pc > 1))

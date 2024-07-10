@@ -34,7 +34,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
-   # when adding measures, remember to add measure to .setlab()
+   # when adding measures, remember to add measures to .setlab()
 
    if (!is.element(to, c("all","only0","if0all","none")))
       stop(mstyle$stop("Unknown 'to' argument specified."))
@@ -127,6 +127,11 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
    yi <- .getx("yi", mf=mf, data=data)
 
+   ### get flip (NULL if not specified)
+
+   #flip <- .getx("flip", mf=mf, data=data)
+   flip <- NULL
+
    ### for certain measures, set add=0 by default unless user explicitly sets the add argument
 
    addval <- mf[[match("add", names(mf))]]
@@ -155,7 +160,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ri  <- .getx("ri",  mf=mf, data=data, checknumeric=TRUE)
          pi  <- .getx("pi",  mf=mf, data=data, checknumeric=TRUE)
 
-         if (!.equal.length(ai, bi, ci, di, n1i, n2i, ri, pi))
+         if (!.equal.length(ai, bi, ci, di, n1i, n2i, ri, pi, flip))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          n1i.inc <- n1i != ai + bi
@@ -619,7 +624,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (!.all.specified(x1i, x2i, t1i, t2i))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., x1i, x2i, t1i, t2i)."))
 
-         if (!.equal.length(x1i, x2i, t1i, t2i))
+         if (!.equal.length(x1i, x2i, t1i, t2i, flip))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          k.all <- length(x1i)
@@ -764,7 +769,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
          if (is.element(measure, c("SMD","RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL"))) {
 
-            if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi))
+            if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi, flip))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
             ### convert pi to ti values
@@ -794,7 +799,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             if (!.all.specified(m1i, m2i, sd1i, sd2i, n1i, n2i))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd1i, sd2i, n1i, n2i)."))
 
-            if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i))
+            if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, flip))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          }
@@ -806,7 +811,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             if (!.all.specified(sd1i, sd2i, n1i, n2i))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., sd1i, sd2i, n1i, n2i)."))
 
-            if (!.equal.length(sd1i, sd2i, n1i, n2i))
+            if (!.equal.length(sd1i, sd2i, n1i, n2i, flip))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          }
@@ -818,7 +823,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             if (!.all.specified(m1i, m2i, sd2i, n1i, n2i))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd2i, n1i, n2i)."))
 
-            if (!.equal.length(m1i, m2i, sd2i, n1i, n2i))
+            if (!.equal.length(m1i, m2i, sd2i, n1i, n2i, flip))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          }
@@ -1109,7 +1114,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          ti <- .getx("ti", mf=mf, data=data, checknumeric=TRUE)
          pi <- .getx("pi", mf=mf, data=data, checknumeric=TRUE)
 
-         if (!.equal.length(ri, ni, ti, pi))
+         if (!.equal.length(ri, ni, ti, pi, flip))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          ### convert pi to ti values
@@ -1220,7 +1225,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          pi  <- .getx("pi",  mf=mf, data=data, checknumeric=TRUE)
          r2i <- .getx("r2i", mf=mf, data=data, checknumeric=TRUE)
 
-         if (!.equal.length(ri, ti, mi, ni, pi, r2i))
+         if (!.equal.length(ri, ti, mi, ni, pi, r2i, flip))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          ### convert pi to ti values
@@ -1354,7 +1359,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          fi  <- .getx("fi",  mf=mf, data=data, checknumeric=TRUE)
          pi  <- .getx("pi",  mf=mf, data=data, checknumeric=TRUE)
 
-         if (!.equal.length(r2i, mi, ni))
+         if (!.equal.length(r2i, mi, ni, flip))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          ### convert pi to fi values
@@ -1447,7 +1452,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          mi <- .getx("mi", mf=mf, data=data, checknumeric=TRUE)
          ni <- .getx("ni", mf=mf, data=data, checknumeric=TRUE)
 
-         if (!.equal.length(xi, mi, ni))
+         if (!.equal.length(xi, mi, ni, flip))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          ni.inc <- ni != xi + mi
@@ -1717,7 +1722,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (!.all.specified(xi, ti))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., xi, ti)."))
 
-         if (!.equal.length(xi, ti))
+         if (!.equal.length(xi, ti, flip))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          k.all <- length(xi)
@@ -1849,7 +1854,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             if (!.all.specified(mi, sdi, ni))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., mi, sdi, ni)."))
 
-            if (!.equal.length(mi, sdi, ni))
+            if (!.equal.length(mi, sdi, ni, flip))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          }
@@ -1861,7 +1866,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             if (!.all.specified(sdi, ni))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., sdi, ni)."))
 
-            if (!.equal.length(sdi, ni))
+            if (!.equal.length(sdi, ni, flip))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          }
@@ -1976,7 +1981,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             if (!.all.specified(m1i, m2i, sd1i, sd2i, ri, ni))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd1i, sd2i, ni, ri)."))
 
-            if (!.equal.length(m1i, m2i, sd1i, sd2i, ri, ni))
+            if (!.equal.length(m1i, m2i, sd1i, sd2i, ri, ni, flip))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          }
@@ -1985,7 +1990,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
 
             ### for this measures, need m1i, m2i, sd1i, sd2i, ni, and ri (and can also specify di/ti/pi)
 
-            if (!.equal.length(m1i, m2i, sd1i, sd2i, ri, ni, di, ti, pi))
+            if (!.equal.length(m1i, m2i, sd1i, sd2i, ri, ni, di, ti, pi, flip))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
             ### convert pi to ti values
@@ -2016,7 +2021,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             if (!.all.specified(m1i, m2i, sd1i, ri, ni))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., m1i, m2i, sd1i, ni, ri)."))
 
-            if (!.equal.length(m1i, m2i, sd1i, ri, ni))
+            if (!.equal.length(m1i, m2i, sd1i, ri, ni, flip))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          }
@@ -2028,7 +2033,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
             if (!.all.specified(sd1i, sd2i, ri, ni))
                stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., sd1i, sd2i, ni, ri)."))
 
-            if (!.equal.length(sd1i, sd2i, ri, ni))
+            if (!.equal.length(sd1i, sd2i, ri, ni, flip))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          }
@@ -2271,7 +2276,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (!.all.specified(ai, mi, ni))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ai, mi, ni)."))
 
-         if (!.equal.length(ai, mi, ni))
+         if (!.equal.length(ai, mi, ni, flip))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          k.all <- length(ai)
@@ -2333,7 +2338,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          if (!.all.specified(ai, bi, ci))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ai, bi, ci)."))
 
-         if (!.equal.length(ai, bi, ci))
+         if (!.equal.length(ai, bi, ci, flip))
             stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
          k.all <- length(ai)
@@ -2392,7 +2397,7 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
          }
       }
 
-      if (!.equal.length(yi, vi, ni))
+      if (!.equal.length(yi, vi, ni, flip))
          stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
       k.all <- length(yi)
@@ -2488,6 +2493,22 @@ data, slab, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.
    ### apply subset to include
 
    include <- .getsubset(include, subset)
+
+   ### process flip argument
+
+   if (is.null(flip)) {
+      flip <- rep(1, k.all)
+   } else {
+      if (is.logical(flip)) {
+         flip <- flip %in% TRUE # so NA is treated as FALSE
+         flip <- ifelse(flip, -1, 1)
+      }
+   }
+
+   flip <- .getsubset(flip, subset)
+
+   yi[include] <- flip[include] * yi[include]
+   vi[include] <- flip[include]^2 * vi[include]
 
    ### subset data frame (note: subsetting of other parts already done above, so yi/vi/ni.u/slab are already subsetted)
 

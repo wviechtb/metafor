@@ -69,9 +69,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, olim, digits, transf, ...) {
 
    #########################################################################
 
-   k <- length(yi)
-
-   H0 <- .expand1(H0, k)
+   H0 <- .expand1(H0, yi)
 
    ### compute sei, zi, and lower/upper CI bounds; when applying a transformation, compute the transformed outcome and CI bounds
 
