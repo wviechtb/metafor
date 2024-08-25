@@ -74,7 +74,7 @@
    For fixed-effects with moderators models, the \mjseqn{R^2} statistic is simply the standard \mjseqn{R^2} statistic (also known as the \sQuote{coefficient of determination}) computed based on weighted least squares estimation. To be precise, the so-called \sQuote{adjusted} \mjseqn{R^2} statistic is provided, since \mjseqn{k} is often relatively small in meta-analyses, in which case the adjustment is relevant.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Higgins, J. P. T., & Thompson, S. G. (2002). Quantifying heterogeneity in a meta-analysis. \emph{Statistics in Medicine}, \bold{21}(11), 1539--1558. \verb{https://doi.org/10.1002/sim.1186}

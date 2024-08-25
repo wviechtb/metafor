@@ -21,7 +21,7 @@
    If \code{evaluate=TRUE} the fitted object, otherwise the updated call.
 }
 \author{
-   The present function is based on \code{\link{update.default}}, with changes made by Wolfgang Viechtbauer (\email{wvb@metafor-project.org}) so that the formula updating works with the (somewhat non-standard) interface of the \code{\link{rma.uni}}, \code{\link{rma.glmm}}, and \code{\link{rma.mv}} functions.
+   Based on \code{\link{update.default}}, with changes made by Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}) so that the formula updating works with the (somewhat non-standard) interface of the \code{\link{rma.uni}}, \code{\link{rma.glmm}}, and \code{\link{rma.mv}} functions.
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}

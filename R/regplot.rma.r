@@ -402,12 +402,12 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          len <- 1000
          if (missing(predlim)) {
             range.xi <- max(xi) - min(xi)
-            predlim  <- c(min(xi) - .04*range.xi, max(xi) + .04*range.xi)
-            xs <- seq(predlim[1], predlim[2], length=len)
+            predlim  <- c(min(xi) - 0.04*range.xi, max(xi) + 0.04*range.xi)
+            xs <- seq(predlim[1], predlim[2], length.out=len)
          } else {
             if (length(predlim) != 2L)
                stop(mstyle$stop("Argument 'predlim' must be of length 2."))
-            xs <- seq(predlim[1], predlim[2], length=len)
+            xs <- seq(predlim[1], predlim[2], length.out=len)
          }
       }
 
@@ -417,20 +417,20 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       if (x$int.incl)
          Xnew <- Xnew[,-1,drop=FALSE]
 
-      tmp <- predict(x, newmods=Xnew, level=level)
+      predres <- predict(x, newmods=Xnew, level=level)
 
-      pred  <- tmp$pred
-      ci.lb <- tmp$ci.lb
-      ci.ub <- tmp$ci.ub
-      if (is.null(tmp$pi.lb) || anyNA(tmp$pi.lb)) {
+      pred  <- predres$pred
+      ci.lb <- predres$ci.lb
+      ci.ub <- predres$ci.ub
+      if (is.null(predres$pi.lb) || anyNA(predres$pi.lb)) {
          pi.lb <- ci.lb
          pi.ub <- ci.ub
          if (pi)
             warning(mstyle$warning("Cannot draw prediction interval for the given model."), call.=FALSE)
          pi <- FALSE
       } else {
-         pi.lb <- tmp$pi.lb
-         pi.ub <- tmp$pi.ub
+         pi.lb <- predres$pi.lb
+         pi.ub <- predres$pi.ub
       }
 
       Xnew <- rbind(colMeans(X))[rep(1,k),,drop=FALSE]
@@ -439,12 +439,12 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       if (x$int.incl)
          Xnew <- Xnew[,-1,drop=FALSE]
 
-      tmp <- predict(x, newmods=Xnew, level=level)
+      predres <- predict(x, newmods=Xnew, level=level)
 
-      yi.pred  <- tmp$pred
-      yi.ci.lb <- tmp$ci.lb
-      yi.ci.ub <- tmp$ci.ub
-      if (is.null(tmp$pi.lb) || anyNA(tmp$pi.lb)) {
+      yi.pred  <- predres$pred
+      yi.ci.lb <- predres$ci.lb
+      yi.ci.ub <- predres$ci.ub
+      if (is.null(predres$pi.lb) || anyNA(predres$pi.lb)) {
          yi.pi.lb <- yi.ci.lb
          yi.pi.ub <- yi.ci.ub
          if (!is.null(label) && is.character(label) && label == "piout") {
@@ -452,8 +452,8 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
             label <- NULL
          }
       } else {
-         yi.pi.lb <- tmp$pi.lb
-         yi.pi.ub <- tmp$pi.ub
+         yi.pi.lb <- predres$pi.lb
+         yi.pi.ub <- predres$pi.ub
       }
 
    }

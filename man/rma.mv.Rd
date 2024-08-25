@@ -230,7 +230,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
    Finally, note that the model fitting is not done in a very efficient manner at the moment, which is partly a result of allowing for crossed random effects and correlations across the entire dataset (e.g., when using the \code{R} argument). As a result, the function works directly with the entire \mjeqn{k \times k}{kxk} (marginal) variance-covariance matrix of the observed effect sizes or outcomes (instead of working with smaller blocks in a block diagonal structure). As a result, model fitting can be slow for large \mjseqn{k}. However, when the variance-covariance structure is actually sparse, a lot of speed can be gained by setting \code{sparse=TRUE}, in which case sparse matrix objects are used (via the \href{https://cran.r-project.org/package=Matrix}{Matrix} package). Also, when model fitting appears to be slow, setting \code{verbose=TRUE} is useful to obtain information on how the model fitting is progressing.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Berkey, C. S., Hoaglin, D. C., Antczak-Bouckoms, A., Mosteller, F., & Colditz, G. A. (1998). Meta-analysis of multiple outcomes by regression with random effects. \emph{Statistics in Medicine}, \bold{17}(22), 2537--2550. \verb{https://doi.org/10.1002/(sici)1097-0258(19981130)17:22<2537::aid-sim953>3.0.co;2-c}
@@ -241,7 +241,7 @@ rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
 
    Ishak, K. J., Platt, R. W., Joseph, L., Hanley, J. A., & Caro, J. J. (2007). Meta-analysis of longitudinal studies. \emph{Clinical Trials}, \bold{4}(5), 525--539. \verb{https://doi.org/10.1177/1740774507083567}
 
-   Kalaian, H. A., & Raudenbush, S. W. (1996). A multivariate mixed linear model for meta-analysis. \emph{Psychological Methods}, \bold{1}(3), 227-235. \verb{https://doi.org/10.1037/1082-989X.1.3.227}
+   Kalaian, H. A., & Raudenbush, S. W. (1996). A multivariate mixed linear model for meta-analysis. \emph{Psychological Methods}, \bold{1}(3), 227--235. \verb{https://doi.org/10.1037/1082-989X.1.3.227}
 
    Konstantopoulos, S. (2011). Fixed effects and variance components estimation in three-level meta-analysis. \emph{Research Synthesis Methods}, \bold{2}(1), 61--76. \verb{https://doi.org/10.1002/jrsm.35}
 

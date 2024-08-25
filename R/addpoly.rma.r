@@ -57,14 +57,14 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
 
    pi.type <- .chkddd(ddd$pi.type, "default")
 
-   pred <- predict(x, level=level, pi.type=pi.type)
+   predres <- predict(x, level=level, pi.type=pi.type)
 
-   ci.lb <- pred$ci.lb
-   ci.ub <- pred$ci.ub
+   ci.lb <- predres$ci.lb
+   ci.ub <- predres$ci.ub
 
    if (addpred) {
-      pi.lb <- pred$pi.lb
-      pi.ub <- pred$pi.ub
+      pi.lb <- predres$pi.lb
+      pi.ub <- predres$pi.ub
    } else {
       pi.lb <- NA_real_
       pi.ub <- NA_real_
@@ -75,7 +75,8 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
    ### label for model estimate (if not specified)
 
    if (is.null(mlab))
-      mlab <- sapply(x$method, switch, "FE"="FE Model", "EE"="EE Model", "CE"="CE Model", "RE Model", USE.NAMES=FALSE)
+      mlab <- sapply(x$method, switch, "FE"="Fixed-Effect Model", "EE"="Equal-Effects Model", "CE"="Common-Effect Model", "Random-Effects Model", USE.NAMES=FALSE)
+      #mlab <- sapply(x$method, switch, "FE"="FE Model", "EE"="EE Model", "CE"="CE Model", "RE Model", USE.NAMES=FALSE)
 
    ### passing ci.lb and ci.ub, so that the bounds are correct when the model was fitted with test="knha"
 

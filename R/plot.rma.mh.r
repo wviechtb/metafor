@@ -67,7 +67,7 @@ plot.rma.mh <- function(x, qqplot=FALSE, ...) {
       points(x=seq_len(k), y=z, pch=21, bg=bg, ...)
       axis(side=1, at=seq_len(k), labels=ids, ...)
       abline(h=0, lty="dashed", ...)
-      abline(h=c(qnorm(.025),qnorm(.975)), lty="dotted", ...)
+      abline(h=c(qnorm(0.025),qnorm(0.975)), lty="dotted", ...)
 
       title("Standardized Residuals", ...)
 

@@ -22,7 +22,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (!x$int.only)
       stop(mstyle$stop("Cannot currently use reporter function for models with moderators. This will be implemented eventually."))
 
-   if (x$k == 1)
+   if (x$k == 1L)
       stop(mstyle$stop("Cannot use reporter function when k = 1."))
 
    if (missing(digits)) {
@@ -260,7 +260,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
 
    fpval <- function(p, pdigits=digits[["pval"]])
       paste0("$p ", ifelse(p < 10^(-pdigits), paste0("< ", fmtx(10^(-pdigits), pdigits)), paste0("= ", fmtx(p, pdigits))), "$")
-   # consider giving only 2 digits for p-value if p > .05 or p > .10
+   # consider giving only 2 digits for p-value if p > 0.05 or p > 0.10
 
    #########################################################################
 
@@ -354,7 +354,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    results <- paste0(results, "The observed ", measure, "s ranged from $", fmtx(min(x$yi), digits[["est"]]), "$ to $", fmtx(max(x$yi), digits[["est"]]), "$, ")
 
    ### percent positive/negative
-   results <- paste0(results, "with the majority of estimates being ", ifelse(mean(x$yi > 0) > .50, "positive", "negative"), " (", ifelse(mean(x$yi > 0) > .50, round(100*mean(x$yi > 0)), round(100*mean(x$yi < 0))), "%). ")
+   results <- paste0(results, "with the majority of estimates being ", ifelse(mean(x$yi > 0) > 0.50, "positive", "negative"), " (", ifelse(mean(x$yi > 0) > 0.50, round(100*mean(x$yi > 0)), round(100*mean(x$yi < 0))), "%). ")
 
    if (is.element(model, c("FE","EE","CE","RE"))) {
 
@@ -398,13 +398,13 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
 
       ### for the RE model, when any amount of heterogeneity is detected, provide prediction interval and note whether the directionality of effects is consistent or not
       if (model == "RE" && x$tau2 > 0) {
-         pred <- predict(x)
-         results <- paste0(results, "A ", level, "% prediction interval for the true outcomes is given by $", fmtx(pred$pi.lb, digits[["ci"]]), "$ to $", fmtx(pred$pi.ub, digits[["ci"]]), "$. ")
-         if (c(x$beta) > 0 && pred$pi.lb < 0)
+         predres <- predict(x)
+         results <- paste0(results, "A ", level, "% prediction interval for the true outcomes is given by $", fmtx(predres$pi.lb, digits[["ci"]]), "$ to $", fmtx(predres$pi.ub, digits[["ci"]]), "$. ")
+         if (c(x$beta) > 0 && predres$pi.lb < 0)
             results <- paste0(results, "Hence, although the average outcome is estimated to be positive, in some studies the true outcome may in fact be negative.")
-         if (c(x$beta) < 0 && pred$pi.ub > 0)
+         if (c(x$beta) < 0 && predres$pi.ub > 0)
             results <- paste0(results, "Hence, although the average outcome is estimated to be negative, in some studies the true outcome may in fact be positive.")
-         if ((c(x$beta) > 0 && pred$pi.lb > 0) || (c(x$beta) < 0 && pred$pi.ub < 0))
+         if ((c(x$beta) > 0 && predres$pi.lb > 0) || (c(x$beta) < 0 && predres$pi.ub < 0))
             results <- paste0(results, "Hence, even though there may be some heterogeneity, the true outcomes of the studies are generally in the same direction as the estimated average outcome.")
       }
 
@@ -437,7 +437,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
       results <- paste0(results, "in the context of this model. ")
 
       ### check for influential cases
-      #is.infl <- pchisq(infres$inf$cook.d, df=1) > .50
+      #is.infl <- pchisq(infres$inf$cook.d, df=1) > 0.50
       is.infl <- infres$inf$cook.d > median(infres$inf$cook.d, na.rm=TRUE) + 6 * IQR(infres$inf$cook.d, na.rm=TRUE)
       results <- paste0(results, "According to the Cook's distances, ")
       if (all(!is.infl, na.rm=TRUE))
@@ -457,17 +457,17 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
       regtest  <- regtest(x)
       if (plot.funnel)
          results <- paste0(results, "A funnel plot of the estimates is shown in Figure ", num.funnel, ". ")
-      if (ranktest$pval > .05 && regtest$pval > .05) {
+      if (ranktest$pval > 0.05 && regtest$pval > 0.05) {
          results <- paste0(results, "Neither the rank correlation nor the regression test indicated any funnel plot asymmetry ")
          results <- paste0(results, "(", fpval(ranktest$pval), " and ", fpval(regtest$pval), ", respectively). ")
       }
-      if (ranktest$pval <= .05 && regtest$pval <= .05) {
+      if (ranktest$pval <= 0.05 && regtest$pval <= 0.05) {
          results <- paste0(results, "Both the rank correlation and the regression test indicated potential funnel plot asymmetry ")
          results <- paste0(results, "(", fpval(ranktest$pval), " and ", fpval(regtest$pval), ", respectively). ")
       }
-      if (ranktest$pval > .05 && regtest$pval <= .05)
+      if (ranktest$pval > 0.05 && regtest$pval <= 0.05)
          results <- paste0(results, "The regression test indicated funnel plot asymmetry (", fpval(regtest$pval), ") but not the rank correlation test (", fpval(ranktest$pval), "). ")
-      if (ranktest$pval <= .05 && regtest$pval > .05)
+      if (ranktest$pval <= 0.05 && regtest$pval > 0.05)
          results <- paste0(results, "The rank correlation test indicated funnel plot asymmetry ($", fpval(ranktest$pval), ") but not the regression test (", fpval(regtest$pval), "). ")
 
       ### funnel plot

@@ -73,9 +73,9 @@ profile.rma.uni <- function(fitted,
 
       ### test if predict() works with the given newmods (and to get slab for [a])
 
-      predtest <- predict(x, newmods=newmods)
+      predres <- predict(x, newmods=newmods)
 
-      if (length(predtest$pred) == 0L)
+      if (length(predres$pred) == 0L)
          stop(mstyle$stop("Cannot compute predicted values."))
 
    }
@@ -265,7 +265,7 @@ profile.rma.uni <- function(fitted,
       sav$pred.ci.ub <- do.call(cbind, lapply(res, function(x) x$pred.ci.ub))
       sav$pred.pi.lb <- do.call(cbind, lapply(res, function(x) x$pred.pi.lb))
       sav$pred.pi.ub <- do.call(cbind, lapply(res, function(x) x$pred.pi.ub))
-      rownames(sav$pred) <- rownames(sav$pred.ci.lb) <- rownames(sav$pred.ci.ub) <- rownames(sav$pred.pi.lb) <- rownames(sav$pred.pi.ub) <- predtest$slab # [a]
+      rownames(sav$pred) <- rownames(sav$pred.ci.lb) <- rownames(sav$pred.ci.ub) <- rownames(sav$pred.pi.lb) <- rownames(sav$pred.pi.ub) <- predres$slab # [a]
    }
 
    if (blup) {

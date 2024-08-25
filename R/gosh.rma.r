@@ -9,7 +9,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl, ...) 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
-   if (x$k == 1)
+   if (x$k == 1L)
       stop(mstyle$stop("Stopped because k = 1."))
 
    parallel <- match.arg(parallel, c("no", "snow", "multicore"))
@@ -57,7 +57,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl, ...) 
    N.tot <- sum(choose(x$k, x$p:x$k))
 
    ### if 'subsets' is missing, include all possible subsets if N.tot is <= 10^6
-   ### and otherwise include 10^6 random subsets; if the user specifies 'subsets'
+   ### and otherwise include 10^6 random subsets; if the user specified 'subsets'
    ### and N.tot <= subsets, then again include all possible subsets
 
    if (missing(subsets)) {

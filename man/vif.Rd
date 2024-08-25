@@ -83,7 +83,7 @@ vif(x, \dots)
    \item{vifs}{a vector with just the (G)VIFs.}
    \item{table}{the model coefficient table (only when \code{table=TRUE}).}
    \item{sim}{a matrix with the simulated (G)VIF values (only when \code{sim=TRUE}).}
-   \item{prop}{vector with the proportions of simulated values that are smaller than the actually observed (G)VIF values (only when \code{sim=TRUE}).}
+   \item{prop}{a vector with the proportions of simulated values that are smaller than the actually observed (G)VIF values (only when \code{sim=TRUE}).}
    \item{\dots}{some additional elements/values.}
 
    When \code{x} was a location-scale model object and (G)VIFs can be computed for both the location and the scale coefficients, then the object is a list with elements \code{beta} and \code{alpha}, where each element is an \code{"vif.rma"} object as described above.
@@ -100,7 +100,7 @@ vif(x, \dots)
    On machines with multiple cores, one can try to speed things up by delegating the model fitting to separate worker processes, that is, by setting \code{parallel="snow"} or \code{parallel="multicore"} and \code{ncpus} to some value larger than 1. Parallel processing makes use of the \code{\link[parallel]{parallel}} package, using the \code{\link[parallel]{makePSOCKcluster}} and \code{\link[parallel]{parLapply}} functions when \code{parallel="snow"} or using \code{\link[parallel]{mclapply}} when \code{parallel="multicore"} (the latter only works on Unix/Linux-alikes). With \code{parallel::detectCores()}, one can check on the number of available cores on the local machine.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Belsley, D. A., Kuh, E., & Welsch, R. E. (1980). \emph{Regression diagnostics}. New York: Wiley.
@@ -109,7 +109,7 @@ vif(x, \dots)
 
    Horn, J. L. (1965). A rationale and test for the number of factors in factor analysis. \emph{Psychometrika}, \bold{30}(2), 179--185. \verb{https://doi.org/10.1007/BF02289447}
 
-   Stewart, G. W. (1987). Collinearity and least squares regression. \emph{Statistical Science}, \bold{2}(1), 68-84. \verb{https://doi.org/10.1214/ss/1177013439}
+   Stewart, G. W. (1987). Collinearity and least squares regression. \emph{Statistical Science}, \bold{2}(1), 68--84. \verb{https://doi.org/10.1214/ss/1177013439}
 
    Wax, Y. (1992). Collinearity diagnosis for a relative risk regression-analysis: An application to assessment of diet cancer relationship in epidemiologic studies. \emph{Statistics in Medicine}, \bold{11}(10), 1273--1287. \verb{https://doi.org/10.1002/sim.4780111003}
 

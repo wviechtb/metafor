@@ -49,7 +49,7 @@ matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE,
    When \mjseqn{R} is a covariance matrix with \code{V} and \code{means} specified, the means are treated as known constants when estimating the standard error of the intercept.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Becker, B. J. (1992). Using results from replicated studies to estimate linear models. \emph{Journal of Educational Statistics}, \bold{17}(4), 341--362. \verb{https://doi.org/10.3102/10769986017004341}

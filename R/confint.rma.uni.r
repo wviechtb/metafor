@@ -83,7 +83,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
    if (random) {
 
-      if (k == 1)
+      if (k == 1L)
          stop(mstyle$stop("Stopped because k = 1."))
 
       if (is.element(x$method, c("FE","EE","CE")))
@@ -149,7 +149,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
          QE.tau2.max <- .QE.func(con$tau2.max, Y=Y, vi=vi, X=X, k=k, objective=0)
          QE.tau2.min <- try(.QE.func(con$tau2.min, Y=Y, vi=vi, X=X, k=k, objective=0), silent=TRUE)
 
-         #dfs <- 12; curve(dchisq(x, df=dfs), from=0, to=40, ylim=c(0,.1), xlab="", ylab=""); abline(v=qchisq(c(.025, .975), df=dfs)); text(qchisq(c(.025, .975), df=dfs)+1.6, .1, c("crit.l", "crit.u"))
+         #dfs <- 12; curve(dchisq(x, df=dfs), from=0, to=40, ylim=c(0,0.1), xlab="", ylab=""); abline(v=qchisq(c(0.025, 0.975), df=dfs)); text(qchisq(c(0.025, 0.975), df=dfs)+1.6, 0.1, c("crit.l", "crit.u"))
 
          ###################################################################
 

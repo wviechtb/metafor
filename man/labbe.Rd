@@ -35,7 +35,7 @@ labbe(x, \dots)
    \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
    \item{col}{optional character string to specify the (border) color of the points. Can also be a vector.}
    \item{bg}{optional character string to specify the background color of open plot symbols. Can also be a vector. Set to \code{NA} to make the plotting symbols transparent.}
-   \item{lty}{optional character vector to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model. If unspecified, the function sets this to \code{c("solid","dashed")} by default (use \code{"blank"} to suppress a line).}
+   \item{lty}{optional argument to specify the line type for the diagonal reference line of no effect and the line that indicates the estimated effect based on the fitted model. If unspecified, the function sets this to \code{c("solid","dashed")} by default (use \code{"blank"} to suppress a line).}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -62,7 +62,7 @@ labbe(x, \dots)
    Note that the data frame is returned invisibly.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Jiménez, F. J., Guallar, E., & Martín-Moreno, J. M. (1997). A graphical display useful for meta-analysis. \emph{European Journal of Public Health}, \bold{7}(1), 101--105. \verb{https://doi.org/10.1093/eurpub/8.1.92}

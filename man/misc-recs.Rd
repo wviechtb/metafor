@@ -70,7 +70,7 @@ anova(sav, ...)}
 
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Hartung, J. (1999). An alternative method for meta-analysis. \emph{Biometrical Journal}, \bold{41}(8), 901--916. \verb{https://doi.org/10.1002/(SICI)1521-4036(199912)41:8<901::AID-BIMJ901>3.0.CO;2-W}

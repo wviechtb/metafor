@@ -150,7 +150,7 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
 
       ### allow easy setting of vi to a single value
 
-      vi <- .expand1(vi, yi)
+      vi <- .expand1(vi, length(yi))
 
       ### check length of yi and vi
 
@@ -205,7 +205,7 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
 
    k <- length(yi)
 
-   if (k == 1)
+   if (k == 1L)
       stop(mstyle$stop("Stopped because k = 1."))
 
    ### set interval for uniroot() [a]

@@ -34,7 +34,7 @@
    \item{label}{argument to control the labeling of the points (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{offset}{argument to control the distance between the points and the corresponding labels.}
    \item{pos}{argument to control the position of the labels.}
-   \item{lty}{optional character string to specify the line type for the diagonal line and the pseudo confidence envelope. If unspecified, the function sets this to \code{c("solid", "dotted")} by default.}
+   \item{lty}{optional argument to specify the line type for the diagonal line and the pseudo confidence envelope. If unspecified, the function sets this to \code{c("solid", "dotted")} by default.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -53,7 +53,7 @@
    Note that the list is returned invisibly.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Cook, R. D., & Weisberg, S. (1982). \emph{Residuals and influence in regression}. London: Chapman and Hall.

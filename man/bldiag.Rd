@@ -12,7 +12,7 @@ bldiag(\dots, order)
    \item{order}{optional argument to specify a variable based on which a square block diagonal matrix should be ordered.}
 }
 \author{
-   Posted to R-help by Berton Gunter (2 Sep 2005) with some further adjustments by Wolfgang Viechtbauer
+   Posted to R-help by Berton Gunter (2 Sep 2005) with some further adjustments by Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \seealso{
    \code{\link{rma.mv}} for the model fitting function that can take such a block diagonal matrix as input (for the \code{V} argument).

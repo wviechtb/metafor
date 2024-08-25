@@ -17,7 +17,7 @@
    \item{xlab}{title for the x-axis. If unspecified, the function sets an appropriate axis title.}
    \item{ylab}{title for the y-axis. If unspecified, the function sets an appropriate axis title.}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function sets the tick mark positions/labels to some sensible values.}
-   \item{transf}{optional argument to specify a function to transform the summary estimates (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify a function to transform the pooled estimates (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument to specify a function to transform the x-axis labels (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{digits}{optional integer to specify the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first to specify the number of decimal places for the x-axis, the second for the y-axis labels (e.g., \code{digits=c(2,3)}). If unspecified, the function tries to set the argument to some sensible values.}
@@ -36,7 +36,7 @@
    The color gradient of the points/lines indicates the order of the cumulative results (by default, light gray at the beginning, dark gray at the end). A different set of colors can be chosen via the \code{cols} argument. See \sQuote{Examples}.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}

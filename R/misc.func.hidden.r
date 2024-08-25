@@ -266,24 +266,13 @@
 
 }
 
-### function that expands a scalar to length k; can also expand a scaler to
-### the length of the vector given to k or expand a scaler to the maximum
-### length of the list elements given to k
+### function that expands a scalar to length k; can also expand a scalar to
+### the maximum length of the list elements given to k
 
 .expand1 <- function(x, k) {
 
-   if (is.list(k)) {
-
+   if (is.list(k))
       k <- max(lengths(k, use.names=FALSE))
-
-   } else {
-
-      len <- length(k)
-
-      if (len > 1L)
-         k <- len
-
-   }
 
    if (length(x) == 1L)
       x <- rep(x, k)
@@ -295,8 +284,8 @@
 ############################################################################
 
 ### function to format p-values (no longer used; use fmtp() instead)
-### if showeq=FALSE, c(.001, .00001) becomes c("0.0010", "<.0001")
-### if showeq=TRUE,  c(.001, .00001) becomes c("=0.0010", "<.0001")
+### if showeq=FALSE, c(0.001, 0.00001) becomes c("0.0010", "<.0001")
+### if showeq=TRUE,  c(0.001, 0.00001) becomes c("=0.0010", "<.0001")
 ### if add0=FALSE, "<.0001"; if add0=TRUE, "<0.0001"
 
 .pval <- function(p, digits=4, showeq=FALSE, sep="", add0=FALSE) {

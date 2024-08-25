@@ -112,7 +112,7 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
                      gamma2.levels <- rep(levels(x$mf.h.f$inner), times=x$tau2s) #       # otherwise repeat actual levels tau2s times
                   }                                                              #
                }                                                                 #
-               if ((!is.null(tau2.levels) && is.null(gamma2.levels)) ||          #   # if user specifies only one of tau2.levels and gamma2.levels, throw an error
+               if ((!is.null(tau2.levels) && is.null(gamma2.levels)) ||          #   # if user specified only one of tau2.levels and gamma2.levels, throw an error
                    (is.null(tau2.levels) && !is.null(gamma2.levels)))            #
                   stop(mstyle$stop("Either specify both of 'tau2.levels' and 'gamma2.levels' or neither."))
                if (!is.null(tau2.levels) && !is.null(gamma2.levels)) {           #   # if user has specified both tau2s.levels and gamma2.levels
@@ -330,7 +330,7 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
       if (x$coef_test == "saddlepoint")
          stop(mstyle$stop("Cannot use method when saddlepoint correction was used."))
 
-      cs.lc <- try(clubSandwich::linear_contrast(x, cluster=x$cluster, vcov=x$vb, test=x$coef_test, contrasts=X.new, p_values=FALSE), silent=!isTRUE(ddd$verbose))
+      cs.lc <- try(clubSandwich::linear_contrast(x, cluster=x$cluster, vcov=x$vb, test=x$coef_test, contrasts=X.new, p_values=FALSE, level=1-level), silent=!isTRUE(ddd$verbose))
 
       if (inherits(cs.lc, "try-error"))
          stop(mstyle$stop("Could not obtain the linear contrast(s) (use verbose=TRUE for more details)."))
@@ -342,10 +342,10 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
       crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/ifelse(adjust, 2*k.new, 2), df=ddf[j], lower.tail=FALSE) else NA_real_)
 
-      #ci.lb <- pred - crit * se
-      #ci.ub <- pred + crit * se
-      ci.lb <- cs.lc$CI_L
-      ci.ub <- cs.lc$CI_U
+      #ci.lb <- cs.lc$CI_L
+      #ci.ub <- cs.lc$CI_U
+      ci.lb <- pred - crit * se
+      ci.ub <- pred + crit * se
 
       x$test <- switch(x$coef_test, "z"="z", "naive-t"="t", "naive-tp"="t", "Satterthwaite"="t")
 
@@ -423,12 +423,15 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
    ### prediction intervals
 
+   pi.se <- NULL
+
    if (!inherits(object, "rma.mv")) {
 
       ### for rma.uni, rma.mh, rma.peto, and rma.glmm objects (in rma.mh and rma.peto, tau2 = 0 by default and stored as such)
 
-      pi.lb <- pred - crit * sqrt(vpred + x$tau2 + newvi)
-      pi.ub <- pred + crit * sqrt(vpred + x$tau2 + newvi)
+      pi.se <- sqrt(vpred + x$tau2 + newvi)
+      pi.lb <- pred - crit * pi.se
+      pi.ub <- pred + crit * pi.se
 
    } else {
 
@@ -438,8 +441,9 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
          ### if there is no G structure (and hence no H structure), there are no tau2 and gamma2 values, so just add the sum of all of the sigma2 values
 
-         pi.lb <- pred - crit * sqrt(vpred + sum(x$sigma2) + newvi)
-         pi.ub <- pred + crit * sqrt(vpred + sum(x$sigma2) + newvi)
+         pi.se <- sqrt(vpred + sum(x$sigma2) + newvi)
+         pi.lb <- pred - crit * pi.se
+         pi.ub <- pred + crit * pi.se
 
       }
 
@@ -451,8 +455,9 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
             ### if there is only a single tau^2 value, always add that (in addition to the sum of all of the sigma^2 values)
 
-            pi.lb <- pred - crit * sqrt(vpred + sum(x$sigma2) + x$tau2 + newvi)
-            pi.ub <- pred + crit * sqrt(vpred + sum(x$sigma2) + x$tau2 + newvi)
+            pi.se <- sqrt(vpred + sum(x$sigma2) + x$tau2 + newvi)
+            pi.lb <- pred - crit * pi.se
+            pi.ub <- pred + crit * pi.se
 
          } else {
 
@@ -472,8 +477,9 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
                if (!is.numeric(tau2.levels))
                   tau2.levels <- pmatch(tau2.levels, x$g.levels.f[[1]], duplicates.ok=TRUE)
 
-               pi.lb <- pred - crit * sqrt(vpred + sum(x$sigma2) + x$tau2[tau2.levels] + newvi)
-               pi.ub <- pred + crit * sqrt(vpred + sum(x$sigma2) + x$tau2[tau2.levels] + newvi)
+               pi.se <- sqrt(vpred + sum(x$sigma2) + x$tau2[tau2.levels] + newvi)
+               pi.lb <- pred - crit * pi.se
+               pi.ub <- pred + crit * pi.se
                tau2.levels <- x$g.levels.f[[1]][tau2.levels]
 
             }
@@ -490,8 +496,9 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
             ### if there is only a single tau^2 and gamma^2 value, always add that (in addition to the sum of all of the sigma^2 values)
 
-            pi.lb <- pred - crit * sqrt(vpred + sum(x$sigma2) + x$tau2 + x$gamma2 + newvi)
-            pi.ub <- pred + crit * sqrt(vpred + sum(x$sigma2) + x$tau2 + x$gamma2 + newvi)
+            pi.se <- sqrt(vpred + sum(x$sigma2) + x$tau2 + x$gamma2 + newvi)
+            pi.lb <- pred - crit * pi.se
+            pi.ub <- pred + crit * pi.se
 
          } else {
 
@@ -514,8 +521,9 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
                if (!is.numeric(gamma2.levels))
                   gamma2.levels <- pmatch(gamma2.levels, x$h.levels.f[[1]], duplicates.ok=TRUE)
 
-               pi.lb <- pred - crit * sqrt(vpred + sum(x$sigma2) + x$tau2[tau2.levels] + x$gamma2[gamma2.levels] + newvi)
-               pi.ub <- pred + crit * sqrt(vpred + sum(x$sigma2) + x$tau2[tau2.levels] + x$gamma2[gamma2.levels] + newvi)
+               pi.se <- sqrt(vpred + sum(x$sigma2) + x$tau2[tau2.levels] + x$gamma2[gamma2.levels] + newvi)
+               pi.lb <- pred - crit * pi.se
+               pi.ub <- pred + crit * pi.se
                tau2.levels <- x$g.levels.f[[1]][tau2.levels]
                gamma2.levels <- x$h.levels.f[[1]][gamma2.levels]
 
@@ -632,16 +640,6 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
    if (inherits(object, "rma.mv") && x$withH && x$gamma2s > 1L)
       out$gamma2.level <- gamma2.levels
 
-   ### remove cr part for models with a GEN structure
-   if (inherits(object, "rma.mv") && any(is.element(object$struct, c("GEN","GDIAG")))) {
-      out$cr.lb <- NULL
-      out$cr.ub <- NULL
-      out$pi.lb <- NULL
-      out$pi.ub <- NULL
-      out$tau2.level <- NULL
-      out$gamma2.level <- NULL
-   }
-
    ### add X matrix to list
 
    if (addx) {
@@ -653,14 +651,7 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
    out$slab <- slab[not.na]
 
-   ### for FE/EE/CE models, remove the columns corresponding to the prediction interval bounds
-
-   if (is.element(x$method, c("FE","EE","CE"))) {
-      out$cr.lb <- NULL
-      out$cr.ub <- NULL
-      out$pi.lb <- NULL
-      out$pi.ub <- NULL
-   }
+   ### add some additional info
 
    out$digits <- digits
    out$method <- x$method
@@ -670,8 +661,43 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
    if (x$test != "z")
       out$ddf <- ddf
 
-   if ((x$test != "z" || is.element(pi.type, c("riley","t"))) && pi.type != "simple")
+   if ((x$test != "z" || is.element(pi.type, c("riley","t"))) && pi.type != "simple") {
+      out$pi.dist <- "t"
       out$pi.ddf <- pi.ddf
+   } else {
+      out$pi.dist <- "norm"
+   }
+
+   out$pi.se <- pi.se
+
+   ### add some info to pi.lb
+
+   attr(out$pi.lb, "level") <- level
+   attr(out$pi.lb, "dist") <- out$pi.dist
+   if (out$pi.dist == "t") {
+      attr(out$pi.lb, "ddf") <- out$pi.ddf
+   }
+   attr(out$pi.lb, "se") <- pi.se
+
+   ### for rma.mv models with a GEN structure, remove PI bounds
+
+   if (inherits(object, "rma.mv") && any(is.element(object$struct, c("GEN","GDIAG")))) {
+      out$cr.lb <- NULL
+      out$cr.ub <- NULL
+      out$pi.lb <- NULL
+      out$pi.ub <- NULL
+      out$tau2.level <- NULL
+      out$gamma2.level <- NULL
+   }
+
+   ### for FE/EE/CE models, remove PI bounds
+
+   if (is.element(x$method, c("FE","EE","CE"))) {
+      out$cr.lb <- NULL
+      out$cr.ub <- NULL
+      out$pi.lb <- NULL
+      out$pi.ub <- NULL
+   }
 
    class(out) <- c("predict.rma", "list.rma")
 

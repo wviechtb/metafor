@@ -39,7 +39,7 @@ hc(object, \dots)
    The method makes use of the \code{\link{uniroot}} function. By default, the desired accuracy is set equal to \code{.Machine$double.eps^0.25} and the maximum number of iterations to \code{1000}. The desired accuracy (\code{tol}) and the maximum number of iterations (\code{maxiter}) can be adjusted with the \code{control} argument (i.e., \code{control=list(tol=value, maxiter=value)}).
 }
 \author{
-   Original code by Henmi and Copas (2010). Corrected for typos by Michael Dewey (\email{lists@dewey.myzen.co.uk}). Incorporated into the package with some small adjustments for consistency with the other functions in the package by Wolfgang Viechtbauer (\email{wvb@metafor-project.org}).
+   Original code by Henmi and Copas (2010). Corrected for typos by Michael Dewey (\email{lists@dewey.myzen.co.uk}). Incorporated into the package with some small adjustments for consistency with the other functions in the package by Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Henmi, M., & Copas, J. B. (2010). Confidence intervals for random effects meta-analysis and robustness to publication bias. \emph{Statistics in Medicine}, \bold{29}(29), 2969--2983. \verb{https://doi.org/10.1002/sim.4029}

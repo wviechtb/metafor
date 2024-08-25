@@ -284,12 +284,12 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, lty,
 
    if (ci || pi) {
 
-      tmp <- predict(x)
+      predres <- predict(x)
 
-      y.vals.ci.lb <- tmp$ci.lb + 1*x.vals
-      y.vals.ci.ub <- tmp$ci.ub + 1*x.vals
-      y.vals.pi.lb <- tmp$pi.lb + 1*x.vals
-      y.vals.pi.ub <- tmp$pi.ub + 1*x.vals
+      y.vals.ci.lb <- predres$ci.lb + 1*x.vals
+      y.vals.ci.ub <- predres$ci.ub + 1*x.vals
+      y.vals.pi.lb <- predres$pi.lb + 1*x.vals
+      y.vals.pi.ub <- predres$pi.ub + 1*x.vals
 
    } else {
 

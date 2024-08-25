@@ -97,7 +97,7 @@ funnel(x, \dots)
 
    When using unweighted estimation, using \code{yaxis="wi"} will place all points on a horizontal line. When directly passing a vector with the observed effect sizes or outcomes to the function, \code{yaxis="wi"} is equivalent to \code{yaxis="vinv"}, except that the weights are expressed in percent.
 
-   Argument \code{slab} and when specifying vectors for arguments \code{pch}, \code{col}, and/or \code{bg} and \code{x} is an object of class \code{"rma"}, the variables specified are assumed to be of the same length as the data passed to the model fitting function (and if the \code{data} argument was used in the original model fit, then the variables will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.
+   For argument \code{slab} and when specifying vectors for arguments \code{pch}, \code{col}, and/or \code{bg} and when \code{x} is an object of class \code{"rma"}, the variables specified are assumed to be of the same length as the data passed to the model fitting function (and if the \code{data} argument was used in the original model fit, then the variables will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.
 }
 \value{
    A data frame with components:
@@ -107,7 +107,7 @@ funnel(x, \dots)
    Note that the data frame is returned invisibly.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Light, R. J., & Pillemer, D. B. (1984). \emph{Summing up: The science of reviewing research}. Cambridge, MA: Harvard University Press.

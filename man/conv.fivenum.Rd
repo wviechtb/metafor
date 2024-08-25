@@ -95,7 +95,7 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
    Also note that the development of methods for estimating means and SDs based on five-number summary values is an active area of research. Currently, when \code{method="default"}, then this is identical to \code{method="luo/wan/shi"}, but this might change in the future. For reproducibility, it is therefore recommended to explicitly set \code{method="luo/wan/shi"} (or one of the other methods) when running this function.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Bland, M. (2015). Estimating mean and standard deviation from the sample size, three quartiles, minimum, and maximum. \emph{International Journal of Statistics in Medical Research}, \bold{4}(1), 57--64. \verb{https://doi.org/10.6000/1929-6029.2015.04.01.6}
@@ -116,7 +116,7 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 
    Shi, J., Luo, D., Wan, X., Liu, Y., Liu, J., Bian, Z. & Tong, T. (2023). Detecting the skewness of data from the five-number summary and its application in meta-analysis. \emph{Statistical Methods in Medical Research}, \bold{32}(7), 1338--1360. \verb{https://doi.org/10.1177/09622802231172043}
 
-   Walter, S. D. & Yao, X. (2007). Effect sizes can be calculated for studies reporting ranges for outcome variables in systematic reviews. \emph{Journal of Clinical Epidemiology}, \bold{60}(8), 849-852. \verb{https://doi.org/10.1016/j.jclinepi.2006.11.003}
+   Walter, S. D. & Yao, X. (2007). Effect sizes can be calculated for studies reporting ranges for outcome variables in systematic reviews. \emph{Journal of Clinical Epidemiology}, \bold{60}(8), 849--852. \verb{https://doi.org/10.1016/j.jclinepi.2006.11.003}
 
    Wan, X., Wang, W., Liu, J. & Tong, T. (2014). Estimating the sample mean and standard deviation from the sample size, median, range and/or interquartile range. \emph{BMC Medical Research Methodology}, \bold{14}, 135. \verb{https://doi.org/10.1186/1471-2288-14-135}
 

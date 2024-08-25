@@ -49,7 +49,7 @@
    It may not be possible to fit the model after deletion of the \mjeqn{i\textrm{th}}{ith} case from the dataset. This will result in \code{NA} values for that case.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Belsley, D. A., Kuh, E., & Welsch, R. E. (1980). \emph{Regression diagnostics}. New York: Wiley.

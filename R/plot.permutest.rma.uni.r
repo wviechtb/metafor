@@ -204,10 +204,10 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
       pdist <- QM.perm
 
       if (is.na(x$ddf)) {
-         xs <- seq(0, max(qchisq(.995, df=length(x$btt)), max(pdist, na.rm=TRUE)), length=1000)
+         xs <- seq(0, max(qchisq(0.995, df=length(x$btt)), max(pdist, na.rm=TRUE)), length.out=1000)
          ys <- dchisq(xs, df=length(x$btt))
       } else {
-         xs <- seq(0, max(qf(.995, df1=length(x$btt), df2=x$ddf), max(pdist, na.rm=TRUE)), length=1000)
+         xs <- seq(0, max(qf(0.995, df1=length(x$btt), df2=x$ddf), max(pdist, na.rm=TRUE)), length.out=1000)
          ys <- df(xs, df1=length(x$btt), df2=x$ddf)
       }
 
@@ -256,10 +256,10 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
       pdist <- perm1[[i]]
 
       if (is.na(x$ddf)) {
-         xs <- seq(min(-qnorm(.995), min(pdist, na.rm=TRUE)), max(qnorm(.995), max(pdist, na.rm=TRUE)), length=1000)
+         xs <- seq(min(-qnorm(0.995), min(pdist, na.rm=TRUE)), max(qnorm(0.995), max(pdist, na.rm=TRUE)), length.out=1000)
          ys <- dnorm(xs)
       } else {
-         xs <- seq(min(-qt(.995, df=x$ddf), min(pdist, na.rm=TRUE)), max(qt(.995, df=x$ddf), max(pdist, na.rm=TRUE)), length=1000)
+         xs <- seq(min(-qt(0.995, df=x$ddf), min(pdist, na.rm=TRUE)), max(qt(0.995, df=x$ddf), max(pdist, na.rm=TRUE)), length.out=1000)
          ys <- dt(xs, df=x$ddf)
       }
 
@@ -358,10 +358,10 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
          pdist <- QS.perm
 
          if (is.na(x$ddf.alpha)) {
-            xs <- seq(0, max(qchisq(.995, df=length(x$att)), max(pdist, na.rm=TRUE)), length=1000)
+            xs <- seq(0, max(qchisq(0.995, df=length(x$att)), max(pdist, na.rm=TRUE)), length.out=1000)
             ys <- dchisq(xs, df=length(x$att))
          } else {
-            xs <- seq(0, max(qf(.995, df1=length(x$att), df2=x$ddf.alpha), max(pdist, na.rm=TRUE)), length=1000)
+            xs <- seq(0, max(qf(0.995, df1=length(x$att), df2=x$ddf.alpha), max(pdist, na.rm=TRUE)), length.out=1000)
             ys <- df(xs, df1=length(x$att), df2=x$ddf.alpha)
          }
 
@@ -410,10 +410,10 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
          pdist <- perm2[[i]]
 
          if (is.na(x$ddf.alpha)) {
-            xs <- seq(min(-qnorm(.995), min(pdist, na.rm=TRUE)), max(qnorm(.995), max(pdist, na.rm=TRUE)), length=1000)
+            xs <- seq(min(-qnorm(0.995), min(pdist, na.rm=TRUE)), max(qnorm(0.995), max(pdist, na.rm=TRUE)), length.out=1000)
             ys <- dnorm(xs)
          } else {
-            xs <- seq(min(-qt(.995, df=x$ddf.alpha), min(pdist, na.rm=TRUE)), max(qt(.995, df=x$ddf.alpha), max(pdist, na.rm=TRUE)), length=1000)
+            xs <- seq(min(-qt(0.995, df=x$ddf.alpha), min(pdist, na.rm=TRUE)), max(qt(0.995, df=x$ddf.alpha), max(pdist, na.rm=TRUE)), length.out=1000)
             ys <- dt(xs, df=x$ddf.alpha)
          }
 

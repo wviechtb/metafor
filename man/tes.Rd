@@ -48,7 +48,7 @@ tes(x, vi, sei, subset, data, H0=0, alternative="two.sided", alpha=.05, theta, t
 
    One can either pass a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}.
 
-   The observed effect sizes or outcomes are tested for significance based on a standard Wald-type test, that is, by comparing \mjdeqn{z_i = \frac{y_i - \mbox{H}_0}{\sqrt{v_i}}}{z_i = (y_i - H_0) / sqrt(v_i)} against the appropriate critical value(s) of a standard normal distribution (e.g., \mjseqn{\pm 1.96} for \code{alternative="two.sided"} and \code{alpha=.05}, which are the defaults). Let \mjseqn{O} denote the observed number of significant tests.
+   The observed effect sizes or outcomes are tested for significance based on a standard Wald-type test, that is, by comparing \mjdeqn{z_i = \frac{y_i - \mbox{H}_0}{\sqrt{v_i}}}{z_i = (y_i - H_0) / sqrt(v_i)} against the appropriate critical value(s) of a standard normal distribution (e.g., \mjeqn{\pm 1.96}{±1.96} for \code{alternative="two.sided"} and \code{alpha=.05}, which are the defaults). Let \mjseqn{O} denote the observed number of significant tests.
 
    Given a particular value for the true effect or outcome denoted by \mjseqn{\theta} (which, if it is unspecified, is determined by computing the inverse-variance weighted average of the observed effect sizes or outcomes or the value is taken from the model object), let \mjseqn{1-\beta_i} denote the power of the \mjeqn{i\textrm{th}}{ith} test (where \mjseqn{\beta_i} denotes the Type II error probability). If \mjseqn{\tau^2 > 0}, let \mjseqn{1-\beta_i} denote the expected power (computed based on integrating the power over a normal distribution with mean \mjseqn{\theta} and variance \mjseqn{\tau^2}). Let \mjseqn{E = \sum_{i=1}^k (1-\beta_i)} denote the expected number of significant tests.
 
@@ -82,7 +82,7 @@ tes(x, vi, sei, subset, data, H0=0, alternative="two.sided", alpha=.05, theta, t
    Note that the test is not a test for publication bias but a test whether the set of studies includes an unusual number of significant findings given the power of the studies. The general usefulness of the test and its usefulness under particular circumstances (e.g., when there is substantial heterogeneity in the true effect sizes or outcomes) has been the subject of considerable debate. See Francis (2013) and the commentaries on this article in the same issue of the journal.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Francis, G. (2013). Replication, statistical consistency, and publication bias. \emph{Journal of Mathematical Psychology}, \bold{57}(5), 153--169. \verb{https://doi.org/10.1016/j.jmp.2013.02.003}

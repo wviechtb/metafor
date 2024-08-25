@@ -71,7 +71,7 @@ plot.rma.uni <- function(x, qqplot=FALSE, ...) {
          points(x=seq_len(k), y=z, pch=21, bg=bg, ...)
          axis(side=1, at=seq_len(k), labels=ids, ...)
          abline(h=0, lty="dashed", ...)
-         abline(h=c(qnorm(.025),qnorm(.975)), lty="dotted", ...)
+         abline(h=c(qnorm(0.025),qnorm(0.975)), lty="dotted", ...)
 
          title("Standardized Residuals", ...)
 
@@ -98,7 +98,7 @@ plot.rma.uni <- function(x, qqplot=FALSE, ...) {
 
       plot(NA, NA, xlim=range(pred), ylim=c(min(z, -2, na.rm=TRUE), max(z, 2, na.rm=TRUE)), bty="l", xlab="Fitted Value", ylab="Standardized Residual", ...)
       abline(h=0, lty="dashed", ...)
-      abline(h=c(qnorm(.025),qnorm(.975)), lty="dotted", ...)
+      abline(h=c(qnorm(0.025),qnorm(0.975)), lty="dotted", ...)
       points(pred, z, pch=21, bg=bg, ...)
       title("Fitted vs. Standardized Residuals", ...)
 
@@ -133,7 +133,7 @@ plot.rma.uni <- function(x, qqplot=FALSE, ...) {
          points(x=seq_len(k), y=z, pch=21, bg=bg, ...)
          axis(side=1, at=seq_len(k), labels=ids, ...)
          abline(h=0, lty="dashed", ...)
-         abline(h=c(qnorm(.025),qnorm(.975)), lty="dotted", ...)
+         abline(h=c(qnorm(0.025),qnorm(0.975)), lty="dotted", ...)
 
          title("Standardized Residuals", ...)
 

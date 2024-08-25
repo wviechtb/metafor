@@ -181,9 +181,9 @@
 
    res <- rep(NA_real_, k)
 
-   if (k.g == 1)
+   if (k.g == 1L)
       g <- rep(g, k)
-   if (k.x == 1)
+   if (k.x == 1L)
       x <- rep(x, k)
 
    if (length(g) != length(x))

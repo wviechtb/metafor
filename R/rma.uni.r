@@ -37,7 +37,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    if (!is.element(method[1], c("FE","EE","CE","HS","HSk","HE","DL","DLIT","GENQ","GENQM","SJ","SJIT","PM","MP","PMM","ML","REML","EB")))
       stop(mstyle$stop("Unknown 'method' specified."))
 
-   ### in case user specifies more than one add/to value (as one can do with rma.mh() and rma.peto())
+   ### in case user specified more than one add/to value (as one can do with rma.mh() and rma.peto())
    ### (any kind of continuity correction is directly applied to the outcomes, which are then analyzed as such)
 
    if (length(add) > 1L)
@@ -153,7 +153,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    mf <- match.call()
 
-   ### for certain measures, set add=0 by default unless user explicitly sets the add argument
+   ### for certain measures, set add=0 by default unless user explicitly set the add argument
 
    addval <- mf[[match("add", names(mf))]]
 
@@ -649,6 +649,8 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          di   <- .getx("di",   mf=mf, data=data, checknumeric=TRUE)
          ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
          pi   <- .getx("pi",   mf=mf, data=data, checknumeric=TRUE)
+
+         ri <- .expand1(ri, list(m1i, m2i, sd1i, sd2i, ni, di, ti, pi))
 
          if (measure == "SMCC") {
 
@@ -1891,7 +1893,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             #tmp <- rma.uni(tmp$resid^2, 1, mods=Z, intercept=FALSE, method="FE")
             alpha.init <- coef(tmp)
             if (any(Z %*% alpha.init < 0))
-               alpha.init <- ifelse(is.int, fit$tau2+.01, 0)
+               alpha.init <- ifelse(is.int, fit$tau2+0.01, 0)
             if (any(Z %*% alpha.init < 0))
                stop(mstyle$stop("Unable to find suitable starting values for the scale parameters."))
 

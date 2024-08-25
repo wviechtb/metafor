@@ -23,10 +23,10 @@ test_that("plot can be drawn.", {
 
    doplot <- function() {
 
-      par(mar=c(5,1,1,1))
+      par(mar=c(5,1,2,1))
 
-      forest(yi, vi,
-             xlim=c(-2.5,3.5),
+      forest(yi, vi, header=FALSE,
+             xlim=c(-2.5,3.5), ylim=c(-8, 254),
              order=yi,
              slab=NA, annotate=FALSE,
              efac=0,

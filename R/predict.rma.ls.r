@@ -408,8 +408,9 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
       ### prediction intervals
 
-      pi.lb <- pred - crit * sqrt(vpred + tau2.f + newvi)
-      pi.ub <- pred + crit * sqrt(vpred + tau2.f + newvi)
+      pi.se <- sqrt(vpred + tau2.f + newvi)
+      pi.lb <- pred - crit * pi.se
+      pi.ub <- pred + crit * pi.se
 
    } else {
 
@@ -570,8 +571,15 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
    if (x$test != "z")
       out$ddf <- ddf
 
-   if (pred.mui && (x$test != "z" || is.element(pi.type, c("riley","t"))) && pi.type != "simple")
-      out$pi.ddf <- pi.ddf
+   if (pred.mui) {
+      if ((x$test != "z" || is.element(pi.type, c("riley","t"))) && pi.type != "simple") {
+         out$pi.dist <- "t"
+         out$pi.ddf <- pi.ddf
+      } else {
+         out$pi.dist <- "norm"
+      }
+      out$pi.se <- pi.se
+   }
 
    class(out) <- c("predict.rma", "list.rma")
 

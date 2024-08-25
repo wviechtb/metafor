@@ -697,7 +697,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### create long format dataset
@@ -787,7 +787,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### create long format dataset
@@ -877,7 +877,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### create long format dataset
@@ -967,7 +967,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### create long format dataset
@@ -1028,7 +1028,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### create long format dataset
@@ -1086,7 +1086,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### create long format dataset
@@ -1141,7 +1141,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### create long format dataset
@@ -1225,7 +1225,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### create long format dataset
@@ -1281,7 +1281,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### create long format dataset
@@ -1346,7 +1346,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### create long format dataset
@@ -1433,7 +1433,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### create long format dataset

@@ -77,7 +77,7 @@ fsn(x, vi, sei, subset, data, type, alpha=.05, target,
    If the significance level of the observed studies is already above the specified alpha level or if the average effect size / outcome of the observed studies is already below the target average effect size / outcome, then the fail-safe N value is zero.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Rosenthal, R. (1979). The "file drawer problem" and tolerance for null results. \emph{Psychological Bulletin}, \bold{86}(3), 638--641. \verb{https://doi.org/10.1037/0033-2909.86.3.638}

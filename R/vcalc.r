@@ -1,5 +1,5 @@
 vcalc <- function(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
-data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ..., new = TRUE) {
+data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ...) {
 
    mstyle <- .get.mstyle()
 
@@ -346,55 +346,57 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ..., new = TRUE
          R <- matrix(0, nrow=k, ncol=k)
       }
 
-      if (new) {
-        cluster_set <- unique(cluster) 
-        
-        for (cl in cluster_set) {
-          cl_i <- which(cl == cluster)
-          k_c <- length(cl_i)
-          R_c <- matrix(0, nrow = k_c, ncol = k_c)
-          diag(R_c) <- 1
-          if (k_c > 1L) {
+      cluster_set <- unique(cluster)
+
+      for (cl in cluster_set) {
+
+         cl_i <- which(cl == cluster)
+         k_c  <- length(cl_i)
+         R_c  <- matrix(0, nrow=k_c, ncol=k_c)
+
+         diag(R_c) <- 1
+
+         if (k_c > 1L) {
             for (i in 2:k_c) {
-              for (j in 1:i) {
-                ci <- cl_i[i]
-                cj <- cl_i[j]
-                R_c[i,j] <- ifelse(type[ci]==type[cj], ifelse(obs[ci]==obs[cj], 1, rho[[1]][obs[ci],obs[cj]]), rho[[2]][type[ci],type[cj]]) *
-                  (ifelse(grp1[ci]==grp1[cj], ifelse(time1[ci]==time1[cj], 1, phi^abs(time1[ci]-time1[cj])), 0) * sqrt(1/w1[ci] * 1/w1[cj]) -
-                     ifelse(grp1[ci]==grp2[cj], ifelse(time1[ci]==time2[cj], 1, phi^abs(time1[ci]-time2[cj])), 0) * sqrt(1/w1[ci] * 1/w2[cj]) -
-                     ifelse(grp2[ci]==grp1[cj], ifelse(time2[ci]==time1[cj], 1, phi^abs(time2[ci]-time1[cj])), 0) * sqrt(1/w2[ci] * 1/w1[cj]) +
-                     ifelse(grp2[ci]==grp2[cj], ifelse(time2[ci]==time2[cj], 1, phi^abs(time2[ci]-time2[cj])), 0) * sqrt(1/w2[ci] * 1/w2[cj])) /
-                  (sqrt(1/w1[ci] + 1/w2[ci] - 2*ifelse(grp1[ci]==grp2[ci], ifelse(time1[ci]==time2[ci], 1, phi^abs(time1[ci]-time2[ci])), 0) * sqrt(1/w1[ci] * 1/w2[ci])) *
-                     sqrt(1/w1[cj] + 1/w2[cj] - 2*ifelse(grp1[cj]==grp2[cj], ifelse(time1[cj]==time2[cj], 1, phi^abs(time1[cj]-time2[cj])), 0) * sqrt(1/w1[cj] * 1/w2[cj])))
-              }
+               for (j in 1:i) {
+                  ci <- cl_i[i]
+                  cj <- cl_i[j]
+                  R_c[i,j] <- ifelse(type[ci]==type[cj], ifelse(obs[ci]==obs[cj], 1, rho[[1]][obs[ci],obs[cj]]), rho[[2]][type[ci],type[cj]]) *
+                              (ifelse(grp1[ci]==grp1[cj], ifelse(time1[ci]==time1[cj], 1, phi^abs(time1[ci]-time1[cj])), 0) * sqrt(1/w1[ci] * 1/w1[cj]) -
+                              ifelse(grp1[ci]==grp2[cj], ifelse(time1[ci]==time2[cj], 1, phi^abs(time1[ci]-time2[cj])), 0) * sqrt(1/w1[ci] * 1/w2[cj]) -
+                              ifelse(grp2[ci]==grp1[cj], ifelse(time2[ci]==time1[cj], 1, phi^abs(time2[ci]-time1[cj])), 0) * sqrt(1/w2[ci] * 1/w1[cj]) +
+                              ifelse(grp2[ci]==grp2[cj], ifelse(time2[ci]==time2[cj], 1, phi^abs(time2[ci]-time2[cj])), 0) * sqrt(1/w2[ci] * 1/w2[cj])) /
+                              (sqrt(1/w1[ci] + 1/w2[ci] - 2*ifelse(grp1[ci]==grp2[ci], ifelse(time1[ci]==time2[ci], 1, phi^abs(time1[ci]-time2[ci])), 0) * sqrt(1/w1[ci] * 1/w2[ci])) *
+                              sqrt(1/w1[cj] + 1/w2[cj] - 2*ifelse(grp1[cj]==grp2[cj], ifelse(time1[cj]==time2[cj], 1, phi^abs(time1[cj]-time2[cj])), 0) * sqrt(1/w1[cj] * 1/w2[cj])))
+               }
             }
-          }
-          R_c[upper.tri(R_c)] <- t(R_c)[upper.tri(R_c)]
-          R[cl_i, cl_i] <- R_c
-        }
-        
-      } else {
-        diag(R) <- 1
-        
-        for (i in 2:k) {
-          for (j in 1:i) {
-            if (cluster[i] == cluster[j]) {
-              
-              R[i,j] <- ifelse(type[i]==type[j], ifelse(obs[i]==obs[j], 1, rho[[1]][obs[i],obs[j]]), rho[[2]][type[i],type[j]]) *
-                (ifelse(grp1[i]==grp1[j], ifelse(time1[i]==time1[j], 1, phi^abs(time1[i]-time1[j])), 0) * sqrt(1/w1[i] * 1/w1[j]) -
-                   ifelse(grp1[i]==grp2[j], ifelse(time1[i]==time2[j], 1, phi^abs(time1[i]-time2[j])), 0) * sqrt(1/w1[i] * 1/w2[j]) -
-                   ifelse(grp2[i]==grp1[j], ifelse(time2[i]==time1[j], 1, phi^abs(time2[i]-time1[j])), 0) * sqrt(1/w2[i] * 1/w1[j]) +
-                   ifelse(grp2[i]==grp2[j], ifelse(time2[i]==time2[j], 1, phi^abs(time2[i]-time2[j])), 0) * sqrt(1/w2[i] * 1/w2[j])) /
-                (sqrt(1/w1[i] + 1/w2[i] - 2*ifelse(grp1[i]==grp2[i], ifelse(time1[i]==time2[i], 1, phi^abs(time1[i]-time2[i])), 0) * sqrt(1/w1[i] * 1/w2[i])) *
-                   sqrt(1/w1[j] + 1/w2[j] - 2*ifelse(grp1[j]==grp2[j], ifelse(time1[j]==time2[j], 1, phi^abs(time1[j]-time2[j])), 0) * sqrt(1/w1[j] * 1/w2[j])))
-              
-            }
-          }
-        }
-        
-        R[upper.tri(R)] <- t(R)[upper.tri(R)]
-        
-      }
+         }
+
+         R_c[upper.tri(R_c)] <- t(R_c)[upper.tri(R_c)]
+         R[cl_i, cl_i] <- R_c
+
+     }
+
+      # diag(R) <- 1
+      #
+      # for (i in 2:k) {
+      #    for (j in 1:i) {
+      #       if (cluster[i] == cluster[j]) {
+      #
+      #          R[i,j] <- ifelse(type[i]==type[j], ifelse(obs[i]==obs[j], 1, rho[[1]][obs[i],obs[j]]), rho[[2]][type[i],type[j]]) *
+      #                    (ifelse(grp1[i]==grp1[j], ifelse(time1[i]==time1[j], 1, phi^abs(time1[i]-time1[j])), 0) * sqrt(1/w1[i] * 1/w1[j]) -
+      #                     ifelse(grp1[i]==grp2[j], ifelse(time1[i]==time2[j], 1, phi^abs(time1[i]-time2[j])), 0) * sqrt(1/w1[i] * 1/w2[j]) -
+      #                     ifelse(grp2[i]==grp1[j], ifelse(time2[i]==time1[j], 1, phi^abs(time2[i]-time1[j])), 0) * sqrt(1/w2[i] * 1/w1[j]) +
+      #                     ifelse(grp2[i]==grp2[j], ifelse(time2[i]==time2[j], 1, phi^abs(time2[i]-time2[j])), 0) * sqrt(1/w2[i] * 1/w2[j])) /
+      #                    (sqrt(1/w1[i] + 1/w2[i] - 2*ifelse(grp1[i]==grp2[i], ifelse(time1[i]==time2[i], 1, phi^abs(time1[i]-time2[i])), 0) * sqrt(1/w1[i] * 1/w2[i])) *
+      #                     sqrt(1/w1[j] + 1/w2[j] - 2*ifelse(grp1[j]==grp2[j], ifelse(time1[j]==time2[j], 1, phi^abs(time1[j]-time2[j])), 0) * sqrt(1/w1[j] * 1/w2[j])))
+      #
+      #       }
+      #    }
+      # }
+      #
+      # R[upper.tri(R)] <- t(R)[upper.tri(R)]
+
 
    } else {
 

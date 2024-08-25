@@ -23,7 +23,7 @@ dfround(x, digits, drop0=TRUE)
    Returns the data frame with variables rounded as specified.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \examples{
 dat <- dat.bcg

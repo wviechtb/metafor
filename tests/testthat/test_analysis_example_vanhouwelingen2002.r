@@ -85,7 +85,7 @@ test_that("forest plot of observed log(OR)s and corresponding BLUPs can be drawn
    sav <- blup(res)
 
    png(filename="images/test_analysis_example_vanhouwelingen2002_forest_light_test.png", res=200, width=1800, height=1400, family="mono")
-   par(mar=c(5,5,1,2))
+   par(mar=c(5,5,2,2))
    forest(res, refline=res$b, addcred=TRUE, xlim=c(-7,7), alim=c(-3,3), slab=1:13, psize=0.8,
           ilab=paste0("(n = ", formatC(apply(dat[,c(4:7)], 1, sum), width=7, big.mark=","), ")"),
           ilab.xpos=-3.5, ilab.pos=2, rows=13:1+0.15, header="Trial (total n)", lty="dashed")
@@ -97,7 +97,7 @@ test_that("forest plot of observed log(OR)s and corresponding BLUPs can be drawn
 
    png(filename="images/test_analysis_example_vanhouwelingen2002_forest_dark_test.png", res=200, width=1800, height=1400, family="mono")
    setmfopt(theme="dark")
-   par(mar=c(5,5,1,2))
+   par(mar=c(5,5,2,2))
    forest(res, refline=res$b, addcred=TRUE, xlim=c(-7,7), alim=c(-3,3), slab=1:13, psize=0.8,
           ilab=paste0("(n = ", formatC(apply(dat[,c(4:7)], 1, sum), width=7, big.mark=","), ")"),
           ilab.xpos=-3.5, ilab.pos=2, rows=13:1+0.15, header="Trial (total n)", lty="dashed")

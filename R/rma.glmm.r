@@ -26,7 +26,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    if (!is.element(coding, c(1/2, 1, 0)))
       stop(mstyle$stop("Unknown 'coding' option specified."))
 
-   ### in case user specifies more than one add/to value (as one can do with rma.mh() and rma.peto())
+   ### in case user specified more than one add/to value (as one can do with rma.mh() and rma.peto())
    ### (never apply any kind of continuity correction to the data used in the actual model fitting for models implemented in this function)
 
    if (length(add) > 1L)
@@ -493,7 +493,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    ### at least one study left?
 
-   if (k < 1)
+   if (k < 1L)
       stop(mstyle$stop("Processing terminated since k = 0."))
 
    ### check for NAs in yi/vi and act accordingly (yi/vi pair can be NA/NA if add=0 is used)
@@ -2039,14 +2039,14 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             ### fit ML model
             ### notes: 1) cannot use clogit() or clogistic() for this (do not allow for the addition of random effects)
             ###        2) mclogit() from mclogit package may be an alternative (but it only provides a PQL method)
-            ###        3) start values from CM.AL model (add .01 to tau^2 estimate, in case estimate of tau^2 is 0)
+            ###        3) start values from CM.AL model (add 0.01 to tau^2 estimate, in case estimate of tau^2 is 0)
             ###        4) optimization involves integration, so intCtrl is relevant
             ###        5) results can be sensitive to the scaling of moderators
 
             if (verbose)
                message(mstyle$message("Fitting ML model ..."))
 
-            optcall <- paste0(optimizer, "(", par.arg, "=c(beta, log(tau2+.01)),
+            optcall <- paste0(optimizer, "(", par.arg, "=c(beta, log(tau2+0.01)),
                .dnchg, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
                "ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=TRUE,
                verbose=verbose, digits=digits,

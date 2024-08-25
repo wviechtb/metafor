@@ -81,12 +81,12 @@ test_that("back-transformations work as intended for individual studies and the 
 
    ### create forest plot with CI bounds supplied and then add model estimate
    png("images/test_analysis_example_miller1978_light_test.png", res=200, width=1800, height=800, type="cairo")
-   par(mar=c(5,8,1,8))
+   par(mar=c(5,8,2,8))
    forest(dat.back$yi, ci.lb=dat.back$ci.lb, ci.ub=dat.back$ci.ub, psize=1,
-          xlim=c(-.5,1.8), alim=c(0,1), ylim=c(-1,8), refline=NA, digits=3,
+          xlim=c(-.5,1.8), alim=c(0,1), ylim=c(-2,8), refline=NA, digits=3,
           xlab="Proportion", header=c("Study", "Proportion [95% CI]"))
-   addpoly(pred$pred, ci.lb=pred$ci.lb, ci.ub=pred$ci.ub, rows=-0.5, mlab="EE Model", efac=1.3)
-   abline(h=0.5)
+   addpoly(pred$pred, ci.lb=pred$ci.lb, ci.ub=pred$ci.ub, rows=-1, mlab="EE Model", efac=1.3)
+   abline(h=0)
    dev.off()
 
    expect_true(.vistest("images/test_analysis_example_miller1978_light_test.png", "images/test_analysis_example_miller1978_light.png"))
@@ -94,12 +94,12 @@ test_that("back-transformations work as intended for individual studies and the 
    ### create forest plot with CI bounds supplied and then add model estimate (dark theme)
    png("images/test_analysis_example_miller1978_dark_test.png", res=200, width=1800, height=800, type="cairo")
    setmfopt(theme="dark")
-   par(mar=c(5,8,1,8))
+   par(mar=c(5,8,2,8))
    forest(dat.back$yi, ci.lb=dat.back$ci.lb, ci.ub=dat.back$ci.ub, psize=1,
-          xlim=c(-.5,1.8), alim=c(0,1), ylim=c(-1,8), refline=NA, digits=3,
+          xlim=c(-.5,1.8), alim=c(0,1), ylim=c(-2,8), refline=NA, digits=3,
           xlab="Proportion", header=c("Study", "Proportion [95% CI]"))
-   addpoly(pred$pred, ci.lb=pred$ci.lb, ci.ub=pred$ci.ub, rows=-0.5, mlab="EE Model", efac=1.3)
-   abline(h=0.5)
+   addpoly(pred$pred, ci.lb=pred$ci.lb, ci.ub=pred$ci.ub, rows=-1, mlab="EE Model", efac=1.3)
+   abline(h=0)
    setmfopt(theme="default")
    dev.off()
 

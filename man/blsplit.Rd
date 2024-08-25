@@ -18,7 +18,7 @@ blsplit(x, cluster, fun, args, sort=FALSE)
    A list of one or more sub-matrices.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \seealso{
    \code{\link{bldiag}} for a function to create a block diagonal matrix based on sub-matrices.

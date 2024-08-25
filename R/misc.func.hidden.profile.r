@@ -28,20 +28,20 @@
       }
 
       if (pred) {
-         tmp <- predict(res, newmods=newmods)
-         sav$pred <- tmp$pred
-         sav$pred.ci.lb <- tmp$ci.lb
-         sav$pred.ci.ub <- tmp$ci.ub
-         sav$pred.pi.lb <- tmp$pi.lb
-         sav$pred.pi.ub <- tmp$pi.ub
+         predres <- predict(res, newmods=newmods)
+         sav$pred <- predres$pred
+         sav$pred.ci.lb <- predres$ci.lb
+         sav$pred.ci.ub <- predres$ci.ub
+         sav$pred.pi.lb <- predres$pi.lb
+         sav$pred.pi.ub <- predres$pi.ub
       }
 
       if (blup) { # note: already removed NAs and subsetted
-         tmp <- blup(res)
-         sav$blup <- tmp$pred
-         sav$blup.se <- tmp$se
-         sav$blup.pi.lb <- tmp$pi.lb
-         sav$blup.pi.ub <- tmp$pi.ub
+         blupres <- blup(res)
+         sav$blup <- blupres$pred
+         sav$blup.se <- blupres$se
+         sav$blup.pi.lb <- blupres$pi.lb
+         sav$blup.pi.ub <- blupres$pi.ub
       }
 
    }

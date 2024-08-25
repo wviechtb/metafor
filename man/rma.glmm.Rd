@@ -220,7 +220,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    Via the (undocumented) \code{link} argument, one can also directly adjust the link function that is used (by default, measures \code{"OR"} and \code{"PLO"} use a \code{"logit"} link, measures \code{"RR"} and \code{"PLN"} use a \code{"log"} link, measures \code{"RD"} and \code{"PR"} use an \code{"identity"} link, and measures \code{"IRR"} and \code{"IRLN"} use a \code{"log"} link). See \code{\link{family}} for alternative options. Changing these defaults is only recommended for users familiar with the consequences and the interpretation of the resulting estimates (when misused, the results could be meaningless).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 
    Code for computing the density of the non-central hypergeometric distribution comes from the \href{https://cran.r-project.org/package=MCMCpack}{MCMCpack} package, which in turn is based on Liao and Rosen (2001).
 }
@@ -231,7 +231,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 
    van Houwelingen, H. C., Zwinderman, K. H., & Stijnen, T. (1993). A bivariate approach to meta-analysis. \emph{Statistics in Medicine}, \bold{12}(24), 2273--2284. \verb{https://doi.org/10.1002/sim.4780122405}
 
-   Jackson, D., Law, M., Stijnen, T., Viechtbauer, W., & White, I. R. (2018). A comparison of seven random-effects models for meta-analyses that estimate the summary odds ratio. \emph{Statistics in Medicine}, \bold{37}(7), 1059-1085. \verb{https://doi.org/10.1002/sim.7588}
+   Jackson, D., Law, M., Stijnen, T., Viechtbauer, W., & White, I. R. (2018). A comparison of seven random-effects models for meta-analyses that estimate the summary odds ratio. \emph{Statistics in Medicine}, \bold{37}(7), 1059--1085. \verb{https://doi.org/10.1002/sim.7588}
 
    Liao, J. G., & Rosen, O. (2001). Fast and stable algorithms for computing and sampling from the noncentral hypergeometric distribution. \emph{American Statistician}, \bold{55}(4), 366--369. \verb{https://doi.org/10.1198/000313001753272547}
 

@@ -14,8 +14,9 @@ test_that("plot can be drawn.", {
 
    png("images/test_plots_forest_plot_with_subgroups_test.png", res=240, width=1800, height=1800, type="cairo")
 
-   ### decrease margins so the full space is used
-   par(mar=c(4,4,1,2))
+   ### decrease the top margin
+   #par(mar=c(4,4,1,2))
+   par(mar=c(5,4,2,2))
 
    ### copy BCG vaccine meta-analysis data into 'dat'
    dat <- dat.bcg
@@ -41,7 +42,7 @@ test_that("plot can be drawn.", {
    ### used to specify in which rows the outcomes will be plotted)
    forest(res, xlim=c(-16, 4.6), at=log(c(0.05, 0.25, 1, 4)), atransf=exp,
           ilab=cbind(tpos, tneg, cpos, cneg), ilab.lab=c("TB+","TB-","TB+","TB-"),
-          ilab.xpos=c(-9.5,-8,-6,-4.5), cex=0.75, ylim=c(-1, 27), order=alloc,
+          ilab.xpos=c(-9.5,-8,-6,-4.5), cex=0.75, ylim=c(-2, 28), top=4, order=alloc,
           rows=c(3:4,9:15,20:23), mlab=mlabfun("RE Model for All Studies", res),
           psize=1, header="Author(s) and Year")
 

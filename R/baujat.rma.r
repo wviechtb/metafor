@@ -10,7 +10,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
-   if (x$k == 1)
+   if (x$k == 1L)
       stop(mstyle$stop("Stopped because k = 1."))
 
    .start.plot()

@@ -16,12 +16,12 @@ forest(x, \dots)
 
    In the first case, object \code{x} is a fitted model object coming from the \code{\link{rma.uni}}, \code{\link{rma.mh}}, or \code{\link{rma.peto}} functions. The corresponding method is then \code{\link{forest.rma}}.
 
-   Alternatively, object \code{x} can be a vector with observed effect sizes or outcomes. The corresponding method is then \code{\link{forest.default}}.
+   Alternatively, object \code{x} can be a vector with the observed effect sizes or outcomes. The corresponding method is then \code{\link{forest.default}}.
 
    Finally, object \code{x} can be an object coming from the \code{\link{cumul.rma.uni}}, \code{\link{cumul.rma.mh}}, or \code{\link{cumul.rma.peto}} functions. The corresponding method is then \code{\link{forest.cumul.rma}}.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Lewis, S., & Clarke, M. (2001). Forest plots: Trying to see the wood and the trees. \emph{British Medical Journal}, \bold{322}(7300), 1479--1480. \verb{https://doi.org/10.1136/bmj.322.7300.1479}

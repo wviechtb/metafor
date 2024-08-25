@@ -14,7 +14,7 @@ trimfill.rma.uni <- function(x, side, estimator="L0", maxiter=100, verbose=FALSE
 
    estimator <- match.arg(estimator, c("L0", "R0", "Q0"))
 
-   if (x$k == 1)
+   if (x$k == 1L)
       stop(mstyle$stop("Stopped because k = 1."))
 
    #########################################################################

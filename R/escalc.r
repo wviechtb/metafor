@@ -131,7 +131,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
    flip <- .getx("flip", mf=mf, data=data)
 
-   ### for certain measures, set add=0 by default unless user explicitly sets the add argument
+   ### for certain measures, set add=0 by default unless user explicitly set the add argument
 
    addval <- mf[[match("add", names(mf))]]
 
@@ -1972,6 +1972,8 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
          di   <- .getx("di",   mf=mf, data=data, checknumeric=TRUE)
          ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
          pi   <- .getx("pi",   mf=mf, data=data, checknumeric=TRUE)
+
+         ri <- .expand1(ri, list(m1i, m2i, sd1i, sd2i, ni, di, ti, pi))
 
          if (is.element(measure, c("MC","SMCRH","SMCRP","SMCRPH","ROMC","CVRC"))) {
 

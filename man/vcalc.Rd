@@ -108,7 +108,7 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
    When setting \code{nearpd=TRUE}, the \code{\link[Matrix]{nearPD}} function from the \href{https://cran.r-project.org/package=Matrix}{Matrix} package is used on variance-covariance submatrices that are not positive definite. This should only be used cautiously and after understanding why these matrices are not positive definite.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}) with some tweaks to speed up the computations by James Pustejovsky (\email{pustejovsky@wisc.edu}, \url{https://jepusto.com}).
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}

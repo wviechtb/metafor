@@ -71,7 +71,7 @@ regplot(x, \dots)
 \note{
    For certain types of models, it may not be possible to draw the prediction interval bounds (if this is the case, a warning will be issued).
 
-   Argument \code{slab} and when specifying vectors for arguments \code{pch}, \code{psize}, \code{col}, \code{bg}, and/or \code{label} (for a logical vector), the variables specified are assumed to be of the same length as the data passed to the model fitting function (and if the \code{data} argument was used in the original model fit, then the variables will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.
+   For argument \code{slab} and when specifying vectors for arguments \code{pch}, \code{psize}, \code{col}, \code{bg}, and/or \code{label} (for a logical vector), the variables specified are assumed to be of the same length as the data passed to the model fitting function (and if the \code{data} argument was used in the original model fit, then the variables will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.
 
    If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{olim} argument to enforce those limits (the observed outcomes and confidence/prediction intervals cannot exceed those bounds then).
 }
@@ -90,7 +90,7 @@ regplot(x, \dots)
    Note that the object is returned invisibly. Using \code{points.regplot}, one can redraw the points (and labels) in case one wants to superimpose the points on top of any elements that were added manually to the plot (see \sQuote{Examples}).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Thompson, S. G., & Higgins, J. P. T. (2002). How should meta-regression analyses be undertaken and interpreted? \emph{Statistics in Medicine}, \bold{21}(11), 1559--1573. \verb{https://doi.org/10.1002/sim.1187}

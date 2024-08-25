@@ -85,7 +85,7 @@ rma.peto(ai, bi, ci, di, n1i, n2i,
    Other extractor functions include \code{\link[=coef.rma]{coef}}, \code{\link[=vcov.rma]{vcov}}, \code{\link[=logLik.rma]{logLik}}, \code{\link[=deviance.rma]{deviance}}, \code{\link[=AIC.rma]{AIC}}, and \code{\link[=BIC.rma]{BIC}}.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Bradburn, M. J., Deeks, J. J., Berlin, J. A., & Localio, A. R. (2007). Much ado about nothing: A comparison of the performance of meta-analytical methods with rare events. \emph{Statistics in Medicine}, \bold{26}(1), 53--77. \verb{https://doi.org/10.1002/sim.2528}

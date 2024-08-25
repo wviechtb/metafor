@@ -148,9 +148,9 @@ plot.vif.rma <- function(x,
 
       if (x$vifs[i] > usr[2] && lwd[1] > 0) {
          ya <- mean(par("yaxp")[1:2])
-         arrows(usr[2] - .08*(usr[2]-usr[1]), ya, usr[2] - .01*(usr[2]-usr[1]), ya,
-                length = .02*(grconvertY(usr[4], from="user", to="inches")-
-                             (grconvertY(usr[3], from="user", to="inches"))))
+         arrows(usr[2] - 0.08*(usr[2]-usr[1]), ya, usr[2] - 0.01*(usr[2]-usr[1]), ya,
+                length = 0.02*(grconvertY(usr[4], from="user", to="inches")-
+                              (grconvertY(usr[3], from="user", to="inches"))))
       }
 
       x$vifs[i] <- min(x$vifs[i], usr[2])

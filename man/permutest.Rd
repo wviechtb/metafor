@@ -84,7 +84,7 @@ permutest(x, \dots)
    When obtaining permutation-based CIs, the function makes use of \code{\link{uniroot}}. By default, the desired accuracy is set equal to \code{.Machine$double.eps^0.25} and the maximum number of iterations to \code{100}. The desired accuracy and the maximum number of iterations can be adjusted with the \code{control} argument (i.e., \code{control=list(tol=value, maxiter=value)}). Also, the interval searched for the CI bounds may be too narrow, leading to \code{NA} for a bound. In this case, one can try setting \code{control=list(distfac=value)} with a value larger than 1 to extend the interval (the value indicating a multiplicative factor by which to extend the width of the interval searched) or \code{control=list(extendInt="yes")} to allow \code{\link{uniroot}} to extend the interval dynamically (in which case it can happen that a bound may try to drift to \mjeqn{\pm \infty}{± infinity}).
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Follmann, D. A., & Proschan, M. A. (1999). Valid inference in random effects meta-analysis. \emph{Biometrics}, \bold{55}(3), 732--737. \verb{https://doi.org/10.1111/j.0006-341x.1999.00732.x}

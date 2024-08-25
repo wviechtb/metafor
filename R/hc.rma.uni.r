@@ -25,7 +25,7 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
    vi <- x$vi
    k  <- length(yi)
 
-   if (k == 1)
+   if (k == 1L)
       stop(mstyle$stop("Stopped because k = 1."))
 
    if (!x$allvipos)

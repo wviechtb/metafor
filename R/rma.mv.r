@@ -189,7 +189,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    formula.yi <- NULL
    formula.mods <- NULL
 
-   ### in case user specifies v (instead of V), verbose is set to v, which is non-sensical
+   ### in case user specified v (instead of V), verbose is set to v, which is non-sensical
    ### - if v is set to the name of a variable in 'data', it won't be found; can check for
    ###   this with try() and inherits(verbose, "try-error")
    ### - if v is set to vi or var (or anything else that might be interpreted as a function),
@@ -1026,7 +1026,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
             }
 
-            ### if user specifies the entire (k x k) correlation matrix, this removes the duplicate rows/columns
+            ### if user specified the entire (k x k) correlation matrix, this removes the duplicate rows/columns
 
             #R[Rfix] <- lapply(R[Rfix], unique, MARGIN=1)
             #R[Rfix] <- lapply(R[Rfix], unique, MARGIN=2)
@@ -1626,9 +1626,9 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       } else {
 
          ### TODO: consider a better way to set initial values
-         #total <- max(.001*(sigma2s + tau2s + gamma2s), var(c(Y - X %*% res.FE$beta)) - 1/mean(1/diag(V)))
-         #total <- max(.001*(sigma2s + tau2s + gamma2s), var(as.vector(sY - sX %*% beta)) - 1/mean(1/diag(V)))
-         total  <- max(.001*(sigma2s + tau2s + gamma2s), var(as.vector(Y) - as.vector(X %*% beta.FE)) - 1/mean(1/diag(V)))
+         #total <- max(0.001*(sigma2s + tau2s + gamma2s), var(c(Y - X %*% res.FE$beta)) - 1/mean(1/diag(V)))
+         #total <- max(0.001*(sigma2s + tau2s + gamma2s), var(as.vector(sY - sX %*% beta)) - 1/mean(1/diag(V)))
+         total  <- max(0.001*(sigma2s + tau2s + gamma2s), var(as.vector(Y) - as.vector(X %*% beta.FE)) - 1/mean(1/diag(V)))
 
          #beta.FE <- ifelse(beta.est, beta.FE, beta.arg)
          QE <- sum(as.vector(sY - sX %*% beta.FE)^2)
@@ -1644,13 +1644,13 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    gamma2.init <- rep(total / (sigma2s + tau2s + gamma2s), gamma2s)
 
    if (is.null(g.rho.init)) {
-      rho.init <- rep(.50, rhos)
+      rho.init <- rep(0.50, rhos)
    } else {
       rho.init <- g.rho.init
    }
 
    if (is.null(h.phi.init)) {
-      phi.init <- rep(.50, phis)
+      phi.init <- rep(0.50, phis)
    } else {
       phi.init <- h.phi.init
    }
@@ -1749,19 +1749,19 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (withH && !is.element(struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")) && any(con$phi.init <= -1 | con$phi.init >= 1))
       stop(mstyle$stop("Value(s) of 'phi.init' must be in (-1,1)."))
 
-   ### in case user manually sets con$cholesky and specifies only a single value
+   ### in case user manually set con$cholesky and specified only a single value
 
    con$cholesky <- .expand1(con$cholesky, 2L)
 
    ### use of Cholesky factorization only applicable for models with "UN", "UNR", and "GEN" structure
 
-   if (!withG) # in case user sets cholesky=TRUE and struct="UN", struct="UNR", or struct="GEN" even though there is no 1st 'inner | outer' term
+   if (!withG) # in case user set cholesky=TRUE and struct="UN", struct="UNR", or struct="GEN" even though there is no 1st 'inner | outer' term
       con$cholesky[1] <- FALSE
 
    if (con$cholesky[1] && !is.element(struct[1], c("UN","UNR","GEN")))
       con$cholesky[1] <- FALSE
 
-   if (!withH) # in case user sets cholesky=TRUE and struct="UN", struct="UNR", or struct="GEN" even though there is no 2nd 'inner | outer' term
+   if (!withH) # in case user set cholesky=TRUE and struct="UN", struct="UNR", or struct="GEN" even though there is no 2nd 'inner | outer' term
       con$cholesky[2] <- FALSE
 
    if (con$cholesky[2] && !is.element(struct[2], c("UN","UNR","GEN")))
@@ -1859,8 +1859,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if ((.isTRUE(cvvc) || cvvc %in% c("varcor","varcov","transf")) && !requireNamespace(con$hesspack, quietly=TRUE))
       stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to compute the Hessian.")))
 
-   ### check if length of sigma2.init, tau2.init, rho.init, gamma2.init, and phi.init matches number of variance components
-   ### note: if a particular component is not included, reset (transformed) initial values (in case the user still specifies multiple initial values)
+   ### check if length of sigma2.init, tau2.init, rho.init, gamma2.init, and phi.init matches the number of variance components
+   ### note: if a particular component is not included, reset (transformed) initial values (in case the user still specified multiple initial values)
 
    if (withS) {
       if (length(con$sigma2.init) != sigma2s)

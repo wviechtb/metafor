@@ -265,7 +265,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    ### at least one study left?
 
-   if (k < 1)
+   if (k < 1L)
       stop(mstyle$stop("Processing terminated since k = 0."))
 
    #########################################################################

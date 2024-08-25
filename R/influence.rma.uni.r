@@ -12,7 +12,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
    x <- model
 
-   if (x$k == 1)
+   if (x$k == 1L)
       stop(mstyle$stop("Stopped because k = 1."))
 
    ddd <- list(...)
@@ -201,9 +201,9 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
    ### determine "influential" cases
 
    is.infl <-
-      #abs(inf$rstudent) > qnorm(.975) |
+      #abs(inf$rstudent) > qnorm(0.975) |
       abs(inf$dffits) > 3*sqrt(x$p/(x$k-x$p)) |
-      pchisq(inf$cook.d, df=m) > .50 |
+      pchisq(inf$cook.d, df=m) > 0.50 |
       #inf$cov.r > 1 + 3*m/(x$k-m) |
       #inf$cov.r < 1 - 3*m/(x$k-m) |
       inf$hat > 3*x$p/x$k |

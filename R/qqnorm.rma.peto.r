@@ -8,7 +8,7 @@ qqnorm.rma.peto <- function(y, type="rstandard", pch=21, col, bg, label=FALSE, o
 
    type <- match.arg(type, c("rstandard", "rstudent"))
 
-   if (x$k == 1)
+   if (x$k == 1L)
       stop(mstyle$stop("Stopped because k = 1."))
 
    if (length(label) != 1L)

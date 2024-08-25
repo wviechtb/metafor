@@ -12,7 +12,7 @@ leave1out.rma.peto <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    if (!x$int.only)
       stop(mstyle$stop("Method only applicable to models without moderators."))
 
-   if (x$k == 1)
+   if (x$k == 1L)
       stop(mstyle$stop("Stopped because k = 1."))
 
    if (missing(digits)) {

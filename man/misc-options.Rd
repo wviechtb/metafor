@@ -160,7 +160,7 @@ res}
       \figure{plots-light.pdf}{options: width=5.5in}
       \figure{plots-dark.pdf}{options: width=5.5in}}
 
-      By setting \code{setmfopt(theme="dark")}, all plots created by the package will automatically use a dark mode. RStudio users can also set \code{setmfopt(theme="auto")}, in which case plotting colors are chosen depending on the RStudio theme used (for some themes, setting this to \code{"auto2"} might be aesthetically more pleasing).
+      By setting \code{setmfopt(theme="dark")}, all plots created by the package will automatically use a dark mode. RStudio users can also set \code{setmfopt(theme="auto")}, in which case plotting colors are chosen depending on the RStudio theme used (for some themes, setting this to \code{"auto2"} might be visually more appealing).
 
    }
 
@@ -200,7 +200,7 @@ res$time}
 
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}

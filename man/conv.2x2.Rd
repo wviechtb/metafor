@@ -59,7 +59,7 @@ conv.2x2(ori, ri, x2i, ni, n1i, n2i, correct=TRUE, data, include,
    If \code{replace="all"} (or \code{replace=TRUE}), then all values in \code{var.names[j]} where a reconstructed cell frequency can be computed are replaced, even for cases where the value in \code{var.names[j]} is not missing.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Bonett, D. G. (2007). Transforming odds ratios into correlations for meta-analytic research. \emph{American Psychologist}, \bold{62}(3), 254--255. \verb{https://doi.org/10.1037/0003-066x.62.3.254}

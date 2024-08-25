@@ -23,7 +23,7 @@ pairwise(x, btt, btt2, \dots)
    When using the present function in a call to the \code{\link[=anova.rma]{anova}} or \code{\link[=predict.rma]{predict}} functions, argument \code{x} does not need to specified, as the function will then automatically construct the contrast matrix based on the model object passed to the \code{anova} or \code{predict} function. See below for examples.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}

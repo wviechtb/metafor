@@ -1,5 +1,5 @@
 forest.cumul.rma <- function(x,
-annotate=TRUE,                                                header=FALSE,
+annotate=TRUE,                                                               header=TRUE,
 xlim, alim, olim, ylim, at, steps=5,                refline=0, digits=2L, width,
 xlab,             ilab, ilab.lab, ilab.xpos, ilab.pos,
 transf, atransf, targs, rows,
@@ -153,10 +153,11 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    ### column header
 
    estlab <- .setlab(measure, transf.char, atransf.char, gentype=3, short=TRUE)
+
    if (is.expression(estlab)) {
-      header.right <- str2lang(paste0("bold(", estlab, " * '", annosym[1], "' * '", 100*(1-level), "% CI'", " * '", annosym[3], "')"))
+      header.right <- str2lang(paste0("bold(", estlab, " * '", annosym[1], "' * '", round(100*(1-level),digits[[1]]), "% CI'", " * '", annosym[3], "')"))
    } else {
-      header.right <- paste0(estlab, annosym[1], 100*(1-level), "% CI", annosym[3])
+      header.right <- paste0(estlab, annosym[1], round(100*(1-level),digits[[1]]), "% CI", annosym[3])
    }
 
    if (is.logical(header)) {
@@ -535,7 +536,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    ### set y-axis limits
 
    if (missing(ylim)) {
-      ylim <- c(0.5, max(rows, na.rm=TRUE)+top)
+      ylim <- c(0, max(rows, na.rm=TRUE)+top)
    } else {
       if (length(ylim) == 1L) {
          ylim <- c(ylim, max(rows, na.rm=TRUE)+top)
@@ -573,7 +574,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### start plot
 
-   lplot(NA, NA, xlim=xlim, ylim=ylim, xlab="", ylab="", yaxt="n", xaxt="n", xaxs="i", bty="n", ...)
+   lplot(NA, NA, xlim=xlim, ylim=ylim, xlab="", ylab="", yaxt="n", xaxt="n", xaxs="i", yaxs="i", bty="n", ...)
 
    if (shade.type == "character") {
       if (shade == "zebra" || shade == "zebra1")
@@ -624,7 +625,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       cex <- par("cex") * cex.adj
    } else {
       if (is.null(cex.lab))
-         cex.lab <- cex
+         cex.lab <- par("cex") * cex
       if (is.null(cex.axis))
          cex.axis <- cex
    }
@@ -659,6 +660,10 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### add CI ends (either | or <> if outside of axis limits)
 
+   ciendheight <- height / 150 * cex * efac[1]
+   arrowwidth  <- 1.4    / 100 * cex * (xlim[2]-xlim[1])
+   arrowheight <- height / 150 * cex * efac[2]
+
    for (i in seq_len(k)) {
 
       ### need to skip missings (if check below will otherwise throw an error)
@@ -667,28 +672,32 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
       ### if the lower bound is actually larger than upper x-axis limit, then everything is to the right and just draw a polygon pointing in that direction
       if (ci.lb[i] >= alim[2]) {
-         lpolygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
+         lpolygon(x=c(alim[2], alim[2]-arrowwidth, alim[2]-arrowwidth, alim[2]),
+                  y=c(rows[i], rows[i]+arrowheight, rows[i]-arrowheight, rows[i]), col=col[i], border=col[i], ...)
          next
       }
 
       ### if the upper bound is actually lower than lower x-axis limit, then everything is to the left and just draw a polygon pointing in that direction
       if (ci.ub[i] <= alim[1]) {
-         lpolygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
+         lpolygon(x=c(alim[1], alim[1]+arrowwidth, alim[1]+arrowwidth, alim[1]),
+                  y=c(rows[i], rows[i]+arrowheight, rows[i]-arrowheight, rows[i]), col=col[i], border=col[i], ...)
          next
       }
 
       lsegments(max(ci.lb[i], alim[1]), rows[i], min(ci.ub[i], alim[2]), rows[i], lty=lty[1], col=col[i], ...)
 
       if (ci.lb[i] >= alim[1]) {
-         lsegments(ci.lb[i], rows[i]-(height/150)*cex*efac[1], ci.lb[i], rows[i]+(height/150)*cex*efac[1], col=col[i], ...)
+         lsegments(ci.lb[i], rows[i]-ciendheight, ci.lb[i], rows[i]+ciendheight, col=col[i], ...)
       } else {
-         lpolygon(x=c(alim[1], alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]+(1.4/100)*cex*(xlim[2]-xlim[1]), alim[1]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
+         lpolygon(x=c(alim[1], alim[1]+arrowwidth, alim[1]+arrowwidth, alim[1]),
+                  y=c(rows[i], rows[i]+arrowheight, rows[i]-arrowheight, rows[i]), col=col[i], border=col[i], ...)
       }
 
       if (ci.ub[i] <= alim[2]) {
-         lsegments(ci.ub[i], rows[i]-(height/150)*cex*efac[1], ci.ub[i], rows[i]+(height/150)*cex*efac[1], col=col[i], ...)
+         lsegments(ci.ub[i], rows[i]-ciendheight, ci.ub[i], rows[i]+ciendheight, col=col[i], ...)
       } else {
-         lpolygon(x=c(alim[2], alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]-(1.4/100)*cex*(xlim[2]-xlim[1]), alim[2]), y=c(rows[i], rows[i]+(height/150)*cex*efac[2], rows[i]-(height/150)*cex*efac[2], rows[i]), col=col[i], border=col[i], ...)
+         lpolygon(x=c(alim[2], alim[2]-arrowwidth, alim[2]-arrowwidth, alim[2]),
+                  y=c(rows[i], rows[i]+arrowheight, rows[i]-arrowheight, rows[i]), col=col[i], border=col[i], ...)
       }
 
    }
@@ -791,8 +800,6 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    }
 
-   #lpoints(x=yi, y=rows, pch=pch, cex=cex*psize, ...)
-
    ### add header
 
    ltext(textpos[1], ylim[2]-(top-1)+1+rowadj[1], header.left,  pos=4, font=2, cex=cex, ...)
@@ -802,11 +809,15 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### return some information about plot invisibly
 
-   res <- list(xlim=par("usr")[1:2], alim=alim, at=at, ylim=ylim, rows=rows, cex=cex, cex.lab=cex.lab, cex.axis=cex.axis, ilab.xpos=ilab.xpos, ilab.pos=ilab.pos, textpos=textpos)
+   res <- list(xlim=par("usr")[1:2], alim=alim, at=at, ylim=ylim, rows=rows,
+               cex=cex, cex.lab=cex.lab, cex.axis=cex.axis,
+               ilab.xpos=ilab.xpos, ilab.pos=ilab.pos, textpos=textpos)
 
-   ### add some additional stuff to be put into .metafor environment, so that it can be used by addpoly()
+   ### put some additional stuff into .metafor, so that it can be used by addpoly()
 
-   sav <- c(res, list(level=level, annotate=annotate, digits=digits[[1]], width=width, transf=transf, atransf=atransf, targs=targs, fonts=fonts[1:2], annosym=annosym))
+   sav <- c(res, list(level=level, annotate=annotate, digits=digits[[1]], width=width,
+                      transf=transf, atransf=atransf, targs=targs,
+                      fonts=fonts[1:2], annosym=annosym))
    try(assign("forest", sav, envir=.metafor), silent=TRUE)
 
    invisible(res)

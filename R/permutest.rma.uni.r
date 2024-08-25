@@ -14,7 +14,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, btt=x$btt, permci=FALSE
 
    .chkdots(ddd, c("tol", "time", "seed", "verbose", "fixed"))
 
-   if (!is.null(ddd$tol)) # in case user specifies comptol in the old manner
+   if (!is.null(ddd$tol)) # in case user specified comptol in the old manner
       comptol <- ddd$tol
 
    fixed <- .chkddd(ddd$fixed, FALSE, .isTRUE(ddd$fixed))
@@ -193,7 +193,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, btt=x$btt, permci=FALSE
          while (i <= X.iter) {
 
             signs <- sample(c(-1,1), x$k, replace=TRUE) # easier to understand (a tad slower for small k, but faster for larger k)
-            #signs <- 2*rbinom(x$k,1,.5)-1
+            #signs <- 2*rbinom(x$k,1,0.5)-1
 
             args <- list(yi=signs*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, method=x$method, weighted=x$weighted,
                          test=x$test, level=x$level, btt=1, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE, outlist=outlist)

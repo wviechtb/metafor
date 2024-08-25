@@ -495,13 +495,13 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
       if (yaxis == "seinv") {
          rylim   <- ylim[2] - ylim[1]
-         #ylim[1] <- max(.0001, ylim[1] - (rylim * 0.10)) # not clear how much to add to bottom
+         #ylim[1] <- max(0.0001, ylim[1] - (rylim * 0.10)) # not clear how much to add to bottom
          ylim[2] <- ylim[2] + (rylim * 0.10)
       }
 
       if (yaxis == "vinv") {
          rylim   <- ylim[2] - ylim[1]
-         #ylim[1] <- max(.0001, ylim[1] - (rylim * 0.10)) # not clear how much to add to bottom
+         #ylim[1] <- max(0.0001, ylim[1] - (rylim * 0.10)) # not clear how much to add to bottom
          ylim[2] <- ylim[2] + (rylim * 0.10)
       }
 

@@ -664,7 +664,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### row/group and column/outcome names
@@ -722,7 +722,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### row/group and column/outcome names
@@ -780,7 +780,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### row/group and column/outcome names
@@ -838,7 +838,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### row/group and column/outcome names
@@ -898,7 +898,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### row/group and column/outcome names
@@ -954,7 +954,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### row/group and column/outcome names
@@ -1010,7 +1010,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### row/group and column/outcome names
@@ -1066,7 +1066,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### row/group and column/outcome names
@@ -1123,7 +1123,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### row/group and column/outcome names
@@ -1188,7 +1188,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### row/group and column/outcome names
@@ -1267,7 +1267,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, rows, cols) {
 
       ### at least one study left?
 
-      if (k < 1)
+      if (k < 1L)
          stop(mstyle$stop("Processing terminated since k = 0."))
 
       ### row/group and column/outcome names

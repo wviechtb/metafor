@@ -15,7 +15,7 @@ test_that("plot can be drawn for 'rma.uni' object.", {
    png("images/test_plots_cumulative_forest_plot_1_test.png", res=240, width=1800, height=1400, type="cairo")
 
    ### decrease margins so the full space is used
-   par(mar=c(4,4,1,2))
+   par(mar=c(4,4,2,2))
 
    ### calculate log risk ratios and corresponding sampling variances
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
@@ -34,7 +34,6 @@ test_that("plot can be drawn for 'rma.uni' object.", {
 
    expect_true(.vistest("images/test_plots_cumulative_forest_plot_1_test.png", "images/test_plots_cumulative_forest_plot_1.png"))
 
-
 })
 
 test_that("plot can be drawn for 'rma.mh' object.", {
@@ -46,7 +45,7 @@ test_that("plot can be drawn for 'rma.mh' object.", {
    png("images/test_plots_cumulative_forest_plot_2_test.png", res=240, width=1800, height=1400, type="cairo")
 
    ### decrease margins so the full space is used
-   par(mar=c(4,4,1,2))
+   par(mar=c(4,4,2,2))
 
    ### fit equal-effects models using the Mantel-Haenszel method
    res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, slab=paste(author, year, sep=", "))
@@ -73,7 +72,7 @@ test_that("plot can be drawn for 'rma.peto' object.", {
    png("images/test_plots_cumulative_forest_plot_3_test.png", res=240, width=1800, height=1400, type="cairo")
 
    ### decrease margins so the full space is used
-   par(mar=c(4,4,1,2))
+   par(mar=c(4,4,2,2))
 
    ### fit equal-effects models using Peto's method
    res <- rma.peto(ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, slab=paste(author, year, sep=", "))

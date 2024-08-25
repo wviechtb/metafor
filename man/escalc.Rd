@@ -530,7 +530,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    Although the default value for \code{add} is \code{1/2}, for certain measures the use of such a bias correction makes little sense and for these measures, the function internally sets \code{add=0}. This applies to the following measures: \code{"AS"}, \code{"PHI"}, \code{"ZPHI"}, \code{"RTET"}, \code{"ZTET"}, \code{"IRSD"}, \code{"PAS"}, \code{"PFT"}, \code{"IRS"}, and \code{"IRFT"}. One can still force the use of the bias correction by explicitly setting the \code{add} argument to some non-zero value when calling the function.
 }
 \author{
-   Wolfgang Viechtbauer \email{wvb@metafor-project.org} \url{https://www.metafor-project.org}
+   Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
    Aloe, A. M. (2014). An empirical investigation of partial effect sizes in meta-analysis of correlational data. \emph{Journal of General Psychology}, \bold{141}(1), 47--64. \verb{https://doi.org/10.1080/00221309.2013.853021}
@@ -579,7 +579,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    Hakstian, A. R., & Whalen, T. E. (1976). A k-sample significance test for independent alpha coefficients. \emph{Psychometrika}, \bold{41}(2), 219--231. \verb{https://doi.org/10.1007/BF02291840}
 
-   Hasselblad, V., & Hedges, L. V. (1995). Meta-analysis of screening and diagnostic tests. Psychological Bulletin, 117(1), 167-178. \verb{https://doi.org/10.1037/0033-2909.117.1.167}
+   Hasselblad, V., & Hedges, L. V. (1995). Meta-analysis of screening and diagnostic tests. Psychological Bulletin, 117(1), 167--178. \verb{https://doi.org/10.1037/0033-2909.117.1.167}
 
    Hedges, L. V. (1981). Distribution theory for Glass's estimator of effect size and related estimators. \emph{Journal of Educational Statistics}, \bold{6}(2), 107--128. \verb{https://doi.org/10.3102/10769986006002107}
 
@@ -704,7 +704,7 @@ dat
 dat$yi
 
 ### this information can then be used by other functions; for example in a forest plot
-forest(dat$yi, dat$vi, header=TRUE, top=2)
+forest(dat$yi, dat$vi)
 
 ############################################################################
 

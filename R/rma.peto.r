@@ -216,7 +216,7 @@ level=95, verbose=FALSE, digits, ...) {
 
    ### at least one study left?
 
-   if (k < 1)
+   if (k < 1L)
       stop(mstyle$stop("Processing terminated since k = 0."))
 
    ### check for NAs in yi/vi and act accordingly
