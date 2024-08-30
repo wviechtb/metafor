@@ -125,6 +125,11 @@ emmprep <- function(x, verbose=FALSE, ...) {
          if (verbose) cat("Transformation:     logit\n")
       }
 
+      if (is.element(x$measure, c("PRZ"))) {
+         out@misc$tran <- "probit"
+         if (verbose) cat("Transformation:     probit\n")
+      }
+
       if (is.element(x$measure, c("PAS"))) {
          out <- update(out, emmeans::make.tran("asin.sqrt", 1))
          if (verbose) cat("Transformation:     asin.sqrt\n")

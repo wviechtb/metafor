@@ -1,4 +1,4 @@
-# metafor 4.7-26 (2024-08-25)
+# metafor 4.7-27 (2024-08-29)
 
 - some general changes to the various `forest()` functions: argument `header` is now `TRUE` by default, the y-axis is now created with `yaxs="i"`, and the y-axis limits have been tweaked slightly in accordance
 
@@ -35,6 +35,8 @@
 - `selmodel()` gains a `subset` argument (to specify a subset of studies to which the selection function should apply)
 
 - `nobs()` now just returns the number of estimates, not the effective number of observations
+
+- added measures `"PRZ"` to `escalc()`
 
 - `escalc()` gains a `flip` argument
 

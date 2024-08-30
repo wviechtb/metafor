@@ -24,7 +24,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                               "COR","UCOR","ZCOR",                                               # correlations (raw and r-to-z transformed)
                               "PCOR","ZPCOR","SPCOR","ZSPCOR",                                   # partial and semi-partial correlations
                               "R2","ZR2",                                                        # coefficient of determination / R^2 (raw and r-to-z transformed)
-                              "PR","PLN","PLO","PAS","PFT",                                      # single proportions (and transformations thereof)
+                              "PR","PLN","PLO","PRZ","PAS","PFT",                                # single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                                          # single-group person-time (incidence) data (and transformations thereof)
                               "MN","SMN","MNLN","CVLN","SDLN",                                   # mean, single-group standardized mean, log(mean), log(CV), log(SD),
                               "MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","ROMC","CVRC","VRC",   # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
@@ -579,7 +579,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       }
 
-      if (is.element(measure, c("PR","PLN","PLO","PAS","PFT"))) {
+      if (is.element(measure, c("PR","PLN","PLO","PRZ","PAS","PFT"))) {
 
          xi <- .getx("xi", mf=mf, data=data, checknumeric=TRUE)
          mi <- .getx("mi", mf=mf, data=data, checknumeric=TRUE)

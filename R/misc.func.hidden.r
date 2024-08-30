@@ -966,6 +966,18 @@
                lab <- ifelse(short, "Odds", "Odds")
          }
       }
+      if (measure == "PRZ") {
+         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
+            lab <- ifelse(short, expression(Phi^{-1}*(p)), "Probit Transformed Proportion") # expression(z[p])
+         } else {
+            lab <- ifelse(short, lab, "Transformed Probit Transformed Proportion")
+            funlist <- lapply(list(pnorm), deparse)
+            if (any(sapply(funlist, identical, atransf.char)))
+               lab <- ifelse(short, "Proportion", "Proportion (probit scale)")
+            if (any(sapply(funlist, identical, transf.char)))
+               lab <- ifelse(short, "Proportion", "Proportion")
+         }
+      }
       if (measure == "PAS") {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, expression(arcsin(sqrt(p))), "Arcsine Transformed Proportion")

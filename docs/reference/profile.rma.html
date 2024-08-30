@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-26</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-27</span>
       </span>
     </div>
 
@@ -316,43 +316,40 @@
 <span class="r-in"><span><span class="co">### change data into long format</span></span></span>
 <span class="r-in"><span><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="to.long.html">to.long</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"OR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.bcg.html" class="external-link">dat.bcg</a></span>, append<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### set levels of group variable ("exp" = experimental/vaccinated; "con" = control/non-vaccinated)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">dat.long</span><span class="op">$</span><span class="va">group</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"exp"</span>, <span class="st">"con"</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### set "con" to reference level</span></span></span>
-<span class="r-in"><span><span class="va">dat.long</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/relevel.html" class="external-link">relevel</a></span><span class="op">(</span><span class="va">dat.long</span><span class="op">$</span><span class="va">group</span>, ref<span class="op">=</span><span class="st">"con"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">### set levels/labels for group ("con" = control/non-vaccinated, "exp" = experimental/vaccinated)</span></span></span>
+<span class="r-in"><span><span class="va">dat.long</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dat.long</span><span class="op">$</span><span class="va">group</span>, levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"con"</span>,<span class="st">"exp"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### calculate log odds and corresponding sampling variances</span></span></span>
 <span class="r-in"><span><span class="va">dat.long</span> <span class="op">&lt;-</span> <span class="fu"><a href="escalc.html">escalc</a></span><span class="op">(</span>measure<span class="op">=</span><span class="st">"PLO"</span>, xi<span class="op">=</span><span class="va">out1</span>, mi<span class="op">=</span><span class="va">out2</span>, data<span class="op">=</span><span class="va">dat.long</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dat.long</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    study group out1  out2      yi     vi </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1   con    4   119 -3.3928 0.2584 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2      1   exp   11   128 -2.4541 0.0987 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3      2   con    6   300 -3.9120 0.1700 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4      2   exp   29   274 -2.2458 0.0381 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5      3   con    3   228 -4.3307 0.3377 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      3   exp   11   209 -2.9444 0.0957 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      4   con   62 13536 -5.3860 0.0162 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      4   exp  248 12619 -3.9295 0.0041 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9      5   con   33  5036 -5.0279 0.0305 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10     5   exp   47  5761 -4.8087 0.0215 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11     6   con  180  1361 -2.0230 0.0063 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12     6   exp  372  1079 -1.0649 0.0036 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13     7   con    8  2537 -5.7593 0.1254 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14     7   exp   10   619 -4.1255 0.1016 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 15     8   con  505 87886 -5.1592 0.0020 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 16     8   exp  499 87892 -5.1713 0.0020 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17     9   con   29  7470 -5.5514 0.0346 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 18     9   exp   45  7232 -5.0796 0.0224 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 19    10   con   17  1699 -4.6046 0.0594 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20    10   exp   65  1600 -3.2034 0.0160 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21    11   con  186 50448 -5.6030 0.0054 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 22    11   exp  141 27197 -5.2621 0.0071 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 23    12   con    5  2493 -6.2118 0.2004 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 24    12   exp    3  2338 -6.6584 0.3338 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25    13   con   27 16886 -6.4384 0.0371 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 26    13   exp   29 17825 -6.4211 0.0345 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1      1   exp    4   119 -3.3928 0.2584 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2      1   con   11   128 -2.4541 0.0987 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3      2   exp    6   300 -3.9120 0.1700 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4      2   con   29   274 -2.2458 0.0381 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5      3   exp    3   228 -4.3307 0.3377 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      3   con   11   209 -2.9444 0.0957 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      4   exp   62 13536 -5.3860 0.0162 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      4   con  248 12619 -3.9295 0.0041 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9      5   exp   33  5036 -5.0279 0.0305 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10     5   con   47  5761 -4.8087 0.0215 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11     6   exp  180  1361 -2.0230 0.0063 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12     6   con  372  1079 -1.0649 0.0036 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13     7   exp    8  2537 -5.7593 0.1254 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14     7   con   10   619 -4.1255 0.1016 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 15     8   exp  505 87886 -5.1592 0.0020 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 16     8   con  499 87892 -5.1713 0.0020 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17     9   exp   29  7470 -5.5514 0.0346 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 18     9   con   45  7232 -5.0796 0.0224 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 19    10   exp   17  1699 -4.6046 0.0594 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 20    10   con   65  1600 -3.2034 0.0160 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21    11   exp  186 50448 -5.6030 0.0054 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 22    11   con  141 27197 -5.2621 0.0071 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 23    12   exp    5  2493 -6.2118 0.2004 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 24    12   con    3  2338 -6.6584 0.3338 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25    13   exp   27 16886 -6.4384 0.0371 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 26    13   con   29 17825 -6.4211 0.0345 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit bivariate random-effects model using rma.mv()</span></span></span>
@@ -367,8 +364,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> inner factor: group (nlvls = 2)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             estim    sqrt  k.lvl  fixed  level </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.1    1.5486  1.2444     13     no    con </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.2    2.6173  1.6178     13     no    exp </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.1    2.6173  1.6178     13     no    con </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.2    1.5486  1.2444     13     no    exp </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      rho.con  rho.exp    con  exp </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> con        1               -   13 </span>
@@ -382,9 +379,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           estimate      se      zval    pval    ci.lb    ci.ub      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt    -4.8374  0.3528  -13.7113  &lt;.0001  -5.5289  -4.1459  *** </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> groupexp    0.7414  0.1880    3.9430  &lt;.0001   0.3729   1.1099  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           estimate      se     zval    pval    ci.lb    ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt    -4.0960  0.4529  -9.0432  &lt;.0001  -4.9837  -3.2082  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> groupexp   -0.7414  0.1880  -3.9430  &lt;.0001  -1.1099  -0.3729  *** </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>

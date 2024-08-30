@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-26</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-27</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.7-26" id="metafor-47-26-2024-08-25">metafor 4.7-26 (2024-08-25)<a class="anchor" aria-label="anchor" href="#metafor-47-26-2024-08-25"></a></h2>
+<h2 class="page-header" data-toc-text="4.7-27" id="metafor-47-27-2024-08-29">metafor 4.7-27 (2024-08-29)<a class="anchor" aria-label="anchor" href="#metafor-47-27-2024-08-29"></a></h2>
 <ul><li><p>some general changes to the various <code><a href="../reference/forest.html">forest()</a></code> functions: argument <code>header</code> is now <code>TRUE</code> by default, the y-axis is now created with <code>yaxs="i"</code>, and the y-axis limits have been tweaked slightly in accordance</p></li>
 <li><p>the <code><a href="../reference/forest.rma.html">forest.rma()</a></code> and <code><a href="../reference/addpoly.default.html">addpoly.default()</a></code> functions now provides multiple styles for drawing the prediction interval via the <code>predstyle</code> argument</p></li>
 <li><p><code><a href="../reference/forest.rma.html">forest.rma()</a></code> and <code><a href="../reference/addpoly.rma.html">addpoly.rma()</a></code> now write out the default label (instead of an abbreviation) for the model results; as before, the label can be changed via the <code>mlab</code> argument</p></li>
@@ -109,6 +109,7 @@
 <li><p><code><a href="../reference/permutest.html">permutest.rma.uni()</a></code> gains a <code>btt</code> argument and <code><a href="../reference/permutest.html">permutest.rma.ls()</a></code> gains <code>btt</code> and <code>att</code> arguments</p></li>
 <li><p><code><a href="../reference/selmodel.html">selmodel()</a></code> gains a <code>subset</code> argument (to specify a subset of studies to which the selection function should apply)</p></li>
 <li><p><code><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs()</a></code> now just returns the number of estimates, not the effective number of observations</p></li>
+<li><p>added measures <code>"PRZ"</code> to <code><a href="../reference/escalc.html">escalc()</a></code></p></li>
 <li><p><code><a href="../reference/escalc.html">escalc()</a></code> gains a <code>flip</code> argument</p></li>
 <li><p>fixed <code><a href="../reference/predict.rma.html">predict()</a></code> ignoring the <code>level</code> argument for <code>robust.rma</code> objects obtained with <code>clubSandwich=TRUE</code></p></li>
 <li><p>some tweaks to <code><a href="../reference/vcalc.html">vcalc()</a></code> to speed up the calculations (by James Pustejovsky)</p></li>

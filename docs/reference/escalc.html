@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-26</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-27</span>
       </span>
     </div>
 
@@ -412,10 +412,11 @@
 <p></p><ul><li><p><code>"PR"</code> for the <em>raw proportion</em>,</p></li>
 <li><p><code>"PLN"</code> for the <em>log transformed proportion</em>,</p></li>
 <li><p><code>"PLO"</code> for the <em>logit transformed proportion</em> (i.e., log odds),</p></li>
+<li><p><code>"PRZ"</code> for the <em>probit transformed proportion</em>,</p></li>
 <li><p><code>"PAS"</code> for the <em>arcsine square root transformed proportion</em> (i.e., the angular transformation),</p></li>
 <li><p><code>"PFT"</code> for the <em>Freeman-Tukey double arcsine transformed proportion</em> (Freeman &amp; Tukey, 1950).</p></li>
 </ul><p>Zero cell entries can be problematic for certain outcome measures. When <code>to="only0"</code> (the default), the value of <code>add</code> (the default is <code>1/2</code>; but see ‘Note’) is added to <code>xi</code> and <code>mi</code> only for studies where <code>xi</code> or <code>mi</code> is equal to 0. When <code>to="all"</code>, the value of <code>add</code> is added to <code>xi</code> and <code>mi</code> in all studies. When <code>to="if0all"</code>, the value of <code>add</code> is added in all studies, but only when there is at least one study with a zero value for <code>xi</code> or <code>mi</code>. Setting <code>to="none"</code> or <code>add=0</code> has the same effect: No adjustment to the observed values is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to <code>NA</code>).</p>
-<p>Datasets corresponding to data of this type are provided in <code><a href="https://wviechtb.github.io/metadat/reference/dat.pritz1997.html" class="external-link">dat.pritz1997</a></code> and <code><a href="https://wviechtb.github.io/metadat/reference/dat.debruin2009.html" class="external-link">dat.debruin2009</a></code>.</p>
+<p>Datasets corresponding to data of this type are provided in <code><a href="https://wviechtb.github.io/metadat/reference/dat.pritz1997.html" class="external-link">dat.pritz1997</a></code>, <code><a href="https://wviechtb.github.io/metadat/reference/dat.debruin2009.html" class="external-link">dat.debruin2009</a></code>, <code><a href="https://wviechtb.github.io/metadat/reference/dat.hannum2020.html" class="external-link">dat.hannum2020</a></code>, and <code><a href="https://wviechtb.github.io/metadat/reference/dat.crisafulli2020.html" class="external-link">dat.crisafulli2020</a></code>.</p>
 <p></p>
 </div>
 

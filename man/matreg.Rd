@@ -163,7 +163,7 @@ matreg(1, 2:4, R=R, V=vcov(res), ztor=TRUE)
 dat.long <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
                     data=dat.colditz1994, append=FALSE)
 dat.long <- escalc(measure="PLO", xi=out1, mi=out2, data=dat.long)
-levels(dat.long$group) <- c("CON", "EXP")
+dat.long$group <- factor(dat.long$group, levels=c(2,1), labels=c("con","exp"))
 dat.long
 
 ### fit bivariate model
@@ -171,7 +171,7 @@ res <- rma.mv(yi, vi, mods = ~ 0 + group, random = ~ group | study, struct="UN",
               data=dat.long, method="ML")
 res
 
-### regression of log(odds)_EXP on log(odds)_CON
+### regression of log(odds)_exp on log(odds)_con
 matreg(y=2, x=1, R=res$G, cov=TRUE, means=coef(res), n=res$g.levels.comb.k)
 
 ### but the SE of the CON coefficient is not computed correctly, since above we treat res$G as if
@@ -183,5 +183,7 @@ res <- rma.mv(yi, vi, mods = ~ 0 + group, random = ~ group | study, struct="UN",
 
 ### now use res$vvc as the var-cov matrix of the estimates in res$G
 matreg(y=2, x=1, R=res$G, cov=TRUE, means=coef(res), V=res$vvc)
+
+############################################################################
 }
 \keyword{models}

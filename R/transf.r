@@ -151,33 +151,33 @@ transf.iarcsin <- function(xi) {
    return(c(zi))
 }
 
-# transf.iarcsin.int <- function(xi, targs=NULL) {
-#
-#   if (is.na(xi))
-#      return(NA_real_)
-#
-#   targs <- .chktargsint(targs)
-#
-#   if (is.null(targs$lower))
-#      targs$lower <- 0
-#   if (is.null(targs$upper))
-#      targs$upper <- asin(1)
-#
-#   toint <- function(zval, xi, tau2)
-#      transf.iarcsin(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
-#
-#   cfunc <- function(xi, tau2, lower, upper)
-#      integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2)$value
-#
-#   if (targs$tau2 == 0) {
-#      zi <- transf.iarcsin(xi)
-#   } else {
-#      zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
-#   }
-#
-#   return(c(zi))
-#
-# }
+ transf.iarcsin.int <- function(xi, targs=NULL) {
+
+   if (is.na(xi))
+      return(NA_real_)
+
+   targs <- .chktargsint(targs)
+
+   if (is.null(targs$lower))
+      targs$lower <- 0
+   if (is.null(targs$upper))
+      targs$upper <- asin(1)
+
+   toint <- function(zval, xi, tau2)
+      transf.iarcsin(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
+
+   cfunc <- function(xi, tau2, lower, upper)
+      integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2)$value
+
+   if (targs$tau2 == 0) {
+      zi <- transf.iarcsin(xi)
+   } else {
+      zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
+   }
+
+   return(c(zi))
+
+ }
 
 ############################################################################
 

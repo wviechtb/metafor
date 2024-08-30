@@ -323,13 +323,14 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \item \code{"PR"} for the \emph{raw proportion},
          \item \code{"PLN"} for the \emph{log transformed proportion},
          \item \code{"PLO"} for the \emph{logit transformed proportion} (i.e., log odds),
+         \item \code{"PRZ"} for the \emph{probit transformed proportion},
          \item \code{"PAS"} for the \emph{arcsine square root transformed proportion} (i.e., the angular transformation),
          \item \code{"PFT"} for the \emph{Freeman-Tukey double arcsine transformed proportion} (Freeman & Tukey, 1950).
          }
 
          Zero cell entries can be problematic for certain outcome measures. When \code{to="only0"} (the default), the value of \code{add} (the default is \code{1/2}; but see \sQuote{Note}) is added to \code{xi} and \code{mi} only for studies where \code{xi} or \code{mi} is equal to 0. When \code{to="all"}, the value of \code{add} is added to \code{xi} and \code{mi} in all studies. When \code{to="if0all"}, the value of \code{add} is added in all studies, but only when there is at least one study with a zero value for \code{xi} or \code{mi}. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed values is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to \code{NA}).
 
-         Datasets corresponding to data of this type are provided in \code{\link[metadat]{dat.pritz1997}} and \code{\link[metadat]{dat.debruin2009}}.
+         Datasets corresponding to data of this type are provided in \code{\link[metadat]{dat.pritz1997}}, \code{\link[metadat]{dat.debruin2009}}, \code{\link[metadat]{dat.hannum2020}}, and \code{\link[metadat]{dat.crisafulli2020}}.
 
       }
 

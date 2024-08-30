@@ -278,12 +278,11 @@ rma.mv(yi, vi, random = ~ 1 | trial, data=dat)
 
 ### change data into long format
 dat.long <- to.long(measure="OR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg, append=FALSE)
+dat.long
 
-### set levels of group variable ("exp" = experimental/vaccinated; "con" = control/non-vaccinated)
-levels(dat.long$group) <- c("exp", "con")
-
-### set "con" to reference level
-dat.long$group <- relevel(dat.long$group, ref="con")
+### set levels/labels for group ("con" = control/non-vaccinated, "exp" = experimental/vaccinated)
+dat.long$group <- factor(dat.long$group, levels=c(2,1), labels=c("con","exp"))
+dat.long
 
 ### calculate log odds and corresponding sampling variances
 dat.long <- escalc(measure="PLO", xi=out1, mi=out2, data=dat.long)
