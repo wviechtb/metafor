@@ -1,4 +1,4 @@
-# metafor 4.7-27 (2024-08-29)
+# metafor 4.7-28 (2024-09-03)
 
 - some general changes to the various `forest()` functions: argument `header` is now `TRUE` by default, the y-axis is now created with `yaxs="i"`, and the y-axis limits have been tweaked slightly in accordance
 

@@ -27,7 +27,7 @@ trimfill(x, \dots)
    \item{k0}{estimated number of missing studies.}
    \item{side}{either \code{"left"} or \code{"right"}, indicating on which side of the funnel plot the missing studies (if any) were imputed.}
    \item{se.k0}{standard error of k0.}
-   \item{p.k0}{p-value for the test of \mjeqn{\mbox{H}_0}{H_0}: no missing studies on the chosen side (only when \code{estimator="R0"}; \code{NA} otherwise).}
+   \item{p.k0}{p-value for the test of \mjeqn{\text{H}_0}{H_0}: no missing studies on the chosen side (only when \code{estimator="R0"}; \code{NA} otherwise).}
    \item{yi}{the observed effect sizes or outcomes plus the imputed values (if there are any).}
    \item{vi}{the corresponding sampling variances}
    \item{fill}{a logical vector indicating which of the values in \code{yi} are the observed (\code{FALSE}) and the imputed (\code{TRUE}) data.}

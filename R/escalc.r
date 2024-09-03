@@ -24,7 +24,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
                               "COR","UCOR","ZCOR",                                               # correlations (raw and r-to-z transformed)
                               "PCOR","ZPCOR","SPCOR","ZSPCOR",                                   # partial and semi-partial correlations
                               "R2","ZR2",                                                        # coefficient of determination / R^2 (raw and r-to-z transformed)
-                              "PR","PLN","PLO","PAS","PFT","PRZ",                                # single proportions (and transformations thereof)
+                              "PR","PLN","PLO","PRZ","PAS","PFT",                                # single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                                          # single-group person-time (incidence) data (and transformations thereof)
                               "MN","SMN","MNLN","CVLN","SDLN",                                   # mean, single-group standardized mean, log(mean), log(CV), log(SD),
                               "MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","ROMC","CVRC","VRC",   # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples

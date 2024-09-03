@@ -32,7 +32,7 @@
    \item{yi}{observed effect sizes or outcomes (transformed if \code{transf} is specified).}
    \item{vi}{corresponding sampling variances.}
    \item{sei}{corresponding standard errors.}
-   \item{zi}{test statistics for testing \mjeqn{\mbox{H}_0{:}\; \theta_i = \mbox{H0}}{H_0: \theta_i = H0} (i.e., \code{(yi-H0)/sei}).}
+   \item{zi}{test statistics for testing \mjeqn{\text{H}_0{:}\; \theta_i = \text{H0}}{H_0: \theta_i = H0} (i.e., \code{(yi-H0)/sei}).}
    \item{pval}{corresponding p-values.}
    \item{ci.lb}{lower confidence interval bounds (transformed if \code{transf} is specified).}
    \item{ci.ub}{upper confidence interval bounds (transformed if \code{transf} is specified).}

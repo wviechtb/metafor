@@ -146,4 +146,34 @@ test_that("plot can be drawn with predstyle='d'.", {
 
 })
 
+test_that("plot can be drawn with predstyle='d' and transf=exp.", {
+
+   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
+
+   skip_on_cran()
+
+   png("images/test_plots_forest_plot_with_predstyle_d_transf_test.png", res=240, width=1800, height=1800, type="cairo")
+
+   forest(res, transf=exp, alim=c(0,3), steps=4, xlim=c(-2,4.2), cex=0.75,
+          header="Author(s) and Year", psize=1, refline=1, shade=TRUE,
+          addpred=TRUE, predstyle="d")
+
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_forest_plot_with_predstyle_d_transf_test.png", "images/test_plots_forest_plot_with_predstyle_d_transf.png"))
+
+   png("images/test_plots_forest_plot_with_predstyle_d_transf_test.png", res=240, width=1800, height=1800, type="cairo")
+
+   with(dat, forest(yi, vi, transf=exp, alim=c(0,3), steps=4, xlim=c(-2,4.2), cex=0.75,
+          header="Author(s) and Year", psize=1, refline=1, shade=TRUE,
+          ylim=c(-3,16)))
+   abline(h=0)
+   with(pred, addpoly(pred, ci.lb=ci.lb, ci.ub=ci.ub, pi.lb=pi.lb, pi.ub=pi.ub, mlab="Random-Effects Model", predstyle="d"))
+
+   dev.off()
+
+   expect_true(.vistest("images/test_plots_forest_plot_with_predstyle_d_transf_test.png", "images/test_plots_forest_plot_with_predstyle_d_transf.png"))
+
+})
+
 rm(list=ls())

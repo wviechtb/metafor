@@ -68,6 +68,8 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
    if (missing(atransf))
       atransf <- .getfromenv("forest", "atransf", default=FALSE)
 
+   transf.char <- deparse(transf)
+
    if (is.function(transf) && is.function(atransf))
       stop(mstyle$stop("Use either 'transf' or 'atransf' to specify a transformation (not both)."))
 
@@ -354,6 +356,8 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
    ### if requested, apply transformation to yi's and CI bounds
 
+   yi.utransf <- yi
+
    if (is.function(transf)) {
       if (is.null(targs)) {
          yi    <- sapply(yi, transf)
@@ -484,8 +488,6 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
    }
 
    piendheight <- height / 150 * cex * efac[2]
-   #arrowwidth  <- 1.4    / 100 * cex * (xlim[2]-xlim[1])
-   #arrowheight <- height / 150 * cex * efac[2]
    barheight   <- min(0.25, height / 150 * cex * efac[2])
 
    for (i in seq_len(k)) {
@@ -507,36 +509,78 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
       }
 
-      if (predstyle == "shade") {
+      if (predstyle %in% c("shade","dist")) {
 
-         if (pi.dist == "norm") {
-            crit <- qnorm(pi.level/2, lower.tail=FALSE)
+         if (predstyle == "shade") {
+            x.len <- 100
+            q.lo <- pi.level/2
+            q.hi <- 1-pi.level/2
          } else {
-            crit <- qt(pi.level/2, df=pi.ddf, lower.tail=FALSE)
+            x.len <- 10000
+            q.lo <- 0.0001
+            q.hi <- 0.9999
          }
 
          if (is.null(pi.se))
-            pi.se <- (pi.ub - pi.lb) / (2*crit)
-
-         xs <- seq(-crit, crit, length.out=100)
+            stop(mstyle$stop("Cannot extract SE of the prediction interval."))
 
          if (pi.dist == "norm") {
-            ys <- dnorm(xs)
+            crits <- qnorm(c(q.lo,q.hi), mean=yi.utransf[i], sd=pi.se)
+            xs <- seq(crits[1], crits[2], length.out=x.len)
+            ys <- dnorm(xs, mean=yi.utransf[i], sd=pi.se)
          } else {
-            ys <- dt(xs, df=pi.ddf)
+            if (pi.ddf <= 1L)
+               stop(mstyle$stop("Cannot draw prediction distribution when df <= 1."))
+            crits <- qt(c(q.lo,q.hi), df=pi.ddf) * pi.se + yi.utransf[i]
+            xs <- seq(crits[1], crits[2], length.out=x.len)
+            ys <- dt((xs - yi.utransf[i]) / pi.se, df=pi.ddf) / pi.se
          }
 
-         xs <- yi[i] + xs * pi.se
-
-         intensity <- 1 - (ys - min(ys)) / (max(ys) - min(ys))
+         sel.l0 <- xs < 0
+         sel.g0 <- xs > 0
 
          if (is.function(transf)) {
-            if (is.null(targs)) {
-               xs <- sapply(xs, transf)
+            xs <- sapply(xs, transf)
+            funlist <- lapply(list("1"=exp, "2"=transf.ztor, "3"=tanh, "4"=transf.ilogit, "5"=plogis, "6"=transf.iarcsin), deparse)
+            funmatch <- sapply(funlist, identical, transf.char)
+            if (any(funmatch)) {
+               if (funmatch[1])
+                  ys <- ys / xs
+               if (any(funmatch[2:3]))
+                  ys <- ys / (1-xs^2)
+               if (any(funmatch[4:5]))
+                  ys <- ys / (xs*(1-xs))
+               if (funmatch[6])
+                  ys <- ys / (2*sqrt(xs*(1-xs)))
+               # can run into numerical problems at the extremes (esp. when pi.dist="t"),
+               # so we need to find the range where ys are first increasing and then decreasing
+               sdys <- sign(diff(ys))
+               y.lo <- which(sdys == 1)
+               if (length(y.lo) == 0L) {
+                  y.lo <- 1
+               } else {
+                  y.lo <- min(y.lo) + 1
+               }
+               y.hi <- which(sdys == -1)
+               if (length(y.hi) == 0L) {
+                  y.hi <- x.len
+               } else {
+                  y.hi <- max(y.hi) + 1
+               }
+               sel.l0 <- sel.l0[y.lo:y.hi]
+               sel.g0 <- sel.g0[y.lo:y.hi]
+               xs <- xs[y.lo:y.hi]
+               ys <- ys[y.lo:y.hi]
             } else {
-               xs <- sapply(xs, transf, targs)
+               stop(mstyle$stop("Chosen transformation not (currently) possible with this 'predstyle'."))
             }
          }
+
+      }
+
+      if (predstyle == "shade") {
+
+         intensity <- 1 - (ys - min(ys)) / (max(ys) - min(ys))
 
          colfun <- colorRamp(c(col[2], col[3]))
          rectcol <- colfun(intensity)
@@ -548,54 +592,26 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
       if (predstyle == "dist") {
 
-         if (pi.dist == "norm") {
-            crit <- 3.036304
-         } else {
-            xs <- seq(0, 20, length.out=10000)
-            ys <- dt(xs, df=pi.ddf) / dt(0, df=pi.ddf)
-            crit <- min(xs[ys < 0.01])
-         }
+         ys <- ys / max(ys) * efac[2]
 
-         xs <- seq(-crit, crit, length.out=1000)
+         sel <- ys > 0.005
 
-         if (pi.dist == "norm") {
-            ys <- dnorm(xs)
-         } else {
-            ys <- dt(xs, df=pi.ddf)
-         }
+         xs.sel.l0 <- xs[sel.l0 & sel]
+         xs.sel.g0 <- xs[sel.g0 & sel]
+         ys.sel.l0 <- ys[sel.l0 & sel]
+         ys.sel.g0 <- ys[sel.g0 & sel]
 
-         xs <- yi[i] + xs * pi.se
-
-         sel <- xs < 0
-         xs.sel.l0 <- xs[sel]
-         ys.sel.l0 <- ys[sel]
-
-         sel <- xs > 0
-         xs.sel.g0 <- xs[sel]
-         ys.sel.g0 <- ys[sel]
-
-         if (is.function(transf)) {
-            if (is.null(targs)) {
-               xs <- sapply(xs, transf)
-               xs.sel.l0 <- sapply(xs.sel.l0, transf)
-               xs.sel.g0 <- sapply(xs.sel.g0, transf)
-            } else {
-               xs <- sapply(xs, transf, targs)
-               xs.sel.l0 <- sapply(xs.sel.l0, transf, targs)
-               xs.sel.g0 <- sapply(xs.sel.g0, transf, targs)
-            }
-         }
+         xs <- xs[sel]
+         ys <- ys[sel]
 
          drow <- rows[2] - 0.5
-
-         ys.sel.l0 <- ys.sel.l0 / max(ys) * efac[2] + drow
-         ys.sel.g0 <- ys.sel.g0 / max(ys) * efac[2] + drow
-
-         ys <- ys / max(ys) * efac[2] + drow
+         ys <- ys + drow
+         ys.sel.l0 <- ys.sel.l0 + drow
+         ys.sel.g0 <- ys.sel.g0 + drow
 
          ### shade regions above/below 0
 
-         if (yi[i] > 0) {
+         if (yi.utransf[i] > 0) {
             lpolygon(c(xs.sel.g0,rev(xs.sel.g0)), c(ys.sel.g0,rep(drow,length(ys.sel.g0))), col=col[4], border=ifelse(is.na(col[4]),NA,border[2]), ...)
             lpolygon(c(xs.sel.l0,rev(xs.sel.l0)), c(ys.sel.l0,rep(drow,length(ys.sel.l0))), col=col[3], border=ifelse(is.na(col[3]),NA,border[2]), ...)
          } else {
