@@ -1,4 +1,4 @@
-# metafor 4.7-28 (2024-09-03)
+# metafor 4.7-29 (2024-09-04)
 
 - some general changes to the various `forest()` functions: argument `header` is now `TRUE` by default, the y-axis is now created with `yaxs="i"`, and the y-axis limits have been tweaked slightly in accordance
 
@@ -12,7 +12,7 @@
 
 - added extractor function `se()` for extracting standard errors from model objects
 
-- added `pairwise()` function to construct a matrix of pairwise contrasts
+- added `pairmat()` function to construct a matrix of pairwise contrasts
 
 - `anova()` and `predict()` gain `adjust` argument for adjusting p-values / interval bounds for multiple testing
 

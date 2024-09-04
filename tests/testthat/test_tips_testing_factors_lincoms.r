@@ -107,10 +107,10 @@ test_that("results are correct when testing all pairwise comparisons.", {
    res <- rma(yi, vi, mods = ~ 0 + factor(alloc) + year + ablat, data=dat)
 
    sav1 <- anova(res, X=rbind(c(-1,1,0,0,0), c(-1,0,1,0,0), c(0,-1,1,0,0)))
-   sav2 <- anova(res, X=pairwise(btt=1:3))
+   sav2 <- anova(res, X=pairmat(btt=1:3))
    expect_equivalent(sav1$zval, sav2$zval, tolerance=.tol[["test"]])
 
-   sav3 <- anova(res, X=pairwise(btt=1:3), adjust="holm")
+   sav3 <- anova(res, X=pairmat(btt=1:3), adjust="holm")
    expect_equivalent(sav3$pval, c(0.882646, 0.981965, 0.882646), tolerance=.tol[["pval"]])
 
    sav4 <- summary(glht(res, linfct=rbind(c(-1,1,0,0,0), c(-1,0,1,0,0), c(0,-1,1,0,0))), test=adjusted("none"))
@@ -120,7 +120,7 @@ test_that("results are correct when testing all pairwise comparisons.", {
    sav2 <- predict(res, newmods=rbind(c(-1,1,0,0,0), c(-1,0,1,0,0), c(0,-1,1,0,0)))
    expect_equivalent(sav1$confint[,2], sav2$ci.lb, tolerance=.tol[["ci"]])
 
-   sav1 <- anova(res, X=pairwise(btt=1:3))
+   sav1 <- anova(res, X=pairmat(btt=1:3))
    sav2 <- summary(glht(res, linfct=cbind(contrMat(c("alternate"=1,"random"=1,"systematic"=1), type="Tukey"), 0, 0)), test=adjusted("none"))
    expect_equivalent(sav1$zval, sav2$test$tstat, tolerance=.tol[["test"]])
 
@@ -129,7 +129,7 @@ test_that("results are correct when testing all pairwise comparisons.", {
    res <- rma(yi, vi, mods = ~ factor(alloc) + year + ablat, data=dat, test="knha")
 
    sav1 <- anova(res, X=rbind(c(0,1,0,0,0), c(0,0,1,0,0), c(0,-1,1,0,0)))
-   sav2 <- anova(res, X=pairwise(btt=2:3, btt2=2:3))
+   sav2 <- anova(res, X=pairmat(btt=2:3, btt2=2:3))
    expect_equivalent(sav1$zval, sav2$zval, tolerance=.tol[["test"]])
 
    sav3 <- summary(glht(res, linfct=rbind(c(0,1,0,0,0), c(0,0,1,0,0), c(0,-1,1,0,0)), df=df.residual(res)), test=adjusted("none"))
@@ -144,7 +144,7 @@ test_that("results are correct when testing all pairwise comparisons.", {
    res <- rma(yi, vi, mods = ~ 0 + factor(alloc) + year + ablat, data=dat, test="knha")
 
    sav1 <- anova(res, X=rbind(c(-1,1,0,0,0), c(-1,0,1,0,0), c(0,-1,1,0,0)))
-   sav2 <- anova(res, X=pairwise(btt=1:3))
+   sav2 <- anova(res, X=pairmat(btt=1:3))
    expect_equivalent(sav1$zval, sav2$zval, tolerance=.tol[["test"]])
 
    sav3 <- summary(glht(res, linfct=rbind(c(-1,1,0,0,0), c(-1,0,1,0,0), c(0,-1,1,0,0)), df=df.residual(res)), test=adjusted("none"))
@@ -157,7 +157,7 @@ test_that("results are correct when testing all pairwise comparisons.", {
    sav2 <- predict(res, newmods=rbind(c(-1,1,0,0,0), c(-1,0,1,0,0), c(0,-1,1,0,0)))
    expect_equivalent(sav1$confint[,2], sav2$ci.lb, tolerance=.tol[["ci"]])
 
-   sav3 <- predict(res, newmods=pairwise(btt=1:3))
+   sav3 <- predict(res, newmods=pairmat(btt=1:3))
    expect_equivalent(sav2$ci.lb, sav3$ci.lb, tolerance=.tol[["ci"]])
 
 })

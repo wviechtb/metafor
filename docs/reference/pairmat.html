@@ -11,7 +11,7 @@
       "<link id=\"css\" rel=\"stylesheet\" href=\"https://bootswatch.com/3/flatly/bootstrap.css\" onload=\"document.documentElement.style.display = ''\">"
     );
   }
-</script><title>Construct a Pairwise Contrast Matrix for 'rma' Objects — pairwise • metafor</title><!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css"><script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet"><script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous"><link href="../docsearch.css" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Construct a Pairwise Contrast Matrix for 'rma' Objects — pairwise"><meta property="og:description" content='Functions to construct a matrix of pairwise contrasts for objects of class "rma". '><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@wviechtb"><meta name="twitter:site" content="@wviechtb"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+</script><title>Construct a Pairwise Contrast Matrix for 'rma' Objects — pairmat • metafor</title><!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css"><script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet"><script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous"><link href="../docsearch.css" rel="stylesheet"><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Construct a Pairwise Contrast Matrix for 'rma' Objects — pairmat"><meta property="og:description" content='Functions to construct a matrix of pairwise contrasts for objects of class "rma". '><meta name="twitter:card" content="summary_large_image"><meta name="twitter:creator" content="@wviechtb"><meta name="twitter:site" content="@wviechtb"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--><!-- Flatly Theme - Light  --><link id="css-light" rel="stylesheet" href="https://bootswatch.com/3/flatly/bootstrap.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><!-- Darkly Theme - Dark --><link id="css-dark" rel="stylesheet" href="https://bootswatch.com/3/darkly/bootstrap.css" media="(prefers-color-scheme: dark)"><!-- preferably CSS --><link rel="stylesheet" href="../preferably.css"><link id="css-code-light" rel="stylesheet" href="../code-color-scheme-light.css" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"><link id="css-code-dark" rel="stylesheet" href="../code-color-scheme-dark.css" media="(prefers-color-scheme: dark)"><script src="../darkswitch.js"></script></head><body data-spy="scroll" data-target="#toc">
@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-28</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-29</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
     <div class="page-header">
     <h1>Construct a Pairwise Contrast Matrix for 'rma' Objects</h1>
 
-    <div class="hidden name"><code>pairwise.Rd</code></div>
+    <div class="hidden name"><code>pairmat.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -95,7 +95,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pairwise</span><span class="op">(</span><span class="va">x</span>, <span class="va">btt</span>, <span class="va">btt2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">pairmat</span><span class="op">(</span><span class="va">x</span>, <span class="va">btt</span>, <span class="va">btt2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -171,19 +171,19 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### construct the contrast matrix for the 'alloc' factor</span></span></span>
-<span class="r-in"><span><span class="fu">pairwise</span><span class="op">(</span><span class="va">res</span>, btt<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">pairmat</span><span class="op">(</span><span class="va">res</span>, btt<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                [,1] [,2] [,3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocalternate-allocrandom       -1    1    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocalternate-allocsystematic   -1    0    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocrandom-allocsystematic       0   -1    1</span>
-<span class="r-in"><span><span class="fu">pairwise</span><span class="op">(</span><span class="va">res</span>, btt<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">pairmat</span><span class="op">(</span><span class="va">res</span>, btt<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                [,1] [,2] [,3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocalternate-allocrandom       -1    1    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocalternate-allocsystematic   -1    0    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocrandom-allocsystematic       0   -1    1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### test all pairwise contrasts</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairmat</span><span class="op">(</span>btt<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hypotheses:                                         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:     -allocalternate + allocrandom = 0 </span>
@@ -196,7 +196,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0890 0.5600  0.1590 0.8737   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.5369 0.4364  1.2303 0.2186   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairmat</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hypotheses:                                         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:     -allocalternate + allocrandom = 0 </span>
@@ -211,7 +211,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### obtain the corresponding confidence intervals</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu">pairmat</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                   pred     se   ci.lb  ci.ub   pi.lb  pi.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocalternate-allocrandom     -0.4478 0.5158 -1.4588 0.5632 -2.0005 1.1049 </span>
@@ -220,7 +220,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### test all pairwise contrasts adjusting for multiple testing</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span>, adjust<span class="op">=</span><span class="st">"bonf"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairmat</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span>, adjust<span class="op">=</span><span class="st">"bonf"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hypotheses:                                         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:     -allocalternate + allocrandom = 0 </span>
@@ -267,19 +267,19 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### in this case, we want to include these coefficients directly in the contrast</span></span></span>
 <span class="r-in"><span><span class="co">### matrix (btt2=2:3) but also include the pairwise contrast between them (btt=2:3)</span></span></span>
-<span class="r-in"><span><span class="fu">pairwise</span><span class="op">(</span><span class="va">res</span>, btt<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, btt2<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">pairmat</span><span class="op">(</span><span class="va">res</span>, btt<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, btt2<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             [,1] [,2] [,3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocrandom                    0    1    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocsystematic                0    0    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocrandom-allocsystematic    0   -1    1</span>
-<span class="r-in"><span><span class="fu">pairwise</span><span class="op">(</span><span class="va">res</span>, btt<span class="op">=</span><span class="st">"alloc"</span>, btt2<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">pairmat</span><span class="op">(</span><span class="va">res</span>, btt<span class="op">=</span><span class="st">"alloc"</span>, btt2<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                             [,1] [,2] [,3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocrandom                    0    1    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocsystematic                0    0    1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocrandom-allocsystematic    0   -1    1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### test all pairwise contrasts</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, btt2<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairmat</span><span class="op">(</span>btt<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, btt2<span class="op">=</span><span class="fl">2</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hypotheses:                                      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:                    allocrandom = 0 </span>
@@ -292,7 +292,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0890 0.5600  0.1590 0.8737   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.5369 0.4364  1.2303 0.2186   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span>, btt2<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairmat</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span>, btt2<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hypotheses:                                      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:                    allocrandom = 0 </span>
@@ -307,7 +307,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### obtain the corresponding confidence intervals</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span>, btt2<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu">pairmat</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span>, btt2<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                pred     se   ci.lb  ci.ub   pi.lb  pi.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocrandom                 -0.4478 0.5158 -1.4588 0.5632 -2.0005 1.1049 </span>
@@ -346,7 +346,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### test all pairwise contrasts between the 'alloc' levels (while controlling for 'ablat')</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span>, btt2<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairmat</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span>, btt2<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hypotheses:                                      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:                    allocrandom = 0 </span>
@@ -359,7 +359,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2:   0.0585 0.3795  0.1540 0.8776   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3:   0.3260 0.3104  1.0501 0.2937   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span>, btt2<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairmat</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span>, btt2<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hypotheses:                                      </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1:                    allocrandom = 0 </span>
@@ -374,7 +374,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### obtain the corresponding confidence intervals</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span>, btt2<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu">pairmat</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"alloc"</span>, btt2<span class="op">=</span><span class="st">"alloc"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                pred     se   ci.lb  ci.ub   pi.lb  pi.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> allocrandom                 -0.2675 0.3504 -0.9543 0.4193 -1.2810 0.7460 </span>
@@ -413,7 +413,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### test all pairwise contrasts between the 'grade' levels</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"grade"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairmat</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"grade"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hypotheses:                                        </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: -factor(grade)1 + factor(grade)2 = 0 </span>
@@ -434,7 +434,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### obtain the corresponding confidence intervals</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"grade"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu">pairmat</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"grade"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                  pred     se   ci.lb   ci.ub   pi.lb  pi.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> factor(grade)1-factor(grade)2 -0.3727 0.1705 -0.7069 -0.0385 -0.9374 0.1920 </span>
@@ -446,7 +446,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### test all pairwise contrasts adjusting for multiple testing</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairwise</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"grade"</span><span class="op">)</span>, adjust<span class="op">=</span><span class="st">"bonf"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="anova.rma.html">anova</a></span><span class="op">(</span><span class="va">res</span>, X<span class="op">=</span><span class="fu">pairmat</span><span class="op">(</span>btt<span class="op">=</span><span class="st">"grade"</span><span class="op">)</span>, adjust<span class="op">=</span><span class="st">"bonf"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hypotheses:                                        </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1: -factor(grade)1 + factor(grade)2 = 0 </span>

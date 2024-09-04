@@ -493,6 +493,9 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
    for (i in seq_len(k)) {
 
       ### add prediction interval(s)
+      ### note: in contrast to forest.rma(), these do not respect 'alim' (could in principle
+      ### store 'alim' in .metafor environment and extract these limits from there, but it
+      ### is also nice to have the option to draw PIs without being bounded by 'alim')
 
       if (predstyle == "line") {
 

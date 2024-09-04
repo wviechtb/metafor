@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-28</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-29</span>
       </span>
     </div>
 
@@ -90,14 +90,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.7-28" id="metafor-47-28-2024-09-03">metafor 4.7-28 (2024-09-03)<a class="anchor" aria-label="anchor" href="#metafor-47-28-2024-09-03"></a></h2>
+<h2 class="page-header" data-toc-text="4.7-29" id="metafor-47-29-2024-09-04">metafor 4.7-29 (2024-09-04)<a class="anchor" aria-label="anchor" href="#metafor-47-29-2024-09-04"></a></h2>
 <ul><li><p>some general changes to the various <code><a href="../reference/forest.html">forest()</a></code> functions: argument <code>header</code> is now <code>TRUE</code> by default, the y-axis is now created with <code>yaxs="i"</code>, and the y-axis limits have been tweaked slightly in accordance</p></li>
 <li><p>the <code><a href="../reference/forest.rma.html">forest.rma()</a></code> and <code><a href="../reference/addpoly.default.html">addpoly.default()</a></code> functions now provides multiple styles for drawing the prediction interval via the <code>predstyle</code> argument</p></li>
 <li><p><code><a href="../reference/forest.rma.html">forest.rma()</a></code> and <code><a href="../reference/addpoly.rma.html">addpoly.rma()</a></code> now write out the default label (instead of an abbreviation) for the model results; as before, the label can be changed via the <code>mlab</code> argument</p></li>
 <li><p>added <code>ilab.lab</code> argument to the various <code><a href="../reference/forest.html">forest()</a></code> functions for adding header labels to the plot for the additional study information columns</p></li>
 <li><p>the <code><a href="../reference/predict.rma.html">predict.rma()</a></code> and <code><a href="../reference/predict.rma.html">predict.rma.ls()</a></code> functions now also accept a matrix as input that includes a column for the intercept term (in which case the <code>intercept</code> argument is ignored and the first column of the matrix controls whether the intercept term is included in calculating the predicted value(s))</p></li>
 <li><p>added extractor function <code><a href="../reference/se.html">se()</a></code> for extracting standard errors from model objects</p></li>
-<li><p>added <code><a href="../reference/pairwise.html">pairwise()</a></code> function to construct a matrix of pairwise contrasts</p></li>
+<li><p>added <code><a href="../reference/pairmat.html">pairmat()</a></code> function to construct a matrix of pairwise contrasts</p></li>
 <li><p><code><a href="../reference/anova.rma.html">anova()</a></code> and <code><a href="../reference/predict.rma.html">predict()</a></code> gain <code>adjust</code> argument for adjusting p-values / interval bounds for multiple testing</p></li>
 <li><p><code><a href="../reference/print.anova.rma.html">print.anova.rma()</a></code> and <code><a href="../reference/print.anova.rma.html">print.list.anova.rma()</a></code> also print significance stars for some types of outcomes (unless <code>getOption("show.signif.stars")</code> is <code>FALSE</code>)</p></li>
 <li><p>added <code>collapse</code> argument to the various <code><a href="../reference/cumul.html">cumul()</a></code> functions (to specify whether studies with the same value of the <code>order</code> variable should be added simultaneously)</p></li>

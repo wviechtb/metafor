@@ -16,9 +16,9 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
    mf <- match.call()
 
-   if (any(grepl("pairwise(", as.character(mf), fixed=TRUE))) {
-      try(assign("pairwise", object, envir=.metafor), silent=TRUE)
-      on.exit(suppressWarnings(rm("pairwise", envir=.metafor)))
+   if (any(grepl("pairmat(", as.character(mf), fixed=TRUE))) {
+      try(assign("pairmat", object, envir=.metafor), silent=TRUE)
+      on.exit(suppressWarnings(rm("pairmat", envir=.metafor)))
    }
 
    if (missing(newmods))

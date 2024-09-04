@@ -1,13 +1,13 @@
-pairwise <- function(x, btt, btt2, ...) {
+pairmat <- function(x, btt, btt2, ...) {
 
    mstyle <- .get.mstyle()
 
    if (missing(x)) {
-      x <- .getfromenv("pairwise", envir=.metafor)
+      x <- .getfromenv("pairmat", envir=.metafor)
    } else {
       if (is.atomic(x)) {
          btt <- x
-         x <- .getfromenv("pairwise", envir=.metafor)
+         x <- .getfromenv("pairmat", envir=.metafor)
       }
    }
 

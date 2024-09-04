@@ -223,7 +223,7 @@ reference:
       - transf
       - formatters
       - emmprep
-      - pairwise
+      - pairmat
   - title: "Other Methods"
     desc: >
       Other method functions.

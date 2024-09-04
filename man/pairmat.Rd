@@ -1,11 +1,11 @@
-\name{pairwise}
-\alias{pairwise}
+\name{pairmat}
+\alias{pairmat}
 \title{Construct a Pairwise Contrast Matrix for 'rma' Objects}
 \description{
    Functions to construct a matrix of pairwise contrasts for objects of class \code{"rma"}. \loadmathjax
 }
 \usage{
-pairwise(x, btt, btt2, \dots)
+pairmat(x, btt, btt2, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
@@ -44,18 +44,18 @@ res <- rma(yi, vi, mods = ~ 0 + alloc, data=dat)
 res
 
 ### construct the contrast matrix for the 'alloc' factor
-pairwise(res, btt=1:3)
-pairwise(res, btt="alloc")
+pairmat(res, btt=1:3)
+pairmat(res, btt="alloc")
 
 ### test all pairwise contrasts
-anova(res, X=pairwise(btt=1:3))
-anova(res, X=pairwise(btt="alloc"))
+anova(res, X=pairmat(btt=1:3))
+anova(res, X=pairmat(btt="alloc"))
 
 ### obtain the corresponding confidence intervals
-predict(res, newmods=pairwise(btt="alloc"))
+predict(res, newmods=pairmat(btt="alloc"))
 
 ### test all pairwise contrasts adjusting for multiple testing
-anova(res, X=pairwise(btt="alloc"), adjust="bonf")
+anova(res, X=pairmat(btt="alloc"), adjust="bonf")
 
 ### fit the same model, but including the intercept term; then 'alternate' is the
 ### reference level and the coefficients for 'random' and 'systematic' already
@@ -65,26 +65,26 @@ res
 
 ### in this case, we want to include these coefficients directly in the contrast
 ### matrix (btt2=2:3) but also include the pairwise contrast between them (btt=2:3)
-pairwise(res, btt=2:3, btt2=2:3)
-pairwise(res, btt="alloc", btt2="alloc")
+pairmat(res, btt=2:3, btt2=2:3)
+pairmat(res, btt="alloc", btt2="alloc")
 
 ### test all pairwise contrasts
-anova(res, X=pairwise(btt=2:3, btt2=2:3))
-anova(res, X=pairwise(btt="alloc", btt2="alloc"))
+anova(res, X=pairmat(btt=2:3, btt2=2:3))
+anova(res, X=pairmat(btt="alloc", btt2="alloc"))
 
 ### obtain the corresponding confidence intervals
-predict(res, newmods=pairwise(btt="alloc", btt2="alloc"))
+predict(res, newmods=pairmat(btt="alloc", btt2="alloc"))
 
 ### meta-regression model with 'ablat' and 'alloc' as moderators
 res <- rma(yi, vi, mods = ~ ablat + alloc, data=dat)
 res
 
 ### test all pairwise contrasts between the 'alloc' levels (while controlling for 'ablat')
-anova(res, X=pairwise(btt="alloc", btt2="alloc"))
-anova(res, X=pairwise(btt="alloc", btt2="alloc"))
+anova(res, X=pairmat(btt="alloc", btt2="alloc"))
+anova(res, X=pairmat(btt="alloc", btt2="alloc"))
 
 ### obtain the corresponding confidence intervals
-predict(res, newmods=pairwise(btt="alloc", btt2="alloc"))
+predict(res, newmods=pairmat(btt="alloc", btt2="alloc"))
 
 ### an example of a meta-regression model with more factors levels
 dat <- dat.bangertdrowns2004
@@ -92,12 +92,12 @@ res <- rma(yi, vi, mods = ~ 0 + factor(grade), data=dat)
 res
 
 ### test all pairwise contrasts between the 'grade' levels
-anova(res, X=pairwise(btt="grade"))
+anova(res, X=pairmat(btt="grade"))
 
 ### obtain the corresponding confidence intervals
-predict(res, newmods=pairwise(btt="grade"))
+predict(res, newmods=pairmat(btt="grade"))
 
 ### test all pairwise contrasts adjusting for multiple testing
-anova(res, X=pairwise(btt="grade"), adjust="bonf")
+anova(res, X=pairmat(btt="grade"), adjust="bonf")
 }
 \keyword{models}

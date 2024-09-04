@@ -352,7 +352,7 @@ res <- rma(yi, vi, mods = ~ alloc + year + ablat, data=dat, btt=2:3)
 res
 
 ### test all pairwise differences between the 'alloc' levels
-anova(res, X=pairwise(btt="alloc"))
+anova(res, X=pairmat(btt="alloc"))
 
 ### subgrouping versus using a single model with a factor (subgrouping provides
 ### an estimate of tau^2 within each subgroup, but the number of studies in each

@@ -1017,6 +1017,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       }
 
       ### add prediction interval
+      ### note: in contrast to addpoly(), these respect 'alim'
 
       if (!is.element(x$method, c("FE","EE","CE")) && addpred) {
 
