@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-29</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-30</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># Default S3 method</span></span>
 <span><span class="fu"><a href="addpoly.html">addpoly</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">ci.lb</span>, <span class="va">ci.ub</span>, <span class="va">pi.lb</span>, <span class="va">pi.ub</span>,</span>
-<span>        rows<span class="op">=</span><span class="op">-</span><span class="fl">1</span>, <span class="va">level</span>, <span class="va">annotate</span>, <span class="va">predstyle</span>, <span class="va">digits</span>, <span class="va">width</span>, <span class="va">mlab</span>,</span>
+<span>        rows<span class="op">=</span><span class="op">-</span><span class="fl">1</span>, <span class="va">level</span>, <span class="va">annotate</span>, <span class="va">predstyle</span>, <span class="va">predlim</span>, <span class="va">digits</span>, <span class="va">width</span>, <span class="va">mlab</span>,</span>
 <span>        <span class="va">transf</span>, <span class="va">atransf</span>, <span class="va">targs</span>, <span class="va">efac</span>, <span class="va">col</span>, <span class="va">border</span>, <span class="va">lty</span>, <span class="va">fonts</span>, <span class="va">cex</span>,</span>
 <span>        constarea<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -137,6 +137,9 @@
 
    <dt id="arg-predstyle">predstyle<a class="anchor" aria-label="anchor" href="#arg-predstyle"></a></dt>
 <dd><p>character string to specify the style of the prediction interval (either <code>"line"</code> (the default), <code>"bar"</code>, <code>"shade"</code>, or <code>"dist"</code>; the last three only when adding a single polygon). Can be abbreviated.</p></dd>
+
+   <dt id="arg-predlim">predlim<a class="anchor" aria-label="anchor" href="#arg-predlim"></a></dt>
+<dd><p>optional argument to specify the limits of the prediction distribution when <code>predstyle="dist"</code>.</p></dd>
 
    <dt id="arg-digits">digits<a class="anchor" aria-label="anchor" href="#arg-digits"></a></dt>
 <dd><p>optional integer to specify the number of decimal places to which the annotations should be rounded.</p></dd>

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-29</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-30</span>
       </span>
     </div>
 
@@ -137,10 +137,10 @@
 <dd><p>y-axis limits. If unspecified, the function sets the y-axis limits to some sensible values.</p></dd>
 
    <dt id="arg-predlim">predlim<a class="anchor" aria-label="anchor" href="#arg-predlim"></a></dt>
-<dd><p>optional argument to specify the limits of the (marginal) regression line. If unspecified, the limits are based on the range of the moderator variable.</p></dd>
+<dd><p>argument to specify the limits of the (marginal) regression line. If unspecified, the limits are based on the range of the moderator variable.</p></dd>
 
    <dt id="arg-olim">olim<a class="anchor" aria-label="anchor" href="#arg-olim"></a></dt>
-<dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
+<dd><p>argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
 
    <dt id="arg-xlab">xlab<a class="anchor" aria-label="anchor" href="#arg-xlab"></a></dt>
 <dd><p>title for the x-axis. If unspecified, the function sets an appropriate axis title.</p></dd>
@@ -155,10 +155,10 @@
 <dd><p>integer to specify the number of decimal places to which the tick mark labels of the y-axis should be rounded. When specifying an integer (e.g., <code>2L</code>), trailing zeros after the decimal mark are dropped for the y-axis labels. When specifying a numeric value (e.g., <code>2</code>), trailing zeros are retained.</p></dd>
 
    <dt id="arg-transf">transf<a class="anchor" aria-label="anchor" href="#arg-transf"></a></dt>
-<dd><p>optional argument to specify a function to transform the observed outcomes, predicted values, and confidence/prediction interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dd><p>argument to specify a function to transform the observed outcomes, predicted values, and confidence/prediction interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
 
    <dt id="arg-atransf">atransf<a class="anchor" aria-label="anchor" href="#arg-atransf"></a></dt>
-<dd><p>optional argument to specify a function to transform the y-axis labels (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dd><p>argument to specify a function to transform the y-axis labels (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
 
    <dt id="arg-targs">targs<a class="anchor" aria-label="anchor" href="#arg-targs"></a></dt>
 <dd><p>optional arguments needed by the function specified via <code>transf</code> or <code>atransf</code>.</p></dd>
@@ -170,7 +170,7 @@
 <dd><p>plotting symbol to use for the observed outcomes. By default, an open circle is used. Can also be a vector of values. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options.</p></dd>
 
    <dt id="arg-psize">psize<a class="anchor" aria-label="anchor" href="#arg-psize"></a></dt>
-<dd><p>optional numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values. Can also be a character string (either <code>"seinv"</code> or <code>"vinv"</code>) to make the point sizes proportional to the inverse standard errors or inverse sampling variances.</p></dd>
+<dd><p>numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values. Can also be a character string (either <code>"seinv"</code> or <code>"vinv"</code>) to make the point sizes proportional to the inverse standard errors or inverse sampling variances.</p></dd>
 
    <dt id="arg-plim">plim<a class="anchor" aria-label="anchor" href="#arg-plim"></a></dt>
 <dd><p>numeric vector of length 2 to scale the point sizes (ignored when a numeric value or vector is specified for <code>psize</code>). See ‘Details’.</p></dd>
@@ -182,7 +182,7 @@
 <dd><p>character string to specify the background color of open plot symbols. Can also be a vector.</p></dd>
 
    <dt id="arg-slab">slab<a class="anchor" aria-label="anchor" href="#arg-slab"></a></dt>
-<dd><p>optional vector with labels for the <em></em>\(k\) studies. If unspecified, the function tries to extract study labels from <code>x</code>.</p></dd>
+<dd><p>vector with labels for the <em></em>\(k\) studies. If unspecified, the function tries to extract study labels from <code>x</code>.</p></dd>
 
    <dt id="arg-grid">grid<a class="anchor" aria-label="anchor" href="#arg-grid"></a></dt>
 <dd><p>logical to specify whether a grid should be added to the plot. Can also be a color name for the grid.</p></dd>
@@ -472,6 +472,143 @@
 <span class="r-in"><span><span class="co">### add points back to the plot (so they are on top of the lines)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">tmp</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="regplot-10.png" alt="" width="1728" height="1536"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### an example where we place a dichotomous variable on the x-axis</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### dichotomize the 'random' variable</span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">random</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">alloc</span> <span class="op">==</span> <span class="st">"random"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit mixed-effects model with this dummy variable as moderator</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">random</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of residual heterogeneity):     0.3184 (SE = 0.1779)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):             0.5642</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (residual heterogeneity / unaccounted variability): 89.92%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (unaccounted variability / sampling variability):   9.92</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R^2 (amount of heterogeneity accounted for):            0.00%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Residual Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QE(df = 11) = 138.5113, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficient 2):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 1) = 1.8327, p-val = 0.1758</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate      se     zval    pval    ci.lb   ci.ub    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt   -0.4673  0.2574  -1.8157  0.0694  -0.9717  0.0371  . </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> random    -0.4900  0.3619  -1.3538  0.1758  -1.1994  0.2194    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### draw bubble plot</span></span></span>
+<span class="r-in"><span><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"random"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="regplot-11.png" alt="" width="1728" height="1536"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### draw bubble plot and add a nicer x-axis</span></span></span>
+<span class="r-in"><span><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="st">"random"</span>, xlab<span class="op">=</span><span class="st">"Method of Treatment Allocation"</span>, xaxt<span class="op">=</span><span class="st">"n"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span>side<span class="op">=</span><span class="fl">1</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Non-Random"</span>, <span class="st">"Random"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="regplot-12.png" alt="" width="1728" height="1536"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### an example where we place a categorical variable with more than two levels</span></span></span>
+<span class="r-in"><span><span class="co">### on the x-axis; this is done with a small trick, representing the moderator</span></span></span>
+<span class="r-in"><span><span class="co">### as a polynomial regression model</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit mixed-effects model with a three-level factor</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">alloc</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of residual heterogeneity):     0.3615 (SE = 0.2111)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):             0.6013</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (residual heterogeneity / unaccounted variability): 88.77%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (unaccounted variability / sampling variability):   8.91</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R^2 (amount of heterogeneity accounted for):            0.00%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Residual Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QE(df = 10) = 132.3676, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 2:3):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 2) = 1.7675, p-val = 0.4132</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  estimate      se     zval    pval    ci.lb   ci.ub    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt           -0.5180  0.4412  -1.1740  0.2404  -1.3827  0.3468    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> allocrandom       -0.4478  0.5158  -0.8682  0.3853  -1.4588  0.5632    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> allocsystematic    0.0890  0.5600   0.1590  0.8737  -1.0086  1.1867    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### compute the predicted pooled effect for each level of the factor</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span>alternate<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>, random<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span>, systematic<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               pred     se   ci.lb   ci.ub   pi.lb  pi.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> alternate  -0.5180 0.4412 -1.3827  0.3468 -1.9796 0.9437 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> random     -0.9658 0.2672 -1.4896 -0.4420 -2.2554 0.3238 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> systematic -0.4289 0.3449 -1.1050  0.2472 -1.7875 0.9297 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### represent the three-level factor as a quadratic polynomial model</span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">anum</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">alloc</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">anum</span>, degree<span class="op">=</span><span class="fl">2</span>, raw<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mixed-Effects Model (k = 13; tau^2 estimator: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2 (estimated amount of residual heterogeneity):     0.3615 (SE = 0.2111)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau (square root of estimated tau^2 value):             0.6013</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> I^2 (residual heterogeneity / unaccounted variability): 88.77%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> H^2 (unaccounted variability / sampling variability):   8.91</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> R^2 (amount of heterogeneity accounted for):            0.00%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Residual Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QE(df = 10) = 132.3676, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 2:3):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 2) = 1.7675, p-val = 0.4132</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                      estimate      se     zval    pval    ci.lb   ci.ub    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt                                0.9145  1.5854   0.5768  0.5641  -2.1929  4.0219    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> poly(anum, degree = 2, raw = TRUE)1   -1.9248  1.6208  -1.1876  0.2350  -5.1015  1.2519    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> poly(anum, degree = 2, raw = TRUE)2    0.4923  0.3871   1.2719  0.2034  -0.2663  1.2510    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### compute the predicted pooled effect for each level of the factor</span></span></span>
+<span class="r-in"><span><span class="co">### (note that these values are exactly the same as above)</span></span></span>
+<span class="r-in"><span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, newmods<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/unname.html" class="external-link">unname</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, degree<span class="op">=</span><span class="fl">2</span>, raw<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pred</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      pred     se   ci.lb   ci.ub   pi.lb  pi.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -0.5180 0.4412 -1.3827  0.3468 -1.9796 0.9437 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 -0.9658 0.2672 -1.4896 -0.4420 -2.2554 0.3238 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 -0.4289 0.3449 -1.1050  0.2472 -1.7875 0.9297 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### draw bubble plot, placing the linear (1:3) term on the x-axis and add a</span></span></span>
+<span class="r-in"><span><span class="co">### nicer x-axis for the three levels</span></span></span>
+<span class="r-in"><span><span class="fu">regplot</span><span class="op">(</span><span class="va">res</span>, mod<span class="op">=</span><span class="fl">2</span>, pred<span class="op">=</span><span class="va">pred</span>, xvals<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>, xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>, xlab<span class="op">=</span><span class="st">"Allocation Method"</span>, xaxt<span class="op">=</span><span class="st">"n"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span>side<span class="op">=</span><span class="fl">1</span>, at<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">alloc</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="regplot-13.png" alt="" width="1728" height="1536"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
 </code></pre></div>
     </div>
   </div>

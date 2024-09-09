@@ -12,7 +12,7 @@
    \item{object}{an object of class \code{"rma"}.}
    \item{nsim}{number of response vectors to simulate (defaults to 1).}
    \item{seed}{an object to specify if and how the random number generator should be initialized (\sQuote{seeded}). Either \code{NULL} or an integer that will be used in a call to \code{set.seed} before simulating the response vectors. If set, the value is saved as the \code{"seed"} attribute of the returned value. The default, \code{NULL} will not change the random generator state, and return \code{\link{.Random.seed}} as the \code{"seed"} attribute; see \sQuote{Value}.}
-   \item{olim}{optional argument to specify observation/outcome limits for the simulated values. If unspecified, no limits are used.}
+   \item{olim}{argument to specify observation/outcome limits for the simulated values. If unspecified, no limits are used.}
    \item{\dots}{other arguments.}
 }
 \details{

@@ -501,6 +501,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       xlim <- round(xlim, digits[[2]])
       #xlim[1] <- xlim[1]*max(1, digits[[2]]/2)
       #xlim[2] <- xlim[2]*max(1, digits[[2]]/2)
+   } else {
+      if (length(xlim) != 2L)
+         stop(mstyle$stop("Argument 'xlim' must be of length 2."))
    }
 
    xlim <- sort(xlim)

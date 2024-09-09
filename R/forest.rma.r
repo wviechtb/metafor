@@ -1,6 +1,6 @@
 forest.rma       <- function(x,
 annotate=TRUE, addfit=TRUE, addpred=FALSE, predstyle="line", showweights=FALSE, header=TRUE,
-xlim, alim, olim, ylim, at, steps=5, level=x$level, refline=0, digits=2L, width,
+xlim, alim, olim, ylim, predlim, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab, slab, mlab, ilab, ilab.lab, ilab.xpos, ilab.pos, order,
 transf, atransf, targs, rows,
 efac=1, pch, psize, plim=c(0.5,1.5), colout, col, border, shade, colshade,
@@ -159,6 +159,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
       if (missing(border))
          border <- .coladj(par("bg","fg"), dark=0.3, light=-0.3) # border color of the fitted value polygons
+
+      if (predstyle %in% c("bar","shade","dist"))
+         warning(mstyle$warning("Argument 'predstyle' not relevant for meta-regression models."), call.=FALSE)
 
    }
 
@@ -767,6 +770,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       xlim <- round(xlim, digits[[2]])
       #xlim[1] <- xlim[1]*max(1, digits[[2]]/2)
       #xlim[2] <- xlim[2]*max(1, digits[[2]]/2)
+   } else {
+      if (length(xlim) != 2L)
+         stop(mstyle$stop("Argument 'xlim' must be of length 2."))
    }
 
    xlim <- sort(xlim)
@@ -1063,6 +1069,19 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
          if (predstyle %in% c("shade","dist")) {
 
+            if (!missing(predlim) && length(predlim) != 2L)
+               stop(mstyle$stop("Argument 'predlim' must be of length 2."))
+
+            if (is.function(transf)) {
+               funlist <- lapply(list("1"=exp, "2"=transf.ztor, "3"=tanh, "4"=transf.ilogit, "5"=plogis, "6"=transf.iarcsin), deparse)
+               funmatch <- sapply(funlist, identical, transf.char)
+               if (!any(funmatch))
+                  stop(mstyle$stop("Chosen transformation not (currently) possible with this 'predstyle'."))
+            }
+
+            if (predres$pi.dist != "norm" && predres$pi.ddf <= 1L)
+               stop(mstyle$stop("Cannot shade/draw prediction distribution when df <= 1."))
+
             if (predstyle == "shade") {
                x.len <- 100
                q.lo <- level/2
@@ -1073,16 +1092,36 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
                q.hi <- 0.9999
             }
 
-            if (predres$pi.dist == "norm") {
-               crits <- qnorm(c(q.lo,q.hi), mean=predres$pred, sd=predres$pi.se)
-               xs <- seq(crits[1], crits[2], length.out=x.len)
-               ys <- dnorm(xs, mean=predres$pred, sd=predres$pi.se)
+            if (missing(predlim) || predstyle == "shade") {
+               if (predres$pi.dist == "norm") {
+                  crits <- qnorm(c(q.lo,q.hi), mean=predres$pred, sd=predres$pi.se)
+                  xs <- seq(crits[1], crits[2], length.out=x.len)
+                  ys <- dnorm(xs, mean=predres$pred, sd=predres$pi.se)
+               } else {
+                  crits <- qt(c(q.lo,q.hi), df=predres$pi.ddf) * predres$pi.se + predres$pred
+                  xs <- seq(crits[1], crits[2], length.out=x.len)
+                  ys <- dt((xs - predres$pred) / predres$pi.se, df=predres$pi.ddf) / predres$pi.se
+               }
             } else {
-               if (predres$pi.ddf <= 1L)
-                  stop(mstyle$stop("Cannot draw prediction distribution when df <= 1."))
-               crits <- qt(c(q.lo,q.hi), df=predres$pi.ddf) * predres$pi.se + predres$pred
-               xs <- seq(crits[1], crits[2], length.out=x.len)
-               ys <- dt((xs - predres$pred) / predres$pi.se, df=predres$pi.ddf) / predres$pi.se
+               xs <- seq(predlim[1], predlim[2], length.out=x.len)
+               if (is.function(transf)) {
+                  if (funmatch[1])
+                     xs <- suppressWarnings(log(xs))
+                  if (any(funmatch[2:3]))
+                     xs <- suppressWarnings(atanh(xs))
+                  if (any(funmatch[4:5]))
+                     xs <- suppressWarnings(qlogis(xs))
+                  if (funmatch[6])
+                     xs <- suppressWarnings(transf.arcsin(xs))
+                  sel <- is.finite(xs) # FALSE for +-Inf and NA/NaN
+                  x.len <- sum(sel)
+                  xs <- xs[sel]
+               }
+               if (predres$pi.dist == "norm") {
+                  ys <- dnorm(xs, mean=predres$pred, sd=predres$pi.se)
+               } else {
+                  ys <- dt((xs - predres$pred) / predres$pi.se, df=predres$pi.ddf) / predres$pi.se
+               }
             }
 
             sel.l0 <- xs < 0
@@ -1090,38 +1129,32 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
             if (is.function(transf)) {
                xs <- sapply(xs, transf)
-               funlist <- lapply(list("1"=exp, "2"=transf.ztor, "3"=tanh, "4"=transf.ilogit, "5"=plogis, "6"=transf.iarcsin), deparse)
-               funmatch <- sapply(funlist, identical, transf.char)
-               if (any(funmatch)) {
-                  if (funmatch[1])
-                     ys <- ys / xs
-                  if (any(funmatch[2:3]))
-                     ys <- ys / (1-xs^2)
-                  if (any(funmatch[4:5]))
-                     ys <- ys / (xs*(1-xs))
-                  if (funmatch[6])
-                     ys <- ys / (2*sqrt(xs*(1-xs)))
-                  # can run into numerical problems at the extremes (esp. when pi.dist="t"),
-                  # so we need to find the range where ys are first increasing and then decreasing
-                  sdys <- sign(diff(ys))
-                  y.lo <- which(sdys == 1)
-                  if (length(y.lo) == 0L) {
-                     y.lo <- 1
-                  } else {
-                     y.lo <- min(y.lo) + 1
-                  }
-                  y.hi <- which(sdys == -1)
-                  if (length(y.hi) == 0L) {
-                     y.hi <- x.len
-                  } else {
-                     y.hi <- max(y.hi) + 1
-                  }
-                  sel.l0 <- sel.l0[y.lo:y.hi]
-                  sel.g0 <- sel.g0[y.lo:y.hi]
-                  xs <- xs[y.lo:y.hi]
-                  ys <- ys[y.lo:y.hi]
-               } else {
-                  stop(mstyle$stop("Chosen transformation not (currently) possible with this 'predstyle'."))
+               if (funmatch[1]) {
+                  ys <- ys / xs
+                  x.lo <- 0.01
+                  x.hi <- Inf
+               }
+               if (any(funmatch[2:3])) {
+                  ys <- ys / (1-xs^2)
+                  x.lo <- -0.99
+                  x.hi <-  0.99
+               }
+               if (any(funmatch[4:5])) {
+                  ys <- ys / (xs*(1-xs))
+                  x.lo <- 0.01
+                  x.hi <- 0.99
+               }
+               if (funmatch[6]) {
+                  ys <- ys / (2*sqrt(xs*(1-xs)))
+                  x.lo <- 0.01
+                  x.hi <- 0.99
+               }
+               if (missing(predlim)) {
+                  sel <- xs > x.lo & xs < x.hi
+                  sel.l0 <- sel.l0[sel]
+                  sel.g0 <- sel.g0[sel]
+                  ys <- ys[sel]
+                  xs <- xs[sel]
                }
             }
 
@@ -1142,7 +1175,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
             colfun <- colorRamp(c(col[2], col[3]))
             rectcol <- colfun(intensity)
-            rectcol <- apply(rectcol, 1, function(x) rgb(x[1], x[2], x[3], maxColorValue=255))
+            rectcol <- apply(rectcol, 1, function(x) if (anyNA(x)) NA else rgb(x[1], x[2], x[3], maxColorValue=255))
 
             lrect(xs[-1], -2-barheight, xs[-length(xs)], -2+barheight, col=rectcol, border=rectcol, ...)
 
@@ -1152,7 +1185,12 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
             ys <- ys / max(ys) * efac[4]
 
-            sel <- ys > 0.005
+            if (missing(predlim)) {
+               sel <- ys > 0.005
+            } else {
+               sel <- rep(TRUE, length(ys))
+            }
+
             sel <- sel & xs >= alim[1] & xs <= alim[2]
 
             if (!missing(olim))

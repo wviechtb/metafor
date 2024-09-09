@@ -6,7 +6,7 @@
 }
 \usage{
 \method{addpoly}{default}(x, vi, sei, ci.lb, ci.ub, pi.lb, pi.ub,
-        rows=-1, level, annotate, predstyle, digits, width, mlab,
+        rows=-1, level, annotate, predstyle, predlim, digits, width, mlab,
         transf, atransf, targs, efac, col, border, lty, fonts, cex,
         constarea=FALSE, \dots)
 }
@@ -22,6 +22,7 @@
    \item{level}{optional numeric value between 0 and 100 to specify the confidence interval level (see \link[=misc-options]{here} for details).}
    \item{annotate}{optional logical to specify whether annotations should be added to the plot for the polygons that are drawn.}
    \item{predstyle}{character string to specify the style of the prediction interval (either \code{"line"} (the default), \code{"bar"}, \code{"shade"}, or \code{"dist"}; the last three only when adding a single polygon). Can be abbreviated.}
+   \item{predlim}{optional argument to specify the limits of the prediction distribution when \code{predstyle="dist"}.}
    \item{digits}{optional integer to specify the number of decimal places to which the annotations should be rounded.}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}
    \item{mlab}{optional character vector of the same length as \code{x} giving labels for the polygons that are drawn.}
