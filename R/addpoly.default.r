@@ -28,7 +28,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
    level <- .level(level)
 
-   if (hasArg(pi.lb)) {
+   if (hasArg(pi.lb) && !is.null((pi.lb))) {
 
       pi.level <- attributes(pi.lb)$level
 
@@ -80,6 +80,9 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
       predstyle <- "line"
 
    predstyle <- match.arg(predstyle, c("line", "bar", "shade", "dist"))
+
+   if (missing(predlim))
+      predlim <- NULL
 
    if (missing(efac))
       efac <- .getfromenv("forest", "efac", default=1)
@@ -235,14 +238,17 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
    yi <- x
 
    if (!missing(vi) && is.function(vi)) # if vi is utils::vi()
-      stop(mstyle$stop("Cannot find variable specified for 'vi' argument."))
+      stop(mstyle$stop("Cannot find variable specified for the 'vi' argument."))
 
-   if (hasArg(ci.lb) && hasArg(ci.ub)) {
+   if (hasArg(ci.lb) && hasArg(ci.ub) && !is.null(ci.lb) && !is.null(ci.ub)) {
 
       ### CI bounds are specified by user
 
       if (length(ci.lb) != length(ci.ub))
          stop(mstyle$stop("Length of 'ci.lb' and 'ci.ub' is not the same."))
+
+      if (length(ci.lb) != k)
+         stop(mstyle$stop("Length of ('ci.lb','ci.ub') does not match length of 'x'."))
 
       vi <- ifelse(is.na(ci.lb) | is.na(ci.ub), NA_real_, 1) # need this below for checking for NAs
 
@@ -272,7 +278,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
    }
 
-   if (hasArg(pi.lb) && hasArg(pi.ub)) {
+   if (hasArg(pi.lb) && hasArg(pi.ub) && !is.null(pi.lb) && !is.null(pi.ub)) {
 
       if (length(pi.lb) != length(pi.ub))
          stop(mstyle$stop("Length of 'pi.lb' and 'pi.ub' is not the same."))
@@ -517,9 +523,6 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
          if (is.null(pi.se))
             stop(mstyle$stop("Cannot extract SE of the prediction interval."))
 
-         if (!missing(predlim) && length(predlim) != 2L)
-            stop(mstyle$stop("Argument 'predlim' must be of length 2."))
-
          if (is.function(transf)) {
             funlist <- lapply(list("1"=exp, "2"=transf.ztor, "3"=tanh, "4"=transf.ilogit, "5"=plogis, "6"=transf.iarcsin), deparse)
             funmatch <- sapply(funlist, identical, transf.char)
@@ -540,7 +543,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
             q.hi <- 0.9999
          }
 
-         if (missing(predlim) || predstyle == "shade") {
+         if (is.null(predlim) || predstyle == "shade") {
             if (pi.dist == "norm") {
                crits <- qnorm(c(q.lo,q.hi), mean=yi.utransf[i], sd=pi.se)
                xs <- seq(crits[1], crits[2], length.out=x.len)
@@ -551,6 +554,8 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
                ys <- dt((xs - yi.utransf[i]) / pi.se, df=pi.ddf) / pi.se
             }
          } else {
+            if (length(predlim) != 2L)
+               stop(mstyle$stop("Argument 'predlim' must be of length 2."))
             xs <- seq(predlim[1], predlim[2], length.out=x.len)
             if (is.function(transf)) {
                if (funmatch[1])
@@ -597,7 +602,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
                x.lo <- 0.01
                x.hi <- 0.99
             }
-            if (missing(predlim)) {
+            if (is.null(predlim)) {
                sel <- xs > x.lo & xs < x.hi
                sel.l0 <- sel.l0[sel]
                sel.g0 <- sel.g0[sel]
@@ -624,7 +629,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
          ys <- ys / max(ys) * efac[2]
 
-         if (missing(predlim)) {
+         if (is.null(predlim)) {
             sel <- ys > 0.005
          } else {
             sel <- rep(TRUE, length(ys))

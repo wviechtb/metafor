@@ -132,27 +132,27 @@ with(dat, forest(yi, vi))
 
 ### forest plot of the observed risk ratios (transform outcomes)
 with(dat, forest(yi, vi, transf=exp, alim=c(0,2), steps=5,
-                 xlim=c(-2.5,4), refline=1, cex=0.9))
+                 xlim=c(-2.5,4), refline=1))
 
 ### forest plot of the observed risk ratios (transformed x-axis)
 with(dat, forest(yi, vi, atransf=exp, at=log(c(0.05,0.25,1,4,20)),
-                 xlim=c(-10,8), cex=0.9))
+                 xlim=c(-10,8)))
 
 ### make all points the same size
 with(dat, forest(yi, vi, atransf=exp, at=log(c(0.05,0.25,1,4,20)),
-                 xlim=c(-10,8), cex=0.9, psize=1))
+                 xlim=c(-10,8), psize=1))
 
 ### and remove the vertical lines at the end of the CI bounds
 with(dat, forest(yi, vi, atransf=exp, at=log(c(0.05,0.25,1,4,20)),
-                 xlim=c(-10,8), cex=0.9, psize=1, efac=0))
+                 xlim=c(-10,8), psize=1, efac=0))
 
 ### forest plot of the observed risk ratios with studies ordered by the RRs
 with(dat, forest(yi, vi, atransf=exp, at=log(c(0.05,0.25,1,4,20)),
-                 xlim=c(-10,8), cex=0.9, order="obs"))
+                 xlim=c(-10,8), order="obs"))
 
 ### forest plot of the observed risk ratios with studies ordered by absolute latitude
 with(dat, forest(yi, vi, atransf=exp, at=log(c(0.05,0.25,1,4,20)),
-                 xlim=c(-10,8), cex=0.9, order=ablat))
+                 xlim=c(-10,8), order=ablat))
 
 ### see also examples for the forest.rma function
 }

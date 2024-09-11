@@ -1,24 +1,24 @@
-# metafor 4.7-30 (2024-09-09)
+# metafor 4.7-31 (2024-09-11)
 
 - some general changes to the various `forest()` functions: argument `header` is now `TRUE` by default, the y-axis is now created with `yaxs="i"`, and the y-axis limits have been tweaked slightly in accordance
 
-- the `forest.rma()` and `addpoly.default()` functions now provides multiple styles for drawing the prediction interval via the `predstyle` argument
+- `forest.rma()` and the various `addpoly()` functions now provides multiple styles for drawing the prediction interval via the `predstyle` argument
 
 - `forest.rma()` and `addpoly.rma()` now write out the default label (instead of an abbreviation) for the model results; as before, the label can be changed via the `mlab` argument
 
-- added `ilab.lab` argument to the various `forest()` functions for adding header labels to the plot for the additional study information columns
+- added an `ilab.lab` argument to the various `forest()` functions for adding header labels to the plot for the additional study information columns
 
 - the `predict.rma()` and `predict.rma.ls()` functions now also accept a matrix as input that includes a column for the intercept term (in which case the `intercept` argument is ignored and the first column of the matrix controls whether the intercept term is included in calculating the predicted value(s))
 
 - added extractor function `se()` for extracting standard errors from model objects
 
-- added `pairmat()` function to construct a matrix of pairwise contrasts
+- added a `pairmat()` function to construct a matrix of pairwise contrasts
 
-- `anova()` and `predict()` gain `adjust` argument for adjusting p-values / interval bounds for multiple testing
+- `anova()` and `predict()` gain an `adjust` argument for adjusting p-values / interval bounds for multiple testing
 
-- `print.anova.rma()` and `print.list.anova.rma()` also print significance stars for some types of outcomes (unless `getOption("show.signif.stars")` is `FALSE`)
+- `print.anova.rma()` and `print.list.anova.rma()` now also print significance stars for some tests (unless `getOption("show.signif.stars")` is `FALSE`)
 
-- added `collapse` argument to the various `cumul()` functions (to specify whether studies with the same value of the `order` variable should be added simultaneously)
+- added a `collapse` argument to the various `cumul()` functions (to specify whether studies with the same value of the `order` variable should be added simultaneously)
 
 - `rma.mv()` now counts the number of levels of a random effect more appropriately; this may trigger more often the check that the number of levels is equal to 1, in which case the corresponding variance component is automatically fixed to 0; this check can be omitted with `control=list(check.k.gtr.1=FALSE)`
 
@@ -36,13 +36,13 @@
 
 - `nobs()` now just returns the number of estimates, not the effective number of observations
 
-- added measures `"PRZ"` to `escalc()`
+- added measure `"PRZ"` to `escalc()`
 
 - `escalc()` gains a `flip` argument
 
 - fixed `predict()` ignoring the `level` argument for `robust.rma` objects obtained with `clubSandwich=TRUE`
 
-- some tweaks to `vcalc()` to speed up the calculations (by James Pustejovsky)
+- some tweaks were made to `vcalc()` to speed up the calculations (by James Pustejovsky)
 
 - added more tests
 

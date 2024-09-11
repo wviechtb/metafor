@@ -1,5 +1,5 @@
 addpoly.predict.rma <- function(x,
-rows=-2,                annotate, addpred=FALSE, digits, width, mlab,
+rows=-2,                annotate, addpred=FALSE, predstyle, predlim, digits, width, mlab,
 transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...) {
 
    #########################################################################
@@ -13,6 +13,16 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
    if (missing(annotate))
       annotate <- .getfromenv("forest", "annotate", default=TRUE)
+
+   if (missing(predstyle)) {
+      predstyle <- "line"
+   } else {
+      predstyle <- match.arg(predstyle, c("line", "bar", "shade", "dist"))
+      addpred <- TRUE
+   }
+
+   if (missing(predlim))
+      predlim <- NULL
 
    if (missing(digits))
       digits <- .getfromenv("forest", "digits", default=2)
@@ -53,6 +63,8 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
    if (addpred) {
       pi.lb <- x$pi.lb
       pi.ub <- x$pi.ub
+      if (is.null(pi.lb) || is.null(pi.ub))
+         warning(mstyle$warning("Could not extract prediction interval bounds."), call.=FALSE)
    } else {
       pi.lb <- rep(NA_real_, length(x$pred))
       pi.ub <- rep(NA_real_, length(x$pred))
@@ -61,8 +73,9 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
    #########################################################################
 
    addpoly(x$pred, ci.lb=x$ci.lb, ci.ub=x$ci.ub, pi.lb=pi.lb, pi.ub=pi.ub,
-           rows=rows,             annotate=annotate, digits=digits, width=width,
-           mlab=mlab, transf=transf, atransf=atransf, targs=targs,
+           rows=rows,             annotate=annotate, predstyle=predstyle, predlim=predlim,
+           digits=digits, width=width, mlab=mlab,
+           transf=transf, atransf=atransf, targs=targs,
            efac=efac, col=col, border=border, lty=lty, fonts=fonts, cex=cex,
            constarea=constarea, ...)
 

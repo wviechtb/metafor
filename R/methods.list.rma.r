@@ -48,6 +48,11 @@ as.data.frame.list.rma <- function(x, ...) {
    x$cr.lb <- NULL
    x$cr.ub <- NULL
 
+   ### strip attributes from pi.lb
+
+   if (!is.null(x$pi.lb))
+      x$pi.lb <- c(x$pi.lb)
+
    ### turn all vectors before the slab vector into a data frame
 
    slab.pos <- which(names(x) == "slab")

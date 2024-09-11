@@ -18,7 +18,7 @@
    \item{x}{an object of class \code{"rma"}.}
    \item{annotate}{logical to specify whether annotations should be added to the plot (the default is \code{TRUE}).}
    \item{addfit}{logical to specify whether the pooled estimate (for models without moderators) or fitted values (for models with moderators) should be added to the plot (the default is \code{TRUE}). See \sQuote{Details}.}
-   \item{addpred}{logical to specify whether the bounds of the prediction interval should be added to the plot (the default is \code{FALSE}). See \sQuote{Details}.}
+   \item{addpred}{logical to specify whether the prediction interval should be added to the plot (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{predstyle}{character string to specify the style of the prediction interval (either \code{"line"} (the default), \code{"bar"}, \code{"shade"}, or \code{"dist"}). Can be abbreviated. Setting this to something else than \code{"line"} automatically sets \code{addpred=TRUE}.}
    \item{showweights}{logical to specify whether the annotations should also include the weights given to the observed outcomes during the model fitting (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{header}{logical to specify whether column headings should be added to the plot (the default is \code{TRUE}). Can also be a character vector to specify the left and right headings (or only the left one).}
@@ -194,34 +194,33 @@ defaults <- forest(res)
 defaults
 
 ### several forest plots illustrating the use of various arguments
-forest(res, cex=0.8)
-forest(res, cex=0.8, alim=c(-3,3))
-forest(res, cex=0.8, alim=c(-3,3), order="prec")
-forest(res, cex=0.8, alim=c(-3,3), order="obs")
-forest(res, cex=0.8, alim=c(-3,3), order=ablat)
+forest(res)
+forest(res, alim=c(-3,3))
+forest(res, alim=c(-3,3), order="prec")
+forest(res, alim=c(-3,3), order="obs")
+forest(res, alim=c(-3,3), order=ablat)
 
 ### various ways to show the prediction interval
-forest(res, cex=0.8, addpred=TRUE)
-forest(res, cex=0.8, predstyle="bar")
-forest(res, cex=0.8, predstyle="shade")
-forest(res, cex=0.8, predstyle="dist")
+forest(res, addpred=TRUE)
+forest(res, predstyle="bar")
+forest(res, predstyle="shade")
+forest(res, predstyle="dist")
 
 ### adjust xlim values to see how that changes the plot
 forest(res)
 par("usr")[1:2] # this shows what xlim values were chosen by default
-forest(res, xlim=c(-16,14))
+forest(res, xlim=c(-12,16))
 forest(res, xlim=c(-18,10))
-forest(res, xlim=c(-10,12))
 
 ### illustrate the transf argument (note the asymmetric CI bounds)
-forest(res, transf=exp, at=0:7, xlim=c(-8,12), cex=0.8, refline=1)
+forest(res, transf=exp, at=0:7, xlim=c(-8,12), refline=1)
 
 ### illustrate the atransf argument
-forest(res, atransf=exp, at=log(c(0.05,0.25,1,4,20)), xlim=c(-8,7), cex=0.8)
+forest(res, atransf=exp, at=log(c(0.05,0.25,1,4,20)), xlim=c(-8,7))
 
 ### showweights argument
 forest(res, atransf=exp, at=log(c(0.05,0.25,1,4,20)), xlim=c(-8,8),
-       order="prec", showweights=TRUE, cex=0.8)
+       order="prec", showweights=TRUE)
 
 ### illustrade shade argument
 forest(res, shade="zebra")
@@ -232,16 +231,16 @@ forest(res, shade=c(1,5,10))
 ### note: may need to widen plotting device to avoid overlapping text
 forest(res, atransf=exp, at=log(c(0.05, 0.25, 1, 4)), xlim=c(-16,6),
        ilab=cbind(tpos, tneg, cpos, cneg), ilab.lab=c("TB+","TB-","TB+","TB-"),
-       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=0.75, header="Author(s) and Year")
-text(c(-8.75,-5.25), res$k+2.8, c("Vaccinated", "Control"), cex=0.75, font=2)
+       ilab.xpos=c(-9.5,-8,-6,-4.5), cex=0.85, header="Author(s) and Year")
+text(c(-8.75,-5.25), res$k+2.8, c("Vaccinated", "Control"), cex=0.85, font=2)
 
 ### mixed-effects model with absolute latitude as moderator
 res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, mods = ~ ablat,
            data=dat.bcg, slab=paste(author, year, sep=", "))
 
 ### forest plot with observed and fitted values
-forest(res, xlim=c(-9,5), at=log(c(0.05,0.25,1,4)), order="fit", cex=0.8,
-       ilab=ablat, ilab.xpos=-4, ilab.lab="Latitude", atransf=exp,
+forest(res, xlim=c(-9,5), at=log(c(0.05,0.25,1,4)), order="fit",
+       ilab=ablat, ilab.xpos=-4.5, ilab.lab="Latitude", atransf=exp,
        header="Author(s) and Year")
 
 ### meta-analysis of the log risk ratios using a random-effects model
@@ -250,15 +249,15 @@ res <- rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
 
 ### for more complicated plots, the ylim and rows arguments may be useful
 forest(res)
-forest(res, ylim=c(-1.5, 16)) # the default
-forest(res, ylim=c(-1.5, 20)) # extra space in plot
-forest(res, ylim=c(-1.5, 20), rows=c(17:15, 12:6, 3:1)) # set positions
+forest(res, ylim=c(-2, 16)) # the default
+forest(res, ylim=c(-2, 20)) # extra space in plot
+forest(res, ylim=c(-2, 20), rows=c(17:15, 12:6, 3:1)) # set positions
 
 ### forest plot with subgrouping of studies
 ### note: may need to widen plotting device to avoid overlapping text
-tmp <- forest(res, xlim=c(-16, 4.6), at=log(c(0.05, 0.25, 1, 4)), atransf=exp,
+tmp <- forest(res, xlim=c(-16, 6), at=log(c(0.05, 0.25, 1, 4)), atransf=exp,
               ilab=cbind(tpos, tneg, cpos, cneg), ilab.lab=c("TB+","TB-","TB+","TB-"),
-              ilab.xpos=c(-9.5,-8,-6,-4.5), cex=0.75, ylim=c(-2, 21),
+              ilab.xpos=c(-9.5,-8,-6,-4.5), cex=0.85, ylim=c(-2, 21),
               order=alloc, rows=c(1:2,5:11,14:17),
               header="Author(s) and Year", shade=c(3,12,18))
 op <- par(cex=tmp$cex)

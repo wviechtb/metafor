@@ -104,6 +104,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (predstyle %in% c("bar","shade","dist") && isFALSE(addpred))
       addpred <- TRUE
 
+   if (missing(predlim))
+      predlim <- NULL
+
    ### digits[1] for annotations, digits[2] for x-axis labels, digits[3] (if specified) for weights
    ### note: digits can also be a list (e.g., digits=list(2,3L)); trailing 0's on the x-axis labels
    ### are dropped if the value is an integer
@@ -1069,9 +1072,6 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
          if (predstyle %in% c("shade","dist")) {
 
-            if (!missing(predlim) && length(predlim) != 2L)
-               stop(mstyle$stop("Argument 'predlim' must be of length 2."))
-
             if (is.function(transf)) {
                funlist <- lapply(list("1"=exp, "2"=transf.ztor, "3"=tanh, "4"=transf.ilogit, "5"=plogis, "6"=transf.iarcsin), deparse)
                funmatch <- sapply(funlist, identical, transf.char)
@@ -1092,7 +1092,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
                q.hi <- 0.9999
             }
 
-            if (missing(predlim) || predstyle == "shade") {
+            if (is.null(predlim) || predstyle == "shade") {
                if (predres$pi.dist == "norm") {
                   crits <- qnorm(c(q.lo,q.hi), mean=predres$pred, sd=predres$pi.se)
                   xs <- seq(crits[1], crits[2], length.out=x.len)
@@ -1103,6 +1103,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
                   ys <- dt((xs - predres$pred) / predres$pi.se, df=predres$pi.ddf) / predres$pi.se
                }
             } else {
+               if (length(predlim) != 2L)
+                  stop(mstyle$stop("Argument 'predlim' must be of length 2."))
                xs <- seq(predlim[1], predlim[2], length.out=x.len)
                if (is.function(transf)) {
                   if (funmatch[1])
@@ -1149,7 +1151,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
                   x.lo <- 0.01
                   x.hi <- 0.99
                }
-               if (missing(predlim)) {
+               if (is.null(predlim)) {
                   sel <- xs > x.lo & xs < x.hi
                   sel.l0 <- sel.l0[sel]
                   sel.g0 <- sel.g0[sel]
@@ -1185,7 +1187,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
             ys <- ys / max(ys) * efac[4]
 
-            if (missing(predlim)) {
+            if (is.null(predlim)) {
                sel <- ys > 0.005
             } else {
                sel <- rep(TRUE, length(ys))

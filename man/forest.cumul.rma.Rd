@@ -91,8 +91,8 @@ res <- rma(yi, vi, data=dat)
 
 ### draw cumulative forest plots
 x <- cumul(res, order=year)
-forest(x, cex=0.8)
-forest(x, xlim=c(-4,2.5), alim=c(-2,1), cex=0.8)
+forest(x)
+forest(x, xlim=c(-4,2.5), alim=c(-2,1), steps=7)
 
 ### meta-analysis of the (log) risk ratios using the Mantel-Haenszel method
 res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
@@ -100,6 +100,6 @@ res <- rma.mh(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg,
 
 ### draw cumulative forest plot
 x <- cumul(res, order=year)
-forest(x, xlim=c(-4,2.5), alim=c(-2,1), cex=0.8)
+forest(x, xlim=c(-4,2.5), alim=c(-2,1), steps=7)
 }
 \keyword{hplot}
