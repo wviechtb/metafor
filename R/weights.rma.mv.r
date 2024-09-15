@@ -4,6 +4,9 @@ weights.rma.mv <- function(object, type="diagonal", ...) {
 
    .chkclass(class(object), must="rma.mv")
 
+   if (is.null(object$not.na))
+      stop(mstyle$stop("Information needed to compute the weights is not available in the model object."))
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))

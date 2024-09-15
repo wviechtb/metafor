@@ -4,10 +4,16 @@ rstudent.rma.mv <- function(model, digits, progbar=FALSE, cluster, reestimate=TR
 
    .chkclass(class(model), must="rma.mv", notav="robust.rma")
 
+   if (is.null(model$not.na))
+      stop(mstyle$stop("Information needed to compute the residuals is not available in the model object."))
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
+
+   if (is.null(model$yi))
+      stop(mstyle$stop("Information needed to compute the residuals is not available in the model object."))
 
    x <- model
 

@@ -7,6 +7,9 @@ profile.rma.ls <- function(fitted, alpha,
 
    x <- fitted
 
+   if (is.null(x$yi) || is.null(x$vi))
+      stop(mstyle$stop("Information needed for profiling is not available in the model object."))
+
    if (x$optbeta)
       stop(mstyle$stop("Profiling not yet implemented for models fitted with 'optbeta=TRUE'."))
 

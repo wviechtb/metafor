@@ -18,6 +18,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
+   if (is.null(x$yi.f) || is.null(x$vi.f) || is.null(x$X.f))
+      stop(mstyle$stop("Information needed to construct the plot is not available in the model object."))
+
    if (missing(transf))
       transf <- FALSE
 

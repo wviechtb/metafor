@@ -11,6 +11,7 @@ export(ranef)
 import(mathjaxr)
 import(metadat)
 import(numDeriv)
+import(digest)
 
 S3method("[", list.rma)
 S3method("$<-", list.rma)

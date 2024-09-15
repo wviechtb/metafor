@@ -405,7 +405,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (inherits(V, "matrix") && !is.numeric(V))
       stop(mstyle$stop("The object/variable specified for the 'V' argument is not numeric."))
 
-   ### process W if it was specified
+   ### process W if it was specified (turned into matrix called 'A')
 
    if (!is.null(W)) {
 
@@ -2134,8 +2134,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    M <- fitcall$M
 
-   ### remove row and column names of M
-   ### (but only do this if M has row/column names)
+   ### remove row and column names of M (but only do this if M has row/column names)
 
    if (!is.null(dimnames(M)))
       M <- unname(M)
@@ -2153,7 +2152,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       ddf <- rep(NA_integer_, p)
    }
 
-   ### the Knapp & Hartung method (this is experimental)
+   ### the Knapp & Hartung method (this is experimental!)
 
    s2w <- 1
 
@@ -2529,6 +2528,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
                   int.only=int.only, int.incl=int.incl, intercept=intercept, allvipos=allvipos, coef.na=coef.na,
                   yi=yi, vi=vi, V=V, W=A, X=X, yi.f=yi.f, vi.f=vi.f, V.f=V.f, X.f=X.f, W.f=W.f, ni=ni, ni.f=ni.f,
                   M=M, G=G, H=H, hessian=hessian, vvc=vvc, vccon=vccon,
+                  chksumyi=digest(as.vector(yi)), chksumV=digest(as.matrix(V)), chksumX=digest(X),
                   ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
                   measure=measure, method=method, weighted=weighted,
                   test=test, dfs=dfs, ddf=ddf, s2w=s2w, btt=btt, m=m,
@@ -2558,11 +2558,12 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
          res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,
                      sigma2=sigma2, tau2=tau2, rho=rho, gamma2=gamma2, phi=phi,
                      QE=QE, QEdf=QEdf, QEp=QEp, QM=QM, QMdf=QMdf, QMp=QMp,
-                     k=k, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,
-                     int.only=int.only,
+                     k=k, k.f=k.f, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,
+                     int.only=int.only, int.incl=int.incl, intercept=intercept,
+                     chksumyi=digest(as.vector(yi)), chksumV=digest(as.matrix(V)), chksumX=digest(X),
                      measure=measure, method=method,
                      test=test, dfs=dfs, ddf=ddf, btt=btt, m=m,
-                     digits=digits,
+                     digits=digits, level=level,
                      fit.stats=fit.stats,
                      vc.fix=vc.fix,
                      withS=withS, withG=withG, withH=withH, withR=withR,

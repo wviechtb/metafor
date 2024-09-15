@@ -9,6 +9,9 @@ rstandard.rma.peto <- function(model, digits, ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
+   if (is.null(model$yi.f))
+      stop(mstyle$stop("Information needed to compute the residuals is not available in the model object."))
+
    x <- model
 
    if (missing(digits)) {

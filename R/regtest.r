@@ -40,6 +40,9 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
 
       .chkclass(class(x), must="rma", notav=c("robust.rma", "rma.glmm", "rma.mv", "rma.ls", "rma.gen", "rma.uni.selmodel"))
 
+      if (is.null(x$yi) || is.null(x$vi))
+         stop(mstyle$stop("Information needed to carry out the test is not available in the model object."))
+
       if (!missing(vi) || !missing(sei) || !missing(subset))
          warning(mstyle$warning("Arguments 'vi', 'sei', and 'subset' ignored when 'x' is a model object."), call.=FALSE)
 

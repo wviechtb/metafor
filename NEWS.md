@@ -1,4 +1,4 @@
-# metafor 4.7-31 (2024-09-11)
+# metafor 4.7-32 (2024-09-15)
 
 - some general changes to the various `forest()` functions: argument `header` is now `TRUE` by default, the y-axis is now created with `yaxs="i"`, and the y-axis limits have been tweaked slightly in accordance
 
@@ -43,6 +43,8 @@
 - fixed `predict()` ignoring the `level` argument for `robust.rma` objects obtained with `clubSandwich=TRUE`
 
 - some tweaks were made to `vcalc()` to speed up the calculations (by James Pustejovsky)
+
+- better handling of `outlist="minimal"`
 
 - added more tests
 

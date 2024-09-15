@@ -18,12 +18,12 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
    x <- object
 
-   k <- x$k
-   p <- x$p
+   k  <- x$k
+   p  <- x$p
    yi <- x$yi
    vi <- x$vi
-   X <- x$X
-   Y <- cbind(yi)
+   X  <- x$X
+   Y  <- cbind(yi)
    weights <- x$weights
 
    if (missing(level))

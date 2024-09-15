@@ -15,6 +15,9 @@ leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    if (x$k == 1L)
       stop(mstyle$stop("Stopped because k = 1."))
 
+   if (is.null(x$yi.f) || is.null(x$vi.f))
+      stop(mstyle$stop("Information needed to carry out a leave-one-out analysis is not available in the model object."))
+
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
    } else {

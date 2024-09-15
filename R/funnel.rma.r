@@ -13,6 +13,9 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act), add=TRUE)
 
+   if (is.null(x$yi) || is.null(x$vi))
+      stop(mstyle$stop("Information needed to construct the plot is not available in the model object."))
+
    yaxis <- match.arg(yaxis, c("sei", "vi", "seinv", "vinv", "ni", "ninv", "sqrtni", "sqrtninv", "lni", "wi"))
    type  <- match.arg(type,  c("rstandard", "rstudent"))
 

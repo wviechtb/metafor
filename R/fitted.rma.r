@@ -9,6 +9,9 @@ fitted.rma <- function(object, ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
+   if (is.null(object$X.f))
+      stop(mstyle$stop("Information needed to compute the fitted values is not available in the model object."))
+
    ### note: fitted values can be calculated for all studies including those that
    ### have NA on yi/vi (and with "na.pass" these will be provided); but if there
    ### is an NA in the X's, then the fitted value will also be NA

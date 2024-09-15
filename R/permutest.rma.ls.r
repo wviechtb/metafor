@@ -10,6 +10,9 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, btt=x$btt, att=x$att, pr
       digits <- .get.digits(digits=digits, xdigits=x$digits, dmiss=FALSE)
    }
 
+   if (is.null(x$yi) || is.null(x$vi))
+      stop(mstyle$stop("Information needed to carry out permutation test is not available in the model object."))
+
    ddd <- list(...)
 
    .chkdots(ddd, c("tol", "time", "seed", "verbose", "permci", "skip.beta", "skip.alpha", "fixed"))

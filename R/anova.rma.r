@@ -527,21 +527,21 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, adjust, digits, refi
       ###       isTRUE(all.equal()) because conversion to non-sparse can introduce some negligible discrepancies
 
       if (inherits(object, "rma.uni")) {
-         if (!(identical(as.vector(model.f$yi), as.vector(model.r$yi)) && isTRUE(all.equal(as.vector(model.f$vi), as.vector(model.r$vi)))))
+         if (!identical(model.f$chksumyi, model.r$chksumyi) || !identical(model.f$chksumvi, model.r$chksumvi))
             stop(mstyle$stop("The observed outcomes and/or sampling variances are not equal in the full and reduced model."))
       }
 
       if (is.null(df)) {
 
          if (inherits(object, "rma.mv")) {
-            if (!(identical(as.vector(model.f$yi), as.vector(model.r$yi)) && isTRUE(all.equal(as.matrix(model.f$V), as.matrix(model.r$V)))))
+            if (!identical(model.f$chksumyi, model.r$chksumyi) || !identical(model.f$chksumV, model.r$chksumV))
                stop(mstyle$stop("The observed outcomes and/or sampling variances/covariances are not equal in the full and reduced model."))
          }
 
       } else {
 
          if (inherits(object, "rma.mv")) {
-            if (!(identical(as.vector(model.f$yi), as.vector(model.r$yi))))
+            if (!(identical(model.f$chksumyi, model.r$chksumyi)))
                stop(mstyle$stop("The observed outcomes are not equal in the full and reduced model."))
          }
 
@@ -569,7 +569,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, adjust, digits, refi
 
       ### for LRTs based on REML estimation, check if fixed effects differ
 
-      if (test == "LRT" && model.f$method == "REML" && (!identical(model.f$X, model.r$X))) {
+      if (test == "LRT" && model.f$method == "REML" && !identical(model.f$chksumX, model.r$chksumX)) {
          if (refit) {
             #message(mstyle$message("Refitting models with ML (instead of REML) estimation ..."))
             if (inherits(model.f, "rma.uni") && model.f$model == "rma.uni") {

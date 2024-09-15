@@ -43,6 +43,9 @@ tes <- function(x, vi, sei, subset, data,
 
       .chkclass(class(x), must="rma", notav=c("rma.glmm", "rma.mv", "robust.rma", "rma.ls", "rma.gen", "rma.uni.selmodel"))
 
+      if (is.null(x$yi) || is.null(x$vi))
+         stop(mstyle$stop("Information needed to carry out the test is not available in the model object."))
+
       ### set defaults for digits
 
       if (missing(digits)) {

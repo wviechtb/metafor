@@ -9,6 +9,9 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
    if (!x$int.only)
       stop(mstyle$stop("Method only applicable to models without moderators."))
 
+   if (is.null(x$yi) || is.null(x$vi))
+      stop(mstyle$stop("Information needed is not available in the model object."))
+
    if (missing(digits)) {
       digits <- .get.digits(xdigits=x$digits, dmiss=TRUE)
    } else {

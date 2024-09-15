@@ -9,6 +9,9 @@ hatvalues.rma.uni <- function(model, type="diagonal", ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
+   if (is.null(model$vi) || is.null(model$X))
+      stop(mstyle$stop("Information needed to compute the hat values is not available in the model object."))
+
    type <- match.arg(type, c("diagonal", "matrix"))
 
    #########################################################################

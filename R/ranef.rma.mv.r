@@ -11,6 +11,9 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
+   if (is.null(x$yi) || is.null(x$M) || is.null(x$X))
+      stop(mstyle$stop("Information needed to compute the BLUPs is not available in the model object."))
+
    if (missing(level))
       level <- x$level
 

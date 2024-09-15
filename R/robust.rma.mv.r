@@ -4,6 +4,9 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, .
 
    .chkclass(class(x), must="rma.mv")
 
+   if (is.null(x$yi) || is.null(x$X))
+      stop(mstyle$stop("Information needed for the method is not available in the model object."))
+
    if (missing(cluster))
       stop(mstyle$stop("Must specify 'cluster' variable."))
 

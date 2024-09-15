@@ -239,6 +239,9 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
    }
 
+   if (is.null(X.new))
+      stop(mstyle$stop("Matrix 'X.new' is NULL."))
+
    #return(list(k.new=k.new, tau2=x$tau2, gamma2=x$gamma2, tau2.levels=tau2.levels, gamma2.levels=gamma2.levels))
 
    #########################################################################

@@ -13,6 +13,9 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, 
    if (x$k == 1L)
       stop(mstyle$stop("Stopped because k = 1."))
 
+   if (is.null(x$X.f))
+      stop(mstyle$stop("Information needed to construct the plot is not available in the model object."))
+
    .start.plot()
 
    ### grid argument can either be a logical or a color

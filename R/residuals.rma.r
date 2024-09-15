@@ -9,6 +9,9 @@ residuals.rma <- function(object, type="response", ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
+   if (is.null(object$yi.f) || is.null(object$X.f))
+      stop(mstyle$stop("Information needed to compute the residuals is not available in the model object."))
+
    type <- match.arg(type, c("response", "rstandard", "rstudent", "pearson", "cholesky"))
 
    ### for objects of class "rma.mh" and "rma.peto", use rstandard() to get the Pearson residuals

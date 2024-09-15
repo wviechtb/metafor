@@ -2681,6 +2681,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                   k=k, k.f=k.f, k.eff=k.eff, k.all=k.all, p=p, p.eff=p.eff, parms=parms,
                   int.only=int.only, int.incl=int.incl, intercept=intercept, allvipos=allvipos, coef.na=coef.na,
                   yi=yi, vi=vi, X=X, weights=weights, yi.f=yi.f, vi.f=vi.f, X.f=X.f, weights.f=weights.f, M=M,
+                  chksumyi=digest(as.vector(yi)), chksumvi=digest(as.vector(vi)), chksumX=digest(X),
                   outdat.f=outdat.f, ni=ni, ni.f=ni.f,
                   ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
                   measure=measure, method=method[1], model=model, weighted=weighted,
@@ -2701,11 +2702,12 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                      tau2=tau2, se.tau2=se.tau2, tau2.fix=tau2.fix,
                      I2=I2, H2=H2, R2=R2,
                      QE=QE, QEp=QEp, QM=QM, QMdf=QMdf, QMp=QMp,
-                     k=k, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms,
-                     int.only=int.only,
-                     measure=measure, method=method[1], model=model,
+                     k=k, k.f=k.f, k.eff=k.eff, p=p, p.eff=p.eff, parms=parms,
+                     int.only=int.only, int.incl=int.incl, intercept=intercept,
+                     chksumyi=digest(as.vector(yi)), chksumvi=digest(as.matrix(vi)), chksumX=digest(X),
+                     measure=measure, method=method[1], model=model, weighted=weighted,
                      test=test, dfs=ddf, ddf=ddf, btt=btt, m=m,
-                     digits=digits,
+                     digits=digits, level=level,
                      fit.stats=fit.stats)
       } else {
          res <- eval(str2lang(paste0("list(", ddd$outlist, ")")))

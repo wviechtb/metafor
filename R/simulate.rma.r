@@ -4,6 +4,9 @@ simulate.rma <- function(object, nsim=1, seed=NULL, olim, ...) {
 
    .chkclass(class(object), must="rma", notav=c("rma.gen", "rma.glmm", "rma.mh", "rma.peto", "rma.uni.selmodel"))
 
+   if (is.null(object$X))
+      stop(mstyle$stop("Information needed to simulate values is not available in the model object."))
+
    na.act <- getOption("na.action")
 
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))

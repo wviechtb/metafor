@@ -8,6 +8,9 @@ transf, targs, pch=21, col, bg, back, arc.res=100, cex, cex.lab, cex.axis, ...) 
 
    .chkclass(class(x), must="rma", notav=c("robust.rma", "rma.mv", "rma.ls", "rma.gen", "rma.uni.selmodel"))
 
+   if (is.null(x$yi) || is.null(x$vi))
+      stop(mstyle$stop("Information needed to construct the plot is not available in the model object."))
+
    if (missing(transf))
       transf <- FALSE
 
@@ -53,7 +56,9 @@ transf, targs, pch=21, col, bg, back, arc.res=100, cex, cex.lab, cex.axis, ...) 
       }
 
    } else {
+
       stop(mstyle$stop("Radial plots only available for models without moderators."))
+
    }
 
    if (center) {

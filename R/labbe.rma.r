@@ -12,6 +12,9 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, lty,
    if (!is.element(x$measure, c("RR","OR","RD","AS","IRR","IRD","IRSD")))
       stop(mstyle$stop("Argument 'measure' must have been set to one of the following: 'RR','OR','RD','AS','IRR','IRD','IRSD'."))
 
+   if (is.null(x$outdat.f))
+      stop(mstyle$stop("Information needed to construct the plot is not available in the model object."))
+
    na.act <- getOption("na.action")
    on.exit(options(na.action=na.act), add=TRUE)
 

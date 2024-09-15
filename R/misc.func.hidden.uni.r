@@ -1,9 +1,9 @@
 ############################################################################
 
-### function to calculate:
+### function to calculate
 ### solve(t(X) %*% W %*% X) = .invcalc(X=X, W=W, k=k)
 ### solve(t(X) %*% X)       = .invcalc(X=X, W=diag(k), k=k)
-### without taking the actual inverse
+### via QR decomposition
 
 .invcalc <- function(X, W, k) {
 

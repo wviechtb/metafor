@@ -7,6 +7,9 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
 
    .chkclass(class(x), must="rma.uni", notav=c("rma.ls", "rma.gen", "robust.rma"))
 
+   if (is.null(x$yi))
+      stop(mstyle$stop("Information needed to fit the selection model is not available in the model object."))
+
    alternative <- match.arg(alternative, c("two.sided", "greater", "less"))
 
    if (missing(digits)) {

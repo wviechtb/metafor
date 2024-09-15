@@ -988,6 +988,8 @@
    if (nearpd)
       M <- as.matrix(nearPD(M)$mat)
 
+   ### compute W = M^-1 via Cholesky decomposition
+
    if (verbose > 1) {
       W <- try(chol2inv(chol(M)), silent=FALSE)
    } else {
@@ -1016,8 +1018,7 @@
          U <- try(suppressWarnings(chol(W)), silent=TRUE)
       }
 
-      ### Y ~ N(Xbeta, M), so UY ~ N(UXbeta, UMU) where UMU = I
-      ### return(U %*% M %*% U)
+      ### Y ~ N(Xbeta, M), so UY ~ N(UXbeta, UMU') where UMU' = I
 
       if (inherits(U, "try-error")) {
 
@@ -1031,13 +1032,22 @@
 
          if (!dofit || is.null(A)) {
 
-            sX   <- U %*% X
-            sY   <- U %*% Y
-            beta <- solve(crossprod(sX), crossprod(sX, sY))
-            beta <- ifelse(is.na(beta.arg), beta, beta.arg)
-            RSS  <- sum(as.vector(sY - sX %*% beta)^2)
-            if (dofit)
-               vb <- matrix(solve(crossprod(sX)), nrow=pX, ncol=pX)
+            if (FALSE) {
+               sX   <- U %*% X
+               sY   <- U %*% Y
+               beta <- solve(crossprod(sX), crossprod(sX, sY))
+               beta <- ifelse(is.na(beta.arg), beta, beta.arg)
+               RSS  <- sum(as.vector(sY - sX %*% beta)^2)
+               if (dofit)
+                  vb <- matrix(solve(crossprod(sX)), nrow=pX, ncol=pX)
+            } else {
+               stXWX <- chol2inv(chol(as.matrix(t(X) %*% W %*% X)))
+               beta  <- matrix(stXWX %*% crossprod(X,W) %*% Y, ncol=1)
+               beta  <- ifelse(is.na(beta.arg), beta, beta.arg)
+               RSS   <- as.vector(t(Y - X %*% beta) %*% W %*% (Y - X %*% beta))
+               if (dofit)
+                  vb <- stXWX
+            }
 
          } else {
 
@@ -1097,7 +1107,6 @@
          iteration <- .getfromenv("iteration", default=NULL)
 
          if (!is.null(iteration)) {
-            #cat(mstyle$verbose(paste0("Iteration ", iteration, "\t")))
             cat(mstyle$verbose(paste0("Iteration ", formatC(iteration, width=5, flag="-", format="f", digits=0), " ")))
             try(assign("iteration", iteration+1, envir=.metafor), silent=TRUE)
          }

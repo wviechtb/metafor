@@ -316,6 +316,9 @@
 
 .level <- function(level, allow.vector=FALSE, argname="level", stopon100=FALSE) {
 
+   if (is.null(level))
+      return(NULL)
+
    mstyle <- .get.mstyle()
 
    if (any(level > 100) || any(level < 0))

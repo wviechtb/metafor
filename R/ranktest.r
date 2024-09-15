@@ -37,6 +37,9 @@ ranktest <- function(x, vi, sei, subset, data, digits, ...) {
 
    if (inherits(x, "rma")) {
 
+      if (is.null(x$yi) || is.null(x$vi))
+         stop(mstyle$stop("Information needed to carry out the test is not available in the model object."))
+
       if (!missing(vi) || !missing(sei) || !missing(subset))
          warning(mstyle$warning("Arguments 'vi', 'sei', and 'subset' ignored when 'x' is a model object."), call.=FALSE)
 

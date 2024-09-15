@@ -10,6 +10,9 @@ profile.rma.uni <- function(fitted,
 
    x <- fitted
 
+   if (is.null(x$yi) || is.null(x$vi))
+      stop(mstyle$stop("Information needed for profiling is not available in the model object."))
+
    if (anyNA(steps))
       stop(mstyle$stop("No missing values allowed in 'steps' argument."))
 
