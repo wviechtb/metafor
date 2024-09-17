@@ -174,7 +174,7 @@ res
 ### regression of log(odds)_exp on log(odds)_con
 matreg(y=2, x=1, R=res$G, cov=TRUE, means=coef(res), n=res$g.levels.comb.k)
 
-### but the SE of the CON coefficient is not computed correctly, since above we treat res$G as if
+### but the SE of the 'con' coefficient is not computed correctly, since we treat res$G above as if
 ### it was a var-cov matrix computed from raw data based on res$g.levels.comb.k (= 13) data points
 
 ### fit bivariate model and get the var-cov matrix of the estimates in res$G

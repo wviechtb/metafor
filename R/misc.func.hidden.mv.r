@@ -861,9 +861,15 @@
                        withS, withG, withH,
                        struct, g.levels.r, h.levels.r, g.values, h.values,
                        sparse, cholesky, nearpd, vctransf, vccov, vccon,
-                       verbose, digits, REMLf, dofit=FALSE, hessian=FALSE) {
+                       verbose, digits, REMLf,
+                       dofit=FALSE, hessian=FALSE, optbeta=FALSE) {
 
    mstyle <- .get.mstyle()
+
+   if (optbeta) {
+      beta <- par[1:pX]
+      par  <- par[-c(1:pX)]
+   }
 
    ### only NA values in sigma2.arg, tau2.arg, rho.arg, gamma2.arg, phi.arg should be estimated; otherwise, replace with fixed values
 
@@ -1005,96 +1011,65 @@
       ### move the parameter estimates away from values that create the non-positive-definite M matrix)
 
       if (dofit) {
-         stop(mstyle$stop("Final variance-covariance matrix not positive definite."), call.=FALSE)
+         stop(mstyle$stop("Final variance-covariance matrix is not positive definite."), call.=FALSE)
       } else {
          llval <- -Inf
       }
 
    } else {
 
-      if (verbose > 1) {
-         U <- try(chol(W), silent=FALSE)
+      if (!dofit || is.null(A)) {
+
+         stXWX <- chol2inv(chol(as.matrix(t(X) %*% W %*% X))) # TODO: catch if this fails
+         if (!optbeta)
+            beta <- matrix(stXWX %*% crossprod(X,W) %*% Y, ncol=1)
+         beta  <- ifelse(is.na(beta.arg), beta, beta.arg)
+         RSS   <- as.vector(t(Y - X %*% beta) %*% W %*% (Y - X %*% beta))
+         vb    <- stXWX
+
       } else {
-         U <- try(suppressWarnings(chol(W)), silent=TRUE)
+
+         stXAX <- chol2inv(chol(as.matrix(t(X) %*% A %*% X))) # TODO: catch if this fails
+         beta  <- matrix(stXAX %*% crossprod(X,A) %*% Y, ncol=1)
+         beta  <- ifelse(is.na(beta.arg), beta, beta.arg)
+         RSS   <- as.vector(t(Y - X %*% beta) %*% W %*% (Y - X %*% beta))
+         vb    <- matrix(stXAX %*% t(X) %*% A %*% M %*% A %*% X %*% stXAX, nrow=pX, ncol=pX)
+
       }
 
-      ### Y ~ N(Xbeta, M), so UY ~ N(UXbeta, UMU') where UMU' = I
+      llvals <- c(NA_real_, NA_real_)
 
-      if (inherits(U, "try-error")) {
+      if (dofit || !reml)
+         llvals[1]  <- -1/2 * (k) * log(2*base::pi) - 1/2 * determinant(M, logarithm=TRUE)$modulus - 1/2 * RSS
 
-         if (dofit) {
-            stop(mstyle$stop("Cannot fit model based on estimated marginal variance-covariance matrix."), call.=FALSE)
-         } else {
-            llval <- -Inf
+      if (dofit || reml)
+         llvals[2]  <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
+                       -1/2 * determinant(M, logarithm=TRUE)$modulus - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS
+
+      if (dofit) {
+
+         res <- list(beta=beta, vb=vb, M=M, llvals=llvals)
+
+         if (withS)
+            res$sigma2 <- sigma2
+
+         if (withG) {
+            res$G <- G
+            res$tau2 <- tau2
+            res$rho <- rho
          }
+
+         if (withH) {
+            res$H <- H
+            res$gamma2 <- gamma2
+            res$phi <- phi
+         }
+
+         return(res)
 
       } else {
 
-         if (!dofit || is.null(A)) {
-
-            if (FALSE) {
-               sX   <- U %*% X
-               sY   <- U %*% Y
-               beta <- solve(crossprod(sX), crossprod(sX, sY))
-               beta <- ifelse(is.na(beta.arg), beta, beta.arg)
-               RSS  <- sum(as.vector(sY - sX %*% beta)^2)
-               if (dofit)
-                  vb <- matrix(solve(crossprod(sX)), nrow=pX, ncol=pX)
-            } else {
-               stXWX <- chol2inv(chol(as.matrix(t(X) %*% W %*% X)))
-               beta  <- matrix(stXWX %*% crossprod(X,W) %*% Y, ncol=1)
-               beta  <- ifelse(is.na(beta.arg), beta, beta.arg)
-               RSS   <- as.vector(t(Y - X %*% beta) %*% W %*% (Y - X %*% beta))
-               if (dofit)
-                  vb <- stXWX
-            }
-
-         } else {
-
-            stXAX <- chol2inv(chol(as.matrix(t(X) %*% A %*% X)))
-            #stXAX <- tcrossprod(qr.solve(sX, diag(k)))
-            beta  <- matrix(stXAX %*% crossprod(X,A) %*% Y, ncol=1)
-            beta  <- ifelse(is.na(beta.arg), beta, beta.arg)
-            RSS   <- as.vector(t(Y - X %*% beta) %*% W %*% (Y - X %*% beta))
-            vb    <- matrix(stXAX %*% t(X) %*% A %*% M %*% A %*% X %*% stXAX, nrow=pX, ncol=pX)
-
-         }
-
-         llvals <- c(NA_real_, NA_real_)
-
-         if (dofit || !reml)
-            llvals[1]  <- -1/2 * (k) * log(2*base::pi) - 1/2 * determinant(M, logarithm=TRUE)$modulus - 1/2 * RSS
-
-         if (dofit || reml)
-            llvals[2]  <- -1/2 * (k-pX) * log(2*base::pi) + ifelse(REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
-                          -1/2 * determinant(M, logarithm=TRUE)$modulus - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS
-
-         if (dofit) {
-
-            res <- list(beta=beta, vb=vb, M=M, llvals=llvals)
-
-            if (withS)
-               res$sigma2 <- sigma2
-
-            if (withG) {
-               res$G <- G
-               res$tau2 <- tau2
-               res$rho <- rho
-            }
-
-            if (withH) {
-               res$H <- H
-               res$gamma2 <- gamma2
-               res$phi <- phi
-            }
-
-            return(res)
-
-         } else {
-
-            llval <- ifelse(reml, llvals[2], llvals[1])
-
-         }
+         llval <- ifelse(reml, llvals[2], llvals[1])
 
       }
 

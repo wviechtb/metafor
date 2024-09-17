@@ -1067,7 +1067,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
    if (any(hest) && !isTRUE(ddd$skiphes)) {
 
       if (verbose > 1)
-         message(mstyle$message("\nComputing Hessian ..."))
+         message(mstyle$message("\nComputing the Hessian ..."))
 
       if (verbose > 3)
          cat("\n")
@@ -1137,7 +1137,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
          iH.hest <- try(suppressWarnings(chol2inv(chol(H.hest))), silent=TRUE)
 
          if (inherits(iH.hest, "try-error") || anyNA(iH.hest) || any(is.infinite(iH.hest))) {
-            warning(mstyle$warning("Error when trying to invert Hessian."), call.=FALSE)
+            warning(mstyle$warning("Error when trying to invert the Hessian."), call.=FALSE)
          } else {
             iH <- matrix(0, nrow=length(hest), ncol=length(hest))
             iH[hest, hest] <- iH.hest
@@ -1158,7 +1158,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
    ### Wald-type tests of the fixed effects
 
    if (verbose > 1)
-      message(mstyle$message("Conducting tests of the fixed effects ..."))
+      message(mstyle$message("Conducting the tests of the fixed effects ..."))
 
    ### scale back beta and vb
 
@@ -1245,7 +1245,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
    if (!x$tau2.fix && !is.element(x$method, c("FE","EE","CE")) && !isTRUE(ddd$skiphet)) {
 
       if (verbose > 1)
-         message(mstyle$message("Conducting heterogeneity test ..."))
+         message(mstyle$message("Conducting the heterogeneity test ..."))
 
       if (verbose > 4)
          cat("\n")
@@ -1289,7 +1289,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
    ### LRT for selection model parameter(s)
 
    if (verbose > 1)
-      message(mstyle$message("Conducting LRT for selection model parameter(s) ..."))
+      message(mstyle$message("Conducting the LRT for the selection model parameter(s) ..."))
 
    ll0   <- c(logLik(x, REML=FALSE))
    LRT   <- max(0, -2 * (ll0 - ll))
@@ -1301,7 +1301,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
    ### fit statistics
 
    if (verbose > 1)
-      message(mstyle$message("Computing fit statistics and log-likelihood ..."))
+      message(mstyle$message("Computing the fit statistics and log-likelihood ..."))
 
    ### note: tau2 and delta are not counted as parameters when they were fixed by the user
    parms <- p + ifelse(is.element(x$method, c("FE","EE","CE")) || x$tau2.fix, 0, 1) + sum(is.na(delta.arg))
@@ -1321,7 +1321,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
    ### prepare output
 
    if (verbose > 1)
-      message(mstyle$message("Preparing output ..."))
+      message(mstyle$message("Preparing the output ..."))
 
    res <- x
 

@@ -77,7 +77,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
    if (verbose) .space()
 
    if (verbose)
-      message(mstyle$message("Extracting data and computing yi/vi values ..."))
+      message(mstyle$message("Extracting the data and computing yi/vi values ..."))
 
    ### check if data argument has been specified
 
@@ -128,7 +128,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       ### generate study labels if none are specified
 
       if (verbose)
-         message(mstyle$message("Generating/extracting study labels ..."))
+         message(mstyle$message("Generating/extracting the study labels ..."))
 
       if (is.null(slab)) {
 
@@ -211,7 +211,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       if (any(has.na)) {
 
          if (verbose)
-            message(mstyle$message("Handling NAs in table data ..."))
+            message(mstyle$message("Handling NAs in the table data ..."))
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
             ai <- ai[not.na]
@@ -337,7 +337,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       ### generate study labels if none are specified
 
       if (verbose)
-         message(mstyle$message("Generating/extracting study labels ..."))
+         message(mstyle$message("Generating/extracting the study labels ..."))
 
       if (is.null(slab)) {
 
@@ -415,7 +415,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
       if (any(has.na)) {
 
          if (verbose)
-            message(mstyle$message("Handling NAs in table data ..."))
+            message(mstyle$message("Handling NAs in the table data ..."))
 
          if (na.act == "na.omit" || na.act == "na.exclude" || na.act == "na.pass") {
             x1i  <- x1i[not.na]
@@ -723,7 +723,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
    ###### fit statistics
 
    if (verbose)
-      message(mstyle$message("Computing fit statistics and log-likelihood ..."))
+      message(mstyle$message("Computing the fit statistics and log-likelihood ..."))
 
    if (k.yi >= 1) {
 
@@ -756,7 +756,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
    ###### prepare output
 
    if (verbose)
-      message(mstyle$message("Preparing output ..."))
+      message(mstyle$message("Preparing the output ..."))
 
    parms     <- 1
    p         <- 1

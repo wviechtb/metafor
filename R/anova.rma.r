@@ -571,7 +571,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, adjust, digits, refi
 
       if (test == "LRT" && model.f$method == "REML" && !identical(model.f$chksumX, model.r$chksumX)) {
          if (refit) {
-            #message(mstyle$message("Refitting models with ML (instead of REML) estimation ..."))
+            #message(mstyle$message("Refitting the models with ML (instead of REML) estimation ..."))
             if (inherits(model.f, "rma.uni") && model.f$model == "rma.uni") {
                #model.f <- try(update(model.f, method="ML", data=model.f$data), silent=TRUE)
                args <- list(yi=model.f$yi, vi=model.f$vi, weights=model.f$weights, mods=model.f$X, intercept=FALSE, method="ML", weighted=model.f$weighted,

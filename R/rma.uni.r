@@ -137,7 +137,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    if (verbose) .space()
 
    if (verbose > 1)
-      message(mstyle$message("Extracting/computing yi/vi values ..."))
+      message(mstyle$message("Extracting/computing the yi/vi values ..."))
 
    ### check if data argument has been specified
 
@@ -757,7 +757,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    #########################################################################
 
    if (verbose > 1)
-      message(mstyle$message("Creating model matrix ..."))
+      message(mstyle$message("Creating the model matrix ..."))
 
    ### convert mods formula to X matrix and set intercept equal to FALSE
    ### skipped if formula has already been specified via yi argument, since mods is then no longer a formula (see [a])
@@ -831,7 +831,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    ### generate study labels if none are specified (or none have been found in yi)
 
    if (verbose > 1)
-      message(mstyle$message("Generating/extracting study labels ..."))
+      message(mstyle$message("Generating/extracting the study labels ..."))
 
    ### study ids (1:k sequence before subsetting)
 
@@ -1188,7 +1188,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       }
 
       if (verbose > 1 && !tau2.fix && !is.element(method[1], c("FE","EE","CE")))
-         message(mstyle$message("Estimating tau^2 value ...\n"))
+         message(mstyle$message("Estimating the tau^2 value ...\n"))
 
       if (k == 1L) {
          method.sav <- method[1]
@@ -1869,7 +1869,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       ### set/transform/check alpha.init
 
       if (verbose > 1)
-         message(mstyle$message("Extracting/computing initial values ..."))
+         message(mstyle$message("Extracting/computing the initial values ..."))
 
       if (is.null(con$alpha.init)) {
 
@@ -1975,7 +1975,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       ### estimate alpha (and beta) values
 
       if (verbose > 1)
-         message(mstyle$message("Estimating scale parameters ...\n"))
+         message(mstyle$message("Estimating the scale parameters ...\n"))
 
       tmp <- .chkopt(optimizer, optcontrol, ineq=link=="identity")
       optimizer  <- tmp$optimizer
@@ -2108,7 +2108,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       if (any(hest) && !isTRUE(ddd$skiphes)) {
 
          if (verbose > 1)
-            message(mstyle$message("\nComputing Hessian ..."))
+            message(mstyle$message("\nComputing the Hessian ..."))
 
          if (con$hesspack == "numDeriv")
             H <- try(numDeriv::hessian(func=.ll.rma.ls, x=opt.res$par, method.args=con$hessianCtrl, yi=yi, vi=vi, X=X,
@@ -2351,7 +2351,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    }
 
    if (verbose > 1)
-      message(mstyle$message("Conducting tests of the fixed effects ..."))
+      message(mstyle$message("Conducting the tests of the fixed effects ..."))
 
    ### the Knapp & Hartung method as described in the literature is for random/mixed-effects models
 
@@ -2431,7 +2431,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    ### heterogeneity test (Wald-type test of the extra coefficients in the saturated model)
 
    if (verbose > 1)
-      message(mstyle$message("Conducting heterogeneity test ..."))
+      message(mstyle$message("Conducting the heterogeneity test ..."))
 
    if (allvipos) {
 
@@ -2497,7 +2497,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    ###### fit statistics
 
    if (verbose > 1)
-      message(mstyle$message("Computing fit statistics and log-likelihood ..."))
+      message(mstyle$message("Computing the fit statistics and log-likelihood ..."))
 
    ### note: tau2 is not counted as a parameter when it was fixed by the user (same for fixed alpha values)
    q.est <- ifelse(model == "rma.uni", 0, sum(is.na(alpha.arg)))
@@ -2667,7 +2667,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    ###### prepare output
 
    if (verbose > 1)
-      message(mstyle$message("Preparing output ..."))
+      message(mstyle$message("Preparing the output ..."))
 
    p.eff <- p
    k.eff <- k
