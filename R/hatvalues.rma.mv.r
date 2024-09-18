@@ -29,7 +29,6 @@ hatvalues.rma.mv <- function(model, type="diagonal", ...) {
       H     <- as.matrix(x$X %*% stXAX %*% crossprod(x$X,A))
    }
 
-
    #########################################################################
 
    if (type == "diagonal") {
