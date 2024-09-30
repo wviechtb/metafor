@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-33</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-34</span>
       </span>
     </div>
 
@@ -119,6 +119,8 @@
 <span><span class="fu">transf.dtou1</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.dtou2</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.dtou3</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
+<span><span class="fu">transf.dtoovl</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
+<span><span class="fu">transf.dtocles</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.dtobesd</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.dtomd</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
 <span><span class="fu">transf.dtorpb</span><span class="op">(</span><span class="va">xi</span>, <span class="va">n1i</span>, <span class="va">n2i</span><span class="op">)</span></span>
@@ -174,17 +176,17 @@
 <li><p><code>transf.ilogit</code>: inverse of the former (same as <code>plogis(x)</code>).</p></li>
 <li><p><code>transf.arcsin</code>: arcsine square root transformation for proportions.</p></li>
 <li><p><code>transf.iarcsin</code>: inverse of the former.</p></li>
-<li><p><code>transf.pft</code>: Freeman-Tukey (double arcsine) transformation for proportions. See Freeman &amp; Tukey (1950). The <code>xi</code> argument is used to specify the proportions and the <code>ni</code> argument the corresponding sample sizes.</p></li>
+<li><p><code>transf.pft</code>: Freeman-Tukey (double arcsine) transformation for proportions. See Freeman and Tukey (1950). The <code>xi</code> argument is used to specify the proportions and the <code>ni</code> argument the corresponding sample sizes.</p></li>
 <li><p><code>transf.ipft</code>: inverse of the former. See Miller (1978).</p></li>
 <li><p><code>transf.ipft.hm</code>: inverse of the former, using the harmonic mean of the sample sizes for the back-transformation. See Miller (1978). The sample sizes are specified via the <code>targs</code> argument (the list element should be called <code>ni</code>).</p></li>
 <li><p><code>transf.isqrt</code>: inverse of the square root transformation (i.e., function to square a number).</p></li>
-<li><p><code>transf.irft</code>: Freeman-Tukey transformation for incidence rates. See Freeman &amp; Tukey (1950). The <code>xi</code> argument is used to specify the incidence rates and the <code>ti</code> argument the corresponding person-times at risk.</p></li>
+<li><p><code>transf.irft</code>: Freeman-Tukey transformation for incidence rates. See Freeman and Tukey (1950). The <code>xi</code> argument is used to specify the incidence rates and the <code>ti</code> argument the corresponding person-times at risk.</p></li>
 <li><p><code>transf.iirft</code>: inverse of the former.</p></li>
-<li><p><code>transf.ahw</code>: transformation of coefficient alpha as suggested by Hakstian &amp; Whalen (1976), except that <em></em>\(1-(1-\alpha)^{1/3}\) is used (so that the transformed values are a monotonically increasing function of the <em></em>\(\alpha\) values).</p></li>
+<li><p><code>transf.ahw</code>: transformation of coefficient alpha as suggested by Hakstian and Whalen (1976), except that <em></em>\(1-(1-\alpha)^{1/3}\) is used (so that the transformed values are a monotonically increasing function of the <em></em>\(\alpha\) values).</p></li>
 <li><p><code>transf.iahw</code>: inverse of the former.</p></li>
 <li><p><code>transf.abt</code>: transformation of coefficient alpha as suggested by Bonett (2002), except that <em></em>\(-\log(1-\alpha)\) is used (so that the transformed values are a monotonically increasing function of the <em></em>\(\alpha\) values).</p></li>
 <li><p><code>transf.iabt</code>: inverse of the former.</p></li>
-<li><p><code>transf.r2toz</code>: variance stabilizing transformation for the coefficient of determination, given by <em></em>\(z_i = \frac{1}{2} \log\mathopen{}\left(\frac{1+\sqrt{R_i^2}}{1-\sqrt{R_i^2}}\right)\mathclose{}\) (see Olkin &amp; Finn, 1995, but with the additional <em></em>\(\frac{1}{2}\) factor).</p></li>
+<li><p><code>transf.r2toz</code>: variance stabilizing transformation for the coefficient of determination, given by <em></em>\(z_i = \frac{1}{2} \log\mathopen{}\left(\frac{1+\sqrt{R_i^2}}{1-\sqrt{R_i^2}}\right)\mathclose{}\) (see Olkin &amp; Finn, 1995, but with the additional <em></em>\(\frac{1}{2}\) factor for consistency with the usual r-to-z transformation).</p></li>
 <li><p><code>transf.ztor2</code>: inverse of the former.</p></li>
 <li><p><code>transf.ztor.int</code>: integral transformation method for the z-to-r transformation.</p></li>
 <li><p><code>transf.exp.int</code>: integral transformation method for the exponential transformation.</p></li>
@@ -192,6 +194,7 @@
 <li><p><code>transf.dtou1</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_1\) values (Cohen, 1988). Under the assumption that the data for those in the first (say, treated) and second (say, control) group are normally distributed with equal variances but potentially different means, Cohen's <em></em>\(U_1\) indicates the proportion of non-overlap between the two distributions (i.e., when <em></em>\(d=0\), then <em></em>\(U_1\) is equal to 0, which goes to 1 as <em></em>\(d\) increases).</p></li>
 <li><p><code>transf.dtou2</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_2\) values (Cohen, 1988). Under the same assumptions as above, Cohen's <em></em>\(U_2\) indicates the proportion in the first group that exceeds the same proportion in the second group (i.e., when <em></em>\(d=0\), then <em></em>\(U_2\) is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>
 <li><p><code>transf.dtou3</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_3\) values (Cohen, 1988). Under the same assumptions as above, Cohen's <em></em>\(U_3\) indicates the proportion of individuals in the first group that have a higher value than the mean of those in the second group (i.e., when <em></em>\(d=0\), then <em></em>\(U_3\) is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>
+<li><p><code>transf.dtoovl</code>: transformation of standardized mean differences to overlapping coefficient values under the same assumptions as above (Inman &amp; Bardley, 1989). Note that <em></em>\(1 - U_1\) is <em>not</em> the same as the overlapping coefficient (see Grice &amp; Barrett, 2014).</p></li>
 <li><p><code>transf.dtocles</code>: transformation of standardized mean differences to common language effect size (CLES) values (McGraw &amp; Wong, 1992) (also called the probability of superiority). A CLES value indicates the probability that a randomly sampled individual from the first group has a higher value than a randomly sampled individual from the second group (i.e., when <em></em>\(d=0\), then the CLES is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>
 <li><p><code>transf.dtobesd</code>: transformation of standardized mean differences to binomial effect size display values (Rosenthal &amp; Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply one minus this value).</p></li>
 <li><p><code>transf.dtomd</code>: transformation of standardized mean differences to mean differences given a known standard deviation (which needs to be specified via the <code>targs</code> argument).</p></li>
@@ -231,7 +234,9 @@
 <p>Digby, P. G. N. (1983). Approximating the tetrachoric correlation coefficient. <em>Biometrics</em>, <b>39</b>(3), 753–757. <a href="https://doi.org/10.2307/2531104" class="external-link">https://doi.org/10.2307/2531104</a></p>
 <p>Fisher, R. A. (1921). On the “probable error” of a coefficient of correlation deduced from a small sample. <em>Metron</em>, <b>1</b>, 1–32. <a href="http://hdl.handle.net/2440/15169" class="external-link">http://hdl.handle.net/2440/15169</a></p>
 <p>Freeman, M. F., &amp; Tukey, J. W. (1950). Transformations related to the angular and the square root. <em>Annals of Mathematical Statistics</em>, <b>21</b>(4), 607–611. <a href="https://doi.org/10.1214/aoms/1177729756" class="external-link">https://doi.org/10.1214/aoms/1177729756</a></p>
+<p>Grice, J. W., &amp; Barrett, P. T. (2014). A note on Cohen's overlapping proportions of normal distributions. <em>Psychological Reports</em>, <b>115</b>(3), 741–747. <a href="https://doi.org/10.2466/03.pr0.115c29z4" class="external-link">https://doi.org/10.2466/03.pr0.115c29z4</a></p>
 <p>Hakstian, A. R., &amp; Whalen, T. E. (1976). A k-sample significance test for independent alpha coefficients. <em>Psychometrika</em>, <b>41</b>(2), 219–231. <a href="https://doi.org/10.1007/BF02291840" class="external-link">https://doi.org/10.1007/BF02291840</a></p>
+<p>Inman, H. F., &amp; Bradley Jr, E. L. (1989). The overlapping coefficient as a measure of agreement between probability distributions and point estimation of the overlap of two normal densities. <em>Communications in Statistics, Theory and Methods</em>, <b>18</b>(10), 3851–3874. <a href="https://doi.org/10.1080/03610928908830127" class="external-link">https://doi.org/10.1080/03610928908830127</a></p>
 <p>Jacobs, P., &amp; Viechtbauer, W. (2017). Estimation of the biserial correlation and its sampling variance for use in meta-analysis. <em>Research Synthesis Methods</em>, <b>8</b>(2), 161–180. <a href="https://doi.org/10.1002/jrsm.1218" class="external-link">https://doi.org/10.1002/jrsm.1218</a></p>
 <p>McGraw, K. O., &amp; Wong, S. P. (1992). A common language effect size statistic. <em>Psychological Bulletin</em>, <b>111</b>(2), 361–365. <a href="https://doi.org/10.1037/0033-2909.111.2.361" class="external-link">https://doi.org/10.1037/0033-2909.111.2.361</a></p>
 <p>Miller, J. J. (1978). The inverse of the Freeman-Tukey double arcsine transformation. <em>American Statistician</em>, <b>32</b>(4), 138. <a href="https://doi.org/10.1080/00031305.1978.10479283" class="external-link">https://doi.org/10.1080/00031305.1978.10479283</a></p>
@@ -291,7 +296,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

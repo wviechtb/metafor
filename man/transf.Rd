@@ -24,6 +24,7 @@
 \alias{transf.dtou1}
 \alias{transf.dtou2}
 \alias{transf.dtou3}
+\alias{transf.dtoovl}
 \alias{transf.dtocles}
 \alias{transf.dtobesd}
 \alias{transf.dtomd}
@@ -70,6 +71,8 @@ transf.ilogit.int(xi, targs)
 transf.dtou1(xi)
 transf.dtou2(xi)
 transf.dtou3(xi)
+transf.dtoovl(xi)
+transf.dtocles(xi)
 transf.dtobesd(xi)
 transf.dtomd(xi, targs)
 transf.dtorpb(xi, n1i, n2i)
@@ -107,17 +110,17 @@ transf.lnortortet.digby(xi)
    \item \code{transf.ilogit}: inverse of the former (same as \code{plogis(x)}).
    \item \code{transf.arcsin}: arcsine square root transformation for proportions.
    \item \code{transf.iarcsin}: inverse of the former.
-   \item \code{transf.pft}: Freeman-Tukey (double arcsine) transformation for proportions. See Freeman & Tukey (1950). The \code{xi} argument is used to specify the proportions and the \code{ni} argument the corresponding sample sizes.
+   \item \code{transf.pft}: Freeman-Tukey (double arcsine) transformation for proportions. See Freeman and Tukey (1950). The \code{xi} argument is used to specify the proportions and the \code{ni} argument the corresponding sample sizes.
    \item \code{transf.ipft}: inverse of the former. See Miller (1978).
    \item \code{transf.ipft.hm}: inverse of the former, using the harmonic mean of the sample sizes for the back-transformation. See Miller (1978). The sample sizes are specified via the \code{targs} argument (the list element should be called \code{ni}).
    \item \code{transf.isqrt}: inverse of the square root transformation (i.e., function to square a number).
-   \item \code{transf.irft}: Freeman-Tukey transformation for incidence rates. See Freeman & Tukey (1950). The \code{xi} argument is used to specify the incidence rates and the \code{ti} argument the corresponding person-times at risk.
+   \item \code{transf.irft}: Freeman-Tukey transformation for incidence rates. See Freeman and Tukey (1950). The \code{xi} argument is used to specify the incidence rates and the \code{ti} argument the corresponding person-times at risk.
    \item \code{transf.iirft}: inverse of the former.
-   \item \code{transf.ahw}: transformation of coefficient alpha as suggested by Hakstian & Whalen (1976), except that \mjeqn{1-(1-\alpha)^{1/3}}{1-(1-\alpha)^(1/3)} is used (so that the transformed values are a monotonically increasing function of the \mjseqn{\alpha} values).
+   \item \code{transf.ahw}: transformation of coefficient alpha as suggested by Hakstian and Whalen (1976), except that \mjeqn{1-(1-\alpha)^{1/3}}{1-(1-\alpha)^(1/3)} is used (so that the transformed values are a monotonically increasing function of the \mjseqn{\alpha} values).
    \item \code{transf.iahw}: inverse of the former.
    \item \code{transf.abt}: transformation of coefficient alpha as suggested by Bonett (2002), except that \mjeqn{-\log(1-\alpha)}{-log(1-\alpha)} is used (so that the transformed values are a monotonically increasing function of the \mjseqn{\alpha} values).
    \item \code{transf.iabt}: inverse of the former.
-   \item \code{transf.r2toz}: variance stabilizing transformation for the coefficient of determination, given by \mjeqn{z_i = \frac{1}{2} \log\mathopen{}\left(\frac{1+\sqrt{R_i^2}}{1-\sqrt{R_i^2}}\right)\mathclose{}}{z_i = 1/2 log((1+\sqrt(R_i^2))/(1-\sqrt(R_i^2)))} (see Olkin & Finn, 1995, but with the additional \mjeqn{\frac{1}{2}}{1/2} factor).
+   \item \code{transf.r2toz}: variance stabilizing transformation for the coefficient of determination, given by \mjeqn{z_i = \frac{1}{2} \log\mathopen{}\left(\frac{1+\sqrt{R_i^2}}{1-\sqrt{R_i^2}}\right)\mathclose{}}{z_i = 1/2 log((1+\sqrt(R_i^2))/(1-\sqrt(R_i^2)))} (see Olkin & Finn, 1995, but with the additional \mjeqn{\frac{1}{2}}{1/2} factor for consistency with the usual r-to-z transformation).
    \item \code{transf.ztor2}: inverse of the former.
    \item \code{transf.ztor.int}: integral transformation method for the z-to-r transformation.
    \item \code{transf.exp.int}: integral transformation method for the exponential transformation.
@@ -125,6 +128,7 @@ transf.lnortortet.digby(xi)
    \item \code{transf.dtou1}: transformation of standardized mean differences to Cohen's \mjseqn{U_1} values (Cohen, 1988). Under the assumption that the data for those in the first (say, treated) and second (say, control) group are normally distributed with equal variances but potentially different means, Cohen's \mjseqn{U_1} indicates the proportion of non-overlap between the two distributions (i.e., when \mjseqn{d=0}, then \mjseqn{U_1} is equal to 0, which goes to 1 as \mjseqn{d} increases).
    \item \code{transf.dtou2}: transformation of standardized mean differences to Cohen's \mjseqn{U_2} values (Cohen, 1988). Under the same assumptions as above, Cohen's \mjseqn{U_2} indicates the proportion in the first group that exceeds the same proportion in the second group (i.e., when \mjseqn{d=0}, then \mjseqn{U_2} is equal to 0.5, which goes to 1 as \mjseqn{d} increases).
    \item \code{transf.dtou3}: transformation of standardized mean differences to Cohen's \mjseqn{U_3} values (Cohen, 1988). Under the same assumptions as above, Cohen's \mjseqn{U_3} indicates the proportion of individuals in the first group that have a higher value than the mean of those in the second group (i.e., when \mjseqn{d=0}, then \mjseqn{U_3} is equal to 0.5, which goes to 1 as \mjseqn{d} increases).
+   \item \code{transf.dtoovl}: transformation of standardized mean differences to overlapping coefficient values under the same assumptions as above (Inman & Bardley, 1989). Note that \mjseqn{1 - U_1} is \emph{not} the same as the overlapping coefficient (see Grice & Barrett, 2014).
    \item \code{transf.dtocles}: transformation of standardized mean differences to common language effect size (CLES) values (McGraw & Wong, 1992) (also called the probability of superiority). A CLES value indicates the probability that a randomly sampled individual from the first group has a higher value than a randomly sampled individual from the second group (i.e., when \mjseqn{d=0}, then the CLES is equal to 0.5, which goes to 1 as \mjseqn{d} increases).
    \item \code{transf.dtobesd}: transformation of standardized mean differences to binomial effect size display values (Rosenthal & Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply one minus this value).
    \item \code{transf.dtomd}: transformation of standardized mean differences to mean differences given a known standard deviation (which needs to be specified via the \code{targs} argument).
@@ -168,7 +172,11 @@ transf.lnortortet.digby(xi)
 
    Freeman, M. F., & Tukey, J. W. (1950). Transformations related to the angular and the square root. \emph{Annals of Mathematical Statistics}, \bold{21}(4), 607--611. \verb{https://doi.org/10.1214/aoms/1177729756}
 
+   Grice, J. W., & Barrett, P. T. (2014). A note on Cohen's overlapping proportions of normal distributions. \emph{Psychological Reports}, \bold{115}(3), 741--747. \verb{https://doi.org/10.2466/03.pr0.115c29z4}
+
    Hakstian, A. R., & Whalen, T. E. (1976). A k-sample significance test for independent alpha coefficients. \emph{Psychometrika}, \bold{41}(2), 219--231. \verb{https://doi.org/10.1007/BF02291840}
+
+   Inman, H. F., & Bradley Jr, E. L. (1989). The overlapping coefficient as a measure of agreement between probability distributions and point estimation of the overlap of two normal densities. \emph{Communications in Statistics, Theory and Methods}, \bold{18}(10), 3851--3874. \verb{https://doi.org/10.1080/03610928908830127}
 
    Jacobs, P., & Viechtbauer, W. (2017). Estimation of the biserial correlation and its sampling variance for use in meta-analysis. \emph{Research Synthesis Methods}, \bold{8}(2), 161--180. \verb{https://doi.org/10.1002/jrsm.1218}
 

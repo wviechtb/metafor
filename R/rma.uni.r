@@ -29,7 +29,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                               "MN","SMN","MNLN","CVLN","SDLN",                                   # mean, single-group standardized mean, log(mean), log(CV), log(SD),
                               "MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","ROMC","CVRC","VRC",   # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT",                                                # alpha (and transformations thereof)
-                              "REH",                                                             # relative excess heterozygosity
+                              "REH",#"AUC",                                                       # relative excess heterozygosity, area under the curve
                               "HR","HD",                                                         # hazard (rate) ratios and differences
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
@@ -722,6 +722,26 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          }
 
          args <- list(measure=measure, ai=ai, bi=bi, ci=ci, vtype=vtype)
+
+      }
+
+      if (measure == "AUC") {
+
+         ai  <- .getx("ai",  mf=mf, data=data, checknumeric=TRUE)
+         n1i <- .getx("n1i", mf=mf, data=data, checknumeric=TRUE)
+         n2i <- .getx("n2i", mf=mf, data=data, checknumeric=TRUE)
+
+         k <- length(ai) # number of outcomes before subsetting
+         k.all <- k
+
+         if (!is.null(subset)) {
+            subset <- .chksubset(subset, k)
+            ai  <- .getsubset(ai,  subset)
+            n1i <- .getsubset(n1i, subset)
+            n2i <- .getsubset(n2i, subset)
+         }
+
+         args <- list(measure=measure, ai=ai, n1i=n1i, n2i=n2i, vtype=vtype)
 
       }
 

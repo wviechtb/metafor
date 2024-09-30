@@ -1192,6 +1192,14 @@
          }
       }
       ######################################################################
+      if (measure == "AUC") {
+         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
+            lab <- ifelse(short, "AUC", "Area under the Curve")
+         } else {
+            lab <- ifelse(short, lab, "Transformed Area under the Curve")
+         }
+      }
+      ######################################################################
       if (measure == "HR") {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, "Log[HR]", "Log Hazard Ratio")

@@ -283,7 +283,10 @@ transf.dtou2 <- function(xi)
 transf.dtou3 <- function(xi)
    pnorm(xi)
 
-transf.dtocles <- function(xi)
+transf.dtoovl <- function(xi)
+   2*pnorm(-abs(xi)/2)
+
+transf.dtocles <- function(xi) # note: this does not assume homoscedasticity
    pnorm(xi/sqrt(2))
 
 transf.dtobesd <- function(xi) {

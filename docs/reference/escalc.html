@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-33</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-34</span>
       </span>
     </div>
 
@@ -415,7 +415,8 @@
 <li><p><code>"PRZ"</code> for the <em>probit transformed proportion</em>,</p></li>
 <li><p><code>"PAS"</code> for the <em>arcsine square root transformed proportion</em> (i.e., the angular transformation),</p></li>
 <li><p><code>"PFT"</code> for the <em>Freeman-Tukey double arcsine transformed proportion</em> (Freeman &amp; Tukey, 1950).</p></li>
-</ul><p>Zero cell entries can be problematic for certain outcome measures. When <code>to="only0"</code> (the default), the value of <code>add</code> (the default is <code>1/2</code>; but see ‘Note’) is added to <code>xi</code> and <code>mi</code> only for studies where <code>xi</code> or <code>mi</code> is equal to 0. When <code>to="all"</code>, the value of <code>add</code> is added to <code>xi</code> and <code>mi</code> in all studies. When <code>to="if0all"</code>, the value of <code>add</code> is added in all studies, but only when there is at least one study with a zero value for <code>xi</code> or <code>mi</code>. Setting <code>to="none"</code> or <code>add=0</code> has the same effect: No adjustment to the observed values is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to <code>NA</code>).</p>
+</ul><p>However, for reasons discussed in Schwarzer et al. (2019) and Röver and Friede (2022), the use of double arcsine transformed proportions for a meta-analysis is not recommended.</p>
+<p>Zero cell entries can be problematic for certain outcome measures. When <code>to="only0"</code> (the default), the value of <code>add</code> (the default is <code>1/2</code>; but see ‘Note’) is added to <code>xi</code> and <code>mi</code> only for studies where <code>xi</code> or <code>mi</code> is equal to 0. When <code>to="all"</code>, the value of <code>add</code> is added to <code>xi</code> and <code>mi</code> in all studies. When <code>to="if0all"</code>, the value of <code>add</code> is added in all studies, but only when there is at least one study with a zero value for <code>xi</code> or <code>mi</code>. Setting <code>to="none"</code> or <code>add=0</code> has the same effect: No adjustment to the observed values is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to <code>NA</code>).</p>
 <p>Datasets corresponding to data of this type are provided in <code><a href="https://wviechtb.github.io/metadat/reference/dat.pritz1997.html" class="external-link">dat.pritz1997</a></code>, <code><a href="https://wviechtb.github.io/metadat/reference/dat.debruin2009.html" class="external-link">dat.debruin2009</a></code>, <code><a href="https://wviechtb.github.io/metadat/reference/dat.hannum2020.html" class="external-link">dat.hannum2020</a></code>, and <code><a href="https://wviechtb.github.io/metadat/reference/dat.crisafulli2020.html" class="external-link">dat.crisafulli2020</a></code>.</p>
 <p></p>
 </div>
@@ -636,8 +637,10 @@
 <p>Pearson, K. (1909). On a new method of determining correlation between a measured character A, and a character B, of which only the percentage of cases wherein B exceeds (or falls short of) a given intensity is recorded for each grade of A. <em>Biometrika</em>, <b>7</b>(1/2), 96–105. <a href="https://doi.org/10.1093/biomet/7.1-2.96" class="external-link">https://doi.org/10.1093/biomet/7.1-2.96</a></p>
 <p>Raudenbush, S. W., &amp; Bryk, A. S. (1987). Examining correlates of diversity. <em>Journal of Educational Statistics</em>, <b>12</b>(3), 241–269. <a href="https://doi.org/10.3102/10769986012003241" class="external-link">https://doi.org/10.3102/10769986012003241</a></p>
 <p>Rothman, K. J., Greenland, S., &amp; Lash, T. L. (2008). <em>Modern epidemiology</em> (3rd ed.). Philadelphia: Lippincott Williams &amp; Wilkins.</p>
+<p>Röver, C., &amp; Friede, T. (2022). Double arcsine transform not appropriate for meta‐analysis. <em>Research Synthesis Methods</em>, <b>13</b>(5), 645–648. <a href="https://doi.org/10.1002/jrsm.1591" class="external-link">https://doi.org/10.1002/jrsm.1591</a></p>
 <p>Rücker, G., Schwarzer, G., Carpenter, J., &amp; Olkin, I. (2009). Why add anything to nothing? The arcsine difference as a measure of treatment effect in meta-analysis with zero cells. <em>Statistics in Medicine</em>, <b>28</b>(5), 721–738. <a href="https://doi.org/10.1002/sim.3511" class="external-link">https://doi.org/10.1002/sim.3511</a></p>
 <p>Sánchez-Meca, J., Marín-Martínez, F., &amp; Chacón-Moscoso, S. (2003). Effect-size indices for dichotomized outcomes in meta-analysis. <em>Psychological Methods</em>, <b>8</b>(4), 448–467. <a href="https://doi.org/10.1037/1082-989X.8.4.448" class="external-link">https://doi.org/10.1037/1082-989X.8.4.448</a></p>
+<p>Schwarzer, G., Chemaitelly, H., Abu-Raddad, L. J., &amp; Rücker, G. (2019). Seriously misleading results using inverse of Freeman-Tukey double arcsine transformation in meta-analysis of single proportions. <em>Research Synthesis Methods</em>, <b>10</b>(3), 476–483. <a href="https://doi.org/10.1002/jrsm.1348" class="external-link">https://doi.org/10.1002/jrsm.1348</a></p>
 <p>Soper, H. E. (1914). On the probable error of the bi-serial expression for the correlation coefficient. <em>Biometrika</em>, <b>10</b>(2/3), 384–390. <a href="https://doi.org/10.1093/biomet/10.2-3.384" class="external-link">https://doi.org/10.1093/biomet/10.2-3.384</a></p>
 <p>Stedman, M. R., Curtin, F., Elbourne, D. R., Kesselheim, A. S., &amp; Brookhart, M. A. (2011). Meta-analyses involving cross-over trials: Methodological issues. <em>International Journal of Epidemiology</em>, <b>40</b>(6), 1732–1734. <a href="https://doi.org/10.1093/ije/dyp345" class="external-link">https://doi.org/10.1093/ije/dyp345</a></p>
 <p>Tate, R. F. (1954). Correlation between a discrete and a continuous variable: Point-biserial correlation. <em>Annals of Mathematical Statistics</em>, <b>25</b>(3), 603–607. <a href="https://doi.org/10.1214/aoms/1177728730" class="external-link">https://doi.org/10.1214/aoms/1177728730</a></p>
@@ -886,7 +889,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

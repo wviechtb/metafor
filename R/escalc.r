@@ -29,7 +29,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
                               "MN","SMN","MNLN","CVLN","SDLN",                                   # mean, single-group standardized mean, log(mean), log(CV), log(SD),
                               "MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","ROMC","CVRC","VRC",   # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT",                                                # alpha (and transformations thereof)
-                              "REH",                                                             # relative excess heterozygosity
+                              "REH",#"AUC",                                                       # relative excess heterozygosity, area under the curve
                               "HR","HD",                                                         # hazard (rate) ratios and differences
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
@@ -39,7 +39,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
    if (!is.element(to, c("all","only0","if0all","none")))
       stop(mstyle$stop("Unknown 'to' argument specified."))
 
-   if (any(!is.element(vtype, c("UB","LS","LS2","HO","ST","CS","AV","AV2","AVHO")), na.rm=TRUE)) # vtype can be an entire vector, so use any() and na.rm=TRUE
+   if (any(!is.element(vtype, c("UB","LS","LS2","LS3","HO","ST","CS","AV","AV2","AVHO")), na.rm=TRUE)) # vtype can be an entire vector, so use any() and na.rm=TRUE
       stop(mstyle$stop("Unknown 'vtype' argument specified."))
 
    if (add.measure) {
@@ -943,7 +943,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
             vi <- rep(NA_real_, k)
 
-            if (!all(is.element(vtype, c("LS","LS2"))))
+            if (!all(is.element(vtype, c("LS","LS2","LS3"))))
                stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS' or 'LS2'."))
 
             for (i in seq_len(k)) {
@@ -960,7 +960,12 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
                if (vtype[i] == "LS2") {
                   #vi[i] <- sd1i[i]^2 / (n1i[i]     * sdpi[i]^2) + sd2i[i]^2 / (n2i[i]     * sdpi[i]^2) + yi[i]^2 / (8 * sdpi[i]^4) * (sd1i[i]^4 / (n1i[i]-1) + sd2i[i]^4 / (n2i[i]-1)) # based on standard application of the delta method
                   #vi[i] <- sd1i[i]^2 / ((n1i[i]-1) * sdpi[i]^2) + sd2i[i]^2 / ((n2i[i]-1) * sdpi[i]^2) + yi[i]^2 / (8 * sdpi[i]^4) * (sd1i[i]^4 / (n1i[i]-1) + sd2i[i]^4 / (n2i[i]-1)) # same as Bonett
-                  vi[i] <- sd1i[i]^2 / (n1i[i] * sdpi[i]^2) + sd2i[i]^2 / (n2i[i] * sdpi[i]^2) + yi[i]^2 / (8 * sdpi[i]^4) * (sd1i[i]^4 / n1i[i] + sd2i[i]^4 / n2i[i])
+                  vi[i] <-  sd1i[i]^2 / (n1i[i]     * sdpi[i]^2) + sd2i[i]^2 / (n2i[i]     * sdpi[i]^2) + yi[i]^2 / (8 * sdpi[i]^4) * (sd1i[i]^4 / n1i[i]     + sd2i[i]^4 / n2i[i])
+               }
+
+               ### alternative large sample approximation
+               if (vtype[i] == "LS3") {
+                  vi[i] <- sd1i[i]^2 / (n1i[i]     * sdpi[i]^2) + sd2i[i]^2 / (n2i[i]     * sdpi[i]^2) + yi[i]^2 / (8 * sdpi[i]^4) * (sd1i[i]^4 / (n1i[i]-1) + sd2i[i]^4 / (n2i[i]-1)) # based on standard application of the delta method
                }
 
             }
@@ -2373,6 +2378,57 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
          yi <- log(p1i) - log(2 * sqrt(p0i * p2i))
          vi <- ((1-p1i) / (4 * p0i * p2i) + 1 / p1i) / ni
+
+      }
+
+      ######################################################################
+
+      if (measure == "AUC") {
+
+         ai  <- .getx("ai",  mf=mf, data=data, checknumeric=TRUE)
+         n1i <- .getx("n1i", mf=mf, data=data, checknumeric=TRUE)
+         n2i <- .getx("n2i", mf=mf, data=data, checknumeric=TRUE)
+
+         if (!.all.specified(ai, n1i, n2i))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ai, n1i, n2i)."))
+
+         if (!.equal.length(ai, n1i, n2i))
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+         k.all <- length(ai)
+
+         if (!is.null(subset)) {
+            subset <- .chksubset(subset, k.all)
+            ai  <- .getsubset(ai,  subset)
+            n1i <- .getsubset(n1i, subset)
+            n2i <- .getsubset(n2i, subset)
+         }
+
+         if (any(ai < 0, na.rm=TRUE) || any(ai > 1, na.rm=TRUE))
+            stop(mstyle$stop("One or more AUC values are < 0 or > 1."))
+
+         if (any(n1i < 0, na.rm=TRUE) || any(n2i < 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more group sizes are negative."))
+
+         ni <- n1i + n2i
+
+         ni.u <- ni # unadjusted total sample sizes
+
+         k <- length(ai)
+
+         yi <- ai
+
+         if (vtype == "LS") {
+            Ni <- ni / 2
+            vi <- ai*(1-ai) / ((n1i-1)*(n2i-1)) * (2*Ni - 1 - (3*Ni-3) / ((2-ai)*(1+ai))) # Newcome (2006b)
+         }
+
+         if (vtype == "LS2") {
+            q0i <- ai * (1-ai)
+            q1i <- ai / (2-ai)
+            q2i <- 2*ai^2 / (1+ai)
+            vi <- (q0i + (n1i-1)*(q1i-ai^2) + (n2i-1)*(q2i-ai^2)) / ((n1i-1)*(n2i-1)) # Hanley and McNeil (1982) but using (n1i-1)*(n2i) in the denominator
+         }
 
       }
 

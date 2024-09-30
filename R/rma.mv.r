@@ -113,8 +113,14 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (is.character(dfs))
       dfs <- match.arg(dfs, c("residual", "contain"))
 
-   if (is.numeric(dfs) || (dfs == "contain" && test == "z"))
-      test <- "t"
+   if (test == "z") { # if test="z", switch to test="t" if dfs are numeric or dfs="contain"
+      if (is.numeric(dfs)) {
+         test <- "t"
+      } else {
+         if (dfs == "contain")
+            test <- "t"
+      }
+   }
 
    ### handle Rscale argument (either character, logical, or integer)
 

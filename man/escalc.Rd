@@ -328,6 +328,8 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \item \code{"PFT"} for the \emph{Freeman-Tukey double arcsine transformed proportion} (Freeman & Tukey, 1950).
          }
 
+         However, for reasons discussed in Schwarzer et al. (2019) and \enc{Röver}{Roever} and Friede (2022), the use of double arcsine transformed proportions for a meta-analysis is not recommended.
+
          Zero cell entries can be problematic for certain outcome measures. When \code{to="only0"} (the default), the value of \code{add} (the default is \code{1/2}; but see \sQuote{Note}) is added to \code{xi} and \code{mi} only for studies where \code{xi} or \code{mi} is equal to 0. When \code{to="all"}, the value of \code{add} is added to \code{xi} and \code{mi} in all studies. When \code{to="if0all"}, the value of \code{add} is added in all studies, but only when there is at least one study with a zero value for \code{xi} or \code{mi}. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed values is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to \code{NA}).
 
          Datasets corresponding to data of this type are provided in \code{\link[metadat]{dat.pritz1997}}, \code{\link[metadat]{dat.debruin2009}}, \code{\link[metadat]{dat.hannum2020}}, and \code{\link[metadat]{dat.crisafulli2020}}.
@@ -626,9 +628,13 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    Rothman, K. J., Greenland, S., & Lash, T. L. (2008). \emph{Modern epidemiology} (3rd ed.). Philadelphia: Lippincott Williams & Wilkins.
 
+   \enc{Röver}{Roever}, C., & Friede, T. (2022). Double arcsine transform not appropriate for meta‐analysis. \emph{Research Synthesis Methods}, \bold{13}(5), 645--648. \verb{https://doi.org/10.1002/jrsm.1591}
+
    \enc{Rücker}{Ruecker}, G., Schwarzer, G., Carpenter, J., & Olkin, I. (2009). Why add anything to nothing? The arcsine difference as a measure of treatment effect in meta-analysis with zero cells. \emph{Statistics in Medicine}, \bold{28}(5), 721--738. \verb{https://doi.org/10.1002/sim.3511}
 
    \enc{Sánchez-Meca}{Sanchez-Meca}, J., \enc{Marín-Martínez}{Marin-Martinez}, F., & \enc{Chacón-Moscoso}{Chacon-Moscoso}, S. (2003). Effect-size indices for dichotomized outcomes in meta-analysis. \emph{Psychological Methods}, \bold{8}(4), 448--467. \verb{https://doi.org/10.1037/1082-989X.8.4.448}
+
+   Schwarzer, G., Chemaitelly, H., Abu-Raddad, L. J., & \enc{Rücker}{Ruecker}, G. (2019). Seriously misleading results using inverse of Freeman-Tukey double arcsine transformation in meta-analysis of single proportions. \emph{Research Synthesis Methods}, \bold{10}(3), 476--483. \verb{https://doi.org/10.1002/jrsm.1348}
 
    Soper, H. E. (1914). On the probable error of the bi-serial expression for the correlation coefficient. \emph{Biometrika}, \bold{10}(2/3), 384--390. \verb{https://doi.org/10.1093/biomet/10.2-3.384}
 
