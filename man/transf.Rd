@@ -26,6 +26,7 @@
 \alias{transf.dtou3}
 \alias{transf.dtoovl}
 \alias{transf.dtocles}
+\alias{transf.dtocliffd}
 \alias{transf.dtobesd}
 \alias{transf.dtomd}
 \alias{transf.dtorpb}
@@ -73,6 +74,7 @@ transf.dtou2(xi)
 transf.dtou3(xi)
 transf.dtoovl(xi)
 transf.dtocles(xi)
+transf.dtocliffd(xi)
 transf.dtobesd(xi)
 transf.dtomd(xi, targs)
 transf.dtorpb(xi, n1i, n2i)
@@ -130,6 +132,7 @@ transf.lnortortet.digby(xi)
    \item \code{transf.dtou3}: transformation of standardized mean differences to Cohen's \mjseqn{U_3} values (Cohen, 1988). Under the same assumptions as above, Cohen's \mjseqn{U_3} indicates the proportion of individuals in the first group that have a higher value than the mean of those in the second group (i.e., when \mjseqn{d=0}, then \mjseqn{U_3} is equal to 0.5, which goes to 1 as \mjseqn{d} increases).
    \item \code{transf.dtoovl}: transformation of standardized mean differences to overlapping coefficient values under the same assumptions as above (Inman & Bardley, 1989). Note that \mjseqn{1 - U_1} is \emph{not} the same as the overlapping coefficient (see Grice & Barrett, 2014).
    \item \code{transf.dtocles}: transformation of standardized mean differences to common language effect size (CLES) values (McGraw & Wong, 1992) (also called the probability of superiority). A CLES value indicates the probability that a randomly sampled individual from the first group has a higher value than a randomly sampled individual from the second group (i.e., when \mjseqn{d=0}, then the CLES is equal to 0.5, which goes to 1 as \mjseqn{d} increases).
+   \item \code{transf.dtocliffd}: transformation of standardized mean differences to Cliff's delta values.
    \item \code{transf.dtobesd}: transformation of standardized mean differences to binomial effect size display values (Rosenthal & Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply one minus this value).
    \item \code{transf.dtomd}: transformation of standardized mean differences to mean differences given a known standard deviation (which needs to be specified via the \code{targs} argument).
    \item \code{transf.dtorpb}: transformation of standardized mean differences to point-biserial correlations. Arguments \code{n1i} and \code{n2i} denote the number of individuals in the first and second group, respectively. If \code{n1i} and \code{n2i} are not specified, the function assumes \code{n1i = n2i} and uses the approximate formula \mjeqn{r_{pb} = \frac{d}{\sqrt{d^2 + 4}}}{r_pb = d / \sqrt{d^2 + 4}}. If \code{n1i} and \code{n2i} are specified, the function uses the exact transformation formula \mjeqn{r_{pb} = \frac{d}{\sqrt{d^2 + h}}}{r_pb = d / \sqrt{d^2 + h}}, where \mjeqn{h = \frac{m}{n_1} + \frac{m}{n_2}}{h = m / n_1 + m / n_2} and \mjseqn{m = n_1 + n_2 - 2} (Jacobs & Viechtbauer, 2017).

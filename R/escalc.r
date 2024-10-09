@@ -2383,57 +2383,6 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
       ######################################################################
 
-      if (measure == "AUC") {
-
-         ai  <- .getx("ai",  mf=mf, data=data, checknumeric=TRUE)
-         n1i <- .getx("n1i", mf=mf, data=data, checknumeric=TRUE)
-         n2i <- .getx("n2i", mf=mf, data=data, checknumeric=TRUE)
-
-         if (!.all.specified(ai, n1i, n2i))
-            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ai, n1i, n2i)."))
-
-         if (!.equal.length(ai, n1i, n2i))
-            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
-
-         k.all <- length(ai)
-
-         if (!is.null(subset)) {
-            subset <- .chksubset(subset, k.all)
-            ai  <- .getsubset(ai,  subset)
-            n1i <- .getsubset(n1i, subset)
-            n2i <- .getsubset(n2i, subset)
-         }
-
-         if (any(ai < 0, na.rm=TRUE) || any(ai > 1, na.rm=TRUE))
-            stop(mstyle$stop("One or more AUC values are < 0 or > 1."))
-
-         if (any(n1i < 0, na.rm=TRUE) || any(n2i < 0, na.rm=TRUE))
-            stop(mstyle$stop("One or more group sizes are negative."))
-
-         ni <- n1i + n2i
-
-         ni.u <- ni # unadjusted total sample sizes
-
-         k <- length(ai)
-
-         yi <- ai
-
-         if (vtype == "LS") {
-            Ni <- ni / 2
-            vi <- ai*(1-ai) / ((n1i-1)*(n2i-1)) * (2*Ni - 1 - (3*Ni-3) / ((2-ai)*(1+ai))) # Newcome (2006b)
-         }
-
-         if (vtype == "LS2") {
-            q0i <- ai * (1-ai)
-            q1i <- ai / (2-ai)
-            q2i <- 2*ai^2 / (1+ai)
-            vi <- (q0i + (n1i-1)*(q1i-ai^2) + (n2i-1)*(q2i-ai^2)) / ((n1i-1)*(n2i-1)) # Hanley and McNeil (1982) but using (n1i-1)*(n2i) in the denominator
-         }
-
-      }
-
-      ######################################################################
-
    } else {
 
       ### in case yi is not NULL (so user wants to convert a regular data frame to an 'escalc' object)

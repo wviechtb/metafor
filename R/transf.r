@@ -289,6 +289,9 @@ transf.dtoovl <- function(xi)
 transf.dtocles <- function(xi) # note: this does not assume homoscedasticity
    pnorm(xi/sqrt(2))
 
+transf.dtocliffd <- function(xi) # note: this does not assume homoscedasticity
+   2 * pnorm(xi/sqrt(2)) - 1
+
 transf.dtobesd <- function(xi) {
    rpbi <- xi / sqrt(xi^2 + 4)
    return(0.50 + rpbi/2)

@@ -44,7 +44,7 @@
 
 - some tweaks were made to `vcalc()` to speed up the calculations (by James Pustejovsky)
 
-- added transformation function `transf.dtoovl()` for transforming standardized mean differences to overlapping coefficient values
+- added transformation function `transf.dtoovl()` (for transforming standardized mean differences to overlapping coefficient values) and ``transf.dtocliffd()` (for transforming standardized mean differences to Cliff's delta values)
 
 - better handling of `outlist="minimal"`
 
