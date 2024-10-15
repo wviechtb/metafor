@@ -339,7 +339,7 @@ transf.dtorbis <- function(xi, n1i, n2i) {
    }
    rpbi <- xi / sqrt(xi^2 + hi)
    pi <- n1i / (n1i + n2i)
-   return(sqrt(pi*(1-pi)) / dnorm(pnorm(pi)) * rpbi)
+   return(sqrt(pi*(1-pi)) / dnorm(qnorm(pi)) * rpbi)
 }
 
 transf.rpbtorbis <- function(xi, pi) {

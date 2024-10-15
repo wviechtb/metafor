@@ -1,4 +1,4 @@
-# metafor 4.7-34 (2024-09-30)
+# metafor 4.7-35 (2024-10-15)
 
 - some general changes to the various `forest()` functions: argument `header` is now `TRUE` by default, the y-axis is now created with `yaxs="i"`, and the y-axis limits have been tweaked slightly in accordance
 
@@ -36,7 +36,7 @@
 
 - `nobs()` now just returns the number of estimates, not the effective number of observations
 
-- added measure `"PRZ"` to `escalc()`
+- added measures `"PRZ"`, `"CLES"`, `"AUC"`, `"CLESN"`, and `"AUCN"`  to `escalc()`
 
 - `escalc()` gains a `flip` argument
 
@@ -45,6 +45,8 @@
 - some tweaks were made to `vcalc()` to speed up the calculations (by James Pustejovsky)
 
 - added transformation function `transf.dtoovl()` (for transforming standardized mean differences to overlapping coefficient values) and ``transf.dtocliffd()` (for transforming standardized mean differences to Cliff's delta values)
+
+- `escalc()` gains a `correct` argument (to specify whether a bias correction should be applied)
 
 - better handling of `outlist="minimal"`
 

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-34</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-35</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">metafor.news</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 4.7-34 (2024-09-30)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 4.7-35 (2024-10-15)                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - some general changes to the various forest() functions: argument</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     header is now TRUE by default, the y-axis is now created with</span>
@@ -184,7 +184,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - nobs() now just returns the number of estimates, not the effective</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     number of observations</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - added measure "PRZ" to escalc()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - added measures "PRZ", "CLES", "AUC", "CLESN", and "AUCN" to escalc()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - escalc() gains a flip argument</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -194,8 +194,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - some tweaks were made to vcalc() to speed up the calculations (by</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     James Pustejovsky)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - added transformation function transf.dtoovl() for transforming</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     standardized mean differences to overlapping coefficient values</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - added transformation function transf.dtoovl() (for transforming</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     standardized mean differences to overlapping coefficient values) and</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     ``transf.dtocliffd()` (for transforming standardized mean</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     differences to Cliff's delta values)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - escalc() gains a correct argument (to specify whether a bias</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     correction should be applied)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - better handling of outlist="minimal"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

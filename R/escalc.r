@@ -1,5 +1,5 @@
 escalc <- function(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, fi, pi, sdi, r2i, ni, yi, vi, sei,
-data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", var.names=c("yi","vi"), add.measure=FALSE, append=TRUE, replace=TRUE, digits, ...) {
+data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", correct=TRUE, var.names=c("yi","vi"), add.measure=FALSE, append=TRUE, replace=TRUE, digits, ...) {
 
    ### check argument specifications
 
@@ -29,7 +29,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
                               "MN","SMN","MNLN","CVLN","SDLN",                                   # mean, single-group standardized mean, log(mean), log(CV), log(SD),
                               "MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","ROMC","CVRC","VRC",   # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT",                                                # alpha (and transformations thereof)
-                              "REH",#"AUC",                                                       # relative excess heterozygosity, area under the curve
+                              "REH","CLES","CLESN","AUC","AUCN",                                 # relative excess heterozygosity, common language effect size / area under the curve
                               "HR","HD",                                                         # hazard (rate) ratios and differences
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
@@ -39,7 +39,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
    if (!is.element(to, c("all","only0","if0all","none")))
       stop(mstyle$stop("Unknown 'to' argument specified."))
 
-   if (any(!is.element(vtype, c("UB","LS","LS2","LS3","HO","ST","CS","AV","AV2","AVHO")), na.rm=TRUE)) # vtype can be an entire vector, so use any() and na.rm=TRUE
+   if (any(!is.element(vtype, c("UB","LS","LS2","LS3","HO","ST","CS","AV","AV2","AVHO","H0","MAX")), na.rm=TRUE)) # vtype can be an entire vector, so use any() and na.rm=TRUE
       stop(mstyle$stop("Unknown 'vtype' argument specified."))
 
    if (add.measure) {
@@ -80,14 +80,13 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("onlyo1", "addyi", "addvi", "correct"))
+   .chkdots(ddd, c("onlyo1", "addyi", "addvi"))
 
-   ### set defaults or get onlyo1, addyi, addvi, and correct arguments
+   ### set defaults or get onlyo1, addyi, and addvi arguments
 
    onlyo1  <- .chkddd(ddd$onlyo1,  FALSE, .isTRUE(ddd$onlyo1))
    addyi   <- .chkddd(ddd$addyi,   TRUE,  .isTRUE(ddd$addyi))
    addvi   <- .chkddd(ddd$addvi,   TRUE,  .isTRUE(ddd$addvi))
-   correct <- .chkddd(ddd$correct, TRUE,  .isTRUE(ddd$correct))
 
    ### set defaults for digits
 
@@ -1044,8 +1043,12 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
                for (i in seq_len(k)) {
 
                   ### estimate of the sampling variance for fixed n1i and n2i (i.e., stratified sampling)
-                  if (vtype[i] == "ST" || vtype[i] == "LS")
+                  if (vtype[i] == "ST" || vtype[i] == "LS") {
                      vi[i] <- hi[i]^2 / (hi[i] + di[i]^2)^3 * (1/n1i[i] + 1/n2i[i] + di[i]^2/(2*ni[i]))
+                     # this is consistent with escalc(measure="SMD", correct=FALSE) -> conv.delta(transf=transf.dtorpb)
+                     #tmp <- escalc(measure="SMD", m1i=m1i[i], sd1i=sd1i[i], n1i=n1i[i], m2i=m2i[i], sd2i=sd2i[i], n2i=n2i[i], correct=FALSE)
+                     #vi[i] <- conv.delta(yi, vi, data=tmp, transf=transf.dtorpb, replace=TRUE, n1i=n1i[i], n2i=n2i[i])$vi
+                  }
 
                   ### estimate of the sampling variance for fixed ni but random n1i and n2i (i.e., cross-sectional/multinomial sampling)
                   if (vtype[i] == "CS")
@@ -1067,9 +1070,13 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
             yi  <- sqrt(p1i*p2i) / fzi * yi # yi on the right-hand side is the point-biserial correlation from above
             #vi <- (p1i*p2i) / fzi^2 * vi   # not correct (p1i, p2i, and fzi are random variables and vi from RBP is not correct for the bivariate normal case on which RBIS is based)
             yi.t <- ifelse(abs(yi) > 1, sign(yi), yi)
-            vi  <- 1/(ni-1) * (p1i*p2i/fzi^2 - (3/2 + (1 - p1i*zi/fzi)*(1 + p2i*zi/fzi)) * yi.t^2 + yi.t^4)     # Soper, 1914
+            vi  <- 1/(ni-0) * (p1i*p2i/fzi^2 - (3/2 + (1 - p1i*zi/fzi)*(1 + p2i*zi/fzi)) * yi.t^2 + yi.t^4) # Soper, 1914
             #vi <- 1/(ni-1) * (yi.t^4 + yi.t^2 * (p1i*p2i*zi^2/fzi^2 + (2*p1i-1)*zi/fzi - 5/2) + p1i*p2i/fzi^2) # Tate, 1955; equivalent to equation from Soper, 1914
             # equation appears to work even if dichotomization is done based on a sample quantile value (so that p1i, p2i, and fzi are fixed by design)
+            # this is asymptotically consistent with escalc(measure="SMD", correct=FALSE) -> conv.delta(transf=transf.dtorbis)
+            #tmp <- escalc(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, correct=FALSE)
+            #yi <- conv.delta(yi, vi, data=tmp, transf=transf.dtorbis, replace=TRUE, n1i=n1i, n2i=n2i)$yi
+            #vi <- conv.delta(yi, vi, data=tmp, transf=transf.dtorbis, replace=TRUE, n1i=n1i, n2i=n2i)$vi
          }
 
          ### r-to-z transformation for RPB and RBIS (note: NOT a variance-stabilizing transformation for these measures)
@@ -1096,14 +1103,22 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
          ### coefficient of variation ratio
 
          if (measure == "CVR") {
-            yi <- log(sd1i/m1i) + 1/(2*(n1i-1)) - log(sd2i/m2i) - 1/(2*(n2i-1))
+            if (correct) {
+               yi <- log(sd1i/m1i) + 1/(2*(n1i-1)) - log(sd2i/m2i) - 1/(2*(n2i-1))
+            } else {
+               yi <- log(sd1i/m1i) - log(sd2i/m2i)
+            }
             vi <- 1/(2*(n1i-1)) + sd1i^2/(n1i*m1i^2) + 1/(2*(n2i-1)) + sd2i^2/(n2i*m2i^2) # Nakagawa et al., 2015, equation 12, but without the '-2 rho ...' terms
          }
 
          ### variability ratio
 
          if (measure == "VR") {
-            yi <- log(sd1i/sd2i) + 1/(2*(n1i-1)) - 1/(2*(n2i-1))
+            if (correct) {
+               yi <- log(sd1i/sd2i) + 1/(2*(n1i-1)) - 1/(2*(n2i-1))
+            } else {
+               yi <- log(sd1i/sd2i)
+            }
             vi <- 1/(2*(n1i-1)) + 1/(2*(n2i-1))
          }
 
@@ -1705,6 +1720,9 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
          if (measure == "PRZ") {
             yi <- qnorm(pri)
             vi <- 2*base::pi*pri*(1-pri)*exp(yi^2)/ni
+            # this is consistent with escalc(measure="PR") -> conv.delta(transf=qnorm)
+            #tmp <- escalc(measure="PR", xi=xi, ni=ni)
+            #vi <- conv.delta(yi, vi, data=tmp, transf=qnorm, replace=TRUE)$vi
          }
 
          ### proportion with arcsine square root (angular) transformation
@@ -1712,13 +1730,19 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
          if (measure == "PAS") {
             yi <- asin(sqrt(pri))
             vi <- 1/(4*ni)
+            # this is consistent with escalc(measure="PR") -> conv.delta(transf=transf.arcsin)
+            #tmp <- escalc(measure="PR", xi=xi, ni=ni)
+            #vi <- conv.delta(yi, vi, data=tmp, transf=transf.arcsin, replace=TRUE)$vi
          }
 
          ### proportion with Freeman-Tukey double arcsine transformation
 
          if (measure == "PFT") {
             yi <- 1/2*(asin(sqrt(xi/(ni+1))) + asin(sqrt((xi+1)/(ni+1))))
-            vi <- 1/(4*ni + 2)
+            vi <- 1/(4*ni+2)
+            # this is asymptotically consistent with escalc(measure="PR") -> conv.delta(transf=transf.pft)
+            #tmp <- escalc(measure="PR", xi=xi, ni=ni)
+            #vi <- conv.delta(yi, vi, data=tmp, transf=transf.pft, ni=ni, replace=TRUE)$vi
          }
 
       }
@@ -1837,6 +1861,9 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
                yi <- sqrt(iri.u)
             }
             vi <- 1 / (4*ti)
+            # this is consistent with escalc(measure="IR") -> conv.delta(transf=sqrt)
+            #tmp <- escalc(measure="IR", xi=xi, ti=ti)
+            #vi <- conv.delta(yi, vi, data=tmp, transf=sqrt, replace=TRUE)$vi
          }
 
          ### note: addyi and addvi only implemented for measures above
@@ -1846,6 +1873,9 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
          if (measure == "IRFT") {
             yi <- 1/2 * (sqrt(iri) + sqrt(iri+1/ti))
             vi <- 1 / (4*ti)
+            # this is asymptotically consistent with escalc(measure="IR") -> conv.delta(transf=transf.irft)
+            #tmp <- escalc(measure="IR", xi=xi, ti=ti)
+            #vi <- conv.delta(yi, vi, data=tmp, transf=transf.irft, ti=ti, replace=TRUE)$vi
          }
 
       }
@@ -1935,7 +1965,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
          ### single-group standardized mean
 
          if (measure == "SMN") {
-            cmi <- .cmicalc(ni-1)
+            cmi <- .cmicalc(ni-1, correct=correct)
             yi <- cmi * mi / sdi
             vi <- 1 / ni + yi^2 / (2*ni)
          }
@@ -2327,6 +2357,10 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
             #yi <- (1-ai)^(1/3)    # technically this is the Hakstian & Whalen (1976) transformation
             yi <- 1 - (1-ai)^(1/3) # but with this, yi remains a monotonically increasing function of ai
             vi <- 18*mi*(ni-1)*(1-ai)^(2/3) / ((mi-1)*(9*ni-11)^2)
+            #vi <- 2*mi*(1-ai)^(2/3) / (9*(mi-1)*(ni-2)) # this follows from the delta method
+            # this is asymptotically consistent with escalc(measure="ARAW") -> conv.delta(transf=transf.ahw)
+            #tmp <- escalc(measure="ARAW", ai=ai, mi=mi, ni=ni)
+            #vi <- conv.delta(yi, vi, data=tmp, transf=transf.ahw, replace=TRUE)$vi
          }
 
          ### alphas transformed with Bonett (2002) transformation (without bias correction)
@@ -2336,6 +2370,9 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
             #yi <- log(1-ai) # technically this is the Bonett (2002) transformation
             yi <- -log(1-ai) # but with this, yi remains a monotonically increasing function of ai
             vi <- 2*mi / ((mi-1)*(ni-2))
+            # this is consistent with escalc(measure="ARAW") -> conv.delta(transf=transf.abt)
+            #tmp <- escalc(measure="ARAW", ai=ai, mi=mi, ni=ni)
+            #vi <- conv.delta(yi, vi, data=tmp, transf=transf.abt, replace=TRUE)$vi
          }
 
       }
@@ -2378,6 +2415,222 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
          yi <- log(p1i) - log(2 * sqrt(p0i * p2i))
          vi <- ((1-p1i) / (4 * p0i * p2i) + 1 / p1i) / ni
+
+      }
+
+      ######################################################################
+
+      if (is.element(measure, c("CLES","AUC"))) {
+
+         ai  <- .getx("ai",  mf=mf, data=data, checknumeric=TRUE)
+         n1i <- .getx("n1i", mf=mf, data=data, checknumeric=TRUE)
+         n2i <- .getx("n2i", mf=mf, data=data, checknumeric=TRUE)
+         mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE)
+
+         if (!.all.specified(ai, n1i, n2i))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments (i.e., ai, n1i, n2i)."))
+
+         if (!.equal.length(ai, n1i, n2i, mi))
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+         if (is.null(mi))
+            mi <- rep(0, length(ai))
+
+         mi[is.na(mi)] <- 0
+
+         k.all <- length(ai)
+
+         if (!is.null(subset)) {
+            subset <- .chksubset(subset, k.all)
+            ai  <- .getsubset(ai,  subset)
+            n1i <- .getsubset(n1i, subset)
+            n2i <- .getsubset(n2i, subset)
+            mi  <- .getsubset(mi,  subset)
+         }
+
+         if (any(c(n1i, n2i) <= 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more group sizes are <= 0."))
+
+         if (any(ai < 0, na.rm=TRUE) || any(ai > 1, na.rm=TRUE))
+            stop(mstyle$stop("One or more AUC values are < 0 or > 1."))
+
+         if (any(mi < 0, na.rm=TRUE) || any(mi > 1, na.rm=TRUE))
+            stop(mstyle$stop("One or more 'mi' values are < 0 or > 1."))
+
+         ni <- n1i + n2i
+
+         ni.u <- ni # unadjusted total sample sizes
+
+         k <- length(ai)
+
+         yi <- ai
+
+         vtype <- .expand1(vtype, k)
+
+         vi <- rep(NA_real_, k)
+
+         navgi <- (n1i+n2i)/2
+         q0 <- ai*(1-ai)
+         q1 <- ai/(2-ai)
+         q2 <- 2*ai^2/(1+ai)
+
+         if (!all(is.element(vtype, c("LS","LS2","H0","MAX"))))
+            stop(mstyle$stop("For this outcome measure, 'vtype' must be 'LS' or 'LS2'."))
+
+         for (i in seq_len(k)) {
+
+            ### based on Newcombe (2006b) but using (n1i-1)*(n2i-1) in the denominator as given in Cho et al. (2019), section 2.4
+            if (vtype[i] == "LS")
+               vi[i] <- q0[i] / ((n1i[i]-1)*(n2i[i]-1)) * (2*navgi[i] - 1 - (3*navgi[i]-3) / ((2-ai[i])*(1+ai[i])))
+
+            ### based on Hanley and McNeil (1982) but using (n1i-1)*(n2i-1) in the denominator and subtracting mi/4 as given in Cho et al. (2019)
+            if (vtype[i] == "LS2")
+               vi[i] <- (q0[i] - mi[i]/4 + (n1i[i]-1)*(q1[i]-ai[i]^2) + (n2i[i]-1)*(q2[i]-ai[i]^2)) / ((n1i[i]-1)*(n2i[i]-1))
+
+            ### under H0: CLES=AUC=0.5 and equal variances (conservative if there are ties)
+            if (vtype[i] == "H0")
+               vi[i] <- (n1i[i]+n2i[i]+1)/(12*n1i[i]*n2i[i])
+
+            ### based on sigma^2_max (eq. 7 in Bamber, 1975)
+            if (vtype[i] == "MAX")
+               vi[i] <- q0[i] / (min(n1i[i],n2i[i])-1)
+
+         }
+
+      }
+
+      if (is.element(measure, c("CLESN","AUCN"))) {
+
+         m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE)
+         m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE)
+         sd1i <- .getx("sd1i", mf=mf, data=data, checknumeric=TRUE)
+         sd2i <- .getx("sd2i", mf=mf, data=data, checknumeric=TRUE)
+         n1i  <- .getx("n1i",  mf=mf, data=data, checknumeric=TRUE)
+         n2i  <- .getx("n2i",  mf=mf, data=data, checknumeric=TRUE)
+         di   <- .getx("di",   mf=mf, data=data, checknumeric=TRUE)
+         ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
+         pi   <- .getx("pi",   mf=mf, data=data, checknumeric=TRUE)
+         ai   <- .getx("ai",   mf=mf, data=data, checknumeric=TRUE)
+
+         if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi, ai))
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+         if (!.all.specified(n1i, n2i))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments."))
+
+         k.all <- max(sapply(list(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi, ai), length))
+
+         vtype <- .expand1(vtype, k.all)
+
+         ### if sd1i and/or sd2i have not been specified at all, set sd1i and sd2i to NA for all studies
+
+         if (is.null(sd1i) || is.null(sd2i)) {
+            sd1i <- .expand1(NA_real_, k.all)
+            sd2i <- .expand1(NA_real_, k.all)
+         }
+
+         ### convert pi to ti values
+
+         ti <- replmiss(ti, .convp2t(pi, df=n1i+n2i-2))
+
+         ### convert ti to di values
+
+         di <- replmiss(di, ti * sqrt(1/n1i + 1/n2i))
+
+         ### for specified pi/ti/di values, assume homoscedasticity
+
+         if (!is.null(di))
+            vtype[!is.na(di)] <- "HO"
+
+         ### compute di values from means and SDs (for these, do not assume homoscedasticity, unless vtype="HO")
+
+         sdpi <- ifelse(vtype=="HO", sqrt(((n1i-1)*sd1i^2 + (n2i-1)*sd2i^2)/(n1i+n2i-2)), sqrt((sd1i^2 + sd2i^2)/2))
+         di   <- replmiss(di, (m1i - m2i) / sdpi)
+
+         ### convert di values to ai values and back (in case only ai is known, so we have di for computing vi)
+
+         ai <- replmiss(ai, pnorm(di/sqrt(2)))
+         di <- replmiss(di, qnorm(ai)*sqrt(2))
+
+         k.all <- length(ai)
+
+         ### if sd1i and/or sd2i is missing for a particular study, assume sd1i=sd2i=1 for that study and homoscedasticity
+
+         sdsmiss <- is.na(sd1i) | is.na(sd2i)
+         sd1i <- ifelse(sdsmiss, 1, sd1i)
+         sd2i <- ifelse(sdsmiss, 1, sd2i)
+         vtype[sdsmiss] <- "HO"
+
+         if (!is.null(subset)) {
+            subset <- .chksubset(subset, k.all)
+            vtype  <- .getsubset(vtype,  subset)
+            ai   <- .getsubset(ai,   subset)
+            di   <- .getsubset(di,   subset)
+            sd1i <- .getsubset(sd1i, subset)
+            sd2i <- .getsubset(sd2i, subset)
+            n1i  <- .getsubset(n1i,  subset)
+            n2i  <- .getsubset(n2i,  subset)
+         }
+
+         if (any(c(sd1i, sd2i) < 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more standard deviations are negative."))
+
+         if (any(c(n1i, n2i) <= 0, na.rm=TRUE))
+            stop(mstyle$stop("One or more group sizes are <= 0."))
+
+         if (any(ai < 0, na.rm=TRUE) || any(ai > 1, na.rm=TRUE))
+            stop(mstyle$stop("One or more AUC values are < 0 or > 1."))
+
+         ni.u <- n1i + n2i # unadjusted total sample sizes
+
+         k <- length(ai)
+
+         ni <- ni.u
+
+         yi <- ai
+
+         vi <- rep(NA_real_, k)
+
+         if (!all(is.element(vtype, c("LS","LS2","LS3","HO"))))
+            stop(mstyle$stop("For this outcome measure, 'vtype' must be 'LS' or 'HO'."))
+
+         vri <- sd1i^2 / (sd1i^2 + sd2i^2)
+
+         for (i in seq_len(k)) {
+
+            ### large sample approximation to the sampling variance based on the binormal model
+            if (vtype[i] == "LS") {
+               vi[i] <- exp(-di[i]^2 / 2) / (8*base::pi) * (di[i]^2 * vri[i]^2 / (n1i[i]-1) + di[i]^2 * (1-vri[i])^2 / (n2i[i]-1) + 4*vri[i]/(n1i[i]-1) + 4*(1-vri[i])/(n2i[i]-1))
+               # this is consistent with escalc(measure="SMDH", correct=FALSE) -> conv.delta(transf=transf.dtocles)
+               #tmp <- escalc(measure="SMDH", m1i=m1i[i], sd1i=sd1i[i], n1i=n1i[i], m2i=m2i[i], sd2i=sd2i[i], n2i=n2i[i], correct=FALSE)
+               #vi[i] <- conv.delta(yi, vi, data=tmp, transf=transf.dtocles, replace=TRUE)$vi
+            }
+
+            ### large sample approximation to the sampling variance based on the binormal model
+            if (vtype[i] == "LS2") {
+               vi[i] <- exp(-di[i]^2 / 2) / (8*base::pi) * (di[i]^2 * vri[i]^2 / (n1i[i]-0) + di[i]^2 * (1-vri[i])^2 / (n2i[i]-0) + 4*vri[i]/(n1i[i]-0) + 4*(1-vri[i])/(n2i[i]-0))
+               # this is consistent with escalc(measure="SMDH", correct=FALSE, vtype="LS2") -> conv.delta(transf=transf.dtocles)
+               #tmp <- escalc(measure="SMDH", m1i=m1i[i], sd1i=sd1i[i], n1i=n1i[i], m2i=m2i[i], sd2i=sd2i[i], n2i=n2i[i], correct=FALSE, vtype="LS2")
+               #vi[i] <- conv.delta(yi, vi, data=tmp, transf=transf.dtocles, replace=TRUE)$vi
+            }
+
+            ### large sample approximation to the sampling variance based on the binormal model (based on standard application of the delta method)
+            if (vtype[i] == "LS3") {
+               vi[i] <- exp(-di[i]^2 / 2) / (8*base::pi) * (di[i]^2 * vri[i]^2 / (n1i[i]-1) + di[i]^2 * (1-vri[i])^2 / (n2i[i]-1) + 4*vri[i]/(n1i[i]-0) + 4*(1-vri[i])/(n2i[i]-0))
+               # this is consistent with escalc(measure="SMDH", correct=FALSE, vtype="LS3") -> conv.delta(transf=transf.dtocles)
+               #tmp <- escalc(measure="SMDH", m1i=m1i[i], sd1i=sd1i[i], n1i=n1i[i], m2i=m2i[i], sd2i=sd2i[i], n2i=n2i[i], correct=FALSE, vtype="LS3")
+               #vi[i] <- conv.delta(yi, vi, data=tmp, transf=transf.dtocles, replace=TRUE)$vi
+            }
+
+            ### estimate assuming homoscedasticity of the variances within studies
+            if (vtype[i] == "HO") {
+               vi[i] <- exp(-di[i]^2 / 2) / (4*base::pi) * (1/n1i[i] + 1/n2i[i] + di[i]^2 / (2*(n1i[i]+n2i[i])))
+               # this is consistent with escalc(measure="SMD", correct=FALSE) -> conv.delta(transf=transf.dtocles)
+               #tmp <- escalc(measure="SMD", m1i=m1i[i], sd1i=sd1i[i], n1i=n1i[i], m2i=m2i[i], sd2i=sd2i[i], n2i=n2i[i], correct=FALSE)
+               #vi[i] <- conv.delta(yi, vi, data=tmp, transf=transf.dtocles, replace=TRUE)$vi
+            }
+
+         }
 
       }
 
@@ -2601,6 +2854,9 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
    ### add digits attribute
    attr(dat, "digits") <- digits
+
+   ### add vtype attribute
+   #attr(dat, "vtype") <- vtype
 
    ### add 'yi.names' and 'vi.names' to the first position of the corresponding attributes (so the first is always the last one calculated/added)
    attr(dat, "yi.names") <- union(var.names[1], attr(data, "yi.names")) # if 'yi.names' is not an attribute, attr() returns NULL, so this works fine

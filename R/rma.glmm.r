@@ -184,7 +184,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
          di <- .getsubset(di, subset)
       }
 
-      args <- list(measure=measure, ai=ai, bi=bi, ci=ci, di=di, add=add, to=to, drop00=drop00, vtype=vtype, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
+      args <- list(ai=ai, bi=bi, ci=ci, di=di, add=add, to=to, drop00=drop00, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
 
    }
 
@@ -206,7 +206,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
          t2i <- .getsubset(t2i, subset)
       }
 
-      args <- list(measure=measure, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, add=add, to=to, drop00=drop00, vtype=vtype, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
+      args <- list(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, add=add, to=to, drop00=drop00, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
 
    }
 
@@ -227,7 +227,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
          mi <- .getsubset(mi, subset)
       }
 
-      args <- list(measure=measure, xi=xi, mi=mi, add=add, to=to, vtype=vtype, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
+      args <- list(xi=xi, mi=mi, add=add, to=to, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
 
    }
 
@@ -245,9 +245,11 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
          ti <- .getsubset(ti, subset)
       }
 
-      args <- list(measure=measure, xi=xi, ti=ti, add=add, to=to, vtype=vtype, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
+      args <- list(xi=xi, ti=ti, add=add, to=to, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
 
    }
+
+   args <- c(args, list(measure=measure, vtype=vtype))
 
    dat <- .do.call(escalc, args)
 

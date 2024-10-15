@@ -29,7 +29,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                               "MN","SMN","MNLN","CVLN","SDLN",                                   # mean, single-group standardized mean, log(mean), log(CV), log(SD),
                               "MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","ROMC","CVRC","VRC",   # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
                               "ARAW","AHW","ABT",                                                # alpha (and transformations thereof)
-                              "REH",#"AUC",                                                       # relative excess heterozygosity, area under the curve
+                              "REH","CLES","CLESN","AUC","AUCN",                                 # relative excess heterozygosity, common language effect size / area under the curve
                               "HR","HD",                                                         # hazard (rate) ratios and differences
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
@@ -63,7 +63,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("knha", "onlyo1", "addyi", "addvi", "i2def", "r2def", "skipr2", "abbrev", "dfs", "time", "outlist", "link", "optbeta", "alpha", "beta", "skiphes", "retopt", "pleasedonotreportI2thankyouverymuch"))
+   .chkdots(ddd, c("knha", "onlyo1", "addyi", "addvi", "correct", "i2def", "r2def", "skipr2", "abbrev", "dfs", "time", "outlist", "link", "optbeta", "alpha", "beta", "skiphes", "retopt", "pleasedonotreportI2thankyouverymuch"))
 
    ### handle 'knha' argument from ... (note: overrides test argument)
 
@@ -86,11 +86,12 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       model <- "rma.ls"
    }
 
-   ### set defaults or get onlyo1, addyi, and addvi arguments
+   ### set defaults or get onlyo1, addyi, addvi, and correct arguments
 
-   onlyo1 <- .chkddd(ddd$onlyo1, FALSE)
-   addyi  <- .chkddd(ddd$addyi,  TRUE)
-   addvi  <- .chkddd(ddd$addvi,  TRUE)
+   onlyo1  <- .chkddd(ddd$onlyo1,  FALSE)
+   addyi   <- .chkddd(ddd$addyi,   TRUE)
+   addvi   <- .chkddd(ddd$addvi,   TRUE)
+   correct <- .chkddd(ddd$correct, TRUE)
 
    ### set defaults for i2def and r2def
 
@@ -420,7 +421,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             pi <- .getsubset(pi, subset)
          }
 
-         args <- list(measure=measure, ai=ai, bi=bi, ci=ci, di=di, ri=ri, pi=pi, add=add, to=to, drop00=drop00, vtype=vtype, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
+         args <- list(ai=ai, bi=bi, ci=ci, di=di, ri=ri, pi=pi, add=add, to=to, drop00=drop00, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
 
       }
 
@@ -442,7 +443,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             t2i <- .getsubset(t2i, subset)
          }
 
-         args <- list(measure=measure, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, add=add, to=to, drop00=drop00, vtype=vtype, addyi=addyi, addvi=addvi)
+         args <- list(x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, add=add, to=to, drop00=drop00, addyi=addyi, addvi=addvi)
 
       }
 
@@ -486,7 +487,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             n2i  <- .getsubset(n2i,  subset)
          }
 
-         args <- list(measure=measure, m1i=m1i, m2i=m2i, sd1i=sd1i, sd2i=sd2i, n1i=n1i, n2i=n2i, vtype=vtype)
+         args <- list(m1i=m1i, m2i=m2i, sd1i=sd1i, sd2i=sd2i, n1i=n1i, n2i=n2i)
 
       }
 
@@ -512,7 +513,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             ni <- .getsubset(ni, subset)
          }
 
-         args <- list(measure=measure, ri=ri, ni=ni, vtype=vtype)
+         args <- list(ri=ri, ni=ni)
 
       }
 
@@ -547,7 +548,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             r2i <- .getsubset(r2i, subset)
          }
 
-         args <- list(measure=measure, ri=ri, mi=mi, ni=ni, r2i=r2i, vtype=vtype)
+         args <- list(ri=ri, mi=mi, ni=ni, r2i=r2i)
 
       }
 
@@ -575,7 +576,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             ni  <- .getsubset(ni,  subset)
          }
 
-         args <- list(measure=measure, r2i=r2i, mi=mi, ni=ni, vtype=vtype)
+         args <- list(r2i=r2i, mi=mi, ni=ni)
 
       }
 
@@ -596,7 +597,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             mi <- .getsubset(mi, subset)
          }
 
-         args <- list(measure=measure, xi=xi, mi=mi, add=add, to=to, vtype=vtype, addyi=addyi, addvi=addvi)
+         args <- list(xi=xi, mi=mi, add=add, to=to, addyi=addyi, addvi=addvi)
 
       }
 
@@ -614,7 +615,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             ti <- .getsubset(ti, subset)
          }
 
-         args <- list(measure=measure, xi=xi, ti=ti, add=add, to=to, vtype=vtype, addyi=addyi, addvi=addvi)
+         args <- list(xi=xi, ti=ti, add=add, to=to, addyi=addyi, addvi=addvi)
 
       }
 
@@ -634,7 +635,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             ni  <- .getsubset(ni,  subset)
          }
 
-         args <- list(measure=measure, mi=mi, sdi=sdi, ni=ni, vtype=vtype)
+         args <- list(mi=mi, sdi=sdi, ni=ni)
 
       }
 
@@ -681,7 +682,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             ri   <- .getsubset(ri,   subset)
          }
 
-         args <- list(measure=measure, m1i=m1i, m2i=m2i, sd1i=sd1i, sd2i=sd2i, ri=ri, ni=ni, vtype=vtype)
+         args <- list(m1i=m1i, m2i=m2i, sd1i=sd1i, sd2i=sd2i, ri=ri, ni=ni)
 
       }
 
@@ -701,7 +702,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             ni <- .getsubset(ni, subset)
          }
 
-         args <- list(measure=measure, ai=ai, mi=mi, ni=ni, vtype=vtype)
+         args <- list(ai=ai, mi=mi, ni=ni)
 
       }
 
@@ -721,15 +722,21 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             ci <- .getsubset(ci, subset)
          }
 
-         args <- list(measure=measure, ai=ai, bi=bi, ci=ci, vtype=vtype)
+         args <- list(ai=ai, bi=bi, ci=ci)
 
       }
 
-      if (measure == "AUC") {
+      if (is.element(measure, c("CLES","AUC"))) {
 
          ai  <- .getx("ai",  mf=mf, data=data, checknumeric=TRUE)
          n1i <- .getx("n1i", mf=mf, data=data, checknumeric=TRUE)
          n2i <- .getx("n2i", mf=mf, data=data, checknumeric=TRUE)
+         mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE)
+
+         if (is.null(mi))
+            mi <- rep(0, length(ai))
+
+         mi[is.na(mi)] <- 0
 
          k <- length(ai) # number of outcomes before subsetting
          k.all <- k
@@ -739,11 +746,78 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             ai  <- .getsubset(ai,  subset)
             n1i <- .getsubset(n1i, subset)
             n2i <- .getsubset(n2i, subset)
+            mi  <- .getsubset(mi,  subset)
          }
 
-         args <- list(measure=measure, ai=ai, n1i=n1i, n2i=n2i, vtype=vtype)
+         args <- list(ai=ai, n1i=n1i, n2i=n2i, mi=mi)
 
       }
+
+      if (is.element(measure, c("CLESN","AUCN"))) {
+
+         m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE)
+         m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE)
+         sd1i <- .getx("sd1i", mf=mf, data=data, checknumeric=TRUE)
+         sd2i <- .getx("sd2i", mf=mf, data=data, checknumeric=TRUE)
+         n1i  <- .getx("n1i",  mf=mf, data=data, checknumeric=TRUE)
+         n2i  <- .getx("n2i",  mf=mf, data=data, checknumeric=TRUE)
+         di   <- .getx("di",   mf=mf, data=data, checknumeric=TRUE)
+         ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
+         pi   <- .getx("pi",   mf=mf, data=data, checknumeric=TRUE)
+         ai   <- .getx("ai",   mf=mf, data=data, checknumeric=TRUE)
+
+         if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi, ai))
+            stop(mstyle$stop("Supplied data vectors are not all of the same length."))
+
+         if (!.all.specified(n1i, n2i))
+            stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments."))
+
+         k.all <- max(sapply(list(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi, ai), length))
+
+         vtype <- .expand1(vtype, k.all)
+
+         if (is.null(sd1i) || is.null(sd2i)) {
+            sd1i <- .expand1(NA_real_, k.all)
+            sd2i <- .expand1(NA_real_, k.all)
+         }
+
+         ti <- replmiss(ti, .convp2t(pi, df=n1i+n2i-2))
+         di <- replmiss(di, ti * sqrt(1/n1i + 1/n2i))
+
+         if (!is.null(di))
+            vtype[!is.na(di)] <- "HO"
+
+         sdpi <- ifelse(vtype=="HO", sqrt(((n1i-1)*sd1i^2 + (n2i-1)*sd2i^2)/(n1i+n2i-2)), sqrt((sd1i^2 + sd2i^2)/2))
+         di   <- replmiss(di, (m1i - m2i) / sdpi)
+
+         ai <- replmiss(ai, pnorm(di/sqrt(2)))
+         di <- replmiss(di, qnorm(ai)*sqrt(2))
+
+         k.all <- length(ai)
+
+         sdsmiss <- is.na(sd1i) | is.na(sd2i)
+         sd1i <- ifelse(sdsmiss, 1, sd1i)
+         sd2i <- ifelse(sdsmiss, 1, sd2i)
+         vtype[sdsmiss] <- "HO"
+
+         k <- length(ai) # number of outcomes before subsetting
+         k.all <- k
+
+         if (!is.null(subset)) {
+            subset <- .chksubset(subset, k)
+            vtype  <- .getsubset(vtype,  subset)
+            ai   <- .getsubset(ai,   subset)
+            sd1i <- .getsubset(sd1i, subset)
+            sd2i <- .getsubset(sd2i, subset)
+            n1i  <- .getsubset(n1i,  subset)
+            n2i  <- .getsubset(n2i,  subset)
+         }
+
+         args <- list(ai=ai, sd1i=sd1i, sd2i=sd2i, n1i=n1i, n2i=n2i)
+
+      }
+
+      args <- c(args, list(measure=measure, vtype=vtype, correct=correct))
 
       dat <- .do.call(escalc, args)
 
