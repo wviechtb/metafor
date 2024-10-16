@@ -1192,7 +1192,7 @@
          }
       }
       ######################################################################
-      if (is.element(measure, c("CLES","CLESN"))) {
+      if (is.element(measure, c("CLES","CLESN","CLESCN"))) {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, "CLES", "Common Language Effect Size")
          } else {
@@ -1200,7 +1200,7 @@
          }
       }
       ######################################################################
-      if (is.element(measure, c("AUC","AUCN"))) {
+      if (is.element(measure, c("AUC","AUCN","AUCCN"))) {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, "AUC", "Area under the Curve")
          } else {

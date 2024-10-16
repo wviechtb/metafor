@@ -1,4 +1,4 @@
-# metafor 4.7-36 (2024-10-16)
+# metafor 4.7-37 (2024-10-16)
 
 - some general changes to the various `forest()` functions: argument `header` is now `TRUE` by default, the y-axis is now created with `yaxs="i"`, and the y-axis limits have been tweaked slightly in accordance
 
@@ -36,7 +36,7 @@
 
 - `nobs()` now just returns the number of estimates, not the effective number of observations
 
-- added measures `"PRZ"`, `"CLES"`, `"AUC"`, `"CLESN"`, and `"AUCN"`  to `escalc()`
+- added measures `"PRZ"`, `"CLES"`, `"AUC"`, `"CLESN"`, `"AUCN"`, `"CLESCN"`, and `"AUCCN"` to `escalc()`
 
 - `escalc()` gains a `flip` argument
 

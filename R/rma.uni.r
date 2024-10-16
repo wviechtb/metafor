@@ -14,23 +14,23 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    ### check argument specifications
    ### (arguments "to" and "vtype" are checked inside escalc function)
 
-   if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","ZPHI","YUQ","YUY","RTET","ZTET", # 2x2 table measures
-                              "PBIT","OR2D","OR2DN","OR2DL",                                     # 2x2 table transformations to SMDs
-                              "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",                     # 2x2 table measures for matched pairs / pre-post data
-                              "IRR","IRD","IRSD",                                                # two-group person-time data (incidence) measures
-                              "MD","SMD","SMDH","SMD1","SMD1H","ROM",                            # two-group mean/SD measures
-                              "CVR","VR",                                                        # coefficient of variation ratio, variability ratio
-                              "RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL",                  # two-group mean/SD transformations to r_pb, r_bis, and log(OR)
-                              "COR","UCOR","ZCOR",                                               # correlations (raw and r-to-z transformed)
-                              "PCOR","ZPCOR","SPCOR","ZSPCOR",                                   # partial and semi-partial correlations
-                              "R2","ZR2",                                                        # coefficient of determination / R^2 (raw and r-to-z transformed)
-                              "PR","PLN","PLO","PRZ","PAS","PFT",                                # single proportions (and transformations thereof)
-                              "IR","IRLN","IRS","IRFT",                                          # single-group person-time (incidence) data (and transformations thereof)
-                              "MN","SMN","MNLN","CVLN","SDLN",                                   # mean, single-group standardized mean, log(mean), log(CV), log(SD),
-                              "MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","ROMC","CVRC","VRC",   # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
-                              "ARAW","AHW","ABT",                                                # alpha (and transformations thereof)
-                              "REH","CLES","CLESN","AUC","AUCN",                                 # relative excess heterozygosity, common language effect size / area under the curve
-                              "HR","HD",                                                         # hazard (rate) ratios and differences
+   if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","ZPHI","YUQ","YUY","RTET","ZTET",                # 2x2 table measures
+                              "PBIT","OR2D","OR2DN","OR2DL",                                                    # 2x2 table transformations to SMDs
+                              "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",                                    # 2x2 table measures for matched pairs / pre-post data
+                              "IRR","IRD","IRSD",                                                               # two-group person-time data (incidence) measures
+                              "MD","SMD","SMDH","SMD1","SMD1H","ROM",                                           # two-group mean/SD measures
+                              "CVR","VR",                                                                       # coefficient of variation ratio, variability ratio
+                              "RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL",                                 # two-group mean/SD transformations to r_pb, r_bis, and log(OR)
+                              "COR","UCOR","ZCOR",                                                              # correlations (raw and r-to-z transformed)
+                              "PCOR","ZPCOR","SPCOR","ZSPCOR",                                                  # partial and semi-partial correlations
+                              "R2","ZR2",                                                                       # coefficient of determination / R^2 (raw and r-to-z transformed)
+                              "PR","PLN","PLO","PRZ","PAS","PFT",                                               # single proportions (and transformations thereof)
+                              "IR","IRLN","IRS","IRFT",                                                         # single-group person-time (incidence) data (and transformations thereof)
+                              "MN","SMN","MNLN","CVLN","SDLN",                                                  # mean, single-group standardized mean, log(mean), log(CV), log(SD),
+                              "MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","CLESCN","AUCCN","ROMC","CVRC","VRC", # raw/standardized mean change, CLES/AUC, log(ROM), CVR, and VR for dependent samples
+                              "ARAW","AHW","ABT",                                                               # alpha (and transformations thereof)
+                              "REH","CLES","CLESN","AUC","AUCN",                                                # relative excess heterozygosity, common language effect size / area under the curve
+                              "HR","HD",                                                                        # hazard (rate) ratios and differences
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
@@ -639,7 +639,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       }
 
-      if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","ROMC","CVRC","VRC"))) {
+      if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","CLESCN","AUCCN","ROMC","CVRC","VRC"))) {
 
          m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE)
          m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE)

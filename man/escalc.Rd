@@ -389,7 +389,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
       \subsection{(4a) Measures for Quantitative Variables}{
 
-         When the response or dependent variable assessed in the individual studies is measured on some quantitative scale, the raw mean change, standardized versions thereof, or the (log transformed) ratio of means (log response ratio) can be used as outcome measures (Becker, 1988; Gibbons et al., 1993; Lajeunesse, 2011; Morris, 2000). Here, one needs to specify \code{m1i} and \code{m2i}, the observed means at the two measurement occasions, \code{sd1i} and \code{sd2i} for the corresponding observed standard deviations, \code{ri} for the correlation between the measurements at the two measurement occasions, and \code{ni} for the sample size. The options for the \code{measure} argument are then:
+         When the response or dependent variable assessed in the individual studies is measured on some quantitative scale, the raw mean change, standardized versions thereof, the common language effect size (area under the curve), or the (log transformed) ratio of means (log response ratio) can be used as outcome measures (Becker, 1988; Gibbons et al., 1993; Lajeunesse, 2011; Morris, 2000). Here, one needs to specify \code{m1i} and \code{m2i}, the observed means at the two measurement occasions, \code{sd1i} and \code{sd2i} for the corresponding observed standard deviations, \code{ri} for the correlation between the measurements at the two measurement occasions, and \code{ni} for the sample size. The options for the \code{measure} argument are then:
 
          \itemize{
          \item \code{"MC"} for the \emph{raw mean change},
@@ -398,6 +398,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \item \code{"SMCRH"} for the \emph{standardized mean change} using raw score standardization with heteroscedastic population variances at the two measurement occasions (Bonett, 2008),
          \item \code{"SMCRP"} for the \emph{standardized mean change} using raw score standardization with pooled standard deviations (Cousineau, 2020),
          \item \code{"SMCRPH"} for the \emph{standardized mean change} using raw score standardization with pooled standard deviations and heteroscedastic population variances at the two measurement occasions (Bonett, 2008),
+         \item \code{"CLESCN"} (or \code{"AUCCN"}) for the \emph{common language effect size} (area under the curve) based on a bivariate normal model for dependent samples,
          \item \code{"ROMC"} for the \emph{log transformed ratio of means} (Lajeunesse, 2011).
          }
 

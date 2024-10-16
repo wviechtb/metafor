@@ -14,23 +14,23 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
    if (!is.character(measure))
       stop(mstyle$stop("The 'measure' argument must be a character string."))
 
-   if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","ZPHI","YUQ","YUY","RTET","ZTET", # 2x2 table measures
-                              "PBIT","OR2D","OR2DN","OR2DL",                                     # 2x2 table transformations to SMDs
-                              "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",                     # 2x2 table measures for matched pairs / pre-post data
-                              "IRR","IRD","IRSD",                                                # two-group person-time data (incidence) measures
-                              "MD","SMD","SMDH","SMD1","SMD1H","ROM",                            # two-group mean/SD measures
-                              "CVR","VR",                                                        # coefficient of variation ratio, variability ratio
-                              "RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL",                  # two-group mean/SD transformations to r_pb, r_bis, and log(OR)
-                              "COR","UCOR","ZCOR",                                               # correlations (raw and r-to-z transformed)
-                              "PCOR","ZPCOR","SPCOR","ZSPCOR",                                   # partial and semi-partial correlations
-                              "R2","ZR2",                                                        # coefficient of determination / R^2 (raw and r-to-z transformed)
-                              "PR","PLN","PLO","PRZ","PAS","PFT",                                # single proportions (and transformations thereof)
-                              "IR","IRLN","IRS","IRFT",                                          # single-group person-time (incidence) data (and transformations thereof)
-                              "MN","SMN","MNLN","CVLN","SDLN",                                   # mean, single-group standardized mean, log(mean), log(CV), log(SD),
-                              "MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","ROMC","CVRC","VRC",   # raw/standardized mean change, log(ROM), CVR, and VR for dependent samples
-                              "ARAW","AHW","ABT",                                                # alpha (and transformations thereof)
-                              "REH","CLES","CLESN","AUC","AUCN",                                 # relative excess heterozygosity, common language effect size / area under the curve
-                              "HR","HD",                                                         # hazard (rate) ratios and differences
+   if (!is.element(measure, c("RR","OR","PETO","RD","AS","PHI","ZPHI","YUQ","YUY","RTET","ZTET",                # 2x2 table measures
+                              "PBIT","OR2D","OR2DN","OR2DL",                                                    # 2x2 table transformations to SMDs
+                              "MPRD","MPRR","MPOR","MPORC","MPPETO","MPORM",                                    # 2x2 table measures for matched pairs / pre-post data
+                              "IRR","IRD","IRSD",                                                               # two-group person-time data (incidence) measures
+                              "MD","SMD","SMDH","SMD1","SMD1H","ROM",                                           # two-group mean/SD measures
+                              "CVR","VR",                                                                       # coefficient of variation ratio, variability ratio
+                              "RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL",                                 # two-group mean/SD transformations to r_pb, r_bis, and log(OR)
+                              "COR","UCOR","ZCOR",                                                              # correlations (raw and r-to-z transformed)
+                              "PCOR","ZPCOR","SPCOR","ZSPCOR",                                                  # partial and semi-partial correlations
+                              "R2","ZR2",                                                                       # coefficient of determination / R^2 (raw and r-to-z transformed)
+                              "PR","PLN","PLO","PRZ","PAS","PFT",                                               # single proportions (and transformations thereof)
+                              "IR","IRLN","IRS","IRFT",                                                         # single-group person-time (incidence) data (and transformations thereof)
+                              "MN","SMN","MNLN","CVLN","SDLN",                                                  # mean, single-group standardized mean, log(mean), log(CV), log(SD),
+                              "MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","CLESCN","AUCCN","ROMC","CVRC","VRC", # raw/standardized mean change, CLES/AUC, log(ROM), CVR, and VR for dependent samples
+                              "ARAW","AHW","ABT",                                                               # alpha (and transformations thereof)
+                              "REH","CLES","CLESN","AUC","AUCN",                                                # relative excess heterozygosity, common language effect size / area under the curve
+                              "HR","HD",                                                                        # hazard (rate) ratios and differences
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
@@ -2059,7 +2059,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
       ######################################################################
 
-      if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","ROMC","CVRC","VRC"))) {
+      if (is.element(measure, c("MC","SMCC","SMCR","SMCRH","SMCRP","SMCRPH","CLESCN","AUCCN","ROMC","CVRC","VRC"))) {
 
          m1i  <- .getx("m1i",  mf=mf, data=data, checknumeric=TRUE) # for VRC, do not need to supply this
          m2i  <- .getx("m2i",  mf=mf, data=data, checknumeric=TRUE) # for VRC, do not need to supply this
@@ -2073,7 +2073,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
          ri <- .expand1(ri, list(m1i, m2i, sd1i, sd2i, ni, di, ti, pi))
 
-         if (is.element(measure, c("MC","SMCRH","SMCRP","SMCRPH","ROMC","CVRC"))) {
+         if (is.element(measure, c("MC","SMCRH","SMCRP","SMCRPH","CLESCN","AUCCN","ROMC","CVRC"))) {
 
             ### for these measures, need m1i, m2i, sd1i, sd2i, ni, and ri
 
@@ -2149,7 +2149,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
             ri   <- .getsubset(ri,   subset)
          }
 
-         if (is.element(measure, c("MC","SMCC","SMCRH","SMCRP","SMCRPH","ROMC","CVRC","VRC"))) {
+         if (is.element(measure, c("MC","SMCC","SMCRH","SMCRP","SMCRPH","CLESCN","AUCCN","ROMC","CVRC","VRC"))) {
             if (any(c(sd1i, sd2i) < 0, na.rm=TRUE))
                stop(mstyle$stop("One or more standard deviations are negative."))
          }
@@ -2337,6 +2337,16 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
                   vi[i] <- sddiffi[i]^2 / (sdpi[i]^2 * ni[i]) + yi[i]^2 * (sd1i[i]^4 + sd2i[i]^4 + 2*ri[i]^2*sd1i[i]^2*sd2i[i]^2) / (8 * sdpi[i]^4 * ni[i])
 
             }
+
+         }
+
+         ### common language effect size / area under the curve allowing for heteroscedasticity
+
+         if (is.element(measure, c("CLESCN","AUCCN"))) {
+
+            di <- (m1i - m2i) / sdpi
+            yi <- pnorm(di/sqrt(2))
+            vi <- exp(-di^2 / 2) / (4*base::pi) * (sddiffi^2 / (sdpi^2 * (ni-1)) + di^2 * (sd1i^4 + sd2i^4 + 2*ri^2*sd1i^2*sd2i^2) / (8 * sdpi^4 * (ni-1)))
 
          }
 
