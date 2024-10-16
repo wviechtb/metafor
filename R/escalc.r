@@ -305,34 +305,98 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
          p1i <- ai / n1i
          p2i <- ci / n2i
 
+         ### compute sample size weighted averages of the proportions within groups (for vtype="AV")
+
+         if (addvi) {
+            mnwp1i <- .wmean(p1i, n1i, na.rm=TRUE)
+            mnwp2i <- .wmean(p2i, n2i, na.rm=TRUE)
+         } else {
+            mnwp1i.u <- .wmean(p1i.u, n1i.u, na.rm=TRUE)
+            mnwp2i.u <- .wmean(p2i.u, n2i.u, na.rm=TRUE)
+         }
+
          ### log risk ratios
 
          if (measure == "RR") {
+
             if (addyi) {
                yi <- log(p1i) - log(p2i)
             } else {
                yi <- log(p1i.u) - log(p2i.u)
             }
-            if (addvi) {
-               vi <- 1/ai - 1/n1i + 1/ci - 1/n2i
-            } else {
-               vi <- 1/ai.u - 1/n1i.u + 1/ci.u - 1/n2i.u
+
+            vtype <- .expand1(vtype, k)
+
+            vi <- rep(NA_real_, k)
+
+            if (!all(is.element(vtype, c("LS","AV"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS' or 'AV'."))
+
+            for (i in seq_len(k)) {
+
+               ### large sample approximation to the sampling variance
+               if (vtype[i] == "LS") {
+                  if (addvi) {
+                     vi[i] <- 1/ai[i] - 1/n1i[i] + 1/ci[i] - 1/n2i[i]
+                     #vi[i] <- (1-p1i[i])/(p1i[i]*n1i[i]) + (1-p2i[i])/(p2i[i]*n2i[i]) # same
+                  } else {
+                     vi[i] <- 1/ai.u[i] - 1/n1i.u[i] + 1/ci.u[i] - 1/n2i.u[i]
+                  }
+               }
+
+               ### estimate assuming homogeneity (using the average proportions)
+               if (vtype[i] == "AV") {
+                  if (addvi) {
+                     vi[i] <- (1-mnwp1i)/(mnwp1i*n1i[i]) + (1-mnwp2i)/(mnwp2i*n2i[i])
+                  } else {
+                     vi[i] <- (1-mnwp1i.u)/(mnwp1i.u*n1i.u[i]) + (1-mnwp2i.u)/(mnwp2i.u*n2i.u[i])
+                  }
+               }
+
             }
+
          }
 
          ### log odds ratio
 
          if (is.element(measure, c("OR","OR2D","OR2DN","OR2DL","MPORM"))) {
+
             if (addyi) {
                yi <- log(p1i/(1-p1i)) - log(p2i/(1-p2i))
             } else {
                yi <- log(p1i.u/(1-p1i.u)) - log(p2i.u/(1-p2i.u))
             }
-            if (addvi) {
-               vi <- 1/ai + 1/bi + 1/ci + 1/di
-            } else {
-               vi <- 1/ai.u + 1/bi.u + 1/ci.u + 1/di.u
+
+            vtype <- .expand1(vtype, k)
+
+            vi <- rep(NA_real_, k)
+
+            if (!all(is.element(vtype, c("LS","AV"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS' or 'AV'."))
+
+            for (i in seq_len(k)) {
+
+               ### large sample approximation to the sampling variance
+               if (vtype[i] == "LS") {
+                  if (addvi) {
+                     vi[i] <- 1/ai[i] + 1/bi[i] + 1/ci[i] + 1/di[i]
+                     #vi[i] <- 1/(p1i[i]*(1-p1i[i])*n1i[i]) + 1/(p2i[i]*(1-p2i[i])*n2i[i]) # same
+                  } else {
+                     vi[i] <- 1/ai.u[i] + 1/bi.u[i] + 1/ci.u[i] + 1/di.u[i]
+                  }
+               }
+
+               ### estimate assuming homogeneity (using the average proportions)
+               if (vtype[i] == "AV") {
+                  if (addvi) {
+                     vi[i] <- 1/(mnwp1i*(1-mnwp1i)*n1i[i]) + 1/(mnwp2i*(1-mnwp2i)*n2i[i])
+                  } else {
+                     vi[i] <- 1/(mnwp1i.u*(1-mnwp1i.u)*n1i[i]) + 1/(mnwp2i.u*(1-mnwp2i.u)*n2i[i])
+                  }
+               }
+
             }
+
          }
 
          ### risk difference
@@ -348,14 +412,6 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
             vtype <- .expand1(vtype, k)
 
             vi <- rep(NA_real_, k)
-
-            if (addvi) {
-               mnwp1i <- .wmean(p1i, n1i, na.rm=TRUE) # sample size weighted average of proportions
-               mnwp2i <- .wmean(p2i, n2i, na.rm=TRUE) # sample size weighted average of proportions
-            } else {
-               mnwp1i.u <- .wmean(p1i.u, n1i.u, na.rm=TRUE) # sample size weighted average of proportions
-               mnwp2i.u <- .wmean(p2i.u, n2i.u, na.rm=TRUE) # sample size weighted average of proportions
-            }
 
             if (!all(is.element(vtype, c("UB","LS","AV"))))
                stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'UB', 'LS', or 'AV'."))
@@ -1070,7 +1126,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
             yi  <- sqrt(p1i*p2i) / fzi * yi # yi on the right-hand side is the point-biserial correlation from above
             #vi <- (p1i*p2i) / fzi^2 * vi   # not correct (p1i, p2i, and fzi are random variables and vi from RBP is not correct for the bivariate normal case on which RBIS is based)
             yi.t <- ifelse(abs(yi) > 1, sign(yi), yi)
-            vi  <- 1/(ni-0) * (p1i*p2i/fzi^2 - (3/2 + (1 - p1i*zi/fzi)*(1 + p2i*zi/fzi)) * yi.t^2 + yi.t^4) # Soper, 1914
+            vi  <- 1/(ni-1) * (p1i*p2i/fzi^2 - (3/2 + (1 - p1i*zi/fzi)*(1 + p2i*zi/fzi)) * yi.t^2 + yi.t^4) # Soper, 1914
             #vi <- 1/(ni-1) * (yi.t^4 + yi.t^2 * (p1i*p2i*zi^2/fzi^2 + (2*p1i-1)*zi/fzi - 5/2) + p1i*p2i/fzi^2) # Tate, 1955; equivalent to equation from Soper, 1914
             # equation appears to work even if dichotomization is done based on a sample quantile value (so that p1i, p2i, and fzi are fixed by design)
             # this is asymptotically consistent with escalc(measure="SMD", correct=FALSE) -> conv.delta(transf=transf.dtorbis)
