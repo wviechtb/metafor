@@ -1,6 +1,7 @@
 \name{formatters}
 \alias{formatters}
 \alias{fmtp}
+\alias{fmtp2}
 \alias{fmtx}
 \alias{fmtt}
 \title{Formatter Functions}
@@ -9,12 +10,13 @@
 }
 \usage{
 fmtp(p, digits=4, pname="", equal=FALSE, sep=FALSE, add0=FALSE, quote=FALSE)
+fmtp2(p, cutoff=c(0.001,0.06), pname="p", sep=TRUE, quote=FALSE)
 fmtx(x, digits=4, flag="", quote=FALSE, \dots)
 fmtt(val, tname, df, df1, df2, pval, digits=4,
      pname="p-val", format=1, sep=TRUE, quote=FALSE, call=FALSE, \dots)
 }
 \arguments{
-   \emph{Arguments for \code{fmtp}:}
+   \emph{Arguments for \code{fmtp} and \code{fmtp2}:}
 
    \item{p}{vector of p-values to be formatted.}
    \item{digits}{integer to specify the number of decimal places to which the values should be rounded. For \code{fmmt}, can be a vector of length 2, to specify the number of digits for the test statistic and the p-value, respectively.}
@@ -23,6 +25,7 @@ fmtt(val, tname, df, df1, df2, pval, digits=4,
    \item{sep}{logical to specify whether a space should be added between \code{pname}, the equal/lesser symbol, and the p-value.}
    \item{add0}{logical to specify whether a 0 should be shown before the decimal point when the p-value is below the rounding cutoff.}
    \item{quote}{logical to specify whether formatted strings should be quoted when printed.}
+   \item{cutoff}{numeric vector giving the cutoff values.}
 
    \emph{Arguments specific for \code{fmtx}:}
 
@@ -42,7 +45,9 @@ fmtt(val, tname, df, df1, df2, pval, digits=4,
    \item{\dots}{other arguments.}
 }
 \details{
-   The \code{fmtp} function takes one or multiple p-values as input and rounds them to the chosen number of digits. For p-values that are smaller than \code{10^(-digits)} (e.g., \code{0.0001} for \code{digits=4}), the value is shown to fall below this bound (e.g., \code{<.0001}).
+   The \code{fmtp} function takes one or multiple p-values as input and rounds them to the chosen number of digits. For p-values that are smaller than \code{10^(-digits)} (e.g., \code{0.0001} for \code{digits=4}), the value is shown to fall below this bound (e.g., \code{<.0001}). One can further customize the way the output of the values is formatted via the \code{pname}, \code{equal}, \code{sep}, \code{add0}, and \code{quote} arguments.
+
+   The \code{fmtp2} function is an alternative function to format p-values, which yields output that essentially matches APA style guidelines. Values that fall below the first cutoff are printed as such (e.g., a p-value of .00002 would be printed as \code{p < .001}), values that fall in between the first and second cutoff are printed as exact p-values with the number of digits determined by the first cutoff (e.g., a p-value of .01723 would be printed as \code{p = .017}), and values falling above the second cutoff are printed as exact p-values with the number of digits determined by the second cutoff (e.g., a p-value of .08432 would be printed as \code{p = .08}). Note that the second cutoff is by default \code{.06} to show that p-values in the range of .051 and .054 are above .05.
 
    The \code{fmtx} function takes one or multiple numeric values as input and rounds them to the chosen number of digits, without using scientific notation and without dropping trailing zeros (using \code{\link{formatC}}).
 
@@ -66,6 +71,9 @@ fmtp(c(.0002, .00008), quote=TRUE, digits=4)
 fmtp(c(.0002, .00008), quote=TRUE, digits=4, equal=TRUE)
 fmtp(c(.0002, .00008), quote=TRUE, digits=4, equal=TRUE, sep=TRUE)
 fmtp(c(.0002, .00008), quote=TRUE, digits=4, equal=TRUE, sep=TRUE, add0=TRUE)
+
+# example for fmtp2()
+fmtp2(c(.0005, .001, .002, .0423, .0543, .0578, .0623, .5329), quote=TRUE)
 
 # examples for fmtx()
 fmtx(c(1.0002, 2.00008, 3.00004), digits=4)

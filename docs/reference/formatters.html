@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-37</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-38</span>
       </span>
     </div>
 
@@ -96,6 +96,7 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fmtp</span><span class="op">(</span><span class="va">p</span>, digits<span class="op">=</span><span class="fl">4</span>, pname<span class="op">=</span><span class="st">""</span>, equal<span class="op">=</span><span class="cn">FALSE</span>, sep<span class="op">=</span><span class="cn">FALSE</span>, add0<span class="op">=</span><span class="cn">FALSE</span>, quote<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">fmtp2</span><span class="op">(</span><span class="va">p</span>, cutoff<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.001</span>,<span class="fl">0.06</span><span class="op">)</span>, pname<span class="op">=</span><span class="st">"p"</span>, sep<span class="op">=</span><span class="cn">TRUE</span>, quote<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu">fmtx</span><span class="op">(</span><span class="va">x</span>, digits<span class="op">=</span><span class="fl">4</span>, flag<span class="op">=</span><span class="st">""</span>, quote<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">fmtt</span><span class="op">(</span><span class="va">val</span>, <span class="va">tname</span>, <span class="va">df</span>, <span class="va">df1</span>, <span class="va">df2</span>, <span class="va">pval</span>, digits<span class="op">=</span><span class="fl">4</span>,</span>
 <span>     pname<span class="op">=</span><span class="st">"p-val"</span>, format<span class="op">=</span><span class="fl">1</span>, sep<span class="op">=</span><span class="cn">TRUE</span>, quote<span class="op">=</span><span class="cn">FALSE</span>, call<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
@@ -103,7 +104,7 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <p><em>Arguments for <code>fmtp</code>:</em></p>
+    <p><em>Arguments for <code>fmtp</code> and <code>fmtp2</code>:</em></p>
 <p></p>
 <dl><dt id="arg-p">p<a class="anchor" aria-label="anchor" href="#arg-p"></a></dt>
 <dd><p>vector of p-values to be formatted.</p></dd>
@@ -125,6 +126,9 @@
 
    <dt id="arg-quote">quote<a class="anchor" aria-label="anchor" href="#arg-quote"></a></dt>
 <dd><p>logical to specify whether formatted strings should be quoted when printed.</p></dd>
+
+   <dt id="arg-cutoff">cutoff<a class="anchor" aria-label="anchor" href="#arg-cutoff"></a></dt>
+<dd><p>numeric vector giving the cutoff values.</p></dd>
 
 
    </dl><p><em>Arguments specific for <code>fmtx</code>:</em></p>
@@ -168,7 +172,8 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The <code>fmtp</code> function takes one or multiple p-values as input and rounds them to the chosen number of digits. For p-values that are smaller than <code>10^(-digits)</code> (e.g., <code>0.0001</code> for <code>digits=4</code>), the value is shown to fall below this bound (e.g., <code>&lt;.0001</code>).</p>
+    <p>The <code>fmtp</code> function takes one or multiple p-values as input and rounds them to the chosen number of digits. For p-values that are smaller than <code>10^(-digits)</code> (e.g., <code>0.0001</code> for <code>digits=4</code>), the value is shown to fall below this bound (e.g., <code>&lt;.0001</code>). One can further customize the way the output of the values is formatted via the <code>pname</code>, <code>equal</code>, <code>sep</code>, <code>add0</code>, and <code>quote</code> arguments.</p>
+<p>The <code>fmtp2</code> function is an alternative function to format p-values, which yields output that essentially matches APA style guidelines. Values that fall below the first cutoff are printed as such (e.g., a p-value of .00002 would be printed as <code>p &lt; .001</code>), values that fall in between the first and second cutoff are printed as exact p-values with the number of digits determined by the first cutoff (e.g., a p-value of .01723 would be printed as <code>p = .017</code>), and values falling above the second cutoff are printed as exact p-values with the number of digits determined by the second cutoff (e.g., a p-value of .08432 would be printed as <code>p = .08</code>). Note that the second cutoff is by default <code>.06</code> to show that p-values in the range of .051 and .054 are above .05.</p>
 <p>The <code>fmtx</code> function takes one or multiple numeric values as input and rounds them to the chosen number of digits, without using scientific notation and without dropping trailing zeros (using <code><a href="https://rdrr.io/r/base/formatc.html" class="external-link">formatC</a></code>).</p>
 <p>The <code>fmtt</code> function takes a single test statistic value as input (and, if applicable, its degrees of freedom via argument <code>df</code> or its numerator and denominator degrees of freedom via arguments <code>df1</code> and <code>df2</code>) and the corresponding p-value and formats it for printing. Two different formats are available (chosen via the <code>format</code> argument), one giving the degrees of freedom before the test statistic (in parentheses) and one after the test statistic.</p>
     </div>
@@ -200,6 +205,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "= 0.0002" "&lt; .0001" </span>
 <span class="r-in"><span><span class="fu">fmtp</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.0002</span>, <span class="fl">.00008</span><span class="op">)</span>, quote<span class="op">=</span><span class="cn">TRUE</span>, digits<span class="op">=</span><span class="fl">4</span>, equal<span class="op">=</span><span class="cn">TRUE</span>, sep<span class="op">=</span><span class="cn">TRUE</span>, add0<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "= 0.0002" "&lt; 0.0001"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># example for fmtp2()</span></span></span>
+<span class="r-in"><span><span class="fu">fmtp2</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.0005</span>, <span class="fl">.001</span>, <span class="fl">.002</span>, <span class="fl">.0423</span>, <span class="fl">.0543</span>, <span class="fl">.0578</span>, <span class="fl">.0623</span>, <span class="fl">.5329</span><span class="op">)</span>, quote<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "p &lt; .001" "p = .001" "p = .002" "p = .042" "p = .054" "p = .058" "p = .06"  "p = .53" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># examples for fmtx()</span></span></span>
 <span class="r-in"><span><span class="fu">fmtx</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.0002</span>, <span class="fl">2.00008</span>, <span class="fl">3.00004</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></span>

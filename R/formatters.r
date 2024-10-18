@@ -30,6 +30,47 @@ fmtp <- function(p, digits=4, pname="", equal=FALSE, sep=FALSE, add0=FALSE, quot
 
 }
 
+fmtp2 <- function(p, cutoff=c(0.001,0.06), pname="p", sep=TRUE, quote=FALSE) {
+
+   p[p < 0] <- 0
+   p[p > 1] <- 1
+
+   if (length(cutoff) == 1L)
+      stop("Argument 'cutoff' must be of length 2.")
+
+   cutoff <- sort(cutoff)
+
+   if (cutoff[1] == 0)
+      stop("The lower 'cutoff' value must be > 0.")
+
+   digits1 <- nchar(formatC(cutoff[1], format="f", digits=10, drop0trailing=T))-2
+   digits2 <- nchar(formatC(cutoff[2], format="f", digits=10, drop0trailing=T))-2
+
+   if (sep) {
+      if (pname != "")
+         pname <- paste0(pname, " ")
+      sep <- " "
+   } else {
+      sep <- ""
+   }
+
+   out <- sapply(p, function(x) {
+      if (is.na(x))
+         return(paste0(pname, "=", sep, "NA"))
+      if (x < cutoff[1])
+         return(paste0(pname, "<", sep, gsub("0.", ".", fixed=TRUE, formatC(cutoff[1], digits=digits1, format="f"))))
+      if (x < cutoff[2])
+         return(paste0(pname, "=", sep, gsub("0.", ".", fixed=TRUE, formatC(x, digits=digits1, format="f"))))
+      return(paste0(pname, "=", sep, gsub("0.", ".", fixed=TRUE, formatC(x, digits=digits2, format="f"))))
+   })
+
+   if (!quote)
+      out <- noquote(out)
+
+   return(out)
+
+}
+
 fmtx <- function(x, digits=4, flag="", quote=FALSE, ...) {
 
    # in case x is a data frame / matrix with two dimensions

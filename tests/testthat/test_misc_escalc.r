@@ -1,4 +1,4 @@
-### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true"); Sys.setenv(RUN_VIS_TESTS="true")
+### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true"); Sys.setenv(RUN_VIS_TESTS="true"); .tol[1:length(.tol)] <- .0001
 
 context("Checking misc: escalc() function")
 
@@ -69,6 +69,50 @@ test_that("escalc() works correctly for measure='SMD/SMDH/ROM'", {
    sav <- escalc(measure="ROM", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1:4)
    expect_equivalent(sav$yi, c(-0.3102, -0.0715, -0.6202, -0.7303), tolerance=.tol[["est"]])
    expect_equivalent(sav$vi, c( 0.0094,  0.0028,  0.0018,  0.0119), tolerance=.tol[["var"]])
+
+})
+
+test_that("escalc() works correctly for measure='CLES/AUC/CLESN/AUCN'", {
+
+   # dataset Table 1 from Hanley & McNeil (1982)
+   dat <- data.frame(status = rep(c(0,1), times=c(58,51)), x = c(rep(1:5, times=c(33,6,6,11,2)), rep(1:5, times=c(3,2,2,11,33))))
+   n1 <- sum(dat$status == 1)
+   n0 <- sum(dat$status == 0)
+   x1 <- dat$x[dat$status == 1]
+   x0 <- dat$x[dat$status == 0]
+   mean1 <- mean(x1)
+   mean0 <- mean(x0)
+   sd1   <- sd(x1)
+   sd0   <- sd(x0)
+
+   auc <- (mean(rank(c(x1,x0))[1:n1]) - mean(rank(c(x1,x0))[(n1+1):(n1+n0)])) / (n1+n0) + 1/2
+
+   sav <- escalc(measure="AUC", ai=auc, n1i=n1, n2i=n0)
+   expect_equivalent(sav$yi, 0.893171, tolerance=.tol[["est"]])
+   expect_equivalent(sav$vi, 0.001051, tolerance=.tol[["var"]])
+
+   sav <- escalc(measure="AUC", ai=auc, n1i=n1, n2i=n0, vtype="LS2")
+   expect_equivalent(sav$yi, 0.893171, tolerance=.tol[["est"]])
+   expect_equivalent(sav$vi, 0.001096, tolerance=.tol[["var"]])
+
+   sav <- escalc(measure="AUCN", m1i=mean1, m2i=mean0, sd1i=sd1, sd2i=sd0, n1i=n1, n2i=n0)
+   expect_equivalent(sav$yi, 0.909651, tolerance=.tol[["est"]])
+   expect_equivalent(sav$vi, 0.000717, tolerance=.tol[["var"]])
+
+   sav <- escalc(measure="AUCN", m1i=mean1, m2i=mean0, sd1i=sd1, sd2i=sd0, n1i=n1, n2i=n0)
+   sav <- escalc(measure="AUCN", ai=sav$yi, sd1i=sd1, sd2i=sd0, n1i=n1, n2i=n0)
+   expect_equivalent(sav$yi, 0.909651, tolerance=.tol[["est"]])
+   expect_equivalent(sav$vi, 0.000717, tolerance=.tol[["var"]])
+
+   sav <- escalc(measure="AUCN", m1i=mean1, m2i=mean0, sd1i=sd1, sd2i=sd0, n1i=n1, n2i=n0)
+   sav <- escalc(measure="AUCN", ai=sav$yi, n1i=n1, n2i=n0)
+   expect_equivalent(sav$yi, 0.909651, tolerance=.tol[["est"]])
+   expect_equivalent(sav$vi, 0.000707, tolerance=.tol[["var"]]) # uses vtype="HO"
+
+   sav <- escalc(measure="SMD", m1i=mean1, m2i=mean0, sd1i=sd1, sd2i=sd0, n1i=n1, n2i=n0, correct=FALSE)
+   sav <- escalc(measure="AUCN", di=sav$yi, n1i=n1, n2i=n0)
+   expect_equivalent(sav$yi, 0.908487, tolerance=.tol[["est"]]) # assumes HO
+   expect_equivalent(sav$vi, 0.000717, tolerance=.tol[["var"]]) # uses vtype="HO"
 
 })
 
