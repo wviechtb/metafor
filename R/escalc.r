@@ -1016,7 +1016,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
                ### estimate assuming H0: theta=0
                if (vtype[i] == "H0")
-                  vi[i] <- cmi[i]^2 * (1/n1i[i] + 1/n2i[i]) * (n1i[i] + n2i[i] - 2) / (n1i[i] + n2i[i] - 4)
+                  vi[i] <- ifelse(mi[i] > 2, cmi[i]^2 * (1/n1i[i] + 1/n2i[i]) * mi[i] / (mi[i] - 2), NA_real_)
 
             }
 
@@ -2467,7 +2467,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
             vi <- rep(NA_real_, k)
 
             if (!all(is.element(vtype, c("LS","LS2","UB","H0"))))
-               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS', 'LS2', or 'UB'."))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS', 'LS2', 'UB', or 'H0'."))
 
             for (i in seq_len(k)) {
 
@@ -2485,7 +2485,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
                ### estimate assuming theta=0
                if (vtype[i] == "H0")
-                  vi[i] <- 1/ni[i]
+                  vi[i] <- ifelse(mi[i] > 2, cmi[i]^2 / ni[i] * mi[i] / (mi[i] - 2), NA_real_)
 
             }
 
@@ -2503,8 +2503,8 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
             vi <- rep(NA_real_, k)
 
-            if (!all(is.element(vtype, c("LS","LS2","H0"))))
-               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS' or 'LS2'."))
+            if (!all(is.element(vtype, c("LS","LS2","UB","H0"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS', 'LS2', 'UB', or 'H0'."))
 
             for (i in seq_len(k)) {
 
@@ -2519,13 +2519,15 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
                ### unbiased estimate of the sampling variance
                if (vtype[i] == "UB") {
-                  rui[i] <- ri[i] * .Fcalc(1/2, 1/2, (ni[i]-2)/2, 1-ri[i]^2) # NA when ni <= 4
-                  vi[i] <- 2*(1-rui[i])/ni[i] + (1 - (mi[i]-2)/(mi[i]*cmi[i]^2)) * yi[i]^2 # Viechtbauer, 2007d, equation 37; see [c]
+                  rui <- ri[i] * .Fcalc(1/2, 1/2, (ni[i]-2)/2, 1-ri[i]^2) # NA when ni <= 4
+                  vi[i] <- 2*(1-rui)/ni[i] + (1 - (mi[i]-2)/(mi[i]*cmi[i]^2)) * yi[i]^2 # Viechtbauer, 2007d, equation 37; see [c]
                }
 
                ### estimate assuming theta=0
-               if (vtype[i] == "H0")
-                  vi[i] <- 2*(1-ri[i])/ni[i]
+               if (vtype[i] == "H0") {
+                  rui <- ri[i] * .Fcalc(1/2, 1/2, (ni[i]-2)/2, 1-ri[i]^2) # NA when ni <= 4
+                  vi[i] <- ifelse(mi[i] > 2, cmi[i]^2 * 2*(1-rui) / ni[i] * mi[i] / (mi[i] - 2), NA_real_)
+               }
 
             }
 
