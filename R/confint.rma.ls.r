@@ -76,6 +76,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
             cl.vc$alpha <- pos
             cl.vc$time <- FALSE
             #cl.vc$object <- quote(x)
+            cl.vc[[1]] <- str2lang("metafor::confint.rma.ls")
             if (verbose)
                cat(mstyle$verbose(paste("\nObtaining CI for alpha =", pos, "\n")))
             res.all[[j]] <- eval(cl.vc, envir=parent.frame())

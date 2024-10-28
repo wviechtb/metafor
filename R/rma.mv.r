@@ -775,7 +775,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    }
 
-   mf.r <- unname(mf.r)
+   mf.r <- unname(mf.r) # to avoid problems when list elements in 'random' are named
 
    ### warn that 'struct' argument is disregarded if it has been specified, but model contains no '~ inner | outer' terms
 

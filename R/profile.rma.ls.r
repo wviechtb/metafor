@@ -96,6 +96,7 @@ profile.rma.ls <- function(fitted, alpha,
             mc.vc$alpha <- pos
             mc.vc$time <- FALSE
             #mc.vc$fitted <- quote(x)
+            mc.vc[[1]] <- str2lang("metafor::profile.rma.ls")
             if (progbar)
                cat(mstyle$verbose(paste("Profiling alpha =", pos, "\n")))
             sav[[j]] <- eval(mc.vc, envir=parent.frame())

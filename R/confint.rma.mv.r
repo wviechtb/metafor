@@ -75,6 +75,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
             cl.vc$sigma2 <- pos
             cl.vc$time <- FALSE
             #cl.vc$object <- quote(x)
+            cl.vc[[1]] <- str2lang("metafor::confint.rma.mv")
             if (verbose)
                cat(mstyle$verbose(paste("\nObtaining CI for sigma2 =", pos, "\n")))
             res.all[[j]] <- eval(cl.vc, envir=parent.frame())
@@ -89,6 +90,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                cl.vc$tau2 <- pos
                cl.vc$time <- FALSE
                #cl.vc$object <- quote(x)
+               cl.vc[[1]] <- str2lang("metafor::confint.rma.mv")
                if (verbose)
                   cat(mstyle$verbose(paste("\nObtaining CI for tau2 =", pos, "\n")))
                res.all[[j]] <- eval(cl.vc, envir=parent.frame())
@@ -101,6 +103,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                cl.vc$rho <- pos
                cl.vc$time <- FALSE
                #cl.vc$object <- quote(x)
+               cl.vc[[1]] <- str2lang("metafor::confint.rma.mv")
                if (verbose)
                   cat(mstyle$verbose(paste("\nObtaining CI for rho =", pos, "\n")))
                res.all[[j]] <- eval(cl.vc, envir=parent.frame())
@@ -116,6 +119,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                cl.vc$gamma2 <- pos
                cl.vc$time <- FALSE
                #cl.vc$object <- quote(x)
+               cl.vc[[1]] <- str2lang("metafor::confint.rma.mv")
                if (verbose)
                   cat(mstyle$verbose(paste("\nObtaining CI for gamma2 =", pos, "\n")))
                res.all[[j]] <- eval(cl.vc, envir=parent.frame())
@@ -128,6 +132,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
                cl.vc$phi <- pos
                cl.vc$time <- FALSE
                #cl.vc$object <- quote(x)
+               cl.vc[[1]] <- str2lang("metafor::confint.rma.mv")
                if (verbose)
                   cat(mstyle$verbose(paste("\nObtaining CI for phi =", pos, "\n")))
                res.all[[j]] <- eval(cl.vc, envir=parent.frame())

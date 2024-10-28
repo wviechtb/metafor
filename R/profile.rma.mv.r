@@ -96,6 +96,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
             mc.vc$sigma2 <- pos
             mc.vc$time <- FALSE
             #mc.vc$fitted <- quote(x)
+            mc.vc[[1]] <- str2lang("metafor::profile.rma.mv")
             if (progbar)
                cat(mstyle$verbose(paste("Profiling sigma2 =", pos, "\n")))
             sav[[j]] <- eval(mc.vc, envir=parent.frame())
@@ -110,6 +111,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
                mc.vc$tau2 <- pos
                mc.vc$time <- FALSE
                #mc.vc$fitted <- quote(x)
+               mc.vc[[1]] <- str2lang("metafor::profile.rma.mv")
                if (progbar)
                   cat(mstyle$verbose(paste("Profiling tau2 =", pos, "\n")))
                sav[[j]] <- eval(mc.vc, envir=parent.frame())
@@ -122,6 +124,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
                mc.vc$rho <- pos
                mc.vc$time <- FALSE
                #mc.vc$fitted <- quote(x)
+               mc.vc[[1]] <- str2lang("metafor::profile.rma.mv")
                if (progbar)
                   cat(mstyle$verbose(paste("Profiling rho =", pos, "\n")))
                sav[[j]] <- eval(mc.vc, envir=parent.frame())
@@ -137,6 +140,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
                mc.vc$gamma2 <- pos
                mc.vc$time <- FALSE
                #mc.vc$fitted <- quote(x)
+               mc.vc[[1]] <- str2lang("metafor::profile.rma.mv")
                if (progbar)
                   cat(mstyle$verbose(paste("Profiling gamma2 =", pos, "\n")))
                sav[[j]] <- eval(mc.vc, envir=parent.frame())
@@ -149,6 +153,7 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
                mc.vc$phi <- pos
                mc.vc$time <- FALSE
                #mc.vc$fitted <- quote(x)
+               mc.vc[[1]] <- str2lang("metafor::profile.rma.mv")
                if (progbar)
                   cat(mstyle$verbose(paste("Profiling phi =", pos, "\n")))
                sav[[j]] <- eval(mc.vc, envir=parent.frame())

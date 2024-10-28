@@ -78,6 +78,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
          cl.vc$tau2 <- 1
          cl.vc$time <- FALSE
          #cl.vc$object <- quote(x)
+         cl.vc[[1]] <- str2lang("metafor::confint.rma.uni.selmodel")
          if (verbose)
             cat(mstyle$verbose(paste("\nObtaining CI for tau2\n")))
          res.all[[j]] <- eval(cl.vc, envir=parent.frame())
@@ -90,6 +91,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
             cl.vc$delta <- pos
             cl.vc$time <- FALSE
             #cl.vc$object <- quote(x)
+            cl.vc[[1]] <- str2lang("metafor::confint.rma.uni.selmodel")
             if (verbose)
                cat(mstyle$verbose(paste("\nObtaining CI for delta =", pos, "\n")))
             res.all[[j]] <- eval(cl.vc, envir=parent.frame())
