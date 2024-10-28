@@ -10,7 +10,7 @@
 }
 \usage{
 fmtp(p, digits=4, pname="", equal=FALSE, sep=FALSE, add0=FALSE, quote=FALSE)
-fmtp2(p, cutoff=c(0.001,0.06), pname="p", sep=TRUE, quote=FALSE)
+fmtp2(p, cutoff=c(0.001,0.06), pname="p", sep=TRUE, add0=FALSE, quote=FALSE)
 fmtx(x, digits=4, flag="", quote=FALSE, \dots)
 fmtt(val, tname, df, df1, df2, pval, digits=4,
      pname="p-val", format=1, sep=TRUE, quote=FALSE, call=FALSE, \dots)
@@ -23,7 +23,7 @@ fmtt(val, tname, df, df1, df2, pval, digits=4,
    \item{pname}{string to add as a prefix to the p-value (e.g., something like \code{"p-val"} or just \code{"p"}).}
    \item{equal}{logical to specify whether an equal symbol should be shown before the p-value (when it is larger than the rounding cutoff).}
    \item{sep}{logical to specify whether a space should be added between \code{pname}, the equal/lesser symbol, and the p-value.}
-   \item{add0}{logical to specify whether a 0 should be shown before the decimal point when the p-value is below the rounding cutoff.}
+   \item{add0}{logical to specify whether a 0 should be shown before the decimal point (for \code{fmtp}, this only applies when the p-value is below the rounding cutoff).}
    \item{quote}{logical to specify whether formatted strings should be quoted when printed.}
    \item{cutoff}{numeric vector giving the cutoff values.}
 

@@ -30,7 +30,7 @@ fmtp <- function(p, digits=4, pname="", equal=FALSE, sep=FALSE, add0=FALSE, quot
 
 }
 
-fmtp2 <- function(p, cutoff=c(0.001,0.06), pname="p", sep=TRUE, quote=FALSE) {
+fmtp2 <- function(p, cutoff=c(0.001,0.06), pname="p", sep=TRUE, add0=FALSE, quote=FALSE) {
 
    p[p < 0] <- 0
    p[p > 1] <- 1
@@ -57,12 +57,17 @@ fmtp2 <- function(p, cutoff=c(0.001,0.06), pname="p", sep=TRUE, quote=FALSE) {
    out <- sapply(p, function(x) {
       if (is.na(x))
          return(paste0(pname, "=", sep, "NA"))
-      if (x < cutoff[1])
-         return(paste0(pname, "<", sep, gsub("0.", ".", fixed=TRUE, formatC(cutoff[1], digits=digits1, format="f"))))
-      if (x < cutoff[2])
-         return(paste0(pname, "=", sep, gsub("0.", ".", fixed=TRUE, formatC(x, digits=digits1, format="f"))))
-      return(paste0(pname, "=", sep, gsub("0.", ".", fixed=TRUE, formatC(x, digits=digits2, format="f"))))
+      if (x < cutoff[1]) {
+         return(paste0(pname, "<", sep, formatC(cutoff[1], digits=digits1, format="f")))
+      }
+      if (x < cutoff[2]) {
+         return(paste0(pname, "=", sep, formatC(x, digits=digits1, format="f")))
+      }
+      return(paste0(pname, "=", sep, formatC(x, digits=digits2, format="f")))
    })
+
+   if (!add0)
+      out <- gsub("0.", ".", fixed=TRUE, out)
 
    if (!quote)
       out <- noquote(out)

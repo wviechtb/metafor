@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-38</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-40</span>
       </span>
     </div>
 
@@ -207,7 +207,7 @@
 <li><p><code>transf.rtod</code>: transformation of Pearson product-moment correlations to the corresponding standardized mean differences, when one of the two variables is dichotomized. Arguments <code>n1i</code> and <code>n2i</code> can be used to denote the number of individuals in the first and second group created by the dichotomization. If <code>n1i</code> and <code>n2i</code> are not specified, the function assumes <code>n1i = n2i</code>. This function is simply the inverse of <code>transf.dtorbis</code>.</p></li>
 <li><p><code>transf.rpbtod</code>: transformation of point-biserial correlations to standardized mean differences. This is simply the inverse of <code>transf.dtorpb</code>.</p></li>
 <li><p><code>transf.lnortord</code>: transformation of log odds ratios to risk differences, assuming a particular value for the control group risk (which needs to be specified via the <code>pc</code> argument).</p></li>
-<li><p><code>transf.lnortorr</code>: transformation of log odds ratios to risk ratios, assuming a particular value for the control group risk (which needs to be specified via the <code>pc</code> argument).</p></li>
+<li><p><code>transf.lnortorr</code>: transformation of log odds ratios to risk ratios, assuming a particular value for the control group risk (which needs to be specified via the <code>pc</code> argument). Note that this function transforms to risk ratios, <em>not</em> log risk ratios.</p></li>
 <li><p><code>transf.lnortod.norm</code>: transformation of log odds ratios to standardized mean differences (assuming normal distributions) (Cox &amp; Snell, 1989).</p></li>
 <li><p><code>transf.lnortod.logis</code>: transformation of log odds ratios to standardized mean differences (assuming logistic distributions) (Chinn, 2000).</p></li>
 <li><p><code>transf.dtolnor.norm</code>: transformation of standardized mean differences to log odds ratios (assuming normal distributions) (Cox &amp; Snell, 1989).</p></li>
