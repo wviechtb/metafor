@@ -14,10 +14,14 @@
 \method{qqnorm}{rma.uni}(y, type="rstandard", pch=21, col, bg,
        envelope=TRUE, level=y$level, bonferroni=FALSE, reps=1000, smooth=TRUE, bass=0,
        label=FALSE, offset=0.3, pos=13, lty, \dots)
+
 \method{qqnorm}{rma.mh}(y, type="rstandard", pch=21, col, bg, label=FALSE, offset=0.3, pos=13, \dots)
+
 \method{qqnorm}{rma.peto}(y, type="rstandard", pch=21, col, bg, label=FALSE, offset=0.3, pos=13, \dots)
-\method{qqnorm}{rma.glmm}(y, \dots)
-\method{qqnorm}{rma.mv}(y, \dots)
+
+\method{qqnorm}{rma.glmm}(y, \dots) # not currently implemented
+
+\method{qqnorm}{rma.mv}(y, \dots) # not currently implemented
 }
 \arguments{
    \item{y}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, or \code{"rma.peto"}. The method is not yet implemented for objects of class \code{"rma.glmm"} or \code{"rma.mv"}.}

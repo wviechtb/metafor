@@ -775,6 +775,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    }
 
+   mf.r <- unname(mf.r)
+
    ### warn that 'struct' argument is disregarded if it has been specified, but model contains no '~ inner | outer' terms
 
    if (!withG && "struct" %in% names(mf))

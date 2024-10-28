@@ -2,6 +2,7 @@
 \alias{plot.rma}
 \alias{plot.rma.uni}
 \alias{plot.rma.mh}
+\alias{plot.rma.mv}
 \alias{plot.rma.peto}
 \alias{plot.rma.glmm}
 \title{Plot Method for 'rma' Objects}
@@ -15,7 +16,9 @@
 
 \method{plot}{rma.peto}(x, qqplot=FALSE, \dots)
 
-\method{plot}{rma.glmm}(x, qqplot=FALSE, \dots)
+\method{plot}{rma.glmm}(x, qqplot=FALSE, \dots) # not currently implemented
+
+\method{plot}{rma.mv}(x, qqplot=FALSE, \dots) # not currently implemented
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, or \code{"rma.peto"}. The method is not yet implemented for objects of class \code{"rma.glmm"}.}
