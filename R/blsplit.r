@@ -3,7 +3,7 @@ blsplit <- function(x, cluster, fun, args, sort=FALSE) {
    mstyle <- .get.mstyle()
 
    if (missing(cluster))
-      stop(mstyle$stop("Must specify 'cluster' variable."))
+      stop(mstyle$stop("Must specify the 'cluster' variable."))
 
    if (!is.matrix(x) && !inherits(x, "dgCMatrix"))
       stop(mstyle$stop("Argument 'x' must be a matrix."))

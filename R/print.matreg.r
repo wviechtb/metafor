@@ -17,8 +17,11 @@ print.matreg <- function(x, digits=x$digits, signif.stars=getOption("show.signif
    } else {
       res.table <- data.frame(estimate=fmtx(c(x$tab$beta), digits[["est"]]), se=fmtx(x$tab$se, digits[["se"]]), zval=fmtx(x$tab$zval, digits[["test"]]), pval=fmtp(x$tab$pval, digits[["pval"]]), ci.lb=fmtx(x$tab$ci.lb, digits[["ci"]]), ci.ub=fmtx(x$tab$ci.ub, digits[["ci"]]), stringsAsFactors=FALSE)
    }
+
    rownames(res.table) <- rownames(x$tab)
+
    signif <- symnum(x$tab$pval, corr=FALSE, na=FALSE, cutpoints=c(0, 0.001, 0.01, 0.05, 0.1, 1), symbols = c("***", "**", "*", ".", " "))
+
    if (signif.stars) {
       res.table <- cbind(res.table, signif)
       colnames(res.table)[ncol(res.table)] <- ""

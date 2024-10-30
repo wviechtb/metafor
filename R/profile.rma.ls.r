@@ -120,6 +120,8 @@ profile.rma.ls <- function(fitted, alpha,
 
    }
 
+   #########################################################################
+
    ### round and take unique values
 
    if (!missing(alpha) && is.numeric(alpha))

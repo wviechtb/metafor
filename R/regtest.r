@@ -135,7 +135,7 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
       }
 
       if (is.null(vi))
-         stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
+         stop(mstyle$stop("Must specify the 'vi' or 'sei' argument."))
 
       ### check length of yi and vi
 

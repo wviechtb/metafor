@@ -299,7 +299,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       if (is.null(vi)) {
          if (is.null(sei)) {
-            stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
+            stop(mstyle$stop("Must specify the 'vi' or 'sei' argument."))
          } else {
             vi <- sei^2
          }
@@ -1415,7 +1415,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             #   stop(mstyle$stop("GENQ estimator cannot be used when there are non-positive sampling variances in the data."))
 
             if (is.null(weights))
-               stop(mstyle$stop("Must specify 'weights' when method='GENQ'."))
+               stop(mstyle$stop("Must specify the 'weights' argument when method='GENQ'."))
 
             A     <- diag(weights, nrow=k, ncol=k)
             stXAX <- .invcalc(X=X, W=A, k=k)
@@ -1434,7 +1434,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          if (method[1] == "GENQM") {
 
             if (is.null(weights))
-               stop(mstyle$stop("Must specify 'weights' when method='GENQM'."))
+               stop(mstyle$stop("Must specify the 'weights' argument when method='GENQM'."))
 
             A     <- diag(weights, nrow=k, ncol=k)
             stXAX <- .invcalc(X=X, W=A, k=k)

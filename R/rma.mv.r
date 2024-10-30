@@ -329,7 +329,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    ### some checks on V (and turn V into a diagonal matrix if it is a column/row vector)
 
    if (is.null(V))
-      stop(mstyle$stop("Must specify 'V' argument."))
+      stop(mstyle$stop("Must specify the 'V' argument."))
 
    ### catch cases where 'V' is the utils::vi() function
 

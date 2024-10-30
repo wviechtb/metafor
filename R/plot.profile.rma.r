@@ -19,10 +19,8 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
    missing.ylab <- missing(ylab)
    missing.main <- missing(main)
 
-   ### filter out some arguments for the plot() function
-
-   lplot   <- function(..., time, LB, startmethod, sub1, sqrt, exp, pred, blup) plot(...)
-   lpoints <- function(..., time, LB, startmethod, sub1, log, sqrt, exp, pred, blup) points(...) # need 'log' here so profile(res, log="x") doesn't throw a warning
+   lplot   <- function(..., time, LB, startmethod, sub1,      sqrt, exp, pred, blup, callback) plot(...)
+   lpoints <- function(..., time, LB, startmethod, sub1, log, sqrt, exp, pred, blup, callback) points(...) # need 'log' here so profile(res, log="x") doesn't throw a warning
 
    #########################################################################
 

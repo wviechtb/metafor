@@ -3,10 +3,10 @@ conv.delta <- function(yi, vi, ni, data, include, transf, var.names, append=TRUE
    mstyle <- .get.mstyle()
 
    if (missing(yi) || missing(vi))
-      stop(mstyle$stop("Must specify 'yi' and 'vi' arguments."))
+      stop(mstyle$stop("Must specify the 'yi' and 'vi' arguments."))
 
    if (missing(transf))
-      stop(mstyle$stop("Must specify 'transf' argument."))
+      stop(mstyle$stop("Must specify the 'transf' argument."))
 
    if (is.logical(replace)) {
       if (isTRUE(replace)) {

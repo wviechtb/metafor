@@ -550,7 +550,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
    if (type == "stepfun") {
 
       if (!stepsspec)
-         stop(mstyle$stop("Must specify 'steps' argument for this type of selection model."))
+         stop(mstyle$stop("Must specify the 'steps' argument for this type of selection model."))
 
       if (precspec) { # [b]
          if (decreasing) {
@@ -602,7 +602,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
    if (type == "stepcon") {
 
       if (!stepsspec)
-         stop(mstyle$stop("Must specify 'steps' argument for this type of selection model."))
+         stop(mstyle$stop("Must specify the 'steps' argument for this type of selection model."))
 
       if (precspec) { # [b]
          warning(mstyle$warning("Argument 'prec' ignored (not applicable to this type of selection model)."), call.=FALSE)

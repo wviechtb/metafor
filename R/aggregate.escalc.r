@@ -10,7 +10,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
       stop(mstyle$stop("Unknown 'struct' specified."))
 
    if (missing(cluster))
-      stop(mstyle$stop("Must specify 'cluster' variable."))
+      stop(mstyle$stop("Must specify the 'cluster' variable."))
 
    na.rm <- .expand1(na.rm, 2L)
 
@@ -127,7 +127,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
          ### checks on time variable
 
          if (!is.element("time", names(mf)))
-            stop(mstyle$stop("Must specify 'time' variable for this var-cov structure."))
+            stop(mstyle$stop("Must specify a 'time' variable for this var-cov structure."))
 
          if (length(time) != k)
             stop(mstyle$stop(paste0("Length of variable specified via 'time' (", length(time), ") does not match length of data (", k, ").")))
@@ -137,7 +137,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
             ### checks on obs variable
 
          if (!is.element("obs", names(mf)))
-            stop(mstyle$stop("Must specify 'obs' variable for this var-cov structure."))
+            stop(mstyle$stop("Must specify an 'obs' variable for this var-cov structure."))
 
             if (length(obs) != k)
                stop(mstyle$stop(paste0("Length of variable specified via 'obs' (", length(obs), ") does not match length of data (", k, ").")))

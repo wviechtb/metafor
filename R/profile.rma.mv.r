@@ -100,6 +100,8 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
             if (progbar)
                cat(mstyle$verbose(paste("Profiling sigma2 =", pos, "\n")))
             sav[[j]] <- eval(mc.vc, envir=parent.frame())
+            #if (!is.null(ddd[["callback"]]))
+            #   eval(expr = parse(text = ddd[["callback"]]))
          }
       }
 
@@ -177,6 +179,8 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
       return(invisible(sav))
 
    }
+
+   #########################################################################
 
    ### round and take unique values
 

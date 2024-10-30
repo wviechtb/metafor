@@ -100,7 +100,7 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
 
 }
 \value{
-   A \mjseqn{k \times k} variance-covariance matrix (given as a sparse matrix when \code{sparse=TRUE}), where \mjseqn{k} denotes the length of the \code{vi} variable (i.e., the number of rows in the dataset).
+   A \mjeqn{k \times k}{kxk} variance-covariance matrix (given as a sparse matrix when \code{sparse=TRUE}), where \mjseqn{k} denotes the length of the \code{vi} variable (i.e., the number of rows in the dataset).
 }
 \note{
    Depending on the data structure, the specified variables, and the specified values for \code{rho} and/or \code{phi}, it is possible that the constructed variance-covariance matrix is not positive definite within one or more clusters (this is checked when \code{checkpd=TRUE}, which is the default). If such non-positive definite submatrices are found, the reasons for this should be carefully checked since this might indicate misapplication of the function and/or the specification of implausible values for \code{rho} and/or \code{phi}.

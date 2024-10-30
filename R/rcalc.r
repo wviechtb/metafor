@@ -30,7 +30,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
    if (inherits(x, "formula")) {
 
       if (missing(data))
-         stop(mstyle$stop("Must specify 'data' argument when 'x' is a formula."))
+         stop(mstyle$stop("Must specify the 'data' argument when 'x' is a formula."))
 
       if (!is.data.frame(data))
          data <- data.frame(data)

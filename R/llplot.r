@@ -84,7 +84,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
       if (is.null(vi)) {
          if (is.null(sei)) {
-            stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
+            stop(mstyle$stop("Must specify the 'vi' or 'sei' argument."))
          } else {
             vi <- sei^2
          }

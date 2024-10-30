@@ -132,6 +132,8 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
 
    }
 
+   #########################################################################
+
    ### round and take unique values
 
    if (!missing(delta) && is.numeric(delta))

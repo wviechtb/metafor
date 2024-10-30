@@ -15,7 +15,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    ### (arguments "to" and "vtype" are checked inside escalc function)
 
    if (missing(measure))
-      stop(mstyle$stop("Must specify 'measure' argument."))
+      stop(mstyle$stop("Must specify the 'measure' argument."))
 
    if (!is.element(measure, c("OR","IRR","PLO","IRLN", "PR","RR","RD","PLN")))
       stop(mstyle$stop("Unknown 'measure' specified."))

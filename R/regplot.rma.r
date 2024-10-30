@@ -111,7 +111,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    if (inherits(pred, "list.rma")) {
       addpred <- TRUE
       if (missing(xvals))
-         stop(mstyle$stop("Must specify 'xvals' argument when passing an object from predict() to 'pred'."))
+         stop(mstyle$stop("Must specify the 'xvals' argument when passing an object from predict() to 'pred'."))
       if (length(xvals) != length(pred$pred))
          stop(mstyle$stop(paste0("Length of the 'xvals' argument (", length(xvals), ") does not correspond to the number of predicted values (", length(pred$pred), ").")))
    } else {
@@ -183,7 +183,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          if (x$p == 1L) {
             mod <- 1
          } else {
-            stop(mstyle$stop("Must specify 'mod' argument for models with multiple predictors."))
+            stop(mstyle$stop("Must specify the 'mod' argument for models with multiple predictors."))
          }
       }
    }

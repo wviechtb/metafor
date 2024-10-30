@@ -135,13 +135,13 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
       }
 
       if (type %in% c("Rosenthal", "Rosenberg", "General") && is.null(vi))
-         stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
+         stop(mstyle$stop("Must specify the 'vi' or 'sei' argument."))
 
       ### ensure backwards compatibility with the 'weighted' argument when type="Orwin"
 
       if (type == "Orwin") {
          if (isTRUE(ddd$weighted) && is.null(vi)) # if weighted=TRUE, then check that the vi's are available
-            stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
+            stop(mstyle$stop("Must specify the 'vi' or 'sei' argument."))
          if (isFALSE(ddd$weighted)) # if weighted=FALSE, then set vi <- 1 for unweighted
             vi <- 1
          if (is.null(ddd$weighted) && is.null(vi)) # if weighted is unspecified, set vi <- 1 if vi's are unspecified

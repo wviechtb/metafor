@@ -6,10 +6,10 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ...) {
    ############################################################################
 
    if (missing(vi))
-      stop(mstyle$stop("Must specify 'vi' variable."))
+      stop(mstyle$stop("Must specify the 'vi' variable."))
 
    if (missing(cluster))
-      stop(mstyle$stop("Must specify 'cluster' variable."))
+      stop(mstyle$stop("Must specify the 'cluster' variable."))
 
    ### get ... argument and check for extra/superfluous arguments
 
@@ -26,7 +26,7 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ...) {
       data <- NULL
 
    if (is.null(data) && !missing(rvars))
-      stop(mstyle$stop("Must specify 'data' argument when using 'rvars'."))
+      stop(mstyle$stop("Must specify the 'data' argument when using 'rvars'."))
 
    if (is.null(data)) {
       data <- sys.frame(sys.parent())

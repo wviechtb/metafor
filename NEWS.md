@@ -1,4 +1,4 @@
-# metafor 4.7-42 (2024-10-28)
+# metafor 4.7-43 (2024-10-31)
 
 - some general changes to the various `forest()` functions: argument `header` is now `TRUE` by default, the y-axis is now created with `yaxs="i"`, and the y-axis limits have been tweaked slightly in accordance
 
@@ -12,9 +12,13 @@
 
 - added extractor function `se()` for extracting standard errors from model objects
 
-- added a `pairmat()` function to construct a matrix of pairwise contrasts
+- added function `pairmat()` to construct a matrix of pairwise contrasts
+
+- added function `deltamethod()` to apply the (multivariate) delta method to a set of estimates
 
 - `anova()` and `predict()` gain an `adjust` argument for adjusting p-values / interval bounds for multiple testing
+
+- fixed `predict()` ignoring the `level` argument for `robust.rma` objects obtained with `clubSandwich=TRUE`
 
 - `print.anova.rma()` and `print.list.anova.rma()` now also print significance stars for some tests (unless `getOption("show.signif.stars")` is `FALSE`)
 
@@ -36,17 +40,15 @@
 
 - `nobs()` now just returns the number of estimates, not the effective number of observations
 
+- some tweaks were made to `vcalc()` to speed up the calculations (by James Pustejovsky)
+
 - added measures `"PRZ"`, `"CLES"`, `"AUC"`, `"CLESN"`, `"AUCN"`, `"CLESCN"`, and `"AUCCN"` to `escalc()`
 
 - `escalc()` gains a `flip` argument
 
-- fixed `predict()` ignoring the `level` argument for `robust.rma` objects obtained with `clubSandwich=TRUE`
-
-- some tweaks were made to `vcalc()` to speed up the calculations (by James Pustejovsky)
+- `escalc()` gains a `correct` argument (to specify whether a bias correction should be applied)
 
 - added transformation function `transf.dtoovl()` (for transforming standardized mean differences to overlapping coefficient values) and ``transf.dtocliffd()` (for transforming standardized mean differences to Cliff's delta values)
-
-- `escalc()` gains a `correct` argument (to specify whether a bias correction should be applied)
 
 - better handling of `outlist="minimal"`
 

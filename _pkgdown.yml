@@ -181,10 +181,11 @@ reference:
       - print.gosh.rma
       - print.hc.rma.uni
       - print.list.rma
-      - print.matreg
       - print.permutest.rma.uni
       - print.ranktest
       - print.regtest
+      - print.matreg
+      - print.deltamethod
   # - title: "Datasets"
   #   desc: >
   #     Datasets included with the package.
@@ -202,6 +203,8 @@ reference:
       - formula.rma
       - coef.matreg
       - vcov.matreg
+      - coef.deltamethod
+      - vcov.deltamethod
   - title: "Convenience Functions"
     desc: >
       Miscellaneous convenience functions.
@@ -218,6 +221,7 @@ reference:
       - reporter
       - matreg
       - vec2mat
+      - deltamethod
       - aggregate.escalc
       - metafor.news
       - transf

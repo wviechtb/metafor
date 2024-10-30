@@ -10,7 +10,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
    ### check/process R argument
 
    if (missing(R))
-      stop(mstyle$stop("Must specify 'R' argument."))
+      stop(mstyle$stop("Must specify the 'R' argument."))
 
    R <- as.matrix(R)
 

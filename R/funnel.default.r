@@ -90,7 +90,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    if (is.element(yaxis, c("sei", "vi", "seinv", "vinv", "wi"))) {
       if (is.null(vi))
-         stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
+         stop(mstyle$stop("Must specify the 'vi' or 'sei' argument."))
       if (length(vi) != k)
          stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') is not the same."))
    }

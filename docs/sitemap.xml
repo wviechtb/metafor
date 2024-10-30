@@ -25,6 +25,7 @@
 <url><loc>https://wviechtb.github.io/metafor/reference/conv.fivenum.html</loc></url>
 <url><loc>https://wviechtb.github.io/metafor/reference/conv.wald.html</loc></url>
 <url><loc>https://wviechtb.github.io/metafor/reference/cumul.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/deltamethod.html</loc></url>
 <url><loc>https://wviechtb.github.io/metafor/reference/dfround.html</loc></url>
 <url><loc>https://wviechtb.github.io/metafor/reference/emmprep.html</loc></url>
 <url><loc>https://wviechtb.github.io/metafor/reference/escalc.html</loc></url>
@@ -51,6 +52,7 @@
 <url><loc>https://wviechtb.github.io/metafor/reference/metafor.news.html</loc></url>
 <url><loc>https://wviechtb.github.io/metafor/reference/methods.anova.rma.html</loc></url>
 <url><loc>https://wviechtb.github.io/metafor/reference/methods.confint.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/methods.deltamethod.html</loc></url>
 <url><loc>https://wviechtb.github.io/metafor/reference/methods.escalc.html</loc></url>
 <url><loc>https://wviechtb.github.io/metafor/reference/methods.list.rma.html</loc></url>
 <url><loc>https://wviechtb.github.io/metafor/reference/methods.matreg.html</loc></url>
@@ -72,6 +74,7 @@
 <url><loc>https://wviechtb.github.io/metafor/reference/predict.rma.html</loc></url>
 <url><loc>https://wviechtb.github.io/metafor/reference/print.anova.rma.html</loc></url>
 <url><loc>https://wviechtb.github.io/metafor/reference/print.confint.rma.html</loc></url>
+<url><loc>https://wviechtb.github.io/metafor/reference/print.deltamethod.html</loc></url>
 <url><loc>https://wviechtb.github.io/metafor/reference/print.escalc.html</loc></url>
 <url><loc>https://wviechtb.github.io/metafor/reference/print.fsn.html</loc></url>
 <url><loc>https://wviechtb.github.io/metafor/reference/print.gosh.rma.html</loc></url>

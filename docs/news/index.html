@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-42</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-43</span>
       </span>
     </div>
 
@@ -90,15 +90,17 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.7-42" id="metafor-47-42-2024-10-28">metafor 4.7-42 (2024-10-28)<a class="anchor" aria-label="anchor" href="#metafor-47-42-2024-10-28"></a></h2>
+<h2 class="page-header" data-toc-text="4.7-43" id="metafor-47-43-2024-10-31">metafor 4.7-43 (2024-10-31)<a class="anchor" aria-label="anchor" href="#metafor-47-43-2024-10-31"></a></h2>
 <ul><li><p>some general changes to the various <code><a href="../reference/forest.html">forest()</a></code> functions: argument <code>header</code> is now <code>TRUE</code> by default, the y-axis is now created with <code>yaxs="i"</code>, and the y-axis limits have been tweaked slightly in accordance</p></li>
 <li><p><code><a href="../reference/forest.rma.html">forest.rma()</a></code> and the various <code><a href="../reference/addpoly.html">addpoly()</a></code> functions now provides multiple styles for drawing the prediction interval via the <code>predstyle</code> argument</p></li>
 <li><p><code><a href="../reference/forest.rma.html">forest.rma()</a></code> and <code><a href="../reference/addpoly.rma.html">addpoly.rma()</a></code> now write out the default label (instead of an abbreviation) for the model results; as before, the label can be changed via the <code>mlab</code> argument</p></li>
 <li><p>added an <code>ilab.lab</code> argument to the various <code><a href="../reference/forest.html">forest()</a></code> functions for adding header labels to the plot for the additional study information columns</p></li>
 <li><p>the <code><a href="../reference/predict.rma.html">predict.rma()</a></code> and <code><a href="../reference/predict.rma.html">predict.rma.ls()</a></code> functions now also accept a matrix as input that includes a column for the intercept term (in which case the <code>intercept</code> argument is ignored and the first column of the matrix controls whether the intercept term is included in calculating the predicted value(s))</p></li>
 <li><p>added extractor function <code><a href="../reference/se.html">se()</a></code> for extracting standard errors from model objects</p></li>
-<li><p>added a <code><a href="../reference/pairmat.html">pairmat()</a></code> function to construct a matrix of pairwise contrasts</p></li>
+<li><p>added function <code><a href="../reference/pairmat.html">pairmat()</a></code> to construct a matrix of pairwise contrasts</p></li>
+<li><p>added function <code><a href="../reference/deltamethod.html">deltamethod()</a></code> to apply the (multivariate) delta method to a set of estimates</p></li>
 <li><p><code><a href="../reference/anova.rma.html">anova()</a></code> and <code><a href="../reference/predict.rma.html">predict()</a></code> gain an <code>adjust</code> argument for adjusting p-values / interval bounds for multiple testing</p></li>
+<li><p>fixed <code><a href="../reference/predict.rma.html">predict()</a></code> ignoring the <code>level</code> argument for <code>robust.rma</code> objects obtained with <code>clubSandwich=TRUE</code></p></li>
 <li><p><code><a href="../reference/print.anova.rma.html">print.anova.rma()</a></code> and <code><a href="../reference/print.anova.rma.html">print.list.anova.rma()</a></code> now also print significance stars for some tests (unless <code>getOption("show.signif.stars")</code> is <code>FALSE</code>)</p></li>
 <li><p>added a <code>collapse</code> argument to the various <code><a href="../reference/cumul.html">cumul()</a></code> functions (to specify whether studies with the same value of the <code>order</code> variable should be added simultaneously)</p></li>
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now counts the number of levels of a random effect more appropriately; this may trigger more often the check that the number of levels is equal to 1, in which case the corresponding variance component is automatically fixed to 0; this check can be omitted with <code>control=list(check.k.gtr.1=FALSE)</code></p></li>
@@ -109,12 +111,11 @@
 <li><p><code><a href="../reference/permutest.html">permutest.rma.uni()</a></code> gains a <code>btt</code> argument and <code><a href="../reference/permutest.html">permutest.rma.ls()</a></code> gains <code>btt</code> and <code>att</code> arguments</p></li>
 <li><p><code><a href="../reference/selmodel.html">selmodel()</a></code> gains a <code>subset</code> argument (to specify a subset of studies to which the selection function should apply)</p></li>
 <li><p><code><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs()</a></code> now just returns the number of estimates, not the effective number of observations</p></li>
+<li><p>some tweaks were made to <code><a href="../reference/vcalc.html">vcalc()</a></code> to speed up the calculations (by James Pustejovsky)</p></li>
 <li><p>added measures <code>"PRZ"</code>, <code>"CLES"</code>, <code>"AUC"</code>, <code>"CLESN"</code>, <code>"AUCN"</code>, <code>"CLESCN"</code>, and <code>"AUCCN"</code> to <code><a href="../reference/escalc.html">escalc()</a></code></p></li>
 <li><p><code><a href="../reference/escalc.html">escalc()</a></code> gains a <code>flip</code> argument</p></li>
-<li><p>fixed <code><a href="../reference/predict.rma.html">predict()</a></code> ignoring the <code>level</code> argument for <code>robust.rma</code> objects obtained with <code>clubSandwich=TRUE</code></p></li>
-<li><p>some tweaks were made to <code><a href="../reference/vcalc.html">vcalc()</a></code> to speed up the calculations (by James Pustejovsky)</p></li>
-<li><p>added transformation function <code><a href="../reference/transf.html">transf.dtoovl()</a></code> (for transforming standardized mean differences to overlapping coefficient values) and `<code><a href="../reference/transf.html">transf.dtocliffd()</a></code> (for transforming standardized mean differences to Cliff’s delta values)</p></li>
 <li><p><code><a href="../reference/escalc.html">escalc()</a></code> gains a <code>correct</code> argument (to specify whether a bias correction should be applied)</p></li>
+<li><p>added transformation function <code><a href="../reference/transf.html">transf.dtoovl()</a></code> (for transforming standardized mean differences to overlapping coefficient values) and `<code><a href="../reference/transf.html">transf.dtocliffd()</a></code> (for transforming standardized mean differences to Cliff’s delta values)</p></li>
 <li><p>better handling of <code>outlist="minimal"</code></p></li>
 <li><p>added more tests</p></li>
 </ul></div>

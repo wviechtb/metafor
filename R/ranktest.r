@@ -87,7 +87,7 @@ ranktest <- function(x, vi, sei, subset, data, digits, ...) {
       }
 
       if (is.null(vi))
-         stop(mstyle$stop("Must specify 'vi' or 'sei' argument."))
+         stop(mstyle$stop("Must specify the 'vi' or 'sei' argument."))
 
       ### check length of yi and vi
 
