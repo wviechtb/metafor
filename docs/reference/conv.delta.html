@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-43</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-44</span>
       </span>
     </div>
 
@@ -134,7 +134,7 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The <code><a href="escalc.html">escalc</a></code> function can be used to compute a wide variety of effect sizes or ‘outcome measures’. In some cases, it may be necessary to transform one type of measure to another. The present function provides a general method for doing so via the <a href="https://en.wikipedia.org/wiki/Delta_method" class="external-link">delta method</a>, which briefly works as follows.</p>
+    <p>The <code><a href="escalc.html">escalc</a></code> function can be used to compute a wide variety of effect sizes or ‘outcome measures’. In some cases, it may be necessary to transform one type of measure to another. The present function provides a general method for doing so via the <a href="https://en.wikipedia.org/wiki/Delta_method" class="external-link">delta method</a> (e.g., van der Vaart, 1998), which briefly works as follows.</p>
 <p>Let <em></em>\(y_i\) denote the observed effect size or outcome for a particular study and <em></em>\(v_i\) the corresponding sampling variance. Then <em></em>\(f(y_i)\) will be the transformed effect size or outcome, where <em></em>\(f(\cdot)\) is the function specified via the <code>transf</code> argument. The sampling variance of the transformed effect size or outcome is then computed with <em></em>\(v_i \times f'(y_i)^2\), where <em></em>\(f'(y_i)\) denotes the derivative of <em></em>\(f(\cdot)\) evaluated at <em></em>\(y_i\). The present function computes the derivative numerically using the <code><a href="https://rdrr.io/pkg/numDeriv/man/grad.html" class="external-link">grad</a></code> function from the <code>numDeriv</code> package.</p>
 <p>The value of the observed effect size or outcome should be the first argument of the function specified via <code>transf</code>. The function can have additional arguments, which can be specified via the ... argument. However, due to the manner in which these additional arguments are evaluated, they cannot have names that match one of the arguments of the <code><a href="https://rdrr.io/pkg/numDeriv/man/grad.html" class="external-link">grad</a></code> function (an error will be issued if such a naming clash is detected).</p>
 <p>Optionally, one can use the <code>ni</code> argument to supply the total sample sizes of the studies. This has no relevance for the calculations done by the present function, but some other functions may use this information (e.g., when drawing a funnel plot with the <code><a href="funnel.html">funnel</a></code> function and one adjusts the <code>yaxis</code> argument to one of the options that puts the sample sizes or some transformation thereof on the y-axis).</p>
@@ -151,11 +151,12 @@
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1–48. <a href="https://doi.org/10.18637/jss.v036.i03" class="external-link">https://doi.org/10.18637/jss.v036.i03</a></p>
+    <p>van der Vaart, A. W. (1998). <em>Asymptotic statistics</em>. Cambridge, UK: Cambridge University Press.</p>
+<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1–48. <a href="https://doi.org/10.18637/jss.v036.i03" class="external-link">https://doi.org/10.18637/jss.v036.i03</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="escalc.html">escalc</a></code> for a function to compute various effect size measures.</p></div>
+    <div class="dont-index"><p><code><a href="escalc.html">escalc</a></code> for a function to compute various effect size measures and <code><a href="deltamethod.html">deltamethod</a></code> for a function to apply the multivariate delta method to a set of estimates.</p></div>
     </div>
 
     <div id="ref-examples">

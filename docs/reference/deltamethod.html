@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-43</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-44</span>
       </span>
     </div>
 
@@ -123,7 +123,7 @@
     <div id="details">
     <h2>Details</h2>
     <p>Let <em></em>\(\hat{\theta}\) denote a vector of <em></em>\(p\) estimates which can be specified via the <code>x</code> argument and let <em></em>\(\Sigma\) denote the corresponding <em></em>\(p \times p\) variance-covariance matrix, which can be specified via the <code>vcov</code> argument. If <code>x</code> is not an vector with estimates, then the function assumes that <code>x</code> is a model object and will try to use <code>coef(x)</code> and <code>vcov(x)</code> to extract the model coefficients and the corresponding variance-covariance matrix (in this case, the <code>vcov</code> argument is ignored).</p>
-<p>Let <em></em>\(f(\cdot)\) be a function, specified via the <code>fun</code> argument, with <em></em>\(p\) inputs (arguments), which returns a numeric (and atomic) vector of <em></em>\(q\) transformed estimates. Then the function computes <code>fun(x)</code> and the corresponding variance-covariance matrix of the transformed estimates using the multivariate delta method with <em></em>\(\nabla f(\hat{\theta})' \cdot \Sigma \cdot \nabla f(\hat{\theta})\), where <em></em>\(\nabla f(\hat{\theta})\) denotes the gradient of <em></em>\(f(\cdot)\) evaluated at <em></em>\(\hat{\theta}\). The function computes the gradient numerically using the <code><a href="https://calculus.eguidotti.com/reference/derivative.html" class="external-link">derivative</a></code> function from the <code>calculus</code> package.</p>
+<p>Let <em></em>\(f(\cdot)\) be a function, specified via the <code>fun</code> argument, with <em></em>\(p\) inputs/arguments (or with a single argument that is assumed to be a vector of length <em></em>\(p\)), which returns a numeric (and atomic) vector of <em></em>\(q\) transformed estimates. Then the function computes <em></em>\(f(\hat{\theta})\) and the corresponding variance-covariance matrix of the transformed estimates using the <a href="https://en.wikipedia.org/wiki/Delta_method#Multivariate_delta_method" class="external-link">multivariate delta method</a> (e.g., van der Vaart, 1998) with \[\textrm{Var}[f(\hat{\theta})] = \nabla f(\hat{\theta})' \cdot \Sigma \cdot \nabla f(\hat{\theta})\] where <em></em>\(\nabla f(\hat{\theta})\) denotes the gradient of <em></em>\(f(\cdot)\) evaluated at <em></em>\(\hat{\theta}\). The function computes the gradient numerically using the <code><a href="https://calculus.eguidotti.com/reference/derivative.html" class="external-link">derivative</a></code> function from the <code>calculus</code> package.</p>
 <p>The function also computes Wald-type tests and confidence intervals for the <em></em>\(q\) transformed estimates. The <code>level</code> argument can be used to control the confidence interval level.</p>
     </div>
     <div id="value">
@@ -147,13 +147,248 @@
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1–48. <a href="https://doi.org/10.18637/jss.v036.i03" class="external-link">https://doi.org/10.18637/jss.v036.i03</a></p>
+    <p>van der Vaart, A. W. (1998). <em>Asymptotic statistics</em>. Cambridge, UK: Cambridge University Press.</p>
+<p>Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. <em>Journal of Statistical Software</em>, <b>36</b>(3), 1–48. <a href="https://doi.org/10.18637/jss.v036.i03" class="external-link">https://doi.org/10.18637/jss.v036.i03</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="conv.delta.html">conv.delta</a></code> for a function to apply the (univariate) delta method to observed effect sizes or outcomes and their sampling variances.</p></div>
     </div>
 
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### copy data into 'dat'</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.craft2003.html" class="external-link">dat.craft2003</a></span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### construct dataset and var-cov matrix of the correlations</span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="rcalc.html">rcalc</a></span><span class="op">(</span><span class="va">ri</span> <span class="op">~</span> <span class="va">var1</span> <span class="op">+</span> <span class="va">var2</span> <span class="op">|</span> <span class="va">study</span>, ni<span class="op">=</span><span class="va">ni</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="va">tmp</span><span class="op">$</span><span class="va">V</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">tmp</span><span class="op">$</span><span class="va">dat</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### turn var1.var2 into a factor with the desired order of levels</span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">var1.var2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">var1.var2</span>,</span></span>
+<span class="r-in"><span>   levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"acog.perf"</span>, <span class="st">"asom.perf"</span>, <span class="st">"conf.perf"</span>, <span class="st">"acog.asom"</span>, <span class="st">"acog.conf"</span>, <span class="st">"asom.conf"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### multivariate random-effects model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">V</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="va">var1.var2</span>, random <span class="op">=</span> <span class="op">~</span> <span class="va">var1.var2</span> <span class="op">|</span> <span class="va">study</span>, struct<span class="op">=</span><span class="st">"UN"</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>9 rows with NAs omitted from model fitting.</span>
+<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 51; method: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variance Components:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> outer factor: study     (nlvls = 9)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> inner factor: var1.var2 (nlvls = 6)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             estim    sqrt  k.lvl  fixed      level </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.1    0.1611  0.4014      9     no  acog.perf </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.2    0.0604  0.2459      9     no  asom.perf </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.3    0.0468  0.2163      8     no  conf.perf </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.4    0.0047  0.0683      9     no  acog.asom </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.5    0.0125  0.1119      8     no  acog.conf </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.6    0.0111  0.1052      8     no  asom.conf </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            rho.acg.p  rho.asm.p  rho.cnf.  rho.acg.s  rho.acg.c  rho.asm.c    acg.p  asm.p  cnf. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf          1                                                              -      9     8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf     0.9497          1                                                  no      -     8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf    -0.6178    -0.5969         1                                        no     no     - </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom     0.5491     0.4604   -0.9345          1                             no     no    no </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf     0.0432    -0.0495    0.7023    -0.6961          1                  no     no    no </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf     0.3532     0.2688   -0.1311    -0.0891     0.4193          1       no     no    no </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            acg.s  acg.c  asm.c </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf      9      8      8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf      9      8      8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf      8      8      8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom      -      8      8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf     no      -      8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf     no     no      - </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Residual Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QE(df = 45) = 334.8358, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 1:6):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 6) = 596.7705, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     estimate      se     zval    pval    ci.lb    ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2acog.perf   -0.0600  0.1408  -0.4264  0.6698  -0.3359   0.2159      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2asom.perf   -0.1423  0.0917  -1.5527  0.1205  -0.3220   0.0373      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2conf.perf    0.3167  0.0847   3.7393  0.0002   0.1507   0.4827  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2acog.asom    0.5671  0.0367  15.4640  &lt;.0001   0.4953   0.6390  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2acog.conf   -0.4888  0.0509  -9.6048  &lt;.0001  -0.5886  -0.3891  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2asom.conf   -0.4750  0.0506  -9.3901  &lt;.0001  -0.5741  -0.3758  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### restructure estimated mean correlations into a 4x4 matrix</span></span></span>
+<span class="r-in"><span><span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="vec2mat.html">vec2mat</a></span><span class="op">(</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"perf"</span>, <span class="st">"acog"</span>, <span class="st">"asom"</span>, <span class="st">"conf"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">R</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        perf   acog   asom   conf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> perf  1.000 -0.060 -0.142  0.317</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog -0.060  1.000  0.567 -0.489</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom -0.142  0.567  1.000 -0.475</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conf  0.317 -0.489 -0.475  1.000</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### check that order in vcov(res) corresponds to order in R</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="vcov.rma.html">vcov</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    var1.var2acog.perf var1.var2asom.perf var1.var2conf.perf var1.var2acog.asom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2acog.perf             0.0198             0.0115            -0.0069             0.0017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2asom.perf             0.0115             0.0084            -0.0043             0.0009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2conf.perf            -0.0069            -0.0043             0.0072            -0.0017</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2acog.asom             0.0017             0.0009            -0.0017             0.0013</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2acog.conf             0.0004            -0.0002             0.0023            -0.0009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2asom.conf             0.0018             0.0010            -0.0004            -0.0004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    var1.var2acog.conf var1.var2asom.conf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2acog.perf             0.0004             0.0018</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2asom.perf            -0.0002             0.0010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2conf.perf             0.0023            -0.0004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2acog.asom            -0.0009            -0.0004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2acog.conf             0.0026             0.0011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2asom.conf             0.0011             0.0026</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### fit regression model with 'perf' as outcome and 'acog', 'asom', and 'conf' as predictors</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="matreg.html">matreg</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">4</span>, R<span class="op">=</span><span class="va">R</span>, V<span class="op">=</span><span class="fu"><a href="vcov.rma.html">vcov</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       estimate      se     zval    pval    ci.lb   ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog    0.1482  0.1566   0.9465  0.3439  -0.1587  0.4550      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom   -0.0536  0.0768  -0.6979  0.4852  -0.2043  0.0970      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conf    0.3637  0.0910   3.9985  &lt;.0001   0.1854  0.5419  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### same analysis but using the deltamethod() function</span></span></span>
+<span class="r-in"><span><span class="fu">deltamethod</span><span class="op">(</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>, <span class="fu"><a href="vcov.rma.html">vcov</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>, fun<span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">r1</span>,<span class="va">r2</span>,<span class="va">r3</span>,<span class="va">r4</span>,<span class="va">r5</span>,<span class="va">r6</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>   <span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="vec2mat.html">vec2mat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">r1</span>,<span class="va">r2</span>,<span class="va">r3</span>,<span class="va">r4</span>,<span class="va">r5</span>,<span class="va">r6</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/solve-methods.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">R</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">R</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"acog"</span>,<span class="st">"asom"</span>,<span class="st">"conf"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       estimate      se     zval    pval    ci.lb   ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog    0.1482  0.1566   0.9465  0.3439  -0.1587  0.4550      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom   -0.0536  0.0768  -0.6979  0.4852  -0.2043  0.0970      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conf    0.3637  0.0910   3.9985  &lt;.0001   0.1854  0.5419  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### using a function that takes a vector as input</span></span></span>
+<span class="r-in"><span><span class="fu">deltamethod</span><span class="op">(</span><span class="fu"><a href="coef.rma.html">coef</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>, <span class="fu"><a href="vcov.rma.html">vcov</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>, fun<span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">r</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>   <span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="vec2mat.html">vec2mat</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="https://rdrr.io/r/stats/setNames.html" class="external-link">setNames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/solve-methods.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">R</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">R</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"acog"</span>,<span class="st">"asom"</span>,<span class="st">"conf"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       estimate      se     zval    pval    ci.lb   ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog    0.1482  0.1566   0.9465  0.3439  -0.1587  0.4550      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom   -0.0536  0.0768  -0.6979  0.4852  -0.2043  0.0970      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conf    0.3637  0.0910   3.9985  &lt;.0001   0.1854  0.5419  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### construct dataset and var-cov matrix of the r-to-z transformed correlations</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.craft2003.html" class="external-link">dat.craft2003</a></span></span></span>
+<span class="r-in"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="rcalc.html">rcalc</a></span><span class="op">(</span><span class="va">ri</span> <span class="op">~</span> <span class="va">var1</span> <span class="op">+</span> <span class="va">var2</span> <span class="op">|</span> <span class="va">study</span>, ni<span class="op">=</span><span class="va">ni</span>, data<span class="op">=</span><span class="va">dat</span>, rtoz<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="va">tmp</span><span class="op">$</span><span class="va">V</span></span></span>
+<span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">tmp</span><span class="op">$</span><span class="va">dat</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### turn var1.var2 into a factor with the desired order of levels</span></span></span>
+<span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">var1.var2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">var1.var2</span>,</span></span>
+<span class="r-in"><span>   levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"acog.perf"</span>, <span class="st">"asom.perf"</span>, <span class="st">"conf.perf"</span>, <span class="st">"acog.asom"</span>, <span class="st">"acog.conf"</span>, <span class="st">"asom.conf"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### multivariate random-effects model</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.mv.html">rma.mv</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">V</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="va">var1.var2</span>, random <span class="op">=</span> <span class="op">~</span> <span class="va">var1.var2</span> <span class="op">|</span> <span class="va">study</span>, struct<span class="op">=</span><span class="st">"UN"</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>9 rows with NAs omitted from model fitting.</span>
+<span class="r-in"><span><span class="va">res</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multivariate Meta-Analysis Model (k = 51; method: REML)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Variance Components:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> outer factor: study     (nlvls = 9)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> inner factor: var1.var2 (nlvls = 6)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             estim    sqrt  k.lvl  fixed      level </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.1    0.1747  0.4180      9     no  acog.perf </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.2    0.0581  0.2410      9     no  asom.perf </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.3    0.0594  0.2438      8     no  conf.perf </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.4    0.0095  0.0974      9     no  acog.asom </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.5    0.0166  0.1290      8     no  acog.conf </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> tau^2.6    0.0110  0.1048      8     no  asom.conf </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            rho.acg.p  rho.asm.p  rho.cnf.  rho.acg.s  rho.acg.c  rho.asm.c    acg.p  asm.p  cnf. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf          1                                                              -      9     8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf     0.9426          1                                                  no      -     8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf    -0.5875    -0.5611         1                                        no     no     - </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom     0.6497     0.4954   -0.9122          1                             no     no    no </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf    -0.0622    -0.1297    0.8080    -0.6220          1                  no     no    no </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf     0.2732     0.2499   -0.1899     0.1025     0.1724          1       no     no    no </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            acg.s  acg.c  asm.c </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf      9      8      8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf      9      8      8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf      8      8      8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom      -      8      8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf     no      -      8 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf     no     no      - </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test for Residual Heterogeneity:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QE(df = 45) = 272.3337, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Test of Moderators (coefficients 1:6):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> QM(df = 6) = 400.3522, p-val &lt; .0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model Results:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     estimate      se     zval    pval    ci.lb    ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2acog.perf   -0.0746  0.1493  -0.4995  0.6174  -0.3672   0.2180      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2asom.perf   -0.1597  0.0927  -1.7226  0.0850  -0.3414   0.0220    . </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2conf.perf    0.3460  0.0965   3.5839  0.0003   0.1568   0.5352  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2acog.asom    0.6203  0.0526  11.7875  &lt;.0001   0.5172   0.7234  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2acog.conf   -0.5135  0.0623  -8.2369  &lt;.0001  -0.6356  -0.3913  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> var1.var2asom.conf   -0.4872  0.0580  -8.3964  &lt;.0001  -0.6010  -0.3735  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### estimate the difference between r(acog,perf) and r(asom,perf)</span></span></span>
+<span class="r-in"><span><span class="fu">deltamethod</span><span class="op">(</span><span class="va">res</span>, fun<span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">z1</span>,<span class="va">z2</span>,<span class="va">z3</span>,<span class="va">z4</span>,<span class="va">z5</span>,<span class="va">z6</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="transf.html">transf.ztor</a></span><span class="op">(</span><span class="va">z1</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="transf.html">transf.ztor</a></span><span class="op">(</span><span class="va">z2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se    zval    pval    ci.lb   ci.ub    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.0839  0.0828  1.0137  0.3107  -0.0784  0.2462    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### using a function that takes a vector as input</span></span></span>
+<span class="r-in"><span><span class="fu">deltamethod</span><span class="op">(</span><span class="va">res</span>, fun<span class="op">=</span><span class="kw">function</span><span class="op">(</span><span class="va">z</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>   <span class="fu"><a href="transf.html">transf.ztor</a></span><span class="op">(</span><span class="va">z</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="transf.html">transf.ztor</a></span><span class="op">(</span><span class="va">z</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> estimate      se    zval    pval    ci.lb   ci.ub    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0.0839  0.0828  1.0137  0.3107  -0.0784  0.2462    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

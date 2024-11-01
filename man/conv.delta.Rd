@@ -20,7 +20,7 @@ conv.delta(yi, vi, ni, data, include, transf, var.names, append=TRUE, replace="i
    \item{\dots}{other arguments for the transformation function.}
 }
 \details{
-   The \code{\link{escalc}} function can be used to compute a wide variety of effect sizes or \sQuote{outcome measures}. In some cases, it may be necessary to transform one type of measure to another. The present function provides a general method for doing so via the \href{https://en.wikipedia.org/wiki/Delta_method}{delta method}, which briefly works as follows.
+   The \code{\link{escalc}} function can be used to compute a wide variety of effect sizes or \sQuote{outcome measures}. In some cases, it may be necessary to transform one type of measure to another. The present function provides a general method for doing so via the \href{https://en.wikipedia.org/wiki/Delta_method}{delta method} (e.g., van der Vaart, 1998), which briefly works as follows.
 
    Let \mjseqn{y_i} denote the observed effect size or outcome for a particular study and \mjseqn{v_i} the corresponding sampling variance. Then \mjseqn{f(y_i)} will be the transformed effect size or outcome, where \mjeqn{f(\cdot)}{f(.)} is the function specified via the \code{transf} argument. The sampling variance of the transformed effect size or outcome is then computed with \mjseqn{v_i \times f'(y_i)^2}, where \mjseqn{f'(y_i)} denotes the derivative of \mjeqn{f(\cdot)}{f(.)} evaluated at \mjseqn{y_i}. The present function computes the derivative numerically using the \code{\link[numDeriv]{grad}} function from the \code{numDeriv} package.
 
@@ -39,10 +39,12 @@ conv.delta(yi, vi, ni, data, include, transf, var.names, append=TRUE, replace="i
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
+   van der Vaart, A. W. (1998). \emph{Asymptotic statistics}. Cambridge, UK: Cambridge University Press.
+
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{escalc}} for a function to compute various effect size measures.
+   \code{\link{escalc}} for a function to compute various effect size measures and \code{\link{deltamethod}} for a function to apply the multivariate delta method to a set of estimates.
 }
 \examples{
 ############################################################################

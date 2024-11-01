@@ -24,7 +24,7 @@ deltamethod <- function(x, vcov, fun, level, H0=0, digits) {
 
    } else {
 
-      ### when x is not just a vector (and then presumably a model object)
+      ### when x is not a vector (and then presumably a model object)
 
       coef <- try(coef(x))
 
@@ -39,10 +39,11 @@ deltamethod <- function(x, vcov, fun, level, H0=0, digits) {
       if (inherits(vcov, "try-error"))
          stop(mstyle$stop("Cannot extract var-cov matrix via vcov() from 'x'."))
 
-      if (inherits(x, c("rma.ls", "rma.uni.selmodel"))) {
+      if (is.list(coef) && names(coef)[1] == "beta")
          coef <- coef$beta
+
+      if (is.list(vcov) && names(vcov)[1] == "beta")
          vcov <- vcov$beta
-      }
 
    }
 
@@ -95,12 +96,20 @@ deltamethod <- function(x, vcov, fun, level, H0=0, digits) {
 
    args <- formalArgs(fun)
 
-   if (length(args) != p)
-      stop(mstyle$stop(paste0("Number of function arguments (", length(args), ") does not match the number of coefficients (", p, ").")))
+   if (length(args) == 1L) {
 
-   names(coef) <- args
+      coef <- unname(coef)
+      coef.transf <- try(fun(coef))
 
-   coef.transf <- try(do.call(fun, args=as.list(coef)))
+   } else {
+
+      if (length(args) != p)
+         stop(mstyle$stop(paste0("Number of function arguments (", length(args), ") does not match the number of coefficients (", p, ").")))
+
+      names(coef) <- args
+      coef.transf <- try(do.call(fun, args=as.list(coef)))
+
+   }
 
    if (inherits(coef.transf, "try-error"))
       stop(mstyle$stop("Error when applying the function to the coefficient(s)."))
@@ -129,6 +138,8 @@ deltamethod <- function(x, vcov, fun, level, H0=0, digits) {
    level <- .level(level)
 
    vcov.transf <- grad %*% vcov %*% t(grad)
+
+   rownames(vcov.transf) <- colnames(vcov.transf) <- names(coef.transf)
 
    crit <- qnorm(level/2, lower.tail=FALSE)
    se.transf <- sqrt(diag(vcov.transf))
