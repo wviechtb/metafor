@@ -385,7 +385,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
       tau2.init <- log(con$tau2.init)
    }
 
-   con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma"))
+   con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma","calculus"))
 
    if (!isTRUE(ddd$skiphes) && !requireNamespace(con$hesspack, quietly=TRUE))
       stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to compute the Hessian.")))
@@ -1090,6 +1090,14 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
                wi.fun=wi.fun, steps=steps, pgrp=pgrp,
                alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n")
 
+         if (con$hesspack == "calculus")
+            hescall <- paste0("calculus::hessian(", .selmodel.ll, ", var=c(opt.res$par),
+               params=list(yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
+               deltas=deltas, delta.arg=delta.hes, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
+               tau2.arg=tau2.hes, tau2.transf=TRUE, tau2.max=tau2.max, beta.arg=beta.hes,
+               wi.fun=wi.fun, steps=steps, pgrp=pgrp,
+               alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits))\n")
+
       } else {
 
          ### this is the default
@@ -1110,11 +1118,19 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
                wi.fun=wi.fun, steps=steps, pgrp=pgrp,
                alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n")
 
+         if (con$hesspack == "calculus")
+            hescall <- paste0("calculus::hessian(", .selmodel.ll, ", var=c(beta, tau2, delta),
+               params=list(yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
+               deltas=deltas, delta.arg=delta.hes, delta.transf=FALSE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
+               tau2.arg=tau2.hes, tau2.transf=FALSE, tau2.max=tau2.max, beta.arg=beta.hes,
+               wi.fun=wi.fun, steps=steps, pgrp=pgrp,
+               alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits))\n")
+
       }
 
       #return(hescall)
 
-      H <- try(eval(str2lang(hescall)), silent=TRUE)
+      H <- try(eval(str2lang(hescall)), silent=F)
 
       #return(H)
 

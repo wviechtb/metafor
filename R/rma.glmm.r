@@ -841,7 +841,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
       }
 
       if (is.element(optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","Rcgmin","Rvmmin"))) {
-         con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma"))
+         con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma","calculus"))
          if (!requireNamespace(con$hesspack, quietly=TRUE))
             stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to fit this model.")))
          if (con$dnchgcalc == "dFNCHypergeo") {
@@ -1762,6 +1762,8 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             if (optimizer=="nlm")
                res.FE$par <- res.FE$estimate
 
+            res.FE$par <- unname(res.FE$par)
+
             if (verbose > 1)
                message(mstyle$message("Computing the Hessian ..."))
 
@@ -1769,6 +1771,8 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                h.FE <- numDeriv::hessian(.dnchg, x=res.FE$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
             if (con$hesspack == "pracma")
                h.FE <- pracma::hessian(.dnchg, x0=res.FE$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
+            if (con$hesspack == "calculus")
+               h.FE <- calculus::hessian(.dnchg, var=res.FE$par, params=list(ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec))
             #return(list(res.FE=res.FE, h.FE=h.FE))
 
             ### log-likelihood
@@ -1872,6 +1876,8 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                   if (QEconv && optimizer=="nlm")
                      res.QE$par <- res.QE$estimate
 
+                  res.QE$par <- unname(res.QE$par)
+
                   if (QEconv) {
                      if (verbose > 1)
                         message(mstyle$message("Computing the Hessian ..."))
@@ -1879,6 +1885,8 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                         h.QE <- numDeriv::hessian(.dnchg, x=res.QE$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
                      if (con$hesspack == "pracma")
                         h.QE <- pracma::hessian(.dnchg, x0=res.QE$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
+                     if (con$hesspack == "calculus")
+                        h.QE <- calculus::hessian(.dnchg, var=res.QE$par, params=list(ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec))
                   }
 
                } else {
@@ -2102,6 +2110,8 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             if (optimizer=="nlm")
                res.ML$par <- res.ML$estimate
 
+            res.ML$par <- unname(res.ML$par)
+
             if (verbose > 1)
                message(mstyle$message("Computing the Hessian ..."))
 
@@ -2114,6 +2124,8 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                h.ML <- numDeriv::hessian(.dnchg, x=res.ML$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=!tau2eff0, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
             if (con$hesspack == "pracma")
                h.ML <- pracma::hessian(.dnchg, x0=res.ML$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=!tau2eff0, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
+            if (con$hesspack == "calculus")
+               h.ML <- calculus::hessian(.dnchg, var=res.ML$par, params=list(ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=!tau2eff0, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl))
             #return(list(res.ML, h.ML))
 
             ### log-likelihood

@@ -1212,7 +1212,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    if (model == "rma.ls") {
 
-      con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma"))
+      con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma","calculus"))
 
       if (!isTRUE(ddd$skiphes) && !requireNamespace(con$hesspack, quietly=TRUE))
          stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to compute the Hessian.")))
@@ -2209,11 +2209,18 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                                        Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=FALSE, digits=digits,
                                        REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE,
                                        tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta), silent=TRUE)
+
          if (con$hesspack == "pracma")
             H <- try(pracma::hessian(f=.ll.rma.ls, x0=opt.res$par, yi=yi, vi=vi, X=X,
                                      Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=FALSE, digits=digits,
                                      REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE,
                                      tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta), silent=TRUE)
+
+         if (con$hesspack == "calculus")
+            H <- try(calculus::hessian(f=.ll.rma.ls, var=opt.res$par, params=list(yi=yi, vi=vi, X=X,
+                                     Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=FALSE, digits=digits,
+                                     REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE,
+                                     tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta)), silent=TRUE)
 
          if (inherits(H, "try-error")) {
 

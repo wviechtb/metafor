@@ -1867,7 +1867,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    reml <- ifelse(method == "REML", TRUE, FALSE)
 
-   con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma"))
+   con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma","calculus"))
 
    if ((.isTRUE(cvvc) || cvvc %in% c("varcor","varcov","transf") || optbeta) && !requireNamespace(con$hesspack, quietly=TRUE))
       stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to compute the Hessian.")))
@@ -2147,6 +2147,17 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE, vccon=vccon,
             verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE, hessian=TRUE, optbeta=optbeta), silent=!verbose)
 
+      if (con$hesspack == "calculus")
+         hessian <- try(calculus::hessian(f=.ll.rma.mv, var=opt.res$par,
+            params = list(reml=reml, Y=Y, M=V, A=A, X=X, k=k, pX=p,
+            D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
+            sigma2.arg=sigma2, tau2.arg=tau2, rho.arg=rho, gamma2.arg=gamma2, phi.arg=phi, beta.arg=beta.arg,
+            sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
+            withS=withS, withG=withG, withH=withH, struct=struct,
+            g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
+            sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE, vccon=vccon,
+            verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE, hessian=TRUE, optbeta=optbeta)), silent=!verbose)
+
       if (inherits(hessian, "try-error")) {
 
          warning(mstyle$warning("Error when trying to compute the Hessian."), call.=FALSE)
@@ -2382,6 +2393,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
                g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
                sparse=sparse, cholesky=c(FALSE,FALSE), nearpd=nearpd, vctransf=FALSE, vccov=TRUE, vccon=vccon,
                verbose=verbose, digits=digits, REMLf=con$REMLf, hessian=TRUE), silent=TRUE)
+
          if (con$hesspack == "pracma")
             hessian <- try(pracma::hessian(f=.ll.rma.mv, x0 = c(sigma2, tau2, cov1, gamma2, cov2),
                reml=reml, Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
@@ -2392,6 +2404,17 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
                g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
                sparse=sparse, cholesky=c(FALSE,FALSE), nearpd=nearpd, vctransf=FALSE, vccov=TRUE, vccon=vccon,
                verbose=verbose, digits=digits, REMLf=con$REMLf, hessian=TRUE), silent=TRUE)
+
+         if (con$hesspack == "calculus")
+            hessian <- try(calculus::hessian(f=.ll.rma.mv, var = c(sigma2, tau2, cov1, gamma2, cov2),
+               params=list(reml=reml, Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
+               D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
+               sigma2.arg=sigma2.arg, tau2.arg=tau2.arg, rho.arg=rho.arg, gamma2.arg=gamma2.arg, phi.arg=phi.arg, beta.arg=beta.arg,
+               sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
+               withS=withS, withG=withG, withH=withH, struct=struct,
+               g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
+               sparse=sparse, cholesky=c(FALSE,FALSE), nearpd=nearpd, vctransf=FALSE, vccov=TRUE, vccon=vccon,
+               verbose=verbose, digits=digits, REMLf=con$REMLf, hessian=TRUE)), silent=TRUE)
 
          # note: vctransf=FALSE and cholesky=c(FALSE,FALSE), so we get the Hessian for the raw/untransfored variances and covariances
 
@@ -2408,6 +2431,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
                sparse=sparse, cholesky=ifelse(c(cvvc=="transf",cvvc=="transf") & cholesky, TRUE, FALSE),
                nearpd=nearpd, vctransf=cvvc=="transf", vccov=FALSE, vccon=vccon,
                verbose=verbose, digits=digits, REMLf=con$REMLf, hessian=TRUE), silent=TRUE)
+
          if (con$hesspack == "pracma")
             hessian <- try(pracma::hessian(f=.ll.rma.mv, x0 = if (cvvc=="transf") opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
                reml=reml, Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
@@ -2419,6 +2443,18 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
                sparse=sparse, cholesky=ifelse(c(cvvc=="transf",cvvc=="transf") & cholesky, TRUE, FALSE),
                nearpd=nearpd, vctransf=cvvc=="transf", vccov=FALSE, vccon=vccon,
                verbose=verbose, digits=digits, REMLf=con$REMLf, hessian=TRUE), silent=TRUE)
+
+         if (con$hesspack == "calculus")
+            hessian <- try(calculus::hessian(f=.ll.rma.mv, var = if (cvvc=="transf") opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
+               params=list(reml=reml, Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
+               D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
+               sigma2.arg=sigma2.arg, tau2.arg=tau2.arg, rho.arg=rho.arg, gamma2.arg=gamma2.arg, phi.arg=phi.arg, beta.arg=beta.arg,
+               sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
+               withS=withS, withG=withG, withH=withH, struct=struct,
+               g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
+               sparse=sparse, cholesky=ifelse(c(cvvc=="transf",cvvc=="transf") & cholesky, TRUE, FALSE),
+               nearpd=nearpd, vctransf=cvvc=="transf", vccov=FALSE, vccon=vccon,
+               verbose=verbose, digits=digits, REMLf=con$REMLf, hessian=TRUE)), silent=TRUE)
 
          # note: when cvvc=TRUE/"covcor", get the Hessian for the (raw/untransfored) variances and correlations
          #       when cvvc="transf", get the Hessian for the transformed variances (i.e., log(var)) and correlations (i.e., transf.rtoz(cor))
