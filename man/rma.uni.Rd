@@ -8,18 +8,20 @@
 \usage{
 rma.uni(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
         m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, fi, pi, sdi, r2i, ni, mods, scale,
-        measure="GEN", intercept=TRUE, data, slab, subset,
-        add=1/2, to="only0", drop00=FALSE, vtype="LS",
+        measure="GEN", data, slab, subset,
+        add=1/2, to="only0", drop00=FALSE, intercept=TRUE,
         method="REML", weighted=TRUE, test="z",
         level=95, btt, att, tau2, verbose=FALSE, digits, control, \dots)
 rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
         m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, fi, pi, sdi, r2i, ni, mods, scale,
-        measure="GEN", intercept=TRUE, data, slab, subset,
-        add=1/2, to="only0", drop00=FALSE, vtype="LS",
+        measure="GEN", data, slab, subset,
+        add=1/2, to="only0", drop00=FALSE, intercept=TRUE,
         method="REML", weighted=TRUE, test="z",
         level=95, btt, att, tau2, verbose=FALSE, digits, control, \dots)
 }
 \arguments{
+   \emph{These arguments pertain to data input:}
+
    \item{yi}{vector of length \mjseqn{k} with the observed effect sizes or outcomes. See \sQuote{Details}.}
    \item{vi}{vector of length \mjseqn{k} with the corresponding sampling variances. See \sQuote{Details}.}
    \item{sei}{vector of length \mjseqn{k} with the corresponding standard errors (only relevant when not using \code{vi}). See \sQuote{Details}.}
@@ -50,14 +52,19 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{mods}{optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \mjseqn{k} specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \mjseqn{k} rows and as many columns as there are moderator variables. Alternatively, a model \code{\link{formula}} can be used to specify the model. See \sQuote{Details}.}
    \item{scale}{optional argument to include one or more predictors for the scale part in a location-scale model. See \sQuote{Details}.}
    \item{measure}{character string to specify the type of data supplied to the function. When \code{measure="GEN"} (default), the observed effect sizes or outcomes and corresponding sampling variances should be supplied to the function via the \code{yi} and \code{vi} arguments, respectively (instead of the sampling variances, one can supply the standard errors via the \code{sei} argument). Alternatively, one can set \code{measure} to one of the effect sizes or outcome measures described under the documentation for the \code{\link{escalc}} function in which case one must specify the required data via the appropriate arguments (see \code{\link{escalc}}).}
-   \item{intercept}{logical to specify whether an intercept should be added to the model (the default is \code{TRUE}). Ignored when \code{mods} is a formula.}
    \item{data}{optional data frame containing the data supplied to the function.}
    \item{slab}{optional vector with labels for the \mjseqn{k} studies.}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.}
+
+   \emph{These arguments pertain to handling of zero cells/counts/frequencies:}
+
    \item{add}{see the documentation of the \code{\link{escalc}} function.}
    \item{to}{see the documentation of the \code{\link{escalc}} function.}
    \item{drop00}{see the documentation of the \code{\link{escalc}} function.}
-   \item{vtype}{see the documentation of the \code{\link{escalc}} function.}
+
+   \emph{These arguments pertain to the model / computations and output:}
+
+   \item{intercept}{logical to specify whether an intercept should be added to the model (the default is \code{TRUE}). Ignored when \code{mods} is a formula.}
    \item{method}{character string to specify whether an equal- or a random-effects model should be fitted. An equal-effects model is fitted when using \code{method="EE"}. A random-effects model is fitted by setting \code{method} equal to one of the following: \code{"DL"}, \code{"HE"}, \code{"HS"}, \code{"HSk"}, \code{"SJ"}, \code{"ML"}, \code{"REML"}, \code{"EB"}, \code{"PM"}, \code{"GENQ"}, \code{"PMM"}, or \code{"GENQM"}. The default is \code{"REML"}. See \sQuote{Details}.}
    \item{weighted}{logical to specify whether weighted (default) or unweighted estimation should be used to fit the model (the default is \code{TRUE}).}
    \item{test}{character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (\code{test="z"}), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When \code{test="t"}, a t-distribution is used instead. When \code{test="knha"}, the method by Knapp and Hartung (2003) is used. See \sQuote{Details} and also \link[=misc-recs]{here} for some recommended practices.}

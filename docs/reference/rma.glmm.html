@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-45</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-46</span>
       </span>
     </div>
 
@@ -96,15 +96,16 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rma.glmm</span><span class="op">(</span><span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">x1i</span>, <span class="va">x2i</span>, <span class="va">t1i</span>, <span class="va">t2i</span>, <span class="va">xi</span>, <span class="va">mi</span>, <span class="va">ti</span>, <span class="va">ni</span>,</span>
-<span>         <span class="va">mods</span>, <span class="va">measure</span>, intercept<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,</span>
-<span>         add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"only0"</span>, drop00<span class="op">=</span><span class="cn">TRUE</span>, vtype<span class="op">=</span><span class="st">"LS"</span>,</span>
+<span>         <span class="va">mods</span>, <span class="va">measure</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,</span>
+<span>         add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"only0"</span>, drop00<span class="op">=</span><span class="cn">TRUE</span>, intercept<span class="op">=</span><span class="cn">TRUE</span>,</span>
 <span>         model<span class="op">=</span><span class="st">"UM.FS"</span>, method<span class="op">=</span><span class="st">"ML"</span>, coding<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, cor<span class="op">=</span><span class="cn">FALSE</span>, test<span class="op">=</span><span class="st">"z"</span>,</span>
 <span>         level<span class="op">=</span><span class="fl">95</span>, <span class="va">btt</span>, nAGQ<span class="op">=</span><span class="fl">7</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
+    <p><em>These arguments pertain to data input:</em></p>
+<p></p>
 <dl><dt id="arg-ai">ai<a class="anchor" aria-label="anchor" href="#arg-ai"></a></dt>
 <dd><p>see below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 
@@ -153,9 +154,6 @@
    <dt id="arg-measure">measure<a class="anchor" aria-label="anchor" href="#arg-measure"></a></dt>
 <dd><p>character string to specify the outcome measure to use for the meta-analysis. Possible options are <code>"OR"</code> for the (log transformed) odds ratio, <code>"IRR"</code> for the (log transformed) incidence rate ratio, <code>"PLO"</code> for the (logit transformed) proportion, or <code>"IRLN"</code> for the (log transformed) incidence rate.</p></dd>
 
-   <dt id="arg-intercept">intercept<a class="anchor" aria-label="anchor" href="#arg-intercept"></a></dt>
-<dd><p>logical to specify whether an intercept should be added to the model (the default is <code>TRUE</code>).</p></dd>
-
    <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>optional data frame containing the data supplied to the function.</p></dd>
 
@@ -165,7 +163,10 @@
    <dt id="arg-subset">subset<a class="anchor" aria-label="anchor" href="#arg-subset"></a></dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.</p></dd>
 
-   <dt id="arg-add">add<a class="anchor" aria-label="anchor" href="#arg-add"></a></dt>
+
+   </dl><p><em>These arguments pertain to handling of zero cells/counts/frequencies:</em></p>
+<p></p>
+<dl><dt id="arg-add">add<a class="anchor" aria-label="anchor" href="#arg-add"></a></dt>
 <dd><p>non-negative number to specify the amount to add to zero cells, counts, or frequencies when calculating the observed effect sizes or outcomes of the individual studies. See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 
    <dt id="arg-to">to<a class="anchor" aria-label="anchor" href="#arg-to"></a></dt>
@@ -174,8 +175,11 @@
    <dt id="arg-drop-">drop00<a class="anchor" aria-label="anchor" href="#arg-drop-"></a></dt>
 <dd><p>logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped. See the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 
-   <dt id="arg-vtype">vtype<a class="anchor" aria-label="anchor" href="#arg-vtype"></a></dt>
-<dd><p>character string to specify the type of sampling variances to calculate when calculating the observed effect sizes or outcomes. See the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
+
+   </dl><p><em>These arguments pertain to the model / computations and output:</em></p>
+<p></p>
+<dl><dt id="arg-intercept">intercept<a class="anchor" aria-label="anchor" href="#arg-intercept"></a></dt>
+<dd><p>logical to specify whether an intercept should be added to the model (the default is <code>TRUE</code>).</p></dd>
 
    <dt id="arg-model">model<a class="anchor" aria-label="anchor" href="#arg-model"></a></dt>
 <dd><p>character string to specify the general model type for the analysis. Either <code>"UM.FS"</code> (the default), <code>"UM.RS"</code>, <code>"CM.EL"</code>, or <code>"CM.AL"</code>. See ‘Details’.</p></dd>

@@ -1,7 +1,6 @@
 rma <- rma.uni <- function(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, fi, pi, sdi, r2i, ni, mods, scale,
-measure="GEN", intercept=TRUE,
-data, slab, subset,
-add=1/2, to="only0", drop00=FALSE, vtype="LS",
+measure="GEN", data, slab, subset,
+add=1/2, to="only0", drop00=FALSE, intercept=TRUE,
 method="REML", weighted=TRUE,
 test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
@@ -63,7 +62,13 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("knha", "onlyo1", "addyi", "addvi", "correct", "i2def", "r2def", "skipr2", "abbrev", "dfs", "time", "outlist", "link", "optbeta", "alpha", "beta", "skiphes", "retopt", "pleasedonotreportI2thankyouverymuch"))
+   .chkdots(ddd, c("vtype", "knha", "onlyo1", "addyi", "addvi", "correct", "i2def", "r2def", "skipr2", "abbrev", "dfs", "time", "outlist", "link", "optbeta", "alpha", "beta", "skiphes", "retopt", "pleasedonotreportI2thankyouverymuch"))
+
+   if (is.null(ddd$vtype)) {
+      vtype <- "LS"
+   } else {
+      vtype <- ddd$vtype
+   }
 
    ### handle 'knha' argument from ... (note: overrides test argument)
 

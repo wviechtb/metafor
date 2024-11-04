@@ -6,12 +6,14 @@
 }
 \usage{
 rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
-         mods, measure, intercept=TRUE, data, slab, subset,
-         add=1/2, to="only0", drop00=TRUE, vtype="LS",
+         mods, measure, data, slab, subset,
+         add=1/2, to="only0", drop00=TRUE, intercept=TRUE,
          model="UM.FS", method="ML", coding=1/2, cor=FALSE, test="z",
          level=95, btt, nAGQ=7, verbose=FALSE, digits, control, \dots)
 }
 \arguments{
+   \emph{These arguments pertain to data input:}
+
    \item{ai}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{bi}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{ci}{see below and the documentation of the \code{\link{escalc}} function for more details.}
@@ -28,14 +30,19 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \item{ni}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{mods}{optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \mjseqn{k} specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \mjseqn{k} rows and as many columns as there are moderator variables. Alternatively, a model \code{\link{formula}} can be used to specify the model. See \sQuote{Details}.}
    \item{measure}{character string to specify the outcome measure to use for the meta-analysis. Possible options are \code{"OR"} for the (log transformed) odds ratio, \code{"IRR"} for the (log transformed) incidence rate ratio, \code{"PLO"} for the (logit transformed) proportion, or \code{"IRLN"} for the (log transformed) incidence rate.}
-   \item{intercept}{logical to specify whether an intercept should be added to the model (the default is \code{TRUE}).}
    \item{data}{optional data frame containing the data supplied to the function.}
    \item{slab}{optional vector with labels for the \mjseqn{k} studies.}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.}
+
+   \emph{These arguments pertain to handling of zero cells/counts/frequencies:}
+
    \item{add}{non-negative number to specify the amount to add to zero cells, counts, or frequencies when calculating the observed effect sizes or outcomes of the individual studies. See below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{to}{character string to specify when the values under \code{add} should be added (either \code{"only0"}, \code{"all"}, \code{"if0all"}, or \code{"none"}). See below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{drop00}{logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped. See the documentation of the \code{\link{escalc}} function for more details.}
-   \item{vtype}{character string to specify the type of sampling variances to calculate when calculating the observed effect sizes or outcomes. See the documentation of the \code{\link{escalc}} function for more details.}
+
+   \emph{These arguments pertain to the model / computations and output:}
+
+   \item{intercept}{logical to specify whether an intercept should be added to the model (the default is \code{TRUE}).}
    \item{model}{character string to specify the general model type for the analysis. Either \code{"UM.FS"} (the default), \code{"UM.RS"}, \code{"CM.EL"}, or \code{"CM.AL"}. See \sQuote{Details}.}
    \item{method}{character string to specify whether an equal- or a random-effects model should be fitted. An equal-effects model is fitted when using \code{method="EE"}. A random-effects model is fitted by setting \code{method="ML"} (the default). See \sQuote{Details}.}
    \item{coding}{numeric scalar to specify how the group variable should be coded in the random effects structure for random/mixed-effects models (the default is \code{1/2}). See \sQuote{Note}.}

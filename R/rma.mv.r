@@ -24,8 +24,8 @@
 # - GEN (general positive-definite matrix for an arbitrary number of predictors)
 # - PHYBM/PHYPL/PHYPD (phylogenetic structures: Brownian motion, Pagel's lambda, Pagel's delta)
 
-rma.mv <- function(yi, V, W, mods, random, struct="CS", intercept=TRUE,
-data, slab, subset, method="REML",
+rma.mv <- function(yi, V, W, mods, data, slab, subset,
+random, struct="CS", intercept=TRUE, method="REML",
 test="z", dfs="residual", level=95, btt,
 R, Rscale="cor", sigma2, tau2, rho, gamma2, phi,
 cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {

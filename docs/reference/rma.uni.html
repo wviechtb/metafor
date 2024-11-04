@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-45</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-46</span>
       </span>
     </div>
 
@@ -97,21 +97,22 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rma.uni</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">weights</span>, <span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">x1i</span>, <span class="va">x2i</span>, <span class="va">t1i</span>, <span class="va">t2i</span>,</span>
 <span>        <span class="va">m1i</span>, <span class="va">m2i</span>, <span class="va">sd1i</span>, <span class="va">sd2i</span>, <span class="va">xi</span>, <span class="va">mi</span>, <span class="va">ri</span>, <span class="va">ti</span>, <span class="va">fi</span>, <span class="va">pi</span>, <span class="va">sdi</span>, <span class="va">r2i</span>, <span class="va">ni</span>, <span class="va">mods</span>, <span class="va">scale</span>,</span>
-<span>        measure<span class="op">=</span><span class="st">"GEN"</span>, intercept<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,</span>
-<span>        add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"only0"</span>, drop00<span class="op">=</span><span class="cn">FALSE</span>, vtype<span class="op">=</span><span class="st">"LS"</span>,</span>
+<span>        measure<span class="op">=</span><span class="st">"GEN"</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,</span>
+<span>        add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"only0"</span>, drop00<span class="op">=</span><span class="cn">FALSE</span>, intercept<span class="op">=</span><span class="cn">TRUE</span>,</span>
 <span>        method<span class="op">=</span><span class="st">"REML"</span>, weighted<span class="op">=</span><span class="cn">TRUE</span>, test<span class="op">=</span><span class="st">"z"</span>,</span>
 <span>        level<span class="op">=</span><span class="fl">95</span>, <span class="va">btt</span>, <span class="va">att</span>, <span class="va">tau2</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="fu">rma</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">weights</span>, <span class="va">ai</span>, <span class="va">bi</span>, <span class="va">ci</span>, <span class="va">di</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">x1i</span>, <span class="va">x2i</span>, <span class="va">t1i</span>, <span class="va">t2i</span>,</span>
 <span>        <span class="va">m1i</span>, <span class="va">m2i</span>, <span class="va">sd1i</span>, <span class="va">sd2i</span>, <span class="va">xi</span>, <span class="va">mi</span>, <span class="va">ri</span>, <span class="va">ti</span>, <span class="va">fi</span>, <span class="va">pi</span>, <span class="va">sdi</span>, <span class="va">r2i</span>, <span class="va">ni</span>, <span class="va">mods</span>, <span class="va">scale</span>,</span>
-<span>        measure<span class="op">=</span><span class="st">"GEN"</span>, intercept<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,</span>
-<span>        add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"only0"</span>, drop00<span class="op">=</span><span class="cn">FALSE</span>, vtype<span class="op">=</span><span class="st">"LS"</span>,</span>
+<span>        measure<span class="op">=</span><span class="st">"GEN"</span>, <span class="va">data</span>, <span class="va">slab</span>, <span class="va">subset</span>,</span>
+<span>        add<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="fl">2</span>, to<span class="op">=</span><span class="st">"only0"</span>, drop00<span class="op">=</span><span class="cn">FALSE</span>, intercept<span class="op">=</span><span class="cn">TRUE</span>,</span>
 <span>        method<span class="op">=</span><span class="st">"REML"</span>, weighted<span class="op">=</span><span class="cn">TRUE</span>, test<span class="op">=</span><span class="st">"z"</span>,</span>
 <span>        level<span class="op">=</span><span class="fl">95</span>, <span class="va">btt</span>, <span class="va">att</span>, <span class="va">tau2</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">control</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
+    <p><em>These arguments pertain to data input:</em></p>
+<p></p>
 <dl><dt id="arg-yi">yi<a class="anchor" aria-label="anchor" href="#arg-yi"></a></dt>
 <dd><p>vector of length <em></em>\(k\) with the observed effect sizes or outcomes. See ‘Details’.</p></dd>
 
@@ -202,9 +203,6 @@
    <dt id="arg-measure">measure<a class="anchor" aria-label="anchor" href="#arg-measure"></a></dt>
 <dd><p>character string to specify the type of data supplied to the function. When <code>measure="GEN"</code> (default), the observed effect sizes or outcomes and corresponding sampling variances should be supplied to the function via the <code>yi</code> and <code>vi</code> arguments, respectively (instead of the sampling variances, one can supply the standard errors via the <code>sei</code> argument). Alternatively, one can set <code>measure</code> to one of the effect sizes or outcome measures described under the documentation for the <code><a href="escalc.html">escalc</a></code> function in which case one must specify the required data via the appropriate arguments (see <code><a href="escalc.html">escalc</a></code>).</p></dd>
 
-   <dt id="arg-intercept">intercept<a class="anchor" aria-label="anchor" href="#arg-intercept"></a></dt>
-<dd><p>logical to specify whether an intercept should be added to the model (the default is <code>TRUE</code>). Ignored when <code>mods</code> is a formula.</p></dd>
-
    <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>optional data frame containing the data supplied to the function.</p></dd>
 
@@ -214,7 +212,10 @@
    <dt id="arg-subset">subset<a class="anchor" aria-label="anchor" href="#arg-subset"></a></dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.</p></dd>
 
-   <dt id="arg-add">add<a class="anchor" aria-label="anchor" href="#arg-add"></a></dt>
+
+   </dl><p><em>These arguments pertain to handling of zero cells/counts/frequencies:</em></p>
+<p></p>
+<dl><dt id="arg-add">add<a class="anchor" aria-label="anchor" href="#arg-add"></a></dt>
 <dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
 
    <dt id="arg-to">to<a class="anchor" aria-label="anchor" href="#arg-to"></a></dt>
@@ -223,8 +224,11 @@
    <dt id="arg-drop-">drop00<a class="anchor" aria-label="anchor" href="#arg-drop-"></a></dt>
 <dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
 
-   <dt id="arg-vtype">vtype<a class="anchor" aria-label="anchor" href="#arg-vtype"></a></dt>
-<dd><p>see the documentation of the <code><a href="escalc.html">escalc</a></code> function.</p></dd>
+
+   </dl><p><em>These arguments pertain to the model / computations and output:</em></p>
+<p></p>
+<dl><dt id="arg-intercept">intercept<a class="anchor" aria-label="anchor" href="#arg-intercept"></a></dt>
+<dd><p>logical to specify whether an intercept should be added to the model (the default is <code>TRUE</code>). Ignored when <code>mods</code> is a formula.</p></dd>
 
    <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>character string to specify whether an equal- or a random-effects model should be fitted. An equal-effects model is fitted when using <code>method="EE"</code>. A random-effects model is fitted by setting <code>method</code> equal to one of the following: <code>"DL"</code>, <code>"HE"</code>, <code>"HS"</code>, <code>"HSk"</code>, <code>"SJ"</code>, <code>"ML"</code>, <code>"REML"</code>, <code>"EB"</code>, <code>"PM"</code>, <code>"GENQ"</code>, <code>"PMM"</code>, or <code>"GENQM"</code>. The default is <code>"REML"</code>. See ‘Details’.</p></dd>

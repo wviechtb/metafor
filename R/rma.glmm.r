@@ -1,7 +1,6 @@
 rma.glmm <- function(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni, mods,
-measure, intercept=TRUE,
-data, slab, subset,
-add=1/2, to="only0", drop00=TRUE, vtype="LS",
+measure, data, slab, subset,
+add=1/2, to="only0", drop00=TRUE, intercept=TRUE,
 model="UM.FS", method="ML", coding=1/2, cor=FALSE,
 test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
@@ -76,7 +75,13 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist", "onlyo1", "addyi", "addvi", "time", "retdat", "family", "retfit", "skiphet", "i2def", "link"))
+   .chkdots(ddd, c("vtype", "tdist", "outlist", "onlyo1", "addyi", "addvi", "time", "retdat", "family", "retfit", "skiphet", "i2def", "link"))
+
+   if (is.null(ddd$vtype)) {
+      vtype <- "LS"
+   } else {
+      vtype <- ddd$vtype
+   }
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 

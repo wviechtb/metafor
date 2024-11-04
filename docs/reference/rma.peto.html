@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-45</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-46</span>
       </span>
     </div>
 
@@ -103,7 +103,8 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <p></p>
+    <p><em>These arguments pertain to data input:</em></p>
+<p></p>
 <dl><dt id="arg-ai">ai<a class="anchor" aria-label="anchor" href="#arg-ai"></a></dt>
 <dd><p>vector with the <em></em>\(2 \times 2\) table frequencies (upper left cell). See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 
@@ -131,7 +132,10 @@
    <dt id="arg-subset">subset<a class="anchor" aria-label="anchor" href="#arg-subset"></a></dt>
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.</p></dd>
 
-   <dt id="arg-add">add<a class="anchor" aria-label="anchor" href="#arg-add"></a></dt>
+
+   </dl><p><em>These arguments pertain to handling of zero cells/counts/frequencies:</em></p>
+<p></p>
+<dl><dt id="arg-add">add<a class="anchor" aria-label="anchor" href="#arg-add"></a></dt>
 <dd><p>non-negative number to specify the amount to add to zero cells when calculating the observed effect sizes of the individual studies. Can also be a vector of two numbers, where the first number is used in the calculation of the observed effect sizes and the second number is used when applying Peto's method. See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 
    <dt id="arg-to">to<a class="anchor" aria-label="anchor" href="#arg-to"></a></dt>
@@ -140,7 +144,10 @@
    <dt id="arg-drop-">drop00<a class="anchor" aria-label="anchor" href="#arg-drop-"></a></dt>
 <dd><p>logical to specify whether studies with no cases (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes (the outcomes for such studies are set to <code>NA</code>). Can also be a vector of two logicals, where the first applies to the calculation of the observed effect sizes or outcomes and the second when applying Peto's method. See below and the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
 
-   <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
+
+   </dl><p><em>These arguments pertain to the model / computations and output:</em></p>
+<p></p>
+<dl><dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
 <dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95; see <a href="misc-options.html">here</a> for details).</p></dd>
 
    <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>

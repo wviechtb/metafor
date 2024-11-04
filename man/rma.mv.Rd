@@ -5,23 +5,28 @@
    Function to fit meta-analytic multivariate/multilevel fixed- and random/mixed-effects models with or without moderators via linear (mixed-effects) models. See below and the introduction to the \pkg{\link{metafor-package}} for more details on these models. \loadmathjax
 }
 \usage{
-rma.mv(yi, V, W, mods, random, struct="CS", intercept=TRUE,
-       data, slab, subset, method="REML",
+rma.mv(yi, V, W, mods, data, slab, subset,
+       random, struct="CS", intercept=TRUE, method="REML",
        test="z", dfs="residual", level=95, btt,
        R, Rscale="cor", sigma2, tau2, rho, gamma2, phi,
        cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, \dots)
 }
 \arguments{
+   \emph{These arguments pertain to data input:}
+
    \item{yi}{vector of length \mjseqn{k} with the observed effect sizes or outcomes. See \sQuote{Details}.}
    \item{V}{vector of length \mjseqn{k} with the corresponding sampling variances or a \mjeqn{k \times k}{kxk} variance-covariance matrix of the sampling errors. See \sQuote{Details}.}
    \item{W}{optional argument to specify a vector of length \mjseqn{k} with user-defined weights or a \mjeqn{k \times k}{kxk} user-defined weight matrix. See \sQuote{Details}.}
    \item{mods}{optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \mjseqn{k} specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \mjseqn{k} rows and as many columns as there are moderator variables. Alternatively, a model \code{\link{formula}} can be used to specify the model. See \sQuote{Details}.}
-   \item{random}{either a single one-sided formula or list of one-sided formulas to specify the random-effects structure of the model. See \sQuote{Details}.}
-   \item{struct}{character string to specify the variance structure of an \code{~ inner | outer} formula in the \code{random} argument. Either \code{"CS"} for compound symmetry, \code{"HCS"} for heteroscedastic compound symmetry, \code{"UN"} or \code{"GEN"} for an unstructured variance-covariance matrix, \code{"ID"} for a scaled identity matrix, \code{"DIAG"} for a diagonal matrix, \code{"AR"} for an AR(1) autoregressive structure, \code{"HAR"} for a heteroscedastic AR(1) autoregressive structure, \code{"CAR"} for a continuous-time autoregressive structure, or one of \code{"SPEXP"}, \code{"SPGAU"}, \code{"SPLIN"}, \code{"SPRAT"}, or \code{"SPSPH"} for one of the spatial correlation structures. See \sQuote{Details}.}
-   \item{intercept}{logical to specify whether an intercept should be added to the model (the default is \code{TRUE}). Ignored when \code{mods} is a formula.}
    \item{data}{optional data frame containing the data supplied to the function.}
    \item{slab}{optional vector with labels for the \mjseqn{k} outcomes/studies.}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies (or more precisely, rows of the dataset) that should be used for the analysis.}
+
+   \emph{These arguments pertain to the model / computations and output:}
+
+   \item{random}{either a single one-sided formula or list of one-sided formulas to specify the random-effects structure of the model. See \sQuote{Details}.}
+   \item{struct}{character string to specify the variance structure of an \code{~ inner | outer} formula in the \code{random} argument. Either \code{"CS"} for compound symmetry, \code{"HCS"} for heteroscedastic compound symmetry, \code{"UN"} or \code{"GEN"} for an unstructured variance-covariance matrix, \code{"ID"} for a scaled identity matrix, \code{"DIAG"} for a diagonal matrix, \code{"AR"} for an AR(1) autoregressive structure, \code{"HAR"} for a heteroscedastic AR(1) autoregressive structure, \code{"CAR"} for a continuous-time autoregressive structure, or one of \code{"SPEXP"}, \code{"SPGAU"}, \code{"SPLIN"}, \code{"SPRAT"}, or \code{"SPSPH"} for one of the spatial correlation structures. See \sQuote{Details}.}
+   \item{intercept}{logical to specify whether an intercept should be added to the model (the default is \code{TRUE}). Ignored when \code{mods} is a formula.}
    \item{method}{character string to specify whether the model should be fitted via maximum likelihood (\code{"ML"}) or via restricted maximum likelihood (\code{"REML"}) estimation (the default is \code{"REML"}).}
    \item{test}{character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (\code{test="z"}), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When \code{test="t"}, a t-distribution is used instead. See \sQuote{Details} and also \link[=misc-recs]{here} for some recommended practices.}
    \item{dfs}{character string to specify how the (denominator) degrees of freedom should be calculated when \code{test="t"}. Either \code{dfs="residual"} or \code{dfs="contain"}. Can also be a numeric vector with the degrees of freedom for each model coefficient. See \sQuote{Details}.}
