@@ -6,7 +6,7 @@
 }
 \usage{
 \method{plot}{vif.rma}(x, breaks="Scott", freq=FALSE, col, border, col.out, col.density,
-     trim=0, adjust=1, lwd=c(2,0), layout, \dots)
+     trim=0, adjust=1, lwd=c(2,0), \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"vif.rma"} obtained with \code{\link[=vif.rma]{vif}}.}
@@ -19,7 +19,6 @@
    \item{trim}{the fraction (up to 0.5) of observations to be trimmed from the upper tail of each distribution before its histogram is plotted.}
    \item{adjust}{numeric value to be passed on to the corresponding argument of \code{\link{density}} (for adjusting the bandwidth of the kernel density estimate).}
    \item{lwd}{numeric vector to specify the width of the vertical lines corresponding to the value of the observed (G)VIFs and of the density estimate (note: by default, the density estimate has a line width of 0 and is therefore not plotted).}
-   \item{layout}{optional vector of two numbers to specify the number of rows and columns for the layout of the figure.}
    \item{\dots}{other arguments.}
 }
 \details{

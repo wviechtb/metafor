@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-46</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-47</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'vif.rma'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, breaks<span class="op">=</span><span class="st">"Scott"</span>, freq<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">col</span>, <span class="va">border</span>, <span class="va">col.out</span>, <span class="va">col.density</span>,</span>
-<span>     trim<span class="op">=</span><span class="fl">0</span>, adjust<span class="op">=</span><span class="fl">1</span>, lwd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span>, <span class="va">layout</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>     trim<span class="op">=</span><span class="fl">0</span>, adjust<span class="op">=</span><span class="fl">1</span>, lwd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -132,9 +132,6 @@
 
    <dt id="arg-lwd">lwd<a class="anchor" aria-label="anchor" href="#arg-lwd"></a></dt>
 <dd><p>numeric vector to specify the width of the vertical lines corresponding to the value of the observed (G)VIFs and of the density estimate (note: by default, the density estimate has a line width of 0 and is therefore not plotted).</p></dd>
-
-   <dt id="arg-layout">layout<a class="anchor" aria-label="anchor" href="#arg-layout"></a></dt>
-<dd><p>optional vector of two numbers to specify the number of rows and columns for the layout of the figure.</p></dd>
 
    <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments.</p></dd>
@@ -187,10 +184,10 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### plot the simulated distributions of the VIFs</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vifs</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="plot.vif.rma-1.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### add densities, trim away some extremes, and set break points</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vifs</span>, lwd<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span>, trim<span class="op">=</span><span class="fl">0.01</span>, breaks<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2.2</span>,by<span class="op">=</span><span class="fl">0.05</span><span class="op">)</span>, adjust<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot.vif.rma-1.png" alt="" width="1728" height="1536"></span>
 <span class="r-plt img"><img src="plot.vif.rma-2.png" alt="" width="1728" height="1536"></span>
 </code></pre></div>
     </div>

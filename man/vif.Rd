@@ -86,7 +86,7 @@ vif(x, \dots)
    \item{prop}{a vector with the proportions of simulated values that are smaller than the actually observed (G)VIF values (only when \code{sim=TRUE}).}
    \item{\dots}{some additional elements/values.}
 
-   When \code{x} was a location-scale model object and (G)VIFs can be computed for both the location and the scale coefficients, then the object is a list with elements \code{beta} and \code{alpha}, where each element is an \code{"vif.rma"} object as described above.
+   When \code{x} was a location-scale model object and (G)VIFs can be computed for both the location and the scale coefficients, then the object is a list with elements \code{beta} and \code{alpha}, where each element is a \code{"vif.rma"} object as described above.
 
    The results are formatted and printed with the \code{print} function. To format the results as a data frame, one can use the \code{\link[=as.data.frame.vif.rma]{as.data.frame}} function. When \code{sim=TRUE}, the distribution of each (G)VIF can be plotted with the \code{\link[=plot.vif.rma]{plot}} function.
 }
@@ -148,6 +148,31 @@ vif(res, reestimate=TRUE)
 
 ### get full table
 vif(res, reestimate=TRUE, table=TRUE)
+
+############################################################################
+
+### an example where the VIFs are close to 1, but actually reflect considerable
+### multicollinearity as can be seen based on the simulation approach
+dat <- dat.mcdaniel1994
+dat <- escalc(measure="ZCOR", ri=ri, ni=ni, data=dat)
+res <- rma(yi, vi, mods = ~ factor(type) + factor(struct), data=dat)
+res
+vif(res)
+
+### use the simulation approach to analyze the size of the VIFs
+\dontrun{
+vifs <- vif(res, sim=TRUE, seed=1234)
+vifs
+plot(vifs, lwd=c(2,2), breaks=seq(1,2,by=0.0015), xlim=c(1,1.08))
+}
+
+### an example for a location-scale model
+res <- rma(yi, vi, mods = ~ factor(type) + factor(struct),
+                   scale = ~ factor(type) + factor(struct), data=dat)
+res
+vif(res)
+
+############################################################################
 
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)

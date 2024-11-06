@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-46</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-47</span>
       </span>
     </div>
 
@@ -90,11 +90,12 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.7-46" id="metafor-47-46-2024-11-04">metafor 4.7-46 (2024-11-04)<a class="anchor" aria-label="anchor" href="#metafor-47-46-2024-11-04"></a></h2>
+<h2 class="page-header" data-toc-text="4.7-47" id="metafor-47-47-2024-11-06">metafor 4.7-47 (2024-11-06)<a class="anchor" aria-label="anchor" href="#metafor-47-47-2024-11-06"></a></h2>
 <ul><li><p>some general changes to the various <code><a href="../reference/forest.html">forest()</a></code> functions: argument <code>header</code> is now <code>TRUE</code> by default, the y-axis is now created with <code>yaxs="i"</code>, and the y-axis limits have been tweaked slightly in accordance</p></li>
 <li><p><code><a href="../reference/forest.rma.html">forest.rma()</a></code> and the various <code><a href="../reference/addpoly.html">addpoly()</a></code> functions now provides multiple styles for drawing the prediction interval via the <code>predstyle</code> argument</p></li>
 <li><p><code><a href="../reference/forest.rma.html">forest.rma()</a></code> and <code><a href="../reference/addpoly.rma.html">addpoly.rma()</a></code> now write out the default label (instead of an abbreviation) for the model results; as before, the label can be changed via the <code>mlab</code> argument</p></li>
 <li><p>added an <code>ilab.lab</code> argument to the various <code><a href="../reference/forest.html">forest()</a></code> functions for adding header labels to the plot for the additional study information columns</p></li>
+<li><p>all plot functions that create multi-panel plots now behave in a consistent manner, setting <code>par(mfrow)</code> automatically when no plotting device is open or when the number of panels in an open plotting device is too small for the number of panels to be plotted; all multi-panel plots also set <code>par(mfrow)=c(1L,1L)</code> upon exit; argument <code>layout</code> has been deprecated from <code><a href="../reference/plot.permutest.rma.uni.html">plot.permutest.rma.uni()</a></code>, <code><a href="../reference/plot.vif.rma.html">plot.vif.rma()</a></code>, and <code><a href="../reference/plot.infl.rma.uni.html">plot.infl.rma.uni()</a></code></p></li>
 <li><p>the <code><a href="../reference/predict.rma.html">predict.rma()</a></code> and <code><a href="../reference/predict.rma.html">predict.rma.ls()</a></code> functions now also accept a matrix as input that includes a column for the intercept term (in which case the <code>intercept</code> argument is ignored and the first column of the matrix controls whether the intercept term is included in calculating the predicted value(s))</p></li>
 <li><p>added extractor function <code><a href="../reference/se.html">se()</a></code> for extracting standard errors from model objects</p></li>
 <li><p>added function <code><a href="../reference/pairmat.html">pairmat()</a></code> to construct a matrix of pairwise contrasts</p></li>

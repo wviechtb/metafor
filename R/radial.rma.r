@@ -115,8 +115,8 @@ transf, targs, pch=21, col, bg, back, arc.res=100, cex, cex.lab, cex.axis, ...) 
    par.mar <- par("mar")
    par.mar.adj <- par.mar + c(0,4,0,6)
    par.mar.adj[par.mar.adj < 1] <- 1
-   par(mar = par.mar.adj)
-   on.exit(par(mar = par.mar), add=TRUE)
+   par(mar=par.mar.adj)
+   on.exit(par(mar=par.mar), add=TRUE)
 
    ### label for the x-axis
 

@@ -1,4 +1,4 @@
-### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true"); Sys.setenv(RUN_VIS_TESTS="true"); .tol[1:length(.tol)] <- .0001
+### library(metafor); library(testthat); Sys.setenv(NOT_CRAN="true"); Sys.setenv(RUN_VIS_TESTS="true")
 
 ### see: https://www.metafor-project.org/doku.php/plots:plot_of_influence_diagnostics
 
@@ -17,14 +17,16 @@ test_that("plot can be drawn.", {
    out <- capture.output(print(inf)) # so that print.infl.rma.uni() is run (at least once)
 
    png("images/test_plots_plot_of_influence_diagnostics_1_light_test.png", res=200, width=1800, height=3600, type="cairo")
-   plot(inf, layout=c(8,1))
+   par(mfrow=c(8,1))
+   plot(inf)
    dev.off()
 
    expect_true(.vistest("images/test_plots_plot_of_influence_diagnostics_1_light_test.png", "images/test_plots_plot_of_influence_diagnostics_1_light.png"))
 
    png("images/test_plots_plot_of_influence_diagnostics_1_dark_test.png", res=200, width=1800, height=3600, type="cairo")
    setmfopt(theme="dark")
-   plot(inf, layout=c(8,1))
+   par(mfrow=c(8,1))
+   plot(inf)
    setmfopt(theme="default")
    dev.off()
 

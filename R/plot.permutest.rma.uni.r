@@ -1,6 +1,6 @@
 plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
    breaks="Scott", freq=FALSE, col, border, col.out, col.ref, col.density,
-   trim=0, adjust=1, lwd=c(2,0,0,4), layout, legend=FALSE, ...) {
+   trim=0, adjust=1, lwd=c(2,0,0,4), legend=FALSE, ...) {
 
    #########################################################################
 
@@ -31,6 +31,9 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
    p2defn      <- .chkddd(ddd$p2defn,      x$p2defn,      match.arg(ddd$p2defn, c("abs", "px2")))
    stat        <- .chkddd(ddd$stat,        x$stat,        match.arg(ddd$stat, c("test", "coef")))
 
+   if (!is.null(ddd$layout))
+      warning(mstyle$warning("Argument 'layout' has been deprecated."), call.=FALSE)
+
    ### check trim
 
    if (trim >= 0.5)
@@ -50,9 +53,9 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
    if (freq)
       lwd[c(2,3)] <- 0
 
-   lhist   <- function(..., alternative, p2defn, stat) hist(...)
-   labline <- function(..., alternative, p2defn, stat) abline(...)
-   llines  <- function(..., alternative, p2defn, stat) lines(...)
+   lhist   <- function(..., alternative, p2defn, stat, layout) hist(...)
+   labline <- function(..., alternative, p2defn, stat, layout) abline(...)
+   llines  <- function(..., alternative, p2defn, stat, layout) lines(...)
 
    ############################################################################
 
@@ -173,31 +176,21 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
    ############################################################################
 
-   # number of plots
+   # determine number of plots and set mfrow appropriately if needed
 
    np <- length(beta) + length(alpha) + ifelse(is.null(QM.perm), 0L, 1L) + ifelse(is.null(QS.perm), 0L, 1L)
 
    if (np == 0L)
       stop(mstyle$stop("Must select at least one elements to plot."))
 
-   # set/check layout argument
-
-   if (missing(layout)) {
-      layout <- n2mfrow(np)
-   } else {
-      layout <- layout[layout >= 1]
-      layout <- round(layout)
-      if (length(layout) != 2L)
-         stop(mstyle$stop("Incorrect specification of 'layout' argument."))
+   if (np > 1L) {
+      # if no plotting device is open or mfrow is too small, set mfrow appropriately
+      if (dev.cur() == 1L || prod(par("mfrow")) < np)
+         par(mfrow=n2mfrow(np))
+      on.exit(par(mfrow=c(1L,1L)), add=TRUE)
    }
 
-   #print(list(np, layout))
-
    ############################################################################
-
-   par.mfrow <- par("mfrow")
-   par(mfrow=layout)
-   on.exit(par(mfrow = par.mfrow), add=TRUE)
 
    if (!is.null(QM.perm)) {
 

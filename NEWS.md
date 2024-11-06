@@ -1,4 +1,4 @@
-# metafor 4.7-46 (2024-11-04)
+# metafor 4.7-47 (2024-11-06)
 
 - some general changes to the various `forest()` functions: argument `header` is now `TRUE` by default, the y-axis is now created with `yaxs="i"`, and the y-axis limits have been tweaked slightly in accordance
 
@@ -7,6 +7,8 @@
 - `forest.rma()` and `addpoly.rma()` now write out the default label (instead of an abbreviation) for the model results; as before, the label can be changed via the `mlab` argument
 
 - added an `ilab.lab` argument to the various `forest()` functions for adding header labels to the plot for the additional study information columns
+
+- all plot functions that create multi-panel plots now behave in a consistent manner, setting `par(mfrow)` automatically when no plotting device is open or when the number of panels in an open plotting device is too small for the number of panels to be plotted; all multi-panel plots also set `par(mfrow)=c(1L,1L)` upon exit; argument `layout` has been deprecated from `plot.permutest.rma.uni()`, `plot.vif.rma()`, and `plot.infl.rma.uni()`
 
 - the `predict.rma()` and `predict.rma.ls()` functions now also accept a matrix as input that includes a column for the intercept term (in which case the `intercept` argument is ignored and the first column of the matrix controls whether the intercept term is included in calculating the predicted value(s))
 

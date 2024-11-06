@@ -855,8 +855,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    par.mar <- par("mar")
    par.mar.adj <- par.mar - c(0,3,1,1)
    par.mar.adj[par.mar.adj < 0] <- 0
-   par(mar = par.mar.adj)
-   on.exit(par(mar = par.mar), add=TRUE)
+   par(mar=par.mar.adj)
+   on.exit(par(mar=par.mar), add=TRUE)
 
    #if (identical(par("mar"), c(5.1,4.1,4.1,2.1)))
    #   par(mar = c(5.1,1.1,3.1,1.1))

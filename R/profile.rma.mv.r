@@ -80,9 +80,11 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
          stop(mstyle$stop("No components in the model for which a profile likelihood can be constructed."))
 
       if (plot) {
-         if (dev.cur() == 1L) { # if only the 'null device' is currently open, set mfrow
-            par(mfrow=n2mfrow(comps))
-            #on.exit(par(mfrow=c(1,1)), add=TRUE)
+         if (comps > 1L) {
+            # if no plotting device is open or mfrow is too small, set mfrow appropriately
+            if (dev.cur() == 1L || prod(par("mfrow")) < comps)
+               par(mfrow=n2mfrow(comps))
+            on.exit(par(mfrow=c(1L,1L)), add=TRUE)
          }
       }
 

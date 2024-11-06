@@ -14,9 +14,10 @@ plot.rma.uni <- function(x, qqplot=FALSE, ...) {
 
    .start.plot()
 
-   par.mfrow <- par("mfrow")
-   par(mfrow=c(2,2))
-   on.exit(par(mfrow = par.mfrow), add=TRUE)
+   # if no plotting device is open or mfrow is too small, set mfrow appropriately
+   if (dev.cur() == 1L || prod(par("mfrow")) < 4L)
+      par(mfrow=n2mfrow(4))
+   on.exit(par(mfrow=c(1L,1L)), add=TRUE)
 
    bg <- .coladj(par("bg","fg"), dark=0.35, light=-0.35)
    col.na <- .coladj(par("bg","fg"), dark=0.2, light=-0.2)

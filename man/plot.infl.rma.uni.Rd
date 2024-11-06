@@ -6,7 +6,7 @@
 }
 \usage{
 \method{plot}{infl.rma.uni}(x, plotinf=TRUE, plotdfbs=FALSE, dfbsnew=FALSE, logcov=TRUE,
-     layout, slab.style=1, las=0, pch=21, bg, bg.infl, col.na, \dots)
+     slab.style=1, las=0, pch=21, bg, bg.infl, col.na, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"infl.rma.uni"} obtained with \code{\link[=influence.rma.uni]{influence}}.}
@@ -14,7 +14,6 @@
    \item{plotdfbs}{logical to specify whether the DFBETAS values should be plotted (the default is \code{FALSE}). Can also be a vector of integers to specify for which coefficient(s) to plot the DFBETAS values.}
    \item{dfbsnew}{logical to specify whether a new device should be opened for plotting the DFBETAS values (the default is \code{FALSE}).}
    \item{logcov}{logical to specify whether the covariance ratios should be plotted on a log scale (the default is \code{TRUE}).}
-   \item{layout}{optional vector of two numbers to specify the number of rows and columns for the layout of the figure.}
    \item{slab.style}{integer to specify the style of the x-axis labels: 1 = study number, 2 = study label, 3 = abbreviated study label. Note that study labels, even when abbreviated, may be too long to fit in the margins (see argument \code{mar} for \code{\link{par}} to adjust the margin sizes).}
    \item{las}{integer between 0 and 3 to specify the alignment of the axis labels (see \code{\link{par}}). The most useful alternative to 0 is 3, so that the x-axis labels are drawn vertical to the axis.}
    \item{pch}{plotting symbol to use. By default, an open circle is used. See \code{\link{points}} for other options.}
@@ -73,7 +72,6 @@ par(op)
 
 ### select which plots to show
 plot(inf, plotinf=1:4)
-plot(inf, plotinf=1:4, layout=c(4,1))
 
 ### plot the DFBETAS values
 plot(inf, plotinf=FALSE, plotdfbs=TRUE)

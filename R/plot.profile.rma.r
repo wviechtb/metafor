@@ -8,9 +8,11 @@ plot.profile.rma <- function(x, xlim, ylim, pch=19, xlab, ylab, main, refline=TR
 
    .start.plot()
 
-   if (dev.cur() == 1L) { # if only the 'null device' is currently open, set mfrow
-      par(mfrow=n2mfrow(x$comps))
-      #on.exit(par(mfrow=c(1,1)), add=TRUE)
+   if (x$comps > 1L) {
+      # if no plotting device is open or mfrow is too small, set mfrow appropriately
+      if (dev.cur() == 1L || prod(par("mfrow")) < x$comps)
+         par(mfrow=n2mfrow(x$comps))
+      on.exit(par(mfrow=c(1L,1L)), add=TRUE)
    }
 
    missing.xlim <- missing(xlim)

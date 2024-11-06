@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-46</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-47</span>
       </span>
     </div>
 
@@ -97,7 +97,7 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'infl.rma.uni'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, plotinf<span class="op">=</span><span class="cn">TRUE</span>, plotdfbs<span class="op">=</span><span class="cn">FALSE</span>, dfbsnew<span class="op">=</span><span class="cn">FALSE</span>, logcov<span class="op">=</span><span class="cn">TRUE</span>,</span>
-<span>     <span class="va">layout</span>, slab.style<span class="op">=</span><span class="fl">1</span>, las<span class="op">=</span><span class="fl">0</span>, pch<span class="op">=</span><span class="fl">21</span>, <span class="va">bg</span>, <span class="va">bg.infl</span>, <span class="va">col.na</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>     slab.style<span class="op">=</span><span class="fl">1</span>, las<span class="op">=</span><span class="fl">0</span>, pch<span class="op">=</span><span class="fl">21</span>, <span class="va">bg</span>, <span class="va">bg.infl</span>, <span class="va">col.na</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -117,9 +117,6 @@
 
    <dt id="arg-logcov">logcov<a class="anchor" aria-label="anchor" href="#arg-logcov"></a></dt>
 <dd><p>logical to specify whether the covariance ratios should be plotted on a log scale (the default is <code>TRUE</code>).</p></dd>
-
-   <dt id="arg-layout">layout<a class="anchor" aria-label="anchor" href="#arg-layout"></a></dt>
-<dd><p>optional vector of two numbers to specify the number of rows and columns for the layout of the figure.</p></dd>
 
    <dt id="arg-slab-style">slab.style<a class="anchor" aria-label="anchor" href="#arg-slab-style"></a></dt>
 <dd><p>integer to specify the style of the x-axis labels: 1 = study number, 2 = study label, 3 = abbreviated study label. Note that study labels, even when abbreviated, may be too long to fit in the margins (see argument <code>mar</code> for <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></code> to adjust the margin sizes).</p></dd>
@@ -194,7 +191,6 @@
 <span class="r-in"><span><span class="co">### select which plots to show</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">inf</span>, plotinf<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.infl.rma.uni-3.png" alt="" width="1728" height="1536"></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">inf</span>, plotinf<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### plot the DFBETAS values</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">inf</span>, plotinf<span class="op">=</span><span class="cn">FALSE</span>, plotdfbs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
