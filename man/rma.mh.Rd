@@ -105,7 +105,7 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    The \code{\link[=residuals.rma]{residuals}}, \code{\link[=rstandard.rma.mh]{rstandard}}, and \code{\link[=rstudent.rma.mh]{rstudent}} functions extract raw and standardized residuals. Leave-one-out diagnostics can be obtained with \code{\link[=leave1out.rma.mh]{leave1out}}.
 
-   Forest, funnel, radial, \enc{L'Abbé}{L'Abbe}, and Baujat plots can be obtained with \code{\link[=forest.rma]{forest}}, \code{\link[=funnel.rma]{funnel}}, \code{\link[=radial.rma]{radial}}, \code{\link[=labbe.rma]{labbe}}, and \code{\link[=baujat.rma]{baujat}}. The \code{\link[=qqnorm.rma.mh]{qqnorm}} function provides normal QQ plots of the standardized residuals. One can also just call \code{\link[=plot.rma.mh]{plot}} on the fitted model object to obtain various plots at once.
+   Forest, funnel, radial, \enc{L'Abbé}{L'Abbe}, and Baujat plots can be obtained with \code{\link[=forest.rma]{forest}}, \code{\link[=funnel.rma]{funnel}}, \code{\link[=radial.rma]{radial}}, \code{\link[=labbe.rma]{labbe}}, and \code{\link[=baujat.rma]{baujat}}. The \code{\link[=qqnorm.rma.mh]{qqnorm}} function provides normal QQ plots of the standardized residuals. One can also call \code{\link[=plot.rma.mh]{plot}} on the fitted model object to obtain various plots at once.
 
    A cumulative meta-analysis (i.e., adding one observation at a time) can be obtained with \code{\link[=cumul.rma.mh]{cumul}}.
 

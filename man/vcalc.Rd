@@ -94,7 +94,7 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
 
       with \code{rvars = c(r1, r2, r3, r4)}. If the \code{rvars} variables are a consecutive set in the data frame (as above), then one can use the shorthand notation \code{rvars = c(r1:r4)}, so \code{r1} denotes the first and \code{r4} the last variable in the set. Note that only the lower triangular part of the submatrices defined by the \code{rvars} variables is used. Also, it is important that the rows in the dataset corresponding to a particular study are in consecutive order as shown above.
 
-      There must be as many variables specified via \code{rvars} as the number of rows in the \emph{largest} cluster (in smaller clusters, the non-relevant variables can just be set to \code{NA}; see above).
+      There must be as many variables specified via \code{rvars} as the number of rows in the \emph{largest} cluster (in smaller clusters, the non-relevant variables can be set to \code{NA}; see above).
 
    }
 

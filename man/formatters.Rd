@@ -20,7 +20,7 @@ fmtt(val, tname, df, df1, df2, pval, digits=4,
 
    \item{p}{vector of p-values to be formatted.}
    \item{digits}{integer to specify the number of decimal places to which the values should be rounded. For \code{fmmt}, can be a vector of length 2, to specify the number of digits for the test statistic and the p-value, respectively.}
-   \item{pname}{string to add as a prefix to the p-value (e.g., something like \code{"p-val"} or just \code{"p"}).}
+   \item{pname}{string to add as a prefix to the p-value (e.g., something like \code{"p-val"} or \code{"p"}).}
    \item{equal}{logical to specify whether an equal symbol should be shown before the p-value (when it is larger than the rounding cutoff).}
    \item{sep}{logical to specify whether a space should be added between \code{pname}, the equal/lesser symbol, and the p-value.}
    \item{add0}{logical to specify whether a 0 should be shown before the decimal point (for \code{fmtp}, this only applies when the p-value is below the rounding cutoff).}

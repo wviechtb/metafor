@@ -8,7 +8,7 @@
 metafor.news()
 }
 \details{
-   The function is just a wrapper for \code{news(package="metafor")} which parses and displays the \file{NEWS} file of the package.
+   The function is simply a wrapper for \code{news(package="metafor")} which parses and displays the \file{NEWS} file of the package.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).

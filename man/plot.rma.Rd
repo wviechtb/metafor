@@ -21,7 +21,7 @@
 \method{plot}{rma.mv}(x, qqplot=FALSE, \dots) # not currently implemented
 }
 \arguments{
-   \item{x}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, or \code{"rma.peto"}. The method is not yet implemented for objects of class \code{"rma.glmm"}.}
+   \item{x}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, or \code{"rma.peto"}. The method is not (yet) implemented for objects of class \code{"rma.glmm"} or \code{"rma.mv"}.}
    \item{qqplot}{logical to specify whether a normal QQ plot should be drawn (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }

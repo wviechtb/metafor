@@ -862,7 +862,7 @@
                        struct, g.levels.r, h.levels.r, g.values, h.values,
                        sparse, cholesky, nearpd, vctransf, vccov, vccon,
                        verbose, digits, REMLf,
-                       dofit=FALSE, hessian=FALSE, optbeta=FALSE) {
+                       dofit=FALSE, hessian=FALSE, optbeta=FALSE, lambda=0, intercept=TRUE) {
 
    mstyle <- .get.mstyle()
 
@@ -1025,6 +1025,15 @@
             beta <- matrix(stXWX %*% crossprod(X,W) %*% Y, ncol=1)
          beta  <- ifelse(is.na(beta.arg), beta, beta.arg)
          RSS   <- as.vector(t(Y - X %*% beta) %*% W %*% (Y - X %*% beta))
+         if (optbeta && lambda > 0) {
+            if (intercept) {
+               RSS <- RSS + c(lambda * crossprod(beta[-1]))
+               #RSS <- RSS + c(lambda * sum(abs(beta[-1])))
+            } else {
+               RSS <- RSS + c(lambda * crossprod(beta))
+               #RSS <- RSS + c(lambda * sum(abs(beta)))
+            }
+         }
          vb    <- stXWX
 
       } else {
@@ -1033,6 +1042,13 @@
          beta  <- matrix(stXAX %*% crossprod(X,A) %*% Y, ncol=1)
          beta  <- ifelse(is.na(beta.arg), beta, beta.arg)
          RSS   <- as.vector(t(Y - X %*% beta) %*% W %*% (Y - X %*% beta))
+         if (optbeta && lambda > 0) {
+            if (intercept) {
+               RSS <- RSS + c(lambda * crossprod(beta[-1]))
+            } else {
+               RSS <- RSS + c(lambda * crossprod(beta))
+            }
+         }
          vb    <- matrix(stXAX %*% t(X) %*% A %*% M %*% A %*% X %*% stXAX, nrow=pX, ncol=pX)
 
       }

@@ -18,7 +18,7 @@
 \method{weights}{rma.mv}(object, type="diagonal", \dots)
 }
 \arguments{
-   \item{object}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, or \code{"rma.mv"}. The method is not yet implemented for objects of class \code{"rma.glmm"}.}
+   \item{object}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, \code{"rma.peto"}, or \code{"rma.mv"}. The method is not (yet) implemented for objects of class \code{"rma.glmm"}.}
    \item{type}{character string to specify whether to return only the diagonal of the weight matrix (\code{"diagonal"}) or the entire weight matrix (\code{"matrix"}). For \code{"rma.mv"}, this can also be \code{"rowsum"} for \sQuote{row-sum weights} (for intercept-only models).}
    \item{\dots}{other arguments.}
 }

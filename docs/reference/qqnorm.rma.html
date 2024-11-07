@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-48</span>
       </span>
     </div>
 
@@ -96,15 +96,17 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'rma.uni'</span></span>
-<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">21</span>, <span class="va">col</span>, <span class="va">bg</span>,</span>
+<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">21</span>, <span class="va">col</span>, <span class="va">bg</span>, grid<span class="op">=</span><span class="cn">FALSE</span>,</span>
 <span>       envelope<span class="op">=</span><span class="cn">TRUE</span>, level<span class="op">=</span><span class="va">y</span><span class="op">$</span><span class="va">level</span>, bonferroni<span class="op">=</span><span class="cn">FALSE</span>, reps<span class="op">=</span><span class="fl">1000</span>, smooth<span class="op">=</span><span class="cn">TRUE</span>, bass<span class="op">=</span><span class="fl">0</span>,</span>
 <span>       label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">lty</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'rma.mh'</span></span>
-<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">21</span>, <span class="va">col</span>, <span class="va">bg</span>, label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">21</span>, <span class="va">col</span>, <span class="va">bg</span>, grid<span class="op">=</span><span class="cn">FALSE</span>,</span>
+<span>       label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'rma.peto'</span></span>
-<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">21</span>, <span class="va">col</span>, <span class="va">bg</span>, label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, type<span class="op">=</span><span class="st">"rstandard"</span>, pch<span class="op">=</span><span class="fl">21</span>, <span class="va">col</span>, <span class="va">bg</span>, grid<span class="op">=</span><span class="cn">FALSE</span>,</span>
+<span>       label<span class="op">=</span><span class="cn">FALSE</span>, offset<span class="op">=</span><span class="fl">0.3</span>, pos<span class="op">=</span><span class="fl">13</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'rma.glmm'</span></span>
 <span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">y</span>, <span class="va">...</span><span class="op">)</span> <span class="co"># not currently implemented</span></span>
@@ -117,7 +119,7 @@
     <h2>Arguments</h2>
     <p></p>
 <dl><dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>an object of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, or <code>"rma.peto"</code>. The method is not yet implemented for objects of class <code>"rma.glmm"</code> or <code>"rma.mv"</code>.</p></dd>
+<dd><p>an object of class <code>"rma.uni"</code>, <code>"rma.mh"</code>, or <code>"rma.peto"</code>. The method is not (yet) implemented for objects of class <code>"rma.glmm"</code> or <code>"rma.mv"</code>.</p></dd>
 
    <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
 <dd><p>character string (either <code>"rstandard"</code> (default) or <code>"rstudent"</code>) to specify whether standardized residuals or studentized deleted residuals should be used in creating the plot. See ‘Details’.</p></dd>
@@ -131,8 +133,11 @@
    <dt id="arg-bg">bg<a class="anchor" aria-label="anchor" href="#arg-bg"></a></dt>
 <dd><p>optional character string to specify the background color of open plot symbols.</p></dd>
 
+   <dt id="arg-grid">grid<a class="anchor" aria-label="anchor" href="#arg-grid"></a></dt>
+<dd><p>logical to specify whether a grid should be added to the plot (the default is <code>FALSE</code>). Can also be a color name.</p></dd>
+
    <dt id="arg-envelope">envelope<a class="anchor" aria-label="anchor" href="#arg-envelope"></a></dt>
-<dd><p>logical to specify whether a pseudo confidence envelope should be simulated and added to the plot (the default is <code>TRUE</code>)). Only for objects of class <code>"rma.uni"</code>. See ‘Details’.</p></dd>
+<dd><p>logical to specify whether a pseudo confidence envelope should be simulated and added to the plot (the default is <code>TRUE</code>). Can also be a color name. Only for objects of class <code>"rma.uni"</code>. See ‘Details’.</p></dd>
 
    <dt id="arg-level">level<a class="anchor" aria-label="anchor" href="#arg-level"></a></dt>
 <dd><p>numeric value between 0 and 100 to specify the level of the pseudo confidence envelope (see <a href="misc-options.html">here</a> for details). The default is to take the value from the object.</p></dd>
@@ -159,7 +164,7 @@
 <dd><p>argument to control the position of the labels.</p></dd>
 
    <dt id="arg-lty">lty<a class="anchor" aria-label="anchor" href="#arg-lty"></a></dt>
-<dd><p>optional argument to specify the line type for the diagonal line and the pseudo confidence envelope. If unspecified, the function sets this to <code>c("solid", "dotted")</code> by default.</p></dd>
+<dd><p>optional argument to specify the line type for the diagonal line and the pseudo confidence envelope. If unspecified, the function sets this to <code>c("solid","dotted")</code> by default.</p></dd>
 
    <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments.</p></dd>
@@ -208,14 +213,14 @@
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### draw QQ plot</span></span></span>
-<span class="r-in"><span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">res</span>, grid<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="qqnorm.rma-1.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit mixed-effects model with absolute latitude as moderator</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### draw QQ plot</span></span></span>
-<span class="r-in"><span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">qqnorm</span><span class="op">(</span><span class="va">res</span>, grid<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="qqnorm.rma-2.png" alt="" width="1728" height="1536"></span>
 </code></pre></div>
     </div>

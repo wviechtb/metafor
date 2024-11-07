@@ -1,4 +1,4 @@
-qqnorm.rma.mh <- function(y, type="rstandard", pch=21, col, bg, label=FALSE, offset=0.3, pos=13, ...) {
+qqnorm.rma.mh <- function(y, type="rstandard", pch=21, col, bg, grid=FALSE, label=FALSE, offset=0.3, pos=13, ...) {
 
    mstyle <- .get.mstyle()
 
@@ -22,6 +22,14 @@ qqnorm.rma.mh <- function(y, type="rstandard", pch=21, col, bg, label=FALSE, off
    if (missing(bg))
       bg <- .coladj(par("bg","fg"), dark=0.35, light=-0.35)
 
+   if (is.logical(grid))
+      gridcol <- .coladj(par("bg","fg"), dark=c(0.2,-0.6), light=c(-0.2,0.6))
+
+   if (is.character(grid)) {
+      gridcol <- grid
+      grid <- TRUE
+   }
+
    #########################################################################
 
    if (type == "rstandard") {
@@ -41,6 +49,14 @@ qqnorm.rma.mh <- function(y, type="rstandard", pch=21, col, bg, label=FALSE, off
    }
 
    sav <- qqnorm(zi, pch=pch, col=col, bg=bg, bty="l", ...)
+
+   ### add grid (and redraw box)
+
+   if (.isTRUE(grid)) {
+      grid(col=gridcol)
+      box(..., bty="l")
+   }
+
    abline(a=0, b=1, lty="solid", ...)
    #qqline(zi, ...)
    #abline(h=0, lty="dotted", ...)

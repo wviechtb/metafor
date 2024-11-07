@@ -93,7 +93,13 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist", "time", "dist", "abbrev", "restart", "optbeta", "beta", "vccon", "retopt"))
+   .chkdots(ddd, c("tdist", "outlist", "time", "dist", "abbrev", "restart", "optbeta", "beta", "vccon", "retopt", "lambda"))
+
+   if (is.null(ddd$lambda)) {
+      lambda <- 0
+   } else {
+      lambda <- ddd$lambda
+   }
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 
@@ -2044,7 +2050,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
             sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE, vccon=vccon,
             verbose=verbose, digits=digits, REMLf=con$REMLf,
-            dofit=FALSE, hessian=FALSE, optbeta=", optbeta, ctrl.arg, ")\n")
+            dofit=FALSE, hessian=FALSE, optbeta=", optbeta, ", lambda=", lambda, ", intercept=", intercept, ctrl.arg, ")\n")
 
          #return(optcall)
 
@@ -2110,7 +2116,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       withS=withS, withG=withG, withH=withH, struct=struct,
       g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
       sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE, vccon=vccon,
-      verbose=FALSE, digits=digits, REMLf=con$REMLf, dofit=TRUE, optbeta=optbeta)
+      verbose=FALSE, digits=digits, REMLf=con$REMLf, dofit=TRUE,
+      optbeta=optbeta, lambda=lambda, intercept=intercept)
 
    ### extract elements
 
@@ -2134,7 +2141,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             withS=withS, withG=withG, withH=withH, struct=struct,
             g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
             sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE, vccon=vccon,
-            verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE, hessian=TRUE, optbeta=optbeta), silent=!verbose)
+            verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE, hessian=TRUE,
+            optbeta=optbeta, lambda=lambda, intercept=intercept), silent=!verbose)
 
       if (con$hesspack == "pracma")
          hessian <- try(pracma::hessian(f=.ll.rma.mv, x0=opt.res$par,
@@ -2145,7 +2153,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             withS=withS, withG=withG, withH=withH, struct=struct,
             g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
             sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE, vccon=vccon,
-            verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE, hessian=TRUE, optbeta=optbeta), silent=!verbose)
+            verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE, hessian=TRUE,
+            optbeta=optbeta, lambda=lambda, intercept=intercept), silent=!verbose)
 
       if (con$hesspack == "calculus")
          hessian <- try(calculus::hessian(f=.ll.rma.mv, var=opt.res$par,
@@ -2156,7 +2165,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             withS=withS, withG=withG, withH=withH, struct=struct,
             g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
             sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE, vccon=vccon,
-            verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE, hessian=TRUE, optbeta=optbeta)), silent=!verbose)
+            verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE, hessian=TRUE,
+            optbeta=optbeta, lambda=lambda, intercept=intercept)), silent=!verbose)
 
       if (inherits(hessian, "try-error")) {
 

@@ -161,7 +161,7 @@ regplot(res, mod="ablat", pred=tmp, xlab="Absolute Latitude", xlim=c(0,60), xval
 ############################################################################
 
 ### fit a model with an interaction between a quantitative and a categorical predictor
-### (note: just for illustration purposes; this model is too complex for this dataset)
+### (note: only for illustration purposes; this model is too complex for this dataset)
 res <- rma(yi, vi, mods = ~ ablat * alloc, data=dat)
 res
 

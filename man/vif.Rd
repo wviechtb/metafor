@@ -80,7 +80,7 @@ vif(x, \dots)
 \value{
    An object of class \code{"vif.rma"}. The object is a list containing the following components:
    \item{vif}{a list of data frames with the (G)VIFs and (G)SIFs and some additional information.}
-   \item{vifs}{a vector with just the (G)VIFs.}
+   \item{vifs}{a vector with the (G)VIFs.}
    \item{table}{the model coefficient table (only when \code{table=TRUE}).}
    \item{sim}{a matrix with the simulated (G)VIF values (only when \code{sim=TRUE}).}
    \item{prop}{a vector with the proportions of simulated values that are smaller than the actually observed (G)VIF values (only when \code{sim=TRUE}).}

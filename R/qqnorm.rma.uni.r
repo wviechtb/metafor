@@ -1,4 +1,4 @@
-qqnorm.rma.uni <- function(y, type="rstandard", pch=21, col, bg,
+qqnorm.rma.uni <- function(y, type="rstandard", pch=21, col, bg, grid=FALSE,
 envelope=TRUE, level=y$level, bonferroni=FALSE, reps=1000, smooth=TRUE, bass=0,
 label=FALSE, offset=0.3, pos=13, lty, ...) {
 
@@ -16,23 +16,37 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
    if (x$k == 1L)
       stop(mstyle$stop("Stopped because k = 1."))
 
-   draw.envelope <- envelope
-
-   if (label == "out" & !envelope) {
-      envelope <- TRUE
-      draw.envelope <- FALSE
-   }
-
    if (length(label) != 1L)
       stop(mstyle$stop("Argument 'label' should be of length 1."))
 
    .start.plot()
+
+   envelopecol <- .coladj(par("bg","fg"), dark=0.15, light=-0.15)
+
+   if (label == "out" && is.logical(envelope))
+      envelope <- TRUE
+
+   if (is.logical(envelope))
+      draw.envelope <- envelope
+
+   if (is.character(envelope)) {
+      envelopecol <- envelope
+      draw.envelope <- TRUE
+   }
 
    if (missing(col))
       col <- par("fg")
 
    if (missing(bg))
       bg <- .coladj(par("bg","fg"), dark=0.35, light=-0.35)
+
+   if (is.logical(grid))
+      gridcol <- .coladj(par("bg","fg"), dark=c(0.2,-0.6), light=c(-0.2,0.6))
+
+   if (is.character(grid)) {
+      gridcol <- grid
+      grid <- TRUE
+   }
 
    if (missing(lty)) {
       lty <- c("solid", "dotted") # 1st value = diagonal line, 2nd value = pseudo confidence envelope
@@ -43,11 +57,13 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
 
    ddd <- list(...)
 
-   lqqnorm <- function(..., seed) qqnorm(...)
-   lpoints <- function(..., seed) points(...)
-   labline <- function(..., seed) abline(...)
-   llines  <- function(..., seed) lines(...)
-   ltext   <- function(..., seed) text(...)
+   lqqnorm  <- function(..., seed) qqnorm(...)
+   lpoints  <- function(..., seed) points(...)
+   labline  <- function(..., seed) abline(...)
+   lpolygon <- function(..., seed) polygon(...)
+   llines   <- function(..., seed) lines(...)
+   lbox     <- function(..., seed) box(...)
+   ltext    <- function(..., seed) text(...)
 
    #########################################################################
 
@@ -68,16 +84,12 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
    }
 
    sav <- lqqnorm(zi, pch=pch, col=col, bg=bg, bty="l", ...)
-   labline(a=0, b=1, lty=lty[1], ...)
-   #qqline(zi, ...)
-   #abline(h=0, lty="dotted", ...)
-   #abline(v=0, lty="dotted", ...)
 
    #########################################################################
 
    ### construct simulation based pseudo confidence envelope
 
-   if (envelope) {
+   if (draw.envelope) {
 
       level <- .level(level)
 
@@ -102,19 +114,38 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
       }
 
       temp.lb <- qqnorm(lb, plot.it=FALSE)
-      if (smooth)
-         temp.lb <- supsmu(temp.lb$x, temp.lb$y, bass=bass)
-      if (draw.envelope)
-         llines(temp.lb$x, temp.lb$y, lty=lty[2], ...)
-         #llines(temp.lb$x, temp.lb$y, lty="12", lwd=1.5, ...)
       temp.ub <- qqnorm(ub, plot.it=FALSE)
-      if (smooth)
+
+      if (smooth) {
+         temp.lb <- supsmu(temp.lb$x, temp.lb$y, bass=bass)
          temp.ub <- supsmu(temp.ub$x, temp.ub$y, bass=bass)
-      if (draw.envelope)
+      }
+
+      if (draw.envelope) {
+
+         lpolygon(c(temp.lb$x,rev(temp.ub$x)), c(temp.lb$y,rev(temp.ub$y)), col=envelopecol, border=NA, ...)
+         llines(temp.lb$x, temp.lb$y, lty=lty[2], ...)
          llines(temp.ub$x, temp.ub$y, lty=lty[2], ...)
-         #llines(temp.ub$x, temp.ub$y, lty="12", lwd=1.5, , ...)
+
+      }
 
    }
+
+   ### add grid (and redraw box)
+
+   if (.isTRUE(grid)) {
+      grid(col=gridcol)
+      lbox(..., bty="l")
+   }
+
+   ### draw the diagonal line
+
+   labline(a=0, b=1, lty=lty[1], ...)
+   #qqline(zi, ...)
+   #abline(h=0, lty="dotted", ...)
+   #abline(v=0, lty="dotted", ...)
+
+   ### add the points
 
    lpoints(sav$x, sav$y, pch=pch, col=col, bg=bg, ...)
 

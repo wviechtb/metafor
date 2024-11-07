@@ -1,4 +1,4 @@
-# metafor 4.7-47 (2024-11-06)
+# metafor 4.7-48 (2024-11-07)
 
 - some general changes to the various `forest()` functions: argument `header` is now `TRUE` by default, the y-axis is now created with `yaxs="i"`, and the y-axis limits have been tweaked slightly in accordance
 
@@ -51,6 +51,8 @@
 - `escalc()` gains a `correct` argument (to specify whether a bias correction should be applied)
 
 - added transformation function `transf.dtoovl()` (for transforming standardized mean differences to overlapping coefficient values) and ``transf.dtocliffd()` (for transforming standardized mean differences to Cliff's delta values)
+
+- `qqnorm.rma.uni()` now shades the pseudo confidence region; all `qqnorm()` functions gain a `grid` argument
 
 - better handling of `outlist="minimal"`
 

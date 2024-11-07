@@ -11,25 +11,28 @@
    Function to create normal QQ plots for objects of class \code{"rma.uni"}, \code{"rma.mh"}, and \code{"rma.peto"}. \loadmathjax
 }
 \usage{
-\method{qqnorm}{rma.uni}(y, type="rstandard", pch=21, col, bg,
+\method{qqnorm}{rma.uni}(y, type="rstandard", pch=21, col, bg, grid=FALSE,
        envelope=TRUE, level=y$level, bonferroni=FALSE, reps=1000, smooth=TRUE, bass=0,
        label=FALSE, offset=0.3, pos=13, lty, \dots)
 
-\method{qqnorm}{rma.mh}(y, type="rstandard", pch=21, col, bg, label=FALSE, offset=0.3, pos=13, \dots)
+\method{qqnorm}{rma.mh}(y, type="rstandard", pch=21, col, bg, grid=FALSE,
+       label=FALSE, offset=0.3, pos=13, \dots)
 
-\method{qqnorm}{rma.peto}(y, type="rstandard", pch=21, col, bg, label=FALSE, offset=0.3, pos=13, \dots)
+\method{qqnorm}{rma.peto}(y, type="rstandard", pch=21, col, bg, grid=FALSE,
+       label=FALSE, offset=0.3, pos=13, \dots)
 
 \method{qqnorm}{rma.glmm}(y, \dots) # not currently implemented
 
 \method{qqnorm}{rma.mv}(y, \dots) # not currently implemented
 }
 \arguments{
-   \item{y}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, or \code{"rma.peto"}. The method is not yet implemented for objects of class \code{"rma.glmm"} or \code{"rma.mv"}.}
+   \item{y}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, or \code{"rma.peto"}. The method is not (yet) implemented for objects of class \code{"rma.glmm"} or \code{"rma.mv"}.}
    \item{type}{character string (either \code{"rstandard"} (default) or \code{"rstudent"}) to specify whether standardized residuals or studentized deleted residuals should be used in creating the plot. See \sQuote{Details}.}
    \item{pch}{plotting symbol to use for the observed outcomes. By default, an open circle is used. See \code{\link{points}} for other options.}
    \item{col}{optional character string to specify the (border) color of the points.}
    \item{bg}{optional character string to specify the background color of open plot symbols.}
-   \item{envelope}{logical to specify whether a pseudo confidence envelope should be simulated and added to the plot (the default is \code{TRUE})). Only for objects of class \code{"rma.uni"}. See \sQuote{Details}.}
+   \item{grid}{logical to specify whether a grid should be added to the plot (the default is \code{FALSE}). Can also be a color name.}
+   \item{envelope}{logical to specify whether a pseudo confidence envelope should be simulated and added to the plot (the default is \code{TRUE}). Can also be a color name. Only for objects of class \code{"rma.uni"}. See \sQuote{Details}.}
    \item{level}{numeric value between 0 and 100 to specify the level of the pseudo confidence envelope (see \link[=misc-options]{here} for details). The default is to take the value from the object.}
    \item{bonferroni}{logical to specify whether the bounds of the envelope should be Bonferroni corrected.}
    \item{reps}{numeric value to specify the number of iterations for simulating the pseudo confidence envelope (the default is 1000).}
@@ -38,7 +41,7 @@
    \item{label}{argument to control the labeling of the points (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{offset}{argument to control the distance between the points and the corresponding labels.}
    \item{pos}{argument to control the position of the labels.}
-   \item{lty}{optional argument to specify the line type for the diagonal line and the pseudo confidence envelope. If unspecified, the function sets this to \code{c("solid", "dotted")} by default.}
+   \item{lty}{optional argument to specify the line type for the diagonal line and the pseudo confidence envelope. If unspecified, the function sets this to \code{c("solid","dotted")} by default.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -79,12 +82,12 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 res <- rma(yi, vi, data=dat)
 
 ### draw QQ plot
-qqnorm(res)
+qqnorm(res, grid=TRUE)
 
 ### fit mixed-effects model with absolute latitude as moderator
 res <- rma(yi, vi, mods = ~ ablat, data=dat)
 
 ### draw QQ plot
-qqnorm(res)
+qqnorm(res, grid=TRUE)
 }
 \keyword{hplot}

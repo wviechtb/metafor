@@ -29,10 +29,10 @@ test_that("plot can be drawn for 'rma.uni' object.", {
    res4 <- rma(yi, vi, mods=~ablat, data=dat)
 
    ### normal QQ plots for the various models
-   qqnorm(res1, seed=1234, main="Equal-Effects Model")
-   qqnorm(res2, seed=1234, main="Random-Effects Model")
-   qqnorm(res3, seed=1234, main="Fixed-Effects with Moderators Model")
-   qqnorm(res4, seed=1234, main="Mixed-Effects Model")
+   qqnorm(res1, seed=1234, grid=TRUE, main="Equal-Effects Model")
+   qqnorm(res2, seed=1234, grid=TRUE, main="Random-Effects Model")
+   qqnorm(res3, seed=1234, grid=TRUE, main="Fixed-Effects with Moderators Model")
+   qqnorm(res4, seed=1234, grid=TRUE, main="Mixed-Effects Model")
 
    dev.off()
 
@@ -40,7 +40,7 @@ test_that("plot can be drawn for 'rma.uni' object.", {
 
    ### draw plot with studentized residuals and labels
    png("images/test_plots_normal_qq_plots_2_test.png", res=200, width=1800, height=1800, type="cairo")
-   qqnorm(res2, type="rstudent", label=TRUE, seed=1234)
+   qqnorm(res2, type="rstudent", grid=TRUE, label=TRUE, seed=1234)
    dev.off()
 
    expect_true(.vistest("images/test_plots_normal_qq_plots_2_test.png", "images/test_plots_normal_qq_plots_2.png"))

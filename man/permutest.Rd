@@ -42,7 +42,7 @@ permutest(x, \dots)
 
       For models with moderators, the exact permutation test actually only requires fitting the model to each \emph{unique} permutation of the model matrix. The number of unique permutations will be smaller than \mjseqn{k!} when the model matrix contains recurring rows. This may be the case when only including categorical moderators (i.e., factors) in the model or when any quantitative moderators included in the model can only take on a small number of unique values. When \code{exact=TRUE}, the function therefore uses an algorithm to restrict the test to only the unique permutations of the model matrix, which may make the use of the exact test feasible even when \mjseqn{k} is large.
 
-      One can also set \code{exact="i"} in which case the function just returns the number of iterations required for an exact permutation test.
+      One can also set \code{exact="i"} in which case the function simply returns the number of iterations required for an exact permutation test.
 
       When using random permutations, the function ensures that the very first permutation will always correspond to the original data. This avoids p-values equal to 0.
 

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-47</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-48</span>
       </span>
     </div>
 
@@ -152,7 +152,7 @@
 <p>For models with moderators, the increase in the number of possible permutations is even more severe. The total number of possible permutations of the model matrix is <em></em>\(k!\). Therefore, for <em></em>\(k=5\), there are 120 possible permutations, for <em></em>\(k=10\), there are 3,628,800, and for <em></em>\(k=20\), there are over <em></em>\(10^{18}\) permutations of the model matrix.</p>
 <p>Therefore, going through all possible permutations may become infeasible. Instead of using an exact permutation test, one can set <code>exact=FALSE</code> (which is also the default). In that case, the function approximates the exact permutation-based p-value(s) by going through a smaller number (as specified by the <code>iter</code> argument) of <em>random</em> permutations. Therefore, running the function twice on the same data can yield (slightly) different p-values. Setting <code>iter</code> sufficiently large ensures that the results become stable. For full reproducibility, one can also set the seed of the random number generator before running the function (see ‘Examples’). Note that if <code>exact=FALSE</code> and <code>iter</code> is actually larger than the number of iterations required for an exact permutation test, then an exact test will automatically be carried out.</p>
 <p>For models with moderators, the exact permutation test actually only requires fitting the model to each <em>unique</em> permutation of the model matrix. The number of unique permutations will be smaller than <em></em>\(k!\) when the model matrix contains recurring rows. This may be the case when only including categorical moderators (i.e., factors) in the model or when any quantitative moderators included in the model can only take on a small number of unique values. When <code>exact=TRUE</code>, the function therefore uses an algorithm to restrict the test to only the unique permutations of the model matrix, which may make the use of the exact test feasible even when <em></em>\(k\) is large.</p>
-<p>One can also set <code>exact="i"</code> in which case the function just returns the number of iterations required for an exact permutation test.</p>
+<p>One can also set <code>exact="i"</code> in which case the function simply returns the number of iterations required for an exact permutation test.</p>
 <p>When using random permutations, the function ensures that the very first permutation will always correspond to the original data. This avoids p-values equal to 0.</p>
 <p></p>
 </div>
