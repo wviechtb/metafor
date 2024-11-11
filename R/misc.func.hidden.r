@@ -913,14 +913,14 @@
          }
       }
       ######################################################################
-      if (measure == "R2") {
+      if (is.element(measure, c("R2","R2F"))) {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, expression(R^2), "Coefficient of Determination")
          } else {
             lab <- ifelse(short, lab, "Transformed Coefficient of Determination")
          }
       }
-      if (measure == "ZR2") {
+      if (is.element(measure, c("ZR2","ZR2F"))) {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, expression(z[R^2]), "z Transformed Coefficient of Determination")
          } else {

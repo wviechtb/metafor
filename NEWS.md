@@ -1,4 +1,4 @@
-# metafor 4.7-48 (2024-11-07)
+# metafor 4.7-49 (2024-11-11)
 
 - some general changes to the various `forest()` functions: argument `header` is now `TRUE` by default, the y-axis is now created with `yaxs="i"`, and the y-axis limits have been tweaked slightly in accordance
 
@@ -44,7 +44,7 @@
 
 - some tweaks were made to `vcalc()` to speed up the calculations (by James Pustejovsky)
 
-- added measures `"PRZ"`, `"CLES"`, `"AUC"`, `"CLESN"`, `"AUCN"`, `"CLESCN"`, and `"AUCCN"` to `escalc()`
+- added measures `"PRZ"`, `"CLES"`, `"AUC"`, `"CLESN"`, `"AUCN"`, `"CLESCN"`, `"AUCCN"`, `"R2F"`, and `"ZR2F"` to `escalc()`
 
 - `escalc()` gains a `flip` argument
 

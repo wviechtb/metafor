@@ -20,7 +20,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
                               "RPB","RBIS","D2OR","D2ORN","D2ORL",                 # - transformations to r_PB, r_BIS, and log(OR)
                               "COR","UCOR","ZCOR",                                 # correlations (raw and r-to-z transformed)
                               "PCOR","ZPCOR","SPCOR",                              # partial and semi-partial correlations
-                              "R2","ZR2",                                          # coefficient of determination (raw and r-to-z transformed)
+                              "R2","ZR2","R2F","ZR2F",                             # coefficient of determination (raw and r-to-z transformed)
                               "PR","PLN","PLO","PRZ","PAS","PFT",                  # single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                            # single-group person-time data (and transformations thereof)
                               "MN","SMN","MNLN","CVLN","SDLN",                     # mean, single-group standardized mean, log(mean), log(CV), log(SD),
@@ -28,7 +28,7 @@ data, slab, subset, add=1/2, to="none", drop00=FALSE, vlong=FALSE, append=TRUE, 
                               "ARAW","AHW","ABT")))                                # alpha (and transformations thereof)
       stop(mstyle$stop("Unknown 'measure' specified."))
 
-   if (is.element(measure, c("CVR","VR","PCOR","ZPCOR","SPCOR","R2","ZR2","CVLN","SDLN","VRC")))
+   if (is.element(measure, c("CVR","VR","PCOR","ZPCOR","SPCOR","R2","ZR2","R2F","ZR2F","CVLN","SDLN","VRC")))
       stop(mstyle$stop("Function not available for this outcome measure."))
 
    na.act <- getOption("na.action")

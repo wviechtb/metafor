@@ -23,7 +23,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
                               "RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL",                                 # two-group mean/SD transformations to r_pb, r_bis, and log(OR)
                               "COR","UCOR","ZCOR",                                                              # correlations (raw and r-to-z transformed)
                               "PCOR","ZPCOR","SPCOR","ZSPCOR",                                                  # partial and semi-partial correlations
-                              "R2","ZR2",                                                                       # coefficient of determination / R^2 (raw and r-to-z transformed)
+                              "R2","ZR2","R2F","ZR2F",                                                          # coefficient of determination / R^2 (raw and r-to-z transformed)
                               "PR","PLN","PLO","PRZ","PAS","PFT",                                               # single proportions (and transformations thereof)
                               "IR","IRLN","IRS","IRFT",                                                         # single-group person-time (incidence) data (and transformations thereof)
                               "MN","SMN","MNLN","CVLN","SDLN",                                                  # mean, single-group standardized mean, log(mean), log(CV), log(SD),
@@ -1697,7 +1697,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
       ######################################################################
 
-      if (is.element(measure, c("R2","ZR2"))) {
+      if (is.element(measure, c("R2","ZR2","R2F","ZR2F"))) {
 
          r2i <- .getx("r2i", mf=mf, data=data, checknumeric=TRUE)
          mi  <- .getx("mi",  mf=mf, data=data, checknumeric=TRUE)
@@ -1737,7 +1737,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
          if (any(mi <= 0, na.rm=TRUE))
             stop(mstyle$stop("One or more mi values are <= 0."))
 
-         if (any(ni-mi- 1 <= 0, na.rm=TRUE))
+         if (any(ni-mi-1 <= 0, na.rm=TRUE))
             stop(mstyle$stop("One or more dfs are <= 0."))
 
          ni.u <- ni # unadjusted total sample sizes
@@ -1756,7 +1756,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
             mnwyi <- .wmean(yi, ni, na.rm=TRUE) # sample size weighted average of yi's
 
-            if (!all(is.element(vtype, c("LS","LS2","AV"))))
+            if (!all(is.element(vtype, c("LS","AV","LS2","AV2"))))
                stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS' or 'AV'."))
 
             for (i in seq_len(k)) {
@@ -1784,8 +1784,48 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
          ### r-to-z transformed coefficients of determination
 
          if (measure == "ZR2") {
+
+            if (!all(is.element(vtype, "LS")))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be 'LS'."))
+
             yi <- transf.rtoz(sqrt(r2i))
             vi <- 1 / ni # Olkin & Finn, 1995, p.162, but var(z*) is 4/n, not 16/n and here we use the 1/2 factor, so 1/n is correct
+
+         }
+
+         if (is.element(measure, c("R2F","ZR2F"))) {
+
+            yi <- r2i
+
+            vtype <- .expand1(vtype, k)
+
+            vi <- rep(NA_real_, k)
+
+            if (!all(is.element(vtype, "LS")))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be 'LS'."))
+
+            R2s <- seq(0.0001, 0.9999, length=10^5)
+
+            trapezoid <- function(x,y) sum(diff(x)*(y[-1]+y[-length(y)]))/2
+
+            for (i in seq_len(k)) {
+
+               Fval <- (ni[i] - mi[i] - 1) / mi[i] * r2i[i] / (1 - r2i[i])
+               ncps <- (mi[i] + ni[i]-mi[i]) * R2s / (1 - R2s)
+               denFval <- sapply(ncps, function(ncp) df(Fval, df1=mi[i], df2=ni[i]-mi[i]-1, ncp=ncp))
+               denFval <- denFval / trapezoid(R2s, denFval)
+               vi[i] <- sum((R2s[2]-R2s[1])*R2s^2*denFval) - sum((R2s[2]-R2s[1])*R2s*denFval)^2
+               #plot(R2s[denFval > sqrt(.Machine$double.eps)], denFval[denFval > sqrt(.Machine$double.eps)], type="l", lwd=5, bty="l", xlab="R^2", ylab="Density")
+
+            }
+
+         }
+
+         if (measure == "ZR2F") {
+
+            vi <- vi / (1 - yi^2)^2
+            yi <- transf.rtoz(sqrt(r2i))
+
          }
 
       }
@@ -2578,7 +2618,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
             vi <- rep(NA_real_, k)
 
-            if (!all(is.element(vtype, c("LS"))))
+            if (!all(is.element(vtype, "LS")))
                stop(mstyle$stop("For this outcome measure, 'vtype' must be 'LS'."))
 
             for (i in seq_len(k)) {

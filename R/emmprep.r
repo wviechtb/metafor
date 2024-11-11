@@ -149,7 +149,7 @@ emmprep <- function(x, verbose=FALSE, ...) {
          if (verbose) cat("Transformation:     r-to-z\n")
       }
 
-      if (is.element(x$measure, c("ZR2"))) {
+      if (is.element(x$measure, c("ZR2","ZR2F"))) {
          out@misc$tran$linkfun  <- transf.r2toz
          out@misc$tran$linkinv  <- transf.ztor2
          out@misc$tran$mu.eta   <- function(eta) 2*sinh(eta)/cosh(eta)^3 # derivative of transf.ztor2(eta) (= tanh(eta)^2)
