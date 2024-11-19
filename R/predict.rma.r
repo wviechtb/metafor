@@ -693,9 +693,19 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
       out$gamma2.level <- NULL
    }
 
-   ### for FE/EE/CE models, remove PI bounds
+   ### for FE/EE/CE models, remove the PI bounds
 
    if (is.element(x$method, c("FE","EE","CE"))) {
+      out$cr.lb <- NULL
+      out$cr.ub <- NULL
+      out$pi.lb <- NULL
+      out$pi.ub <- NULL
+   }
+
+   ### for certain transformations, remove the PI bounds
+
+   funlist <- lapply(list(transf.exp.mode, transf.ilogit.mode, transf.ztor.mode), deparse)
+   if (do.transf && any(sapply(funlist, identical, deparse(transf)))) {
       out$cr.lb <- NULL
       out$cr.ub <- NULL
       out$pi.lb <- NULL

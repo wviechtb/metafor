@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-49</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-51</span>
       </span>
     </div>
 
@@ -116,6 +116,9 @@
 <span><span class="fu">transf.ztor.int</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
 <span><span class="fu">transf.exp.int</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
 <span><span class="fu">transf.ilogit.int</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
+<span><span class="fu">transf.ztor.mode</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
+<span><span class="fu">transf.exp.mode</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
+<span><span class="fu">transf.ilogit.mode</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
 <span><span class="fu">transf.dtou1</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.dtou2</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.dtou3</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
@@ -192,6 +195,9 @@
 <li><p><code>transf.ztor.int</code>: integral transformation method for the z-to-r transformation.</p></li>
 <li><p><code>transf.exp.int</code>: integral transformation method for the exponential transformation.</p></li>
 <li><p><code>transf.ilogit.int</code>: integral transformation method for the inverse logit transformation.</p></li>
+<li><p><code>transf.ztor.mode</code>: function to determine the mode of a atanh-normal variable.</p></li>
+<li><p><code>transf.exp.mode</code>: function to determine the mode of a log-normal variable.</p></li>
+<li><p><code>transf.ilogit.mode</code>: function to determine the mode of a logit-normal variable.</p></li>
 <li><p><code>transf.dtou1</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_1\) values (Cohen, 1988). Under the assumption that the data for those in the first (say, treated) and second (say, control) group are normally distributed with equal variances but potentially different means, Cohen's <em></em>\(U_1\) indicates the proportion of non-overlap between the two distributions (i.e., when <em></em>\(d=0\), then <em></em>\(U_1\) is equal to 0, which goes to 1 as <em></em>\(d\) increases).</p></li>
 <li><p><code>transf.dtou2</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_2\) values (Cohen, 1988). Under the same assumptions as above, Cohen's <em></em>\(U_2\) indicates the proportion in the first group that exceeds the same proportion in the second group (i.e., when <em></em>\(d=0\), then <em></em>\(U_2\) is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>
 <li><p><code>transf.dtou3</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_3\) values (Cohen, 1988). Under the same assumptions as above, Cohen's <em></em>\(U_3\) indicates the proportion of individuals in the first group that have a higher value than the mean of those in the second group (i.e., when <em></em>\(d=0\), then <em></em>\(U_3\) is equal to 0.5, which goes to 1 as <em></em>\(d\) increases).</p></li>

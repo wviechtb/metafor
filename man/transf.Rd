@@ -21,6 +21,9 @@
 \alias{transf.ztor.int}
 \alias{transf.exp.int}
 \alias{transf.ilogit.int}
+\alias{transf.ztor.mode}
+\alias{transf.exp.mode}
+\alias{transf.ilogit.mode}
 \alias{transf.dtou1}
 \alias{transf.dtou2}
 \alias{transf.dtou3}
@@ -69,6 +72,9 @@ transf.ztor2(xi)
 transf.ztor.int(xi, targs)
 transf.exp.int(xi, targs)
 transf.ilogit.int(xi, targs)
+transf.ztor.mode(xi, targs)
+transf.exp.mode(xi, targs)
+transf.ilogit.mode(xi, targs)
 transf.dtou1(xi)
 transf.dtou2(xi)
 transf.dtou3(xi)
@@ -127,6 +133,9 @@ transf.lnortortet.digby(xi)
    \item \code{transf.ztor.int}: integral transformation method for the z-to-r transformation.
    \item \code{transf.exp.int}: integral transformation method for the exponential transformation.
    \item \code{transf.ilogit.int}: integral transformation method for the inverse logit transformation.
+   \item \code{transf.ztor.mode}: function to determine the mode of a atanh-normal variable.
+   \item \code{transf.exp.mode}: function to determine the mode of a log-normal variable.
+   \item \code{transf.ilogit.mode}: function to determine the mode of a logit-normal variable.
    \item \code{transf.dtou1}: transformation of standardized mean differences to Cohen's \mjseqn{U_1} values (Cohen, 1988). Under the assumption that the data for those in the first (say, treated) and second (say, control) group are normally distributed with equal variances but potentially different means, Cohen's \mjseqn{U_1} indicates the proportion of non-overlap between the two distributions (i.e., when \mjseqn{d=0}, then \mjseqn{U_1} is equal to 0, which goes to 1 as \mjseqn{d} increases).
    \item \code{transf.dtou2}: transformation of standardized mean differences to Cohen's \mjseqn{U_2} values (Cohen, 1988). Under the same assumptions as above, Cohen's \mjseqn{U_2} indicates the proportion in the first group that exceeds the same proportion in the second group (i.e., when \mjseqn{d=0}, then \mjseqn{U_2} is equal to 0.5, which goes to 1 as \mjseqn{d} increases).
    \item \code{transf.dtou3}: transformation of standardized mean differences to Cohen's \mjseqn{U_3} values (Cohen, 1988). Under the same assumptions as above, Cohen's \mjseqn{U_3} indicates the proportion of individuals in the first group that have a higher value than the mean of those in the second group (i.e., when \mjseqn{d=0}, then \mjseqn{U_3} is equal to 0.5, which goes to 1 as \mjseqn{d} increases).

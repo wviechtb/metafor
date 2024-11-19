@@ -67,6 +67,37 @@ transf.ztor.int <- function(xi, targs=NULL) {
 
 }
 
+transf.ztor.mode <- function(xi, targs=NULL) {
+
+   if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
+      stop("Must specify 'tau2' value via the 'targs' argument.", call.=FALSE)
+   if (is.list(targs)) {
+      tau2 <- targs$tau2
+   } else {
+      tau2 <- targs
+   }
+
+   tau <- sqrt(tau2)
+
+   dfun <- function(x, mu, sigma)
+      dnorm(atanh(x), mean=mu, sd=sigma) / (1 - x^2)
+
+   zi <- sapply(xi, function(x) {
+      if (tau2 == 0)
+         return(tanh(xi))
+      res <- try(optimize(dfun, maximum=TRUE, lower=-0.9999, upper=0.9999, mu=x, sigma=tau))
+      if (inherits(res, "try-error")) {
+         return(NA_real_)
+      } else {
+         return(res$maximum)
+      }
+   })
+
+   return(c(zi))
+
+}
+############################################################################
+
 transf.r2toz <- function(xi) {
    xi[xi > 1] <- 1
    xi[xi < 0] <- 0
@@ -109,6 +140,20 @@ transf.exp.int <- function(xi, targs=NULL) {
 
 }
 
+transf.exp.mode <- function(xi, targs=NULL) {
+
+   if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
+      stop("Must specify 'tau2' value via the 'targs' argument.", call.=FALSE)
+   if (is.list(targs)) {
+      tau2 <- targs$tau2
+   } else {
+      tau2 <- targs
+   }
+
+   return(c(exp(xi - tau2)))
+
+}
+
 ############################################################################
 
 transf.logit <- function(xi) # resulting value between -Inf (for 0) and +Inf (for +1)
@@ -143,6 +188,44 @@ transf.ilogit.int <- function(xi, targs=NULL) {
    } else {
       zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
    }
+
+   return(c(zi))
+
+}
+
+transf.ilogit.mode <- function(xi, targs=NULL) {
+
+   if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
+      stop("Must specify 'tau2' value via the 'targs' argument.", call.=FALSE)
+   if (is.list(targs)) {
+      tau2 <- targs$tau2
+   } else {
+      tau2 <- targs
+   }
+
+   tau <- sqrt(tau2)
+
+   xs <- seq(0, 1, length=10^5)
+
+   modefun <- function(x, mu, sigma)
+      sigma^2 * (2*x - 1) + mu - qlogis(x)
+
+   zi <- sapply(xi, function(x) {
+      if (tau2 == 0)
+         return(plogis(xi))
+      ys <- modefun(xs, mu=x, sigma=tau)
+      nmodes <- length(unique(sign(diff(ys)))) # check if there is a single mode
+      if (nmodes == 1L) {
+         res <- try(uniroot(modefun, lower=0, upper=1, mu=x, sigma=tau), silent=TRUE)
+         if (inherits(res, "try-error")) {
+            return(NA_real_)
+         } else {
+            return(res$root)
+         }
+      } else {
+         return(NA_real_)
+      }
+   })
 
    return(c(zi))
 
