@@ -38,9 +38,6 @@ transf.ztor <- function(xi)
 
 transf.ztor.int <- function(xi, targs=NULL) {
 
-   if (is.na(xi))
-      return(NA_real_)
-
    targs <- .chktargsint(targs)
 
    if (is.null(targs$lower))
@@ -51,8 +48,14 @@ transf.ztor.int <- function(xi, targs=NULL) {
    toint <- function(zval, xi, tau2)
       tanh(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
 
-   cfunc <- function(xi, tau2, lower, upper)
-      integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2)$value
+   cfunc <- function(xi, tau2, lower, upper) {
+      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2), silent=TRUE)
+      if (inherits(out, "try-error")) {
+         return(NA_real_)
+      } else {
+         return(out$value)
+      }
+   }
 
    if (targs$tau2 == 0) {
       zi <- transf.ztor(xi)
@@ -77,9 +80,6 @@ transf.ztor2 <- function(xi)
 
 transf.exp.int <- function(xi, targs=NULL) {
 
-   if (is.na(xi))
-      return(NA_real_)
-
    targs <- .chktargsint(targs)
 
    if (is.null(targs$lower))
@@ -90,8 +90,14 @@ transf.exp.int <- function(xi, targs=NULL) {
    toint <- function(zval, xi, tau2)
       exp(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
 
-   cfunc <- function(xi, tau2, lower, upper)
-      integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2)$value
+   cfunc <- function(xi, tau2, lower, upper) {
+      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2), silent=TRUE)
+      if (inherits(out, "try-error")) {
+         return(NA_real_)
+      } else {
+         return(out$value)
+      }
+   }
 
    if (targs$tau2 == 0) {
       zi <- exp(xi)
@@ -113,9 +119,6 @@ transf.ilogit <- function(xi)
 
 transf.ilogit.int <- function(xi, targs=NULL) {
 
-   if (is.na(xi))
-      return(NA_real_)
-
    targs <- .chktargsint(targs)
 
    if (is.null(targs$lower))
@@ -126,8 +129,14 @@ transf.ilogit.int <- function(xi, targs=NULL) {
    toint <- function(zval, xi, tau2)
       plogis(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
 
-   cfunc <- function(xi, tau2, lower, upper)
-      integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2)$value
+   cfunc <- function(xi, tau2, lower, upper) {
+      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2), silent=TRUE)
+      if (inherits(out, "try-error")) {
+         return(NA_real_)
+      } else {
+         return(out$value)
+      }
+   }
 
    if (targs$tau2 == 0) {
       zi <- transf.ilogit(xi)
@@ -153,9 +162,6 @@ transf.iarcsin <- function(xi) {
 
 # transf.iarcsin.int <- function(xi, targs=NULL) {
 #
-#   if (is.na(xi))
-#      return(NA_real_)
-#
 #   targs <- .chktargsint(targs)
 #
 #   if (is.null(targs$lower))
@@ -166,8 +172,14 @@ transf.iarcsin <- function(xi) {
 #   toint <- function(zval, xi, tau2)
 #      transf.iarcsin(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
 #
-#   cfunc <- function(xi, tau2, lower, upper)
-#      integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2)$value
+#   cfunc <- function(xi, tau2, lower, upper) {
+#      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2), silent=TRUE)
+#      if (inherits(out, "try-error")) {
+#         return(NA_real_)
+#      } else {
+#         return(out$value)
+#      }
+#   }
 #
 #   if (targs$tau2 == 0) {
 #      zi <- transf.iarcsin(xi)
