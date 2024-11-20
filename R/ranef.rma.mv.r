@@ -41,9 +41,11 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("expand"))
+   .chkdots(ddd, c("expand", "vcov"))
 
    expand <- ifelse(is.null(expand), FALSE, isTRUE(ddd$expand)) # TODO: make this an option?
+
+   vcov <- list()
 
    #########################################################################
 
@@ -124,6 +126,9 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
             rownames(pred) <- x$s.levels[[j]]
             out[[j]] <- pred
+
+            if (isTRUE(ddd$vcov))
+               vcov <- c(vcov, list(vpred))
 
          }
 
@@ -206,6 +211,9 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       rownames(pred) <- r.names[!is.dup]
 
+      if (isTRUE(ddd$vcov))
+         vpred <- vpred[!is.dup, !is.dup]
+
       if (is.element(x$struct[1], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG"))) {
          #r.order <- order(x$mf.g[[nvars]][!is.dup], seq_len(x$k)[!is.dup])
          r.order <- seq_len(x$k)
@@ -214,6 +222,11 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       }
 
       pred <- pred[r.order,]
+
+      if (isTRUE(ddd$vcov)) {
+         vpred <- vpred[r.order, r.order]
+         vcov <- c(vcov, list(vpred))
+      }
 
       out <- c(out, list(pred))
       #names(out)[length(out)] <- paste(x$g.names, collapse=" | ")
@@ -269,6 +282,9 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       rownames(pred) <- r.names[!is.dup]
 
+      if (isTRUE(ddd$vcov))
+         vpred <- vpred[!is.dup, !is.dup]
+
       if (is.element(x$struct[2], c("SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD","GEN","GDIAG"))) {
          #r.order <- order(x$mf.h[[nvars]][!is.dup], seq_len(x$k)[!is.dup])
          r.order <- seq_len(x$k)
@@ -277,6 +293,11 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       }
 
       pred <- pred[r.order,]
+
+      if (isTRUE(ddd$vcov)) {
+         vpred <- vpred[r.order, r.order]
+         vcov <- c(vcov, list(vpred))
+      }
 
       out <- c(out, list(pred))
       #names(out)[length(out)] <- paste(x$h.names, collapse=" | ")
@@ -319,6 +340,10 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
    if (is.null(out)) {
       return()
    } else {
+      if (isTRUE(ddd$vcov)) {
+         out <- list(pred=out)
+         out$vcov <- vcov
+      }
       return(out)
    }
 
