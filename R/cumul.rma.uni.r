@@ -172,6 +172,8 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, collapse=FALSE, progb
          ci.lb <- sapply(ci.lb, transf)
          ci.ub <- sapply(ci.ub, transf)
       } else {
+         if (!is.primitive(transf) && !is.null(targs) && length(formals(transf)) == 1L)
+            stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
          beta  <- sapply(beta, transf, targs)
          se    <- rep(NA_real_, k.o)
          ci.lb <- sapply(ci.lb, transf, targs)

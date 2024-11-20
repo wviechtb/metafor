@@ -92,7 +92,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
       if (is.null(vi))
          stop(mstyle$stop("Must specify the 'vi' or 'sei' argument."))
       if (length(vi) != k)
-         stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') is not the same."))
+         stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') are not the same."))
    }
 
    ### set negative variances and/or standard errors to 0
@@ -581,6 +581,8 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
          if (is.null(targs)) {
             at.lab <- fmtx(sapply(at.lab, atransf), digits[[1]], drop0ifint=TRUE)
          } else {
+            if (!is.primitive(atransf) && !is.null(targs) && length(formals(atransf)) == 1L)
+               stop(mstyle$stop("Function specified via 'atransf' does not appear to have an argument for 'targs'."))
             at.lab <- fmtx(sapply(at.lab, atransf, targs), digits[[1]], drop0ifint=TRUE)
          }
       } else {

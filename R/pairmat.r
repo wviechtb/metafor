@@ -12,7 +12,7 @@ pairmat <- function(x, btt, btt2, ...) {
    }
 
    if (is.null(x))
-      stop(mstyle$stop("Need to specify 'x' argument."), call.=FALSE)
+      stop(mstyle$stop("Need to specify the 'x' argument."), call.=FALSE)
 
    .chkclass(class(x), must="rma")
 
@@ -20,7 +20,7 @@ pairmat <- function(x, btt, btt2, ...) {
       stop(mstyle$stop("Cannot construct contrast matrices for intercept-only models."))
 
    if (missing(btt) || is.null(btt))
-      stop(mstyle$stop("Need to specify 'btt' argument."), call.=FALSE)
+      stop(mstyle$stop("Need to specify the 'btt' argument."), call.=FALSE)
 
    ddd <- list(...)
 

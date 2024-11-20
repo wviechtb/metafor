@@ -14,7 +14,7 @@ blsplit <- function(x, cluster, fun, args, sort=FALSE) {
    k <- nrow(x)
 
    if (length(cluster) != k)
-      stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not correspond to the dimensions of the matrix (", k, "x", k, ").")))
+      stop(mstyle$stop(paste0("Length of the variable specified via 'cluster' (", length(cluster), ") does not correspond to the dimensions of the matrix (", k, "x", k, ").")))
 
    res <- list()
 

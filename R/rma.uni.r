@@ -347,7 +347,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       ### check length of yi and vi
 
       if (length(vi) != k)
-         stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') is not the same."))
+         stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') are not the same."))
 
       ### if ni has not been specified, try to get it from the attributes of yi
 
@@ -846,7 +846,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    ### check length of yi and weights (only if weights is not NULL)
 
    if (!is.null(weights) && (length(weights) != k))
-      stop(mstyle$stop("Length of 'yi' and 'weights' is not the same."))
+      stop(mstyle$stop("Length of 'yi' and 'weights' are not the same."))
 
    ### subsetting of weights
 
@@ -894,7 +894,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    ### check if mods matrix has the right number of rows
 
    if (!is.null(mods) && nrow(mods) != k)
-      stop(mstyle$stop(paste0("Number of rows in the model matrix (", nrow(mods), ") does not match length of the outcome vector (", k, ").")))
+      stop(mstyle$stop(paste0("Number of rows in the model matrix (", nrow(mods), ") do not match the length of the outcome vector (", k, ").")))
 
    ### for rma.ls models, get model matrix for the scale part
 
@@ -922,7 +922,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             stop(mstyle$stop("Scale model matrix contains character variables."))
       }
       if (nrow(Z) != k)
-         stop(mstyle$stop(paste0("Number of rows in the model matrix specified via the 'scale' argument (", nrow(Z), ") does not match length of the outcome vector (", k, ").")))
+         stop(mstyle$stop(paste0("Number of rows in the model matrix specified via the 'scale' argument (", nrow(Z), ") do not match the length of the outcome vector (", k, ").")))
    } else {
       Z <- NULL
    }
@@ -1913,7 +1913,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       } else {
          alpha <- .expand1(alpha, q)
          if (length(alpha) != q)
-            stop(mstyle$stop(paste0("Length of 'alpha' argument (", length(alpha), ") does not match actual number of parameters (", q, ").")))
+            stop(mstyle$stop(paste0("Length of the 'alpha' argument (", length(alpha), ") does not match the actual number of parameters (", q, ").")))
       }
 
       ### checks on beta argument
@@ -1925,7 +1925,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          } else {
             beta <- .expand1(beta, p)
             if (length(beta) != p)
-               stop(mstyle$stop(paste0("Length of 'beta' argument (", length(beta), ") does not match actual number of parameters (", p, ").")))
+               stop(mstyle$stop(paste0("Length of the 'beta' argument (", length(beta), ") does not match the actual number of parameters (", p, ").")))
          }
 
          ### needed for constrOptim() when optbeta=TRUE
@@ -2017,7 +2017,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       }
 
       if (length(alpha.init) != q)
-         stop(mstyle$stop(paste0("Length of 'alpha.init' argument (", length(alpha.init), ") does not match actual number of parameters (", q, ").")))
+         stop(mstyle$stop(paste0("Length of the 'alpha.init' argument (", length(alpha.init), ") does not match the actual number of parameters (", q, ").")))
 
       if (anyNA(alpha.init))
          stop(mstyle$stop("No missing values allowed in 'alpha.init'."))
@@ -2033,7 +2033,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             beta.init <- con$beta.init
 
             if (length(beta.init) != p)
-               stop(mstyle$stop(paste0("Length of 'beta.init' argument (", length(beta.init), ") does not match actual number of parameters (", p, ").")))
+               stop(mstyle$stop(paste0("Length of the 'beta.init' argument (", length(beta.init), ") does not match the actual number of parameters (", p, ").")))
 
             if (anyNA(beta.init))
                stop(mstyle$stop("No missing values allowed in 'beta.init'."))
@@ -2052,10 +2052,10 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       con$alpha.max <- .expand1(con$alpha.max, q)
 
       if (length(con$alpha.min) != q)
-         stop(mstyle$stop(paste0("Length of 'alpha.min' argument (", length(alpha.min), ") does not match actual number of parameters (", q, ").")))
+         stop(mstyle$stop(paste0("Length of the 'alpha.min' argument (", length(alpha.min), ") does not match the actual number of parameters (", q, ").")))
 
       if (length(con$alpha.max) != q)
-         stop(mstyle$stop(paste0("Length of 'alpha.max' argument (", length(alpha.max), ") does not match actual number of parameters (", q, ").")))
+         stop(mstyle$stop(paste0("Length of the 'alpha.max' argument (", length(alpha.max), ") does not match the actual number of parameters (", q, ").")))
 
       if (any(xor(is.infinite(con$alpha.min),is.infinite(con$alpha.max))))
          stop(mstyle$stop("Constraints on scale coefficients must be placed on both the lower and upper bound."))

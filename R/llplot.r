@@ -196,19 +196,19 @@ lty, lwd, col, level=99.99, refline=0, ...) {
    if (!is.null(lty)) {
       lty <- .expand1(lty, k)
       if (length(lty) != k)
-         stop(mstyle$stop(paste0("Length of 'lty' argument (", length(lty), ") does not match length of data (", k, ").")))
+         stop(mstyle$stop(paste0("Length of the 'lty' argument (", length(lty), ") does not match the length of the data (", k, ").")))
    }
 
    if (!is.null(lwd)) {
       lwd <- .expand1(lwd, k)
       if (length(lwd) != k)
-         stop(mstyle$stop(paste0("Length of 'lwd' argument (", length(lwd), ") does not match length of data (", k, ").")))
+         stop(mstyle$stop(paste0("Length of the 'lwd' argument (", length(lwd), ") does not match the length of the data (", k, ").")))
    }
 
    if (!is.null(col)) {
       col <- .expand1(col, k)
       if (length(col) != k)
-         stop(mstyle$stop(paste0("Length of 'col' argument (", length(col), ") does not match length of data (", k, ").")))
+         stop(mstyle$stop(paste0("Length of the 'col' argument (", length(col), ") does not match the length of the data (", k, ").")))
    }
 
    ### if a subset of studies is specified

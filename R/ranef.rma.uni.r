@@ -80,6 +80,8 @@ ranef.rma.uni <- function(object, level, digits, transf, targs, ...) {
          pi.lb <- sapply(pi.lb, transf)
          pi.ub <- sapply(pi.ub, transf)
       } else {
+         if (!is.primitive(transf) && !is.null(targs) && length(formals(transf)) == 1L)
+            stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
          pred  <- sapply(pred, transf, targs)
          se    <- rep(NA_real_, x$k.f)
          pi.lb <- sapply(pi.lb, transf, targs)

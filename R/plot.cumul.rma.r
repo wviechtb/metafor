@@ -130,6 +130,8 @@ digits, cols, grid=TRUE, pch=19, cex=1, lwd=2, ...) {
       if (is.null(targs)) {
          dat$estim <- sapply(dat$estim, transf)
       } else {
+         if (!is.primitive(transf) && !is.null(targs) && length(formals(transf)) == 1L)
+            stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
          dat$estim <- sapply(dat$estim, transf, targs)
       }
    }

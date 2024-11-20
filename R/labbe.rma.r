@@ -311,6 +311,8 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, lty,
          y.vals.pi.lb <- sapply(y.vals.pi.lb, transf)
          y.vals.pi.ub <- sapply(y.vals.pi.ub, transf)
       } else {
+         if (!is.primitive(transf) && !is.null(targs) && length(formals(transf)) == 1L)
+            stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
          dat.x$yi     <- sapply(dat.x$yi, transf, targs)
          dat.y$yi     <- sapply(dat.y$yi, transf, targs)
          x.vals       <- sapply(x.vals, transf, targs)

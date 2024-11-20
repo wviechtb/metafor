@@ -128,4 +128,31 @@ test_that("predict() correctly handles in/exclusion of the intercept term", {
 
 })
 
+test_that("predict() works correctly with adjusted level", {
+
+   dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
+   res <- rma(yi ~ ablat, vi, data=dat)
+   pred1 <- predict(res, newmods=seq(0,60,by=10), level=90)
+   res <- rma(yi ~ ablat, vi, data=dat, level=90)
+   pred2 <- predict(res, newmods=seq(0,60,by=10))
+   expect_equivalent(pred1, pred2)
+
+   res <- rma(yi ~ ablat, vi, data=dat)
+   res <- robust(res, cluster=trial)
+   pred1 <- predict(res, newmods=seq(0,60,by=10), level=90)
+   res <- rma(yi ~ ablat, vi, data=dat, level=90)
+   res <- robust(res, cluster=trial)
+   pred2 <- predict(res, newmods=seq(0,60,by=10))
+   expect_equivalent(pred1, pred2)
+
+   res <- rma(yi ~ ablat, vi, data=dat)
+   res <- robust(res, cluster=trial, clubSandwich=TRUE)
+   pred1 <- predict(res, newmods=seq(0,60,by=10), level=90)
+   res <- rma(yi ~ ablat, vi, data=dat, level=90)
+   res <- robust(res, cluster=trial, clubSandwich=TRUE)
+   pred2 <- predict(res, newmods=seq(0,60,by=10))
+   expect_equivalent(pred1, pred2)
+
+})
+
 rm(list=ls())

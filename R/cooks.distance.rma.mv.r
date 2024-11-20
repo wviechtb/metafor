@@ -75,7 +75,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
    ###       of NAs as was done during model fitting
 
    if (length(cluster) != x$k.all)
-      stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not match length of data (", x$k.all, ").")))
+      stop(mstyle$stop(paste0("Length of the variable specified via 'cluster' (", length(cluster), ") does not match the length of the data (", x$k.all, ").")))
 
    cluster <- .getsubset(cluster, x$subset)
 

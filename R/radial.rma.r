@@ -274,6 +274,8 @@ transf, targs, pch=21, col, bg, back, arc.res=100, cex, cex.lab, cex.axis, ...) 
       if (is.null(targs)) {
          atyis.lab <- sapply(atyis.lab, transf)
       } else {
+         if (!is.primitive(transf) && !is.null(targs) && length(formals(transf)) == 1L)
+            stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
          atyis.lab <- sapply(atyis.lab, transf, targs)
       }
    }

@@ -230,7 +230,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    k <- length(yi) # either of length k when na.action="na.omit" or k.f otherwise
 
    if (length(vi) != k)
-      stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') is not the same."))
+      stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') are not the same."))
 
    ### note: ilab, pch, psize, col must be of the same length as yi (which may
    ###       or may not contain NAs; this is different than the other forest()
@@ -370,6 +370,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          ci.lb <- sapply(ci.lb, transf)
          ci.ub <- sapply(ci.ub, transf)
       } else {
+         if (!is.primitive(transf) && !is.null(targs) && length(formals(transf)) == 1L)
+            stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
          yi    <- sapply(yi, transf, targs)
          ci.lb <- sapply(ci.lb, transf, targs)
          ci.ub <- sapply(ci.ub, transf, targs)
@@ -713,7 +715,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    if (!is.null(ilab)) {
       if (is.null(ilab.xpos)) {
-         #stop(mstyle$stop("Must specify 'ilab.xpos' argument when adding information with 'ilab'."))
+         #stop(mstyle$stop("Must specify the 'ilab.xpos' argument when adding information with 'ilab'."))
          dist <- min(ci.lb, na.rm=TRUE) - xlim[1]
          if (ncol.ilab == 1L)
             ilab.xpos <- xlim[1] + dist*0.75
@@ -725,11 +727,11 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
             ilab.xpos <- seq(xlim[1] + dist*0.5, xlim[1] + dist*0.9, length.out=ncol.ilab)
       }
       if (length(ilab.xpos) != ncol.ilab)
-         stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol.ilab, ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ").")))
+         stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol.ilab, ") do not match the length of the 'ilab.xpos' argument (", length(ilab.xpos), ").")))
       if (!is.null(ilab.pos) && length(ilab.pos) == 1L)
          ilab.pos <- rep(ilab.pos, ncol.ilab)
       if (!is.null(ilab.lab) && length(ilab.lab) != ncol.ilab)
-         stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol.ilab, ") does not match length of 'ilab.lab' argument (", length(ilab.lab), ").")))
+         stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol.ilab, ") do not match the length of the 'ilab.lab' argument (", length(ilab.lab), ").")))
       par(family=names(fonts)[3], font=fonts[3])
       for (l in seq_len(ncol.ilab)) {
          ltext(ilab.xpos[l], rows+rowadj[3], ilab[,l], pos=ilab.pos[l], cex=cex, ...)
@@ -768,7 +770,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       } else {
          width <- .expand1(width, ncol(annotext))
          if (length(width) != ncol(annotext))
-            stop(mstyle$stop(paste0("Length of 'width' argument (", length(width), ") does not the match number of annotation columns (", ncol(annotext), ").")))
+            stop(mstyle$stop(paste0("Length of the 'width' argument (", length(width), ") does not the match number of annotation columns (", ncol(annotext), ").")))
       }
 
       for (j in seq_len(ncol(annotext))) {

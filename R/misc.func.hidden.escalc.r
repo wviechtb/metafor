@@ -187,7 +187,7 @@
       x <- rep(x, k)
 
    if (length(g) != length(x))
-      stop(mstyle$stop("Length of 'g' and 'x' arguments is not the same."))
+      stop(mstyle$stop("Length of the 'g' and 'x' arguments are not the same."))
 
    for (i in seq_len(k)) {
 

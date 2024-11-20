@@ -574,6 +574,8 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
             ci.lb <- sapply(ci.lb, transf)
             ci.ub <- sapply(ci.ub, transf)
          } else {
+            if (!is.primitive(transf) && !is.null(targs) && length(formals(transf)) == 1L)
+               stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
             beta  <- sapply(beta, transf, targs)
             ci.lb <- sapply(ci.lb, transf, targs)
             ci.ub <- sapply(ci.ub, transf, targs)

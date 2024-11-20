@@ -90,7 +90,7 @@ conv.delta <- function(yi, vi, ni, data, include, transf, var.names, append=TRUE
    ### check length of yi and vi (and ni)
 
    if (length(yi) != length(vi))
-      stop(mstyle$stop("Length of 'yi' and 'vi' is not the same."))
+      stop(mstyle$stop("Length of 'yi' and 'vi' are not the same."))
 
    if (!.equal.length(yi, vi, ni)) # a bit redundant with the above, but keep
       stop(mstyle$stop("Supplied data vectors are not all of the same length."))

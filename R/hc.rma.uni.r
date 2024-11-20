@@ -136,6 +136,8 @@ hc.rma.uni <- function(object, digits, transf, targs, control, ...) {
          ci.lb.rma <- sapply(ci.lb.rma, transf)
          ci.ub.rma <- sapply(ci.ub.rma, transf)
       } else {
+         if (!is.primitive(transf) && !is.null(targs) && length(formals(transf)) == 1L)
+            stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
          beta      <- sapply(beta, transf, targs)
          beta.rma  <- sapply(beta.rma, transf, targs)
          se        <- NA_real_

@@ -220,7 +220,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (hasArg(ci.lb) && hasArg(ci.ub) && !is.null(ci.lb) && !is.null(ci.ub)) { # CI bounds are specified by user
 
       if (length(ci.lb) != length(ci.ub))
-         stop(mstyle$stop("Length of 'ci.lb' and 'ci.ub' is not the same."))
+         stop(mstyle$stop("Length of 'ci.lb' and 'ci.ub' are not the same."))
 
       if (missing(vi) && missing(sei)) {     # vi/sei not specified, so calculate vi based on CI
          vi <- ((ci.ub - ci.lb) / (2*qnorm(level/2, lower.tail=FALSE)))^2
@@ -230,7 +230,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       }
 
       if (length(ci.lb) != length(vi))
-         stop(mstyle$stop("Length of 'vi' (or 'sei') does not match length of ('ci.lb','ci.ub')."))
+         stop(mstyle$stop("Length of 'vi' (or 'sei') does not match the length of ('ci.lb','ci.ub')."))
 
    } else {                                  # CI bounds are not specified by user
 
@@ -243,7 +243,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       }
 
       if (length(yi) != length(vi)) # need to do this here to avoid warning when calculating 'ci.lb' and 'ci.ub'
-         stop(mstyle$stop("Length of 'vi' (or 'sei') does not match length of 'yi'."))
+         stop(mstyle$stop("Length of 'vi' (or 'sei') does not match the length of 'yi'."))
 
       ci.lb <- yi - qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
       ci.ub <- yi + qnorm(level/2, lower.tail=FALSE) * sqrt(vi)
@@ -472,6 +472,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          ci.lb <- sapply(ci.lb, transf)
          ci.ub <- sapply(ci.ub, transf)
       } else {
+         if (!is.primitive(transf) && !is.null(targs) && length(formals(transf)) == 1L)
+            stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
          yi    <- sapply(yi, transf, targs)
          ci.lb <- sapply(ci.lb, transf, targs)
          ci.ub <- sapply(ci.ub, transf, targs)
@@ -859,7 +861,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    if (!is.null(ilab)) {
       if (is.null(ilab.xpos)) {
-         #stop(mstyle$stop("Must specify 'ilab.xpos' argument when adding information with 'ilab'."))
+         #stop(mstyle$stop("Must specify the 'ilab.xpos' argument when adding information with 'ilab'."))
          dist <- min(ci.lb, na.rm=TRUE) - xlim[1]
          if (ncol.ilab == 1L)
             ilab.xpos <- xlim[1] + dist*0.75
@@ -871,11 +873,11 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
             ilab.xpos <- seq(xlim[1] + dist*0.5, xlim[1] + dist*0.9, length.out=ncol.ilab)
       }
       if (length(ilab.xpos) != ncol.ilab)
-         stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol.ilab, ") does not match length of 'ilab.xpos' argument (", length(ilab.xpos), ").")))
+         stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol.ilab, ") do not match the length of the 'ilab.xpos' argument (", length(ilab.xpos), ").")))
       if (!is.null(ilab.pos) && length(ilab.pos) == 1L)
          ilab.pos <- rep(ilab.pos, ncol.ilab)
       if (!is.null(ilab.lab) && length(ilab.lab) != ncol.ilab)
-         stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol.ilab, ") does not match length of 'ilab.lab' argument (", length(ilab.lab), ").")))
+         stop(mstyle$stop(paste0("Number of 'ilab' columns (", ncol.ilab, ") do not match the length of the 'ilab.lab' argument (", length(ilab.lab), ").")))
       par(family=names(fonts)[3], font=fonts[3])
       for (l in seq_len(ncol.ilab)) {
          ltext(ilab.xpos[l], rows+rowadj[3], ilab[,l], pos=ilab.pos[l], cex=cex, ...)
@@ -919,7 +921,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       } else {
          width <- .expand1(width, ncol(annotext))
          if (length(width) != ncol(annotext))
-            stop(mstyle$stop(paste0("Length of 'width' argument (", length(width), ") does not match the number of annotation columns (", ncol(annotext), ").")))
+            stop(mstyle$stop(paste0("Length of the 'width' argument (", length(width), ") does not match the number of annotation columns (", ncol(annotext), ").")))
       }
 
       for (j in seq_len(ncol(annotext))) {

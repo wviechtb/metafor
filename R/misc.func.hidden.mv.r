@@ -38,7 +38,7 @@
 
    if (length(ids) != length(vcvals)) {
       mstyle <- .get.mstyle()
-      stop(mstyle$stop(paste0("Length of 'vccon$", vcname, "' (", length(ids), ") does not match length of ", vcname, " (", length(vcvals), ").")), call.=FALSE)
+      stop(mstyle$stop(paste0("Length of 'vccon$", vcname, "' (", length(ids), ") does not match the length of ", vcname, " (", length(vcvals), ").")), call.=FALSE)
    }
 
    for (id in unique(ids))
@@ -176,9 +176,9 @@
    ### check if tau2 and rho are of correct length
 
    if (length(tau2) != tau2s)
-      stop(mstyle$stop(paste0("Length of ", ifelse(isG, 'tau2', 'gamma2'), " argument (", length(tau2), ") does not match actual number of variance components (", tau2s, ").")), call.=FALSE)
+      stop(mstyle$stop(paste0("Length of the ", ifelse(isG, 'tau2', 'gamma2'), " argument (", length(tau2), ") does not match the actual number of variance components (", tau2s, ").")), call.=FALSE)
    if (length(rho) != rhos)
-      stop(mstyle$stop(paste0("Length of ", ifelse(isG, 'rho', 'phi'), " argument (", length(rho), ") does not match actual number of correlations (", rhos, ").")), call.=FALSE)
+      stop(mstyle$stop(paste0("Length of the ", ifelse(isG, 'rho', 'phi'), " argument (", length(rho), ") does not match the actual number of correlations (", rhos, ").")), call.=FALSE)
 
    ### checks on any fixed values of tau2 and rho arguments
 
@@ -1361,7 +1361,7 @@
          ddf <- dfs
          ddf <- .expand1(ddf, p)
          if (length(ddf) != p)
-            stop(mstyle$stop(paste0("Length of 'dfs' argument (", length(dfs), ") does not match the number of model coefficient (", p, ").")), call.=FALSE)
+            stop(mstyle$stop(paste0("Length of the 'dfs' argument (", length(dfs), ") does not match the number of model coefficient (", p, ").")), call.=FALSE)
       }
 
       if (is.character(dfs) && dfs == "residual")

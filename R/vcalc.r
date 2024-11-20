@@ -79,7 +79,7 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ...) {
       stop(mstyle$stop("No missing values allowed in 'cluster' variable."))
 
    if (length(cluster) != k)
-      stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not match length of 'vi' (", k, ").")))
+      stop(mstyle$stop(paste0("Length of the variable specified via 'cluster' (", length(cluster), ") does not match the length of 'vi' (", k, ").")))
 
    ### checks on subgroup variable
 
@@ -89,7 +89,7 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ...) {
          stop(mstyle$stop("No missing values allowed in 'subgroup' variable."))
 
       if (length(subgroup) != k)
-         stop(mstyle$stop(paste0("Length of variable specified via 'subgroup' (", length(subgroup), ") does not match length of 'vi' (", k, ").")))
+         stop(mstyle$stop(paste0("Length of the variable specified via 'subgroup' (", length(subgroup), ") does not match the length of 'vi' (", k, ").")))
 
       cluster <- paste0(cluster, ".", subgroup)
 
@@ -117,7 +117,7 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ...) {
          stop(mstyle$stop("No missing values allowed in 'type' variable."))
 
       if (length(type) != k)
-         stop(mstyle$stop(paste0("Length of variable specified via 'type' (", length(type), ") does not match length of 'vi' (", k, ").")))
+         stop(mstyle$stop(paste0("Length of the variable specified via 'type' (", length(type), ") does not match the length of 'vi' (", k, ").")))
 
       ### process obs variable
 
@@ -133,7 +133,7 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ...) {
          stop(mstyle$stop("No missing values allowed in 'obs' variable."))
 
       if (length(obs) != k)
-         stop(mstyle$stop(paste0("Length of variable specified via 'obs' (", length(obs), ") does not match length of 'vi' (", k, ").")))
+         stop(mstyle$stop(paste0("Length of the variable specified via 'obs' (", length(obs), ") does not match the length of 'vi' (", k, ").")))
 
       ### process grp1 and grp2 variables
 
@@ -156,10 +156,10 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ...) {
          stop(mstyle$stop("No missing values allowed in 'grp2' variable."))
 
       if (length(grp1) != k)
-         stop(mstyle$stop(paste0("Length of variable specified via 'grp1' (", length(grp1), ") does not match length of 'vi' (", k, ").")))
+         stop(mstyle$stop(paste0("Length of the variable specified via 'grp1' (", length(grp1), ") does not match the length of 'vi' (", k, ").")))
 
       if (length(grp2) != k)
-         stop(mstyle$stop(paste0("Length of variable specified via 'grp2' (", length(grp2), ") does not match length of 'vi' (", k, ").")))
+         stop(mstyle$stop(paste0("Length of the variable specified via 'grp2' (", length(grp2), ") does not match the length of 'vi' (", k, ").")))
 
       ### process time1 and time2 variables
 
@@ -192,10 +192,10 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ...) {
          stop(mstyle$stop("No missing values allowed in 'time2' variable."))
 
       if (length(time1) != k)
-         stop(mstyle$stop(paste0("Length of variable specified via 'time1' (", length(time1), ") does not match length of 'vi' (", k, ").")))
+         stop(mstyle$stop(paste0("Length of the variable specified via 'time1' (", length(time1), ") does not match the length of 'vi' (", k, ").")))
 
       if (length(time2) != k)
-         stop(mstyle$stop(paste0("Length of variable specified via 'time2' (", length(time2), ") does not match length of 'vi' (", k, ").")))
+         stop(mstyle$stop(paste0("Length of the variable specified via 'time2' (", length(time2), ") does not match the length of 'vi' (", k, ").")))
 
       if (!is.numeric(time1))
          stop(mstyle$stop("Variable 'time1' must be a numeric variable."))
@@ -224,10 +224,10 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ...) {
          stop(mstyle$stop("No missing values allowed in 'w2' variable."))
 
       if (length(w1) != k)
-         stop(mstyle$stop(paste0("Length of variable specified via 'w1' (", length(w1), ") does not match length of 'vi' (", k, ").")))
+         stop(mstyle$stop(paste0("Length of the variable specified via 'w1' (", length(w1), ") does not match the length of 'vi' (", k, ").")))
 
       if (length(w2) != k)
-         stop(mstyle$stop(paste0("Length of variable specified via 'w2' (", length(w2), ") does not match length of 'vi' (", k, ").")))
+         stop(mstyle$stop(paste0("Length of the variable specified via 'w2' (", length(w2), ") does not match the length of 'vi' (", k, ").")))
 
       if (!is.numeric(w1))
          stop(mstyle$stop("Variable 'w1' must be a numeric variable."))

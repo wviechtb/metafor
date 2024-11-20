@@ -353,7 +353,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
       beta.init <- c(x$beta)
    } else {
       if (length(con$beta.init) != p)
-         stop(mstyle$stop(paste0("Length of 'beta.init' argument (", length(con$beta.init), ") does not match actual number of parameters (", p, ").")))
+         stop(mstyle$stop(paste0("Length of the 'beta.init' argument (", length(con$beta.init), ") does not match the actual number of parameters (", p, ").")))
       beta.init <- con$beta.init
    }
 

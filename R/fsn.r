@@ -155,7 +155,7 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
       ### check length of yi and vi
 
       if (length(yi) != length(vi))
-         stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') is not the same."))
+         stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') are not the same."))
 
       ### check 'vi' argument for potential misuse
 

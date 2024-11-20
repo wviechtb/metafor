@@ -117,7 +117,7 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
                   stop(mstyle$stop("Either specify both of 'tau2.levels' and 'gamma2.levels' or neither."))
                if (!is.null(tau2.levels) && !is.null(gamma2.levels)) {           #   # if user has specified both tau2s.levels and gamma2.levels
                   if (length(tau2.levels) != length(gamma2.levels))              #
-                     stop(mstyle$stop("Length of 'tau2.levels' and 'gamma2.levels' is not the same."))
+                     stop(mstyle$stop("Length of 'tau2.levels' and 'gamma2.levels' are not the same."))
                   k.new <- length(tau2.levels)                                   #      # then we need to predict intercepts for those level combinations
                   X.new <- cbind(rep(1,k.new))                                   #
                }                                                                 #
@@ -254,7 +254,7 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
          if (is.null(tau2.levels)) {
 
-            #warning(mstyle$warning("Must specify 'tau2.levels' argument to obtain prediction interval."), call.=FALSE)
+            #warning(mstyle$warning("Must specify the 'tau2.levels' argument to obtain prediction intervals."), call.=FALSE)
 
          } else {
 
@@ -274,7 +274,7 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
             ### check length of tau2.levels argument
             if (length(tau2.levels) != k.new)
-               stop(mstyle$stop(paste0("Length of 'tau2.levels' argument (", length(tau2.levels), ") does not match the number of predicted values (", k.new, ").")))
+               stop(mstyle$stop(paste0("Length of the 'tau2.levels' argument (", length(tau2.levels), ") does not match the number of predicted values (", k.new, ").")))
 
          }
 
@@ -294,7 +294,7 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
          if (is.null(gamma2.levels)) {
 
-            #warning(mstyle$warning("Must specify 'gamma2.levels' argument to obtain prediction interval."), call.=FALSE)
+            #warning(mstyle$warning("Must specify the 'gamma2.levels' argument to obtain prediction intervals."), call.=FALSE)
 
          } else {
 
@@ -314,7 +314,7 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
             ### check length of gamma2.levels argument
             if (length(gamma2.levels) != k.new)
-               stop(mstyle$stop(paste0("Length of 'gamma2.levels' argument (", length(gamma2.levels), ") does not match the number of predicted values (", k.new, ").")))
+               stop(mstyle$stop(paste0("Length of the 'gamma2.levels' argument (", length(gamma2.levels), ") does not match the number of predicted values (", k.new, ").")))
 
          }
 
@@ -419,7 +419,7 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
       newvi <- ddd$newvi
       newvi <- .expand1(newvi, k.new)
       if (length(newvi) != k.new)
-         stop(mstyle$stop(paste0("Length of 'newvi' argument (", length(newvi), ") does not match the number of predicted values (", k.new, ").")))
+         stop(mstyle$stop(paste0("Length of the 'newvi' argument (", length(newvi), ") does not match the number of predicted values (", k.new, ").")))
    }
 
    #########################################################################
@@ -543,7 +543,8 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
    ### apply transformation function if one has been specified
 
    if (is.function(transf)) {
-      #if (is.null(targs) && grepl("transf\\.[a-z]*\\.int$", deparse(substitute(transf))) && inherits(x, c("rma.uni","rma.glmm")) && length(x$tau2 == 1L))
+      #funlist <- lapply(list(transf.exp.int, transf.ilogit.int, transf.ztor.int, transf.exp.mode, transf.ilogit.mode, transf.ztor.mode), deparse)
+      #if (is.null(targs) && any(sapply(funlist, identical, deparse(transf))) && inherits(x, c("rma.uni","rma.glmm")) && length(x$tau2 == 1L))
       #   targs <- c(tau2=x$tau2)
       if (is.null(targs)) {
          pred  <- sapply(pred, transf)
@@ -553,6 +554,8 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
          pi.lb <- sapply(pi.lb, transf)
          pi.ub <- sapply(pi.ub, transf)
       } else {
+         if (!is.primitive(transf) && !is.null(targs) && length(formals(transf)) == 1L)
+            stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
          pred  <- sapply(pred, transf, targs)
          se    <- rep(NA_real_, k.new)
          ci.lb <- sapply(ci.lb, transf, targs)

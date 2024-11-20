@@ -107,7 +107,7 @@ tes <- function(x, vi, sei, subset, data,
       ### check length of yi and vi
 
       if (length(yi) != length(vi))
-         stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') is not the same."))
+         stop(mstyle$stop("Length of 'yi' and 'vi' (or 'sei') are not the same."))
 
       ### check 'vi' argument for potential misuse
 
@@ -174,7 +174,7 @@ tes <- function(x, vi, sei, subset, data,
          }
 
          if (length(theta) != k.f)
-            stop(mstyle$stop("Length of 'theta' and 'yi' is not the same."))
+            stop(mstyle$stop("Length of 'theta' and 'yi' are not the same."))
 
       }
 

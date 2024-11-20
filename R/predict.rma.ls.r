@@ -403,7 +403,7 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
          newvi <- ddd$newvi
          newvi <- .expand1(newvi, k.new)
          if (length(newvi) != k.new)
-            stop(mstyle$stop(paste0("Length of 'newvi' argument (", length(newvi), ") does not match the number of predicted values (", k.new, ").")))
+            stop(mstyle$stop(paste0("Length of the 'newvi' argument (", length(newvi), ") does not match the number of predicted values (", k.new, ").")))
       }
 
       ### prediction intervals
@@ -435,6 +435,8 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
          pi.lb <- sapply(pi.lb, transf)
          pi.ub <- sapply(pi.ub, transf)
       } else {
+         if (!is.primitive(transf) && !is.null(targs) && length(formals(transf)) == 1L)
+            stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
          pred  <- sapply(pred, transf, targs)
          se    <- rep(NA_real_, k.new)
          ci.lb <- sapply(ci.lb, transf, targs)

@@ -476,6 +476,8 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
          yi.pi.lb <- sapply(yi.pi.lb, transf)
          yi.pi.ub <- sapply(yi.pi.ub, transf)
       } else {
+         if (!is.primitive(transf) && !is.null(targs) && length(formals(transf)) == 1L)
+            stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
          yi       <- sapply(yi, transf, targs)
          pred     <- sapply(pred, transf, targs)
          ci.lb    <- sapply(ci.lb, transf, targs)

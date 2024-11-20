@@ -36,7 +36,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
       stop(mstyle$stop("No missing values allowed in 'cluster' variable."))
 
    if (length(cluster) != k)
-      stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not match length of data (", k, ").")))
+      stop(mstyle$stop(paste0("Length of the variable specified via 'cluster' (", length(cluster), ") does not match the length of the data (", k, ").")))
 
    ucluster <- unique(cluster)
    n <- length(ucluster)
@@ -130,7 +130,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
             stop(mstyle$stop("Must specify a 'time' variable for this var-cov structure."))
 
          if (length(time) != k)
-            stop(mstyle$stop(paste0("Length of variable specified via 'time' (", length(time), ") does not match length of data (", k, ").")))
+            stop(mstyle$stop(paste0("Length of the variable specified via 'time' (", length(time), ") does not match the length of the data (", k, ").")))
 
          if (struct == "CS*CAR") {
 
@@ -140,7 +140,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
             stop(mstyle$stop("Must specify an 'obs' variable for this var-cov structure."))
 
             if (length(obs) != k)
-               stop(mstyle$stop(paste0("Length of variable specified via 'obs' (", length(obs), ") does not match length of data (", k, ").")))
+               stop(mstyle$stop(paste0("Length of the variable specified via 'obs' (", length(obs), ") does not match the length of the data (", k, ").")))
 
          }
 
@@ -195,7 +195,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
          V <- .expand1(V, k)
 
          if (length(V) != k)
-            stop(mstyle$stop(paste0("Length of 'V' (", length(V), ") does not match length of data frame (", k, ").")))
+            stop(mstyle$stop(paste0("Length of 'V' (", length(V), ") does not match the length of the data frame (", k, ").")))
 
          V <- diag(as.vector(V), nrow=k, ncol=k)
 
@@ -214,7 +214,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
          stop(mstyle$stop("'V' must be a symmetric matrix."))
 
       if (nrow(V) != k)
-         stop(mstyle$stop(paste0("Dimensions of 'V' (", nrow(V), "x", ncol(V), ") do not match length of data frame (", k, ").")))
+         stop(mstyle$stop(paste0("Dimensions of 'V' (", nrow(V), "x", ncol(V), ") do not match the length of the data frame (", k, ").")))
 
       ### check that covariances are really 0 for estimates belonging to different clusters
       ### note: if na.rm[1] is FALSE, there may be missings in V, so skip check in those clusters

@@ -300,6 +300,8 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       if (is.null(targs)) {
          out <- lapply(out, transf)
       } else {
+         if (!is.primitive(transf) && !is.null(targs) && length(formals(transf)) == 1L)
+            stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
          out <- lapply(out, transf, targs)
       }
       out <- lapply(out, function(x) x[,-2,drop=FALSE])

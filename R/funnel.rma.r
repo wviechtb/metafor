@@ -631,6 +631,8 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
          if (is.null(targs)) {
             at.lab <- fmtx(sapply(at.lab, atransf), digits[[1]], drop0ifint=TRUE)
          } else {
+            if (!is.primitive(atransf) && !is.null(targs) && length(formals(atransf)) == 1L)
+               stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
             at.lab <- fmtx(sapply(at.lab, atransf, targs), digits[[1]], drop0ifint=TRUE)
          }
       } else {

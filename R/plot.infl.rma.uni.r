@@ -47,7 +47,7 @@ slab.style=1, las=0, pch=21, bg, bg.infl, col.na, ...) {
       which.inf <- which.inf[(which.inf >= 1) & (which.inf <= 8)]
       which.inf <- unique(round(which.inf))
       if (length(which.inf) == 0L)
-         stop(mstyle$stop("Incorrect specification of 'plotinf' argument."))
+         stop(mstyle$stop("Incorrect specification of the 'plotinf' argument."))
       plotinf <- TRUE
    }
 
@@ -61,7 +61,7 @@ slab.style=1, las=0, pch=21, bg, bg.infl, col.na, ...) {
       which.dfbs <- which.dfbs[(which.dfbs >= 1) & (which.dfbs <= x$p)]
       which.dfbs <- unique(round(which.dfbs))
       if (length(which.dfbs) == 0L)
-         stop(mstyle$stop("Incorrect specification of 'plotdfbs' argument."))
+         stop(mstyle$stop("Incorrect specification of the 'plotdfbs' argument."))
       plotdfbs <- TRUE
    }
 

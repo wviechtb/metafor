@@ -92,7 +92,7 @@ deltamethod <- function(x, vcov, fun, level, H0=0, digits) {
    pvcov <- nrow(vcov)
 
    if (p != pvcov)
-      stop(mstyle$stop(paste0("Length of 'coef' vector (", p, ") does not match the dimensions of 'vcov' (", pvcov, "x", pvcov, ").")))
+      stop(mstyle$stop(paste0("Length of the 'coef' vector (", p, ") does not match the dimensions of 'vcov' (", pvcov, "x", pvcov, ").")))
 
    args <- formalArgs(fun)
 
@@ -104,7 +104,7 @@ deltamethod <- function(x, vcov, fun, level, H0=0, digits) {
    } else {
 
       if (length(args) != p)
-         stop(mstyle$stop(paste0("Number of function arguments (", length(args), ") does not match the number of coefficients (", p, ").")))
+         stop(mstyle$stop(paste0("Number of function arguments (", length(args), ") do not match the number of coefficients (", p, ").")))
 
       names(coef) <- args
       coef.transf <- try(do.call(fun, args=as.list(coef)))
@@ -123,7 +123,7 @@ deltamethod <- function(x, vcov, fun, level, H0=0, digits) {
       stop(mstyle$stop("Error when computing the gradient."))
 
    if (ncol(grad) != p)
-      stop(mstyle$stop(paste0("Length of gradient (", ncol(grad), ") does not match the dimensions of 'vcov' (", pvcov, "x", pvcov, ").")))
+      stop(mstyle$stop(paste0("Length of the gradient (", ncol(grad), ") does not match the dimensions of 'vcov' (", pvcov, "x", pvcov, ").")))
 
    q <- length(coef.transf)
 
@@ -131,7 +131,7 @@ deltamethod <- function(x, vcov, fun, level, H0=0, digits) {
       H0 <- rep(H0, q)
 
    if (length(H0) != q)
-      stop(mstyle$stop(paste0("Length of 'H0' argument (", length(H0), ") does not match the number of transformed coefficients (", q, ").")))
+      stop(mstyle$stop(paste0("Length of the 'H0' argument (", length(H0), ") does not match the number of transformed coefficients (", q, ").")))
 
    #########################################################################
 

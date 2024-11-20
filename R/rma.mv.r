@@ -405,7 +405,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    ### check length of yi and V
 
    if (nrow(V) != k)
-      stop(mstyle$stop(paste0("Length of 'yi' (", k, ") and length/dimensions of 'V' (", nrow(V), ") is not the same.")))
+      stop(mstyle$stop(paste0("Length of 'yi' (", k, ") and the length/dimensions of 'V' (", nrow(V), ") are not the same.")))
 
    ### force V to be sparse when sparse=TRUE (and V is not yet sparse)
 
@@ -460,7 +460,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       ### check length of yi and A
 
       if (nrow(A) != k)
-         stop(mstyle$stop(paste0("Length of 'yi' (", k, ") and length/dimensions of 'W' (", nrow(A), ") is not the same.")))
+         stop(mstyle$stop(paste0("Length of 'yi' (", k, ") and length/dimensions of 'W' (", nrow(A), ") are not the same.")))
 
       ### force A to be sparse when sparse=TRUE (and A is not yet sparse)
 
@@ -535,7 +535,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    ### check if mods matrix has the right number of rows
 
    if (!is.null(mods) && nrow(mods) != k)
-      stop(mstyle$stop(paste0("Number of rows in the model matrix (", nrow(mods), ") does not match length of the outcome vector (", k, ").")))
+      stop(mstyle$stop(paste0("Number of rows in the model matrix (", nrow(mods), ") do not match the length of the outcome vector (", k, ").")))
 
    #########################################################################
    #########################################################################
@@ -755,7 +755,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       ### make sure that rows in each model frame match the length of the data
 
       if (any(mf.r.nrows != k))
-         stop(mstyle$stop("Length of variables specified via the 'random' argument does not match length of the data."))
+         stop(mstyle$stop("Length of the variables specified via the 'random' argument does not match the length of the data."))
 
       ### need this for profile(); with things like 'random = ~ factor(arm) | study', 'mf.r' contains variables 'factor(arm)' and 'study'
       ### but the former won't work when using the same formula for the refitting (same when using interaction() in the random formula)
@@ -940,7 +940,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       ### check if sigma2 is of the correct length
 
       if (length(sigma2) != sigma2s)
-         stop(mstyle$stop(paste0("Length of 'sigma2' argument (", length(sigma2), ") does not match actual number of variance components (", sigma2s, ").")))
+         stop(mstyle$stop(paste0("Length of the 'sigma2' argument (", length(sigma2), ") does not match the actual number of variance components (", sigma2s, ").")))
 
       ### checks on any fixed values of sigma2 argument
 
@@ -1391,7 +1391,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    } else {
       beta.arg <- ddd$beta
       if (length(beta.arg) != p)
-         stop(mstyle$stop(paste0("Length of 'beta' argument (", length(beta.arg), ") does not match actual number of fixed effects (", p, ").")))
+         stop(mstyle$stop(paste0("Length of the 'beta' argument (", length(beta.arg), ") does not match the actual number of fixed effects (", p, ").")))
       beta.est <- is.na(beta.arg)
    }
 
@@ -1883,35 +1883,35 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    if (withS) {
       if (length(con$sigma2.init) != sigma2s)
-         stop(mstyle$stop(paste0("Length of 'sigma2.init' argument (", length(con$sigma2.init), ") does not match actual number of variance components (", sigma2s, ").")))
+         stop(mstyle$stop(paste0("Length of the 'sigma2.init' argument (", length(con$sigma2.init), ") does not match the actual number of variance components (", sigma2s, ").")))
    } else {
       con$sigma2.init <- 0
    }
 
    if (withG) {
       if (length(con$tau2.init) != tau2s)
-         stop(mstyle$stop(paste0("Length of 'tau2.init' argument (", length(con$tau2.init), ") does not match actual number of variance components (", tau2s, ").")))
+         stop(mstyle$stop(paste0("Length of the 'tau2.init' argument (", length(con$tau2.init), ") does not match the actual number of variance components (", tau2s, ").")))
    } else {
       con$tau2.init <- 0
    }
 
    if (withG) {
       if (length(con$rho.init) != rhos)
-         stop(mstyle$stop(paste0("Length of 'rho.init' argument (", length(con$rho.init), ") does not match actual number of correlations (", rhos, ").")))
+         stop(mstyle$stop(paste0("Length of the 'rho.init' argument (", length(con$rho.init), ") does not match the actual number of correlations (", rhos, ").")))
    } else {
       con$rho.init <- 0
    }
 
    if (withH) {
       if (length(con$gamma2.init) != gamma2s)
-         stop(mstyle$stop(paste0("Length of 'gamma2.init' argument (", length(con$gamma2.init), ") does not match actual number of variance components (", gamma2s, ").")))
+         stop(mstyle$stop(paste0("Length of the 'gamma2.init' argument (", length(con$gamma2.init), ") does not match the actual number of variance components (", gamma2s, ").")))
    } else {
       con$gamma2.init <- 0
    }
 
    if (withH) {
       if (length(con$phi.init) != phis)
-         stop(mstyle$stop(paste0("Length of 'phi.init' argument (", length(con$phi.init), ") does not match actual number of correlations (", phis, ").")))
+         stop(mstyle$stop(paste0("Length of the 'phi.init' argument (", length(con$phi.init), ") does not match the actual number of correlations (", phis, ").")))
    } else {
       con$phi.init <- 0
    }

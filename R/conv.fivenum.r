@@ -90,7 +90,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
    dist <- .expand1(dist, k)
 
    if (length(dist) != k)
-      stop(mstyle$stop(paste0("Length of 'dist' argument (", length(dist), ") does not match length of data (", k, ").")))
+      stop(mstyle$stop(paste0("Length of the 'dist' argument (", length(dist), ") does not match the length of the data (", k, ").")))
 
    dist <- c("norm","lnorm")[pmatch(dist, c("norm","lnorm"), duplicates.ok=TRUE)]
 

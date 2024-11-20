@@ -34,7 +34,7 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
    cluster <- .getx("cluster", mf=mf, data=x$data)
 
    if (length(cluster) != x$k.all)
-      stop(mstyle$stop(paste0("Length of variable specified via 'cluster' (", length(cluster), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
+      stop(mstyle$stop(paste0("Length of the variable specified via 'cluster' (", length(cluster), ") does not correspond to the size of the original dataset (", x$k.all, ").")))
 
    cluster <- .getsubset(cluster, x$subset)
 

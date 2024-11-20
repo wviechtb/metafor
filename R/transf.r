@@ -3,7 +3,7 @@
 .chktargsint <- function(targs) {
 
    if (length(targs) > 3L)
-      stop("Length of 'targs' argument must be <= 3.", call.=FALSE)
+      stop("Length of the 'targs' argument must be <= 3.", call.=FALSE)
 
    if (.is.vector(targs)) {
       if (is.null(names(targs))) {
@@ -16,10 +16,11 @@
    }
 
    if (any(lengths(targs) > 1L))
-      stop("Elements of 'targs' arguments must be scalars.", call.=FALSE)
+      stop("Elements of the 'targs' arguments must be scalars.", call.=FALSE)
 
    if (is.null(targs$tau2))
-      targs$tau2 <- 0
+      stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
+      #targs$tau2 <- 0
 
    return(targs)
 
@@ -70,7 +71,7 @@ transf.ztor.int <- function(xi, targs=NULL) {
 transf.ztor.mode <- function(xi, targs=NULL) {
 
    if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
-      stop("Must specify 'tau2' value via the 'targs' argument.", call.=FALSE)
+      stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
    if (is.list(targs)) {
       tau2 <- targs$tau2
    } else {
@@ -143,7 +144,7 @@ transf.exp.int <- function(xi, targs=NULL) {
 transf.exp.mode <- function(xi, targs=NULL) {
 
    if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
-      stop("Must specify 'tau2' value via the 'targs' argument.", call.=FALSE)
+      stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
    if (is.list(targs)) {
       tau2 <- targs$tau2
    } else {
@@ -196,7 +197,7 @@ transf.ilogit.int <- function(xi, targs=NULL) {
 transf.ilogit.mode <- function(xi, targs=NULL) {
 
    if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
-      stop("Must specify 'tau2' value via the 'targs' argument.", call.=FALSE)
+      stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
    if (is.list(targs)) {
       tau2 <- targs$tau2
    } else {
@@ -410,9 +411,9 @@ transf.dtorpb <- function(xi, n1i, n2i) {
       hi <- 4
    } else {
       if (length(n1i) != length(n2i))
-         stop("Length of 'n1i' does not match length of 'n2i'.", call.=FALSE)
+         stop("Length of 'n1i' does not match the length of 'n2i'.", call.=FALSE)
       if (length(n1i) != length(xi))
-         stop("Length of 'n1i' and 'n2i' does not match length of 'xi'.", call.=FALSE)
+         stop("Length of 'n1i' and 'n2i' does not match the length of 'xi'.", call.=FALSE)
       mi <- n1i + n2i - 2
       hi <- mi / n1i + mi / n2i
    }
@@ -426,9 +427,9 @@ transf.dtorbis <- function(xi, n1i, n2i) {
       n2i <- 1
    } else {
       if (length(n1i) != length(n2i))
-         stop("Length of 'n1i' does not match length of 'n2i'.", call.=FALSE)
+         stop("Length of 'n1i' does not match the length of 'n2i'.", call.=FALSE)
       if (length(n1i) != length(xi))
-         stop("Length of 'n1i' and 'n2i' does not match length of 'xi'.", call.=FALSE)
+         stop("Lengths of 'n1i' and 'n2i' do not match the length of 'xi'.", call.=FALSE)
       mi <- n1i + n2i - 2
       hi <- mi / n1i + mi / n2i
    }
@@ -443,7 +444,7 @@ transf.rpbtorbis <- function(xi, pi) {
    } else {
       pi <- .expand1(pi, length(xi))
       if (length(xi) != length(pi))
-         stop("Length of 'xi' does not match length of 'pi'.", call.=FALSE)
+         stop("Length of 'xi' does not match the length of 'pi'.", call.=FALSE)
    }
    if (any(pi < 0 | pi > 1, na.rm=TRUE))
       stop("One or more 'pi' values are < 0 or > 1.", call.=FALSE)
@@ -456,7 +457,7 @@ transf.rtorpb <- function(xi, pi) {
    } else {
       pi <- .expand1(pi, length(xi))
       if (length(xi) != length(pi))
-         stop("Length of 'xi' does not match length of 'pi'.", call.=FALSE)
+         stop("Length of 'xi' does not match the length of 'pi'.", call.=FALSE)
    }
    if (any(pi < 0 | pi > 1, na.rm=TRUE))
       stop("One or more 'pi' values are < 0 or > 1.", call.=FALSE)
@@ -470,9 +471,9 @@ transf.rtod <- function(xi, n1i, n2i) {
       n2i <- 1
    } else {
       if (length(n1i) != length(n2i))
-         stop("Length of 'n1i' does not match length of 'n2i'.", call.=FALSE)
+         stop("Length of 'n1i' does not match the length of 'n2i'.", call.=FALSE)
       if (length(n1i) != length(xi))
-         stop("Length of 'n1i' and 'n2i' does not match length of 'xi'.", call.=FALSE)
+         stop("Lengths of 'n1i' and 'n2i' do not match the length of 'xi'.", call.=FALSE)
       mi <- n1i + n2i - 2
       hi <- mi / n1i + mi / n2i
    }
@@ -488,9 +489,9 @@ transf.rpbtod <- function(xi, n1i, n2i) {
       hi <- 4
    } else {
       if (length(n1i) != length(n2i))
-         stop("Length of 'n1i' does not match length of 'n2i'.", call.=FALSE)
+         stop("Length of 'n1i' does not match the length of 'n2i'.", call.=FALSE)
       if (length(n1i) != length(xi))
-         stop("Length of 'n1i' and 'n2i' does not match length of 'xi'.", call.=FALSE)
+         stop("Lengths of 'n1i' and 'n2i' do not match the length of 'xi'.", call.=FALSE)
       mi <- n1i + n2i - 2
       hi <- mi / n1i + mi / n2i
    }
@@ -500,7 +501,7 @@ transf.rpbtod <- function(xi, n1i, n2i) {
 transf.lnortord <- function(xi, pc) {
    pc <- .expand1(pc, length(xi))
    if (length(xi) != length(pc))
-      stop("Length of 'xi' does not match length of 'pc'.", call.=FALSE)
+      stop("Length of 'xi' does not match the length of 'pc'.", call.=FALSE)
    if (any(pc < 0) || any(pc > 1))
       stop("The control group risk 'pc' must be between 0 and 1.", call.=FALSE)
    return(exp(xi)*pc / (1 - pc + pc * exp(xi)) - pc)
@@ -509,7 +510,7 @@ transf.lnortord <- function(xi, pc) {
 transf.lnortorr <- function(xi, pc) {
    pc <- .expand1(pc, length(xi))
    if (length(xi) != length(pc))
-      stop("Length of 'xi' does not match length of 'pc'.", call.=FALSE)
+      stop("Length of 'xi' does not match the length of 'pc'.", call.=FALSE)
    if (any(pc < 0) || any(pc > 1))
       stop("The control group risk 'pc' must be between 0 and 1.", call.=FALSE)
    return(exp(xi) / (pc * (exp(xi) - 1) + 1))

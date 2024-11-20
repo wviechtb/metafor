@@ -245,10 +245,10 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
       ### CI bounds are specified by user
 
       if (length(ci.lb) != length(ci.ub))
-         stop(mstyle$stop("Length of 'ci.lb' and 'ci.ub' is not the same."))
+         stop(mstyle$stop("Length of 'ci.lb' and 'ci.ub' are not the same."))
 
       if (length(ci.lb) != k)
-         stop(mstyle$stop("Length of ('ci.lb','ci.ub') does not match length of 'x'."))
+         stop(mstyle$stop("Length of ('ci.lb','ci.ub') does not match the length of 'x'."))
 
       vi <- ifelse(is.na(ci.lb) | is.na(ci.ub), NA_real_, 1) # need this below for checking for NAs
 
@@ -265,7 +265,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
       }
 
       if (length(vi) != k)
-         stop(mstyle$stop("Length of 'vi' (or 'sei') does not match length of 'x'."))
+         stop(mstyle$stop("Length of 'vi' (or 'sei') does not match the length of 'x'."))
 
       # note: the CI bounds are calculated based on a normal distribution, but
       # the Knapp and Hartung method may have been used to obtain vi (or sei),
@@ -281,10 +281,10 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
    if (hasArg(pi.lb) && hasArg(pi.ub) && !is.null(pi.lb) && !is.null(pi.ub)) {
 
       if (length(pi.lb) != length(pi.ub))
-         stop(mstyle$stop("Length of 'pi.lb' and 'pi.ub' is not the same."))
+         stop(mstyle$stop("Length of 'pi.lb' and 'pi.ub' are not the same."))
 
       if (length(pi.lb) != k)
-         stop(mstyle$stop("Length of ('pi.lb', 'pi.ub') does not match length of 'x'."))
+         stop(mstyle$stop("Length of ('pi.lb', 'pi.ub') does not match the length of 'x'."))
 
    } else {
 
@@ -372,6 +372,8 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
          pi.lb <- sapply(pi.lb, transf)
          pi.ub <- sapply(pi.ub, transf)
       } else {
+         if (!is.primitive(transf) && !is.null(targs) && length(formals(transf)) == 1L)
+            stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
          yi    <- sapply(yi, transf, targs)
          ci.lb <- sapply(ci.lb, transf, targs)
          ci.ub <- sapply(ci.ub, transf, targs)
