@@ -50,6 +50,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
    #########################################################################
 
    out <- NULL
+   vcov <- NULL
 
    if (verbose)
       message(mstyle$message("\nComputing the inverse marginal var-cov and hat matrix ... "), appendLF = FALSE)
@@ -82,6 +83,9 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       out <- vector(mode="list", length=x$sigma2s)
       names(out) <- x$s.names
+
+      vcov <- vector(mode="list", length=x$sigma2s)
+      names(vcov) <- x$s.names
 
       for (j in seq_len(x$sigma2s)) {
 
@@ -128,7 +132,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
             out[[j]] <- pred
 
             if (isTRUE(ddd$vcov))
-               vcov <- c(vcov, list(vpred))
+               vcov[[j]] <- vpred
 
          }
 
@@ -223,14 +227,15 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       pred <- pred[r.order,]
 
-      if (isTRUE(ddd$vcov)) {
-         vpred <- vpred[r.order, r.order]
-         vcov <- c(vcov, list(vpred))
-      }
-
       out <- c(out, list(pred))
       #names(out)[length(out)] <- paste(x$g.names, collapse=" | ")
       names(out)[length(out)] <- paste0(x$formulas[[1]], collapse="")
+
+      if (isTRUE(ddd$vcov)) {
+         vpred <- vpred[r.order, r.order]
+         vcov <- c(vcov, list(vpred))
+         names(vcov)[length(vcov)] <- paste0(x$formulas[[1]], collapse="")
+      }
 
       if (verbose)
          message(mstyle$message("Done!"))
@@ -294,14 +299,15 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
       pred <- pred[r.order,]
 
-      if (isTRUE(ddd$vcov)) {
-         vpred <- vpred[r.order, r.order]
-         vcov <- c(vcov, list(vpred))
-      }
-
       out <- c(out, list(pred))
       #names(out)[length(out)] <- paste(x$h.names, collapse=" | ")
       names(out)[length(out)] <- paste0(x$formulas[[2]], collapse="")
+
+      if (isTRUE(ddd$vcov)) {
+         vpred <- vpred[r.order, r.order]
+         vcov <- c(vcov, list(vpred))
+         names(vcov)[length(vcov)] <- paste0(x$formulas[[2]], collapse="")
+      }
 
       if (verbose)
          message(mstyle$message("Done!"))
