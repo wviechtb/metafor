@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-51</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-54</span>
       </span>
     </div>
 
@@ -123,7 +123,7 @@
     <div id="details">
     <h2>Details</h2>
     <p>Let <em></em>\(\hat{\theta}\) denote a vector of <em></em>\(p\) estimates which can be specified via the <code>x</code> argument and let <em></em>\(\Sigma\) denote the corresponding <em></em>\(p \times p\) variance-covariance matrix, which can be specified via the <code>vcov</code> argument. If <code>x</code> is not an vector with estimates, then the function assumes that <code>x</code> is a model object and will try to use <code>coef(x)</code> and <code>vcov(x)</code> to extract the model coefficients and the corresponding variance-covariance matrix (in this case, the <code>vcov</code> argument is ignored).</p>
-<p>Let <em></em>\(f(\cdot)\) be a function, specified via the <code>fun</code> argument, with <em></em>\(p\) inputs/arguments (or with a single argument that is assumed to be a vector of length <em></em>\(p\)), which returns a numeric (and atomic) vector of <em></em>\(q\) transformed estimates. Then the function computes <em></em>\(f(\hat{\theta})\) and the corresponding variance-covariance matrix of the transformed estimates using the <a href="https://en.wikipedia.org/wiki/Delta_method#Multivariate_delta_method" class="external-link">multivariate delta method</a> (e.g., van der Vaart, 1998) with \[\textrm{Var}[f(\hat{\theta})] = \nabla f(\hat{\theta})' \cdot \Sigma \cdot \nabla f(\hat{\theta})\] where <em></em>\(\nabla f(\hat{\theta})\) denotes the gradient of <em></em>\(f(\cdot)\) evaluated at <em></em>\(\hat{\theta}\). The function computes the gradient numerically using the <code><a href="https://calculus.eguidotti.com/reference/derivative.html" class="external-link">derivative</a></code> function from the <code>calculus</code> package.</p>
+<p>Let <em></em>\(f(\cdot)\) be a function, specified via the <code>fun</code> argument, with <em></em>\(p\) inputs/arguments (or with a single argument that is assumed to be a vector of length <em></em>\(p\)), which returns a numeric (and atomic) vector of <em></em>\(q\) transformed estimates. Then the function computes <em></em>\(f(\hat{\theta})\) and the corresponding variance-covariance matrix of the transformed estimates using the <a href="https://en.wikipedia.org/wiki/Delta_method#Multivariate_delta_method" class="external-link">multivariate delta method</a> (e.g., van der Vaart, 1998) with \[\text{Var}[f(\hat{\theta})] = \nabla f(\hat{\theta})' \cdot \Sigma \cdot \nabla f(\hat{\theta})\] where <em></em>\(\nabla f(\hat{\theta})\) denotes the gradient of <em></em>\(f(\cdot)\) evaluated at <em></em>\(\hat{\theta}\). The function computes the gradient numerically using the <code><a href="https://calculus.eguidotti.com/reference/derivative.html" class="external-link">derivative</a></code> function from the <code>calculus</code> package.</p>
 <p>The function also computes Wald-type tests and confidence intervals for the <em></em>\(q\) transformed estimates. The <code>level</code> argument can be used to control the confidence interval level.</p>
     </div>
     <div id="value">

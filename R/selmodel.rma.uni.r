@@ -189,7 +189,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
 
       steps <- unique(sort(steps))
 
-      if (type != "trunc") {
+      if (!is.element(type, c("trunc","beta"))) {
          if (steps[1] == 0)
             stop(mstyle$stop("Lowest 'steps' value must be > 0."))
          if (steps[length(steps)] != 1)
@@ -211,7 +211,6 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
       warning(mstyle$warning("Cannot use 'verbose > 2' for this type of selection model (setting verbose=2)."), call.=FALSE)
       verbose <- 2
    }
-
 
    if (missing(subset)) {
       subset <- rep(TRUE, k)
@@ -403,11 +402,12 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
 
    if (type == "beta") {
 
-      if (stepsspec)
-         warning(mstyle$warning("Argument 'steps' ignored (not applicable to this type of selection model)."), call.=FALSE)
-
-      stepsspec <- FALSE
-      steps <- NA_real_
+      if (stepsspec) {
+         if (length(steps) != 2L) # steps should be c(alpha1,alpha2)
+            stop(mstyle$stop("The 'steps' argument for this type of selection model should be of length 2."))
+      } else {
+         steps <- c(0,1)
+      }
 
       if (precspec) # [b]
          warning(mstyle$warning("Argument 'prec' ignored (not applicable to this type of selection model)."), call.=FALSE)
@@ -426,7 +426,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
       delta.LRT <- c(TRUE, TRUE)
       pval.min <- 1e-5
       wi.fun <- function(x, delta, yi, vi, preci, alternative, steps)
-         x^(delta[1]-1) * (1-x)^(delta[2]-1)
+         pmin(pmax(steps[1],x),steps[2])^(delta[1]-1) * (1-pmin(pmax(steps[1],x),steps[2]))^(delta[2]-1)
       .selmodel.ll <- ".selmodel.ll.cont"
 
    }

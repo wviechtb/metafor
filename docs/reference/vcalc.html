@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-51</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-54</span>
       </span>
     </div>
 
@@ -187,7 +187,7 @@
 
 
 <p>The function also provides an alternative approach for constructing the variance-covariance matrix using the <code>rvars</code> argument. Here, one must specify the names of the variables in the dataset that correspond to the correlation matrices of the studies. The variables should be specified as a vector (e.g., <code>c(var1, var2, var3)</code>) and do not need to be quoted.</p>
-<p>In particular, let <em></em>\(k_i\) denote the number of rows corresponding to the <em></em>\(i\textrm{th}\) cluster. Then the values of the first <em></em>\(k_i\) variables from <code>rvars</code> are used to construct the correlation matrix and, together with the sampling variances (specified via <code>vi</code>), the variance-covariance matrix. Say there are three studies, the first with two correlated estimates, the second with a single estimate, and the third with four correlated estimates. Then the data structure should look like this:</p>
+<p>In particular, let <em></em>\(k_i\) denote the number of rows corresponding to the <em></em>\(i\text{th}\) cluster. Then the values of the first <em></em>\(k_i\) variables from <code>rvars</code> are used to construct the correlation matrix and, together with the sampling variances (specified via <code>vi</code>), the variance-covariance matrix. Say there are three studies, the first with two correlated estimates, the second with a single estimate, and the third with four correlated estimates. Then the data structure should look like this:</p>
 <div class="sourceCode"><pre><code>study  yi  vi  r1  r2  r3  r4
 =============================
     1   .   .   1  NA  NA  NA

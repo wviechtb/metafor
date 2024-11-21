@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-51</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-54</span>
       </span>
     </div>
 
@@ -247,7 +247,7 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The plot shows the observed effect sizes or outcomes (by default as filled squares) with corresponding <code>level</code>% confidence intervals (as horizontal lines extending from the observed outcomes). The confidence intervals are computed with <em></em>\(y_i \pm z_{crit} \sqrt{v_i}\), where <em></em>\(y_i\) denotes the observed outcome in the <em></em>\(i\textrm{th}\) study, <em></em>\(v_i\) the corresponding sampling variance (and hence <em></em>\(\sqrt{v_i}\) is the corresponding standard error), and <em></em>\(z_{crit}\) is the appropriate critical value from a standard normal distribution (e.g., <em></em>\(1.96\) for a 95% CI).</p>
+    <p>The plot shows the observed effect sizes or outcomes (by default as filled squares) with corresponding <code>level</code>% confidence intervals (as horizontal lines extending from the observed outcomes). The confidence intervals are computed with <em></em>\(y_i \pm z_{crit} \sqrt{v_i}\), where <em></em>\(y_i\) denotes the observed outcome in the <em></em>\(i\text{th}\) study, <em></em>\(v_i\) the corresponding sampling variance (and hence <em></em>\(\sqrt{v_i}\) is the corresponding standard error), and <em></em>\(z_{crit}\) is the appropriate critical value from a standard normal distribution (e.g., <em></em>\(1.96\) for a 95% CI).</p>
 <p>For an equal- and a random-effects model (i.e., for models without moderators), a four-sided polygon, sometimes called a summary ‘diamond’, is added to the bottom of the forest plot, showing the pooled estimate based on the model (with the center of the polygon corresponding to the estimate and the left/right edges indicating the confidence interval limits). The <code>col</code> and <code>border</code> arguments can be used to adjust the (border) color of the polygon. Drawing of the polgyon can be suppressed by setting <code>addfit=FALSE</code>.</p>
 <p>For random-effects models and if <code>addpred=TRUE</code>, a dotted line is added to the polygon which indicates the bounds of the prediction interval (Riley et al., 2011). For random-effects models of class <code>"rma.mv"</code> (see <code><a href="rma.mv.html">rma.mv</a></code>) with multiple <em></em>\(\tau^2\) values, the <code>addpred</code> argument can be used to specify for which level of the inner factor the prediction interval should be provided (since the intervals differ depending on the <em></em>\(\tau^2\) value). If the model also contains multiple <em></em>\(\gamma^2\) values, the <code>addpred</code> argument should then be of length 2 to specify the levels of both inner factors. See also <code><a href="predict.rma.html">predict</a></code>, which is used to compute these interval bounds.</p>
 <p>Instead of showing the prediction interval as a dotted line (which corresponds to <code>predstyle="line"</code>), one can choose a different style via the <code>predstyle</code> argument:</p>

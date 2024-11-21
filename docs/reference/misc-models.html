@@ -31,7 +31,7 @@ However, the question then remains what the real fixed-effects model is all abou
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-51</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-54</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@ However, the question then remains what the real fixed-effects model is all abou
 <h3 id="fixed-effects-model">Fixed-Effects Model<a class="anchor" aria-label="anchor" href="#fixed-effects-model"></a></h3>
 
 
-<p>Assume we have a set of <em></em>\(i = 1, \ldots, k\) independent studies and let <em></em>\(y_i\) denote the observed value of the effect size or outcome measure in the <em></em>\(i\textrm{th}\) study. Let <em></em>\(\theta_i\) denote the corresponding (unknown) true effect/outcome, such that \[y_i \mid \theta_i \sim N(\theta_i, v_i).\] In other words, the observed effect sizes or outcomes are assumed to be unbiased and normally distributed estimates of the corresponding true effects/outcomes with sampling variances equal to <em></em>\(v_i\). The <em></em>\(v_i\) values are assumed to be known.</p>
+<p>Assume we have a set of <em></em>\(i = 1, \ldots, k\) independent studies and let <em></em>\(y_i\) denote the observed value of the effect size or outcome measure in the <em></em>\(i\text{th}\) study. Let <em></em>\(\theta_i\) denote the corresponding (unknown) true effect/outcome, such that \[y_i \mid \theta_i \sim N(\theta_i, v_i).\] In other words, the observed effect sizes or outcomes are assumed to be unbiased and normally distributed estimates of the corresponding true effects/outcomes with sampling variances equal to <em></em>\(v_i\). The <em></em>\(v_i\) values are assumed to be known.</p>
 <p>The fixed-effects model is simply given by \[y_i = \theta_i + \varepsilon_i,\] where the <em></em>\(\theta_i\) values are the (fixed) true effects/outcomes of the <em></em>\(k\) studies. Therefore, the model ‘conditions’ on the true effects/outcomes and provides a <em>conditional inference</em> about the <em></em>\(k\) studies included in the meta-analysis.</p>
 <p>When using weighted estimation (the default in <code><a href="rma.uni.html">rma.uni</a></code> when <code>method="FE"</code>), this implies that the fitted model provides an estimate of \[\bar{\theta}_w = \frac{\sum_{i=1}^k w_i \theta_i}{\sum_{i=1}^k w_i},\] that is, the <em>weighted average</em> of the true effects/outcomes in the <em></em>\(k\) studies, with weights equal to <em></em>\(w_i = 1/v_i\).</p>
 <p>As an example, consider the meta-analysis by Bangert-Drowns et al. (2004) on the effectiveness of writing-to-learn interventions on academic achievement. The dataset (<code><a href="https://wviechtb.github.io/metadat/reference/dat.bangertdrowns2004.html" class="external-link">dat.bangertdrowns2004</a></code>) includes the observed standardized mean differences (variable <code>yi</code>) and the corresponding sampling variances (variable <code>vi</code>) of 48 studies that have examined such an intervention. We can fit a fixed-effects model to these data with:</p>
@@ -131,7 +131,7 @@ However, the question then remains what the real fixed-effects model is all abou
 <span><span class="co"># estimate      se    zval    pval   ci.lb   ci.ub</span></span>
 <span><span class="co">#   0.1656  0.0269  6.1499  &lt;.0001  0.1128  0.2184</span></span></code></pre></div>
 
-<p>The Q-test suggests that the underlying true standardized mean differences are heterogeneous <em></em>\((Q(\textrm{df}=47) = 107.11, p &lt; .0001).\) Therefore, if we believe this to be true, then the value shown under <code>estimate</code> is an estimate of the inverse-variance weighted average of the true standardized mean differences of these 48 studies (i.e., <em></em>\(\hat{\bar{\theta}}_w = 0.17\)).</p>
+<p>The Q-test suggests that the underlying true standardized mean differences are heterogeneous <em></em>\((Q(\text{df}=47) = 107.11, p &lt; .0001).\) Therefore, if we believe this to be true, then the value shown under <code>estimate</code> is an estimate of the inverse-variance weighted average of the true standardized mean differences of these 48 studies (i.e., <em></em>\(\hat{\bar{\theta}}_w = 0.17\)).</p>
 <p>One can also employ an unweighted estimation method (by setting <code>weighted=FALSE</code> in <code><a href="rma.uni.html">rma.uni</a></code>), which provides an estimate of the <em>unweighted average</em> of the true effects/outcomes in the <em></em>\(k\) studies, that is, an estimate of \[\bar{\theta}_u = \frac{\sum_{i=1}^k \theta_i}{k}.\]</p>
 <p>Returning to the example, we then find:</p>
 <p></p><div class="sourceCode"><pre><code><span><span class="co"># fit a fixed-effects model using unweighted estimation</span></span>

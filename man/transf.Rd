@@ -164,7 +164,7 @@ transf.lnortortet.digby(xi)
    A vector with the transformed values.
 }
 \note{
-   The integral transformation method for a transformation function \mjseqn{h(z)} is given by \mjsdeqn{\int_{\textrm{lower}}^{\textrm{upper}} h(z) f(z) dz} using the limits \code{targs$lower} and \code{targs$upper}, where \mjseqn{f(z)} is the density of a normal distribution with mean equal to \code{xi} and variance equal to \code{targs$tau2}. An example is provided below.
+   The integral transformation method for a transformation function \mjseqn{h(z)} is given by \mjsdeqn{\int_{\text{lower}}^{\text{upper}} h(z) f(z) dz} using the limits \code{targs$lower} and \code{targs$upper}, where \mjseqn{f(z)} is the density of a normal distribution with mean equal to \code{xi} and variance equal to \code{targs$tau2}. An example is provided below.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).

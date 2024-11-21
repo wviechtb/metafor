@@ -13,7 +13,7 @@ However, the question then remains what the real fixed-effects model is all abou
 
    \subsection{Fixed-Effects Model}{
 
-      Assume we have a set of \mjseqn{i = 1, \ldots, k} independent studies and let \mjseqn{y_i} denote the observed value of the effect size or outcome measure in the \mjeqn{i\textrm{th}}{ith} study. Let \mjseqn{\theta_i} denote the corresponding (unknown) true effect/outcome, such that \mjdeqn{y_i \mid \theta_i \sim N(\theta_i, v_i).}{y_i | \theta_i ~ N(\theta_i, v_i).} In other words, the observed effect sizes or outcomes are assumed to be unbiased and normally distributed estimates of the corresponding true effects/outcomes with sampling variances equal to \mjseqn{v_i}. The \mjseqn{v_i} values are assumed to be known.
+      Assume we have a set of \mjseqn{i = 1, \ldots, k} independent studies and let \mjseqn{y_i} denote the observed value of the effect size or outcome measure in the \mjeqn{i\text{th}}{ith} study. Let \mjseqn{\theta_i} denote the corresponding (unknown) true effect/outcome, such that \mjdeqn{y_i \mid \theta_i \sim N(\theta_i, v_i).}{y_i | \theta_i ~ N(\theta_i, v_i).} In other words, the observed effect sizes or outcomes are assumed to be unbiased and normally distributed estimates of the corresponding true effects/outcomes with sampling variances equal to \mjseqn{v_i}. The \mjseqn{v_i} values are assumed to be known.
 
       The fixed-effects model is simply given by \mjdeqn{y_i = \theta_i + \varepsilon_i,}{y_i = \theta_i + \epsilon_i,} where the \mjseqn{\theta_i} values are the (fixed) true effects/outcomes of the \mjseqn{k} studies. Therefore, the model \sQuote{conditions} on the true effects/outcomes and provides a \emph{conditional inference} about the \mjseqn{k} studies included in the meta-analysis.
 
@@ -41,7 +41,7 @@ res
 # estimate      se    zval    pval   ci.lb   ci.ub
 #   0.1656  0.0269  6.1499  <.0001  0.1128  0.2184}
 
-      The Q-test suggests that the underlying true standardized mean differences are heterogeneous \mjeqn{(Q(\textrm{df}=47) = 107.11, p < .0001).}{(Q(df=47) = 107.11, p < .0001).} Therefore, if we believe this to be true, then the value shown under \code{estimate} is an estimate of the inverse-variance weighted average of the true standardized mean differences of these 48 studies (i.e., \mjeqn{\hat{\bar{\theta}}_w = 0.17}{\theta-bar-hat_w = 0.17}).
+      The Q-test suggests that the underlying true standardized mean differences are heterogeneous \mjeqn{(Q(\text{df}=47) = 107.11, p < .0001).}{(Q(df=47) = 107.11, p < .0001).} Therefore, if we believe this to be true, then the value shown under \code{estimate} is an estimate of the inverse-variance weighted average of the true standardized mean differences of these 48 studies (i.e., \mjeqn{\hat{\bar{\theta}}_w = 0.17}{\theta-bar-hat_w = 0.17}).
 
       One can also employ an unweighted estimation method (by setting \code{weighted=FALSE} in \code{\link{rma.uni}}), which provides an estimate of the \emph{unweighted average} of the true effects/outcomes in the \mjseqn{k} studies, that is, an estimate of \mjdeqn{\bar{\theta}_u = \frac{\sum_{i=1}^k \theta_i}{k}.}{\theta_u = \sum \theta_i / k.}
 

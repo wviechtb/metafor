@@ -1,4 +1,4 @@
-# metafor 4.7-53 (2024-11-20)
+# metafor 4.7-54 (2024-11-21)
 
 - some general changes to the various `forest()` functions: argument `header` is now `TRUE` by default, the y-axis is now created with `yaxs="i"`, and the y-axis limits have been tweaked slightly in accordance
 
@@ -38,7 +38,7 @@
 
 - `permutest.rma.uni()` gains a `btt` argument and `permutest.rma.ls()` gains `btt` and `att` arguments
 
-- `selmodel()` gains a `subset` argument (to specify a subset of studies to which the selection function should apply)
+- `selmodel()` gains a `subset` argument (to specify a subset of studies to which the selection function should apply); for the beta selection model, one can now also specify two `steps` values to fit a truncated beta selection model
 
 - `nobs()` now just returns the number of estimates, not the effective number of observations
 
