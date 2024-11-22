@@ -130,10 +130,10 @@ transf.lnortortet.digby(xi)
    \item \code{transf.iabt}: inverse of the former.
    \item \code{transf.r2toz}: variance stabilizing transformation for the coefficient of determination, given by \mjeqn{z_i = \frac{1}{2} \log\mathopen{}\left(\frac{1+\sqrt{R_i^2}}{1-\sqrt{R_i^2}}\right)\mathclose{}}{z_i = 1/2 log((1+\sqrt(R_i^2))/(1-\sqrt(R_i^2)))} (see Olkin & Finn, 1995, but with the additional \mjeqn{\frac{1}{2}}{1/2} factor for consistency with the usual r-to-z transformation).
    \item \code{transf.ztor2}: inverse of the former.
-   \item \code{transf.ztor.int}: integral transformation method for the z-to-r transformation.
-   \item \code{transf.exp.int}: integral transformation method for the exponential transformation.
-   \item \code{transf.ilogit.int}: integral transformation method for the inverse logit transformation.
-   \item \code{transf.ztor.mode}: function to determine the mode of a atanh-normal variable.
+   \item \code{transf.ztor.int}: integral transformation method for the z-to-r transformation. See \sQuote{Note}.
+   \item \code{transf.exp.int}: integral transformation method for the exponential transformation. See \sQuote{Note}.
+   \item \code{transf.ilogit.int}: integral transformation method for the inverse logit transformation. See \sQuote{Note}.
+   \item \code{transf.ztor.mode}: function to determine the mode of an atanh-normal variable.
    \item \code{transf.exp.mode}: function to determine the mode of a log-normal variable.
    \item \code{transf.ilogit.mode}: function to determine the mode of a logit-normal variable.
    \item \code{transf.dtou1}: transformation of standardized mean differences to Cohen's \mjseqn{U_1} values (Cohen, 1988). Under the assumption that the data for those in the first (say, treated) and second (say, control) group are normally distributed with equal variances but potentially different means, Cohen's \mjseqn{U_1} indicates the proportion of non-overlap between the two distributions (i.e., when \mjseqn{d=0}, then \mjseqn{U_1} is equal to 0, which goes to 1 as \mjseqn{d} increases).
@@ -164,7 +164,7 @@ transf.lnortortet.digby(xi)
    A vector with the transformed values.
 }
 \note{
-   The integral transformation method for a transformation function \mjseqn{h(z)} is given by \mjsdeqn{\int_{\text{lower}}^{\text{upper}} h(z) f(z) dz} using the limits \code{targs$lower} and \code{targs$upper}, where \mjseqn{f(z)} is the density of a normal distribution with mean equal to \code{xi} and variance equal to \code{targs$tau2}. An example is provided below.
+   The integral transformation method for a transformation function \mjseqn{h(z)} is given by \mjsdeqn{\int_{\text{lower}}^{\text{upper}} h(z) f(z) dz} using the limits \code{targs$lower} and \code{targs$upper}, where \mjseqn{f(z)} is the density of a normal distribution with mean equal to \code{xi} and variance equal to \code{targs$tau2}. By default, \code{targs$lower} and \code{targs$upper} are set to reasonable values and, if possible, \code{targs$tau2} is extracted from the model object in functions where such transformation functions are typically applied (e.g., \code{\link[=predict.rma]{predict}}). An example is provided below.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
@@ -222,6 +222,6 @@ predict(res, transf=transf.exp.int, targs=list(tau2=res$tau2, lower=-4, upper=4)
 predict(res, transf=transf.exp.int, targs=list(tau2=res$tau2))
 
 ### this as well
-predict(res, transf=transf.exp.int, targs=res$tau2)
+predict(res, transf=transf.exp.int)
 }
 \keyword{manip}

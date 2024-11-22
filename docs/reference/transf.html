@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-54</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-55</span>
       </span>
     </div>
 
@@ -192,10 +192,10 @@
 <li><p><code>transf.iabt</code>: inverse of the former.</p></li>
 <li><p><code>transf.r2toz</code>: variance stabilizing transformation for the coefficient of determination, given by <em></em>\(z_i = \frac{1}{2} \log\mathopen{}\left(\frac{1+\sqrt{R_i^2}}{1-\sqrt{R_i^2}}\right)\mathclose{}\) (see Olkin &amp; Finn, 1995, but with the additional <em></em>\(\frac{1}{2}\) factor for consistency with the usual r-to-z transformation).</p></li>
 <li><p><code>transf.ztor2</code>: inverse of the former.</p></li>
-<li><p><code>transf.ztor.int</code>: integral transformation method for the z-to-r transformation.</p></li>
-<li><p><code>transf.exp.int</code>: integral transformation method for the exponential transformation.</p></li>
-<li><p><code>transf.ilogit.int</code>: integral transformation method for the inverse logit transformation.</p></li>
-<li><p><code>transf.ztor.mode</code>: function to determine the mode of a atanh-normal variable.</p></li>
+<li><p><code>transf.ztor.int</code>: integral transformation method for the z-to-r transformation. See ‘Note’.</p></li>
+<li><p><code>transf.exp.int</code>: integral transformation method for the exponential transformation. See ‘Note’.</p></li>
+<li><p><code>transf.ilogit.int</code>: integral transformation method for the inverse logit transformation. See ‘Note’.</p></li>
+<li><p><code>transf.ztor.mode</code>: function to determine the mode of an atanh-normal variable.</p></li>
 <li><p><code>transf.exp.mode</code>: function to determine the mode of a log-normal variable.</p></li>
 <li><p><code>transf.ilogit.mode</code>: function to determine the mode of a logit-normal variable.</p></li>
 <li><p><code>transf.dtou1</code>: transformation of standardized mean differences to Cohen's <em></em>\(U_1\) values (Cohen, 1988). Under the assumption that the data for those in the first (say, treated) and second (say, control) group are normally distributed with equal variances but potentially different means, Cohen's <em></em>\(U_1\) indicates the proportion of non-overlap between the two distributions (i.e., when <em></em>\(d=0\), then <em></em>\(U_1\) is equal to 0, which goes to 1 as <em></em>\(d\) increases).</p></li>
@@ -227,7 +227,7 @@
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>The integral transformation method for a transformation function <em></em>\(h(z)\) is given by \[\int_{\text{lower}}^{\text{upper}} h(z) f(z) dz\] using the limits <code>targs$lower</code> and <code>targs$upper</code>, where <em></em>\(f(z)\) is the density of a normal distribution with mean equal to <code>xi</code> and variance equal to <code>targs$tau2</code>. An example is provided below.</p>
+    <p>The integral transformation method for a transformation function <em></em>\(h(z)\) is given by \[\int_{\text{lower}}^{\text{upper}} h(z) f(z) dz\] using the limits <code>targs$lower</code> and <code>targs$upper</code>, where <em></em>\(f(z)\) is the density of a normal distribution with mean equal to <code>xi</code> and variance equal to <code>targs$tau2</code>. By default, <code>targs$lower</code> and <code>targs$upper</code> are set to reasonable values and, if possible, <code>targs$tau2</code> is extracted from the model object in functions where such transformation functions are typically applied (e.g., <code><a href="predict.rma.html">predict</a></code>). An example is provided below.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -285,7 +285,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### this as well</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">transf.exp.int</span>, targs<span class="op">=</span><span class="va">res</span><span class="op">$</span><span class="va">tau2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="predict.rma.html">predict</a></span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">transf.exp.int</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    pred  ci.lb  ci.ub  pi.lb  pi.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.5724 0.4024 0.8142 0.1809 1.8117 </span>

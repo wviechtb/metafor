@@ -52,6 +52,11 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
    if (missing(targs))
       targs <- NULL
 
+   funlist <- lapply(list(transf.exp.int, transf.ilogit.int, transf.ztor.int, transf.exp.mode, transf.ilogit.mode, transf.ztor.mode), deparse)
+
+   if (is.null(targs) && any(sapply(funlist, identical, deparse(transf))) && inherits(x, c("rma.uni","rma.glmm")) && length(x$tau2 == 1L))
+      targs <- c(tau2=x$tau2)
+
    level <- .level(level)
 
    if (!is.logical(adjust))
@@ -543,9 +548,6 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
    ### apply transformation function if one has been specified
 
    if (is.function(transf)) {
-      #funlist <- lapply(list(transf.exp.int, transf.ilogit.int, transf.ztor.int, transf.exp.mode, transf.ilogit.mode, transf.ztor.mode), deparse)
-      #if (is.null(targs) && any(sapply(funlist, identical, deparse(transf))) && inherits(x, c("rma.uni","rma.glmm")) && length(x$tau2 == 1L))
-      #   targs <- c(tau2=x$tau2)
       if (is.null(targs)) {
          pred  <- sapply(pred, transf)
          se    <- rep(NA_real_, k.new)
