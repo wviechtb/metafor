@@ -1,4 +1,4 @@
-# metafor 4.7-55 (2024-11-22)
+# metafor 4.7-56 (2024-11-24)
 
 - some general changes to the various `forest()` functions: argument `header` is now `TRUE` by default, the y-axis is now created with `yaxs="i"`, and the y-axis limits have been tweaked slightly in accordance
 
@@ -25,6 +25,8 @@
 - `print.anova.rma()` and `print.list.anova.rma()` now also print significance stars for some tests (unless `getOption("show.signif.stars")` is `FALSE`)
 
 - added a `collapse` argument to the various `cumul()` functions (to specify whether studies with the same value of the `order` variable should be added simultaneously)
+
+- the various `leave1out()` functions gain a `cluster` argument
 
 - `rma.mv()` now counts the number of levels of a random effect more appropriately; this may trigger more often the check that the number of levels is equal to 1, in which case the corresponding variance component is automatically fixed to 0; this check can be omitted with `control=list(check.k.gtr.1=FALSE)`
 

@@ -281,6 +281,23 @@
 
 }
 
+### function that takes a vector as input and creates an expanded vector of
+### the length of 'fill' of all NAs but where the fill values are given by x
+### (can also take an entire list as input)
+
+.expandna <- function(x, fill) {
+   if (is.list(x)) {
+      return(lapply(x, function(xi) .expandna(xi, fill)))
+   } else {
+      if (!is.logical(fill))
+         stop("Argument 'fill' is not a logical vector.")
+      k <- length(fill)
+      out <- rep(NA_real_, k)
+      out[fill] <- x
+      return(out)
+   }
+}
+
 ############################################################################
 
 ### function to format p-values (no longer used; use fmtp() instead)

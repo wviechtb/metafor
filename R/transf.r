@@ -110,35 +110,40 @@ transf.ztor2 <- function(xi)
 
 ############################################################################
 
+#transf.exp.int <- function(xi, targs=NULL) {
+#
+#   targs <- .chktargsint(targs)
+#
+#   if (is.null(targs$lower))
+#      targs$lower <- xi-10*sqrt(targs$tau2)
+#   if (is.null(targs$upper))
+#      targs$upper <- xi+10*sqrt(targs$tau2)
+#
+#   toint <- function(zval, xi, tau2)
+#      exp(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
+#
+#   cfunc <- function(xi, tau2, lower, upper) {
+#      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2), silent=TRUE)
+#      if (inherits(out, "try-error")) {
+#         return(NA_real_)
+#      } else {
+#         return(out$value)
+#      }
+#   }
+#
+#   if (targs$tau2 == 0) {
+#      zi <- exp(xi)
+#   } else {
+#      zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
+#   }
+#
+#   return(c(zi))
+#
+#}
+
 transf.exp.int <- function(xi, targs=NULL) {
-
    targs <- .chktargsint(targs)
-
-   if (is.null(targs$lower))
-      targs$lower <- xi-10*sqrt(targs$tau2)
-   if (is.null(targs$upper))
-      targs$upper <- xi+10*sqrt(targs$tau2)
-
-   toint <- function(zval, xi, tau2)
-      exp(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
-
-   cfunc <- function(xi, tau2, lower, upper) {
-      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2), silent=TRUE)
-      if (inherits(out, "try-error")) {
-         return(NA_real_)
-      } else {
-         return(out$value)
-      }
-   }
-
-   if (targs$tau2 == 0) {
-      zi <- exp(xi)
-   } else {
-      zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
-   }
-
-   return(c(zi))
-
+   return(exp(xi + targs$tau2/2))
 }
 
 transf.exp.mode <- function(xi, targs=NULL) {

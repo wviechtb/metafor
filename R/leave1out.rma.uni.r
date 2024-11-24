@@ -1,4 +1,4 @@
-leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
+leave1out.rma.uni <- function(x, cluster, digits, transf, targs, progbar=FALSE, ...) {
 
    mstyle <- .get.mstyle()
 
@@ -44,38 +44,75 @@ leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
 
    #########################################################################
 
-   beta  <- rep(NA_real_, x$k.f)
-   se    <- rep(NA_real_, x$k.f)
-   zval  <- rep(NA_real_, x$k.f)
-   pval  <- rep(NA_real_, x$k.f)
-   ci.lb <- rep(NA_real_, x$k.f)
-   ci.ub <- rep(NA_real_, x$k.f)
-   QE    <- rep(NA_real_, x$k.f)
-   QEp   <- rep(NA_real_, x$k.f)
-   tau2  <- rep(NA_real_, x$k.f)
-   I2    <- rep(NA_real_, x$k.f)
-   H2    <- rep(NA_real_, x$k.f)
+   ### process cluster variable
+
+   misscluster <- ifelse(missing(cluster), TRUE, FALSE)
+
+   if (misscluster) {
+      cluster <- seq_len(x$k.all)
+   } else {
+      mf <- match.call()
+      cluster <- .getx("cluster", mf=mf, data=x$data)
+   }
+
+   ### note: cluster variable must be of the same length as the original dataset
+   ###       so we have to apply the same subsetting (if necessary) and removing
+   ###       of NAs as was done during model fitting
+
+   if (length(cluster) != x$k.all)
+      stop(mstyle$stop(paste0("Length of the variable specified via 'cluster' (", length(cluster), ") does not match the length of the data (", x$k.all, ").")))
+
+   cluster <- .getsubset(cluster, x$subset)
+
+   cluster.f <- cluster
+
+   cluster <- cluster[x$not.na]
+
+   ### checks on cluster variable
+
+   if (anyNA(cluster.f))
+      stop(mstyle$stop("No missing values allowed in 'cluster' variable."))
+
+   if (length(cluster.f) == 0L)
+      stop(mstyle$stop(paste0("Cannot find 'cluster' variable (or it has zero length).")))
+
+   ### cluster ids and number of clusters
+
+   ids <- unique(cluster)
+   n <- length(ids)
+
+   if (!misscluster)
+      ids <- sort(ids)
+
+   #########################################################################
+
+   beta  <- rep(NA_real_, n)
+   se    <- rep(NA_real_, n)
+   zval  <- rep(NA_real_, n)
+   pval  <- rep(NA_real_, n)
+   ci.lb <- rep(NA_real_, n)
+   ci.ub <- rep(NA_real_, n)
+   QE    <- rep(NA_real_, n)
+   QEp   <- rep(NA_real_, n)
+   tau2  <- rep(NA_real_, n)
+   I2    <- rep(NA_real_, n)
+   H2    <- rep(NA_real_, n)
 
    ### elements that need to be returned
 
    outlist <- "beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, QE=QE, QEp=QEp, tau2=tau2, I2=I2, H2=H2"
 
-   ### note: skipping NA cases
-   ### also: it is possible that model fitting fails, so that generates more NAs (these NAs will always be shown in output)
-
    if (progbar)
-      pbar <- pbapply::startpb(min=0, max=x$k.f)
+      pbar <- pbapply::startpb(min=0, max=n)
 
-   for (i in seq_len(x$k.f)) {
+   for (i in seq_len(n)) {
 
       if (progbar)
          pbapply::setpb(pbar, i)
 
-      if (!x$not.na[i])
-         next
-
-      args <- list(yi=x$yi.f, vi=x$vi.f, weights=x$weights.f, intercept=TRUE, method=x$method, weighted=x$weighted,
-                   test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i, skipr2=TRUE, outlist=outlist)
+      args <- list(yi=x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, method=x$method, weighted=x$weighted,
+                   test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control,
+                   subset=ids[i]!=cluster, skipr2=TRUE, outlist=outlist)
       res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
 
       if (inherits(res, "try-error"))
@@ -105,14 +142,14 @@ leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
    if (is.function(transf)) {
       if (is.null(targs)) {
          beta  <- sapply(beta, transf)
-         se    <- rep(NA_real_, x$k.f)
+         se    <- rep(NA_real_, n)
          ci.lb <- sapply(ci.lb, transf)
          ci.ub <- sapply(ci.ub, transf)
       } else {
          if (!is.primitive(transf) && !is.null(targs) && length(formals(transf)) == 1L)
             stop(mstyle$stop("Function specified via 'transf' does not appear to have an argument for 'targs'."))
          beta  <- sapply(beta, transf, targs)
-         se    <- rep(NA_real_, x$k.f)
+         se    <- rep(NA_real_, n)
          ci.lb <- sapply(ci.lb, transf, targs)
          ci.ub <- sapply(ci.ub, transf, targs)
       }
@@ -127,18 +164,24 @@ leave1out.rma.uni <- function(x, digits, transf, targs, progbar=FALSE, ...) {
 
    #########################################################################
 
+   out <- list(estimate=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, Q=QE, Qp=QEp, tau2=tau2, I2=I2, H2=H2)
+
    if (na.act == "na.omit") {
-      out <- list(estimate=beta[x$not.na], se=se[x$not.na], zval=zval[x$not.na], pval=pval[x$not.na], ci.lb=ci.lb[x$not.na], ci.ub=ci.ub[x$not.na], Q=QE[x$not.na], Qp=QEp[x$not.na], tau2=tau2[x$not.na], I2=I2[x$not.na], H2=H2[x$not.na])
-      out$slab <- x$slab[x$not.na]
+      if (misscluster) {
+         out$slab <- paste0("-", x$slab[x$not.na])
+      } else {
+         out$slab <- paste0("-", ids)
+      }
    }
 
    if (na.act == "na.exclude" || na.act == "na.pass") {
-      out <- list(estimate=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, Q=QE, Qp=QEp, tau2=tau2, I2=I2, H2=H2)
-      out$slab <- x$slab
+      if (misscluster) {
+         out <- .expandna(out, x$not.na)
+         out$slab <- paste0("-", x$slab)
+      } else {
+         out$slab <- paste0("-", ids)
+      }
    }
-
-   if (na.act == "na.fail" && any(!x$not.na))
-      stop(mstyle$stop("Missing values in results."))
 
    if (is.element(x$test, c("knha","adhoc","t")))
       names(out)[3] <- "tval"

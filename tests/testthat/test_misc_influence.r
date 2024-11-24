@@ -27,7 +27,7 @@ test_that("leave1out() works for rma().", {
    inf <- leave1out(res)
    inf <- inf[1]
 
-   sav <- structure(list(estimate = -0.707083788031436, se = 0.189961024702717, zval = -3.72225717953459, pval = 0.000197449759023198, ci.lb = -1.07940055491509, ci.ub = -0.334767021147788, Q = 151.582572747109, Qp = 7.0778599767807e-27, tau2 = 0.336156745300306, I2 = 93.2259349111223, H2 = 14.762184698253, slab = 1L, digits = c(est = 4, se = 4, test = 4, pval = 4, ci = 4, var = 4, sevar = 4, fit = 4, het = 4), transf = FALSE), class = "list.rma")
+   sav <- structure(list(estimate = -0.707083788031436, se = 0.189961024702717, zval = -3.72225717953459, pval = 0.000197449759023198, ci.lb = -1.07940055491509, ci.ub = -0.334767021147788, Q = 151.582572747109, Qp = 7.0778599767807e-27, tau2 = 0.336156745300306, I2 = 93.2259349111223, H2 = 14.762184698253, slab = "-1", digits = c(est = 4, se = 4, test = 4, pval = 4, ci = 4, var = 4, sevar = 4, fit = 4, het = 4), transf = FALSE), class = "list.rma")
 
    expect_equivalent(sav, inf, tolerance=.tol[["misc"]])
 
@@ -39,7 +39,7 @@ test_that("leave1out() works for rma.mh().", {
    inf <- leave1out(res)
    inf <- inf[1]
 
-   sav <- structure(list(estimate = -0.451379469928476, se = 0.0394350331703394, zval = -11.4461541842439, pval = 2.45810944109134e-30, ci.lb = -0.528670714671484, ci.ub = -0.374088225185468, Q = 151.915260738878, Qp = 6.05181927235005e-27, I2 = 92.7591211399706, H2 = 13.8104782489889, slab = 1L, digits = c(est = 4, se = 4, test = 4, pval = 4, ci = 4, var = 4, sevar = 4, fit = 4, het = 4), transf = FALSE), class = "list.rma")
+   sav <- structure(list(estimate = -0.451379469928476, se = 0.0394350331703394, zval = -11.4461541842439, pval = 2.45810944109134e-30, ci.lb = -0.528670714671484, ci.ub = -0.374088225185468, Q = 151.915260738878, Qp = 6.05181927235005e-27, I2 = 92.7591211399706, H2 = 13.8104782489889, slab = "-1", digits = c(est = 4, se = 4, test = 4, pval = 4, ci = 4, var = 4, sevar = 4, fit = 4, het = 4), transf = FALSE), class = "list.rma")
 
    expect_equivalent(sav, inf, tolerance=.tol[["misc"]])
 
@@ -51,7 +51,7 @@ test_that("leave1out() works for rma.peto().", {
    inf <- leave1out(res)
    inf <- inf[1]
 
-   sav <- structure(list(estimate = -0.472177269248539, se = 0.0407784291562603, zval = -11.5790941195696, pval = 5.25989306490064e-31, ci.lb = -0.552101521740927, ci.ub = -0.39225301675615, Q = 167.200450619361, Qp = 4.44309617192221e-30, I2 = 93.4210703623987, H2 = 15.2000409653964, slab = 1L, digits = c(est = 4, se = 4, test = 4, pval = 4, ci = 4, var = 4, sevar = 4, fit = 4, het = 4), transf = FALSE), class = "list.rma")
+   sav <- structure(list(estimate = -0.472177269248539, se = 0.0407784291562603, zval = -11.5790941195696, pval = 5.25989306490064e-31, ci.lb = -0.552101521740927, ci.ub = -0.39225301675615, Q = 167.200450619361, Qp = 4.44309617192221e-30, I2 = 93.4210703623987, H2 = 15.2000409653964, slab = "-1", digits = c(est = 4, se = 4, test = 4, pval = 4, ci = 4, var = 4, sevar = 4, fit = 4, het = 4), transf = FALSE), class = "list.rma")
 
    expect_equivalent(sav, inf, tolerance=.tol[["misc"]])
 

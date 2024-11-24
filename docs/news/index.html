@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-55</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.7-56</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.7-55" id="metafor-47-55-2024-11-22">metafor 4.7-55 (2024-11-22)<a class="anchor" aria-label="anchor" href="#metafor-47-55-2024-11-22"></a></h2>
+<h2 class="page-header" data-toc-text="4.7-56" id="metafor-47-56-2024-11-24">metafor 4.7-56 (2024-11-24)<a class="anchor" aria-label="anchor" href="#metafor-47-56-2024-11-24"></a></h2>
 <ul><li><p>some general changes to the various <code><a href="../reference/forest.html">forest()</a></code> functions: argument <code>header</code> is now <code>TRUE</code> by default, the y-axis is now created with <code>yaxs="i"</code>, and the y-axis limits have been tweaked slightly in accordance</p></li>
 <li><p><code><a href="../reference/forest.rma.html">forest.rma()</a></code> and the various <code><a href="../reference/addpoly.html">addpoly()</a></code> functions now provides multiple styles for drawing the prediction interval via the <code>predstyle</code> argument</p></li>
 <li><p><code><a href="../reference/forest.rma.html">forest.rma()</a></code> and <code><a href="../reference/addpoly.rma.html">addpoly.rma()</a></code> now write out the default label (instead of an abbreviation) for the model results; as before, the label can be changed via the <code>mlab</code> argument</p></li>
@@ -104,6 +104,7 @@
 <li><p>fixed <code><a href="../reference/predict.rma.html">predict()</a></code> ignoring the <code>level</code> argument for <code>robust.rma</code> objects obtained with <code>clubSandwich=TRUE</code></p></li>
 <li><p><code><a href="../reference/print.anova.rma.html">print.anova.rma()</a></code> and <code><a href="../reference/print.anova.rma.html">print.list.anova.rma()</a></code> now also print significance stars for some tests (unless <code>getOption("show.signif.stars")</code> is <code>FALSE</code>)</p></li>
 <li><p>added a <code>collapse</code> argument to the various <code><a href="../reference/cumul.html">cumul()</a></code> functions (to specify whether studies with the same value of the <code>order</code> variable should be added simultaneously)</p></li>
+<li><p>the various <code><a href="../reference/leave1out.html">leave1out()</a></code> functions gain a <code>cluster</code> argument</p></li>
 <li><p><code><a href="../reference/rma.mv.html">rma.mv()</a></code> now counts the number of levels of a random effect more appropriately; this may trigger more often the check that the number of levels is equal to 1, in which case the corresponding variance component is automatically fixed to 0; this check can be omitted with <code>control=list(check.k.gtr.1=FALSE)</code></p></li>
 <li><p>made optimizers <code>Rcgmin</code> and <code>Rvmmin</code> available again via the <code>optimx</code> package</p></li>
 <li><p>when unspecified, argument <code>shade</code> in <code><a href="../reference/funnel.html">funnel()</a></code> now automatically uses a color gradient for the regions when multiple <code>level</code> values are specified</p></li>
