@@ -2,12 +2,15 @@
 
 .profile.rma.uni <- function(val, obj,
    parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE, pred=FALSE, blup=FALSE, newmods=NULL,
-   objective, model=0L, verbose=FALSE, outlist=NULL) {
+   objective, model=0L, verbose=FALSE, outlist=NULL, code2=NULL) {
 
    mstyle <- .get.mstyle()
 
    if (parallel == "snow")
       library(metafor)
+
+   if (!is.null(code2))
+      eval(expr = parse(text = code2))
 
    if (profile || confint) {
 
@@ -112,12 +115,15 @@
 
 .profile.rma.mv <- function(val, obj, comp, sigma2.pos, tau2.pos, rho.pos, gamma2.pos, phi.pos,
    parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE,
-   objective, verbose=FALSE) {
+   objective, verbose=FALSE, code2=NULL) {
 
    mstyle <- .get.mstyle()
 
    if (parallel == "snow")
       library(metafor)
+
+   if (!is.null(code2))
+      eval(expr = parse(text = code2))
 
    if (profile || confint) {
 
@@ -187,7 +193,7 @@
 
 }
 
-.profile.rma.mh <- function(val, obj, parallel=FALSE, subset=FALSE, outlist=NULL) {
+.profile.rma.mh <- function(val, obj, parallel=FALSE, subset=FALSE, outlist=NULL, code2=NULL) {
 
    if (parallel == "snow")
       library(metafor)
@@ -211,7 +217,7 @@
 
 }
 
-.profile.rma.peto <- function(val, obj, parallel=FALSE, subset=FALSE, outlist=NULL) {
+.profile.rma.peto <- function(val, obj, parallel=FALSE, subset=FALSE, outlist=NULL, code2=NULL) {
 
    if (parallel == "snow")
       library(metafor)
@@ -232,12 +238,15 @@
 
 .profile.rma.uni.selmodel <- function(val, obj, comp, delta.pos,
    parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE,
-   objective, verbose=FALSE) {
+   objective, verbose=FALSE, code2=NULL) {
 
    mstyle <- .get.mstyle()
 
    if (parallel == "snow")
       library(metafor)
+
+   if (!is.null(code2))
+      eval(expr = parse(text = code2))
 
    if (profile || confint) {
 
@@ -300,12 +309,15 @@
 
 .profile.rma.ls <- function(val, obj, comp, alpha.pos,
    parallel=FALSE, profile=FALSE, confint=FALSE, subset=FALSE,
-   objective, verbose=FALSE) {
+   objective, verbose=FALSE, code2=NULL) {
 
    mstyle <- .get.mstyle()
 
    if (parallel == "snow")
       library(metafor)
+
+   if (!is.null(code2))
+      eval(expr = parse(text = code2))
 
    if (profile || confint) {
 

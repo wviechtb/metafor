@@ -20,7 +20,7 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("btt", "measure", "time"))
+   .chkdots(ddd, c("btt", "measure", "time", "code1", "code2"))
 
    btt <- .set.btt(ddd$btt, x$p, int.incl=FALSE, Xnames=colnames(x$X)) # note: 1:p by default (also in models with intercept)
    m <- length(btt)
@@ -38,6 +38,9 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
+
+   if (!is.null(ddd[["code1"]]))
+      eval(expr = parse(text = ddd[["code1"]]))
 
    #########################################################################
 
@@ -93,6 +96,9 @@ influence.rma.uni <- function(model, digits, progbar=FALSE, ...) {
 
       if (progbar)
          pbapply::setpb(pbar, i)
+
+      if (!is.null(ddd[["code2"]]))
+         eval(expr = parse(text = ddd[["code2"]]))
 
       args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, method=x$method, weighted=x$weighted,
                    test=x$test, level=x$level, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, subset=-i, skipr2=TRUE, outlist=outlist)

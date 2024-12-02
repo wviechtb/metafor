@@ -29,7 +29,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
    if (missing(type))
       stop(mstyle$stop("Must choose a specific selection model via the 'type' argument (see 'help(selmodel)' for options)."))
 
-   type.options <- c("beta", "halfnorm", "negexp", "logistic", "power", "negexppow", "halfnorm2", "negexp2", "logistic2", "power2", "stepfun", "stepcon", "trunc", "truncest")
+   type.options <- c("beta", "halfnorm", "negexp", "logistic", "power", "negexppow", "halfnorm1", "negexp1", "logistic1", "power1", "halfnorm2", "negexp2", "logistic2", "power2", "stepfun", "stepcon", "trunc", "truncest")
 
    #type <- match.arg(type, type.options)
    type <- type.options[grep(type, type.options)[1]]
@@ -460,6 +460,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
       if (type == "halfnorm") {
          wi.fun <- function(x, delta, yi, vi, preci, alternative, steps)
             ifelse(x <= steps[1], 1, exp(-delta * preci * x^2) / exp(-delta * preci * steps[1]^2))
+            #pmin(1, exp(-delta * preci * x^2) / exp(-delta * preci * steps[1]^2))
       }
       if (type == "negexp") {
          wi.fun <- function(x, delta, yi, vi, preci, alternative, steps)
@@ -472,6 +473,52 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
       if (type == "power") {
          wi.fun <- function(x, delta, yi, vi, preci, alternative, steps)
             ifelse(x <= steps[1], 1, (1-x)^(preci*delta) / (1-steps[1])^(preci*delta))
+      }
+      .selmodel.ll <- ".selmodel.ll.cont"
+
+   }
+
+   if (is.element(type, c("halfnorm1", "negexp1", "logistic1", "power1"))) {
+
+      if (stepsspec) {
+         if (length(steps) != 2L) # steps should be c(alpha,1)
+            stop(mstyle$stop("Can only specify a single value for the 'steps' argument for this type of selection model."))
+      } else {
+         steps <- 0
+      }
+
+      deltas <- 1L
+      delta.transf.fun <- "exp"
+      delta.transf.fun.inv <- "log"
+      delta.lb <- 0
+      delta.ub <- Inf
+      delta.lb.excl <- FALSE
+      delta.ub.excl <- FALSE
+      delta.init <- 1
+      delta.min <- 0
+      delta.max <- 100
+      H0.delta <- 0
+      delta.LRT <- TRUE
+      if (type == "power") {
+         pval.min <- 1e-5
+      } else {
+         pval.min <- 0
+      }
+      if (type == "halfnorm1") {
+         wi.fun <- function(x, delta, yi, vi, preci, alternative, steps)
+            ifelse(x <= steps[1], 1, exp(-delta * preci * ((x-steps[1])/(1-steps[1]))^2))
+      }
+      if (type == "negexp1") {
+         wi.fun <- function(x, delta, yi, vi, preci, alternative, steps)
+            ifelse(x <= steps[1], 1, exp(-delta * preci * ((x-steps[1])/(1-steps[1]))))
+      }
+      if (type == "logistic1") {
+         wi.fun <- function(x, delta, yi, vi, preci, alternative, steps)
+            ifelse(x <= steps[1], 1, (2 * exp(-delta * preci * ((x-steps[1])/(1-steps[1]))) / (1 + exp(-delta * preci * ((x-steps[1])/(1-steps[1]))))))
+      }
+      if (type == "power1") {
+         wi.fun <- function(x, delta, yi, vi, preci, alternative, steps)
+            ifelse(x <= steps[1], 1, (1-((x-steps[1])/(1-steps[1])))^(preci*delta))
       }
       .selmodel.ll <- ".selmodel.ll.cont"
 

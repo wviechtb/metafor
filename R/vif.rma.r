@@ -129,7 +129,6 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
       on.exit(pbapply::pboptions(pbo), add=TRUE)
    }
 
-
    #########################################################################
 
    if (vif.loc) {

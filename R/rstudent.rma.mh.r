@@ -22,10 +22,13 @@ rstudent.rma.mh <- function(model, digits, progbar=FALSE, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time"))
+   .chkdots(ddd, c("time", "code1", "code2"))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
+
+   if (!is.null(ddd[["code1"]]))
+      eval(expr = parse(text = ddd[["code1"]]))
 
    #########################################################################
 
@@ -45,6 +48,9 @@ rstudent.rma.mh <- function(model, digits, progbar=FALSE, ...) {
 
       if (progbar)
          pbapply::setpb(pbar, i)
+
+      if (!is.null(ddd[["code2"]]))
+         eval(expr = parse(text = ddd[["code2"]]))
 
       if (!x$not.na[i])
          next

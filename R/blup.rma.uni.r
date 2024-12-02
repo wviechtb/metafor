@@ -40,6 +40,13 @@ blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
    if (!is.null(x$weights) || !x$weighted)
       stop(mstyle$stop("Extraction of random effects not available for models with non-standard weights."))
 
+   ddd <- list(...)
+
+   .chkdots(ddd, c("code1", "code2"))
+
+   if (!is.null(ddd[["code1"]]))
+      eval(expr = parse(text = ddd[["code1"]]))
+
    #########################################################################
 
    pred  <- rep(NA_real_, x$k.f)
@@ -53,13 +60,20 @@ blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
    li <- ifelse(is.infinite(x$tau2.f), 1, x$tau2.f / (x$tau2.f + x$vi.f))
 
    for (i in seq_len(x$k.f)[x$not.na]) { # note: skipping NA cases
+
+      if (!is.null(ddd[["code2"]]))
+         eval(expr = parse(text = ddd[["code2"]]))
+
       Xi <- matrix(x$X.f[i,], nrow=1)
+
       pred[i]  <- li[i] * x$yi.f[i] + (1 - li[i])   * Xi %*% x$beta
+
       if (li[i] == 1) {
          vpred[i] <- li[i] * x$vi.f[i]
       } else {
          vpred[i] <- li[i] * x$vi.f[i] + (1 - li[i])^2 * Xi %*% tcrossprod(x$vb,Xi)
       }
+
    }
 
    se <- sqrt(vpred)

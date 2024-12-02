@@ -43,7 +43,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time", "xlim", "extint"))
+   .chkdots(ddd, c("time", "xlim", "extint", "code1", "code2"))
 
    level <- .level(level, stopon100=.isTRUE(ddd$extint))
 
@@ -74,11 +74,16 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
       if (comps == 0)
          stop(mstyle$stop("No components for which a CI can be obtained."))
 
+      if (!is.null(ddd[["code1"]]))
+         eval(expr = parse(text = ddd[["code1"]]))
+
       res.all <- list()
       j <- 0
 
       if (!is.element(x$method, c("FE","EE","CE")) && !x$tau2.fix) {
          j <- j + 1
+         if (!is.null(ddd[["code2"]]))
+            eval(expr = parse(text = ddd[["code2"]]))
          cl.vc <- cl
          cl.vc$tau2 <- 1
          cl.vc$time <- FALSE
@@ -92,6 +97,8 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
       if (any(!x$delta.fix)) {
          for (pos in seq_len(x$deltas)[!x$delta.fix]) {
             j <- j + 1
+            if (!is.null(ddd[["code2"]]))
+               eval(expr = parse(text = ddd[["code2"]]))
             cl.vc <- cl
             cl.vc$delta <- pos
             cl.vc$time <- FALSE

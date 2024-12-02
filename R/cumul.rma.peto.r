@@ -26,7 +26,7 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, collapse=FALSE, prog
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time", "decreasing"))
+   .chkdots(ddd, c("time", "decreasing", "code1", "code2"))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
@@ -87,6 +87,9 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, collapse=FALSE, prog
 
    k.o <- length(uorvar)
 
+   if (!is.null(ddd[["code1"]]))
+      eval(expr = parse(text = ddd[["code1"]]))
+
    k     <- rep(NA_integer_, k.o)
    beta  <- rep(NA_real_, k.o)
    se    <- rep(NA_real_, k.o)
@@ -111,6 +114,9 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, collapse=FALSE, prog
 
       if (progbar)
          pbapply::setpb(pbar, i)
+
+      if (!is.null(ddd[["code2"]]))
+         eval(expr = parse(text = ddd[["code2"]]))
 
       if (collapse) {
 

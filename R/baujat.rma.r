@@ -28,6 +28,16 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, 
       grid <- TRUE
    }
 
+   ddd <- list(...)
+
+   lplot   <- function(..., code1, code2) plot(...)
+   lbox    <- function(..., code1, code2) box(...)
+   lpoints <- function(..., code1, code2) points(...)
+   ltext   <- function(..., code1, code2) text(...)
+
+   if (!is.null(ddd[["code1"]]))
+      eval(expr = parse(text = ddd[["code1"]]))
+
    #########################################################################
 
    ### set up vectors to store results in
@@ -53,6 +63,9 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, 
 
       if (progbar)
          pbapply::setpb(pbar, i)
+
+      if (!is.null(ddd[["code2"]]))
+         eval(expr = parse(text = ddd[["code2"]]))
 
       if (!x$not.na[i])
          next
@@ -125,13 +138,13 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, 
 
    ### draw empty plot
 
-   plot(NA, xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, ...)
+   lplot(NA, xlab=xlab, ylab=ylab, xlim=xlim, ylim=ylim, ...)
 
    ### add grid (and redraw box)
 
    if (.isTRUE(grid)) {
       grid(col=gridcol)
-      box(...)
+      lbox(...)
    }
 
    if (is.numeric(symbol)) {
@@ -143,15 +156,15 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, 
 
       symbol <- .getsubset(symbol, x$subset)
 
-      points(x=xhati, y=yhati, cex=cex, pch=symbol, ...)
+      lpoints(x=xhati, y=yhati, cex=cex, pch=symbol, ...)
 
    }
 
    if (is.character(symbol) && symbol=="ids")
-      text(xhati, yhati, x$ids, cex=cex, ...)
+      ltext(xhati, yhati, x$ids, cex=cex, ...)
 
    if (is.character(symbol) && symbol=="slab")
-      text(xhati, yhati, x$slab, cex=cex, ...)
+      ltext(xhati, yhati, x$slab, cex=cex, ...)
 
    #########################################################################
 

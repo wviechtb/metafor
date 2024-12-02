@@ -267,6 +267,11 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          }
       }
 
+      ### check if yi is an array
+
+      if (inherits(yi, "array"))
+         stop(mstyle$stop("The object/variable specified for the 'yi' argument is an array."))
+
       ### check if yi is numeric
 
       if (!is.numeric(yi))
@@ -331,6 +336,11 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
             }
          }
       }
+
+      ### check if vi is an array
+
+      if (inherits(vi, "array"))
+         stop(mstyle$stop("The object/variable specified for the 'vi' argument is an array."))
 
       ### check if user constrained vi to 0
 

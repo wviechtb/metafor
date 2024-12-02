@@ -32,7 +32,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time", "xlim", "extint"))
+   .chkdots(ddd, c("time", "xlim", "extint", "code1", "code2"))
 
    level <- .level(level, stopon100=.isTRUE(ddd$extint))
 
@@ -66,12 +66,17 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
       if (comps == 0)
          stop(mstyle$stop("No components for which a CI can be obtained."))
 
+      if (!is.null(ddd[["code1"]]))
+         eval(expr = parse(text = ddd[["code1"]]))
+
       res.all <- list()
       j <- 0
 
       if (any(!x$alpha.fix)) {
          for (pos in seq_len(x$alphas)[!x$alpha.fix]) {
             j <- j + 1
+            if (!is.null(ddd[["code2"]]))
+               eval(expr = parse(text = ddd[["code2"]]))
             cl.vc <- cl
             cl.vc$alpha <- pos
             cl.vc$time <- FALSE

@@ -1125,10 +1125,13 @@
 
 ############################################################################
 
-.cooks.distance.rma.mv <- function(i, obj, parallel, svb, cluster, ids, reestimate, btt) {
+.cooks.distance.rma.mv <- function(i, obj, parallel, svb, cluster, ids, reestimate, btt, code2=NULL) {
 
    if (parallel == "snow")
       library(metafor)
+
+   if (!is.null(code2))
+      eval(expr = parse(text = code2))
 
    incl <- cluster %in% ids[i]
 
@@ -1188,10 +1191,13 @@
 
 }
 
-.rstudent.rma.mv <- function(i, obj, parallel, cluster, ids, reestimate) {
+.rstudent.rma.mv <- function(i, obj, parallel, cluster, ids, reestimate, code2=NULL) {
 
    if (parallel == "snow")
       library(metafor)
+
+   if (!is.null(code2))
+      eval(expr = parse(text = code2))
 
    incl <- cluster %in% ids[i]
 
@@ -1274,10 +1280,13 @@
 
 }
 
-.dfbetas.rma.mv <- function(i, obj, parallel, cluster, ids, reestimate) {
+.dfbetas.rma.mv <- function(i, obj, parallel, cluster, ids, reestimate, code2=NULL) {
 
    if (parallel == "snow")
       library(metafor)
+
+   if (!is.null(code2))
+      eval(expr = parse(text = code2))
 
    incl <- cluster %in% ids[i]
 

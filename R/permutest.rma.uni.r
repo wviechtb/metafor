@@ -15,7 +15,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, btt=x$btt, permci=FALSE
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tol", "time", "seed", "verbose", "fixed"))
+   .chkdots(ddd, c("tol", "time", "seed", "verbose", "fixed", "code1", "code2"))
 
    if (!is.null(ddd$tol)) # in case user specified comptol in the old manner
       comptol <- ddd$tol
@@ -145,6 +145,9 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, btt=x$btt, permci=FALSE
    if (progbar)
       cat(mstyle$verbose(paste0("Running ", X.iter, " iterations for an ", ifelse(X.exact, "exact", "approximate"), " permutation test.\n")))
 
+   if (!is.null(ddd[["code1"]]))
+      eval(expr = parse(text = ddd[["code1"]]))
+
    if (x$int.only) {
 
       ### permutation test for intercept-only model
@@ -173,6 +176,9 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, btt=x$btt, permci=FALSE
 
          for (i in seq_len(X.iter)) {
 
+            if (!is.null(ddd[["code2"]]))
+               eval(expr = parse(text = ddd[["code2"]]))
+
             args <- list(yi=signmat[i,]*x$yi, vi=x$vi, weights=x$weights, intercept=TRUE, method=x$method, weighted=x$weighted,
                          test=x$test, level=x$level, btt=1, tau2=ifelse(x$tau2.fix, x$tau2, NA), control=x$control, skipr2=TRUE, outlist=outlist)
             res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
@@ -194,6 +200,9 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, btt=x$btt, permci=FALSE
          i <- 1
 
          while (i <= X.iter) {
+
+            if (!is.null(ddd[["code2"]]))
+               eval(expr = parse(text = ddd[["code2"]]))
 
             signs <- sample(c(-1,1), x$k, replace=TRUE) # easier to understand (a tad slower for small k, but faster for larger k)
             #signs <- 2*rbinom(x$k,1,0.5)-1

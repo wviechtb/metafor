@@ -79,6 +79,9 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
       if (comps == 0)
          stop(mstyle$stop("No components in the model for which a profile likelihood can be constructed."))
 
+      if (!is.null(ddd[["code3"]]))
+         eval(expr = parse(text = ddd[["code3"]]))
+
       if (plot) {
          if (comps > 1L) {
             # if no plotting device is open or mfrow is too small, set mfrow appropriately
@@ -94,6 +97,8 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
       if (x$withS && any(!x$vc.fix$sigma2)) {
          for (pos in seq_len(x$sigma2s)[!x$vc.fix$sigma2]) {
             j <- j + 1
+            if (!is.null(ddd[["code4"]]))
+               eval(expr = parse(text = ddd[["code4"]]))
             mc.vc <- mc
             mc.vc$sigma2 <- pos
             mc.vc$time <- FALSE
@@ -102,8 +107,6 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
             if (progbar)
                cat(mstyle$verbose(paste("Profiling sigma2 =", pos, "\n")))
             sav[[j]] <- eval(mc.vc, envir=parent.frame())
-            #if (!is.null(ddd[["callback"]]))
-            #   eval(expr = parse(text = ddd[["callback"]]))
          }
       }
 
@@ -111,6 +114,8 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
          if (any(!x$vc.fix$tau2)) {
             for (pos in seq_len(x$tau2s)[!x$vc.fix$tau2]) {
                j <- j + 1
+               if (!is.null(ddd[["code4"]]))
+                  eval(expr = parse(text = ddd[["code4"]]))
                mc.vc <- mc
                mc.vc$tau2 <- pos
                mc.vc$time <- FALSE
@@ -124,6 +129,8 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
          if (any(!x$vc.fix$rho)) {
             for (pos in seq_len(x$rhos)[!x$vc.fix$rho]) {
                j <- j + 1
+               if (!is.null(ddd[["code4"]]))
+                  eval(expr = parse(text = ddd[["code4"]]))
                mc.vc <- mc
                mc.vc$rho <- pos
                mc.vc$time <- FALSE
@@ -140,6 +147,8 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
          if (any(!x$vc.fix$gamma2)) {
             for (pos in seq_len(x$gamma2s)[!x$vc.fix$gamma2]) {
                j <- j + 1
+               if (!is.null(ddd[["code4"]]))
+                  eval(expr = parse(text = ddd[["code4"]]))
                mc.vc <- mc
                mc.vc$gamma2 <- pos
                mc.vc$time <- FALSE
@@ -153,6 +162,8 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
          if (any(!x$vc.fix$phi)) {
             for (pos in seq_len(x$phis)[!x$vc.fix$phi]) {
                j <- j + 1
+               if (!is.null(ddd[["code4"]]))
+                  eval(expr = parse(text = ddd[["code4"]]))
                mc.vc <- mc
                mc.vc$phi <- pos
                mc.vc$time <- FALSE
@@ -441,12 +452,15 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
    if (length(vcs) <= 1L)
       stop(mstyle$stop("Cannot set 'xlim' automatically. Please set this argument manually."))
 
+   if (!is.null(ddd[["code1"]]))
+      eval(expr = parse(text = ddd[["code1"]]))
+
    if (parallel == "no")
-      res <- pbapply::pblapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
+      res <- pbapply::pblapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, code2=ddd$code2)
 
    if (parallel == "multicore")
-      res <- pbapply::pblapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, cl=ncpus)
-      #res <- parallel::mclapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, mc.cores=ncpus)
+      res <- pbapply::pblapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, code2=ddd$code2, cl=ncpus)
+      #res <- parallel::mclapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, code2=ddd$code2, mc.cores=ncpus)
 
    if (parallel == "snow") {
       if (is.null(cl)) {
@@ -454,14 +468,14 @@ profile.rma.mv <- function(fitted, sigma2, tau2, rho, gamma2, phi,
          on.exit(parallel::stopCluster(cl), add=TRUE)
       }
       if (.isTRUE(ddd$LB)) {
-         res <- parallel::parLapplyLB(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
-         #res <- parallel::clusterApplyLB(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
-         #res <- parallel::clusterMap(cl, .profile.rma.mv, vcs, MoreArgs=list(obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE), .scheduling = "dynamic")
+         res <- parallel::parLapplyLB(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, code2=ddd$code2)
+         #res <- parallel::clusterApplyLB(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, code2=ddd$code2)
+         #res <- parallel::clusterMap(cl, .profile.rma.mv, vcs, MoreArgs=list(obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, code2=ddd$code2), .scheduling = "dynamic")
       } else {
-         res <- pbapply::pblapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, cl=cl)
-         #res <- parallel::parLapply(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
-         #res <- parallel::clusterApply(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE)
-         #res <- parallel::clusterMap(cl, .profile.rma.mv, vcs, MoreArgs=list(obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE))
+         res <- pbapply::pblapply(vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, code2=ddd$code2, cl=cl)
+         #res <- parallel::parLapply(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, code2=ddd$code2)
+         #res <- parallel::clusterApply(cl, vcs, .profile.rma.mv, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, code2=ddd$code2)
+         #res <- parallel::clusterMap(cl, .profile.rma.mv, vcs, MoreArgs=list(obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, parallel=parallel, profile=TRUE, code2=ddd$code2))
       }
    }
 

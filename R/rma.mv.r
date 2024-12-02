@@ -311,6 +311,11 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       }
    }
 
+   ### check if yi is an array
+
+   if (inherits(yi, "array"))
+      stop(mstyle$stop("The object/variable specified for the 'yi' argument is an array."))
+
    ### check if yi is numeric
 
    if (!is.numeric(yi))

@@ -58,7 +58,7 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("btt", "time", "LB"))
+   .chkdots(ddd, c("btt", "time", "LB", "code1", "code2"))
 
    btt <- .set.btt(ddd$btt, x$p, int.incl=FALSE, Xnames=colnames(x$X))
    m <- length(btt)
@@ -96,6 +96,9 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
    ids <- unique(cluster)
    n <- length(ids)
 
+   if (!is.null(ddd[["code1"]]))
+      eval(expr = parse(text = ddd[["code1"]]))
+
    #########################################################################
 
    ### calculate inverse of variance-covariance matrix under the full model
@@ -103,11 +106,11 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
    svb <- chol2inv(chol(x$vb[btt,btt,drop=FALSE]))
 
    if (parallel == "no")
-      res <- pbapply::pblapply(seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
+      res <- pbapply::pblapply(seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt, code2=ddd$code2)
 
    if (parallel == "multicore")
-      res <- pbapply::pblapply(seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt, cl=ncpus)
-      #res <- parallel::mclapply(seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt, mc.cores=ncpus)
+      res <- pbapply::pblapply(seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt, code2=ddd$code2, cl=ncpus)
+      #res <- parallel::mclapply(seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt, code2=ddd$code2, mc.cores=ncpus)
 
    if (parallel == "snow") {
       if (is.null(cl)) {
@@ -115,12 +118,12 @@ cooks.distance.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE
          on.exit(parallel::stopCluster(cl), add=TRUE)
       }
       if (.isTRUE(ddd$LB)) {
-         res <- parallel::parLapplyLB(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
-         #res <- parallel::clusterApplyLB(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
+         res <- parallel::parLapplyLB(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt, code2=ddd$code2)
+         #res <- parallel::clusterApplyLB(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt, code2=ddd$code2)
       } else {
-         res <- pbapply::pblapply(seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt, cl=cl)
-         #res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
-         #res <- parallel::clusterApply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt)
+         res <- pbapply::pblapply(seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt, code2=ddd$code2, cl=cl)
+         #res <- parallel::parLapply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt, code2=ddd$code2)
+         #res <- parallel::clusterApply(cl, seq_len(n), .cooks.distance.rma.mv, obj=x, parallel=parallel, svb=svb, cluster=cluster, ids=ids, reestimate=reestimate, btt=btt, code2=ddd$code2)
       }
    }
 

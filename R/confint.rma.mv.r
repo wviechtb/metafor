@@ -32,7 +32,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time", "xlim", "extint"))
+   .chkdots(ddd, c("time", "xlim", "extint", "code1", "code2"))
 
    level <- .level(level, stopon100=.isTRUE(ddd$extint))
 
@@ -65,12 +65,17 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       if (comps == 0)
          stop(mstyle$stop("No components for which a CI can be obtained."))
 
+      if (!is.null(ddd[["code1"]]))
+         eval(expr = parse(text = ddd[["code1"]]))
+
       res.all <- list()
       j <- 0
 
       if (x$withS && any(!x$vc.fix$sigma2)) {
          for (pos in seq_len(x$sigma2s)[!x$vc.fix$sigma2]) {
             j <- j + 1
+            if (!is.null(ddd[["code2"]]))
+               eval(expr = parse(text = ddd[["code2"]]))
             cl.vc <- cl
             cl.vc$sigma2 <- pos
             cl.vc$time <- FALSE
@@ -86,6 +91,8 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          if (any(!x$vc.fix$tau2)) {
             for (pos in seq_len(x$tau2s)[!x$vc.fix$tau2]) {
                j <- j + 1
+               if (!is.null(ddd[["code2"]]))
+                  eval(expr = parse(text = ddd[["code2"]]))
                cl.vc <- cl
                cl.vc$tau2 <- pos
                cl.vc$time <- FALSE
@@ -99,6 +106,8 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          if (any(!x$vc.fix$rho)) {
             for (pos in seq_len(x$rhos)[!x$vc.fix$rho]) {
                j <- j + 1
+               if (!is.null(ddd[["code2"]]))
+                  eval(expr = parse(text = ddd[["code2"]]))
                cl.vc <- cl
                cl.vc$rho <- pos
                cl.vc$time <- FALSE
@@ -115,6 +124,8 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          if (any(!x$vc.fix$gamma2)) {
             for (pos in seq_len(x$gamma2s)[!x$vc.fix$gamma2]) {
                j <- j + 1
+               if (!is.null(ddd[["code2"]]))
+                  eval(expr = parse(text = ddd[["code2"]]))
                cl.vc <- cl
                cl.vc$gamma2 <- pos
                cl.vc$time <- FALSE
@@ -128,6 +139,8 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          if (any(!x$vc.fix$phi)) {
             for (pos in seq_len(x$phis)[!x$vc.fix$phi]) {
                j <- j + 1
+               if (!is.null(ddd[["code2"]]))
+                  eval(expr = parse(text = ddd[["code2"]]))
                cl.vc <- cl
                cl.vc$phi <- pos
                cl.vc$time <- FALSE

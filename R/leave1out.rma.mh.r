@@ -32,7 +32,7 @@ leave1out.rma.mh <- function(x, cluster, digits, transf, targs, progbar=FALSE, .
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("time"))
+   .chkdots(ddd, c("time", "code1", "code2"))
 
    if (.isTRUE(ddd$time))
       time.start <- proc.time()
@@ -79,6 +79,9 @@ leave1out.rma.mh <- function(x, cluster, digits, transf, targs, progbar=FALSE, .
    if (!misscluster)
       ids <- sort(ids)
 
+   if (!is.null(ddd[["code1"]]))
+      eval(expr = parse(text = ddd[["code1"]]))
+
    #########################################################################
 
    beta  <- rep(NA_real_, n)
@@ -104,6 +107,9 @@ leave1out.rma.mh <- function(x, cluster, digits, transf, targs, progbar=FALSE, .
 
       if (progbar)
          pbapply::setpb(pbar, i)
+
+      if (!is.null(ddd[["code2"]]))
+         eval(expr = parse(text = ddd[["code2"]]))
 
       if (is.element(x$measure, c("RR","OR","RD"))) {
          args <- list(ai=x$outdat$ai, bi=x$outdat$bi, ci=x$outdat$ci, di=x$outdat$di,
