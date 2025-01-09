@@ -851,12 +851,13 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
          di   <- .getx("di",   mf=mf, data=data, checknumeric=TRUE)
          ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
          pi   <- .getx("pi",   mf=mf, data=data, checknumeric=TRUE)
+         ri   <- .getx("ri",   mf=mf, data=data, checknumeric=TRUE) # point-biserial correlation
 
-         ### for these measures, need m1i, m2i, sd1i, sd2i, n1i, and n2i (and can also specify di/ti/pi)
+         ### for these measures, need m1i, m2i, sd1i, sd2i, n1i, and n2i (and can also specify di/ti/pi/ri)
 
          if (is.element(measure, c("SMD","RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL"))) {
 
-            if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi))
+            if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi, ri))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
             ### convert pi to ti values
@@ -866,6 +867,12 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
             ### convert ti to di values
 
             di <- replmiss(di, ti * sqrt(1/n1i + 1/n2i))
+
+            ### convert ri (point-biserial correlations) to di values
+
+            mi <- n1i + n2i - 2
+            hi <- mi / n1i + mi / n2i
+            di <- replmiss(di, sqrt(hi) * ri / sqrt(1 - ri^2))
 
             ### when di is available, set m1i, m2i, sd1i, and sd2i values accordingly
 
@@ -1118,35 +1125,31 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
          ### Das Gupta (1960) describes the case where Y itself is normal, but the variance expressions therein can
          ### really only be used in some special cases (not useful in practice)
 
-         if (is.element(measure, c("RPB","RBIS","ZPB","ZBIS"))) {
+         if (is.element(measure, c("RPB","ZPB"))) {
 
             hi <- mi/n1i + mi/n2i
-            yi <- di / sqrt(di^2 + hi) # need this also when measure="RBIS/ZBIS"
+            yi <- di / sqrt(di^2 + hi)
 
-            if (is.element(measure, c("RPB","ZPB"))) { # this only applies when measure="RPB/ZPB"
+            vtype <- .expand1(vtype, k)
 
-               vtype <- .expand1(vtype, k)
+            vi <- rep(NA_real_, k)
 
-               vi <- rep(NA_real_, k)
+            if (!all(is.element(vtype, c("LS","ST","CS"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS', 'ST', or 'CS'."))
 
-               if (!all(is.element(vtype, c("LS","ST","CS"))))
-                  stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS', 'ST', or 'CS'."))
+            for (i in seq_len(k)) {
 
-               for (i in seq_len(k)) {
-
-                  ### estimate of the sampling variance for fixed n1i and n2i (i.e., stratified sampling)
-                  if (vtype[i] == "ST" || vtype[i] == "LS") {
-                     vi[i] <- hi[i]^2 / (hi[i] + di[i]^2)^3 * (1/n1i[i] + 1/n2i[i] + di[i]^2/(2*ni[i]))
-                     # this is consistent with escalc(measure="SMD", correct=FALSE) -> conv.delta(transf=transf.dtorpb)
-                     #tmp <- escalc(measure="SMD", m1i=m1i[i], sd1i=sd1i[i], n1i=n1i[i], m2i=m2i[i], sd2i=sd2i[i], n2i=n2i[i], correct=FALSE)
-                     #vi[i] <- conv.delta(yi, vi, data=tmp, transf=transf.dtorpb, replace=TRUE, n1i=n1i[i], n2i=n2i[i])$vi
-                  }
-
-                  ### estimate of the sampling variance for fixed ni but random n1i and n2i (i.e., cross-sectional/multinomial sampling)
-                  if (vtype[i] == "CS")
-                     vi[i] <- (1-yi[i]^2)^2 * (ni[i]*yi[i]^2 / (4*n1i[i]*n2i[i]) + (2-3*yi[i]^2)/(2*ni[i])) # Tate, 1954; Tate, 1955b
-
+               ### estimate of the sampling variance for fixed n1i and n2i (i.e., stratified sampling)
+               if (vtype[i] == "ST" || vtype[i] == "LS") {
+                  vi[i] <- hi[i]^2 / (hi[i] + di[i]^2)^3 * (1/n1i[i] + 1/n2i[i] + di[i]^2/(2*ni[i]))
+                  # this is consistent with escalc(measure="SMD", correct=FALSE) -> conv.delta(transf=transf.dtorpb)
+                  #tmp <- escalc(measure="SMD", m1i=m1i[i], sd1i=sd1i[i], n1i=n1i[i], m2i=m2i[i], sd2i=sd2i[i], n2i=n2i[i], correct=FALSE)
+                  #vi[i] <- conv.delta(yi, vi, data=tmp, transf=transf.dtorpb, replace=TRUE, n1i=n1i[i], n2i=n2i[i])$vi
                }
+
+               ### estimate of the sampling variance for fixed ni but random n1i and n2i (i.e., cross-sectional/multinomial sampling)
+               if (vtype[i] == "CS")
+                  vi[i] <- (1-yi[i]^2)^2 * (ni[i]*yi[i]^2 / (4*n1i[i]*n2i[i]) + (2-3*yi[i]^2)/(2*ni[i])) # Tate, 1954; Tate, 1955b
 
             }
 
@@ -1155,12 +1158,14 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
          ### biserial correlation obtained from the standardized mean difference (continued from above)
 
          if (is.element(measure, c("RBIS","ZBIS"))) {
+            hi  <- mi/n1i + mi/n2i
+            yi  <- di / sqrt(di^2 + hi) # point-biserial correlation
             p1i <- n1i / ni
             p2i <- n2i / ni
             zi  <- qnorm(p1i, lower.tail=FALSE)
             fzi <- dnorm(zi)
             yi  <- sqrt(p1i*p2i) / fzi * yi # yi on the right-hand side is the point-biserial correlation from above
-            #vi <- (p1i*p2i) / fzi^2 * vi   # not correct (p1i, p2i, and fzi are random variables and vi from RBP is not correct for the bivariate normal case on which RBIS is based)
+            #vi <- (p1i*p2i) / fzi^2 * vi   # vi is from RPB, but this is not correct (p1i, p2i, and fzi are random variables and vi from RBP is not correct for the bivariate normal case on which RBIS is based)
             yi.t <- ifelse(abs(yi) > 1, sign(yi), yi)
             vi  <- 1/(ni-1) * (p1i*p2i/fzi^2 - (3/2 + (1 - p1i*zi/fzi)*(1 + p2i*zi/fzi)) * yi.t^2 + yi.t^4) # Soper, 1914
             #vi <- 1/(ni-1) * (yi.t^4 + yi.t^2 * (p1i*p2i*zi^2/fzi^2 + (2*p1i-1)*zi/fzi - 5/2) + p1i*p2i/fzi^2) # Tate, 1955; equivalent to equation from Soper, 1914

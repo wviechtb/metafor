@@ -473,14 +473,18 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          di   <- .getx("di",   mf=mf, data=data, checknumeric=TRUE)
          ti   <- .getx("ti",   mf=mf, data=data, checknumeric=TRUE)
          pi   <- .getx("pi",   mf=mf, data=data, checknumeric=TRUE)
+         ri   <- .getx("ri",   mf=mf, data=data, checknumeric=TRUE)
 
          if (is.element(measure, c("SMD","RPB","ZPB","RBIS","ZBIS","D2OR","D2ORN","D2ORL"))) {
 
-            if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi))
+            if (!.equal.length(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi, ri))
                stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
             ti <- replmiss(ti, .convp2t(pi, df=n1i+n2i-2))
             di <- replmiss(di, ti * sqrt(1/n1i + 1/n2i))
+            mi <- n1i + n2i - 2
+            hi <- mi / n1i + mi / n2i
+            di <- replmiss(di, sqrt(hi) * ri / sqrt(1 - ri^2))
 
             m1i[!is.na(di)]  <- di[!is.na(di)]
             m2i[!is.na(di)]  <- 0
