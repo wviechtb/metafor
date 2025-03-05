@@ -8,8 +8,6 @@ context("Checking plots example: L'Abbe plot")
 
 test_that("plot can be drawn.", {
 
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
-
    skip_on_cran()
 
    dat <- dat.damico2009

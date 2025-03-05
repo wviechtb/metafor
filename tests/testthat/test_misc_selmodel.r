@@ -6,8 +6,6 @@ source("settings.r")
 
 test_that("results are correct for a step function model.", {
 
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
-
    skip_on_cran()
 
    dat <- dat.hackshaw1998
@@ -57,8 +55,6 @@ test_that("results are correct for a step function model.", {
 })
 
 test_that("results are correct for the beta function model.", {
-
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
    skip_on_cran()
 
@@ -114,8 +110,6 @@ test_that("results are correct for the beta function model.", {
 })
 
 test_that("results are correct for the various exponential function models.", {
-
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
    skip_on_cran()
 
@@ -173,8 +167,6 @@ test_that("results are correct for the various exponential function models.", {
 
 test_that("results are correct for a pirori chosen step function models.", {
 
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
-
    skip_on_cran()
 
    tab <- data.frame(
@@ -196,8 +188,6 @@ test_that("results are correct for a pirori chosen step function models.", {
 })
 
 test_that("results are correct for a truncated distribution model.", {
-
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
    skip_on_cran()
 

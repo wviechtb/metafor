@@ -8,8 +8,6 @@ context("Checking plots example: funnel plot with trim and fill")
 
 test_that("plot can be drawn.", {
 
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
-
    skip_on_cran()
 
    res <- rma(yi, vi, data=dat.hackshaw1998, measure="OR")

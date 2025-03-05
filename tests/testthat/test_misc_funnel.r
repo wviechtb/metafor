@@ -6,8 +6,6 @@ source("settings.r")
 
 test_that("funnel() works correctly.", {
 
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
-
    skip_on_cran()
 
    ### simulate a large meta-analytic dataset (correlations with rho = 0.0)

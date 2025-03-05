@@ -91,6 +91,8 @@ test_that("rma.mv() works correctly with test='t'", {
 
 test_that("rma.mv() works correctly with different optimizers", {
 
+   skip_on_cran()
+
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="BFGS"), sparse=.sparse)
    expect_equivalent(res$sigma2, 0.3132, tolerance=.tol[["var"]])
    res <- rma.mv(yi, vi, random = ~ 1 | trial, data=dat, control=list(optimizer="L-BFGS-B"), sparse=.sparse)

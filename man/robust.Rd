@@ -71,6 +71,8 @@ robust(x, cluster, \dots)
 
    MacKinnon, J. G., & White, H. (1985). Some heteroskedasticity-consistent covariance matrix estimators with improved finite sample properties. \emph{Journal of Econometrics}, \bold{29}(3), 305--325. \verb{https://doi.org/10.1016/0304-4076(85)90158-7}
 
+   Pustejovsky, J. E., & Tipton, E. (2018). Small-sample methods for cluster-robust variance estimation and hypothesis testing in fixed effects models. \emph{Journal of Business & Economic Statistics}, \bold{36}(4), 672--683. \verb{https://doi.org/10.1080/07350015.2016.1247004}
+
    Tipton, E. (2015). Small sample adjustments for robust variance estimation with meta-regression. \emph{Psychological Methods}, \bold{20}(3), 375--393. \verb{https://doi.org/10.1037/met0000011}
 
    Tipton, E., & Pustejovsky, J. E. (2015). Small-sample adjustments for tests of moderators and model fit using robust variance estimation in meta-regression. \emph{Journal of Educational and Behavioral Statistics}, \bold{40}(6), 604--634. \verb{https://doi.org/10.3102/1076998615606099}

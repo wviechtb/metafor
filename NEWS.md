@@ -1,6 +1,8 @@
-# metafor 4.9-0 (2025-01-28)
+# metafor 4.9-2 (2025-03-05)
 
-- new devel version
+- added (undocumented) arguments `legend.cex`, `legend.pt.cex`, and `legend.inset` to `labbe()`
+
+- fixed how `intercept` (when unspecified) is set in `predict.rma.ls()` when using `newscale`
 
 # metafor 4.8-0 (2025-01-28)
 
@@ -56,7 +58,7 @@
 
 - `escalc()` gains a `correct` argument (to specify whether a bias correction should be applied)
 
-- added transformation function `transf.dtoovl()` (for transforming standardized mean differences to overlapping coefficient values) and ``transf.dtocliffd()` (for transforming standardized mean differences to Cliff's delta values)
+- added transformation function `transf.dtoovl()` (for transforming standardized mean differences to overlapping coefficient values) and `transf.dtocliffd()` (for transforming standardized mean differences to Cliff's delta values)
 
 - `qqnorm.rma.uni()` now shades the pseudo confidence region; all `qqnorm()` functions gain a `grid` argument
 

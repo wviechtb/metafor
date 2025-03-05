@@ -25,7 +25,7 @@ labbe(x, \dots)
    \item{ci}{logical to specify whether the confidence interval region should be shown in the plot (the default is \code{FALSE}). Can also be a color name.}
    \item{pi}{logical to specify whether the prediction interval region should be shown in the plot (the default is \code{FALSE}). Can also be a color name.}
    \item{grid}{logical to specify whether a grid should be added to the plot (the default is \code{FALSE}). Can also be a color name.}
-   \item{legend}{logical to specify whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to specify the position of the legend (see \code{\link{legend}}).}
+   \item{legend}{logical to specify whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to specify the position of the legend (see \code{\link{legend}}). Arguments \code{legend.cex}, \code{legend.pt.cex}, and \code{legend.inset} are passed on to the corresponding arguments of the \code{legend} function via the \code{\dots} argument.}
    \item{add}{See the documentation of the \code{\link{escalc}} function for more details.}
    \item{to}{See the documentation of the \code{\link{escalc}} function for more details.}
    \item{transf}{optional argument to specify a function to transform the outcomes (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}

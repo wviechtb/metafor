@@ -12,8 +12,6 @@ pred <- predict(res)
 
 test_that("plot can be drawn with predstyle='l'.", {
 
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
-
    skip_on_cran()
 
    png("images/test_plots_forest_plot_with_predstyle_l_test.png", res=240, width=1800, height=1800, type="cairo")
@@ -73,8 +71,6 @@ test_that("plot can be drawn with predstyle='l'.", {
 })
 
 test_that("plot can be drawn with predstyle='b'.", {
-
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
    skip_on_cran()
 
@@ -136,8 +132,6 @@ test_that("plot can be drawn with predstyle='b'.", {
 
 test_that("plot can be drawn with predstyle='s'.", {
 
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
-
    skip_on_cran()
 
    png("images/test_plots_forest_plot_with_predstyle_s_test.png", res=240, width=1800, height=1800, type="cairo")
@@ -198,8 +192,6 @@ test_that("plot can be drawn with predstyle='s'.", {
 
 test_that("plot can be drawn with predstyle='d'.", {
 
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
-
    skip_on_cran()
 
    png("images/test_plots_forest_plot_with_predstyle_d_test.png", res=240, width=1800, height=1800, type="cairo")
@@ -259,8 +251,6 @@ test_that("plot can be drawn with predstyle='d'.", {
 })
 
 test_that("plot can be drawn with predstyle='d' and transf=exp.", {
-
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
    skip_on_cran()
 

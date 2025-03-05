@@ -114,8 +114,6 @@ test_that("results are correct for the three-level random-effects model fitted w
 
 test_that("profiling works for the three-level random-effects model (multilevel parameterization).", {
 
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
-
    skip_on_cran()
 
    ### three-level model (ml = multilevel parameterization)
@@ -160,8 +158,6 @@ test_that("results are correct for the three-level random-effects model when usi
 })
 
 test_that("profiling works for the three-level random-effects model (multivariate parameterization).", {
-
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
    skip_on_cran()
 

@@ -25,7 +25,6 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
       newmods <- NULL
 
    if (missing(intercept)) {
-      intercept <- x$intercept
       int.spec <- FALSE
    } else {
       int.spec <- TRUE
@@ -137,6 +136,9 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
       ### but user can also decide to remove the intercept from the predictions with intercept=FALSE
       ### one special case: when the location model is an intercept-only model, one can set newmods=1 to obtain the predicted intercept
 
+      if (missing(intercept))
+         intercept <- x$intercept
+
       if (!singlemod && ncol(X.new) == x$p) {
 
          if (int.spec)
@@ -229,6 +231,9 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
       ### but user can also decide to remove the intercept from the predictions with intercept=FALSE (only when predicting log(tau^2))
       ### one special case: when the scale model is an intercept-only model, one can set newscale=1 to obtain the predicted intercept
       ### (which can be converted to tau^2 with transf=exp when using a log link)
+
+      if (missing(intercept))
+         intercept <- x$Z.intercept
 
       if (!singlescale && ncol(Z.new) == x$q) {
 

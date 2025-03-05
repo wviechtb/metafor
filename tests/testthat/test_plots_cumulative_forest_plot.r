@@ -8,8 +8,6 @@ context("Checking plots example: cumulative forest plot")
 
 test_that("plot can be drawn for 'rma.uni' object.", {
 
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
-
    skip_on_cran()
 
    png("images/test_plots_cumulative_forest_plot_1_test.png", res=240, width=1800, height=1400, type="cairo")
@@ -38,8 +36,6 @@ test_that("plot can be drawn for 'rma.uni' object.", {
 
 test_that("plot can be drawn for 'rma.mh' object.", {
 
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
-
    skip_on_cran()
 
    png("images/test_plots_cumulative_forest_plot_2_test.png", res=240, width=1800, height=1400, type="cairo")
@@ -64,8 +60,6 @@ test_that("plot can be drawn for 'rma.mh' object.", {
 })
 
 test_that("plot can be drawn for 'rma.peto' object.", {
-
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
    skip_on_cran()
 

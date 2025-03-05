@@ -60,8 +60,6 @@ test_that("results for the random-effects model are correct.", {
 
 test_that("profile plot for tau^2 can be drawn.", {
 
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
-
    skip_on_cran()
 
    res <- rma(yi, vi, data=dat, method="ML")
@@ -76,8 +74,6 @@ test_that("profile plot for tau^2 can be drawn.", {
 })
 
 test_that("forest plot of observed log(OR)s and corresponding BLUPs can be drawn.", {
-
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
    skip_on_cran()
 
@@ -130,8 +126,6 @@ test_that("the prediction interval is correct.", {
 })
 
 test_that("L'Abbe plot can be drawn.", {
-
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
    skip_on_cran()
 

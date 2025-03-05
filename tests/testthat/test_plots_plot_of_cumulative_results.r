@@ -8,8 +8,6 @@ context("Checking plots example: plot of cumulative results")
 
 test_that("plot can be drawn.", {
 
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
-
    skip_on_cran()
 
    dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)

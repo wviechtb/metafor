@@ -88,7 +88,7 @@ test_that("results are correct for package MuMIn.", {
 
    skip_on_cran()
 
-   expect_equivalent(TRUE, TRUE)
+   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
 
    return()
 

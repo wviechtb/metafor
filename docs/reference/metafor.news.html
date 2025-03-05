@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-2</span>
       </span>
     </div>
 
@@ -115,9 +115,13 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">metafor.news</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 4.9-0 (2025-01-28)                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 4.9-2 (2025-03-05)                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   - new devel version</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - added (undocumented) arguments legend.cex, legend.pt.cex, and</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     legend.inset to labbe()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - fixed how intercept (when unspecified) is set in predict.rma.ls()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     when using newscale</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 4.8-0 (2025-01-28)                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -218,8 +222,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added transformation function transf.dtoovl() (for transforming</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     standardized mean differences to overlapping coefficient values) and</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ``transf.dtocliffd()` (for transforming standardized mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     differences to Cliff's delta values)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     transf.dtocliffd() (for transforming standardized mean differences</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     to Cliff's delta values)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - qqnorm.rma.uni() now shades the pseudo confidence region; all</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     qqnorm() functions gain a grid argument</span>

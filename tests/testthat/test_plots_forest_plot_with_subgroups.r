@@ -8,8 +8,6 @@ context("Checking plots example: forest plot with subgroups")
 
 test_that("plot can be drawn.", {
 
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
-
    skip_on_cran()
 
    png("images/test_plots_forest_plot_with_subgroups_test.png", res=240, width=1800, height=1800, type="cairo")

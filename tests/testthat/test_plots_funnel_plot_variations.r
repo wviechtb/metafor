@@ -8,8 +8,6 @@ context("Checking plots example: funnel plot variations")
 
 test_that("plot can be drawn.", {
 
-   expect_equivalent(TRUE, TRUE) # avoid 'Empty test' message
-
    skip_on_cran()
 
    ### fit equal-effects model
