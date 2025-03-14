@@ -526,7 +526,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
             stop(mstyle$stop("Cannot extract SE of the prediction interval."))
 
          if (is.function(transf)) {
-            funlist <- lapply(list("1"=exp, "2"=transf.ztor, "3"=tanh, "4"=transf.ilogit, "5"=plogis, "6"=transf.iarcsin), deparse)
+            funlist <- lapply(list("1"=exp, "2"=transf.ztor, "3"=tanh, "4"=transf.ilogit, "5"=plogis, "6"=transf.iarcsin, "7"=pnorm), deparse)
             funmatch <- sapply(funlist, identical, transf.char)
             if (!any(funmatch))
                stop(mstyle$stop("Chosen transformation not (currently) possible with this 'predstyle'."))
@@ -568,6 +568,8 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
                   xs <- suppressWarnings(qlogis(xs))
                if (funmatch[6])
                   xs <- suppressWarnings(transf.arcsin(xs))
+               if (funmatch[7])
+                  xs <- suppressWarnings(qnorm(xs))
                sel <- is.finite(xs) # FALSE for +-Inf and NA/NaN
                x.len <- sum(sel)
                xs <- xs[sel]
@@ -601,6 +603,11 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
             }
             if (funmatch[6]) {
                ys <- ys / (2*sqrt(xs*(1-xs)))
+               x.lo <- 0.01
+               x.hi <- 0.99
+            }
+            if (funmatch[7]) {
+               ys <- ys / dnorm(qnorm(xs))
                x.lo <- 0.01
                x.hi <- 0.99
             }
