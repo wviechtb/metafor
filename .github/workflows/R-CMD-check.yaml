@@ -11,38 +11,20 @@ name: R-CMD-check
 jobs:
   R-CMD-check:
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: r-lib/actions/setup-r@v1
-      - name: Install gls
-        run: sudo apt-get install -y libgsl-dev
-      - name: Install libcurl
-        run: sudo apt-get install -y libcurl4-openssl-dev
-      - name: Install TeX Live
-        run: sudo apt-get install -y texlive texlive-fonts-extra
-      - name: Install Java
-        run: sudo apt-get install -y default-jre default-jdk
-      - name: Query dependencies
-        run: |
-          install.packages("remotes")
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-        shell: Rscript {0}
-      - name: Cache R packages
-        uses: actions/cache@v2
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-r@v2
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
-      - name: Install dependencies
-        run: |
-          install.packages(c("remotes", "rcmdcheck"))
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_github("wviechtb/metadat")
-        shell: Rscript {0}
-      - name: Check
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran", "--no-tests"), error_on = "warning")
-        shell: Rscript {0}
+          r-version: 'release'
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          args: 'c("--no-manual", "--as-cran", "--no-tests")'
+          error-on: '"warning"'
+          check-dir: '"check"'
