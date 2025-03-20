@@ -344,11 +344,6 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
       tau2 <- tmp$tau2
       pval <- tmp$pval
 
-      if (mumiss != 0 && sign(est) == sign(mumiss)) {
-         mumiss <- -mumiss
-         message(mstyle$message("Flipped the sign of 'mumiss'."))
-      }
-
       if (is.null(target)) {
 
          if (pval >= alpha) {
