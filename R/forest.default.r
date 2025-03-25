@@ -1,6 +1,6 @@
-forest.default   <- function(x, vi, sei, ci.lb, ci.ub,
-annotate=TRUE,                                            showweights=FALSE, header=TRUE,
-xlim, alim, olim, ylim, at, steps=5, level=95,      refline=0, digits=2L, width,
+forest.default <- function(x, vi, sei, ci.lb, ci.ub,
+annotate=TRUE,                                               showweights=FALSE, header=TRUE,
+xlim, alim, olim, ylim,          at, steps=5, level=95,      refline=0, digits=2L, width,
 xlab, slab,       ilab, ilab.lab, ilab.xpos, ilab.pos, order, subset,
 transf, atransf, targs, rows,
 efac=1, pch, psize, plim=c(0.5,1.5),         col,         shade, colshade,
@@ -201,14 +201,29 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    xlabfont <- .chkddd(ddd$xlabfont, 1)
 
-   lplot     <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) plot(...)
-   labline   <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) abline(...)
-   lsegments <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) segments(...)
-   laxis     <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) axis(...)
-   lmtext    <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) mtext(...)
-   lpolygon  <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) polygon(...)
-   ltext     <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) text(...)
-   lpoints   <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) points(...)
+   if (!is.null(ddd$mlab))
+      warning("The forest.default() function does not have an 'mlab' argument.", call.=FALSE, immediate.=TRUE)
+   if (!is.null(ddd$addfit))
+      warning("The forest.default() function does not have an 'addfit' argument.", call.=FALSE, immediate.=TRUE)
+   if (!is.null(ddd$addpred))
+      warning("The forest.default() function does not have an 'addpred' argument.", call.=FALSE, immediate.=TRUE)
+   if (!is.null(ddd$predstyle))
+      warning("The forest.default() function does not have a 'predstyle' argument.", call.=FALSE, immediate.=TRUE)
+   if (!is.null(ddd$predlim))
+      warning("The forest.default() function does not have a 'predlim' argument.", call.=FALSE, immediate.=TRUE)
+   if (!is.null(ddd$colout))
+      warning("The forest.default() function does not have a 'colout' argument.", call.=FALSE, immediate.=TRUE)
+   if (!is.null(ddd$border))
+      warning("The forest.default() function does not have a 'border' argument.", call.=FALSE, immediate.=TRUE)
+
+   lplot     <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, mlab, addfit, addpred, predstyle, predlim, colout, border) plot(...)
+   labline   <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, mlab, addfit, addpred, predstyle, predlim, colout, border) abline(...)
+   lsegments <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, mlab, addfit, addpred, predstyle, predlim, colout, border) segments(...)
+   laxis     <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, mlab, addfit, addpred, predstyle, predlim, colout, border) axis(...)
+   lmtext    <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, mlab, addfit, addpred, predstyle, predlim, colout, border) mtext(...)
+   lpolygon  <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, mlab, addfit, addpred, predstyle, predlim, colout, border) polygon(...)
+   ltext     <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, mlab, addfit, addpred, predstyle, predlim, colout, border) text(...)
+   lpoints   <- function(..., textpos, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, mlab, addfit, addpred, predstyle, predlim, colout, border) points(...)
 
    #########################################################################
 

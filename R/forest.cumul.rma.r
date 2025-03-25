@@ -1,6 +1,6 @@
 forest.cumul.rma <- function(x,
-annotate=TRUE,                                                               header=TRUE,
-xlim, alim, olim, ylim, at, steps=5,                refline=0, digits=2L, width,
+annotate=TRUE,                                                                  header=TRUE,
+xlim, alim, olim, ylim,          at, steps=5,                refline=0, digits=2L, width,
 xlab,             ilab, ilab.lab, ilab.xpos, ilab.pos,
 transf, atransf, targs, rows,
 efac=1, pch, psize,                          col,         shade, colshade,
@@ -208,14 +208,35 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    xlabfont <- .chkddd(ddd$xlabfont, 1)
 
-   lplot     <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) plot(...)
-   labline   <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) abline(...)
-   lsegments <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) segments(...)
-   laxis     <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) axis(...)
-   lmtext    <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) mtext(...)
-   lpolygon  <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) polygon(...)
-   ltext     <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) text(...)
-   lpoints   <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) points(...)
+   if (!is.null(ddd$slab))
+      warning("The forest.cumul.rma() function does not have an 'slab' argument.", call.=FALSE, immediate.=TRUE)
+   if (!is.null(ddd$mlab))
+      warning("The forest.cumul.rma() function does not have an 'mlab' argument.", call.=FALSE, immediate.=TRUE)
+   if (!is.null(ddd$order))
+      warning("The forest.cumul.rma() function does not have an 'order' argument.", call.=FALSE, immediate.=TRUE)
+   if (!is.null(ddd$addfit))
+      warning("The forest.cumul.rma() function does not have an 'addfit' argument.", call.=FALSE, immediate.=TRUE)
+   if (!is.null(ddd$addpred))
+      warning("The forest.cumul.rma() function does not have an 'addpred' argument.", call.=FALSE, immediate.=TRUE)
+   if (!is.null(ddd$predstyle))
+      warning("The forest.cumul.rma() function does not have a 'predstyle' argument.", call.=FALSE, immediate.=TRUE)
+   if (!is.null(ddd$showweights))
+      warning("The forest.cumul.rma() function does not have a 'showweights' argument.", call.=FALSE, immediate.=TRUE)
+   if (!is.null(ddd$predlim))
+      warning("The forest.cumul.rma() function does not have a 'predlim' argument.", call.=FALSE, immediate.=TRUE)
+   if (!is.null(ddd$colout))
+      warning("The forest.cumul.rma() function does not have a 'colout' argument.", call.=FALSE, immediate.=TRUE)
+   if (!is.null(ddd$border))
+      warning("The forest.cumul.rma() function does not have a 'border' argument.", call.=FALSE, immediate.=TRUE)
+
+   lplot     <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, slab, mlab, order, addfit, addpred, predstyle, showweights, predlim, colout, border) plot(...)
+   labline   <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, slab, mlab, order, addfit, addpred, predstyle, showweights, predlim, colout, border) abline(...)
+   lsegments <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, slab, mlab, order, addfit, addpred, predstyle, showweights, predlim, colout, border) segments(...)
+   laxis     <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, slab, mlab, order, addfit, addpred, predstyle, showweights, predlim, colout, border) axis(...)
+   lmtext    <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, slab, mlab, order, addfit, addpred, predstyle, showweights, predlim, colout, border) mtext(...)
+   lpolygon  <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, slab, mlab, order, addfit, addpred, predstyle, showweights, predlim, colout, border) polygon(...)
+   ltext     <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, slab, mlab, order, addfit, addpred, predstyle, showweights, predlim, colout, border) text(...)
+   lpoints   <- function(..., textpos, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab, slab, mlab, order, addfit, addpred, predstyle, showweights, predlim, colout, border) points(...)
 
    #########################################################################
 

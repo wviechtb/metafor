@@ -1,4 +1,4 @@
-forest.rma       <- function(x,
+forest.rma <- function(x,
 annotate=TRUE, addfit=TRUE, addpred=FALSE, predstyle="line", showweights=FALSE, header=TRUE,
 xlim, alim, olim, ylim, predlim, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab, slab, mlab, ilab, ilab.lab, ilab.xpos, ilab.pos, order,
