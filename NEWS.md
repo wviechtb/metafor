@@ -1,8 +1,10 @@
-# metafor 4.9-2 (2025-03-05)
+# metafor 4.9-3 (2025-03-25)
 
-- added (undocumented) arguments `legend.cex`, `legend.pt.cex`, and `legend.inset` to `labbe()`
+- added (undocumented) arguments `legend.cex`, `legend.pt.cex`, and `legend.inset` to `labbe()` for more control over the look of the legend
 
 - fixed how `intercept` (when unspecified) is set in `predict.rma.ls()` when using `newscale`
+
+- renamed `pi.type` argument to `predtype` (which is more consistent with the `predstyle` argument), but `pi.type` will continue to work for backwards compatibility
 
 # metafor 4.8-0 (2025-01-28)
 

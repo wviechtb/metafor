@@ -213,11 +213,11 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
       }
    }
 
-   lsegments <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym, textpos) segments(...)
-   ltext     <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym, textpos) text(...)
-   lpolygon  <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym, textpos) polygon(...)
-   lrect     <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym, textpos) rect(...)
-   llines    <- function(..., cr.lb, cr.ub, addcred, pi.type, lcol, annosym, textpos) lines(...)
+   lsegments <- function(..., cr.lb, cr.ub, addcred, pi.type, predtype, lcol, annosym, textpos) segments(...)
+   ltext     <- function(..., cr.lb, cr.ub, addcred, pi.type, predtype, lcol, annosym, textpos) text(...)
+   lpolygon  <- function(..., cr.lb, cr.ub, addcred, pi.type, predtype, lcol, annosym, textpos) polygon(...)
+   lrect     <- function(..., cr.lb, cr.ub, addcred, pi.type, predtype, lcol, annosym, textpos) rect(...)
+   llines    <- function(..., cr.lb, cr.ub, addcred, pi.type, predtype, lcol, annosym, textpos) lines(...)
 
    ### set/get fonts (1st for labels, 2nd for annotations)
    ### when passing a named vector, the names are for 'family' and the values are for 'font'

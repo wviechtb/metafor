@@ -255,7 +255,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (!is.null(ddd$addcred))
       addpred <- ddd$addcred
 
-   pi.type <- .chkddd(ddd$pi.type, "default")
+   pi.type  <- .chkddd(ddd$pi.type, "default", tolower(ddd$pi.type))
+   predtype <- .chkddd(ddd$predtype, pi.type, tolower(ddd$predtype))
 
    decreasing <- .chkddd(ddd$decreasing, FALSE)
 
@@ -286,16 +287,16 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    xlabfont <- .chkddd(ddd$xlabfont, 1)
 
-   lplot     <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) plot(...)
-   labline   <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) abline(...)
-   lsegments <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) segments(...)
-   laxis     <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) axis(...)
-   lmtext    <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) mtext(...)
-   lpolygon  <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) polygon(...)
-   ltext     <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) text(...)
-   lpoints   <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) points(...)
-   lrect     <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) rect(...)
-   llines    <- function(..., textpos, addcred, pi.type, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) lines(...)
+   lplot     <- function(..., textpos, addcred, pi.type, predtype, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) plot(...)
+   labline   <- function(..., textpos, addcred, pi.type, predtype, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) abline(...)
+   lsegments <- function(..., textpos, addcred, pi.type, predtype, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) segments(...)
+   laxis     <- function(..., textpos, addcred, pi.type, predtype, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) axis(...)
+   lmtext    <- function(..., textpos, addcred, pi.type, predtype, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) mtext(...)
+   lpolygon  <- function(..., textpos, addcred, pi.type, predtype, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) polygon(...)
+   ltext     <- function(..., textpos, addcred, pi.type, predtype, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) text(...)
+   lpoints   <- function(..., textpos, addcred, pi.type, predtype, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) points(...)
+   lrect     <- function(..., textpos, addcred, pi.type, predtype, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) rect(...)
+   llines    <- function(..., textpos, addcred, pi.type, predtype, decreasing, clim, rowadj, annosym, tabfig, top, xlabadj, xlabfont, at.lab) lines(...)
 
    if (is.character(showweights)) {
       weighttype  <- match.arg(showweights, c("diagonal", "rowsum"))
@@ -438,7 +439,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       pred.ci.lb <- rep(NA_real_, k)
       pred.ci.ub <- rep(NA_real_, k)
    } else {
-      predres <- predict(x, level=level, pi.type=pi.type)
+      predres <- predict(x, level=level, predtype=predtype)
       pred <- predres$pred
       if (addpred) {
          pred.ci.lb <- predres$pi.lb
@@ -971,20 +972,20 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
                stop(mstyle$stop("Must specify the level of the inner factor(s) via the 'addpred' argument."))
             } else {
                ### here addpred=FALSE, so just use the first tau^2 and gamma^2 arbitrarily (so predict() works)
-               predres <- predict(x, level=level, tau2.levels=1, gamma2.levels=1, pi.type=pi.type)
+               predres <- predict(x, level=level, tau2.levels=1, gamma2.levels=1, predtype=predtype)
             }
          } else {
             ### for multiple tau^2 (and gamma^2) values, need to specify level(s) of the inner factor(s) to compute the PI
             ### this can be done via the addpred argument (i.e., instead of using a logical, one specifies the level(s))
             if (length(addpred) == 1L)
                addpred <- c(addpred, addpred)
-            predres <- predict(x, level=level, tau2.levels=addpred[1], gamma2.levels=addpred[2], pi.type=pi.type)
+            predres <- predict(x, level=level, tau2.levels=addpred[1], gamma2.levels=addpred[2], predtype=predtype)
             addpred <- TRUE # set addpred to TRUE, so if (!is.element(x$method, c("FE","EE","CE")) && addpred) further below works
          }
 
       } else {
 
-         predres <- predict(x, level=level, pi.type=pi.type)
+         predres <- predict(x, level=level, predtype=predtype)
 
       }
 

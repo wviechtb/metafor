@@ -64,9 +64,10 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("pi.type", "newvi", "verbose"))
+   .chkdots(ddd, c("pi.type", "predtype", "newvi", "verbose"))
 
-   pi.type <- .chkddd(ddd$pi.type, "default", tolower(ddd$pi.type))
+   pi.type  <- .chkddd(ddd$pi.type, "default", tolower(ddd$pi.type))
+   predtype <- .chkddd(ddd$predtype, pi.type, tolower(ddd$predtype))
 
    if (x$int.only && !is.null(newmods))
       stop(mstyle$stop("Cannot specify new moderator values for models without moderators."))
@@ -360,7 +361,7 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
    } else {
 
       ### ddf calculation for x$test %in% c("knha","adhoc","t") but also need this
-      ### for pi.ddf calculation when test="z" and pi.type %in% c("riley","t")
+      ### for pi.ddf calculation when test="z" and predtype %in% c("riley","t")
 
       if (length(x$ddf) == 1L) {
          ddf <- rep(x$ddf, k.new)     # when test="z", x$ddf is NA, so this then results in a vector of NAs
@@ -402,17 +403,17 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
    if (vcov)
       vcovpred <- symmpart(X.new %*% x$vb %*% t(X.new))
 
-   if (pi.type == "simple") {
+   if (predtype == "simple") {
       crit <- qnorm(level/ifelse(adjust, 2*k.new, 2), lower.tail=FALSE)
       vpred <- 0
    }
 
    pi.ddf <- ddf
 
-   if (is.element(pi.type, c("riley","t"))) {
-      if (pi.type == "riley")
+   if (is.element(predtype, c("riley","t"))) {
+      if (predtype == "riley")
          pi.ddf <- ddf - x$parms + x$p
-      if (pi.type == "t")
+      if (predtype == "t")
          pi.ddf <- ddf
       pi.ddf[pi.ddf < 1] <- 1
       crit <- sapply(seq_along(pi.ddf), function(j) if (pi.ddf[j] > 0) qt(level/ifelse(adjust, 2*k.new, 2), df=pi.ddf[j], lower.tail=FALSE) else NA_real_)
@@ -669,7 +670,7 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
    if (x$test != "z")
       out$ddf <- ddf
 
-   if ((x$test != "z" || is.element(pi.type, c("riley","t"))) && pi.type != "simple") {
+   if ((x$test != "z" || is.element(predtype, c("riley","t"))) && predtype != "simple") {
       out$pi.dist <- "t"
       out$pi.ddf <- pi.ddf
    } else {

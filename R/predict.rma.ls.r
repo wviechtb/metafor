@@ -55,9 +55,10 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("pi.type", "newvi"))
+   .chkdots(ddd, c("pi.type", "predtype", "newvi"))
 
-   pi.type <- .chkddd(ddd$pi.type, "default", tolower(ddd$pi.type))
+   pi.type  <- .chkddd(ddd$pi.type, "default", tolower(ddd$pi.type))
+   predtype <- .chkddd(ddd$predtype, pi.type, tolower(ddd$predtype))
 
    if (!is.null(newmods) && x$int.only && !(x$int.only && identical(newmods, 1)))
       stop(mstyle$stop("Cannot specify new moderator values for models without moderators."))
@@ -386,17 +387,17 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
       if (vcov)
          vcovpred <- symmpart(X.new %*% x$vb %*% t(X.new))
 
-      if (pi.type == "simple") {
+      if (predtype == "simple") {
          crit <- qnorm(level/ifelse(adjust, 2*k.new, 2), lower.tail=FALSE)
          vpred <- 0
       }
 
       pi.ddf <- ddf
 
-      if (is.element(pi.type, c("riley","t"))) {
-         if (pi.type == "riley")
+      if (is.element(predtype, c("riley","t"))) {
+         if (predtype == "riley")
             pi.ddf <- x$k - x$p - x$q
-         if (pi.type == "t")
+         if (predtype == "t")
             pi.ddf <- x$k - x$p
          pi.ddf[pi.ddf < 1] <- 1
          crit <- qt(level/ifelse(adjust, 2*k.new, 2), df=pi.ddf, lower.tail=FALSE)
@@ -579,7 +580,7 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
       out$ddf <- ddf
 
    if (pred.mui) {
-      if ((x$test != "z" || is.element(pi.type, c("riley","t"))) && pi.type != "simple") {
+      if ((x$test != "z" || is.element(predtype, c("riley","t"))) && predtype != "simple") {
          out$pi.dist <- "t"
          out$pi.ddf <- pi.ddf
       } else {

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-3</span>
       </span>
     </div>
 
@@ -208,7 +208,7 @@
     <div id="note">
     <h2>Note</h2>
     <p>Confidence and prediction intervals are constructed based on the critical values from a standard normal distribution (i.e., <em></em>\(\pm 1.96\) for <code>level=95</code>). When the model was fitted with <code>test="t"</code>, <code>test="knha"</code>, <code>test="hksj"</code>, or <code>test="adhoc"</code>, then a t-distribution with <em></em>\(k-p\) degrees of freedom is used, where <em></em>\(p\) denotes the total number of columns of the model matrix (i.e., counting the intercept term if the model includes one).</p>
-<p>For a random-effects model (where <em></em>\(p=1\)) fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function, note that this differs slightly from Riley et al. (2011), who suggest to use a t-distribution with <em></em>\(k-2\) degrees of freedom for constructing the prediction interval. Neither a normal, nor a t-distribution with <em></em>\(k-1\) or <em></em>\(k-2\) degrees of freedom is correct; all of these are approximations. The computations are done in the way described above, so that the prediction interval is identical to the confidence interval when <em></em>\(\hat{\tau}^2 = 0\), which could be argued is the logical thing that should happen. If the prediction interval for a random-effects model should be computed as described by Riley et al. (2011), then one can use argument <code>pi.type="Riley"</code> (and for mixed-effects meta-regression models, the function then uses <em></em>\(k-p-1\) degrees of freedom).</p>
+<p>For a random-effects model (where <em></em>\(p=1\)) fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function, note that this differs slightly from Riley et al. (2011), who suggest to use a t-distribution with <em></em>\(k-2\) degrees of freedom for constructing the prediction interval. Neither a normal, nor a t-distribution with <em></em>\(k-1\) or <em></em>\(k-2\) degrees of freedom is correct; all of these are approximations. The computations are done in the way described above, so that the prediction interval is identical to the confidence interval when <em></em>\(\hat{\tau}^2 = 0\), which could be argued is the logical thing that should happen. If the prediction interval for a random-effects model should be computed as described by Riley et al. (2011), then one can use argument <code>predtype="Riley"</code> (and for mixed-effects meta-regression models, the function then uses <em></em>\(k-p-1\) degrees of freedom).</p>
 <p>The predicted values are based only on the fixed effects of the model. Best linear unbiased predictions (BLUPs) that combine the fitted values based on the fixed effects and the estimated contributions of the random effects can be obtained with <code><a href="blup.html">blup</a></code> (currently only for objects of class <code>"rma.uni"</code>).</p>
 <p>When using the <code>transf</code> option, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are omitted from the printed output. Also, <code>vcov=TRUE</code> is ignored when using the <code>transf</code> option.</p>
     </div>

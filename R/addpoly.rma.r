@@ -65,9 +65,10 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
    if (!is.null(ddd$addcred))
       addpred <- ddd$addcred
 
-   pi.type <- .chkddd(ddd$pi.type, "default")
+   pi.type  <- .chkddd(ddd$pi.type, "default", tolower(ddd$pi.type))
+   predtype <- .chkddd(ddd$predtype, pi.type, tolower(ddd$predtype))
 
-   predres <- predict(x, level=level, pi.type=pi.type)
+   predres <- predict(x, level=level, predtype=predtype)
 
    ci.lb <- predres$ci.lb
    ci.ub <- predres$ci.ub
