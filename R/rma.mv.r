@@ -222,11 +222,12 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
                ncpus = 1L,                # arguments for optimParallel()
                REMLf = TRUE,              # full REML likelihood (including all constants)
                evtol = 1e-07,             # lower bound for eigenvalues to determine if model matrix is positive definite
-               nearpd = FALSE,            # to force G and H matrix to become positive definite
+               nearpd = FALSE,            # to force the G, H, and M matrices to be positive definite
                hessianCtrl = list(r=8),   # arguments passed on to 'method.args' of hessian()
                hesstol = .Machine$double.eps^0.5, # threshold for detecting fixed elements in Hessian
                hesspack = "numDeriv",     # package for computing the Hessian (numDeriv or pracma)
-               check.k.gtr.1 = TRUE)      # check that s.nlevels > 1 and g.levels.k > 1
+               check.k.gtr.1 = TRUE,      # check that s.nlevels > 1 and g.levels.k > 1
+               mfmaxit = Inf)             # iteration limit (independent of the optimizer)
 
    ### replace defaults with any user-defined values
 
@@ -2054,7 +2055,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             withS=withS, withG=withG, withH=withH, struct=struct,
             g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
             sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE, vccon=vccon,
-            verbose=verbose, digits=digits, REMLf=con$REMLf,
+            verbose=verbose, digits=digits, REMLf=con$REMLf, mfmaxit=con$mfmaxit,
             dofit=FALSE, hessian=FALSE, optbeta=", optbeta, ", lambda=", lambda, ", intercept=", intercept, ctrl.arg, ")\n")
 
          #return(optcall)

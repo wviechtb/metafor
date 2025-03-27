@@ -80,7 +80,7 @@
    \item{QE.r}{test statistic of the test for (residual) heterogeneity from the reduced model.}
    \item{tau2.f}{estimated \mjseqn{\tau^2} value from the full model. \code{NA} for \code{"rma.mv"} objects.}
    \item{tau2.r}{estimated \mjseqn{\tau^2} value from the reduced model. \code{NA} for \code{"rma.mv"} objects.}
-   \item{R2}{amount (in percent) of the heterogeneity in the reduced model that is accounted for in the full model (\code{NA} for \code{"rma.mv"} objects). This can be regarded as a pseudo \mjseqn{R^2} statistic (Raudenbush, 2009). Note that the value may not be very accurate unless \mjseqn{k} is large (Lopez-Lopez et al., 2014).}
+   \item{R2}{amount (in percent) of the heterogeneity in the reduced model that is accounted for in the full model (\code{NA} for \code{"rma.mv"} objects). This can be regarded as a pseudo \mjseqn{R^2} statistic (Raudenbush, 2009). Note that the value may not be very accurate unless \mjseqn{k} is large (\enc{López-López}{Lopez-Lopez} et al., 2014).}
    \item{\dots}{some additional elements/values.}
 
    The results are formatted and printed with the \code{\link[=print.anova.rma]{print}} function. To format the results as a data frame, one can use the \code{\link[=as.data.frame.anova.rma]{as.data.frame}} function.

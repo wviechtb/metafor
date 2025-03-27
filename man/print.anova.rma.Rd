@@ -28,7 +28,7 @@
    \item the corresponding p-value.
    \item the test statistic of the test for (residual) heterogeneity for the full and the reduced model.
    \item the estimate of \mjseqn{\tau^2} from the full and the reduced model. Suppressed for equal-effects models.
-   \item amount (in percent) of heterogeneity in the reduced model that is accounted for in the full model (\code{NA} for \code{"rma.mv"} objects). This can be regarded as a pseudo \mjseqn{R^2} statistic (Raudenbush, 2009). Note that the value may not be very accurate unless \mjseqn{k} is large (Lopez-Lopez et al., 2014).
+   \item amount (in percent) of heterogeneity in the reduced model that is accounted for in the full model (\code{NA} for \code{"rma.mv"} objects). This can be regarded as a pseudo \mjseqn{R^2} statistic (Raudenbush, 2009). Note that the value may not be very accurate unless \mjseqn{k} is large (\enc{López-López}{Lopez-Lopez} et al., 2014).
    }
 
    The last two items are not provided when comparing \code{"rma.mv"} models.

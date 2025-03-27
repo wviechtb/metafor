@@ -861,7 +861,7 @@
                        withS, withG, withH,
                        struct, g.levels.r, h.levels.r, g.values, h.values,
                        sparse, cholesky, nearpd, vctransf, vccov, vccon,
-                       verbose, digits, REMLf,
+                       verbose, digits, REMLf, mfmaxit=Inf,
                        dofit=FALSE, hessian=FALSE, optbeta=FALSE, lambda=0, intercept=TRUE) {
 
    mstyle <- .get.mstyle()
@@ -886,6 +886,8 @@
 
       #if (any(is.nan(sigma2)))
       #   return(Inf)
+
+      #sigma2[is.nan(sigma2)] <- 0
 
       ### set really small sigma2 values equal to 0 (anything below .Machine$double.eps*10 is essentially 0)
       sigma2 <- ifelse(sigma2 <= .Machine$double.eps*10, 0, sigma2)
@@ -1091,16 +1093,17 @@
 
    }
 
+   iteration <- .getfromenv("iteration", default=NULL)
+
+   if (iteration > mfmaxit)
+      stop(mstyle$stop(paste0("Maximum number of iterations (", mfmaxit, ") reached.")), call.=FALSE)
+
    if ((vctransf && verbose) || (!vctransf && (verbose > 1))) {
 
       if (!hessian) {
 
-         iteration <- .getfromenv("iteration", default=NULL)
-
-         if (!is.null(iteration)) {
+         if (!is.null(iteration))
             cat(mstyle$verbose(paste0("Iteration ", formatC(iteration, width=5, flag="-", format="f", digits=0), " ")))
-            try(assign("iteration", iteration+1, envir=.metafor), silent=TRUE)
-         }
 
       }
 
@@ -1118,6 +1121,8 @@
       cat("\n")
 
    }
+
+   try(assign("iteration", iteration+1, envir=.metafor), silent=TRUE)
 
    return(-1 * c(llval))
 
