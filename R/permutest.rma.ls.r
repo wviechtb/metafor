@@ -81,7 +81,7 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, btt=x$btt, att=x$att, pr
       btt <- .set.btt(btt, x$p, x$int.incl, colnames(x$X), fixed=fixed)
       att <- .set.btt(att, x$q, x$Z.int.incl, colnames(x$Z), fixed=fixed)
 
-      args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=X, intercept=FALSE, scale=x$Z, link=x$link, method=x$method,
+      args <- list(yi=x$yi, vi=x$vi, weights=x$weights, mods=x$X, intercept=FALSE, scale=x$Z, link=x$link, method=x$method,
                    weighted=x$weighted, test=x$test, level=x$level, btt=btt, att=att, alpha=ifelse(x$alpha.fix, x$alpha, NA),
                    optbeta=x$optbeta, beta=ifelse(x$beta.fix, x$beta, NA), control=x$control)
       x <- try(suppressWarnings(.do.call(rma.uni, args)), silent=!isTRUE(ddd$verbose))
