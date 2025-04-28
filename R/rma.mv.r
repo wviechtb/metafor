@@ -2211,11 +2211,12 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
             vvc <- try(suppressWarnings(chol2inv(chol(hessian))), silent=TRUE)
 
-            if (inherits(vvc, "try-error") || anyNA(vvc) || any(is.infinite(vvc)))
+            if (inherits(vvc, "try-error") || anyNA(vvc) || any(is.infinite(vvc))) {
                warning(mstyle$warning("Error when trying to invert the Hessian."), call.=FALSE)
-
-            sel <- grep("beta", colnames(hessian), fixed=TRUE)
-            vb[hest[1:p],hest[1:p]] <- vvc[sel,sel,drop=FALSE]
+            } else {
+               sel <- grep("beta", colnames(hessian), fixed=TRUE)
+               vb[hest[1:p],hest[1:p]] <- vvc[sel,sel,drop=FALSE]
+            }
 
          } else {
 
