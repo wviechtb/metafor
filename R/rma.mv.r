@@ -93,12 +93,18 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist", "time", "dist", "abbrev", "restart", "optbeta", "beta", "vccon", "retopt", "lambda"))
+   .chkdots(ddd, c("tdist", "outlist", "time", "dist", "abbrev", "restart", "optbeta", "beta", "vccon", "retopt", "lambda1", "lambda2"))
 
-   if (is.null(ddd$lambda)) {
-      lambda <- 0
+   if (is.null(ddd$lambda1)) {
+      lambda1 <- 0
    } else {
-      lambda <- ddd$lambda
+      lambda1 <- ddd$lambda1
+   }
+
+   if (is.null(ddd$lambda2)) {
+      lambda2 <- 0
+   } else {
+      lambda2 <- ddd$lambda2
    }
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
@@ -1386,11 +1392,6 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ### check which beta elements are estimated versus fixed
 
-   optbeta <- .chkddd(ddd$optbeta, FALSE, .isTRUE(ddd$optbeta))
-
-   if (optbeta && !is.null(A))
-      stop(mstyle$stop("Cannot use custom weights when 'optbeta=TRUE'."))
-
    if (is.null(ddd$beta)) {
       beta.arg <- rep(NA_real_, p)
       beta.est <- rep(TRUE, p)
@@ -1400,6 +1401,16 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
          stop(mstyle$stop(paste0("Length of the 'beta' argument (", length(beta.arg), ") does not match the actual number of fixed effects (", p, ").")))
       beta.est <- is.na(beta.arg)
    }
+
+   ### check whether we are optimizing over the beta coefficients as well
+
+   optbeta <- .chkddd(ddd$optbeta, FALSE, .isTRUE(ddd$optbeta))
+
+   if (optbeta && !is.null(A))
+      stop(mstyle$stop("Cannot use custom weights when 'optbeta=TRUE'."))
+
+   if (lambda1 > 0 || lambda2 > 0)
+      optbeta <- TRUE
 
    #########################################################################
    #########################################################################
@@ -2056,7 +2067,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
             sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE, vccon=vccon,
             verbose=verbose, digits=digits, REMLf=con$REMLf, mfmaxit=con$mfmaxit,
-            dofit=FALSE, hessian=FALSE, optbeta=", optbeta, ", lambda=", lambda, ", intercept=", intercept, ctrl.arg, ")\n")
+            dofit=FALSE, hessian=FALSE, optbeta=", optbeta, ", lambda1=", lambda1, ", lambda2=", lambda2, ", intercept=", intercept, ctrl.arg, ")\n")
 
          #return(optcall)
 
@@ -2123,7 +2134,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
       sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE, vccon=vccon,
       verbose=FALSE, digits=digits, REMLf=con$REMLf, dofit=TRUE,
-      optbeta=optbeta, lambda=lambda, intercept=intercept)
+      optbeta=optbeta, lambda1=lambda1, lambda2=lambda2, intercept=intercept)
 
    ### extract elements
 
@@ -2148,7 +2159,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
             sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE, vccon=vccon,
             verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE, hessian=TRUE,
-            optbeta=optbeta, lambda=lambda, intercept=intercept), silent=!verbose)
+            optbeta=optbeta, lambda1=lambda1, lambda2=lambda2, intercept=intercept), silent=!verbose)
 
       if (con$hesspack == "pracma")
          hessian <- try(pracma::hessian(f=.ll.rma.mv, x0=opt.res$par,
@@ -2160,7 +2171,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
             sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE, vccon=vccon,
             verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE, hessian=TRUE,
-            optbeta=optbeta, lambda=lambda, intercept=intercept), silent=!verbose)
+            optbeta=optbeta, lambda1=lambda1, lambda2=lambda2, intercept=intercept), silent=!verbose)
 
       if (con$hesspack == "calculus")
          hessian <- try(calculus::hessian(f=.ll.rma.mv, var=opt.res$par,
@@ -2172,7 +2183,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             g.levels.r=g.levels.r, h.levels.r=h.levels.r, g.values=g.values, h.values=h.values,
             sparse=sparse, cholesky=cholesky, nearpd=nearpd, vctransf=TRUE, vccov=FALSE, vccon=vccon,
             verbose=verbose, digits=digits, REMLf=con$REMLf, dofit=FALSE, hessian=TRUE,
-            optbeta=optbeta, lambda=lambda, intercept=intercept)), silent=!verbose)
+            optbeta=optbeta, lambda1=lambda1, lambda2=lambda2, intercept=intercept)), silent=!verbose)
 
       if (inherits(hessian, "try-error")) {
 
