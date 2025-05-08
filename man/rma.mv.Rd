@@ -217,7 +217,7 @@ rma.mv(yi, V, W, mods, data, slab, subset,
 
    For random/mixed-effects models, the \code{\link[=profile.rma.mv]{profile}} function can be used to obtain a plot of the (restricted) log-likelihood as a function of a specific variance/correlation component of the model. For models with moderators, \code{\link[=regplot.rma]{regplot}} draws scatter plots / bubble plots, showing the (marginal) relationship between the observed outcomes and a selected moderator from the model.
 
-   Other extractor functions include \code{\link[=coef.rma]{coef}}, \code{\link[=vcov.rma]{vcov}}, \code{\link[=logLik.rma]{logLik}}, \code{\link[=deviance.rma]{deviance}}, \code{\link[=AIC.rma]{AIC}}, \code{\link[=BIC.rma]{BIC}}, \code{\link[=hatvalues.rma.mv]{hatvalues}}, and \code{\link[=weights.rma.mv]{weights}}.
+   Other extractor functions include \code{\link[=coef.rma]{coef}}, \code{\link[=vcov.rma]{vcov}}, \code{\link[=se.rma]{se}}, \code{\link[=logLik.rma]{logLik}}, \code{\link[=deviance.rma]{deviance}}, \code{\link[=AIC.rma]{AIC}}, \code{\link[=BIC.rma]{BIC}}, \code{\link[=hatvalues.rma.mv]{hatvalues}}, and \code{\link[=weights.rma.mv]{weights}}.
 }
 \note{
    Argument \code{V} also accepts a list of variance-covariance matrices for the observed effect sizes or outcomes. From the list elements, the full (block diagonal) variance-covariance matrix is then automatically constructed. For this to work correctly, the list elements must be in the same order as the observed outcomes.

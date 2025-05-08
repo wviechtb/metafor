@@ -3,12 +3,10 @@ se <- function(object, ...)
 
 se.default <- function(object, ...) {
 
-   mstyle <- .get.mstyle()
-
    vb <- try(vcov(object, ...), silent=TRUE)
 
    if (inherits(vb, "try-error") || !is.matrix(vb) || !.is.square(vb))
-      stop(mstyle$stop("Default method for extracting the standard errors does not work for such model objects."))
+      stop("Default method for extracting the standard errors does not work for such model objects.")
 
    return(sqrt(diag(vb)))
 

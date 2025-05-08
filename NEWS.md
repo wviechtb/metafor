@@ -1,4 +1,4 @@
-# metafor 4.9-5 (2025-04-28)
+# metafor 4.9-6 (2025-05-08)
 
 - added (undocumented) arguments `legend.cex`, `legend.pt.cex`, and `legend.inset` to `labbe()` for more control over the look of the legend
 
@@ -7,6 +7,8 @@
 - renamed `pi.type` argument to `predtype` (which is more consistent with the `predstyle` argument), but `pi.type` will continue to work for backwards compatibility
 
 - fixed `permutest.rma.ls()` not running when `btt` and/or `att` is specified
+
+- added various methods for `matreg` objects
 
 # metafor 4.8-0 (2025-01-28)
 

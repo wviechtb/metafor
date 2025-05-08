@@ -1388,7 +1388,7 @@
 
 .print.table <- function(x, mstyle) {
 
-   is.header <- !grepl(" [-0-9]", x)
+   is.header <- !grepl(" [-0-9]", x) & !grepl(" NA ", x, fixed=TRUE)
    #is.header <- !grepl("^\\s*[0-9]", x)
    has.header <- any(is.header)
 

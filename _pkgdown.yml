@@ -203,6 +203,12 @@ reference:
       - formula.rma
       - coef.matreg
       - vcov.matreg
+      - sigma.matreg
+      - logLik.matreg
+      - AIC.matreg
+      - BIC.matreg
+      - confint.matreg
+      - print.confint.matreg
       - coef.deltamethod
       - vcov.deltamethod
   - title: "Convenience Functions"

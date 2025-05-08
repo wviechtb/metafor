@@ -1,9 +1,9 @@
 pandoc: '2.5'
-pkgdown: 2.1.1.9000
-pkgdown_sha: 0a18bc718640aee7160a0ebbcdef5ecaae2ac4a4
+pkgdown: 2.1.2
+pkgdown_sha: ~
 articles:
   pkgdown/diagram: pkgdown/diagram.html
-last_built: 2025-03-27T13:07Z
+last_built: 2025-05-08T09:00Z
 urls:
   reference: https://wviechtb.github.io/metafor/reference
   article: https://wviechtb.github.io/metafor/articles

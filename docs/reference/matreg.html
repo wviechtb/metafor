@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-6</span>
       </span>
     </div>
 
@@ -141,17 +141,35 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>Let <em></em>\(R\) be a <em></em>\(p \times p\) correlation or covariance matrix. Let <em></em>\(y\) denote the row/column of the outcome variable and <em></em>\(x\) the row(s)/column(s) of the predictor variable(s) in this matrix. Let <em></em>\(R_{x,x}\) and <em></em>\(R_{x,y}\) denote the corresponding submatrices of <em></em>\(R\). Then \[b = R_{x,x}^{-1} R_{x,y}\] yields the standardized or raw regression coefficients (depending on whether <em></em>\(R\) is a correlation or covariance matrix, respectively) when regressing the outcome variable on the predictor variable(s).</p>
-<p>The <em></em>\(R\) matrix may be computed based on a single sample of <em></em>\(n\) subjects. In this case, one should specify the sample size via argument <code>n</code>. The variance-covariance matrix of the standardized regression coefficients is then given by <em></em>\(\text{Var}[b] = \text{MSE} \times R_{x,x}^{-1}\), where <em></em>\(\text{MSE} = (1 - b'R_{x,y}) / (n - m)\) and <em></em>\(m\) denotes the number of predictor variables. The standard errors are then given by the square root of the diagonal elements of <em></em>\(\text{Var}[b]\). Test statistics (in this case, t-statistics) and the corresponding p-values can then be computed as in a regular regression analysis. When <em></em>\(R\) is a covariance matrix, one should set <code>cov=TRUE</code> and specify the means of the <em></em>\(p\) variables via argument <code>means</code> to obtain raw regression coefficients including the intercept and corresponding standard errors.</p>
-<p>Alternatively, <em></em>\(R\) may be the result of a meta-analysis of correlation coefficients. In this case, the elements in <em></em>\(R\) are pooled correlation coefficients and the variance-covariance matrix of these pooled coefficients should be specified via argument <code>V</code>. The order of elements in <code>V</code> should correspond to the order of elements in the lower triangular part of <em></em>\(R\) column-wise. For example, if <em></em>\(R\) is a <em></em>\(4 \times 4\) matrix of the form: \[\begin{bmatrix} 1 &amp; &amp; &amp; \\ r_{21} &amp; 1 &amp; &amp; \\ r_{31} &amp; r_{32} &amp; 1 &amp; \\ r_{41} &amp; r_{42} &amp; r_{43} &amp; 1 \end{bmatrix}\] then the elements are <em></em>\(r_{21}\), <em></em>\(r_{31}\), <em></em>\(r_{41}\), <em></em>\(r_{32}\), <em></em>\(r_{42}\), and <em></em>\(r_{43}\) and hence <code>V</code> should be a <em></em>\(6 \times 6\) variance-covariance matrix of these elements in this order. The variance-covariance matrix of the standardized regression coefficients (i.e., <em></em>\(\text{Var}[b]\)) is then computed as a function of <code>V</code> as described in Becker (1992) using the multivariate delta method. The standard errors are then again given by the square root of the diagonal elements of <em></em>\(\text{Var}[b]\). Test statistics (in this case, z-statistics) and the corresponding p-values can then be computed in the usual manner.</p>
-<p>In case <em></em>\(R\) is the result of a meta-analysis of Fisher r-to-z transformed correlation coefficients (and hence <code>V</code> is then the corresponding variance-covariance matrix of these pooled transformed coefficients), one should set argument <code>ztor=TRUE</code>, so that the appropriate back-transformation is then applied to <code>R</code> (and <code>V</code>) within the function.</p>
+
+
+<p>Let <em></em>\(R\) be a <em></em>\(p \times p\) correlation or covariance matrix. Let <em></em>\(y\) denote the row/column of the outcome variable and <em></em>\(x\) the row(s)/column(s) of the predictor variable(s) in this matrix. Let <em></em>\(m\) denote the length of <em></em>\(x\) (i.e., the number of predictors). Let <em></em>\(R_{x,x}\) and <em></em>\(R_{x,y}\) denote the corresponding submatrices of <em></em>\(R\). Then \[b = R_{x,x}^{-1} R_{x,y}\] yields the standardized or raw regression coefficients (depending on whether <em></em>\(R\) is a correlation or covariance matrix, respectively) when regressing the outcome variable on the predictor variable(s).</p>
+<p></p><div class="section">
+<h3 id="regular-r-matrix">Regular R Matrix<a class="anchor" aria-label="anchor" href="#regular-r-matrix"></a></h3>
+
+
+<p>The <em></em>\(R\) matrix may be computed based on a single sample of <em></em>\(n\) subjects. In this case, one should specify the sample size via argument <code>n</code>. The variance-covariance matrix of the (standardized) regression coefficients is then given by <em></em>\(\text{Var}[b] = \hat{\sigma}^2 \times R_{x,x}^{-1}\), where <em></em>\(\hat{\sigma}^2 = (1 - b'R_{x,y}) / \text{df}\) is the estimated error variance and <em></em>\(\text{df}\) denotes the residual degrees of freedom (which are <em></em>\(n-m-1\) when <em></em>\(R\) is a covariance matrix and <em></em>\(n-m\) when <em></em>\(R\) is a correlation matrix). The standard errors are then given by the square root of the diagonal elements of <em></em>\(\text{Var}[b]\). Test statistics (in this case, t-statistics) and the corresponding p-values can then be computed as in a regular regression analysis. When <em></em>\(R\) is a covariance matrix, one should set <code>cov=TRUE</code> and specify the means of the <em></em>\(p\) variables in the <em></em>\(R\) matrix via argument <code>means</code> to obtain raw regression coefficients including the intercept and corresponding standard errors (when <code>means</code> is not specified, then the intercept estimate will be <code>NA</code>).</p>
+<p></p>
+</div>
+
+<p></p><div class="section">
+<h3 id="meta-analytic-r-matrix">Meta-Analytic R Matrix<a class="anchor" aria-label="anchor" href="#meta-analytic-r-matrix"></a></h3>
+
+
+<p>Alternatively, <em></em>\(R\) may be the result of a meta-analysis of correlation coefficients. In this case, the elements in <em></em>\(R\) are pooled correlation coefficients and the variance-covariance matrix of these pooled coefficients should be specified via argument <code>V</code>. The order of elements in <code>V</code> should correspond to the order of elements in the lower triangular part of <em></em>\(R\) column-wise. For example, if <em></em>\(R\) is a <em></em>\(4 \times 4\) matrix of the form: \[\begin{bmatrix} 1 &amp; &amp; &amp; \\ r_{21} &amp; 1 &amp; &amp; \\ r_{31} &amp; r_{32} &amp; 1 &amp; \\ r_{41} &amp; r_{42} &amp; r_{43} &amp; 1 \end{bmatrix}\] then the elements are <em></em>\(r_{21}\), <em></em>\(r_{31}\), <em></em>\(r_{41}\), <em></em>\(r_{32}\), <em></em>\(r_{42}\), and <em></em>\(r_{43}\) and hence <code>V</code> should be a <em></em>\(6 \times 6\) variance-covariance matrix of these elements in this order.</p>
+<p>The standardized regression coefficients are still computed as described above, but the variance-covariance matrix of the standardized regression coefficients (i.e., <em></em>\(\text{Var}[b]\)) is then computed as a function of <code>V</code> as described in Becker (1992) using the multivariate delta method. The standard errors are then again given by the square root of the diagonal elements of <em></em>\(\text{Var}[b]\). Test statistics (in this case, z-statistics) and the corresponding p-values can then be computed in the usual manner.</p>
+<p>In case <em></em>\(R\) is the result of a meta-analysis of Fisher r-to-z transformed correlation coefficients (and hence <code>V</code> is then the corresponding variance-covariance matrix of these pooled transformed coefficients), one should set argument <code>ztor=TRUE</code>, so that the appropriate back-transformation is then applied to <code>R</code> (and <code>V</code>) within the function before the standardized regression coefficients will be computed.</p>
 <p>Finally, <em></em>\(R\) may be a covariance matrix based on a meta-analysis (e.g., the estimated variance-covariance matrix of the random effects in a multivariate model). In this case, one should set <code>cov=TRUE</code> and <code>V</code> should again be the variance-covariance matrix of the elements in <em></em>\(R\), but now including the diagonal. Hence, if <em></em>\(R\) is a <em></em>\(4 \times 4\) matrix of the form: \[\begin{bmatrix} \tau_1^2 &amp; &amp; &amp; \\ \tau_{21} &amp; \tau_2^2 &amp; &amp; \\ \tau_{31} &amp; \tau_{32} &amp; \tau_3^2 &amp; \\ \tau_{41} &amp; \tau_{42} &amp; \tau_{43} &amp; \tau_4^2 \end{bmatrix}\] then the elements are <em></em>\(\tau^2_1\), <em></em>\(\tau_{21}\), <em></em>\(\tau_{31}\), <em></em>\(\tau_{41}\), <em></em>\(\tau^2_2\), <em></em>\(\tau_{32}\), <em></em>\(\tau_{42}\), <em></em>\(\tau^2_3\), <em></em>\(\tau_{43}\), and <em></em>\(\tau^2_4\), and hence <code>V</code> should be a <em></em>\(10 \times 10\) variance-covariance matrix of these elements in this order. Argument <code>means</code> can then again be used to specify the means of the variables.</p>
+<p></p>
+</div>
+
+
     </div>
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>"matreg"</code>. The object is a list containing the following components:</p>
 <dl><dt>tab</dt>
-<dd><p>a data frame with the estimated model coefficients, standard errors, test statistics, degrees of freedom (only for t-tests), p-values, and lower/upper confidence interval bounds.</p></dd>
+<dd><p>a data frame with the estimated (standardized) regression coefficients, standard errors, test statistics, degrees of freedom (only for t-tests), p-values, and lower/upper confidence interval bounds.</p></dd>
 
    <dt>vb</dt>
 <dd><p>the variance-covariance matrix of the estimated model coefficients.</p></dd>
@@ -160,7 +178,7 @@
 <dd><p>some additional elements/values.</p></dd>
 
 
-</dl><p>The results are formatted and printed with the <code><a href="print.matreg.html">print</a></code> function. Extractor functions include <code><a href="methods.matreg.html">coef</a></code> and <code><a href="methods.matreg.html">vcov</a></code>.</p>
+</dl><p>The results are formatted and printed with the <code><a href="print.matreg.html">print</a></code> function. Extractor functions include <code><a href="methods.matreg.html">coef</a></code>, <code><a href="methods.matreg.html">vcov</a></code>, <code><a href="se.html">se</a></code>, <code><a href="methods.matreg.html">sigma</a></code>, <code><a href="methods.matreg.html">confint</a></code>, <code><a href="methods.matreg.html">logLik</a></code>, <code><a href="https://rdrr.io/r/stats/deviance.html" class="external-link">deviance</a></code>, <code><a href="methods.matreg.html">AIC</a></code>, and <code><a href="methods.matreg.html">BIC</a></code> (some of these only work under the ‘Regular <em></em>\(R\) Matrix’ case).</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -572,7 +590,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 

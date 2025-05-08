@@ -200,6 +200,8 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
 
    ############################################################################
 
+   has.means <- FALSE
+
    if (cov) {
 
       if (missing(means)) {
@@ -242,7 +244,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
       F  <- c(value = (R2 / m) / mse, df1=m, df2=df)
       Fp <- pf(F[[1]], df1=m, df2=df, lower.tail=FALSE)
 
-      mse <- sdy^2 * (n-1) * (1 - R2) / df
+      mse <- unname(sdy^2 * (n-1) * (1 - R2) / df)
 
       if (cov) {
 
@@ -266,6 +268,10 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
             vb[,1] <- NA_real_
          }
 
+      } else {
+
+         XtX <- Rxx * (n-1)
+
       }
 
       rownames(vb) <- colnames(vb) <- rownames(b)
@@ -277,7 +283,33 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
       ci.lb <- c(b - crit * se)
       ci.ub <- c(b + crit * se)
 
-      res <- list(tab = data.frame(beta=b, se=se, tval=tval, df=df, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, R2adj=R2adj, F=F, Fdf=c(m,df), Fp=Fp, mse=mse, digits=digits, test="t")
+      # fit statistics
+
+      p <- sum(!is.na(b)) # number of (estimated) fixed effects
+      parms <- p + 1      # number of (estimated) parameters
+
+      deviance <- mse * df
+      sigma2.ml   <- mse * df / n
+      sigma2.reml <- mse
+      ll.ML     <- -n/2 * log(2*base::pi*sigma2.ml) - 1/2 * deviance / sigma2.ml
+      ll.REML   <- -df/2 * log(2*base::pi*sigma2.reml) - 1/2 * deviance/sigma2.reml - 1/2 * determinant(XtX, logarithm=TRUE)$modulus
+      AIC.ML    <- -2 * ll.ML   + 2*parms
+      BIC.ML    <- -2 * ll.ML   +   parms * log(n)
+      AICc.ML   <- -2 * ll.ML   + 2*parms * max(n, parms+2) / (max(n, parms+2) - parms - 1)
+      dev.ML    <- deviance
+      dev.REML  <- -2 * (ll.REML - 0)
+      AIC.REML  <- -2 * ll.REML + 2*parms
+      BIC.REML  <- -2 * ll.REML +   parms * log(n-p)
+      AICc.REML <- -2 * ll.REML + 2*parms * max(n-p, parms+2) / (max(n-p, parms+2) - parms - 1)
+
+      fit.stats <- matrix(c(ll.ML, dev.ML, AIC.ML, BIC.ML, AICc.ML, ll.REML, dev.REML, AIC.REML, BIC.REML, AICc.REML), ncol=2, byrow=FALSE)
+      dimnames(fit.stats) <- list(c("ll","dev","AIC","BIC","AICc"), c("ML","REML"))
+      fit.stats <- data.frame(fit.stats)
+
+      res <- list(tab = data.frame(beta=b, se=se, tval=tval, df=df, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb,
+                                   R2=R2, R2adj=R2adj, F=F, Fdf=c(m,df), Fp=Fp, p=p, df.residual=df,
+                                   sigma2.ml=sigma2.ml, sigma2.reml=sigma2.reml, nobs=n, parms=parms, deviance=deviance,
+                                   fit.stats=fit.stats, digits=digits, test="t", level=level)
 
    } else {
 
@@ -361,7 +393,9 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
 
       rownames(vb) <- colnames(vb) <- rownames(b)
 
-      res <- list(tab = data.frame(beta=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb, R2=R2, QM=QM, QMdf=c(m,NA_integer_), QMp=QMp, digits=digits, test="z")
+      res <- list(tab = data.frame(beta=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb,
+                                   R2=R2, QM=QM, QMdf=c(m,NA_integer_), QMp=QMp, p=m, parms=m, digits=digits,
+                                   test="z", level=level)
 
    }
 

@@ -90,7 +90,7 @@ rma.peto(ai, bi, ci, di, n1i, n2i,
 
    A cumulative meta-analysis (i.e., adding one observation at a time) can be obtained with \code{\link[=cumul.rma.peto]{cumul}}.
 
-   Other extractor functions include \code{\link[=coef.rma]{coef}}, \code{\link[=vcov.rma]{vcov}}, \code{\link[=logLik.rma]{logLik}}, \code{\link[=deviance.rma]{deviance}}, \code{\link[=AIC.rma]{AIC}}, and \code{\link[=BIC.rma]{BIC}}.
+   Other extractor functions include \code{\link[=coef.rma]{coef}}, \code{\link[=vcov.rma]{vcov}}, \code{\link[=se.rma]{se}}, \code{\link[=logLik.rma]{logLik}}, \code{\link[=deviance.rma]{deviance}}, \code{\link[=AIC.rma]{AIC}}, and \code{\link[=BIC.rma]{BIC}}.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
