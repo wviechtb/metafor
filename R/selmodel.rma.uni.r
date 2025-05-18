@@ -238,7 +238,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
                tau2tol = min(vi/10, 1e-04), # threshold for treating tau^2 as effectively equal to 0 in the Hessian computation
                deltatol = 1e-04,      # threshold for treating deltas as effectively equal to 0 in the Hessian computation (only for stepfun)
                pval.min = NULL,       # minimum p-value to intergrate over (for selection models where this matters)
-               optimizer = "optim",   # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","solnp","alabama"/"constrOptim.nl","Rcgmin","Rvmmin")
+               optimizer = "optim",   # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","solnp","alabama"/"constrOptim.nl"/"auglag","Rcgmin","Rvmmin")
                optmethod = "BFGS",    # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),     # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,             # arguments for optimParallel()
@@ -261,7 +261,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
 
    verbose <- con$verbose
 
-   optimizer <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","solnp","alabama","constrOptim.nl","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent","Rcgmin","Rvmmin"))
+   optimizer <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","solnp","alabama","constrOptim.nl","auglag","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent","Rcgmin","Rvmmin"))
    optmethod <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
    if (optimizer %in% c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent")) {
       optmethod <- optimizer
@@ -323,9 +323,9 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
       if (optimizer == "optim" && optmethod=="BFGS") { # this is the default
          optimizer <- "solnp"
       } else {
-         if (!is.element(optimizer, c("solnp","nloptr","constrOptim.nl"))) {
+         if (!is.element(optimizer, c("solnp","nloptr","constrOptim.nl","auglag"))) {
             optimizer <- "solnp"
-            warning(mstyle$warning(paste0("Can only use optimizers 'solnp', 'nloptr', or 'constrOptim.nl' when type='stepcon' (resetting to '", optimizer, "').")), call.=FALSE)
+            warning(mstyle$warning(paste0("Can only use optimizers 'solnp', 'nloptr', 'constrOptim.nl', or 'auglag' when type='stepcon' (resetting to '", optimizer, "').")), call.=FALSE)
          }
       }
    }
@@ -1005,8 +1005,8 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
             wi.fun=wi.fun, steps=steps, pgrp=pgrp,
             alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=verbose, digits=digits, dofit=FALSE", ctrl.arg, ")\n")
 
-      if (optimizer == "alabama::constrOptim.nl")
-         optcall <- paste0("alabama::constrOptim.nl(par=c(beta.init, tau2.init, delta.init), fn=.selmodel.ll.stepfun,
+      if (is.element(optimizer, c("alabama::constrOptim.nl","alabama::auglag")))
+         optcall <- paste0(optimizer, "(par=c(beta.init, tau2.init, delta.init), fn=.selmodel.ll.stepfun,
             hin=.rma.selmodel.ineqfun.pos,
             yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
             deltas=deltas, delta.arg=delta, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,

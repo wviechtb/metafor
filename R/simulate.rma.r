@@ -29,21 +29,30 @@ simulate.rma <- function(object, nsim=1, seed=NULL, olim, ...) {
    if (nsim <= 0)
       stop(mstyle$stop("Argument 'nsim' must be >= 1."))
 
+   ddd <- list(...)
+
    #########################################################################
 
    ### fitted values
 
-   ftd <- c(object$X %*% object$beta)
+   pred <- c(object$X %*% object$beta)
+
+   if (isTRUE(ddd$withvb)) {
+      vcovpred <- symmpart(object$X %*% object$vb %*% t(object$X))
+   } else {
+      vcovpred <- matrix(0, nrow=nrow(object$X), ncol=nrow(object$X))
+   }
 
    ### simulate for rma.uni (and rma.ls) objects
 
    if (inherits(object, "rma.uni"))
-      val <- replicate(nsim, rnorm(object$k, mean=ftd, sd=sqrt(object$vi + object$tau2)))
+      val <- t(.mvrnorm(nsim, mu=pred, Sigma=vcovpred+object$M))
+      #val <- replicate(nsim, rnorm(object$k, mean=pred, sd=sqrt(object$vi + object$tau2)))
 
    ### simulate for rma.mv objects
 
    if (inherits(object, "rma.mv"))
-      val <- t(.mvrnorm(nsim, mu=ftd, Sigma=object$M))
+      val <- t(.mvrnorm(nsim, mu=pred, Sigma=vcovpred+object$M))
 
    ### apply observation/outcome limits if specified
 

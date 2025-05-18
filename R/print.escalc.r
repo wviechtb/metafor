@@ -37,25 +37,25 @@ print.escalc <- function(x, digits=attr(x,"digits"), ...) {
    ### round variables according to the digits argument
 
    if (length(yi.pos) > 0L)
-      x[yi.pos] <- apply(x[yi.pos], 2, fmtx, digits[["est"]])
+      x[yi.pos] <- lapply(x[yi.pos], fmtx, digits[["est"]])
 
    if (length(vi.pos) > 0L)
-      x[vi.pos] <- apply(x[vi.pos], 2, fmtx, digits[["var"]])
+      x[vi.pos] <- lapply(x[vi.pos], fmtx, digits[["var"]])
 
    if (length(sei.pos) > 0L)
-      x[sei.pos] <- apply(x[sei.pos], 2, fmtx, digits[["se"]])
+      x[sei.pos] <- lapply(x[sei.pos], fmtx, digits[["se"]])
 
    if (length(zi.pos) > 0L)
-      x[zi.pos] <- apply(x[zi.pos], 2, fmtx, digits[["test"]])
+      x[zi.pos] <- lapply(x[zi.pos], fmtx, digits[["test"]])
 
    if (length(pval.pos) > 0L)
-      x[pval.pos] <- apply(x[pval.pos], 2, fmtp, digits[["pval"]]) # note: using fmtp here
+      x[pval.pos] <- lapply(x[pval.pos], fmtp, digits[["pval"]]) # note: using fmtp here
 
    if (length(ci.lb.pos) > 0L)
-      x[ci.lb.pos] <- apply(x[ci.lb.pos], 2, fmtx, digits[["ci"]])
+      x[ci.lb.pos] <- lapply(x[ci.lb.pos], fmtx, digits[["ci"]])
 
    if (length(ci.ub.pos) > 0L)
-      x[ci.ub.pos] <- apply(x[ci.ub.pos], 2, fmtx, digits[["ci"]])
+      x[ci.ub.pos] <- lapply(x[ci.ub.pos], fmtx, digits[["ci"]])
 
    ### print data frame with styling
 

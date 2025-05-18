@@ -1198,7 +1198,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       con <- c(con,
           list(beta.init = NULL,               # initial values for location parameters (only relevant when optbeta=TRUE)
                hesspack = "numDeriv",          # package for computing the Hessian (numDeriv or pracma)
-               optimizer = "nlminb",           # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","solnp","alabama"/"constrOptim.nl","Rcgmin","Rvmmin")
+               optimizer = "nlminb",           # optimizer to use ("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","solnp","alabama"/"constrOptim.nl"/"auglag","Rcgmin","Rvmmin")
                optmethod = "BFGS",             # argument 'method' for optim() ("Nelder-Mead" and "BFGS" are sensible options)
                parallel = list(),              # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,                      # arguments for optimParallel()
@@ -1835,7 +1835,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       ### get optimizer arguments from control argument
 
-      optimizer <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","solnp","alabama","constrOptim.nl","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent","Rcgmin","Rvmmin"))
+      optimizer <- match.arg(con$optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","constrOptim","solnp","alabama","constrOptim.nl","auglag","Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent","Rcgmin","Rvmmin"))
       optmethod <- match.arg(con$optmethod, c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent"))
       if (optimizer %in% c("Nelder-Mead","BFGS","CG","L-BFGS-B","SANN","Brent")) {
          optmethod <- optimizer
@@ -1865,14 +1865,14 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          if (optimizer == "nlminb") {
             optimizer <- "constrOptim"
          } else {
-            if (!is.element(optimizer, c("constrOptim","solnp","nloptr","constrOptim.nl"))) {
+            if (!is.element(optimizer, c("constrOptim","solnp","nloptr","constrOptim.nl","auglag"))) {
                optimizer <- "constrOptim"
-               warning(mstyle$warning(paste0("Can only use optimizers 'constrOptim', 'solnp', 'nloptr', or 'constrOptim.nl' when link='identity' (resetting to '", optimizer, "').")), call.=FALSE)
+               warning(mstyle$warning(paste0("Can only use optimizers 'constrOptim', 'solnp', 'nloptr', 'constrOptim.nl', or 'auglag' when link='identity' (resetting to '", optimizer, "').")), call.=FALSE)
             }
          }
       }
 
-      if (link == "log" && is.element(optimizer, c("constrOptim","constrOptim.nl")))
+      if (link == "log" && is.element(optimizer, c("constrOptim","constrOptim.nl","auglag")))
          stop(mstyle$stop(paste0("Cannot use '", optimizer, "' optimizer when using a log link."))) # but can use solnp and nloptr
 
       reml <- ifelse(method[1] == "REML", TRUE, FALSE)
@@ -2165,8 +2165,8 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                               REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
                               tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
 
-         if (optimizer == "alabama::constrOptim.nl")
-            optcall <- paste0("alabama::constrOptim.nl(par=c(beta.init, alpha.init), fn=.ll.rma.ls, hin=.rma.ls.ineqfun.pos,
+         if (is.element(optimizer, c("alabama::constrOptim.nl","alabama::auglag")))
+            optcall <- paste0(optimizer, "(par=c(beta.init, alpha.init), fn=.ll.rma.ls, hin=.rma.ls.ineqfun.pos,
                               yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=verbose, digits=digits,
                               REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
                               tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")

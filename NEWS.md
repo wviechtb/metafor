@@ -1,4 +1,4 @@
-# metafor 4.9-6 (2025-05-08)
+# metafor 4.9-7 (2025-05-18)
 
 - added (undocumented) arguments `legend.cex`, `legend.pt.cex`, and `legend.inset` to `labbe()` for more control over the look of the legend
 

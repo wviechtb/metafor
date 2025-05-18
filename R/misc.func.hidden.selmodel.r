@@ -317,7 +317,7 @@
 
 ############################################################################
 
-.rma.selmodel.ineqfun.pos <- function(par, yi, vi, X, preci, k, pX, pvals,
+.rma.selmodel.ineqfun.pos <- function(par, yi, vi, X, preci, subset, k, pX, pvals,
                                       deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max, decreasing,
                                       tau2.arg, tau2.transf, tau2.max, beta.arg,
                                       wi.fun, steps, pgrp, alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {
@@ -335,7 +335,7 @@
 
 }
 
-.rma.selmodel.ineqfun.neg <- function(par, yi, vi, X, preci, k, pX, pvals,
+.rma.selmodel.ineqfun.neg <- function(par, yi, vi, X, preci, subset, k, pX, pvals,
                                       deltas, delta.arg, delta.transf, mapfun, delta.min, delta.max, decreasing,
                                       tau2.arg, tau2.transf, tau2.max, beta.arg,
                                       wi.fun, steps, pgrp, alternative, pval.min, intCtrl, verbose, digits, dofit=FALSE) {

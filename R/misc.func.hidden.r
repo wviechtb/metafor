@@ -1721,7 +1721,7 @@
          stop(mstyle$stop("Please install the 'Rsolnp' package to use this optimizer."), call.=FALSE)
    }
 
-   if (optimizer == "constrOptim.nl") {
+   if (is.element(optimizer, c("constrOptim.nl","auglag"))) {
       if (!requireNamespace("alabama", quietly=TRUE))
          stop(mstyle$stop("Please install the 'alabama' package to use this optimizer."), call.=FALSE)
    }
@@ -1786,9 +1786,9 @@
       ctrl.arg <- ", control=optcontrol"
    }
 
-   if (optimizer == "constrOptim.nl") {
+   if (is.element(optimizer, c("constrOptim.nl","auglag"))) {
       par.arg <- "par"
-      optimizer <- "alabama::constrOptim.nl"
+      optimizer <- paste0("alabama::", optimizer)
       if ("control.outer" %in% names(optcontrol)) {
          # can specify 'control.outer' to be passed to constrOptim.nl(), but when using
          # the 'method' argument, must escape " or use ' for this to work; for example:
@@ -1842,7 +1842,7 @@
    if (optimizer == "lbfgsb3c::lbfgsb3c" && is.null(opt.res$convergence)) # special provision for lbfgsb3c in case 'convergence' is missing
       opt.res$convergence <- -99
 
-   if (is.element(optimizer, c("optim","constrOptim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rsolnp::solnp","alabama::constrOptim.nl","optimx::Rcgmin","optimx:Rvmmin","optimParallel::optimParallel")) && opt.res$convergence != 0)
+   if (is.element(optimizer, c("optim","constrOptim","nlminb","dfoptim::hjk","dfoptim::nmk","lbfgsb3c::lbfgsb3c","subplex::subplex","BB::BBoptim","Rsolnp::solnp","alabama::constrOptim.nl","alabama::auglag","optimx::Rcgmin","optimx:Rvmmin","optimParallel::optimParallel")) && opt.res$convergence != 0)
       stop(mstyle$stop(paste0("Optimizer (", optimizer, ") did not achieve convergence (convergence = ", opt.res$convergence, ").")), call.=FALSE)
 
    if (is.element(optimizer, c("dfoptim::mads")) && opt.res$convergence > optcontrol$tol)
