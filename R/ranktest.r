@@ -139,7 +139,12 @@ ranktest <- function(x, vi, sei, subset, data, digits, ...) {
 
    vi.star <- vi - vb
    yi.star <- (yi - theta) / sqrt(vi.star)
-   res <- cor.test(yi.star, vi, method="kendall", exact=exact)
+   res <- suppressWarnings(cor.test(yi.star, vi, method="kendall", exact=exact))
+
+   # when k is large, using exact=TRUE can result in the p-value being NA
+
+   if (is.na(res$p.value))
+      res <- suppressWarnings(cor.test(yi.star, vi, method="kendall", exact=FALSE))
 
    pval <- res$p.value
    tau  <- res$estimate

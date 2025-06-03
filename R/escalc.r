@@ -519,8 +519,8 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
             pi.1 <- (ai+ci) / ni
             pi.2 <- (bi+di) / ni
 
-            if (!all(is.element(vtype, c("ST","LS","CS"))))
-               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'ST', 'LS', or 'CS'."))
+            if (!all(is.element(vtype, c("ST","CS","LS"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'ST', 'CS', or 'LS'."))
 
             for (i in seq_len(k)) {
 
@@ -534,7 +534,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
                }
 
                ### estimate of the sampling variance for cross-sectional/multinomial sampling
-               if (vtype[i] == "LS" || vtype[i] == "CS") {
+               if (vtype[i] == "CS" || vtype[i] == "LS") {
                   vi[i] <- 1/ni[i] * (1 - yi[i]^2 + yi[i]*(1+1/2*yi[i]^2) * (pi1.[i]-pi2.[i])*(pi.1[i]-pi.2[i]) / sqrt(pi1.[i]*pi2.[i]*pi.1[i]*pi.2[i]) -
                                       3/4 * yi[i]^2 * ((pi1.[i]-pi2.[i])^2/(pi1.[i]*pi2.[i]) + (pi.1[i]-pi.2[i])^2/(pi.1[i]*pi.2[i]))) # Yule, 1912, p.603
                }
@@ -1134,8 +1134,8 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
             vi <- rep(NA_real_, k)
 
-            if (!all(is.element(vtype, c("LS","ST","CS"))))
-               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'LS', 'ST', or 'CS'."))
+            if (!all(is.element(vtype, c("ST","CS","LS"))))
+               stop(mstyle$stop("For this outcome measure, 'vtype' must be either 'ST', 'CS', or 'LS'."))
 
             for (i in seq_len(k)) {
 

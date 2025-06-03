@@ -1,6 +1,6 @@
 .onAttach <- function(libname, pkgname) {
 
-   ver <- "4.9-7"
+   ver <- "4.9-8"
 
    loadmsg <- paste0("\nLoading the 'metafor' package (version ", ver, "). For an\nintroduction to the package please type: help(metafor)\n")
 
@@ -57,12 +57,20 @@
 
          # pull version number from CRAN
 
-         tmp <- suppressWarnings(try(readLines("https://cran.r-project.org/web/packages/metafor/index.html"), silent=TRUE))
+         #tmp <- suppressWarnings(try(readLines("https://cran.r-project.org/web/packages/metafor/index.html"), silent=TRUE))
+
+         #if (!inherits(tmp, "try-error")) {
+         #   available.ver <- tmp[grep("Version:", tmp, fixed=TRUE) + 1]
+         #   if (!is.na(available.ver) && length(available.ver) != 0L)
+         #      available.ver <- substr(available.ver, 5, nchar(available.ver)-5) # strip <td> and </td>
+         #}
+
+         tmp <- suppressWarnings(try(readLines("https://cran.r-project.org/web/packages/metafor/DESCRIPTION"), silent=TRUE))
 
          if (!inherits(tmp, "try-error")) {
-            available.ver <- tmp[grep("Version:", tmp, fixed=TRUE) + 1]
+            available.ver <- tmp[grep("Version:", tmp, fixed=TRUE)]
             if (!is.na(available.ver) && length(available.ver) != 0L)
-               available.ver <- substr(available.ver, 5, nchar(available.ver)-5) # strip <td> and </td>
+               available.ver <- substr(available.ver, 10, nchar(available.ver)) # strip Version:
          }
 
       }

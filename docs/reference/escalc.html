@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-8</span>
       </span>
     </div>
 
@@ -385,7 +385,7 @@
 <li><p><code>"YUY"</code> for <em>Yule's Y</em> (Yule, 1912),</p></li>
 <li><p><code>"RTET"</code> for the <em>tetrachoric correlation coefficient</em>.</p></li>
 </ul><p>There are also measures <code>"ZPHI"</code> and <code>"ZTET"</code> for applying Fisher's r-to-z transformation to these measures. This may be useful when combining these with other types of correlation coefficients that were r-to-z transformed. However, note that the r-to-z transformation is <em>not</em> a variance-stabilizing transformation for these measures.</p>
-<p>Tables with one or more zero counts are handled as described earlier. For <code>measure="PHI"</code>, one must indicate via <code>vtype="ST"</code> or <code>vtype="CS"</code> whether the data for the studies were obtained using stratified or cross-sectional (i.e., multinomial) sampling, respectively (it is also possible to specify an entire vector for the <code>vtype</code> argument in case the sampling scheme differed for the various studies).</p>
+<p>Tables with one or more zero counts are handled as described earlier. For <code>measure="PHI"</code>, one must indicate via <code>vtype="ST"</code> or <code>vtype="CS"</code> whether the data for the studies were obtained using stratified or cross-sectional (i.e., multinomial) sampling, respectively (it is also possible to specify an entire vector for the <code>vtype</code> argument in case the sampling scheme differed for the various studies). Note that <code>vtype="LS"</code> is treated like <code>vtype="CS"</code>.</p>
 <p>A dataset corresponding to data of this type is provided in <code><a href="https://wviechtb.github.io/metadat/reference/dat.bourassa1996.html" class="external-link">dat.bourassa1996</a></code>.</p>
 <p></p>
 </div>
@@ -400,7 +400,7 @@
 <li><p><code>"RBIS"</code> for the <em>biserial correlation coefficient</em>.</p></li>
 </ul><p>There are also measures <code>"ZPB"</code> and <code>"ZBIS"</code> for applying Fisher's r-to-z transformation to these measures. This may be useful when combining these with other types of correlation coefficients that were r-to-z transformed. However, note that the r-to-z transformation is <em>not</em> a variance-stabilizing transformation for these measures.</p>
 <p>If the means and standard deviations are unknown for some studies, one can also use arguments <code>di</code>, <code>ri</code>, <code>ti</code>, or <code>pi</code> to specify standardized mean differences (Cohen's d values), point-biserial correlations, t-statistics from an independent samples t-test, or signed p-values for the t-test, respectively, as described earlier under (1a) (together with the group sizes, these are sufficient statistics for computing the (point-)biserial correlation coefficients).</p>
-<p>For <code>measure="RPB"</code>, one must indicate via <code>vtype="ST"</code> or <code>vtype="CS"</code> whether the data for the studies were obtained using stratified or cross-sectional (i.e., multinomial) sampling, respectively (it is also possible to specify an entire vector for the <code>vtype</code> argument in case the sampling scheme differed for the various studies).</p>
+<p>For <code>measure="RPB"</code>, one must indicate via <code>vtype="ST"</code> or <code>vtype="CS"</code> whether the data for the studies were obtained using stratified or cross-sectional (i.e., multinomial) sampling, respectively (it is also possible to specify an entire vector for the <code>vtype</code> argument in case the sampling scheme differed for the various studies). Note that <code>vtype="LS"</code> is treated like <code>vtype="ST"</code>.</p>
 <p></p>
 </div>
 
@@ -921,7 +921,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
   <p class="preferably">Using <a href="https://preferably.amirmasoudabdol.name/?source=footer" class="external-link">preferably</a> template.</p>
 </div>
 
