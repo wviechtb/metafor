@@ -1,5 +1,5 @@
 forest.rma <- function(x,
-annotate=TRUE, addfit=TRUE, addpred=FALSE, predstyle="line", showweights=FALSE, header=TRUE,
+annotate=TRUE, addfit=TRUE, addpred=FALSE, predstyle="line", preddist, showweights=FALSE, header=TRUE,
 xlim, alim, olim, ylim, predlim, at, steps=5, level=x$level, refline=0, digits=2L, width,
 xlab, slab, mlab, ilab, ilab.lab, ilab.xpos, ilab.pos, order,
 transf, atransf, targs, rows,
@@ -110,6 +110,15 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (missing(predlim))
       predlim <- NULL
 
+   if (missing(preddist)) {
+      preddist <- NULL
+   } else {
+      if (!is.list(preddist) || length(preddist) < 2L)
+         stop(mstyle$stop("Argument 'preddist' must be a list (of length >= 2)."))
+      if (length(preddist[[1]]) != length(preddist[[2]]))
+         stop(mstyle$stop("The length of 'preddist[[1]]' does not match the length of 'preddist[[2]]'."))
+   }
+
    ### digits[1] for annotations, digits[2] for x-axis labels, digits[3] (if specified) for weights
    ### note: digits can also be a list (e.g., digits=list(2,3L)); trailing 0's on the x-axis labels
    ### are dropped if the value is an integer
@@ -121,14 +130,6 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       digits <- c(digits,digits[[1]])
 
    ddd <- list(...)
-
-   if (is.null(ddd$preddist)) {
-      preddist <- NULL
-   } else {
-      preddist <- ddd$preddist
-      if (!is.list(preddist))
-         stop(mstyle$stop("Argument 'preddist' must be a list."))
-   }
 
    ############################################################################
 
@@ -1005,8 +1006,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          beta.pi.lb <- predres$pi.lb
          beta.pi.ub <- predres$pi.ub
       } else {
-         dx  <- diff(preddist[[1]])[1]
-         cdf <- cumsum(preddist[[2]]) * dx
+         #dx  <- diff(preddist[[1]])[1]
+         #cdf <- cumsum(preddist[[2]]) * dx
+         cdf <- mapply(.trapezoid, preddist[[1]], preddist[[2]])
          cdf <- cdf / max(cdf)
          beta.pi.lb <- preddist[[1]][which.min(abs(cdf - level/2))]
          beta.pi.ub <- preddist[[1]][which.min(abs(cdf - (1-level/2)))]

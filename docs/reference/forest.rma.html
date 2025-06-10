@@ -96,7 +96,8 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'rma'</span></span>
-<span><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">x</span>, annotate<span class="op">=</span><span class="cn">TRUE</span>, addfit<span class="op">=</span><span class="cn">TRUE</span>, addpred<span class="op">=</span><span class="cn">FALSE</span>, predstyle<span class="op">=</span><span class="st">"line"</span>,</span>
+<span><span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">x</span>, annotate<span class="op">=</span><span class="cn">TRUE</span>, addfit<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>       addpred<span class="op">=</span><span class="cn">FALSE</span>, predstyle<span class="op">=</span><span class="st">"line"</span>, <span class="va">preddist</span>,</span>
 <span>       showweights<span class="op">=</span><span class="cn">FALSE</span>, header<span class="op">=</span><span class="cn">TRUE</span>,</span>
 <span>       <span class="va">xlim</span>, <span class="va">alim</span>, <span class="va">olim</span>, <span class="va">ylim</span>, <span class="va">predlim</span>, <span class="va">at</span>, steps<span class="op">=</span><span class="fl">5</span>,</span>
 <span>       level<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">level</span>, refline<span class="op">=</span><span class="fl">0</span>, digits<span class="op">=</span><span class="fl">2L</span>, <span class="va">width</span>,</span>
@@ -124,6 +125,9 @@
    <dt id="arg-predstyle">predstyle<a class="anchor" aria-label="anchor" href="#arg-predstyle"></a></dt>
 <dd><p>character string to specify the style of the prediction interval (either <code>"line"</code> (the default), <code>"polygon"</code>, <code>"bar"</code>, <code>"shade"</code>, or <code>"dist"</code>). Can be abbreviated. Setting this to something else than <code>"line"</code> automatically sets <code>addpred=TRUE</code>.</p></dd>
 
+   <dt id="arg-preddist">preddist<a class="anchor" aria-label="anchor" href="#arg-preddist"></a></dt>
+<dd><p>optional list of two elements to manually specify the predictive distribution.</p></dd>
+
    <dt id="arg-showweights">showweights<a class="anchor" aria-label="anchor" href="#arg-showweights"></a></dt>
 <dd><p>logical to specify whether the annotations should also include the weights given to the observed outcomes during the model fitting (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
 
@@ -143,7 +147,7 @@
 <dd><p>the y-axis limits of the plot. If unspecified, the function sets the y-axis limits to some sensible values. Can also be a single value to set the lower bound (while the upper bound is still set automatically).</p></dd>
 
    <dt id="arg-predlim">predlim<a class="anchor" aria-label="anchor" href="#arg-predlim"></a></dt>
-<dd><p>optional argument to specify the limits of the prediction distribution when <code>predstyle="dist"</code>.</p></dd>
+<dd><p>optional argument to specify the limits of the predictive distribution when <code>predstyle="dist"</code>.</p></dd>
 
    <dt id="arg-at">at<a class="anchor" aria-label="anchor" href="#arg-at"></a></dt>
 <dd><p>position of the x-axis tick marks and corresponding labels. If unspecified, the function sets the tick mark positions/labels to some sensible values.</p></dd>
@@ -253,9 +257,10 @@
 <p>Instead of showing the prediction interval as a dotted line (which corresponds to <code>predstyle="line"</code>), one can choose a different style via the <code>predstyle</code> argument:</p>
 <p></p><ul><li><p><code>predstyle="polygon"</code>: the prediction interval is shown as an additional polygon below the polygon for the pooled estimate,</p></li>
 <li><p><code>predstyle="bar"</code>: the prediction interval is shown as a bar below the polygon for the pooled estimate,</p></li>
-<li><p><code>predstyle="shade"</code>: the bar is shaded in color intensity in accordance with the density of the prediction distribution,</p></li>
-<li><p><code>predstyle="dist"</code>: the prediction distribution is shown and the regions beyond the prediction interval bounds are shaded in gray; the region below or above zero (depending on whether the pooled estimate is positive or negative) is also shaded in a lighter shade of gray.</p></li>
-</ul><p>In all of these cases, the prediction interval bounds are then also provided as part of the annotations. For <code>predstyle="dist"</code>, one can adjust the range of values for which the prediction distribution is shown via the <code>predlim</code> argument. Note that the shaded regions may not be visible depending on the location/shape of the distribution.</p>
+<li><p><code>predstyle="shade"</code>: the bar is shaded in color intensity in accordance with the density of the predictive distribution,</p></li>
+<li><p><code>predstyle="dist"</code>: the predictive distribution is shown and the regions beyond the prediction interval bounds are shaded in gray; the region below or above zero (depending on whether the pooled estimate is positive or negative) is also shaded in a lighter shade of gray.</p></li>
+</ul><p>In all of these cases, the prediction interval bounds are then also provided as part of the annotations. For <code>predstyle="dist"</code>, one can adjust the range of values for which the predictive distribution is shown via the <code>predlim</code> argument. Note that the shaded regions may not be visible depending on the location/shape of the distribution.</p>
+<p>Internally, <code><a href="predict.rma.html">predict</a></code> is used to obtain the prediction interval / predictive distribution. However, one can also specify the predictive distribution manually via argument <code>preddist</code> (this can be useful if the distribution was estimated via some other method). The list should contain two elements, the first containing the x-values and the second the corresponding densities. The bounds of the prediction interval are then obtained numerically by constructing the corresponding empirical cumulative distribution function (the range of x-values at which the densities are given should therefore be wide enough to span the entire distribution, so that tail areas can be accurately determined).</p>
 <p>For meta-regression models (i.e., models involving moderators), the fitted value for each study is added as a polygon to the plot. By default, the width of the polygons corresponds to the confidence interval limits for the fitted values. By setting <code>addpred=TRUE</code>, the width reflects the prediction interval limits. Again, the <code>col</code> and <code>border</code> arguments can be used to adjust the (border) color of the polygons. These polygons can be suppressed by setting <code>addfit=FALSE</code>.</p>
 <p>With the <code>transf</code> argument, the observed outcomes, pooled estimate, fitted values, confidence interval bounds, and prediction interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, one could use <code>transf=exp</code> to obtain a forest plot showing odds ratios. Note that when the transformation is non-linear (as is the case for <code>transf=exp</code>), the interval bounds will be asymmetric (which is visually not so appealing). Alternatively, one can use the <code>atransf</code> argument to transform the x-axis labels and annotations. For example, when using <code>atransf=exp</code>, the x-axis will correspond to a log scale. See <a href="transf.html">transf</a> for some other useful transformation functions in the context of a meta-analysis. The examples below illustrate the use of these arguments.</p>
 <p>By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row <em></em>\(k\), the second study in row <em></em>\(k-1\), and so on, until the last study, which is placed in the first row). The studies can be reordered with the <code>order</code> argument:</p>

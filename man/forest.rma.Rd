@@ -5,7 +5,8 @@
    Function to create forest plots for objects of class \code{"rma"}. \loadmathjax
 }
 \usage{
-\method{forest}{rma}(x, annotate=TRUE, addfit=TRUE, addpred=FALSE, predstyle="line",
+\method{forest}{rma}(x, annotate=TRUE, addfit=TRUE,
+       addpred=FALSE, predstyle="line", preddist,
        showweights=FALSE, header=TRUE,
        xlim, alim, olim, ylim, predlim, at, steps=5,
        level=x$level, refline=0, digits=2L, width,
@@ -20,13 +21,14 @@
    \item{addfit}{logical to specify whether the pooled estimate (for models without moderators) or fitted values (for models with moderators) should be added to the plot (the default is \code{TRUE}). See \sQuote{Details}.}
    \item{addpred}{logical to specify whether the prediction interval should be added to the plot (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{predstyle}{character string to specify the style of the prediction interval (either \code{"line"} (the default), \code{"polygon"}, \code{"bar"}, \code{"shade"}, or \code{"dist"}). Can be abbreviated. Setting this to something else than \code{"line"} automatically sets \code{addpred=TRUE}.}
+   \item{preddist}{optional list of two elements to manually specify the predictive distribution.}
    \item{showweights}{logical to specify whether the annotations should also include the weights given to the observed outcomes during the model fitting (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{header}{logical to specify whether column headings should be added to the plot (the default is \code{TRUE}). Can also be a character vector to specify the left and right headings (or only the left one).}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function sets the horizontal plot limits to some sensible values.}
    \item{alim}{the x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.}
    \item{olim}{optional argument to specify observation/outcome limits. If unspecified, no limits are used.}
    \item{ylim}{the y-axis limits of the plot. If unspecified, the function sets the y-axis limits to some sensible values. Can also be a single value to set the lower bound (while the upper bound is still set automatically).}
-   \item{predlim}{optional argument to specify the limits of the prediction distribution when \code{predstyle="dist"}.}
+   \item{predlim}{optional argument to specify the limits of the predictive distribution when \code{predstyle="dist"}.}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function sets the tick mark positions/labels to some sensible values.}
    \item{steps}{the number of tick marks for the x-axis (the default is 5). Ignored when the positions are specified via the \code{at} argument.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (see \link[=misc-options]{here} for details). The default is to take the value from the object.}
@@ -73,11 +75,13 @@
    \itemize{
    \item \code{predstyle="polygon"}: the prediction interval is shown as an additional polygon below the polygon for the pooled estimate,
    \item \code{predstyle="bar"}: the prediction interval is shown as a bar below the polygon for the pooled estimate,
-   \item \code{predstyle="shade"}: the bar is shaded in color intensity in accordance with the density of the prediction distribution,
-   \item \code{predstyle="dist"}: the prediction distribution is shown and the regions beyond the prediction interval bounds are shaded in gray; the region below or above zero (depending on whether the pooled estimate is positive or negative) is also shaded in a lighter shade of gray.
+   \item \code{predstyle="shade"}: the bar is shaded in color intensity in accordance with the density of the predictive distribution,
+   \item \code{predstyle="dist"}: the predictive distribution is shown and the regions beyond the prediction interval bounds are shaded in gray; the region below or above zero (depending on whether the pooled estimate is positive or negative) is also shaded in a lighter shade of gray.
    }
 
-   In all of these cases, the prediction interval bounds are then also provided as part of the annotations. For \code{predstyle="dist"}, one can adjust the range of values for which the prediction distribution is shown via the \code{predlim} argument. Note that the shaded regions may not be visible depending on the location/shape of the distribution.
+   In all of these cases, the prediction interval bounds are then also provided as part of the annotations. For \code{predstyle="dist"}, one can adjust the range of values for which the predictive distribution is shown via the \code{predlim} argument. Note that the shaded regions may not be visible depending on the location/shape of the distribution.
+
+   Internally, \code{\link[=predict.rma]{predict}} is used to obtain the prediction interval / predictive distribution. However, one can also specify the predictive distribution manually via argument \code{preddist} (this can be useful if the distribution was estimated via some other method). The list should contain two elements, the first containing the x-values and the second the corresponding densities. The bounds of the prediction interval are then obtained numerically by constructing the corresponding empirical cumulative distribution function (the range of x-values at which the densities are given should therefore be wide enough to span the entire distribution, so that tail areas can be accurately determined).
 
    For meta-regression models (i.e., models involving moderators), the fitted value for each study is added as a polygon to the plot. By default, the width of the polygons corresponds to the confidence interval limits for the fitted values. By setting \code{addpred=TRUE}, the width reflects the prediction interval limits. Again, the \code{col} and \code{border} arguments can be used to adjust the (border) color of the polygons. These polygons can be suppressed by setting \code{addfit=FALSE}.
 

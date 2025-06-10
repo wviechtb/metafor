@@ -1811,14 +1811,12 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
             R2s <- seq(0.0001, 0.9999, length=10^5)
 
-            trapezoid <- function(x,y) sum(diff(x)*(y[-1]+y[-length(y)]))/2
-
             for (i in seq_len(k)) {
 
                Fval <- (ni[i] - mi[i] - 1) / mi[i] * r2i[i] / (1 - r2i[i])
                ncps <- (mi[i] + ni[i]-mi[i]) * R2s / (1 - R2s)
                denFval <- sapply(ncps, function(ncp) df(Fval, df1=mi[i], df2=ni[i]-mi[i]-1, ncp=ncp))
-               denFval <- denFval / trapezoid(R2s, denFval)
+               denFval <- denFval / .trapezoid(R2s, denFval)
                vi[i] <- sum((R2s[2]-R2s[1])*R2s^2*denFval) - sum((R2s[2]-R2s[1])*R2s*denFval)^2
                #plot(R2s[denFval > sqrt(.Machine$double.eps)], denFval[denFval > sqrt(.Machine$double.eps)], type="l", lwd=5, bty="l", xlab="R^2", ylab="Density")
 

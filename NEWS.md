@@ -8,6 +8,8 @@
 
 - added `predstyle="polygon"` as another option for drawing the prediction interval (as a polygon like for the pooled estimate)
 
+- can now use the `preddist` argument in `forest.rma()` and `addpoly.default()` to provide the predictive distribution directly
+
 - fixed `permutest.rma.ls()` not running when `btt` and/or `att` is specified
 
 - `ranktest()` now also provides a p-value when the number of estimates is large
