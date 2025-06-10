@@ -19,7 +19,7 @@
    \item{annotate}{logical to specify whether annotations should be added to the plot (the default is \code{TRUE}).}
    \item{addfit}{logical to specify whether the pooled estimate (for models without moderators) or fitted values (for models with moderators) should be added to the plot (the default is \code{TRUE}). See \sQuote{Details}.}
    \item{addpred}{logical to specify whether the prediction interval should be added to the plot (the default is \code{FALSE}). See \sQuote{Details}.}
-   \item{predstyle}{character string to specify the style of the prediction interval (either \code{"line"} (the default), \code{"bar"}, \code{"shade"}, or \code{"dist"}). Can be abbreviated. Setting this to something else than \code{"line"} automatically sets \code{addpred=TRUE}.}
+   \item{predstyle}{character string to specify the style of the prediction interval (either \code{"line"} (the default), \code{"polygon"}, \code{"bar"}, \code{"shade"}, or \code{"dist"}). Can be abbreviated. Setting this to something else than \code{"line"} automatically sets \code{addpred=TRUE}.}
    \item{showweights}{logical to specify whether the annotations should also include the weights given to the observed outcomes during the model fitting (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{header}{logical to specify whether column headings should be added to the plot (the default is \code{TRUE}). Can also be a character vector to specify the left and right headings (or only the left one).}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function sets the horizontal plot limits to some sensible values.}
@@ -71,7 +71,8 @@
    Instead of showing the prediction interval as a dotted line (which corresponds to \code{predstyle="line"}), one can choose a different style via the \code{predstyle} argument:
 
    \itemize{
-   \item \code{predstyle="bar"}: the prediction interval is shown as a bar below the polygon,
+   \item \code{predstyle="polygon"}: the prediction interval is shown as an additional polygon below the polygon for the pooled estimate,
+   \item \code{predstyle="bar"}: the prediction interval is shown as a bar below the polygon for the pooled estimate,
    \item \code{predstyle="shade"}: the bar is shaded in color intensity in accordance with the density of the prediction distribution,
    \item \code{predstyle="dist"}: the prediction distribution is shown and the regions beyond the prediction interval bounds are shaded in gray; the region below or above zero (depending on whether the pooled estimate is positive or negative) is also shaded in a lighter shade of gray.
    }
@@ -143,7 +144,7 @@ text(c(-8.75, -5.25), res$k+2.8, c("Vaccinated", "Control"), cex=0.75, font=2)
 
    If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{olim} argument to enforce those limits (the observed outcomes and confidence/prediction intervals cannot exceed those bounds then).
 
-   The models without moderators, the \code{col} argument can also be a vector of two elements, the first for the color of the polygon, the second for the color of the line for the prediction interval. For \code{predstyle="bar"}, \code{col[2]} can be used to adjust the bar color and \code{border[2]} the border color. For \code{predstyle="shade"}, \code{col} can be a vector of up to three elements, where \code{col[2]} and \code{col[3]} specify the colors for the center and the ends of the shading region. For \code{predstyle="dist"}, \code{col} can be a vector of up to four elements, \code{col[2]} for the tail regions, \code{col[3]} for the color above/below zero, \code{col[4]} for the opposite side (transparent by default), and \code{border[2]} for the color of the lines. Setting a color to \code{NA} makes it transparent.
+   The models without moderators, the \code{col} argument can also be a vector of two elements, the first for the color of the polygon, the second for the color of the line for the prediction interval. For \code{predstyle="polygon"} and \code{predstyle="bar"}, \code{col[2]} can be used to adjust the polygon/bar color and \code{border[2]} the border color. For \code{predstyle="shade"}, \code{col} can be a vector of up to three elements, where \code{col[2]} and \code{col[3]} specify the colors for the center and the ends of the shading region. For \code{predstyle="dist"}, \code{col} can be a vector of up to four elements, \code{col[2]} for the tail regions, \code{col[3]} for the color above/below zero, \code{col[4]} for the opposite side (transparent by default), and \code{border[2]} for the color of the lines. Setting a color to \code{NA} makes it transparent.
 
    The \code{lty} argument can also be a vector of up to three elements, the first for specifying the line type of the individual CIs (\code{"solid"} by default), the second for the line type of the prediction interval (\code{"dotted"} by default), the third for the line type of the horizontal lines that are automatically added to the plot (\code{"solid"} by default; set to \code{"blank"} to remove them).
 }
@@ -202,6 +203,7 @@ forest(res, alim=c(-3,3), order=ablat)
 
 ### various ways to show the prediction interval
 forest(res, addpred=TRUE)
+forest(res, predstyle="polygon")
 forest(res, predstyle="bar")
 forest(res, predstyle="shade")
 forest(res, predstyle="dist")

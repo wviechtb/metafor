@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-10</span>
       </span>
     </div>
 
@@ -90,10 +90,11 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.9-8" id="metafor-49-8-2025-06-03">metafor 4.9-8 (2025-06-03)<a class="anchor" aria-label="anchor" href="#metafor-49-8-2025-06-03"></a></h2>
+<h2 class="page-header" data-toc-text="4.9-10" id="metafor-49-10-2025-06-10">metafor 4.9-10 (2025-06-10)<a class="anchor" aria-label="anchor" href="#metafor-49-10-2025-06-10"></a></h2>
 <ul><li><p>added (undocumented) arguments <code>legend.cex</code>, <code>legend.pt.cex</code>, and <code>legend.inset</code> to <code><a href="../reference/labbe.html">labbe()</a></code> for more control over the look of the legend</p></li>
 <li><p>fixed how <code>intercept</code> (when unspecified) is set in <code><a href="../reference/predict.rma.html">predict.rma.ls()</a></code> when using <code>newscale</code></p></li>
 <li><p>renamed <code>pi.type</code> argument to <code>predtype</code> (which is more consistent with the <code>predstyle</code> argument), but <code>pi.type</code> will continue to work for backwards compatibility</p></li>
+<li><p>added <code>predstyle="polygon"</code> as another option for drawing the prediction interval (as a polygon like for the pooled estimate)</p></li>
 <li><p>fixed <code><a href="../reference/permutest.html">permutest.rma.ls()</a></code> not running when <code>btt</code> and/or <code>att</code> is specified</p></li>
 <li><p><code><a href="../reference/ranktest.html">ranktest()</a></code> now also provides a p-value when the number of estimates is large</p></li>
 <li><p>added various methods for <code>matreg</code> objects</p></li>

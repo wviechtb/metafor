@@ -1,10 +1,12 @@
-# metafor 4.9-8 (2025-06-03)
+# metafor 4.9-10 (2025-06-10)
 
 - added (undocumented) arguments `legend.cex`, `legend.pt.cex`, and `legend.inset` to `labbe()` for more control over the look of the legend
 
 - fixed how `intercept` (when unspecified) is set in `predict.rma.ls()` when using `newscale`
 
 - renamed `pi.type` argument to `predtype` (which is more consistent with the `predstyle` argument), but `pi.type` will continue to work for backwards compatibility
+
+- added `predstyle="polygon"` as another option for drawing the prediction interval (as a polygon like for the pooled estimate)
 
 - fixed `permutest.rma.ls()` not running when `btt` and/or `att` is specified
 

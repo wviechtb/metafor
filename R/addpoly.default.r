@@ -79,10 +79,25 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
    if (missing(predstyle))
       predstyle <- "line"
 
-   predstyle <- match.arg(predstyle, c("line", "bar", "shade", "dist"))
+   predstyle <- match.arg(predstyle, c("line", "polygon", "bar", "shade", "dist"))
 
    if (missing(predlim))
       predlim <- NULL
+
+   if (is.null(ddd$preddist)) {
+      preddist <- NULL
+   } else {
+      if (k != 1)
+         stop(mstyle$stop("Can only use 'preddist' when plotting a single estimate."))
+      preddist <- ddd$preddist
+      if (!is.list(preddist))
+         stop(mstyle$stop("Argument 'preddist' must be a list."))
+      dx  <- diff(preddist[[1]])[1]
+      cdf <- cumsum(preddist[[2]]) * dx
+      cdf <- cdf / max(cdf)
+      pi.lb <- preddist[[1]][which.min(abs(cdf - pi.level/2))]
+      pi.ub <- preddist[[1]][which.min(abs(cdf - (1-pi.level/2)))]
+   }
 
    if (missing(efac))
       efac <- .getfromenv("forest", "efac", default=1)
@@ -90,9 +105,9 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
    ### vertical expansion factor: 1st = polygon(s), 2nd = PI end lines
 
    ### note: forest.rma() puts 'efac' into .metafor in the order:
-   ### 1st = CI/PI end lines, 2nd = arrows, 3rd = polygons, 4th = bar/shade/dist height
+   ### 1st = CI/PI end lines, 2nd = arrows, 3rd = polygons, 4th = polygon/bar/shade/dist height
    ### so need to pick out the 3rd and 1st/4th in that order
-   ### (so 1st = polygon, 2nd = PI end lines or bar/shade/dist height)
+   ### (so 1st = polygon, 2nd = PI end lines or polygon/bar/shade/dist height)
 
    if (predstyle == "line") {
 
@@ -101,12 +116,20 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
    } else {
 
-      if (length(efac) == 3L)
+      if (length(efac) == 4L)
          efac <- efac[c(3,4)]
 
    }
 
    efac <- .expand1(efac, 2L)
+
+   if (is.null(ddd$rowadj)) {
+      rowadj <- .getfromenv("forest", "rowadj", default=rep(0,3))
+   } else {
+      rowadj <- ddd$rowadj
+      if (length(rowadj) == 1L)
+         rowadj <- c(rowadj,rowadj)
+   }
 
    ### annotation symbols vector
 
@@ -141,7 +164,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
          col3 <- .coladj(par("bg","fg"), dark=0.20, light=-0.20)
       }
 
-      if (missing(col)) { # 1st = summary polygon, 2nd = PI line/bar / shade center / tails, 3rd = shade end / ><0 region, 4th = <>0 region
+      if (missing(col)) { # 1st = summary polygon, 2nd = PI line/polygon/bar / shade center / tails, 3rd = shade end / ><0 region, 4th = <>0 region
          col <- c(par("fg"), col2, col3, NA)
       } else {
          if (length(col) == 1L)
@@ -153,17 +176,10 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
       }
 
       if (missing(border)) {
-         border <- c(par("fg"), par("fg")) # 1st = summary polygon, 2nd = bar for predstyle="bar" and distribution for predstyle="dist"
+         border <- c(par("fg"), par("fg")) # 1st = summary polygon, 2nd = polygon for predstyle="polygon" / bar for predstyle="bar" / distribution for predstyle="dist"
       } else {
          if (length(border) == 1L)
             border <- c(border, par("fg")) # if user only specified one value, assume it is for the summary polygon
-      }
-
-      if (missing(border)) {
-         border <- c(par("fg"), par("fg")) # 1st = summary polygon, 2nd = bar for predstyle="bar"
-      } else {
-         if (length(border) == 1L)
-            border <- c(border, par("fg"))
       }
 
    } else {
@@ -194,7 +210,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
       if (predstyle == "line") {
          mlab <- rep("", k)
       } else {
-         if (predstyle %in% c("bar","shade"))
+         if (predstyle %in% c("polygon","bar","shade"))
             mlab <- c("", paste0("Prediction Interval", annosym[1], round(100*(1-pi.level),digits[[1]]), "% PI", annosym[3]))
          if (predstyle == "dist")
             mlab <- c("", paste0("Predictive Distribution", annosym[1], round(100*(1-pi.level),digits[[1]]), "% PI", annosym[3]))
@@ -206,18 +222,18 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
          if (length(mlab) != k)
             stop(mstyle$stop(paste0("Length of the 'mlab' argument (", length(mlab), ") does not correspond to the number of polygons to be plotted (", k, ").")))
       } else {
-         if (length(mlab) == 1L && predstyle %in% c("bar","shade"))
+         if (length(mlab) == 1L && predstyle %in% c("polygon","bar","shade"))
             mlab <- c(mlab, paste0("Prediction Interval", annosym[1], round(100*(1-pi.level),digits[[1]]), "% PI", annosym[3]))
          if (length(mlab) == 1L && predstyle == "dist")
             mlab <- c(mlab, paste0("Predictive Distribution", annosym[1], round(100*(1-pi.level),digits[[1]]), "% PI", annosym[3]))
       }
    }
 
-   lsegments <- function(..., cr.lb, cr.ub, addcred, pi.type, predtype, lcol, annosym, textpos) segments(...)
-   ltext     <- function(..., cr.lb, cr.ub, addcred, pi.type, predtype, lcol, annosym, textpos) text(...)
-   lpolygon  <- function(..., cr.lb, cr.ub, addcred, pi.type, predtype, lcol, annosym, textpos) polygon(...)
-   lrect     <- function(..., cr.lb, cr.ub, addcred, pi.type, predtype, lcol, annosym, textpos) rect(...)
-   llines    <- function(..., cr.lb, cr.ub, addcred, pi.type, predtype, lcol, annosym, textpos) lines(...)
+   lsegments <- function(..., cr.lb, cr.ub, addcred, pi.type, predtype, lcol, rowadj, annosym, textpos, preddist) segments(...)
+   ltext     <- function(..., cr.lb, cr.ub, addcred, pi.type, predtype, lcol, rowadj, annosym, textpos, preddist) text(...)
+   lpolygon  <- function(..., cr.lb, cr.ub, addcred, pi.type, predtype, lcol, rowadj, annosym, textpos, preddist) polygon(...)
+   lrect     <- function(..., cr.lb, cr.ub, addcred, pi.type, predtype, lcol, rowadj, annosym, textpos, preddist) rect(...)
+   llines    <- function(..., cr.lb, cr.ub, addcred, pi.type, predtype, lcol, rowadj, annosym, textpos, preddist) lines(...)
 
    ### set/get fonts (1st for labels, 2nd for annotations)
    ### when passing a named vector, the names are for 'family' and the values are for 'font'
@@ -278,21 +294,25 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
    }
 
-   if (hasArg(pi.lb) && hasArg(pi.ub) && !is.null(pi.lb) && !is.null(pi.ub)) {
+   if (is.null(preddist)) {
 
-      if (length(pi.lb) != length(pi.ub))
-         stop(mstyle$stop("Length of 'pi.lb' and 'pi.ub' are not the same."))
+      if (hasArg(pi.lb) && hasArg(pi.ub) && !is.null(pi.lb) && !is.null(pi.ub)) {
 
-      if (length(pi.lb) != k)
-         stop(mstyle$stop("Length of ('pi.lb', 'pi.ub') does not match the length of 'x'."))
+         if (length(pi.lb) != length(pi.ub))
+            stop(mstyle$stop("Length of 'pi.lb' and 'pi.ub' are not the same."))
 
-   } else {
+         if (length(pi.lb) != k)
+            stop(mstyle$stop("Length of ('pi.lb', 'pi.ub') does not match the length of 'x'."))
 
-      if (predstyle != "line")
-         stop(mstyle$stop("Cannot draw prediction interval if 'pi.lb' and 'pi.ub' are unspecified."))
+      } else {
 
-      pi.lb <- rep(NA_real_, k)
-      pi.ub <- rep(NA_real_, k)
+         if (predstyle != "line")
+            stop(mstyle$stop("Cannot draw prediction interval if 'pi.lb' and 'pi.ub' are unspecified."))
+
+         pi.lb <- rep(NA_real_, k)
+         pi.ub <- rep(NA_real_, k)
+
+      }
 
    }
 
@@ -424,13 +444,13 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
       if (is.function(atransf)) {
          if (is.null(targs)) {
-            if (predstyle %in% c("bar","shade","dist")) {
+            if (predstyle %in% c("polygon","bar","shade","dist")) {
                annotext <- cbind(sapply(c(yi, NA_real_), atransf), sapply(c(ci.lb, pi.lb), atransf), sapply(c(ci.ub, pi.ub), atransf))
             } else {
                annotext <- cbind(sapply(yi, atransf), sapply(ci.lb, atransf), sapply(ci.ub, atransf))
             }
          } else {
-            if (predstyle %in% c("bar","shade","dist")) {
+            if (predstyle %in% c("polygon","bar","shade","dist")) {
                annotext <- cbind(sapply(c(yi, NA_real_), atransf, targs), sapply(c(ci.lb, pi.lb), atransf, targs), sapply(c(ci.ub, pi.ub), atransf, targs))
             } else {
                annotext <- cbind(sapply(yi, atransf, targs), sapply(ci.lb, atransf, targs), sapply(ci.ub, atransf, targs))
@@ -444,7 +464,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
       } else {
 
-         if (predstyle %in% c("bar","shade","dist")) {
+         if (predstyle %in% c("polygon","bar","shade","dist")) {
             annotext <- cbind(c(yi, NA_real_), c(ci.lb, pi.lb), c(ci.ub, pi.ub))
          } else {
             annotext <- cbind(yi, ci.lb, ci.ub)
@@ -467,16 +487,16 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
       annotext <- cbind(annotext[,1], annosym[1], annotext[,2], annosym[2], annotext[,3], annosym[3])
 
       annotext <- apply(annotext, 1, paste, collapse="")
-      if (predstyle %in% c("bar","shade","dist"))
+      if (predstyle %in% c("polygon","bar","shade","dist"))
          annotext[2] <- gsub("NA", "", annotext[2], fixed=TRUE)
       annotext <- gsub("-", annosym[4], annotext, fixed=TRUE)
       annotext <- gsub(" ", annosym[5], annotext, fixed=TRUE)
 
       par(family=names(fonts)[2], font=fonts[2])
-      if (predstyle %in% c("bar","shade","dist")) {
-         ltext(x=textpos[2], c(rows[1],rows[2]), labels=annotext, pos=2, cex=cex, ...)
+      if (predstyle %in% c("polygon","bar","shade","dist")) {
+         ltext(x=textpos[2], c(rows[1],rows[2])+rowadj[2], labels=annotext, pos=2, cex=cex, ...)
       } else {
-         ltext(x=textpos[2], rows, labels=annotext, pos=2, cex=cex, ...)
+         ltext(x=textpos[2], rows+rowadj[2], labels=annotext, pos=2, cex=cex, ...)
       }
       par(family=names(fonts)[1], font=fonts[1])
 
@@ -497,6 +517,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
    piendheight <- height / 150 * cex * efac[2]
    barheight   <- min(0.25, height / 150 * cex * efac[2])
+   pipolheight <- (height / 100) * cex * efac[2]
 
    for (i in seq_len(k)) {
 
@@ -513,6 +534,12 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
       }
 
+      if (predstyle == "polygon") {
+
+         lpolygon(x=c(pi.lb[i], yi[i], pi.ub[i], yi[i]), y=c(rows[2], rows[2]+pipolheight, rows[2], rows[2]-pipolheight), col=col[2], border=border[2], ...)
+
+      }
+
       if (predstyle == "bar") {
 
          lrect(pi.lb[i], rows[2]-barheight, yi[i], rows[2]+barheight, col=col[2], border=border[2], ...)
@@ -522,7 +549,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
       if (predstyle %in% c("shade","dist")) {
 
-         if (is.null(pi.se))
+         if (is.null(preddist) && is.null(pi.se))
             stop(mstyle$stop("Cannot extract SE of the prediction interval."))
 
          if (is.function(transf)) {
@@ -532,7 +559,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
                stop(mstyle$stop("Chosen transformation not (currently) possible with this 'predstyle'."))
          }
 
-         if (pi.dist != "norm" && pi.ddf <= 1L)
+         if (is.null(preddist) && pi.dist != "norm" && pi.ddf <= 1L)
             stop(mstyle$stop("Cannot shade/draw prediction distribution when df <= 1."))
 
          if (predstyle == "shade") {
@@ -545,39 +572,61 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
             q.hi <- 0.9999
          }
 
-         if (is.null(predlim) || predstyle == "shade") {
-            if (pi.dist == "norm") {
-               crits <- qnorm(c(q.lo,q.hi), mean=yi.utransf[i], sd=pi.se)
-               xs <- seq(crits[1], crits[2], length.out=x.len)
-               ys <- dnorm(xs, mean=yi.utransf[i], sd=pi.se)
+         if (is.null(preddist)) {
+            if (is.null(predlim) || predstyle == "shade") {
+               if (pi.dist == "norm") {
+                  crits <- qnorm(c(q.lo,q.hi), mean=yi.utransf[i], sd=pi.se)
+                  xs <- seq(crits[1], crits[2], length.out=x.len)
+                  ys <- dnorm(xs, mean=yi.utransf[i], sd=pi.se)
+               } else {
+                  crits <- qt(c(q.lo,q.hi), df=pi.ddf) * pi.se + yi.utransf[i]
+                  xs <- seq(crits[1], crits[2], length.out=x.len)
+                  ys <- dt((xs - yi.utransf[i]) / pi.se, df=pi.ddf) / pi.se
+               }
             } else {
-               crits <- qt(c(q.lo,q.hi), df=pi.ddf) * pi.se + yi.utransf[i]
-               xs <- seq(crits[1], crits[2], length.out=x.len)
-               ys <- dt((xs - yi.utransf[i]) / pi.se, df=pi.ddf) / pi.se
+               if (length(predlim) != 2L)
+                  stop(mstyle$stop("Argument 'predlim' must be of length 2."))
+               xs <- seq(predlim[1], predlim[2], length.out=x.len)
+               if (is.function(transf)) {
+                  if (funmatch[1])
+                     xs <- suppressWarnings(log(xs))
+                  if (any(funmatch[2:3]))
+                     xs <- suppressWarnings(atanh(xs))
+                  if (any(funmatch[4:5]))
+                     xs <- suppressWarnings(qlogis(xs))
+                  if (funmatch[6])
+                     xs <- suppressWarnings(transf.arcsin(xs))
+                  if (funmatch[7])
+                     xs <- suppressWarnings(qnorm(xs))
+                  sel <- is.finite(xs) # FALSE for +-Inf and NA/NaN
+                  xs <- xs[sel]
+               }
+               if (pi.dist == "norm") {
+                  ys <- dnorm(xs, mean=yi.utransf[i], sd=pi.se)
+               } else {
+                  ys <- dt((xs - yi.utransf[i]) / pi.se, df=pi.ddf) / pi.se
+               }
             }
          } else {
-            if (length(predlim) != 2L)
-               stop(mstyle$stop("Argument 'predlim' must be of length 2."))
-            xs <- seq(predlim[1], predlim[2], length.out=x.len)
-            if (is.function(transf)) {
-               if (funmatch[1])
-                  xs <- suppressWarnings(log(xs))
-               if (any(funmatch[2:3]))
-                  xs <- suppressWarnings(atanh(xs))
-               if (any(funmatch[4:5]))
-                  xs <- suppressWarnings(qlogis(xs))
-               if (funmatch[6])
-                  xs <- suppressWarnings(transf.arcsin(xs))
-               if (funmatch[7])
-                  xs <- suppressWarnings(qnorm(xs))
-               sel <- is.finite(xs) # FALSE for +-Inf and NA/NaN
-               x.len <- sum(sel)
-               xs <- xs[sel]
-            }
-            if (pi.dist == "norm") {
-               ys <- dnorm(xs, mean=yi.utransf[i], sd=pi.se)
-            } else {
-               ys <- dt((xs - yi.utransf[i]) / pi.se, df=pi.ddf) / pi.se
+            xs <- preddist[[1]]
+            ys <- preddist[[2]]
+            if (!is.null(predlim)) {
+               if (length(predlim) != 2L)
+                  stop(mstyle$stop("Argument 'predlim' must be of length 2."))
+               if (is.function(transf)) {
+                  if (funmatch[1])
+                     predlim <- suppressWarnings(log(predlim))
+                  if (any(funmatch[2:3]))
+                     predlim <- suppressWarnings(atanh(predlim))
+                  if (any(funmatch[4:5]))
+                     predlim <- suppressWarnings(qlogis(predlim))
+                  if (funmatch[6])
+                     predlim <- suppressWarnings(transf.arcsin(predlim))
+                  if (funmatch[7])
+                     predlim <- suppressWarnings(qnorm(predlim))
+               }
+               ys <- ys[xs > predlim[1] & xs < predlim[2]]
+               xs <- xs[xs > predlim[1] & xs < predlim[2]]
             }
          }
 
@@ -636,13 +685,15 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
       if (predstyle == "dist") {
 
-         ys <- ys / max(ys) * efac[2]
+         ys <- ys / max(ys)
 
          if (is.null(predlim)) {
             sel <- ys > 0.005
          } else {
             sel <- rep(TRUE, length(ys))
          }
+
+         ys <- ys * efac[2]
 
          xs.sel.l0 <- xs[sel.l0 & sel]
          xs.sel.g0 <- xs[sel.g0 & sel]
@@ -696,10 +747,10 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
       if (!is.null(mlab)) {
 
-         ltext(x=textpos[1], rows[i], mlab[[i]], pos=4, cex=cex, ...)
+         ltext(x=textpos[1], rows[i]+rowadj[1], mlab[[i]], pos=4, cex=cex, ...)
 
-         if (predstyle %in% c("bar","shade","dist"))
-            ltext(textpos[1], rows[2], mlab[[2]], pos=4, cex=cex, ...)
+         if (predstyle %in% c("polygon","bar","shade","dist"))
+            ltext(textpos[1], rows[2]+rowadj[1], mlab[[2]], pos=4, cex=cex, ...)
 
       }
 

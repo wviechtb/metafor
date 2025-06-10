@@ -587,6 +587,12 @@ level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
          out$pi.dist <- "norm"
       }
       out$pi.se <- pi.se
+      attr(out$pi.lb, "level") <- level
+      attr(out$pi.lb, "dist") <- out$pi.dist
+      if (out$pi.dist == "t") {
+         attr(out$pi.lb, "ddf") <- out$pi.ddf
+      }
+      attr(out$pi.lb, "se") <- pi.se
    }
 
    class(out) <- c("predict.rma", "list.rma")

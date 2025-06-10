@@ -21,7 +21,7 @@
    \item{rows}{vector to specify the rows (or more generally, the positions) for plotting the polygons (defaults is \code{-1}). Can also be a single value to specify the row of the first polygon (the remaining polygons are then plotted below this starting row). When \code{predstyle} is not \code{"line"}, can also be a vector of two numbers, the first for the position of the polygon, the second for the position of the prediction interval/distribution.}
    \item{level}{optional numeric value between 0 and 100 to specify the confidence interval level (see \link[=misc-options]{here} for details).}
    \item{annotate}{optional logical to specify whether annotations should be added to the plot for the polygons that are drawn.}
-   \item{predstyle}{character string to specify the style of the prediction interval (either \code{"line"} (the default), \code{"bar"}, \code{"shade"}, or \code{"dist"}; the last three only when adding a single polygon). Can be abbreviated.}
+   \item{predstyle}{character string to specify the style of the prediction interval (either \code{"line"} (the default), \code{"polygon"}, \code{"bar"}, \code{"shade"}, or \code{"dist"}; the last three only when adding a single polygon). Can be abbreviated.}
    \item{predlim}{optional argument to specify the limits of the prediction distribution when \code{predstyle="dist"}.}
    \item{digits}{optional integer to specify the number of decimal places to which the annotations should be rounded.}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}

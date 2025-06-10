@@ -842,7 +842,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    ### put some additional stuff into .metafor, so that it can be used by addpoly()
 
    sav <- c(res, list(level=level, annotate=annotate, digits=digits[[1]], width=width,
-                      transf=transf, atransf=atransf, targs=targs,
+                      transf=transf, atransf=atransf, targs=targs, rowadj=rowadj,
                       fonts=fonts[1:2], annosym=annosym))
    try(assign("forest", sav, envir=.metafor), silent=TRUE)
 

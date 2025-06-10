@@ -17,7 +17,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
    if (missing(predstyle)) {
       predstyle <- "line"
    } else {
-      predstyle <- match.arg(predstyle, c("line", "bar", "shade", "dist"))
+      predstyle <- match.arg(predstyle, c("line", "polygon", "bar", "shade", "dist"))
       addpred <- TRUE
    }
 

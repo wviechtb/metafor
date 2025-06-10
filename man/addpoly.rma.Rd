@@ -15,7 +15,7 @@
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (see \link[=misc-options]{here} for details). The default is to take the value from the object.}
    \item{annotate}{optional logical to specify whether annotations for the pooled estimate should be added to the plot.}
    \item{addpred}{logical to specify whether the prediction interval should be added to the plot (the default is \code{FALSE}).}
-   \item{predstyle}{character string to specify the style of the prediction interval (either \code{"line"}, \code{"bar"}, \code{"shade"}, or \code{"dist"}). Can be abbreviated. Setting this argument automatically sets \code{addpred=TRUE}.}
+   \item{predstyle}{character string to specify the style of the prediction interval (either \code{"line"}, \code{"polygon"}, \code{"bar"}, \code{"shade"}, or \code{"dist"}). Can be abbreviated. Setting this argument automatically sets \code{addpred=TRUE}.}
    \item{predlim}{optional argument to specify the limits of the prediction distribution when \code{predstyle="dist"}.}
    \item{digits}{optional integer to specify the number of decimal places to which the annotations should be rounded.}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations.}
