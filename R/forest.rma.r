@@ -1006,12 +1006,14 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          beta.pi.lb <- predres$pi.lb
          beta.pi.ub <- predres$pi.ub
       } else {
-         #dx  <- diff(preddist[[1]])[1]
-         #cdf <- cumsum(preddist[[2]]) * dx
-         cdf <- mapply(.trapezoid, preddist[[1]], preddist[[2]])
+         pdxs <- preddist[[1]]
+         pdys <- preddist[[2]]
+         #dx  <- diff(pdxs)[1]
+         #cdf <- cumsum(pdys) * dx
+         cdf <- cumsum(diff(pdxs) * (pdys[-1]+pdys[-length(pdys)])/2)
          cdf <- cdf / max(cdf)
-         beta.pi.lb <- preddist[[1]][which.min(abs(cdf - level/2))]
-         beta.pi.ub <- preddist[[1]][which.min(abs(cdf - (1-level/2)))]
+         beta.pi.lb <- pdxs[which.min(abs(cdf - level/2))]
+         beta.pi.ub <- pdxs[which.min(abs(cdf - (1-level/2)))]
       }
 
       if (is.function(transf)) {

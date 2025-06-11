@@ -90,14 +90,17 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
       if (k != 1)
          stop(mstyle$stop("Can only use 'preddist' when plotting a single estimate."))
       preddist <- ddd$preddist
-      if (!is.list(preddist))
-         stop(mstyle$stop("Argument 'preddist' must be a list."))
-      #dx  <- diff(preddist[[1]])[1]
-      #cdf <- cumsum(preddist[[2]]) * dx
-      cdf <- mapply(.trapezoid, preddist[[1]], preddist[[2]])
+      if (!is.list(preddist) || length(preddist) < 2L)
+         stop(mstyle$stop("Argument 'preddist' must be a list (of length >= 2)."))
+      pdxs <- preddist[[1]]
+      pdys <- preddist[[2]]
+      #dx  <- diff(pdxs)[1]
+      #cdf <- cumsum(pdys) * dx
+      cdf <- cumsum(diff(pdxs) * (pdys[-1]+pdys[-length(pdys)])/2)
       cdf <- cdf / max(cdf)
-      pi.lb <- preddist[[1]][which.min(abs(cdf - pi.level/2))]
-      pi.ub <- preddist[[1]][which.min(abs(cdf - (1-pi.level/2)))]
+      pi.lb <- pdxs[which.min(abs(cdf - pi.level/2))]
+      pi.ub <- pdxs[which.min(abs(cdf - (1-pi.level/2)))]
+
    }
 
    if (missing(efac))
