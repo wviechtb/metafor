@@ -92,15 +92,10 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
       preddist <- ddd$preddist
       if (!is.list(preddist) || length(preddist) < 2L)
          stop(mstyle$stop("Argument 'preddist' must be a list (of length >= 2)."))
-      pdxs <- preddist[[1]]
-      pdys <- preddist[[2]]
-      #dx  <- diff(pdxs)[1]
-      #cdf <- cumsum(pdys) * dx
-      cdf <- cumsum(diff(pdxs) * (pdys[-1]+pdys[-length(pdys)])/2)
-      cdf <- cdf / max(cdf)
-      pi.lb <- pdxs[which.min(abs(cdf - pi.level/2))]
-      pi.ub <- pdxs[which.min(abs(cdf - (1-pi.level/2)))]
-
+      if (length(preddist[[1]]) != length(preddist[[2]]))
+         stop(mstyle$stop("Length of 'preddist[[1]]' does not match the length of 'preddist[[2]]'."))
+      if (!is.null(preddist$level))
+         pi.level <- .level(preddist$level)
    }
 
    if (missing(efac))
@@ -318,6 +313,24 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
       }
 
+   } else {
+
+      pdxs <- preddist[[1]]
+      pdys <- preddist[[2]]
+      #dx  <- diff(pdxs)[1]
+      #cdf <- cumsum(pdys) * dx
+      cdf <- cumsum(diff(pdxs) * (pdys[-1]+pdys[-length(pdys)])/2)
+      cdf <- cdf / max(cdf)
+      if (is.null(preddist$pi.lb)) {
+         pi.lb <- pdxs[which.min(abs(cdf - pi.level/2))]
+      } else {
+         pi.lb <- preddist$pi.lb
+      }
+      if (is.null(preddist$pi.ub)) {
+         pi.ub <- pdxs[which.min(abs(cdf - (1-pi.level/2)))]
+      } else {
+         pi.ub <- preddist$pi.ub
+      }
    }
 
    ### set rows value

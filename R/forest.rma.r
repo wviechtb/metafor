@@ -101,6 +101,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       cex.axis <- NULL
 
    level <- .level(level)
+   predlevel <- level # needed when using preddist and it has pi.lb/pi.ub and level elements
 
    predstyle <- match.arg(predstyle, c("line", "polygon", "bar", "shade", "dist"))
 
@@ -116,7 +117,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       if (!is.list(preddist) || length(preddist) < 2L)
          stop(mstyle$stop("Argument 'preddist' must be a list (of length >= 2)."))
       if (length(preddist[[1]]) != length(preddist[[2]]))
-         stop(mstyle$stop("The length of 'preddist[[1]]' does not match the length of 'preddist[[2]]'."))
+         stop(mstyle$stop("Length of 'preddist[[1]]' does not match the length of 'preddist[[2]]'."))
    }
 
    ### digits[1] for annotations, digits[2] for x-axis labels, digits[3] (if specified) for weights
@@ -1012,8 +1013,18 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          #cdf <- cumsum(pdys) * dx
          cdf <- cumsum(diff(pdxs) * (pdys[-1]+pdys[-length(pdys)])/2)
          cdf <- cdf / max(cdf)
-         beta.pi.lb <- pdxs[which.min(abs(cdf - level/2))]
-         beta.pi.ub <- pdxs[which.min(abs(cdf - (1-level/2)))]
+         if (is.null(preddist$pi.lb)) {
+            beta.pi.lb <- pdxs[which.min(abs(cdf - level/2))]
+         } else {
+            beta.pi.lb <- preddist$pi.lb
+         }
+         if (is.null(preddist$pi.ub)) {
+            beta.pi.ub <- pdxs[which.min(abs(cdf - (1-level/2)))]
+         } else {
+            beta.pi.ub <- preddist$pi.ub
+         }
+         if (!is.null(preddist$level))
+            predlevel <- .level(preddist$level)
       }
 
       if (is.function(transf)) {
@@ -1322,9 +1333,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          #mlab <- sapply(x$method, switch, "FE"="FE Model", "EE"="EE Model", "CE"="CE Model", "RE Model", USE.NAMES=FALSE)
 
       if (length(mlab) == 1L && predstyle %in% c("polygon","bar","shade"))
-         mlab <- c(mlab, paste0("Prediction Interval", annosym[1], round(100*(1-level),digits[[1]]), "% PI", annosym[3]))
+         mlab <- c(mlab, paste0("Prediction Interval", annosym[1], round(100*(1-predlevel),digits[[1]]), "% PI", annosym[3]))
       if (length(mlab) == 1L && predstyle == "dist")
-         mlab <- c(mlab, paste0("Predictive Distribution", annosym[1], round(100*(1-level),digits[[1]]), "% PI", annosym[3]))
+         mlab <- c(mlab, paste0("Predictive Distribution", annosym[1], round(100*(1-predlevel),digits[[1]]), "% PI", annosym[3]))
 
       ltext(textpos[1], -1+rowadj[1], mlab[[1]], pos=4, cex=cex, ...)
 

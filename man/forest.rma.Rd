@@ -31,7 +31,7 @@
    \item{predlim}{optional argument to specify the limits of the predictive distribution when \code{predstyle="dist"}.}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function sets the tick mark positions/labels to some sensible values.}
    \item{steps}{the number of tick marks for the x-axis (the default is 5). Ignored when the positions are specified via the \code{at} argument.}
-   \item{level}{numeric value between 0 and 100 to specify the confidence interval level (see \link[=misc-options]{here} for details). The default is to take the value from the object.}
+   \item{level}{numeric value between 0 and 100 to specify the confidence (and prediction) interval level (see \link[=misc-options]{here} for details). The default is to take the value from the object.}
    \item{refline}{numeric value to specify the location of the vertical \sQuote{reference} line (the default is 0). The line can be suppressed by setting this argument to \code{NA}. Can also be a vector to add multiple lines.}
    \item{digits}{integer to specify the number of decimal places to which the annotations and tick mark labels of the x-axis should be rounded (the default is \code{2L}). Can also be a vector of two integers, the first to specify the number of decimal places for the annotations, the second for the x-axis labels (when \code{showweights=TRUE}, can also specify a third value for the weights). When specifying an integer (e.g., \code{2L}), trailing zeros after the decimal mark are dropped for the x-axis labels. When specifying a numeric value (e.g., \code{2}), trailing zeros are retained.}
    \item{width}{optional integer to manually adjust the width of the columns for the annotations (either a single integer or a vector of the same length as the number of annotation columns).}
@@ -64,50 +64,75 @@
    \item{\dots}{other arguments.}
 }
 \details{
+
    The plot shows the observed effect sizes or outcomes (by default as filled squares) with corresponding \code{level}\% confidence intervals (as horizontal lines extending from the observed outcomes). The confidence intervals are computed with \mjeqn{y_i \pm z_{crit} \sqrt{v_i}}{y_i ± z_crit \sqrt{v_i}}, where \mjseqn{y_i} denotes the observed outcome in the \mjeqn{i\text{th}}{ith} study, \mjseqn{v_i} the corresponding sampling variance (and hence \mjseqn{\sqrt{v_i}} is the corresponding standard error), and \mjeqn{z_{crit}}{z_crit} is the appropriate critical value from a standard normal distribution (e.g., \mjseqn{1.96} for a 95\% CI).
 
-   For an equal- and a random-effects model (i.e., for models without moderators), a four-sided polygon, sometimes called a summary \sQuote{diamond}, is added to the bottom of the forest plot, showing the pooled estimate based on the model (with the center of the polygon corresponding to the estimate and the left/right edges indicating the confidence interval limits). The \code{col} and \code{border} arguments can be used to adjust the (border) color of the polygon. Drawing of the polgyon can be suppressed by setting \code{addfit=FALSE}.
+   \subsection{Equal- and Random-Effects Models}{
 
-   For random-effects models and if \code{addpred=TRUE}, a dotted line is added to the polygon which indicates the bounds of the prediction interval (Riley et al., 2011). For random-effects models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) with multiple \mjseqn{\tau^2} values, the \code{addpred} argument can be used to specify for which level of the inner factor the prediction interval should be provided (since the intervals differ depending on the \mjseqn{\tau^2} value). If the model also contains multiple \mjseqn{\gamma^2} values, the \code{addpred} argument should then be of length 2 to specify the levels of both inner factors. See also \code{\link[=predict.rma]{predict}}, which is used to compute these interval bounds.
+      For an equal- and a random-effects model (i.e., for models without moderators), a four-sided polygon, sometimes called a summary \sQuote{diamond}, is added to the bottom of the forest plot, showing the pooled estimate based on the model (with the center of the polygon corresponding to the estimate and the left/right edges indicating the confidence interval limits). The \code{col} and \code{border} arguments can be used to adjust the (border) color of the polygon. Drawing of the polygon can be suppressed by setting \code{addfit=FALSE}.
 
-   Instead of showing the prediction interval as a dotted line (which corresponds to \code{predstyle="line"}), one can choose a different style via the \code{predstyle} argument:
-
-   \itemize{
-   \item \code{predstyle="polygon"}: the prediction interval is shown as an additional polygon below the polygon for the pooled estimate,
-   \item \code{predstyle="bar"}: the prediction interval is shown as a bar below the polygon for the pooled estimate,
-   \item \code{predstyle="shade"}: the bar is shaded in color intensity in accordance with the density of the predictive distribution,
-   \item \code{predstyle="dist"}: the predictive distribution is shown and the regions beyond the prediction interval bounds are shaded in gray; the region below or above zero (depending on whether the pooled estimate is positive or negative) is also shaded in a lighter shade of gray.
    }
 
-   In all of these cases, the prediction interval bounds are then also provided as part of the annotations. For \code{predstyle="dist"}, one can adjust the range of values for which the predictive distribution is shown via the \code{predlim} argument. Note that the shaded regions may not be visible depending on the location/shape of the distribution.
+   \subsection{Prediction Interval for Random-Effects Models}{
 
-   Internally, \code{\link[=predict.rma]{predict}} is used to obtain the prediction interval / predictive distribution. However, one can also specify the predictive distribution manually via argument \code{preddist} (this can be useful if the distribution was estimated via some other method). The list should contain two elements, the first containing the x-values and the second the corresponding densities. The bounds of the prediction interval are then obtained numerically by constructing the corresponding empirical cumulative distribution function (the range of x-values at which the densities are given should therefore be wide enough to span the entire distribution, so that tail areas can be accurately determined).
+      For random-effects models and if \code{addpred=TRUE}, a dotted line is added to the polygon which indicates the bounds of the prediction interval (Riley et al., 2011). For random-effects models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) with multiple \mjseqn{\tau^2} values, the \code{addpred} argument can be used to specify for which level of the inner factor the prediction interval should be provided (since the intervals differ depending on the \mjseqn{\tau^2} value). If the model also contains multiple \mjseqn{\gamma^2} values, the \code{addpred} argument should then be of length 2 to specify the levels of both inner factors. See also \code{\link[=predict.rma]{predict}}, which is used to compute these interval bounds.
 
-   For meta-regression models (i.e., models involving moderators), the fitted value for each study is added as a polygon to the plot. By default, the width of the polygons corresponds to the confidence interval limits for the fitted values. By setting \code{addpred=TRUE}, the width reflects the prediction interval limits. Again, the \code{col} and \code{border} arguments can be used to adjust the (border) color of the polygons. These polygons can be suppressed by setting \code{addfit=FALSE}.
+      Instead of showing the prediction interval as a dotted line (which corresponds to \code{predstyle="line"}), one can choose a different style via the \code{predstyle} argument:
 
-   With the \code{transf} argument, the observed outcomes, pooled estimate, fitted values, confidence interval bounds, and prediction interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, one could use \code{transf=exp} to obtain a forest plot showing odds ratios. Note that when the transformation is non-linear (as is the case for \code{transf=exp}), the interval bounds will be asymmetric (which is visually not so appealing). Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations. For example, when using \code{atransf=exp}, the x-axis will correspond to a log scale. See \link{transf} for some other useful transformation functions in the context of a meta-analysis. The examples below illustrate the use of these arguments.
+      \itemize{
+      \item \code{predstyle="polygon"}: the prediction interval is shown as an additional polygon below the polygon for the pooled estimate,
+      \item \code{predstyle="bar"}: the prediction interval is shown as a bar below the polygon for the pooled estimate,
+      \item \code{predstyle="shade"}: the bar is shaded in color intensity in accordance with the density of the predictive distribution,
+      \item \code{predstyle="dist"}: the entire predictive distribution is shown and the regions beyond the prediction interval bounds are shaded in gray; the region below or above zero (depending on whether the pooled estimate is positive or negative) is also shaded in a lighter shade of gray.
+      }
 
-   By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \mjseqn{k}, the second study in row \mjseqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{order} argument:
+      In all of these cases, the prediction interval bounds are then also provided as part of the annotations. For \code{predstyle="dist"}, one can adjust the range of values for which the predictive distribution is shown via the \code{predlim} argument. Note that the shaded regions may not be visible depending on the location/shape of the distribution.
 
-   \itemize{
-   \item \code{order="obs"}: the studies are ordered by the observed outcomes,
-   \item \code{order="fit"}: the studies are ordered by the fitted values,
-   \item \code{order="prec"}: the studies are ordered by their sampling variances,
-   \item \code{order="resid"}: the studies are ordered by the size of their residuals,
-   \item \code{order="rstandard"}: the studies are ordered by the size of their standardized residuals,
-   \item \code{order="abs.resid"}: the studies are ordered by the size of their absolute residuals,
-   \item \code{order="abs.rstandard"}: the studies are ordered by the size of their absolute standardized residuals.
+      Internally, \code{\link[=predict.rma]{predict}} is used to obtain the prediction interval / predictive distribution. However, one can also specify the predictive distribution manually via argument \code{preddist} (this can be useful if the distribution was estimated via some other method). The list should contain two elements, the first containing the x-values and the second the corresponding densities. The examples below illustrate the use of these arguments.
+
+      When using \code{preddist}, the bounds of the prediction interval are by default obtained numerically by constructing the corresponding empirical cumulative distribution function (the range of x-values at which the densities are given should therefore be wide enough to span the entire distribution, so that tail areas can be accurately determined). However, if \code{preddist} contains elements \code{pi.lb} and \code{pi.ub} (and optionally element \code{level} for the prediction interval level), then these are taken as the prediction interval bounds.
+
    }
 
-   Alternatively, it is also possible to set \code{order} equal to a variable based on which the studies will be ordered. One can also use the \code{rows} argument to specify the rows (or more generally, the positions) for plotting the outcomes.
+   \subsection{Meta-Regression Models}{
 
-   Additional columns with information about the studies can be added to the plot via the \code{ilab} argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The \code{ilab.xpos} argument can be used to specify the horizontal position of the variables specified via \code{ilab}. The \code{ilab.pos} argument can be used to specify how the variables should be aligned. The \code{ilab.lab} argument can be used to add headers to the columns.
+      For meta-regression models (i.e., models involving moderators), the fitted value for each study is added as a polygon to the plot. By default, the width of the polygons corresponds to the confidence interval limits for the fitted values. By setting \code{addpred=TRUE}, the width reflects the prediction interval limits. Again, the \code{col} and \code{border} arguments can be used to adjust the (border) color of the polygons. These polygons can be suppressed by setting \code{addfit=FALSE}.
 
-   \if{html}{The figure below illustrates how the elements in a forest plot are arranged and the meaning of the some of the arguments such as \code{xlim}, \code{alim}, \code{at}, \code{ilab}, \code{ilab.xpos}, and \code{ilab.lab}.}
+   }
 
-   \if{html}{\figure{forest-arrangement.png}{options: width=800}}
+   \subsection{Applying a Transformation}{
 
-   \if{html}{The figure corresponds to the following code: \preformatted{dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
+      With the \code{transf} argument, the observed outcomes, pooled estimate, fitted values, confidence interval bounds, and prediction interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, one could use \code{transf=exp} to obtain a forest plot showing odds ratios. Note that when the transformation is non-linear (as is the case for \code{transf=exp}), the interval bounds will be asymmetric (which is visually not so appealing). Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations. For example, when using \code{atransf=exp}, the x-axis will correspond to a log scale. See \link{transf} for some other useful transformation functions in the context of a meta-analysis. See below for examples.
+
+   }
+
+   \subsection{Ordering of Studies}{
+
+      By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \mjseqn{k}, the second study in row \mjseqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{order} argument:
+
+      \itemize{
+      \item \code{order="obs"}: the studies are ordered by the observed outcomes,
+      \item \code{order="fit"}: the studies are ordered by the fitted values,
+      \item \code{order="prec"}: the studies are ordered by their sampling variances,
+      \item \code{order="resid"}: the studies are ordered by the size of their residuals,
+      \item \code{order="rstandard"}: the studies are ordered by the size of their standardized residuals,
+      \item \code{order="abs.resid"}: the studies are ordered by the size of their absolute residuals,
+      \item \code{order="abs.rstandard"}: the studies are ordered by the size of their absolute standardized residuals.
+      }
+
+      Alternatively, it is also possible to set \code{order} equal to a variable based on which the studies will be ordered. One can also use the \code{rows} argument to specify the rows (or more generally, the positions) for plotting the outcomes.
+
+   }
+
+   \subsection{Adding Additional Information to the Plot}{
+
+      Additional columns with information about the studies can be added to the plot via the \code{ilab} argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The \code{ilab.xpos} argument can be used to specify the horizontal position of the variables specified via \code{ilab}. The \code{ilab.pos} argument can be used to specify how the variables should be aligned. The \code{ilab.lab} argument can be used to add headers to the columns.
+
+      \if{html}{The figure below illustrates how the elements in a forest plot are arranged and the meaning of the some of the arguments such as \code{xlim}, \code{alim}, \code{at}, \code{ilab}, \code{ilab.xpos}, and \code{ilab.lab}.}
+
+      \if{html}{\figure{forest-arrangement.png}{options: width=800}}
+
+      \if{html}{The figure corresponds to the following code: \preformatted{dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
               slab=paste(author, year, sep=", "), data=dat.bcg)
 res <- rma(yi, vi, data=dat)
 forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1), shade=TRUE,
@@ -116,11 +141,11 @@ forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1), shade=TRUE,
 text(c(-8.75, -5.25), res$k+2.8, c("Vaccinated", "Control"), cex=0.75, font=2)
 }}
 
-   \if{latex}{The figure below illustrates how the elements in a forest plot are arranged and the meaning of the some of the arguments such as \code{xlim}, \code{alim}, \code{at}, \code{ilab}, \code{ilab.xpos}, and \code{ilab.lab}.
+      \if{latex}{The figure below illustrates how the elements in a forest plot are arranged and the meaning of the some of the arguments such as \code{xlim}, \code{alim}, \code{at}, \code{ilab}, \code{ilab.xpos}, and \code{ilab.lab}.
 
-   \figure{forest-arrangement.pdf}{options: width=5.5in}
+      \figure{forest-arrangement.pdf}{options: width=5.5in}
 
-   The figure corresponds to the following code: \preformatted{dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
+      The figure corresponds to the following code: \preformatted{dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg,
               slab=paste(author, year, sep=", "), data=dat.bcg)
 res <- rma(yi, vi, data=dat)
 forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1), shade=TRUE,
@@ -129,13 +154,24 @@ forest(res, addpred=TRUE, xlim=c(-16,7), at=seq(-3,2,by=1), shade=TRUE,
 text(c(-8.75, -5.25), res$k+2.8, c("Vaccinated", "Control"), cex=0.75, font=2)
 }}
 
-   Additional pooled estimates can be added to the plot as polygons with the \code{\link{addpoly}} function. See the documentation for that function for examples.
+      Additional pooled estimates can be added to the plot as polygons with the \code{\link{addpoly}} function. See the documentation for that function for examples.
 
-   When \code{showweights=TRUE}, the annotations will include information about the weights given to the observed outcomes during the model fitting. For simple models (such as those fitted with the \code{\link{rma.uni}} function), these weights correspond to the \sQuote{inverse-variance weights} (but are given in percent). For models fitted with the \code{\link{rma.mv}} function, the weights are based on the diagonal of the weight matrix. Note that the weighting structure is typically more complex in such models (i.e., the weight matrix is usually not just a diagonal matrix) and the weights shown therefore do not reflect this complexity. See \code{\link[=weights.rma]{weights}} for more details (for the special case that \code{x} is an intercept-only \code{"rma.mv"} model, one can also set \code{showweights="rowsum"} to show the \sQuote{row-sum weights}).
+      When \code{showweights=TRUE}, the annotations will include information about the weights given to the observed outcomes during the model fitting. For simple models (such as those fitted with the \code{\link{rma.uni}} function), these weights correspond to the \sQuote{inverse-variance weights} (but are given in percent). For models fitted with the \code{\link{rma.mv}} function, the weights are based on the diagonal of the weight matrix. Note that the weighting structure is typically more complex in such models (i.e., the weight matrix is usually not just a diagonal matrix) and the weights shown therefore do not reflect this complexity. See \code{\link[=weights.rma]{weights}} for more details (for the special case that \code{x} is an intercept-only \code{"rma.mv"} model, one can also set \code{showweights="rowsum"} to show the \sQuote{row-sum weights}).
 
-   By default (i.e., when \code{psize} is not specified), the point sizes are a function of the square root of the model weights. This way, their areas are proportional to the weights. However, the point sizes are rescaled so that the smallest point size is \code{plim[1]} and the largest point size is \code{plim[2]}. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights. If exactly relative point sizes are desired, one can set \code{plim[2]} to \code{NA}, in which case the points are rescaled so that the smallest point size corresponds to \code{plim[1]} and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set \code{plim[1]} to \code{NA}, in which case the points are rescaled so that the largest point size corresponds to \code{plim[2]} and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set \code{plim[3]}, which enforces a minimal point size.
+   }
 
-   With the \code{shade} argument, one can shade rows of the plot. The argument can be set to one of the following character strings: \code{"zebra"} (same as \code{shade=TRUE}) or \code{"zebra2"} to use zebra-style shading (starting either at the first or second study) or to \code{"all"} in which case all rows are shaded. Alternatively, the argument can be set to a logical or numeric vector to specify which rows should be shaded. The \code{colshade} argument can be used to set the color of shaded rows.
+   \subsection{Adjusting the Point Sizes}{
+
+      By default (i.e., when \code{psize} is not specified), the point sizes are a function of the square root of the model weights. This way, their areas are proportional to the weights. However, the point sizes are rescaled so that the smallest point size is \code{plim[1]} and the largest point size is \code{plim[2]}. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights. If exactly relative point sizes are desired, one can set \code{plim[2]} to \code{NA}, in which case the points are rescaled so that the smallest point size corresponds to \code{plim[1]} and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set \code{plim[1]} to \code{NA}, in which case the points are rescaled so that the largest point size corresponds to \code{plim[2]} and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set \code{plim[3]}, which enforces a minimal point size.
+
+   }
+
+   \subsection{Shading Rows}{
+
+      With the \code{shade} argument, one can shade rows of the plot. The argument can be set to one of the following character strings: \code{"zebra"} (same as \code{shade=TRUE}) or \code{"zebra2"} to use zebra-style shading (starting either at the first or second study) or to \code{"all"} in which case all rows are shaded. Alternatively, the argument can be set to a logical or numeric vector to specify which rows should be shaded. The \code{colshade} argument can be used to set the color of shaded rows.
+
+   }
+
 }
 \section{Note}{
    The function sets some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.
@@ -208,20 +244,29 @@ forest(res, alim=c(-3,3), order=ablat)
 ### various ways to show the prediction interval
 forest(res, addpred=TRUE)
 forest(res, predstyle="polygon")
+forest(res, predstyle="polygon", col=c("black","white"))
 forest(res, predstyle="bar")
 forest(res, predstyle="shade")
 forest(res, predstyle="dist")
 
+### specify the predictive distribution via the 'preddist' argument
+pred <- predict(res)
+dens <- list(x=seq(-3, 3, length.out=10000))
+dens$y <- dnorm(dens$x, mean=coef(res), sd=pred$pi.se)
+forest(res, predstyle="dist", preddist=dens)
+
 ### adjust xlim values to see how that changes the plot
-forest(res)
-par("usr")[1:2] # this shows what xlim values were chosen by default
+defaults <- forest(res)
+defaults$xlim # this shows what xlim values were chosen by default
+par("usr")[1:2] # or use par("usr") to get the same values
 forest(res, xlim=c(-12,16))
 forest(res, xlim=c(-18,10))
+forest(res, xlim=c(-6,4))
 
 ### illustrate the transf argument (note the asymmetric CI bounds)
 forest(res, transf=exp, at=0:7, xlim=c(-8,12), refline=1)
 
-### illustrate the atransf argument
+### illustrate the atransf argument (note that the CIs now look symmetric)
 forest(res, atransf=exp, at=log(c(0.05,0.25,1,4,20)), xlim=c(-8,7))
 
 ### showweights argument
@@ -229,12 +274,12 @@ forest(res, atransf=exp, at=log(c(0.05,0.25,1,4,20)), xlim=c(-8,8),
        order="prec", showweights=TRUE)
 
 ### illustrade shade argument
-forest(res, shade="zebra")
-forest(res, shade=year >= 1970)
-forest(res, shade=c(1,5,10))
+forest(res, shade="zebra")      # string
+forest(res, shade=year >= 1970) # logical vector
+forest(res, shade=c(1,5,10))    # numeric vector
 
 ### forest plot with extra annotations
-### note: may need to widen plotting device to avoid overlapping text
+### note: may need to widen the plotting device to avoid overlapping text
 forest(res, atransf=exp, at=log(c(0.05, 0.25, 1, 4)), xlim=c(-16,6),
        ilab=cbind(tpos, tneg, cpos, cneg), ilab.lab=c("TB+","TB-","TB+","TB-"),
        ilab.xpos=c(-9.5,-8,-6,-4.5), cex=0.85, header="Author(s) and Year")
@@ -277,11 +322,11 @@ par(op)
 
 ### illustrate the efac argument
 forest(res)
-forest(res, efac=c(0,1))
+forest(res, efac=c(0,1,1)) # no vertical lines at the end of the CIs
 
-### illustrate use of olim argument with a meta-analysis of raw correlation
-### coefficients (data from Pritz, 1997); without olim=c(0,1), some of the
-### CIs would have upper bounds larger than 1
+### illustrate use of the olim argument with a meta-analysis of raw proportions
+### (data from Pritz, 1997); without olim=c(0,1), some of the CIs would have upper
+### bounds larger than 1
 dat <- escalc(measure="PR", xi=xi, ni=ni, data=dat.pritz1997)
 res <- rma(yi, vi, data=dat, slab=paste0(study, ") ", authors))
 forest(res, xlim=c(-0.8,1.6), alim=c(0,1), psize=1, refline=coef(res), olim=c(0,1))
@@ -300,6 +345,6 @@ abline(h = rows[c(1,diff(rows)) == 2] - 1, lty="dotted")
 par(op)
 
 ### another approach where clusters are shaded in a zebra style
-forest(res, cex=0.6, shade=as.numeric(factor(dat$district)) \%\% 2 == 0)
+forest(res, cex=0.6, shade=as.numeric(factor(dat$district)) \%\% 2 != 0)
 }
 \keyword{hplot}
