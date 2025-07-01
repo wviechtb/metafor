@@ -1,6 +1,6 @@
-# metafor 4.9-10 (2025-06-10)
+# metafor 4.9-11 (2025-07-01)
 
-- added (undocumented) arguments `legend.cex`, `legend.pt.cex`, and `legend.inset` to `labbe()` for more control over the look of the legend
+- argument `legend` can now be a list for `funnel()`, `labbe()`, `regplot()`, and `plot.permutest.rma.uni()` for more control over the look of the legend
 
 - fixed how `intercept` (when unspecified) is set in `predict.rma.ls()` when using `newscale`
 

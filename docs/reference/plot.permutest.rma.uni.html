@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-11</span>
       </span>
     </div>
 
@@ -150,7 +150,7 @@
 <dd><p>numeric vector to specify the width of the vertical lines corresponding to the value of the observed test statistic, of the theoretical reference/null distribution, of the density estimate, and of the vertical line at 0 (note: by default, the theoretical reference/null distribution and the density estimate both have a line width of 0 and are therefore not plotted).</p></dd>
 
    <dt id="arg-legend">legend<a class="anchor" aria-label="anchor" href="#arg-legend"></a></dt>
-<dd><p>logical to specify whether a legend should be added to the plot (the default is <code>FALSE</code>). Can also be a keyword to specify the position of the legend (see <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code>).</p></dd>
+<dd><p>logical to specify whether a legend should be added to the plot (the default is <code>FALSE</code>).</p></dd>
 
    <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments.</p></dd>
@@ -167,6 +167,7 @@
 <p>One can superimpose the theoretical reference/null distribution on top of the histogram (i.e., the distribution as assumed by the model). The p-value for the standard (i.e., non-permutation) test is the area that is more extreme than the observed test statistic under this reference/null distribution.</p>
 <p>A kernel density estimate of the permutation distribution can also be superimposed on top of the histogram (as a smoothed representation of the permutation distribution).</p>
 <p>Note that the theoretical reference/null distribution and the kernel density estimate of the permutation distribution are only shown when setting the line width for these elements greater than 0 via the <code>lwd</code> argument (e.g., <code>lwd=c(2,2,2,4)</code>).</p>
+<p>By setting the <code>legend</code> argument to <code>TRUE</code>, a legend is added to the plot. One can also use a keyword for this argument to specify the position of the legend (e.g., <code>legend="topright"</code>; see <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code> for options). Finally, this argument can also be a list, with elements <code>x</code>, <code>y</code>, <code>inset</code>, and <code>cex</code>, which are passed on to the corresponding arguments of the <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code> function for even more control (elements not specified are set to defaults).</p>
 <p>For location-scale models (see <code><a href="rma.uni.html">rma.uni</a></code> for details), one can also use arguments <code>alpha</code> and <code>QS</code> to specify which scale coefficients to plot and whether to also plot the permutation distribution of the omnibus test of the scale coefficients (by setting <code>QS=TRUE</code>).</p>
     </div>
     <div id="author">

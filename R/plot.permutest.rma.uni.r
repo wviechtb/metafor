@@ -144,20 +144,37 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
 
    ### function to add legend
 
-   addlegend <- function(legend) {
+   addlegend <- function(legend, cex) {
 
-      if (is.logical(legend) && isTRUE(legend))
-         lpos <- "topright"
+      lopts <- list(x     = "topright",
+                    y     = NULL,
+                    inset = 0.01,
+                    cex   = 1)
 
-      if (is.character(legend)) {
-         lpos <- legend
+      if (is.list(legend)) {
+
+         # replace defaults with any user-defined values
+         lopts.pos <- pmatch(names(legend), names(lopts))
+         lopts[c(na.omit(lopts.pos))] <- legend[!is.na(lopts.pos)]
+
          legend <- TRUE
+
+      } else {
+
+         if (is.character(legend)) {
+            lopts$x <- legend
+            legend <- TRUE
+         } else {
+            if (!is.logical(legend))
+               stop(mstyle$stop("Argument 'legend' must either be logical, a string, or a list."), call.=FALSE)
+         }
+
       }
 
       if (legend && any(lwd[2:3] > 0)) {
 
          ltxt  <- c("Kernel Density Estimate of\nthe Permutation Distribution", "Theoretical Null Distribution")
-         lwds  <- lwd[2:3]
+         lwds  <- lwd[3:2]
          lcols <- c(col.density, col.ref)
          ltys  <- c("solid", "solid")
          #pchs  <- c("","","\u2506") # \u250a
@@ -166,7 +183,7 @@ plot.permutest.rma.uni <- function(x, beta, alpha, QM=FALSE, QS=FALSE,
          ltys  <- ltys[lwds > 0]
          #pchs  <- pchs[lwds > 0]
          lwds  <- lwds[lwds > 0]
-         legend(lpos, inset=.01, bg=.coladj(par("bg"), dark=0, light=0), lwd=lwds, col=lcols, lty=ltys, legend=ltxt)
+         legend(x=lopts$x, y=lopts$y, inset=lopts$inset, bg=.coladj(par("bg"), dark=0, light=0), lwd=lwds, col=lcols, lty=ltys, legend=ltxt, cex=lopts$cex)
 
       }
 

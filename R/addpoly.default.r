@@ -740,12 +740,12 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
          sel <- xs <= pi.lb
          xs.sel <- xs[sel]
          ys.sel <- ys[sel]
-         lpolygon(c(xs.sel,rev(xs.sel)), c(ys.sel,rep(drow,length(ys.sel))), col=col[2], border=border[2], ...)
+         lpolygon(c(xs.sel,rev(xs.sel)), c(ys.sel,rep(drow,length(ys.sel))), col=col[2], border=ifelse(is.na(col[2]), NA, border[2]), ...)
 
          sel <- xs >= pi.ub
          xs.sel <- xs[sel]
          ys.sel <- ys[sel]
-         lpolygon(c(xs.sel,rev(xs.sel)), c(ys.sel,rep(drow,length(ys.sel))), col=col[2], border=border[2], ...)
+         lpolygon(c(xs.sel,rev(xs.sel)), c(ys.sel,rep(drow,length(ys.sel))), col=col[2], border=ifelse(is.na(col[2]), NA, border[2]), ...)
 
          ### add horizontal and distribution lines
 

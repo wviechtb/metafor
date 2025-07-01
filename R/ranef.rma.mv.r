@@ -43,7 +43,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
 
    .chkdots(ddd, c("expand", "vcov"))
 
-   expand <- ifelse(is.null(expand), FALSE, isTRUE(ddd$expand)) # TODO: make this an option?
+   expand <- .chkddd(ddd$expand, FALSE, isTRUE(ddd$expand)) # TODO: make this an option?
 
    vcov <- list()
 

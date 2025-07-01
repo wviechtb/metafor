@@ -168,9 +168,9 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    lbox     <- function(..., grep, fixed, box.lty, at.lab) box(...)
    ltext    <- function(..., grep, fixed, box.lty, at.lab) text(...)
 
-   grep    <- .chkddd(ddd$grep,  FALSE, .isTRUE(ddd$grep))
-   fixed   <- .chkddd(ddd$fixed, FALSE, .isTRUE(ddd$fixed))
-   box.lty <- .chkddd(ddd$box.lty, par("lty"))
+   grep       <- .chkddd(ddd$grep,  FALSE, .isTRUE(ddd$grep))
+   fixed      <- .chkddd(ddd$fixed, FALSE, .isTRUE(ddd$fixed))
+   box.lty    <- .chkddd(ddd$box.lty, par("lty"))
 
    ############################################################################
 
@@ -726,12 +726,29 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    ### add legend (if requested)
 
-   if (is.logical(legend) && isTRUE(legend))
-      lpos <- "topright"
+   lopts <- list(x      = "topright",
+                 y      = NULL,
+                 inset  = 0.01,
+                 cex    = 1)
 
-   if (is.character(legend)) {
-      lpos <- legend
+   if (is.list(legend)) {
+
+      # replace defaults with any user-defined values
+      lopts.pos <- pmatch(names(legend), names(lopts))
+      lopts[c(na.omit(lopts.pos))] <- legend[!is.na(lopts.pos)]
+
       legend <- TRUE
+
+   } else {
+
+      if (is.character(legend)) {
+         lopts$x <- legend
+         legend <- TRUE
+      } else {
+         if (!is.logical(legend))
+            stop(mstyle$stop("Argument 'legend' must either be logical, a string, or a list."), call.=FALSE)
+      }
+
    }
 
    if (legend) {
@@ -785,7 +802,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       }
 
       if (length(ltxt) >= 1L)
-         legend(lpos, inset=.01, bg=.coladj(par("bg"), dark=0, light=0), pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt, box.lty=box.lty)
+         legend(x=lopts$x, y=lopts$y, inset=lopts$inset, bg=.coladj(par("bg"), dark=0, light=0), pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l*lopts$cex, text.col=tcol.l, pt.cex=1.5*lopts$cex, seg.len=3*lopts$cex, legend=ltxt, box.lty=box.lty, cex=lopts$cex)
 
       pch.l  <- NULL
       col.l  <- NULL
@@ -836,7 +853,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
       }
 
       if (length(ltxt) >= 1L)
-         legend(lpos, inset=.01, bg=NA, pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l, text.col=tcol.l, pt.cex=1.5, seg.len=3, legend=ltxt, box.lty=box.lty)
+         legend(x=lopts$x, y=lopts$y, inset=lopts$inset, bg=NA, pch=pch.l, col=col.l, pt.bg=bg.l, lty=lty.l, lwd=lwd.l*lopts$cex, text.col=tcol.l, pt.cex=1.5*lopts$cex, seg.len=3*lopts$cex, legend=ltxt, box.lty=box.lty, cex=lopts$cex)
 
    }
 

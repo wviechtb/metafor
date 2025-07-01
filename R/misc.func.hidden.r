@@ -250,7 +250,7 @@
    return(x)
 }
 
-### check if ddd element is NULL; if so, return ifnull, otherwise the ddd element or ifnot
+### check if ddd element is NULL; if so, return ifnull, otherwise return the ddd element or ifnot (if the latter is not NULL)
 
 .chkddd <- function(x, ifnull=NULL, ifnot=NULL) {
 

@@ -25,7 +25,7 @@
    \item{trim}{the fraction (up to 0.5) of observations to be trimmed from the tails of each permutation distribution before its histogram is plotted.}
    \item{adjust}{numeric value to be passed on to the corresponding argument of \code{\link{density}} (for adjusting the bandwidth of the kernel density estimate).}
    \item{lwd}{numeric vector to specify the width of the vertical lines corresponding to the value of the observed test statistic, of the theoretical reference/null distribution, of the density estimate, and of the vertical line at 0 (note: by default, the theoretical reference/null distribution and the density estimate both have a line width of 0 and are therefore not plotted).}
-   \item{legend}{logical to specify whether a legend should be added to the plot (the default is \code{FALSE}). Can also be a keyword to specify the position of the legend (see \code{\link{legend}}).}
+   \item{legend}{logical to specify whether a legend should be added to the plot (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -46,6 +46,8 @@
    A kernel density estimate of the permutation distribution can also be superimposed on top of the histogram (as a smoothed representation of the permutation distribution).
 
    Note that the theoretical reference/null distribution and the kernel density estimate of the permutation distribution are only shown when setting the line width for these elements greater than 0 via the \code{lwd} argument (e.g., \code{lwd=c(2,2,2,4)}).
+
+   By setting the \code{legend} argument to \code{TRUE}, a legend is added to the plot. One can also use a keyword for this argument to specify the position of the legend (e.g., \code{legend="topright"}; see \code{\link{legend}} for options). Finally, this argument can also be a list, with elements \code{x}, \code{y}, \code{inset}, and \code{cex}, which are passed on to the corresponding arguments of the \code{\link{legend}} function for even more control (elements not specified are set to defaults).
 
    For location-scale models (see \code{\link{rma.uni}} for details), one can also use arguments \code{alpha} and \code{QS} to specify which scale coefficients to plot and whether to also plot the permutation distribution of the omnibus test of the scale coefficients (by setting \code{QS=TRUE}).
 }

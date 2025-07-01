@@ -60,26 +60,47 @@
    \item{\dots}{other arguments.}
 }
 \details{
+
    The plot shows the observed effect sizes or outcomes (by default as filled squares) with corresponding \code{level}\% confidence intervals (as horizontal lines extending from the observed outcomes). To use the function, one should specify the observed outcomes (via the \code{x} argument) together with the corresponding sampling variances (via the \code{vi} argument) or with the corresponding standard errors (via the \code{sei} argument). The confidence intervals are computed with \mjeqn{y_i \pm z_{crit} \sqrt{v_i}}{y_i ± z_crit \sqrt{v_i}}, where \mjseqn{y_i} denotes the observed outcome in the \mjeqn{i\text{th}}{ith} study, \mjseqn{v_i} the corresponding sampling variance (and hence \mjseqn{\sqrt{v_i}} is the corresponding standard error), and \mjeqn{z_{crit}}{z_crit} is the appropriate critical value from a standard normal distribution (e.g., \mjseqn{1.96} for a 95\% CI). Alternatively, one can directly specify the confidence interval bounds via the \code{ci.lb} and \code{ci.ub} arguments.
 
-   With the \code{transf} argument, the observed outcomes and corresponding confidence interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, then one could use \code{transf=exp} to obtain a forest plot showing the odds ratios. Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations (e.g., \code{atransf=exp}). See also \link{transf} for some other useful transformation functions in the context of a meta-analysis. The examples below illustrate the use of these arguments.
+   \subsection{Applying a Transformation}{
 
-   By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \mjseqn{k}, the second study in row \mjseqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{order} argument:
+      With the \code{transf} argument, the observed outcomes and corresponding confidence interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, then one could use \code{transf=exp} to obtain a forest plot showing the odds ratios. Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations (e.g., \code{atransf=exp}). See also \link{transf} for some other useful transformation functions in the context of a meta-analysis. The examples below illustrate the use of these arguments.
 
-   \itemize{
-   \item \code{order="obs"}: the studies are ordered by the observed outcomes,
-   \item \code{order="prec"}: the studies are ordered by their sampling variances.
    }
 
-   Alternatively, it is also possible to set \code{order} equal to a variable based on which the studies will be ordered (see \sQuote{Examples}). One can also use the \code{rows} argument to specify the rows (or more generally, the positions) for plotting the outcomes.
+   \subsection{Ordering of Studies}{
 
-   Additional columns with information about the studies can be added to the plot via the \code{ilab} argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The \code{ilab.xpos} argument can be used to specify the horizontal position of the variables specified via \code{ilab}. The \code{ilab.pos} argument can be used to specify how the variables should be aligned. The \code{ilab.lab} argument can be used to add headers to the columns.
+      By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \mjseqn{k}, the second study in row \mjseqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{order} argument:
 
-   Pooled estimates can be added to the plot as polygons with the \code{\link{addpoly}} function. See the documentation for that function for examples.
+      \itemize{
+      \item \code{order="obs"}: the studies are ordered by the observed outcomes,
+      \item \code{order="prec"}: the studies are ordered by their sampling    variances.
+      }
 
-   By default (i.e., when \code{psize} is not specified), the point sizes are a function of the precision (i.e., inverse standard errors) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard errors of the estimates, their areas are proportional to the inverse sampling variances, which corresponds to the weights they would receive in an equal-effects model. However, the point sizes are rescaled so that the smallest point size is \code{plim[1]} and the largest point size is \code{plim[2]}. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set \code{plim[2]} to \code{NA}, in which case the points are rescaled so that the smallest point size corresponds to \code{plim[1]} and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set \code{plim[1]} to \code{NA}, in which case the points are rescaled so that the largest point size corresponds to \code{plim[2]} and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set \code{plim[3]}, which enforces a minimal point size.
+      Alternatively, it is also possible to set \code{order} equal to a variable based on which the studies will be ordered (see \sQuote{Examples}). One can also use the \code{rows} argument to specify the rows (or more generally, the positions) for plotting the outcomes.
 
-   With the \code{shade} argument, one can shade rows of the plot. The argument can be set to one of the following character strings: \code{"zebra"} (same as \code{shade=TRUE}) or \code{"zebra2"} to use zebra-style shading (starting either at the first or second study) or to \code{"all"} in which case all rows are shaded. Alternatively, the argument can be set to a logical or numeric vector to specify which rows should be shaded. The \code{colshade} argument can be used to set the color of shaded rows.
+   }
+
+   \subsection{Adding Additional Information to the Plot}{
+
+      Additional columns with information about the studies can be added to the plot via the \code{ilab} argument. This can either be a single variable or an entire matrix / data frame (with as many rows as there are studies in the forest plot). The \code{ilab.xpos} argument can be used to specify the horizontal position of the variables specified via \code{ilab}. The \code{ilab.pos} argument can be used to specify how the variables should be aligned. The \code{ilab.lab} argument can be used to add headers to the columns.
+
+      Pooled estimates can be added to the plot as polygons with the \code{\link{addpoly}} function. See the documentation for that function for examples.
+
+   }
+
+   \subsection{Adjusting the Point Sizes}{
+
+      By default (i.e., when \code{psize} is not specified), the point sizes are a function of the precision (i.e., inverse standard errors) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard errors of the estimates, their areas are proportional to the inverse sampling variances, which corresponds to the weights they would receive in an equal-effects model. However, the point sizes are rescaled so that the smallest point size is \code{plim[1]} and the largest point size is \code{plim[2]}. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set \code{plim[2]} to \code{NA}, in which case the points are rescaled so that the smallest point size corresponds to \code{plim[1]} and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set \code{plim[1]} to \code{NA}, in which case the points are rescaled so that the largest point size corresponds to \code{plim[2]} and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set \code{plim[3]}, which enforces a minimal point size.
+
+   }
+
+   \subsection{Shading Rows}{
+
+      With the \code{shade} argument, one can shade rows of the plot. The argument can be set to one of the following character strings: \code{"zebra"} (same as \code{shade=TRUE}) or \code{"zebra2"} to use zebra-style shading (starting either at the first or second study) or to \code{"all"} in which case all rows are shaded. Alternatively, the argument can be set to a logical or numeric vector to specify which rows should be shaded. The \code{colshade} argument can be used to set the color of shaded rows.
+   }
+
 }
 \section{Note}{
    The function sets some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.

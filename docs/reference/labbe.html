@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-11</span>
       </span>
     </div>
 
@@ -139,7 +139,7 @@
 <dd><p>logical to specify whether a grid should be added to the plot (the default is <code>FALSE</code>). Can also be a color name.</p></dd>
 
    <dt id="arg-legend">legend<a class="anchor" aria-label="anchor" href="#arg-legend"></a></dt>
-<dd><p>logical to specify whether a legend should be added to the plot (the default is <code>FALSE</code>). Can also be a keyword to specify the position of the legend (see <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code>). Arguments <code>legend.cex</code>, <code>legend.pt.cex</code>, and <code>legend.inset</code> are passed on to the corresponding arguments of the <code>legend</code> function via the <code>...</code> argument.</p></dd>
+<dd><p>logical to specify whether a legend should be added to the plot (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
 
    <dt id="arg-add">add<a class="anchor" aria-label="anchor" href="#arg-add"></a></dt>
 <dd><p>See the documentation of the <code><a href="escalc.html">escalc</a></code> function for more details.</p></dd>
@@ -182,6 +182,7 @@
 <p>As described under the documentation for the <code><a href="escalc.html">escalc</a></code> function, zero cells can lead to problems when calculating particular outcomes. Adding a small constant to the cells of the <em></em>\(2 \times 2\) tables is a common solution to this problem. By default, the functions adopts the same method for handling zero cells as was used when fitting the model.</p>
 <p>By default (i.e., when <code>psize</code> is not specified), the point sizes are a function of the precision (i.e., inverse standard errors) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard errors of the estimates, their areas are proportional to the inverse sampling variances, which corresponds to the weights they would receive in an equal-effects model. However, the point sizes are rescaled so that the smallest point size is <code>plim[1]</code> and the largest point size is <code>plim[2]</code>. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set <code>plim[2]</code> to <code>NA</code>, in which case the points are rescaled so that the smallest point size corresponds to <code>plim[1]</code> and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set <code>plim[1]</code> to <code>NA</code>, in which case the points are rescaled so that the largest point size corresponds to <code>plim[2]</code> and all other points are scaled accordingly. As a result, the smallest point may be very small. To avoid the latter, one can also set <code>plim[3]</code>, which enforces a minimal point size.</p>
 <p>The solid line corresponds to identical outcomes in the two groups (i.e., the absence of a difference between the two groups). The dashed line indicates the estimated effect based on the fitted model. If <code>ci=TRUE</code>, then the darker shaded region indicates the corresponding confidence interval. If <code>pi=TRUE</code>, then the lighter shaded region indicates the corresponding prediction interval.</p>
+<p>By setting the <code>legend</code> argument to <code>TRUE</code>, a legend is added to the plot. One can also use a keyword for this argument to specify the position of the legend (e.g., <code>legend="topleft"</code>; see <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code> for options). Finally, this argument can also be a list, with elements <code>x</code>, <code>y</code>, <code>inset</code>, <code>cex</code>, and <code>pt.cex</code>, which are passed on to the corresponding arguments of the <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></code> function for even more control (elements not specified are set to defaults).</p>
     </div>
     <div id="value">
     <h2>Value</h2>

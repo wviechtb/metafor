@@ -1,5 +1,3 @@
-############################################################################
-
 .funnel.legend <- function(legend, level, shade, back, yaxis, trimfill, pch, col, bg, pch.fill, pch.vec, col.vec, bg.vec, colci) {
 
    mstyle <- .get.mstyle()
@@ -17,7 +15,7 @@
 
    if (is.list(legend)) {
 
-      ### replace defaults with any user-defined values
+      # replace defaults with any user-defined values
       lopts.pos <- pmatch(names(legend), names(lopts))
       lopts[c(na.omit(lopts.pos))] <- legend[!is.na(lopts.pos)]
       legend <- TRUE
@@ -42,17 +40,17 @@
    if (!is.na(lopts$show) && !is.element(lopts$show, c("pvals","cis")))
       stop(mstyle$stop("Valid options for 'show' are 'pvals, 'cis', or NA."), call.=FALSE)
 
-   ### can only add p-values / CI regions if 'yaxis' is 'sei', 'vi', 'seinv', or 'vinv'
+   # can only add p-values / CI regions if 'yaxis' is 'sei', 'vi', 'seinv', or 'vinv'
 
    if (legend && !is.element(yaxis, c("sei", "vi", "seinv", "vinv")))
       lopts$show <- NA
 
-   ### only add 'Studies' to legend if pch, col, and bg are not vectors
+   # only add 'Studies' to legend if pch, col, and bg are not vectors
 
    if (pch.vec || col.vec || bg.vec)
       lopts$studies <- FALSE
 
-   ### if neither studies nor p-values / CI regions are shown, then omit the legend
+   # if neither studies nor p-values / CI regions are shown, then omit the legend
 
    if (!lopts$studies && is.na(lopts$show))
       legend <- FALSE
@@ -138,5 +136,3 @@
    }
 
 }
-
-############################################################################

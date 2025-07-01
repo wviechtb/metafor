@@ -87,16 +87,12 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, lty,
 
    llim <- ddd$llim
 
-   legend.cex    <- ifelse(is.null(ddd$legend.cex),    1,    ddd$legend.cex)
-   legend.pt.cex <- ifelse(is.null(ddd$legend.pt.cex), 2.5,  ddd$legend.pt.cex)
-   legend.inset  <- ifelse(is.null(ddd$legend.inset),  0.01, ddd$legend.inset)
-
-   lplot     <- function(..., addyi, addvi, llim, legend.cex, legend.pt.cex, legend.inset) plot(...)
-   lbox      <- function(..., addyi, addvi, llim, legend.cex, legend.pt.cex, legend.inset) box(...)
-   lsegments <- function(..., addyi, addvi, llim, legend.cex, legend.pt.cex, legend.inset) segments(...)
-   llines    <- function(..., addyi, addvi, llim, legend.cex, legend.pt.cex, legend.inset) lines(...)
-   lpoints   <- function(..., addyi, addvi, llim, legend.cex, legend.pt.cex, legend.inset) points(...)
-   lpolygon  <- function(..., addyi, addvi, llim, legend.cex, legend.pt.cex, legend.inset) polygon(...)
+   lplot     <- function(..., addyi, addvi, llim) plot(...)
+   lbox      <- function(..., addyi, addvi, llim) box(...)
+   lsegments <- function(..., addyi, addvi, llim) segments(...)
+   llines    <- function(..., addyi, addvi, llim) lines(...)
+   lpoints   <- function(..., addyi, addvi, llim) points(...)
+   lpolygon  <- function(..., addyi, addvi, llim) polygon(...)
 
    #########################################################################
 
@@ -405,12 +401,34 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, lty,
 
    ### add legend
 
-   if (is.logical(legend) && isTRUE(legend))
-      lpos <- ifelse(intrcpt > 0, "bottomright", "topleft")
+   lopts <- list(x      = ifelse(intrcpt > 0, "bottomright", "topleft"),
+                 y      = NULL,
+                 inset  = 0.01,
+                 cex    = 1,
+                 pt.cex = 2.5)
 
-   if (is.character(legend)) {
-      lpos <- legend
+   if (is.list(legend)) {
+
+      # replace defaults with any user-defined values
+      lopts.pos <- pmatch(names(legend), names(lopts))
+      lopts[c(na.omit(lopts.pos))] <- legend[!is.na(lopts.pos)]
+
+      # rescale pt.cex based on cex (if pt.cex was not specified)
+      if (!is.null(legend$cex) && is.null(legend$pt.cex))
+         lopts$pt.cex <- lopts$pt.cex * lopts$cex
+
       legend <- TRUE
+
+   } else {
+
+      if (is.character(legend)) {
+         lopts$x <- legend
+         legend <- TRUE
+      } else {
+         if (!is.logical(legend))
+            stop(mstyle$stop("Argument 'legend' must either be logical, a string, or a list."), call.=FALSE)
+      }
+
    }
 
    if (legend) {
@@ -429,9 +447,9 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, lty,
       sel <- c(lty != "blank" & lty != 0, ci, pi)
 
       if (any(sel)) {
-         legend(lpos, inset=legend.inset, bg=.coladj(par("bg"), dark=0, light=0),
-                pch=lpch[sel], pt.cex=legend.pt.cex, pt.lwd=0, pt.bg=lpt.bg[sel],
-                lty=llty[sel], legend=ltxt[sel], cex=legend.cex)
+         legend(x=lopts$x, y=lopts$y, inset=lopts$inset, bg=.coladj(par("bg"), dark=0, light=0),
+                pch=lpch[sel], pt.cex=lopts$pt.cex, pt.lwd=0, pt.bg=lpt.bg[sel],
+                lty=llty[sel], legend=ltxt[sel], cex=lopts$cex)
       }
 
    }
