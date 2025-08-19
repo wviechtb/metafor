@@ -1003,7 +1003,7 @@
             lab <- ifelse(short, expression(arcsin(sqrt(p))), "Arcsine Transformed Proportion")
          } else {
             lab <- ifelse(short, lab, "Transformed Arcsine Transformed Proportion")
-            funlist <- lapply(list(transf.iarcsin), deparse)
+            funlist <- lapply(list(transf.iarcsin, transf.iarcsin.int), deparse)
             if (any(sapply(funlist, identical, atransf.char)))
                lab <- ifelse(short, "Proportion", "Proportion (arcsine scale)")
             if (any(sapply(funlist, identical, transf.char)))
@@ -1176,7 +1176,7 @@
             lab <- ifelse(short, expression('Alpha'[HW]), "Transformed Cronbach's alpha")
          } else {
             lab <- ifelse(short, lab, "Transformed Cronbach's alpha")
-            funlist <- lapply(list(transf.iahw), deparse)
+            funlist <- lapply(list(transf.iahw, transf.iahw.int), deparse)
             if (any(sapply(funlist, identical, atransf.char)))
                lab <- ifelse(short, "Alpha", "Cronbach's alpha")
             if (any(sapply(funlist, identical, transf.char)))
@@ -1188,7 +1188,7 @@
             lab <- ifelse(short, expression('Alpha'[B]), "Transformed Cronbach's alpha")
          } else {
             lab <- ifelse(short, lab, "Transformed Cronbach's alpha")
-            funlist <- lapply(list(transf.iabt), deparse)
+            funlist <- lapply(list(transf.iabt, transf.iabt.int), deparse)
             if (any(sapply(funlist, identical, atransf.char)))
                lab <- ifelse(short, "Alpha", "Cronbach's alpha")
             if (any(sapply(funlist, identical, transf.char)))

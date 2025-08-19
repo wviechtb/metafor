@@ -33,10 +33,10 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
    if (missing(targs))
       targs <- NULL
 
-   funlist <- lapply(list(transf.exp.int, transf.ilogit.int, transf.ztor.int, transf.exp.mode, transf.ilogit.mode, transf.ztor.mode), deparse)
+   funlist <- lapply(list(transf.exp.int, transf.ilogit.int, transf.ztor.int, transf.iarcsin.int, transf.iahw.int, transf.iabt.int, transf.exp.mode, transf.ilogit.mode, transf.ztor.mode, transf.iarcsin.mode, transf.iahw.mode, transf.iabt.mode), deparse)
 
    if (is.null(targs) && any(sapply(funlist, identical, deparse(transf))) && inherits(x, c("rma.uni","rma.glmm")) && length(x$tau2 == 1L))
-      targs <- c(tau2=x$tau2)
+      targs <- list(tau2=x$tau2)
 
    if (missing(control))
       control <- list()

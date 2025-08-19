@@ -21,9 +21,15 @@
 \alias{transf.ztor.int}
 \alias{transf.exp.int}
 \alias{transf.ilogit.int}
+\alias{transf.iarcsin.int}
+\alias{transf.iahw.int}
+\alias{transf.iabt.int}
 \alias{transf.ztor.mode}
 \alias{transf.exp.mode}
 \alias{transf.ilogit.mode}
+\alias{transf.iarcsin.mode}
+\alias{transf.iahw.mode}
+\alias{transf.iabt.mode}
 \alias{transf.dtou1}
 \alias{transf.dtou2}
 \alias{transf.dtou3}
@@ -72,9 +78,11 @@ transf.ztor2(xi)
 transf.ztor.int(xi, targs)
 transf.exp.int(xi, targs)
 transf.ilogit.int(xi, targs)
+transf.iarcsin.int(xi, targs)
 transf.ztor.mode(xi, targs)
 transf.exp.mode(xi, targs)
 transf.ilogit.mode(xi, targs)
+transf.iarcsin.mode(xi, targs)
 transf.dtou1(xi)
 transf.dtou2(xi)
 transf.dtou3(xi)
@@ -130,12 +138,18 @@ transf.lnortortet.digby(xi)
    \item \code{transf.iabt}: inverse of the former.
    \item \code{transf.r2toz}: variance stabilizing transformation for the coefficient of determination, given by \mjeqn{z_i = \frac{1}{2} \log\mathopen{}\left(\frac{1+\sqrt{R_i^2}}{1-\sqrt{R_i^2}}\right)\mathclose{}}{z_i = 1/2 log((1+\sqrt(R_i^2))/(1-\sqrt(R_i^2)))} (see Olkin & Finn, 1995, but with the additional \mjeqn{\frac{1}{2}}{1/2} factor for consistency with the usual r-to-z transformation).
    \item \code{transf.ztor2}: inverse of the former.
-   \item \code{transf.ztor.int}: integral transformation method for the z-to-r transformation. See \sQuote{Note}.
-   \item \code{transf.exp.int}: integral transformation method for the exponential transformation. See \sQuote{Note}.
-   \item \code{transf.ilogit.int}: integral transformation method for the inverse logit transformation. See \sQuote{Note}.
+   \item \code{transf.ztor.int}: integral transformation function for the z-to-r transformation. See \sQuote{Note}.
+   \item \code{transf.exp.int}: integral transformation function for the exponential transformation. See \sQuote{Note}.
+   \item \code{transf.ilogit.int}: integral transformation function for the inverse logit transformation. See \sQuote{Note}.
+   \item \code{transf.iarcsin.int}: integral transformation function for the inverse arcsine square root transformation. See \sQuote{Note}.
+   \item \code{transf.iahw.int}: integral transformation function for \code{transf.iahw} transformation. See \sQuote{Note}.
+   \item \code{transf.iahw.int}: integral transformation function for \code{transf.iabt} transformation. See \sQuote{Note}.
    \item \code{transf.ztor.mode}: function to determine the mode of an atanh-normal variable.
    \item \code{transf.exp.mode}: function to determine the mode of a log-normal variable.
    \item \code{transf.ilogit.mode}: function to determine the mode of a logit-normal variable.
+   \item \code{transf.iarcsin.mode}: function to determine the mode of an arcsine-square-root-normal variable.
+   \item \code{transf.iahw.mode}: function to determine the mode of a \code{transf.ahw}-normal variable.
+   \item \code{transf.iabt.mode}: function to determine the mode of a \code{transf.abt}-normal variable.
    \item \code{transf.dtou1}: transformation of standardized mean differences to Cohen's \mjseqn{U_1} values (Cohen, 1988). Under the assumption that the data for those in the first (say, treated) and second (say, control) group are normally distributed with equal variances but potentially different means, Cohen's \mjseqn{U_1} indicates the proportion of non-overlap between the two distributions (i.e., when \mjseqn{d=0}, then \mjseqn{U_1} is equal to 0, which goes to 1 as \mjseqn{d} increases).
    \item \code{transf.dtou2}: transformation of standardized mean differences to Cohen's \mjseqn{U_2} values (Cohen, 1988). Under the same assumptions as above, Cohen's \mjseqn{U_2} indicates the proportion in the first group that exceeds the same proportion in the second group (i.e., when \mjseqn{d=0}, then \mjseqn{U_2} is equal to 0.5, which goes to 1 as \mjseqn{d} increases).
    \item \code{transf.dtou3}: transformation of standardized mean differences to Cohen's \mjseqn{U_3} values (Cohen, 1988). Under the same assumptions as above, Cohen's \mjseqn{U_3} indicates the proportion of individuals in the first group that have a higher value than the mean of those in the second group (i.e., when \mjseqn{d=0}, then \mjseqn{U_3} is equal to 0.5, which goes to 1 as \mjseqn{d} increases).

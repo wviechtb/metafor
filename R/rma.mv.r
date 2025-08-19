@@ -2690,7 +2690,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
                   M=M, G=G, H=H, hessian=hessian, vvc=vvc, vccon=vccon,
                   chksumyi=digest::digest(as.vector(yi)), chksumV=digest::digest(as.matrix(V)), chksumX=digest::digest(X),
                   ids=ids, not.na=not.na, subset=subset, slab=slab, slab.null=slab.null,
-                  measure=measure, method=method, weighted=weighted, optbeta=optbeta,
+                  measure=measure, method=method, weighted=weighted, optbeta=optbeta, opt.res=opt.res,
                   test=test, dfs=dfs, ddf=ddf, s2w=s2w, btt=btt, m=m,
                   digits=digits, level=level, sparse=sparse, dist=ddd$dist, control=control, verbose=verbose,
                   fit.stats=fit.stats,

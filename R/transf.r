@@ -41,16 +41,18 @@ transf.ztor.int <- function(xi, targs=NULL) {
 
    targs <- .chktargsint(targs)
 
+   tau <- sqrt(targs$tau2)
+
    if (is.null(targs$lower))
-      targs$lower <- xi-10*sqrt(targs$tau2)
+      targs$lower <- xi-10*tau
    if (is.null(targs$upper))
-      targs$upper <- xi+10*sqrt(targs$tau2)
+      targs$upper <- xi+10*tau
 
-   toint <- function(zval, xi, tau2)
-      tanh(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
+   toint <- function(zval, xi, tau)
+      tanh(zval) * dnorm(zval, mean=xi, sd=tau)
 
-   cfunc <- function(xi, tau2, lower, upper) {
-      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2), silent=TRUE)
+   cfunc <- function(xi, tau, lower, upper) {
+      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau=tau), silent=TRUE)
       if (inherits(out, "try-error")) {
          return(NA_real_)
       } else {
@@ -61,7 +63,7 @@ transf.ztor.int <- function(xi, targs=NULL) {
    if (targs$tau2 == 0) {
       zi <- transf.ztor(xi)
    } else {
-      zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
+      zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
    }
 
    return(c(zi))
@@ -80,13 +82,13 @@ transf.ztor.mode <- function(xi, targs=NULL) {
 
    tau <- sqrt(tau2)
 
-   dfun <- function(x, mu, sigma)
-      dnorm(atanh(x), mean=mu, sd=sigma) / (1 - x^2)
+   dfun <- function(x, mu, tau)
+      dnorm(atanh(x), mean=mu, sd=tau) / (1 - x^2)
 
    zi <- sapply(xi, function(x) {
       if (tau2 == 0)
          return(tanh(xi))
-      res <- try(optimize(dfun, maximum=TRUE, lower=-0.9999, upper=0.9999, mu=x, sigma=tau))
+      res <- try(optimize(dfun, maximum=TRUE, lower=-0.9999, upper=0.9999, mu=x, tau=tau))
       if (inherits(res, "try-error")) {
          return(NA_real_)
       } else {
@@ -97,6 +99,7 @@ transf.ztor.mode <- function(xi, targs=NULL) {
    return(c(zi))
 
 }
+
 ############################################################################
 
 transf.r2toz <- function(xi) {
@@ -114,16 +117,18 @@ transf.ztor2 <- function(xi)
 #
 #   targs <- .chktargsint(targs)
 #
+#   tau <- sqrt(targs$tau2)
+
 #   if (is.null(targs$lower))
-#      targs$lower <- xi-10*sqrt(targs$tau2)
+#      targs$lower <- xi-10*tau
 #   if (is.null(targs$upper))
-#      targs$upper <- xi+10*sqrt(targs$tau2)
+#      targs$upper <- xi+10*tau
 #
-#   toint <- function(zval, xi, tau2)
-#      exp(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
+#   toint <- function(zval, xi, tau)
+#      exp(zval) * dnorm(zval, mean=xi, sd=tau)
 #
-#   cfunc <- function(xi, tau2, lower, upper) {
-#      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2), silent=TRUE)
+#   cfunc <- function(xi, tau, lower, upper) {
+#      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau=tau), silent=TRUE)
 #      if (inherits(out, "try-error")) {
 #         return(NA_real_)
 #      } else {
@@ -134,7 +139,7 @@ transf.ztor2 <- function(xi)
 #   if (targs$tau2 == 0) {
 #      zi <- exp(xi)
 #   } else {
-#      zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
+#      zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
 #   }
 #
 #   return(c(zi))
@@ -153,7 +158,7 @@ transf.exp.mode <- function(xi, targs=NULL) {
    if (is.list(targs)) {
       tau2 <- targs$tau2
    } else {
-      tau2 <- targs
+      tau2 <- unname(targs)
    }
 
    return(c(exp(xi - tau2)))
@@ -172,16 +177,18 @@ transf.ilogit.int <- function(xi, targs=NULL) {
 
    targs <- .chktargsint(targs)
 
+   tau <- sqrt(targs$tau2)
+
    if (is.null(targs$lower))
-      targs$lower <- xi-10*sqrt(targs$tau2)
+      targs$lower <- xi-10*tau
    if (is.null(targs$upper))
-      targs$upper <- xi+10*sqrt(targs$tau2)
+      targs$upper <- xi+10*tau
 
-   toint <- function(zval, xi, tau2)
-      plogis(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
+   toint <- function(zval, xi, tau)
+      plogis(zval) * dnorm(zval, mean=xi, sd=tau)
 
-   cfunc <- function(xi, tau2, lower, upper) {
-      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2), silent=TRUE)
+   cfunc <- function(xi, tau, lower, upper) {
+      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau=tau), silent=TRUE)
       if (inherits(out, "try-error")) {
          return(NA_real_)
       } else {
@@ -192,7 +199,7 @@ transf.ilogit.int <- function(xi, targs=NULL) {
    if (targs$tau2 == 0) {
       zi <- transf.ilogit(xi)
    } else {
-      zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
+      zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
    }
 
    return(c(zi))
@@ -213,16 +220,16 @@ transf.ilogit.mode <- function(xi, targs=NULL) {
 
    xs <- seq(0, 1, length=10^5)
 
-   modefun <- function(x, mu, sigma)
-      sigma^2 * (2*x - 1) + mu - qlogis(x)
+   modefun <- function(x, mu, tau)
+      tau^2 * (2*x - 1) + mu - qlogis(x)
 
    zi <- sapply(xi, function(x) {
       if (tau2 == 0)
          return(plogis(xi))
-      ys <- modefun(xs, mu=x, sigma=tau)
+      ys <- modefun(xs, mu=x, tau=tau)
       nmodes <- length(unique(sign(diff(ys)))) # check if there is a single mode
       if (nmodes == 1L) {
-         res <- try(uniroot(modefun, lower=0, upper=1, mu=x, sigma=tau), silent=TRUE)
+         res <- try(uniroot(modefun, lower=0, upper=1, mu=x, tau=tau), silent=TRUE)
          if (inherits(res, "try-error")) {
             return(NA_real_)
          } else {
@@ -249,36 +256,76 @@ transf.iarcsin <- function(xi) {
    return(c(zi))
 }
 
-# transf.iarcsin.int <- function(xi, targs=NULL) {
-#
+transf.iarcsin.int <- function(xi, targs=NULL) {
+
+   targs <- .chktargsint(targs)
+
+   tau <- sqrt(targs$tau2)
+
+   if (is.null(targs$lower))
+      targs$lower <- 0
+   if (is.null(targs$upper))
+      targs$upper <- base::pi/2
+
+   toint <- function(zval, xi, tau)
+      transf.iarcsin(zval) * dnorm(zval, mean=xi, sd=tau) / (pnorm((base::pi/2-xi)/tau) - pnorm(-xi/tau))
+
+   cfunc <- function(xi, tau, lower, upper) {
+      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau=tau), silent=TRUE)
+      if (inherits(out, "try-error")) {
+         return(NA_real_)
+      } else {
+         return(out$value)
+      }
+   }
+
+   if (targs$tau2 == 0) {
+      zi <- transf.iarcsin(xi)
+   } else {
+      zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
+   }
+
+   return(c(zi))
+
+}
+
+# this is the analytic solution, but this does not respect that the domain of
+# transf.arcsin() is 0 to base::pi/2
+
+#transf.iarcsin.int <- function(xi, targs=NULL) {
 #   targs <- .chktargsint(targs)
-#
-#   if (is.null(targs$lower))
-#      targs$lower <- 0
-#   if (is.null(targs$upper))
-#      targs$upper <- asin(1)
-#
-#   toint <- function(zval, xi, tau2)
-#      transf.iarcsin(zval) * dnorm(zval, mean=xi, sd=sqrt(tau2))
-#
-#   cfunc <- function(xi, tau2, lower, upper) {
-#      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau2=tau2), silent=TRUE)
-#      if (inherits(out, "try-error")) {
-#         return(NA_real_)
-#      } else {
-#         return(out$value)
-#      }
-#   }
-#
-#   if (targs$tau2 == 0) {
-#      zi <- transf.iarcsin(xi)
-#   } else {
-#      zi <- mapply(xi, FUN=cfunc, tau2=targs$tau2, lower=targs$lower, upper=targs$upper)
-#   }
-#
-#   return(c(zi))
-#
-# }
+#   return(1/2 * (1 - exp(-2*targs$tau2) * cos(2*xi)))
+#}
+
+transf.iarcsin.mode <- function(xi, targs=NULL) {
+
+   if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
+      stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
+   if (is.list(targs)) {
+      tau2 <- targs$tau2
+   } else {
+      tau2 <- targs
+   }
+
+   tau <- sqrt(tau2)
+
+   dfun <- function(x, mu, tau)
+      dnorm(transf.arcsin(x), mean=mu, sd=tau) / (2 * sqrt(x*(1-x)) * (pnorm((base::pi/2-mu)/tau) - pnorm(-mu/tau)))
+
+   zi <- sapply(xi, function(x) {
+      if (tau2 == 0)
+         return(transf.iarcsin(xi))
+      res <- try(optimize(dfun, maximum=TRUE, lower=0, upper=1, mu=x, tau=tau))
+      if (inherits(res, "try-error")) {
+         return(NA_real_)
+      } else {
+         return(res$maximum)
+      }
+   })
+
+   return(c(zi))
+
+}
 
 ############################################################################
 
@@ -353,6 +400,77 @@ transf.iahw <- function(xi) {
    return(c(zi))
 }
 
+transf.iahw.int <- function(xi, targs=NULL) {
+
+   targs <- .chktargsint(targs)
+
+   tau <- sqrt(targs$tau2)
+
+   if (is.null(targs$lower))
+      targs$lower <- 0
+   if (is.null(targs$upper))
+      targs$upper <- 1
+
+   toint <- function(zval, xi, tau)
+      transf.iahw(zval) * dnorm(zval, mean=xi, sd=tau) / (pnorm((1-xi)/tau) - pnorm(-xi/tau))
+
+   cfunc <- function(xi, tau, lower, upper) {
+      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau=tau), silent=TRUE)
+      if (inherits(out, "try-error")) {
+         return(NA_real_)
+      } else {
+         return(out$value)
+      }
+   }
+
+   if (targs$tau2 == 0) {
+      zi <- transf.ztor(xi)
+   } else {
+      zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
+   }
+
+   return(c(zi))
+
+}
+
+# this is the analytic solution, but this does not respect that the domain of
+# transf.ahw() is 0 to 1
+
+#transf.iahw.int <- function(xi, targs=NULL) {
+#   targs <- .chktargsint(targs)
+#   return(xi^3 - 3*xi^2 + 3*xi*(1+targs$tau2) - 3*targs$tau2)
+#}
+
+transf.iahw.mode <- function(xi, targs=NULL) {
+
+   if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
+      stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
+   if (is.list(targs)) {
+      tau2 <- targs$tau2
+   } else {
+      tau2 <- targs
+   }
+
+   tau <- sqrt(tau2)
+
+   dfun <- function(x, mu, tau)
+      dnorm(transf.ahw(x), mean=mu, sd=tau) / (3 * (1-x)^(2/3) * (pnorm((1-mu)/tau) - pnorm(-mu/tau)))
+
+   zi <- sapply(xi, function(x) {
+      if (tau2 == 0)
+         return(transf.iarcsin(xi))
+      res <- try(optimize(dfun, maximum=TRUE, lower=0, upper=1, mu=x, tau=tau))
+      if (inherits(res, "try-error")) {
+         return(NA_real_)
+      } else {
+         return(res$maximum)
+      }
+   })
+
+   return(c(zi))
+
+}
+
 transf.abt <- function(xi) {              # Bonett (2002) transformation of alphas (without bias correction)
 #transf.abt <- function(xi, ni) {         # resulting value between 0 (for alpha=0) to Inf (for alpha=1)
    #zi <- log(1-xi) - log(ni/(ni-1))
@@ -369,6 +487,77 @@ transf.iabt <- function(xi) {             # inverse of Bonett (2002) transformat
    zi <- ifelse(is.nan(zi), NA_real_, zi)
    zi[xi < 0] <- 0                        # if xi is below lower limit, return 0
    return(c(zi))
+}
+
+transf.iabt.int <- function(xi, targs=NULL) {
+
+   targs <- .chktargsint(targs)
+
+   tau <- sqrt(targs$tau2)
+
+   if (is.null(targs$lower))
+      targs$lower <- 0
+   if (is.null(targs$upper))
+      targs$upper <- xi+10*tau
+
+   toint <- function(zval, xi, tau)
+      transf.iabt(zval) * dnorm(zval, mean=xi, sd=tau) / pnorm(xi/tau)
+
+   cfunc <- function(xi, tau, lower, upper) {
+      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau=tau), silent=TRUE)
+      if (inherits(out, "try-error")) {
+         return(NA_real_)
+      } else {
+         return(out$value)
+      }
+   }
+
+   if (targs$tau2 == 0) {
+      zi <- transf.ztor(xi)
+   } else {
+      zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
+   }
+
+   return(c(zi))
+
+}
+
+# this is the analytic solution, but this does not respect that the domain of
+# transf.abt() is 0 to Inf
+
+#atransf.iabt.int <- function(xi, targs=NULL) {
+#   targs <- .chktargsint(targs)
+#   return(1 - exp(-xi + targs$tau2 / 2))
+#}
+
+transf.iabt.mode <- function(xi, targs=NULL) {
+
+   if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
+      stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
+   if (is.list(targs)) {
+      tau2 <- targs$tau2
+   } else {
+      tau2 <- targs
+   }
+
+   tau <- sqrt(tau2)
+
+   dfun <- function(x, mu, tau)
+      dnorm(transf.abt(x), mean=mu, sd=tau) / ((1-x) * pnorm(mu/tau))
+
+   zi <- sapply(xi, function(x) {
+      if (tau2 == 0)
+         return(transf.iarcsin(xi))
+      res <- try(optimize(dfun, maximum=TRUE, lower=0, upper=1, mu=x, tau=tau))
+      if (inherits(res, "try-error")) {
+         return(NA_real_)
+      } else {
+         return(res$maximum)
+      }
+   })
+
+   return(c(zi))
+
 }
 
 ############################################################################
