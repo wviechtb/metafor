@@ -4,6 +4,8 @@
 \alias{transf.ztor}
 \alias{transf.logit}
 \alias{transf.ilogit}
+\alias{transf.probit}
+\alias{transf.iprobit}
 \alias{transf.arcsin}
 \alias{transf.iarcsin}
 \alias{transf.pft}
@@ -21,12 +23,14 @@
 \alias{transf.ztor.int}
 \alias{transf.exp.int}
 \alias{transf.ilogit.int}
+\alias{transf.iprobit.int}
 \alias{transf.iarcsin.int}
 \alias{transf.iahw.int}
 \alias{transf.iabt.int}
 \alias{transf.ztor.mode}
 \alias{transf.exp.mode}
 \alias{transf.ilogit.mode}
+\alias{transf.iprobit.mode}
 \alias{transf.iarcsin.mode}
 \alias{transf.iahw.mode}
 \alias{transf.iabt.mode}
@@ -61,6 +65,8 @@ transf.rtoz(xi)
 transf.ztor(xi)
 transf.logit(xi)
 transf.ilogit(xi)
+transf.probit(xi)
+transf.iprobit(xi)
 transf.arcsin(xi)
 transf.iarcsin(xi)
 transf.pft(xi, ni)
@@ -78,11 +84,15 @@ transf.ztor2(xi)
 transf.ztor.int(xi, targs)
 transf.exp.int(xi, targs)
 transf.ilogit.int(xi, targs)
+transf.iprobit.int(xi, targs)
 transf.iarcsin.int(xi, targs)
 transf.ztor.mode(xi, targs)
 transf.exp.mode(xi, targs)
 transf.ilogit.mode(xi, targs)
+transf.iprobit.mode(xi, targs)
 transf.iarcsin.mode(xi, targs)
+transf.iahw.mode(xi, targs)
+transf.iabt.mode(xi, targs)
 transf.dtou1(xi)
 transf.dtou2(xi)
 transf.dtou3(xi)
@@ -124,6 +134,8 @@ transf.lnortortet.digby(xi)
    \item \code{transf.ztor}: inverse of the former (i.e., the z-to-r transformation; same as \code{tanh(x)}).
    \item \code{transf.logit}: logit (log odds) transformation for proportions (same as \code{qlogis(x)}).
    \item \code{transf.ilogit}: inverse of the former (same as \code{plogis(x)}).
+   \item \code{transf.probit}: probit transformation for proportions (same as \code{qnorm(x)}).
+   \item \code{transf.iprobit}: inverse of the former (same as \code{pnorm(x)}).
    \item \code{transf.arcsin}: arcsine square root transformation for proportions.
    \item \code{transf.iarcsin}: inverse of the former.
    \item \code{transf.pft}: Freeman-Tukey (double arcsine) transformation for proportions. See Freeman and Tukey (1950). The \code{xi} argument is used to specify the proportions and the \code{ni} argument the corresponding sample sizes.
@@ -141,12 +153,14 @@ transf.lnortortet.digby(xi)
    \item \code{transf.ztor.int}: integral transformation function for the z-to-r transformation. See \sQuote{Note}.
    \item \code{transf.exp.int}: integral transformation function for the exponential transformation. See \sQuote{Note}.
    \item \code{transf.ilogit.int}: integral transformation function for the inverse logit transformation. See \sQuote{Note}.
+   \item \code{transf.iprobit.int}: integral transformation function for the inverse probit transformation. See \sQuote{Note}.
    \item \code{transf.iarcsin.int}: integral transformation function for the inverse arcsine square root transformation. See \sQuote{Note}.
    \item \code{transf.iahw.int}: integral transformation function for \code{transf.iahw} transformation. See \sQuote{Note}.
    \item \code{transf.iahw.int}: integral transformation function for \code{transf.iabt} transformation. See \sQuote{Note}.
    \item \code{transf.ztor.mode}: function to determine the mode of an atanh-normal variable.
    \item \code{transf.exp.mode}: function to determine the mode of a log-normal variable.
    \item \code{transf.ilogit.mode}: function to determine the mode of a logit-normal variable.
+   \item \code{transf.iprobit.mode}: function to determine the mode of a probit-normal variable.
    \item \code{transf.iarcsin.mode}: function to determine the mode of an arcsine-square-root-normal variable.
    \item \code{transf.iahw.mode}: function to determine the mode of a \code{transf.ahw}-normal variable.
    \item \code{transf.iabt.mode}: function to determine the mode of a \code{transf.abt}-normal variable.

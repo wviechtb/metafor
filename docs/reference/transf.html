@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-13</span>
       </span>
     </div>
 
@@ -99,6 +99,8 @@
 <span><span class="fu">transf.ztor</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.logit</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.ilogit</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
+<span><span class="fu">transf.probit</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
+<span><span class="fu">transf.iprobit</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.arcsin</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.iarcsin</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.pft</span><span class="op">(</span><span class="va">xi</span>, <span class="va">ni</span><span class="op">)</span></span>
@@ -116,11 +118,15 @@
 <span><span class="fu">transf.ztor.int</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
 <span><span class="fu">transf.exp.int</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
 <span><span class="fu">transf.ilogit.int</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
+<span><span class="fu">transf.iprobit.int</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
 <span><span class="fu">transf.iarcsin.int</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
 <span><span class="fu">transf.ztor.mode</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
 <span><span class="fu">transf.exp.mode</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
 <span><span class="fu">transf.ilogit.mode</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
+<span><span class="fu">transf.iprobit.mode</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
 <span><span class="fu">transf.iarcsin.mode</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
+<span><span class="fu">transf.iahw.mode</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
+<span><span class="fu">transf.iabt.mode</span><span class="op">(</span><span class="va">xi</span>, <span class="va">targs</span><span class="op">)</span></span>
 <span><span class="fu">transf.dtou1</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.dtou2</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
 <span><span class="fu">transf.dtou3</span><span class="op">(</span><span class="va">xi</span><span class="op">)</span></span>
@@ -180,6 +186,8 @@
 <li><p><code>transf.ztor</code>: inverse of the former (i.e., the z-to-r transformation; same as <code>tanh(x)</code>).</p></li>
 <li><p><code>transf.logit</code>: logit (log odds) transformation for proportions (same as <code>qlogis(x)</code>).</p></li>
 <li><p><code>transf.ilogit</code>: inverse of the former (same as <code>plogis(x)</code>).</p></li>
+<li><p><code>transf.probit</code>: probit transformation for proportions (same as <code>qnorm(x)</code>).</p></li>
+<li><p><code>transf.iprobit</code>: inverse of the former (same as <code>pnorm(x)</code>).</p></li>
 <li><p><code>transf.arcsin</code>: arcsine square root transformation for proportions.</p></li>
 <li><p><code>transf.iarcsin</code>: inverse of the former.</p></li>
 <li><p><code>transf.pft</code>: Freeman-Tukey (double arcsine) transformation for proportions. See Freeman and Tukey (1950). The <code>xi</code> argument is used to specify the proportions and the <code>ni</code> argument the corresponding sample sizes.</p></li>
@@ -197,12 +205,14 @@
 <li><p><code>transf.ztor.int</code>: integral transformation function for the z-to-r transformation. See ‘Note’.</p></li>
 <li><p><code>transf.exp.int</code>: integral transformation function for the exponential transformation. See ‘Note’.</p></li>
 <li><p><code>transf.ilogit.int</code>: integral transformation function for the inverse logit transformation. See ‘Note’.</p></li>
+<li><p><code>transf.iprobit.int</code>: integral transformation function for the inverse probit transformation. See ‘Note’.</p></li>
 <li><p><code>transf.iarcsin.int</code>: integral transformation function for the inverse arcsine square root transformation. See ‘Note’.</p></li>
 <li><p><code>transf.iahw.int</code>: integral transformation function for <code>transf.iahw</code> transformation. See ‘Note’.</p></li>
 <li><p><code>transf.iahw.int</code>: integral transformation function for <code>transf.iabt</code> transformation. See ‘Note’.</p></li>
 <li><p><code>transf.ztor.mode</code>: function to determine the mode of an atanh-normal variable.</p></li>
 <li><p><code>transf.exp.mode</code>: function to determine the mode of a log-normal variable.</p></li>
 <li><p><code>transf.ilogit.mode</code>: function to determine the mode of a logit-normal variable.</p></li>
+<li><p><code>transf.iprobit.mode</code>: function to determine the mode of a probit-normal variable.</p></li>
 <li><p><code>transf.iarcsin.mode</code>: function to determine the mode of an arcsine-square-root-normal variable.</p></li>
 <li><p><code>transf.iahw.mode</code>: function to determine the mode of a <code>transf.ahw</code>-normal variable.</p></li>
 <li><p><code>transf.iabt.mode</code>: function to determine the mode of a <code>transf.abt</code>-normal variable.</p></li>

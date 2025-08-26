@@ -570,7 +570,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
             stop(mstyle$stop("Cannot extract SE of the prediction interval."))
 
          if (is.function(transf)) {
-            funlist <- lapply(list("1"=exp, "2"=transf.ztor, "3"=tanh, "4"=transf.ilogit, "5"=plogis, "6"=transf.iarcsin, "7"=pnorm, "8"=transf.iahw, "9"=transf.iabt), deparse)
+            funlist <- lapply(list("1"=exp, "2"=transf.ztor, "3"=tanh, "4"=transf.ilogit, "5"=plogis, "6"=transf.iarcsin, "7"=transf.iprobit, "8"=pnorm, "9"=transf.iahw, "10"=transf.iabt), deparse)
             funmatch <- sapply(funlist, identical, transf.char)
             if (!any(funmatch))
                stop(mstyle$stop("Chosen transformation not (currently) possible with this 'predstyle'."))
@@ -613,11 +613,11 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
                      xs <- suppressWarnings(qlogis(xs))
                   if (funmatch[6])
                      xs <- suppressWarnings(transf.arcsin(xs))
-                  if (funmatch[7])
+                  if (any(funmatch[7:8]))
                      xs <- suppressWarnings(qnorm(xs))
-                  if (funmatch[8])
-                     xs <- suppressWarnings(transf.ahw(xs))
                   if (funmatch[9])
+                     xs <- suppressWarnings(transf.ahw(xs))
+                  if (funmatch[10])
                      xs <- suppressWarnings(transf.abt(xs))
                   sel <- is.finite(xs) # FALSE for +-Inf and NA/NaN
                   xs <- xs[sel]
@@ -643,11 +643,11 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
                      predlim <- suppressWarnings(qlogis(predlim))
                   if (funmatch[6])
                      predlim <- suppressWarnings(transf.arcsin(predlim))
-                  if (funmatch[7])
+                  if (any(funmatch[7:8]))
                      predlim <- suppressWarnings(qnorm(predlim))
-                  if (funmatch[8])
-                     predlim <- suppressWarnings(transf.ahw(predlim))
                   if (funmatch[9])
+                     predlim <- suppressWarnings(transf.ahw(predlim))
+                  if (funmatch[10])
                      predlim <- suppressWarnings(transf.abt(predlim))
                }
                ys <- ys[xs > predlim[1] & xs < predlim[2]]
@@ -680,17 +680,17 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
                x.lo <- 0.01
                x.hi <- 0.99
             }
-            if (funmatch[7]) {
+            if (any(funmatch[7:8])) {
                ys <- ys / dnorm(qnorm(xs))
                x.lo <- 0.01
                x.hi <- 0.99
             }
-            if (funmatch[8]) {
+            if (funmatch[9]) {
                ys <- ys / (3*(1-xs)^(2/3))
                x.lo <- 0.01
                x.hi <- 0.99
             }
-            if (funmatch[9]) {
+            if (funmatch[10]) {
                ys <- ys / (1-xs)
                x.lo <- 0.01
                x.hi <- 0.99

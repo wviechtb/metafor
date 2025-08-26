@@ -2090,6 +2090,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
          if (measure == "PRZ") {
             yi <- qnorm(pri)
             vi <- 2*base::pi*pri*(1-pri)*exp(yi^2)/ni
+            #vi <- pri*(1-pri)/ni / dnorm(qnorm(pri))^2 # same
             # this is consistent with escalc(measure="PR") -> conv.delta(transf=qnorm)
             #tmp <- escalc(measure="PR", xi=xi, ni=ni)
             #vi <- conv.delta(yi, vi, data=tmp, transf=qnorm, replace=TRUE)$vi

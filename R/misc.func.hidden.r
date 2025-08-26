@@ -991,7 +991,7 @@
             lab <- ifelse(short, expression(Phi^{-1}*(p)), "Probit Transformed Proportion") # expression(z[p])
          } else {
             lab <- ifelse(short, lab, "Transformed Probit Transformed Proportion")
-            funlist <- lapply(list(pnorm), deparse)
+            funlist <- lapply(list(transf.iprobit, transf.iprobit.int, pnorm), deparse)
             if (any(sapply(funlist, identical, atransf.char)))
                lab <- ifelse(short, "Proportion", "Proportion (probit scale)")
             if (any(sapply(funlist, identical, transf.char)))

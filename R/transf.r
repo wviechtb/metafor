@@ -118,7 +118,7 @@ transf.ztor2 <- function(xi)
 #   targs <- .chktargsint(targs)
 #
 #   tau <- sqrt(targs$tau2)
-
+#
 #   if (is.null(targs$lower))
 #      targs$lower <- xi-10*tau
 #   if (is.null(targs$upper))
@@ -315,6 +315,77 @@ transf.iarcsin.mode <- function(xi, targs=NULL) {
    zi <- sapply(xi, function(x) {
       if (tau2 == 0)
          return(transf.iarcsin(xi))
+      res <- try(optimize(dfun, maximum=TRUE, lower=0, upper=1, mu=x, tau=tau))
+      if (inherits(res, "try-error")) {
+         return(NA_real_)
+      } else {
+         return(res$maximum)
+      }
+   })
+
+   return(c(zi))
+
+}
+
+############################################################################
+
+transf.probit <- function(xi) # resulting value between -Inf (for 0) and +Inf (for +1)
+   qnorm(xi)
+
+transf.iprobit <- function(xi)
+   pnorm(xi)
+
+transf.iprobit.int <- function(xi, targs=NULL) {
+
+   targs <- .chktargsint(targs)
+
+   tau <- sqrt(targs$tau2)
+
+   if (is.null(targs$lower))
+      targs$lower <- xi-10*tau
+   if (is.null(targs$upper))
+      targs$upper <- xi+10*tau
+
+   toint <- function(zval, xi, tau)
+      pnorm(zval) * dnorm(zval, mean=xi, sd=tau)
+
+   cfunc <- function(xi, tau, lower, upper) {
+      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau=tau), silent=TRUE)
+      if (inherits(out, "try-error")) {
+         return(NA_real_)
+      } else {
+         return(out$value)
+      }
+   }
+
+   if (targs$tau2 == 0) {
+      zi <- pnorm(xi)
+   } else {
+      zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
+   }
+
+   return(c(zi))
+
+}
+
+transf.iprobit.mode <- function(xi, targs=NULL) {
+
+   if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
+      stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
+   if (is.list(targs)) {
+      tau2 <- targs$tau2
+   } else {
+      tau2 <- targs
+   }
+
+   tau <- sqrt(tau2)
+
+   dfun <- function(x, mu, tau)
+      dnorm(qnorm(x), mu, tau) / dnorm(qnorm(x))
+
+   zi <- sapply(xi, function(x) {
+      if (tau2 == 0)
+         return(pnorm(xi))
       res <- try(optimize(dfun, maximum=TRUE, lower=0, upper=1, mu=x, tau=tau))
       if (inherits(res, "try-error")) {
          return(NA_real_)
