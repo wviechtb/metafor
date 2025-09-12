@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-14</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.9-13" id="metafor-49-13-2025-08-26">metafor 4.9-13 (2025-08-26)<a class="anchor" aria-label="anchor" href="#metafor-49-13-2025-08-26"></a></h2>
+<h2 class="page-header" data-toc-text="4.9-14" id="metafor-49-14-2025-09-12">metafor 4.9-14 (2025-09-12)<a class="anchor" aria-label="anchor" href="#metafor-49-14-2025-09-12"></a></h2>
 <ul><li><p>argument <code>legend</code> can now be a list for <code><a href="../reference/funnel.html">funnel()</a></code>, <code><a href="../reference/labbe.html">labbe()</a></code>, <code><a href="../reference/regplot.html">regplot()</a></code>, and <code><a href="../reference/plot.permutest.rma.uni.html">plot.permutest.rma.uni()</a></code> for more control over the look of the legend</p></li>
 <li><p>fixed how <code>intercept</code> (when unspecified) is set in <code><a href="../reference/predict.rma.html">predict.rma.ls()</a></code> when using <code>newscale</code></p></li>
 <li><p>renamed <code>pi.type</code> argument to <code>predtype</code> (which is more consistent with the <code>predstyle</code> argument), but <code>pi.type</code> will continue to work for backwards compatibility</p></li>
@@ -100,6 +100,9 @@
 <li><p><code><a href="../reference/ranktest.html">ranktest()</a></code> now also provides a p-value when the number of estimates is large</p></li>
 <li><p>added some more integral transformation functions</p></li>
 <li><p>added various methods for <code>matreg</code> objects</p></li>
+<li><p><code><a href="../reference/deltamethod.html">deltamethod()</a></code> can now also do the second-order delta method</p></li>
+<li><p>for measures <code>"ROM"</code>, <code>"ROMC"</code>, <code>"CVR"</code>, and <code>"CVRC"</code>, the bias corrections based on the second-order Taylor expansions are now applied by default in <code><a href="../reference/escalc.html">escalc()</a></code> (use <code>correct=FALSE</code> to switch this off)</p></li>
+<li><p>all <code><a href="../reference/addpoly.html">addpoly()</a></code> functions now respect <code>alim</code> and <code>olim</code> as set by <code><a href="../reference/forest.html">forest()</a></code></p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="4.8-0" id="metafor-48-0-2025-01-28">metafor 4.8-0 (2025-01-28)<small>2025-01-28</small><a class="anchor" aria-label="anchor" href="#metafor-48-0-2025-01-28"></a></h2>

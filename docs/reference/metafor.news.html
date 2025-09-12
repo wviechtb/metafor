@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-14</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">metafor.news</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 4.9-13 (2025-08-26)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 4.9-14 (2025-09-12)                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - argument legend can now be a list for funnel(), labbe(), regplot(),</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     and plot.permutest.rma.uni() for more control over the look of the</span>
@@ -143,6 +143,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added some more integral transformation functions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added various methods for matreg objects</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - deltamethod() can now also do the second-order delta method</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - for measures "ROM", "ROMC", "CVR", and "CVRC", the bias corrections</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     based on the second-order Taylor expansions are now applied by</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     default in escalc() (use correct=FALSE to switch this off)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - all addpoly() functions now respect alim and olim as set by forest()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 4.8-0 (2025-01-28)                  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

@@ -5,12 +5,13 @@
    Function to apply the (multivariate) delta method to a set of estimates. \loadmathjax
 }
 \usage{
-deltamethod(x, vcov, fun, level, H0=0, digits)
+deltamethod(x, vcov, fun, order=1, level, H0=0, digits)
 }
 \arguments{
    \item{x}{either a vector of estimates or a model object from which model coefficients can be extracted via \code{coef(x)}.}
    \item{vcov}{when \code{x} is a vector of estimates, the corresponding variance-covariance matrix (ignored when \code{x} is a model object, in which case \code{vcov(x)} is used to extract the variance-covariance matrix).}
    \item{fun}{a function to apply to the estimates.}
+   \item{order}{numeric value equal to 1 or 2 to determine whether the first- or second-order delta method should be used (the default is 1).}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (see \link[=misc-options]{here} for details). If unspecified, this either defaults to 95 or, if possible, the corresponding value from the model object.}
    \item{H0}{numeric value to specify the value under the null hypothesis for the Wald-type test(s) (the default is 0). Can also be a vector.}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded.}
@@ -18,7 +19,9 @@ deltamethod(x, vcov, fun, level, H0=0, digits)
 \details{
    Let \mjeqn{\hat{\theta}}{\theta} denote a vector of \mjseqn{p} estimates which can be specified via the \code{x} argument and let \mjseqn{\Sigma} denote the corresponding \mjeqn{p \times p}{pxp} variance-covariance matrix, which can be specified via the \code{vcov} argument. If \code{x} is not an vector with estimates, then the function assumes that \code{x} is a model object and will try to use \code{coef(x)} and \code{vcov(x)} to extract the model coefficients and the corresponding variance-covariance matrix (in this case, the \code{vcov} argument is ignored).
 
-   Let \mjeqn{f(\cdot)}{f(.)} be a function, specified via the \code{fun} argument, with \mjseqn{p} inputs/arguments (or with a single argument that is assumed to be a vector of length \mjseqn{p}), which returns a numeric (and atomic) vector of \mjseqn{q} transformed estimates. Then the function computes \mjeqn{f(\hat{\theta})}{f(\theta)} and the corresponding variance-covariance matrix of the transformed estimates using the \href{https://en.wikipedia.org/wiki/Delta_method#Multivariate_delta_method}{multivariate delta method} (e.g., van der Vaart, 1998) with \mjdeqn{\text{Var}[f(\hat{\theta})] = \nabla f(\hat{\theta})' \cdot \Sigma \cdot \nabla f(\hat{\theta})}{Var[f(\theta)]  = ▽f(\theta)' \Sigma ▽f(\theta)} where \mjeqn{\nabla f(\hat{\theta})}{▽f(\theta)} denotes the gradient of \mjeqn{f(\cdot)}{f(.)} evaluated at \mjeqn{\hat{\theta}}{\theta}. The function computes the gradient numerically using the \code{\link[calculus]{derivative}} function from the \href{https://cran.r-project.org/package=calculus}{calculus} package.
+   Let \mjeqn{f(\cdot)}{f(.)} be a function, specified via the \code{fun} argument, with \mjseqn{p} inputs/arguments (or with a single argument that is assumed to be a vector of length \mjseqn{p}), which returns a numeric (and atomic) vector of \mjseqn{q} transformed estimates. Then the function computes \mjeqn{f(\hat{\theta})}{f(\theta)} and the corresponding variance-covariance matrix of the transformed estimates using the \href{https://en.wikipedia.org/wiki/Delta_method#Multivariate_delta_method}{multivariate delta method} (e.g., van der Vaart, 1998) with \mjdeqn{\text{Var}[f(\hat{\theta})] = \nabla f(\hat{\theta})' \cdot \Sigma \cdot \nabla f(\hat{\theta})}{Var[f(\theta)] = ▽f(\theta)' \Sigma ▽f(\theta)} where \mjeqn{\nabla f(\hat{\theta})}{▽f(\theta)} denotes the gradient of \mjeqn{f(\cdot)}{f(.)} evaluated at \mjeqn{\hat{\theta}}{\theta}. The function computes the gradient numerically using the \code{\link[calculus]{derivative}} function from the \href{https://cran.r-project.org/package=calculus}{calculus} package.
+
+   When \code{order=2}, then the second-order delta method is used. For this, the variance-covariance matrix of the transformed estimates is computed with \mjdeqn{\text{Var}[f(\hat{\theta})] = \nabla f(\hat{\theta})' \cdot \Sigma \cdot \nabla f(\hat{\theta}) + \tfrac{1}{2} \text{trace}(H \cdot \Sigma \cdot \Sigma \cdot H)}{Var[f(\theta)] = ▽f(\theta)' \Sigma ▽f(\theta) + 1/2 trace(H \Sigma \Sigma H)} where \mjeqn{H}{H} denotes the Hessian matrix evaluated at \mjeqn{\hat{\theta}}{\theta}.
 
    The function also computes Wald-type tests and confidence intervals for the \mjseqn{q} transformed estimates. The \code{level} argument can be used to control the confidence interval level.
 }

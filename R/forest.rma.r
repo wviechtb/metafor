@@ -192,12 +192,12 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          lty <- c(lty, "solid")
    }
 
-   ### vertical expansion factor: 1st = CI/PI end lines, 2nd = arrows, 3rd = polygons, 4th = polygon/bar/shade/dist height
+   ### vertical expansion factors: 1st = CI/PI end lines, 2nd = arrows, 3rd = summary polygon, 4th = PI polygon/bar/shade/dist height
 
    efac <- .expand1(efac, 4L)
 
    if (length(efac) == 2L)
-      efac <- efac[c(1,1,2,2)] # if 2 values specified
+      efac <- efac[c(1,1,2,2)] # if 2 values specified (note: this one is different in forest.default() and forest.cumul.rma())
 
    if (length(efac) == 3L)
       efac <- efac[c(1:3,3)] # if 3 values specified
@@ -270,8 +270,20 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    decreasing <- .chkddd(ddd$decreasing, FALSE)
 
-   if (!is.null(ddd$clim))
+   if (is.null(ddd$clim)) {
+      if (missing(olim))
+         olim <- NULL
+   } else {
       olim <- ddd$clim
+   }
+
+   if (!is.null(olim)) {
+      if (length(olim) != 2L)
+         stop(mstyle$stop("Argument 'olim' must be of length 2."))
+      if (anyNA(olim))
+         stop(mstyle$stop("Argument 'olim' cannot contain NAs."))
+      olim <- sort(olim)
+   }
 
    ### row adjustments for 1) study labels, 2) annotations, and 3) ilab elements
 
@@ -636,10 +648,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### apply observation/outcome limits if specified
 
-   if (!missing(olim)) {
-      if (length(olim) != 2L)
-         stop(mstyle$stop("Argument 'olim' must be of length 2."))
-      olim <- sort(olim)
+   if (!is.null(olim)) {
       yi         <- .applyolim(yi, olim)
       ci.lb      <- .applyolim(ci.lb, olim)
       ci.ub      <- .applyolim(ci.ub, olim)
@@ -697,9 +706,12 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       } else {
          alim <- range(at)
       }
+   } else {
+      if (length(alim) != 2L)
+         stop(mstyle$stop("Argument 'alim' must be of length 2."))
    }
 
-   alim <- sort(alim)[1:2]
+   alim <- sort(alim)
 
    if (anyNA(alim))
       stop(mstyle$stop("Argument 'alim' cannot contain NAs."))
@@ -942,6 +954,10 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    ### if addfit and not an intercept-only model, add fitted polygons
 
+   polylen   <- 10000
+   polheight <- (height/100)*cex*efac[3]
+   poladds   <- (0:(polylen-1)) * (polheight/(polylen-1))
+
    if (addfit && !x$int.only) {
 
       for (i in seq_len(k)) {
@@ -949,15 +965,14 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          if (is.na(pred[i]))
             next
 
-         polheight <- (height/100)*cex*efac[3]
+         xs <- c(seq(pred.ci.lb[i], pred[i], length.out=polylen), seq(pred[i], pred.ci.ub[i], length.out=polylen),
+                 seq(pred.ci.ub[i], pred[i], length.out=polylen), seq(pred[i], pred.ci.lb[i], length.out=polylen))
+         ys <- c(rows[i]+poladds, rows[i]+polheight-poladds, rows[i]-poladds, rows[i]-polheight+poladds)
 
-         lpolygon(x=c(max(pred.ci.lb[i], alim[1]), pred[i], min(pred.ci.ub[i], alim[2]), pred[i]),
-                  y=c(rows[i], rows[i]+polheight, rows[i], rows[i]-polheight),
-                  col=col, border=border, ...)
+         ys <- ys[xs > alim[1] & xs < alim[2]]
+         xs <- xs[xs > alim[1] & xs < alim[2]]
 
-         ### this would only draw intervals if bounds fall within alim range
-         #if ((pred.ci.lb[i] > alim[1]) && (pred.ci.ub[i] < alim[2]))
-         #   lpolygon(x=c(pred.ci.lb[i], pred[i], pred.ci.ub[i], pred[i]), y=c(rows[i], rows[i]+polheight, rows[i], rows[i]-polheight), col=col, border=border, ...)
+         lpolygon(x=xs, y=ys, col=col, border=border, ...)
 
       }
 
@@ -1055,7 +1070,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
       ### apply observation/outcome limits if specified
 
-      if (!missing(olim)) {
+      if (!is.null(olim)) {
          beta       <- .applyolim(beta, olim)
          beta.ci.lb <- .applyolim(beta.ci.lb, olim)
          beta.ci.ub <- .applyolim(beta.ci.ub, olim)
@@ -1064,7 +1079,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       }
 
       ### add prediction interval
-      ### note: in contrast to addpoly(), these respect 'alim'
+      ### note: in contrast to addpoly.default(), these respect 'alim'
 
       if (!is.element(x$method, c("FE","EE","CE")) && addpred) {
 
@@ -1090,8 +1105,16 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
          if (predstyle == "polygon") {
 
-            # no easy way of cutting off the polygon if it extends beyond alim
-            lpolygon(x=c(beta.pi.lb, beta, beta.pi.ub, beta), y=c(-2, -2+pipolheight, -2, -2-pipolheight), col=col[2], border=border[2], ...)
+            poladds <- (0:(polylen-1)) * (pipolheight/(polylen-1))
+
+            xs <- c(seq(beta.pi.lb, beta, length.out=polylen), seq(beta, beta.pi.ub, length.out=polylen),
+                    seq(beta.pi.ub, beta, length.out=polylen), seq(beta, beta.pi.lb, length.out=polylen))
+            ys <- c(-2+poladds, -2+pipolheight-poladds, -2-poladds, -2-pipolheight+poladds)
+
+            ys <- ys[xs > alim[1] & xs < alim[2]]
+            xs <- xs[xs > alim[1] & xs < alim[2]]
+
+            lpolygon(x=xs, y=ys, col=col[2], border=border[2], ...)
 
          }
 
@@ -1127,12 +1150,12 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
             if (is.null(preddist) && predres$pi.dist != "norm" && predres$pi.ddf <= 1L)
                stop(mstyle$stop("Cannot shade/draw prediction distribution when df <= 1."))
 
+            x.len <- 10000
+
             if (predstyle == "shade") {
-               x.len <- 100
                q.lo <- level/2
                q.hi <- 1-level/2
             } else {
-               x.len <- 10000
                q.lo <- 0.0001
                q.hi <- 0.9999
             }
@@ -1260,7 +1283,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
             sel <- xs >= alim[1] & xs <= alim[2]
 
-            if (!missing(olim))
+            if (!is.null(olim))
                sel <- sel & c(xs > olim[1] & xs < olim[2])
 
             ys <- ys[sel]
@@ -1289,7 +1312,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
             sel <- sel & xs >= alim[1] & xs <= alim[2]
 
-            if (!missing(olim))
+            if (!is.null(olim))
                sel <- sel & c(xs > olim[1] & xs < olim[2])
 
             xs.sel.l0 <- xs[sel.l0 & sel]
@@ -1338,11 +1361,16 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
       ### polygon for the summary estimate
 
-      polheight <- (height/100)*cex*efac[3]
+      poladds <- (0:(polylen-1)) * (polheight/(polylen-1))
 
-      lpolygon(x=c(beta.ci.lb, beta, beta.ci.ub, beta),
-               y=c(-1, -1+polheight, -1, -1-polheight),
-               col=col[1], border=border[1], ...)
+      xs <- c(seq(beta.ci.lb, beta, length.out=polylen), seq(beta, beta.ci.ub, length.out=polylen),
+              seq(beta.ci.ub, beta, length.out=polylen), seq(beta, beta.ci.lb, length.out=polylen))
+      ys <- c(-1+poladds, -1+polheight-poladds, -1-poladds, -1-polheight+poladds)
+
+      ys <- ys[xs > alim[1] & xs < alim[2]]
+      xs <- xs[xs > alim[1] & xs < alim[2]]
+
+      lpolygon(x=xs, y=ys, col=col[1], border=border[1], ...)
 
       ### add label for model estimate
 
@@ -1619,8 +1647,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    ### put some additional stuff into .metafor, so that it can be used by addpoly()
 
    sav <- c(res, list(level=level, annotate=annotate, digits=digits[[1]], width=width,
-                      transf=transf, atransf=atransf, targs=targs, efac=efac, rowadj=rowadj,
-                      fonts=fonts[1:2], annosym=annosym))
+                      transf=transf, atransf=atransf, targs=targs, alim=alim, olim=olim,
+                      efac=efac, rowadj=rowadj, fonts=fonts[1:2], annosym=annosym))
    try(assign("forest", sav, envir=.metafor), silent=TRUE)
 
    invisible(res)

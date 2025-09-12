@@ -846,18 +846,6 @@
                lab <- ifelse(short, "Correlation", "Point-Biserial Correlation Coefficient")
          }
       }
-      if (measure == "CVR") {
-         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
-            lab <- ifelse(short, "Log[CVR]", "Log Coefficient of Variation Ratio")
-         } else {
-            lab <- ifelse(short, lab, "Transformed Log Coefficient of Variation Ratio")
-            funlist <- lapply(list(exp, transf.exp.int), deparse)
-            if (any(sapply(funlist, identical, atransf.char)))
-               lab <- ifelse(short, "CVR", "Coefficient of Variation Ratio (log scale)")
-            if (any(sapply(funlist, identical, transf.char)))
-               lab <- ifelse(short, "CVR", "Coefficient of Variation Ratio")
-         }
-      }
       if (measure == "VR") {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, "Log[VR]", "Log Variability Ratio")
@@ -868,6 +856,18 @@
                lab <- ifelse(short, "VR", "Variability Ratio (log scale)")
             if (any(sapply(funlist, identical, transf.char)))
                lab <- ifelse(short, "VR", "Variability Ratio")
+         }
+      }
+      if (measure == "CVR") {
+         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
+            lab <- ifelse(short, "Log[CVR]", "Log Coefficient of Variation Ratio")
+         } else {
+            lab <- ifelse(short, lab, "Transformed Log Coefficient of Variation Ratio")
+            funlist <- lapply(list(exp, transf.exp.int), deparse)
+            if (any(sapply(funlist, identical, atransf.char)))
+               lab <- ifelse(short, "CVR", "Coefficient of Variation Ratio (log scale)")
+            if (any(sapply(funlist, identical, transf.char)))
+               lab <- ifelse(short, "CVR", "Coefficient of Variation Ratio")
          }
       }
       ######################################################################
@@ -1088,18 +1088,6 @@
                lab <- ifelse(short, "Mean", "Mean")
          }
       }
-      if (measure == "CVLN") {
-         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
-            lab <- ifelse(short, "Log[CV]", "Log Coefficient of Variation")
-         } else {
-            lab <- ifelse(short, lab, "Transformed Log Coefficient of Variation")
-            funlist <- lapply(list(exp, transf.exp.int), deparse)
-            if (any(sapply(funlist, identical, atransf.char)))
-               lab <- ifelse(short, "CV", "Coefficient of Variation (log scale)")
-            if (any(sapply(funlist, identical, transf.char)))
-               lab <- ifelse(short, "CV", "Coefficient of Variation")
-         }
-      }
       if (measure == "SDLN") {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, "Log[SD]", "Log Standard Deviation")
@@ -1110,6 +1098,18 @@
                lab <- ifelse(short, "SD", "Standard Deviation (log scale)")
             if (any(sapply(funlist, identical, transf.char)))
                lab <- ifelse(short, "SD", "Standard Deviation")
+         }
+      }
+      if (measure == "CVLN") {
+         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
+            lab <- ifelse(short, "Log[CV]", "Log Coefficient of Variation")
+         } else {
+            lab <- ifelse(short, lab, "Transformed Log Coefficient of Variation")
+            funlist <- lapply(list(exp, transf.exp.int), deparse)
+            if (any(sapply(funlist, identical, atransf.char)))
+               lab <- ifelse(short, "CV", "Coefficient of Variation (log scale)")
+            if (any(sapply(funlist, identical, transf.char)))
+               lab <- ifelse(short, "CV", "Coefficient of Variation")
          }
       }
       ######################################################################
@@ -1139,18 +1139,6 @@
                lab <- ifelse(short, "Ratio of Means", "Ratio of Means")
          }
       }
-      if (measure == "CVRC") {
-         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
-            lab <- ifelse(short, "Log[CVR]", "Log Coefficient of Variation Ratio")
-         } else {
-            lab <- ifelse(short, lab, "Transformed Log Coefficient of Variation Ratio")
-            funlist <- lapply(list(exp, transf.exp.int), deparse)
-            if (any(sapply(funlist, identical, atransf.char)))
-               lab <- ifelse(short, "CVR", "Coefficient of Variation Ratio (log scale)")
-            if (any(sapply(funlist, identical, transf.char)))
-               lab <- ifelse(short, "CVR", "Coefficient of Variation Ratio")
-         }
-      }
       if (measure == "VRC") {
          if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
             lab <- ifelse(short, "Log[VR]", "Log Variability Ratio")
@@ -1161,6 +1149,18 @@
                lab <- ifelse(short, "VR", "Variability Ratio (log scale)")
             if (any(sapply(funlist, identical, transf.char)))
                lab <- ifelse(short, "VR", "Variability Ratio")
+         }
+      }
+      if (measure == "CVRC") {
+         if (identical(transf.char, "FALSE") && identical(atransf.char, "FALSE")) {
+            lab <- ifelse(short, "Log[CVR]", "Log Coefficient of Variation Ratio")
+         } else {
+            lab <- ifelse(short, lab, "Transformed Log Coefficient of Variation Ratio")
+            funlist <- lapply(list(exp, transf.exp.int), deparse)
+            if (any(sapply(funlist, identical, atransf.char)))
+               lab <- ifelse(short, "CVR", "Coefficient of Variation Ratio (log scale)")
+            if (any(sapply(funlist, identical, transf.char)))
+               lab <- ifelse(short, "CVR", "Coefficient of Variation Ratio")
          }
       }
       ######################################################################

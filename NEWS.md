@@ -1,4 +1,4 @@
-# metafor 4.9-13 (2025-08-26)
+# metafor 4.9-14 (2025-09-12)
 
 - argument `legend` can now be a list for `funnel()`, `labbe()`, `regplot()`, and `plot.permutest.rma.uni()` for more control over the look of the legend
 
@@ -17,6 +17,12 @@
 - added some more integral transformation functions
 
 - added various methods for `matreg` objects
+
+- `deltamethod()` can now also do the second-order delta method
+
+- for measures `"ROM"`, `"ROMC"`, `"CVR"`, and `"CVRC"`, the bias corrections based on the second-order Taylor expansions are now applied by default in `escalc()` (use `correct=FALSE` to switch this off)
+
+- all `addpoly()` functions now respect `alim` and `olim` as set by `forest()`
 
 # metafor 4.8-0 (2025-01-28)
 

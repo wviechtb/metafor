@@ -28,7 +28,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
       digits <- .getfromenv("forest", "digits", default=2)
 
    if (missing(width))
-      width <- .getfromenv("forest", "width", default=NULL)
+      width <- .getfromenv("forest", "width")
 
    if (missing(mlab))
       mlab <- NULL
@@ -40,10 +40,10 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
       atransf <- .getfromenv("forest", "atransf", default=FALSE)
 
    if (missing(targs))
-      targs <- .getfromenv("forest", "targs", default=NULL)
+      targs <- .getfromenv("forest", "targs")
 
    if (missing(efac))
-      efac <- .getfromenv("forest", "efac", default=1)
+      efac <- .getfromenv("forest", "efac")
 
    if (missing(col))
       col <- par("fg")
@@ -55,10 +55,10 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
       lty <- "dotted"
 
    if (missing(fonts))
-      fonts <- .getfromenv("forest", "fonts", default=NULL)
+      fonts <- .getfromenv("forest", "fonts")
 
    if (missing(cex))
-      cex <- .getfromenv("forest", "cex", default=NULL)
+      cex <- .getfromenv("forest", "cex")
 
    ddd <- list(...)
 
