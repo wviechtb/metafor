@@ -109,7 +109,7 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    A cumulative meta-analysis (i.e., adding one observation at a time) can be obtained with \code{\link[=cumul.rma.mh]{cumul}}.
 
-   Other extractor functions include \code{\link[=coef.rma]{coef}}, \code{\link[=vcov.rma]{vcov}}, \code{\link[=se.rma]{se}}, \code{\link[=logLik.rma]{logLik}}, \code{\link[=deviance.rma]{deviance}}, \code{\link[=AIC.rma]{AIC}}, and \code{\link[=BIC.rma]{BIC}}.
+   Other extractor functions include \code{\link[=coef.rma]{coef}}, \code{\link[=vcov.rma]{vcov}}, \code{\link[=se.rma]{se}}, \code{\link[=fitstats]{logLik}}, \code{\link[=fitstats]{deviance}}, \code{\link[=fitstats]{AIC}}, and \code{\link[=fitstats]{BIC}}.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
