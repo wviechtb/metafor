@@ -1,4 +1,5 @@
 \name{residuals.rma}
+\alias{resid}
 \alias{residuals}
 \alias{rstandard}
 \alias{rstudent}

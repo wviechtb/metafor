@@ -1,6 +1,10 @@
 \name{fitstats}
 \alias{fitstats}
 \alias{fitstats.rma}
+\alias{logLik}
+\alias{deviance}
+\alias{AIC}
+\alias{BIC}
 \alias{logLik.rma}
 \alias{deviance.rma}
 \alias{AIC.rma}
