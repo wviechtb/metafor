@@ -1,2 +1,2 @@
-radial <- galbraith <- function(x, ...)
+radial <- function(x, ...)
    UseMethod("radial")

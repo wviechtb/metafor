@@ -1,14 +1,12 @@
 \name{radial}
 \alias{radial}
-\alias{galbraith}
 \alias{radial.rma}
-\title{Radial (Galbraith) Plots for 'rma' Objects}
+\title{Radial Plots for 'rma' Objects}
 \description{
-   Function to create radial (also called Galbraith) plots for objects of class \code{"rma"}. \loadmathjax
+   Function to create radial plots for objects of class \code{"rma"}. \loadmathjax
 }
 \usage{
 radial(x, \dots)
-galbraith(x, \dots)
 
 \method{radial}{rma}(x, center=FALSE, xlim, zlim, xlab, zlab,
        atz, aty, steps=7, level=x$level, digits=2,
@@ -40,6 +38,8 @@ galbraith(x, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
+   Radial plots (also sometimes called Galbraith plots) were introduced by Galbraith (1988a, 1988b, 1994) as a way to plot estimates with different precisions. In meta-analyses, they are an interesting alternative to forest plots, especially when the number of observed effect sizes or outcomes is large (in which case the forest plot would be very large).
+
    For an equal-effects model, the plot shows the inverse of the standard errors on the horizontal axis (i.e., \mjeqn{1/\sqrt{v_i}}{1/\sqrt(v_i)}, where \mjseqn{v_i} is the sampling variance of the observed effect size or outcome) against the observed effect sizes or outcomes standardized by their corresponding standard errors on the vertical axis (i.e., \mjeqn{y_i/\sqrt{v_i}}{y_i/\sqrt(v_i)}). Since the vertical axis corresponds to standardized values, it is referred to as the z-axis within this function. On the right hand side of the plot, an arc is drawn (referred to as the y-axis within this function) corresponding to the observed effect sizes or outcomes. A line projected from (0,0) through a particular point within the plot onto this arc indicates the value of the observed effect size or outcome for that point.
 
    For a random-effects model, the function uses \mjeqn{1/\sqrt{v_i + \tau^2}}{1/\sqrt(v_i + \tau^2)} for the horizontal axis, where \mjseqn{\tau^2} is the amount of heterogeneity as estimated based on the model. For the z-axis, \mjeqn{y_i/\sqrt{v_i + \tau^2}}{y_i/\sqrt(v_i + \tau^2)} is used to compute standardized values of the observed effect sizes or outcomes.
@@ -66,9 +66,9 @@ galbraith(x, \dots)
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
-   Galbraith, R. F. (1988). Graphical display of estimates having differing standard errors. \emph{Technometrics}, \bold{30}(3), 271--281. \verb{https://doi.org/10.1080/00401706.1988.10488400}
+   Galbraith, R. F. (1988a). Graphical display of estimates having differing standard errors. \emph{Technometrics}, \bold{30}(3), 271--281. \verb{https://doi.org/10.1080/00401706.1988.10488400}
 
-   Galbraith, R. F. (1988). A note on graphical presentation of estimated odds ratios from several clinical trials. \emph{Statistics in Medicine}, \bold{7}(8), 889--894. \verb{https://doi.org/10.1002/sim.4780070807}
+   Galbraith, R. F. (1988b). A note on graphical presentation of estimated odds ratios from several clinical trials. \emph{Statistics in Medicine}, \bold{7}(8), 889--894. \verb{https://doi.org/10.1002/sim.4780070807}
 
    Galbraith, R. F (1994). Some applications of radial plots. \emph{Journal of the American Statistical Association}, \bold{89}(428), 1232--1242. \verb{https://doi.org/10.1080/01621459.1994.10476864}
 

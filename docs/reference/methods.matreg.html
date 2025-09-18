@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-17</span>
       </span>
     </div>
 
@@ -103,16 +103,16 @@
 <span><span class="fu"><a href="https://rdrr.io/r/stats/sigma.html" class="external-link">sigma</a></span><span class="op">(</span><span class="va">object</span>, REML<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'matreg'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">object</span>, REML<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu"><a href="fitstats.html">logLik</a></span><span class="op">(</span><span class="va">object</span>, REML<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="co"># S3 method for class 'matreg'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span>, k<span class="op">=</span><span class="fl">2</span>, correct<span class="op">=</span><span class="cn">FALSE</span>, REML<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="fitstats.html">AIC</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span>, k<span class="op">=</span><span class="fl">2</span>, correct<span class="op">=</span><span class="cn">FALSE</span>, REML<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co"># S3 method for class 'matreg'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span>, REML<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="fitstats.html">BIC</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span>, REML<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'matreg'</span></span>
 <span><span class="fu"><a href="confint.rma.html">confint</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">parm</span>, <span class="va">level</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="co"># S3 method for class 'confint.matreg'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, digits<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="print.rma.html">print</a></span><span class="op">(</span><span class="va">x</span>, digits<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -125,7 +125,7 @@
 <dd><p>logical whether the returned value should be based on ML or REML estimation.</p></dd>
 
    <dt id="arg-k">k<a class="anchor" aria-label="anchor" href="#arg-k"></a></dt>
-<dd><p>numeric value to specify the penalty per parameter. The default (<code>k=2</code>) is the classical AIC. See <code><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></code> for more details.</p></dd>
+<dd><p>numeric value to specify the penalty per parameter. The default (<code>k=2</code>) is the classical AIC. See <code><a href="fitstats.html">AIC</a></code> for more details.</p></dd>
 
    <dt id="arg-correct">correct<a class="anchor" aria-label="anchor" href="#arg-correct"></a></dt>
 <dd><p>logical to specify whether the regular (default) or corrected (i.e., AICc) should be extracted.</p></dd>
@@ -219,11 +219,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> hp          -0.05715454 -0.01780291</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt          -4.73232353 -1.02482730</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> am          -0.73575874  4.90317900</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="fitstats.html">logLik</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'log Lik.' -73.06742 (df=5)</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="fitstats.html">AIC</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 156.1348</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="fitstats.html">BIC</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 163.4635</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### covariance matrix of the dataset</span></span></span>
@@ -269,11 +269,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> wt       -2.8786 -4.7323 -1.0248 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> am        2.0837 -0.7358  4.9032 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="fitstats.html">logLik</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'log Lik.' -73.06742 (df=5)</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="fitstats.html">AIC</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 156.1348</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="fitstats.html">BIC</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 163.4635</span>
 </code></pre></div>
     </div>

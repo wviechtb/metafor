@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-17</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.9-14" id="metafor-49-14-2025-09-12">metafor 4.9-14 (2025-09-12)<a class="anchor" aria-label="anchor" href="#metafor-49-14-2025-09-12"></a></h2>
+<h2 class="page-header" data-toc-text="4.9-17" id="metafor-49-17-2025-09-18">metafor 4.9-17 (2025-09-18)<a class="anchor" aria-label="anchor" href="#metafor-49-17-2025-09-18"></a></h2>
 <ul><li><p>argument <code>legend</code> can now be a list for <code><a href="../reference/funnel.html">funnel()</a></code>, <code><a href="../reference/labbe.html">labbe()</a></code>, <code><a href="../reference/regplot.html">regplot()</a></code>, and <code><a href="../reference/plot.permutest.rma.uni.html">plot.permutest.rma.uni()</a></code> for more control over the look of the legend</p></li>
 <li><p>fixed how <code>intercept</code> (when unspecified) is set in <code><a href="../reference/predict.rma.html">predict.rma.ls()</a></code> when using <code>newscale</code></p></li>
 <li><p>renamed <code>pi.type</code> argument to <code>predtype</code> (which is more consistent with the <code>predstyle</code> argument), but <code>pi.type</code> will continue to work for backwards compatibility</p></li>
@@ -127,7 +127,7 @@
 <li><p><code>fsn(..., type="General")</code> now computes the final estimates after rounding the fail-safe N value (not before)</p></li>
 <li><p><code><a href="../reference/permutest.html">permutest.rma.uni()</a></code> gains a <code>btt</code> argument and <code><a href="../reference/permutest.html">permutest.rma.ls()</a></code> gains <code>btt</code> and <code>att</code> arguments</p></li>
 <li><p><code><a href="../reference/selmodel.html">selmodel()</a></code> gains a <code>subset</code> argument (to specify a subset of studies to which the selection function should apply); for the beta selection model, one can now also specify two <code>steps</code> values to fit a truncated beta selection model</p></li>
-<li><p><code><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs()</a></code> now just returns the number of estimates, not the effective number of observations</p></li>
+<li><p><code><a href="../reference/fitstats.html">nobs()</a></code> now just returns the number of estimates, not the effective number of observations</p></li>
 <li><p>some tweaks were made to <code><a href="../reference/vcalc.html">vcalc()</a></code> to speed up the calculations (by James Pustejovsky)</p></li>
 <li><p>added measures <code>"PRZ"</code>, <code>"CLES"</code>, <code>"AUC"</code>, <code>"CLESN"</code>, <code>"AUCN"</code>, <code>"CLESCN"</code>, <code>"AUCCN"</code>, <code>"R2F"</code>, and <code>"ZR2F"</code> to <code><a href="../reference/escalc.html">escalc()</a></code></p></li>
 <li><p><code><a href="../reference/escalc.html">escalc()</a></code> gains a <code>flip</code> argument</p></li>
@@ -383,7 +383,7 @@
 <li><p><code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code> now check whether any of the profiled log-likelihood values is larger than the log-likelihood of the fitted model (using numerical tolerance given by <code>lltol</code>) and issues a warning if so</p></li>
 <li><p><code><a href="../reference/profile.rma.html">profile.rma.uni()</a></code>, <code><a href="../reference/profile.rma.html">profile.rma.mv()</a></code>, and <code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gain <code>cline</code> argument; <code><a href="../reference/profile.rma.html">plot.profile.rma()</a></code> gains <code>xlim</code>, <code>ylab</code>, and <code>main</code> arguments</p></li>
 <li><p>fixed an issue with <code><a href="../reference/robust.html">robust.rma.mv()</a></code> when the model was fitted with <code>sparse=TRUE</code> (thanks to Roger Martineau for noting the problem)</p></li>
-<li><p>various method functions (<code><a href="../reference/fitted.rma.html">fitted()</a></code>, <code><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">resid()</a></code>, <code><a href="../reference/predict.rma.html">predict()</a></code>, etc.) behave in a more consistent manner when model omitted studies with missings</p></li>
+<li><p>various method functions (<code><a href="../reference/fitted.rma.html">fitted()</a></code>, <code><a href="../reference/residuals.rma.html">resid()</a></code>, <code><a href="../reference/predict.rma.html">predict()</a></code>, etc.) behave in a more consistent manner when model omitted studies with missings</p></li>
 <li><p><code><a href="../reference/predict.rma.html">predict.rma()</a></code> gains <code>vcov</code> argument; when set to <code>TRUE</code>, the variance-covariance matrix of the predicted values is also returned</p></li>
 <li><p><code><a href="../reference/vcov.rma.html">vcov.rma()</a></code> can now also return the variance-covariance matrix of the fitted values (<code>type="fitted"</code>) and the residuals (<code>type="resid"</code>)</p></li>
 <li><p>added <code>$&lt;-</code> and <code><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix()</a></code> methods for <code>list.rma</code> objects</p></li>
@@ -471,7 +471,7 @@
 <li><p><code><a href="../reference/confint.rma.html">confint()</a></code> now works for models fitted with the <code><a href="../reference/rma.mv.html">rma.mv()</a></code> function; for variance and correlation parameters, the function provides profile likelihood confidence intervals; the output generated by the <code><a href="../reference/confint.rma.html">confint()</a></code> function has been adjusted in general to make the formatting more consistent across the different model types</p></li>
 <li><p>for objects of class <code>rma.mv</code>, <code><a href="../reference/profile.rma.html">profile()</a></code> now provides profile plots for all (non-fixed) variance and correlation components of the model when no component is specified by the user (via the <code>sigma2</code>, <code>tau2</code>, <code>rho</code>, <code>gamma2</code>, or <code>phi</code> arguments)</p></li>
 <li><p>for <code>measure="MD"</code> and <code>measure="ROM"</code>, one can now choose between <code>vtype="LS"</code> (the default) and <code>vtype="HO"</code>; the former computes the sampling variances without assuming homoscedasticity, while the latter assumes homoscedasticity</p></li>
-<li><p>multiple model objects can now be passed to the <code><a href="../reference/fitstats.html">fitstats()</a></code>, <code><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC()</a></code>, and <code><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC()</a></code> functions</p></li>
+<li><p>multiple model objects can now be passed to the <code><a href="../reference/fitstats.html">fitstats()</a></code>, <code><a href="../reference/fitstats.html">AIC()</a></code>, and <code><a href="../reference/fitstats.html">BIC()</a></code> functions</p></li>
 <li><p>check for duplicates in the <code>slab</code> argument is now done <em>after</em> any subsetting is done (as suggested by Michael Dewey)</p></li>
 <li><p><code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> now again works when using <code>add=0</code>, in which case some of the observed outcomes (e.g., log odds or log odds ratios) may be <code>NA</code></p></li>
 <li><p>when using <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> with <code>model="CM.EL"</code>, the saturated model (used to compute the Wald-type and likelihood ratio tests for the presence of (residual) heterogeneity) often fails to converge; the function now continues to run (instead of stopping with an error) and simply omits the test results from the output</p></li>
@@ -670,7 +670,7 @@
 <li><p>the standard errors of the HS and DL estimators of tau^2 are now correctly computed when tau^2 is prespecified by the user in the <code><a href="../reference/rma.uni.html">rma()</a></code> function; in addition, the standard error of the SJ estimator is also now provided when tau^2 is prespecified</p></li>
 <li><p><code><a href="../reference/rma.uni.html">rma.uni()</a></code> and <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> now use a better method to check whether the model matrix is of full rank</p></li>
 <li><p>I^2 and H^2 statistics are now also calculated for mixed-effects models by the <code><a href="../reference/rma.uni.html">rma.uni()</a></code> and <code><a href="../reference/rma.glmm.html">rma.glmm()</a></code> function; <code><a href="../reference/confint.rma.html">confint.rma.uni()</a></code> provides the corresponding confidence intervals for <code>rma.uni</code> models</p></li>
-<li><p>various <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> methods now have a new argument called <code>signif.stars</code>, which defaults to <code>getOption("show.signif.stars")</code> (which by default is <code>TRUE</code>) to determine whether the infamous ‘significance stars’ should be printed</p></li>
+<li><p>various <code><a href="../reference/print.rma.html">print()</a></code> methods now have a new argument called <code>signif.stars</code>, which defaults to <code>getOption("show.signif.stars")</code> (which by default is <code>TRUE</code>) to determine whether the infamous ‘significance stars’ should be printed</p></li>
 <li><p>slight changes in wording in the output produced by the <code><a href="../reference/print.rma.html">print.rma.uni()</a></code> and <code><a href="../reference/print.rma.html">print.rma.glmm()</a></code> functions</p></li>
 <li><p>some improvements to the documentation</p></li>
 </ul></div>
@@ -686,7 +686,7 @@
 <li><p>the <code><a href="../reference/escalc.html">escalc()</a></code> function now does some more extensive error checking for misspecified data and some unusual cases</p></li>
 <li><p><code>append</code> argument is now <code>TRUE</code> by default in the <code><a href="../reference/escalc.html">escalc()</a></code> function</p></li>
 <li><p>objects generated by the <code><a href="../reference/escalc.html">escalc()</a></code> function now have their own class</p></li>
-<li><p>added <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> and <code><a href="../reference/print.rma.html">summary()</a></code> methods for objects of class <code>escalc</code></p></li>
+<li><p>added <code><a href="../reference/print.rma.html">print()</a></code> and <code><a href="../reference/print.rma.html">summary()</a></code> methods for objects of class <code>escalc</code></p></li>
 <li><p>added <code>[</code> and <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind()</a></code> methods for objects of class <code>escalc</code></p></li>
 <li><p>added a few additional arguments to the <code><a href="../reference/escalc.html">escalc()</a></code> function (i.e., <code>slab</code>, <code>subset</code>, <code>var.names</code>, <code>replace</code>, <code>digits</code>)</p></li>
 <li><p>added <code>drop00</code> argument to the <code><a href="../reference/escalc.html">escalc()</a></code>, <code><a href="../reference/rma.uni.html">rma.uni()</a></code>, <code><a href="../reference/rma.mh.html">rma.mh()</a></code>, and <code><a href="../reference/rma.peto.html">rma.peto()</a></code> functions</p></li>
@@ -712,7 +712,7 @@
 <li><p>better handling of missing values in some unusual situations</p></li>
 <li><p>corrected small bug in <code><a href="../reference/fsn.html">fsn()</a></code> that would not allow the user to specify the standard errors instead of the sampling variances (thanks to Bernd Weiss for pointing this out)</p></li>
 <li><p><code><a href="../reference/plot.infl.rma.uni.html">plot.infl.rma.uni()</a></code> function now allows the user to specify which plots to draw (and the layout) and adds the option to show study labels on the x-axis</p></li>
-<li><p>added proper <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method for objects generated by the <code><a href="../reference/confint.rma.html">confint.rma.uni()</a></code>, <code><a href="../reference/confint.rma.html">confint.rma.mh()</a></code>, and <code><a href="../reference/confint.rma.html">confint.rma.peto()</a></code> functions</p></li>
+<li><p>added proper <code><a href="../reference/print.rma.html">print()</a></code> method for objects generated by the <code><a href="../reference/confint.rma.html">confint.rma.uni()</a></code>, <code><a href="../reference/confint.rma.html">confint.rma.mh()</a></code>, and <code><a href="../reference/confint.rma.html">confint.rma.peto()</a></code> functions</p></li>
 <li><p>when <code>transf</code> or <code>atransf</code> argument was a monotonically <em>decreasing</em> function, then confidence and prediction interval bounds were in reversed order; various functions now check for this and order the bounds correctly</p></li>
 <li><p><code><a href="../reference/trimfill.html">trimfill.rma.uni()</a></code> now only prints information about the number of imputed studies when actually printing the model object</p></li>
 <li><p><code><a href="../reference/qqnorm.rma.html">qqnorm.rma.uni()</a></code>, <code><a href="../reference/qqnorm.rma.html">qqnorm.rma.mh()</a></code>, and <code><a href="../reference/qqnorm.rma.html">qqnorm.rma.peto()</a></code> functions now have a new argument called <code>label</code>, which allows for labeling of points; the functions also now return (invisibly) the x and y coordinates of the points drawn</p></li>
@@ -730,7 +730,7 @@
 <li><p>added new dataset (<code>dat.bonett2010</code>) to illustrate the meta-analysis of Cronbach’s alpha values (raw values and transformations thereof)</p></li>
 <li><p>added new datasets (<code>dat.hackshaw1998</code>, <code>dat.raudenbush1985</code>)</p></li>
 <li><p>(approximate) standard error of the tau^2 estimate is now computed and shown for most of the (residual) heterogeneity estimators</p></li>
-<li><p>added <code><a href="https://rdrr.io/r/stats/nobs.html" class="external-link">nobs()</a></code> and <code><a href="https://rdrr.io/r/stats/df.residual.html" class="external-link">df.residual()</a></code> methods for objects of class <code>rma</code></p></li>
+<li><p>added <code><a href="../reference/fitstats.html">nobs()</a></code> and <code><a href="../reference/fitstats.html">df.residual()</a></code> methods for objects of class <code>rma</code></p></li>
 <li><p><code><a href="../reference/metafor.news.html">metafor.news()</a></code> is now simply a wrapper for <code>news(package="metafor")</code></p></li>
 <li><p>the package code is now byte-compiled, which yields some modest increases in execution speed</p></li>
 <li><p>some general code cleanup</p></li>
@@ -788,7 +788,7 @@
 <li><p><code><a href="../reference/cumul.html">cumul()</a></code> functions not showing all of the output columns when using fixed-effects models has been corrected</p></li>
 <li><p><code><a href="../reference/weights.rma.html">weights.rma.uni()</a></code> function now handles <code>NA</code>s appropriately</p></li>
 <li><p><code><a href="../reference/weights.rma.html">weights.rma.mh()</a></code> and <code><a href="../reference/weights.rma.html">weights.rma.peto()</a></code> functions added</p></li>
-<li><p><code><a href="../reference/fitstats.html">logLik.rma()</a></code> function now behaves more like other <code><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik()</a></code> functions (such as <code>logLik.lm()</code> and <code>logLik.lme()</code>)</p></li>
+<li><p><code><a href="../reference/fitstats.html">logLik.rma()</a></code> function now behaves more like other <code><a href="../reference/fitstats.html">logLik()</a></code> functions (such as <code>logLik.lm()</code> and <code>logLik.lme()</code>)</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.1-0" id="metafor-11-0-2010-04-28">metafor 1.1-0 (2010-04-28)<small>2010-04-28</small><a class="anchor" aria-label="anchor" href="#metafor-11-0-2010-04-28"></a></h2>
@@ -812,7 +812,7 @@
 <li><p><code><a href="../reference/forest.html">forest()</a></code> function can now also show the prediction interval as a dashed line for a random-effects model</p></li>
 <li><p>information about the measure used is now passed on to the <code><a href="../reference/forest.html">forest()</a></code> and <code><a href="../reference/funnel.html">funnel()</a></code> functions, which try to set an appropriate x-axis title accordingly</p></li>
 <li><p><code><a href="../reference/funnel.html">funnel()</a></code> function now has more arguments (e.g., <code>atransf</code>, <code>at</code>) providing more control over the display of the x-axis</p></li>
-<li><p><code><a href="../reference/predict.rma.html">predict()</a></code> function now has its own <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> method and has a new argument called <code>addx</code>, which adds the values of the moderator variables to the returned object (when <code>addx=TRUE</code>)</p></li>
+<li><p><code><a href="../reference/predict.rma.html">predict()</a></code> function now has its own <code><a href="../reference/print.rma.html">print()</a></code> method and has a new argument called <code>addx</code>, which adds the values of the moderator variables to the returned object (when <code>addx=TRUE</code>)</p></li>
 <li><p>functions now properly handle the <code>na.action</code> <code>"na.pass"</code> (treated essentially like <code>"na.exclude"</code>)</p></li>
 <li><p>added method for <code><a href="../reference/weights.rma.html">weights()</a></code> to extract the weights used when fitting models with <code><a href="../reference/rma.uni.html">rma.uni()</a></code></p></li>
 <li><p>some small improvements to the documentation</p></li>
@@ -828,7 +828,7 @@
 <h2 class="page-header" data-toc-text="0.5-6" id="metafor-05-6-2009-10-19">metafor 0.5-6 (2009-10-19)<a class="anchor" aria-label="anchor" href="#metafor-05-6-2009-10-19"></a></h2>
 <ul><li><p>small changes to the computation of the DFFITS and DFBETAS values in the <code><a href="../reference/influence.rma.uni.html">influence()</a></code> function, so that these statistics are more in line with their definitions in regular linear regression models</p></li>
 <li><p>added option to the plot function for objects returned by <code><a href="../reference/influence.rma.uni.html">influence()</a></code> to allow plotting the covariance ratios on a log scale (now the default)</p></li>
-<li><p>slight adjustments to various <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> functions (to catch some errors when certain values were <code>NA</code>)</p></li>
+<li><p>slight adjustments to various <code><a href="../reference/print.rma.html">print()</a></code> functions (to catch some errors when certain values were <code>NA</code>)</p></li>
 <li><p>added a control option to <code><a href="../reference/rma.uni.html">rma()</a></code> to adjust the step length of the Fisher scoring algorithm by a constant factor (this may be useful when the algorithm does not converge)</p></li>
 </ul></div>
     <div class="section level2">

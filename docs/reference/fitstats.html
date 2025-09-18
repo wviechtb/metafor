@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-14</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-17</span>
       </span>
     </div>
 
@@ -101,14 +101,14 @@
 <span><span class="fu">fitstats</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span>, <span class="va">REML</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'rma'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">REML</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">logLik</span><span class="op">(</span><span class="va">object</span>, <span class="va">REML</span>, <span class="va">...</span><span class="op">)</span></span>
 <span><span class="co"># S3 method for class 'rma'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/deviance.html" class="external-link">deviance</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">REML</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">deviance</span><span class="op">(</span><span class="va">object</span>, <span class="va">REML</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'rma'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span>, k<span class="op">=</span><span class="fl">2</span>, correct<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu">AIC</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span>, k<span class="op">=</span><span class="fl">2</span>, correct<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co"># S3 method for class 'rma'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">BIC</span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -118,13 +118,13 @@
 <dd><p>an object of class <code>"rma"</code>.</p></dd>
 
    <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>optionally more fitted model objects (only for <code>fitstats()</code>, <code><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC()</a></code>, and <code><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC()</a></code>).</p></dd>
+<dd><p>optionally more fitted model objects (only for <code>fitstats()</code>, <code>AIC()</code>, and <code>BIC()</code>).</p></dd>
 
    <dt id="arg-reml">REML<a class="anchor" aria-label="anchor" href="#arg-reml"></a></dt>
 <dd><p>logical to specify whether the regular or restricted likelihood function should be used to obtain the fit statistics and information criteria. Defaults to the method of estimation used (i.e., <code>TRUE</code> if <code>object</code> was fitted with <code>method="REML"</code> and <code>FALSE</code> otherwise).</p></dd>
 
    <dt id="arg-k">k<a class="anchor" aria-label="anchor" href="#arg-k"></a></dt>
-<dd><p>numeric value to specify the penalty per parameter. The default (<code>k=2</code>) is the classical AIC. See <code><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></code> for more details.</p></dd>
+<dd><p>numeric value to specify the penalty per parameter. The default (<code>k=2</code>) is the classical AIC. See <code>AIC</code> for more details.</p></dd>
 
    <dt id="arg-correct">correct<a class="anchor" aria-label="anchor" href="#arg-correct"></a></dt>
 <dd><p>logical to specify whether the regular (default) or corrected (i.e., AICc) should be extracted.</p></dd>
@@ -176,27 +176,27 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> AICc:      30.53015 28.292231</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### log-likelihoods</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">res1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">logLik</span><span class="op">(</span><span class="va">res1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'log Lik.' -12.66508 (df=2)</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/logLik.html" class="external-link">logLik</a></span><span class="op">(</span><span class="va">res2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">logLik</span><span class="op">(</span><span class="va">res2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 'log Lik.' -7.646115 (df=4)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### deviances</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/deviance.html" class="external-link">deviance</a></span><span class="op">(</span><span class="va">res1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">deviance</span><span class="op">(</span><span class="va">res1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 37.11602</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/deviance.html" class="external-link">deviance</a></span><span class="op">(</span><span class="va">res2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">deviance</span><span class="op">(</span><span class="va">res2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 27.0781</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### AIC, AICc, and BIC values</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">res1</span>, <span class="va">res2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">AIC</span><span class="op">(</span><span class="va">res1</span>, <span class="va">res2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      df      AIC</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> res1  2 29.33015</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> res2  4 23.29223</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">res1</span>, <span class="va">res2</span>, correct<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">AIC</span><span class="op">(</span><span class="va">res1</span>, <span class="va">res2</span>, correct<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      df     AICc</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> res1  2 30.53015</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> res2  4 28.29223</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">BIC</a></span><span class="op">(</span><span class="va">res1</span>, <span class="va">res2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">BIC</span><span class="op">(</span><span class="va">res1</span>, <span class="va">res2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      df      BIC</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> res1  2 30.46005</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> res2  4 25.55203</span>

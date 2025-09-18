@@ -1,4 +1,5 @@
 \name{print.rma}
+\alias{print}
 \alias{print.rma}
 \alias{print.rma.uni}
 \alias{print.rma.mh}
