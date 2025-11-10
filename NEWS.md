@@ -1,6 +1,8 @@
-# metafor 4.9-18 (2025-09-22)
+# metafor 4.9-19 (2025-11-10)
 
 - argument `legend` can now be a list for `funnel()`, `labbe()`, `regplot()`, and `plot.permutest.rma.uni()` for more control over the look of the legend
+
+- added `hetvar` argument to `predict.rma()` to manually specify the amount of heterogeneity for computing prediction intervals
 
 - fixed how `intercept` (when unspecified) is set in `predict.rma.ls()` when using `newscale`
 

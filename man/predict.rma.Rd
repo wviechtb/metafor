@@ -7,8 +7,8 @@
    The function computes predicted values, corresponding standard errors, confidence intervals, and prediction intervals for objects of class \code{"rma"}. \loadmathjax
 }
 \usage{
-\method{predict}{rma}(object, newmods, intercept, tau2.levels, gamma2.levels, addx=FALSE,
-        level, adjust=FALSE, digits, transf, targs, vcov=FALSE, \dots)
+\method{predict}{rma}(object, newmods, intercept, tau2.levels, gamma2.levels, hetvar,
+        addx=FALSE, level, adjust=FALSE, digits, transf, targs, vcov=FALSE, \dots)
 
 \method{predict}{rma.ls}(object, newmods, intercept, addx=FALSE, newscale, addz=FALSE,
         level, adjust=FALSE, digits, transf, targs, vcov=FALSE, \dots)
@@ -17,8 +17,9 @@
    \item{object}{an object of class \code{"rma"} or \code{"rma.ls"}.}
    \item{newmods}{optional vector or matrix to specify the values of the moderator values for which the predicted values should be calculated. See \sQuote{Details}.}
    \item{intercept}{logical to specify whether the intercept should be included when calculating the predicted values for \code{newmods}. If unspecified, the intercept is automatically added when the original model also included an intercept.}
-   \item{tau2.levels}{vector to specify the levels of the inner factor when computing prediction intervals. Only relevant for models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) and when the model includes more than a single \mjseqn{\tau^2} value. See \sQuote{Details}.}
-   \item{gamma2.levels}{vector to specify the levels of the inner factor when computing prediction intervals. Only relevant for models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) and when the model includes more than a single \mjseqn{\gamma^2} value. See \sQuote{Details}.}
+   \item{tau2.levels}{optional vector to specify the levels of the inner factor when computing prediction intervals. Only relevant for models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) and when the model includes more than a single \mjseqn{\tau^2} value. See \sQuote{Details}.}
+   \item{gamma2.levels}{optional vector to specify the levels of the inner factor when computing prediction intervals. Only relevant for models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) and when the model includes more than a single \mjseqn{\gamma^2} value. See \sQuote{Details}.}
+   \item{hetvar}{optional numeric vector with the amount of heterogeneity for computing prediction intervals. See \sQuote{Details}.}
    \item{addx}{logical to specify whether the values of the moderator variables should be added to the returned object. See \sQuote{Examples}.}
    \item{newscale}{optional vector or matrix to specify the values of the scale variables for which the predicted values should be calculated. Only relevant for location-scale models (see \code{\link{rma.uni}}). See \sQuote{Details}.}
    \item{addz}{logical to specify whether the values of the scale variables should be added to the returned object.}
@@ -43,7 +44,7 @@
 
    For random-effects models that were fitted with the \code{\link{rma.mv}} function, the model may actually include multiple \mjseqn{\tau^2} values (i.e., when the \code{random} argument includes an \sQuote{\code{~ inner | outer}} term and \code{struct="HCS"}, \code{struct="DIAG"}, \code{struct="HAR"}, or \code{struct="UN"}). In that case, the function will provide prediction intervals for each level of the inner factor (since the prediction intervals differ depending on the \mjseqn{\tau^2} value). Alternatively, one can use the \code{tau2.levels} argument to specify for which level(s) the prediction interval should be provided. If the model includes a second \sQuote{\code{~ inner | outer}} term with multiple \mjseqn{\gamma^2} values, prediction intervals for each combination of levels of the inner factors will be provided. Alternatively, one can use the \code{tau2.levels} and \code{gamma2.levels} arguments to specify for which level combination(s) the prediction interval should be provided.
 
-   When using the \code{newmods} argument for mixed-effects models that were fitted with the \code{\link{rma.mv}} function, if the model includes multiple \mjseqn{\tau^2} (and multiple \mjseqn{\gamma^2}) values, then one must use the \code{tau2.levels} (and \code{gamma2.levels}) argument to specify the levels of the inner factor(s) (i.e., a vector of length \mjeqn{k_{new}}{k_new}) to obtain the appropriate prediction interval(s).
+   When using the \code{newmods} argument for mixed-effects models that were fitted with the \code{\link{rma.mv}} function, if the model includes multiple \mjseqn{\tau^2} (and multiple \mjseqn{\gamma^2}) values, then one must use the \code{tau2.levels} (and \code{gamma2.levels}) argument to specify the levels of the inner factor(s) (i.e., a vector of length \mjeqn{k_{new}}{k_new}) to obtain the appropriate prediction interval(s). Alternatively, one can use the \code{hetvar} argument to specify a vector with the amount of heterogeneity for the predicted values.
 
    For location-scale models fitted with the \code{\link{rma.uni}} function, one can use \code{newmods} to specify the values of the \mjseqn{p'} moderator variables included in the model and \code{newscale} to specify the values of the \mjseqn{q'} scale variables included in the model. Whenever \code{newmods} is specified, the function computes predicted effects/outcomes for the specified moderators values. To obtain the corresponding prediction intervals, one must also specify the corresponding \code{newscale} values. If only \code{newscale} is specified (and not \code{newmods}), the function computes the predicted log-transformed \mjseqn{\tau^2} values (when using a log link) for the specified scale values. By setting \code{transf=exp}, one can then obtain the predicted \mjseqn{\tau^2} values.
 
