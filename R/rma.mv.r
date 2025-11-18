@@ -1833,8 +1833,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       if (struct[1] == "UNR") {
          con$tau2.init <- log(tau2.init)
       } else {
-         con$tau2.init <- diag(G)        # note: con$tau2.init and con$rho.init are the 'choled' values of the initial G matrix, so con$rho.init really
-         con$rho.init <- G[lower.tri(G)] # contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
+         con$tau2.init <- diag(G)           # note: con$tau2.init and con$rho.init are the 'choled' values of the initial G matrix, so con$rho.init really
+         con$rho.init <- t(G)[lower.tri(G)] # contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
       }
       if (length(con$rho.init) == 0L)
          con$rho.init <- 0
@@ -1853,8 +1853,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       H <- try(chol(H), silent=TRUE)
       if (inherits(H, "try-error") || anyNA(H))
          stop(mstyle$stop("Cannot take Choleski decomposition of initial 'H' matrix."))
-      con$gamma2.init <- diag(H)      # note: con$gamma2.init and con$phi.init are the 'choled' values of the initial H matrix, so con$phi.init really
-      con$phi.init <- H[lower.tri(H)] # contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
+      con$gamma2.init <- diag(H)         # note: con$gamma2.init and con$phi.init are the 'choled' values of the initial H matrix, so con$phi.init really
+      con$phi.init <- t(H)[lower.tri(H)] # contains the 'choled' covariances; and these values are also passed on the .ll.rma.mv as the initial values
       if (length(con$phi.init) == 0L)
          con$phi.init <- 0
    } else {
