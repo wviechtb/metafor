@@ -1,4 +1,4 @@
-# metafor 4.9-19 (2025-11-10)
+# metafor 4.9-20 (2025-12-01)
 
 - argument `legend` can now be a list for `funnel()`, `labbe()`, `regplot()`, and `plot.permutest.rma.uni()` for more control over the look of the legend
 
@@ -16,7 +16,7 @@
 
 - `ranktest()` now also provides a p-value when the number of estimates is large
 
-- added some more integral transformation functions
+- added some more transformation functions
 
 - added various methods for `matreg` objects
 

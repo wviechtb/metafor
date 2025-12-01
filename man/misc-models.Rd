@@ -41,7 +41,7 @@ res
 # estimate      se    zval    pval   ci.lb   ci.ub
 #   0.1656  0.0269  6.1499  <.0001  0.1128  0.2184}
 
-      The Q-test suggests that the underlying true standardized mean differences are heterogeneous \mjeqn{(Q(\text{df}=47) = 107.11, p < .0001).}{(Q(df=47) = 107.11, p < .0001).} Therefore, if we believe this to be true, then the value shown under \code{estimate} is an estimate of the inverse-variance weighted average of the true standardized mean differences of these 48 studies (i.e., \mjeqn{\hat{\bar{\theta}}_w = 0.17}{\theta-bar-hat_w = 0.17}).
+      The Q-test suggests that the underlying true standardized mean differences are heterogeneous (\mjteqn{Q(\text{df}=47) = 107.11, p < .0001}{Q(\text{df}=47) = 107.11, p \lt .0001}{Q(df=47) = 107.11, p < .0001}). Therefore, if we believe this to be true, then the value shown under \code{estimate} is an estimate of the inverse-variance weighted average of the true standardized mean differences of these 48 studies (i.e., \mjeqn{\hat{\bar{\theta}}_w = 0.17}{\theta-bar-hat_w = 0.17}).
 
       One can also employ an unweighted estimation method (by setting \code{weighted=FALSE} in \code{\link{rma.uni}}), which provides an estimate of the \emph{unweighted average} of the true effects/outcomes in the \mjseqn{k} studies, that is, an estimate of \mjdeqn{\bar{\theta}_u = \frac{\sum_{i=1}^k \theta_i}{k}.}{\theta_u = \sum \theta_i / k.}
 

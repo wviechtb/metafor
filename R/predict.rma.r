@@ -42,10 +42,12 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
    if (missing(hetvar)) {
       hetvar <- NULL
    } else {
-      if (!is.null(tau2.levels) || !is.null(gamma2.levels)) {
-         tau2.levels <- NULL
-         gamma2.levels <- NULL
-         warning(mstyle$warning("Arguments 'tau2.levels' and 'gamma2.levels' ignored when specifying the 'hetvar' argument."), call.=FALSE)
+      if (inherits(object, "rma.mv")) {
+         if (!is.null(tau2.levels) || !is.null(gamma2.levels)) {
+            tau2.levels <- NULL
+            gamma2.levels <- NULL
+            warning(mstyle$warning("Arguments 'tau2.levels' and 'gamma2.levels' ignored when specifying the 'hetvar' argument."), call.=FALSE)
+         }
       }
       if (!is.numeric(hetvar))
          stop(mstyle$stop("Argument 'hetvar' must be a numeric vector."))
@@ -66,7 +68,7 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
    if (missing(targs))
       targs <- NULL
 
-   funlist <- lapply(list(transf.exp.int, transf.ilogit.int, transf.iprobit.int, transf.ztor.int, transf.iarcsin.int, transf.iahw.int, transf.iabt.int, transf.exp.mode, transf.ilogit.mode, transf.iprobit.mode, transf.ztor.mode, transf.iarcsin.mode, transf.iahw.mode, transf.iabt.mode), deparse)
+   funlist <- lapply(list(transf.exp.int, transf.ilogit.int, transf.iprobit.int, transf.ztor.int, transf.iarcsin.int, transf.iahw.int, transf.iabt.int, transf.dtocles.int, transf.exp.mode, transf.ilogit.mode, transf.iprobit.mode, transf.ztor.mode, transf.iarcsin.mode, transf.iahw.mode, transf.iabt.mode), deparse)
 
    if (is.null(targs) && any(sapply(funlist, identical, deparse(transf))) && inherits(x, c("rma.uni","rma.glmm")) && length(x$tau2 == 1L))
       targs <- list(tau2=x$tau2)
@@ -738,7 +740,7 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
 
    # for certain transformations, remove the PI bounds
 
-   funlist <- lapply(list(transf.exp.int,  transf.ilogit.int,  transf.iprobit.int,  transf.ztor.int,  transf.iarcsin.int,  transf.iahw.int,  transf.iabt.int,
+   funlist <- lapply(list(transf.exp.int,  transf.ilogit.int,  transf.iprobit.int,  transf.ztor.int,  transf.iarcsin.int,  transf.iahw.int,  transf.iabt.int, transf.dtocles.int,
                           transf.exp.mode, transf.ilogit.mode, transf.iprobit.mode, transf.ztor.mode, transf.iarcsin.mode, transf.iahw.mode, transf.iabt.mode), deparse)
    if (do.transf && any(sapply(funlist, identical, deparse(transf)))) {
       out$cr.lb <- NULL

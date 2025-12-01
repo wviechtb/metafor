@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-19</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-20</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@
     </div>
 
     <div class="ref-description">
-    <p>The function computes predicted values, corresponding standard errors, confidence intervals, and prediction intervals for objects of class <code>"rma"</code>. <script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script></p>
+    <p>The function computes predicted values, corresponding standard errors, confidence intervals, and prediction intervals for objects of class <code>"rma"</code>. <script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/4.0.0/tex-mml-chtml.js"></script></p>
     </div>
 
     <div id="ref-usage">
@@ -261,6 +261,18 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>  pred ci.lb ci.ub </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.57  0.40  0.81 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### predict() can automatically extract the tau^2 value needed for the integral</span></span></span>
+<span class="r-in"><span><span class="co">### transformation from the model object, so we don't need to specify it</span></span></span>
+<span class="r-in"><span><span class="fu">predict</span><span class="op">(</span><span class="va">res</span>, transf<span class="op">=</span><span class="va">transf.exp.int</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  pred ci.lb ci.ub </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.57  0.40  0.81 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### note: the prediction interval is not printed here, because the regular back-</span></span></span>
+<span class="r-in"><span><span class="co">### transformation gives the correct bounds for the PI (the integral transformation</span></span></span>
+<span class="r-in"><span><span class="co">### is only needed to obtain the estimated average risk ratio and its CI)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit mixed-effects model with absolute latitude as a moderator</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>

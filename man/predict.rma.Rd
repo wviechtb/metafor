@@ -110,6 +110,14 @@ predict(res, transf=exp, digits=2)
 ### average risk ratio by using the integral transformation
 predict(res, transf=transf.exp.int, targs=res$tau2, digits=2)
 
+### predict() can automatically extract the tau^2 value needed for the integral
+### transformation from the model object, so we don't need to specify it
+predict(res, transf=transf.exp.int, digits=2)
+
+### note: the prediction interval is not printed here, because the regular back-
+### transformation gives the correct bounds for the PI (the integral transformation
+### is only needed to obtain the estimated average risk ratio and its CI)
+
 ### fit mixed-effects model with absolute latitude as a moderator
 res <- rma(yi, vi, mods = ~ ablat, data=dat)
 

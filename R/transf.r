@@ -18,9 +18,13 @@
    if (any(lengths(targs) > 1L))
       stop("Elements of the 'targs' arguments must be scalars.", call.=FALSE)
 
-   if (is.null(targs$tau2))
+   if (is.null(targs$tau2)) {
       stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
-      #targs$tau2 <- 0
+      #targs$tau2 <- 0 # assume tau^2 = 0 (but we don't want to do that)
+   } else {
+      if (targs$tau2 < 0)
+         stop("Value of 'tau2' must be >= 0 to use an integral transformation.", call.=FALSE)
+   }
 
    return(targs)
 
@@ -79,6 +83,12 @@ transf.ztor.mode <- function(xi, targs=NULL) {
    } else {
       tau2 <- targs
    }
+
+   if (length(tau2) > 1L)
+      stop("Value of 'tau2' argument must be a scalar.", call.=FALSE)
+
+   if (tau2 < 0)
+      stop("Value of 'tau2' must be >= 0 to use this transformation function.", call.=FALSE)
 
    tau <- sqrt(tau2)
 
@@ -161,6 +171,12 @@ transf.exp.mode <- function(xi, targs=NULL) {
       tau2 <- unname(targs)
    }
 
+   if (length(tau2) > 1L)
+      stop("Value of 'tau2' argument must be a scalar.", call.=FALSE)
+
+   if (tau2 < 0)
+      stop("Value of 'tau2' must be >= 0 to use this transformation function.", call.=FALSE)
+
    return(c(exp(xi - tau2)))
 
 }
@@ -215,6 +231,12 @@ transf.ilogit.mode <- function(xi, targs=NULL) {
    } else {
       tau2 <- targs
    }
+
+   if (length(tau2) > 1L)
+      stop("Value of 'tau2' argument must be a scalar.", call.=FALSE)
+
+   if (tau2 < 0)
+      stop("Value of 'tau2' must be >= 0 to use this transformation function.", call.=FALSE)
 
    tau <- sqrt(tau2)
 
@@ -307,6 +329,12 @@ transf.iarcsin.mode <- function(xi, targs=NULL) {
       tau2 <- targs
    }
 
+   if (length(tau2) > 1L)
+      stop("Value of 'tau2' argument must be a scalar.", call.=FALSE)
+
+   if (tau2 < 0)
+      stop("Value of 'tau2' must be >= 0 to use this transformation function.", call.=FALSE)
+
    tau <- sqrt(tau2)
 
    dfun <- function(x, mu, tau)
@@ -377,6 +405,12 @@ transf.iprobit.mode <- function(xi, targs=NULL) {
    } else {
       tau2 <- targs
    }
+
+   if (length(tau2) > 1L)
+      stop("Value of 'tau2' argument must be a scalar.", call.=FALSE)
+
+   if (tau2 < 0)
+      stop("Value of 'tau2' must be >= 0 to use this transformation function.", call.=FALSE)
 
    tau <- sqrt(tau2)
 
@@ -522,6 +556,12 @@ transf.iahw.mode <- function(xi, targs=NULL) {
       tau2 <- targs
    }
 
+   if (length(tau2) > 1L)
+      stop("Value of 'tau2' argument must be a scalar.", call.=FALSE)
+
+   if (tau2 < 0)
+      stop("Value of 'tau2' must be >= 0 to use this transformation function.", call.=FALSE)
+
    tau <- sqrt(tau2)
 
    dfun <- function(x, mu, tau)
@@ -611,6 +651,12 @@ transf.iabt.mode <- function(xi, targs=NULL) {
       tau2 <- targs
    }
 
+   if (length(tau2) > 1L)
+      stop("Value of 'tau2' argument must be a scalar.", call.=FALSE)
+
+   if (tau2 < 0)
+      stop("Value of 'tau2' must be >= 0 to use this transformation function.", call.=FALSE)
+
    tau <- sqrt(tau2)
 
    dfun <- function(x, mu, tau)
@@ -647,8 +693,48 @@ transf.dtou3 <- function(xi)
 transf.dtoovl <- function(xi)
    2*pnorm(-abs(xi)/2)
 
+############################################################################
+
 transf.dtocles <- function(xi) # note: this does not assume homoscedasticity
    pnorm(xi/sqrt(2))
+
+transf.clestod <- function(xi) # note: this does not assume homoscedasticity
+   qnorm(xi)*sqrt(2)
+
+transf.dtocles.int <- function(xi, targs=NULL) {
+
+   targs <- .chktargsint(targs)
+
+   tau <- sqrt(targs$tau2)
+
+   if (is.null(targs$lower))
+      targs$lower <- xi-10*tau
+   if (is.null(targs$upper))
+      targs$upper <- xi+10*tau
+
+   toint <- function(zval, xi, tau)
+      transf.dtocles(zval) * dnorm(zval, mean=xi, sd=tau)
+
+   cfunc <- function(xi, tau, lower, upper) {
+      out <- try(integrate(toint, lower=lower, upper=upper, xi=xi, tau=tau), silent=TRUE)
+      if (inherits(out, "try-error")) {
+         return(NA_real_)
+      } else {
+         return(out$value)
+      }
+   }
+
+   if (targs$tau2 == 0) {
+      zi <- transf.dtocles(xi)
+   } else {
+      zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
+   }
+
+   return(c(zi))
+
+}
+
+############################################################################
 
 transf.dtocliffd <- function(xi) # note: this does not assume homoscedasticity
    2 * pnorm(xi/sqrt(2)) - 1
