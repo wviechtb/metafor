@@ -3,18 +3,21 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    mstyle <- .get.mstyle()
 
+   if (missing(data))
+      stop(mstyle$stop("Argument 'data' must be specified."))
+
    if (!is.data.frame(data))
       data <- data.frame(data)
 
-   ### get variable names
+   # get variable names
 
    varnames <- names(data)
 
-   ### number of variables
+   # number of variables
 
    nvars <- length(varnames)
 
-   ### checks on 'var.names' argument
+   # checks on the 'var.names' argument
 
    if (length(var.names) != 3L)
       stop(mstyle$stop("Argument 'var.names' must of length 3."))
@@ -29,7 +32,10 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    ############################################################################
 
-   ### checks on 'study' argument
+   # checks on the 'study' argument
+
+   if (missing(study))
+      stop(mstyle$stop("Argument 'study' must be specified."))
 
    if (length(study) != 1L)
       stop(mstyle$stop("Argument 'study' must of length 1."))
@@ -53,18 +59,21 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    }
 
-   ### get study variable
+   # get study variable
 
    study <- data[[study.pos]]
 
-   ### make sure there are no missing values in study variable
+   # make sure there are no missing values in study variable
 
    if (anyNA(study))
       stop(mstyle$stop("Variable specified via 'study' argument should not contain missing values."))
 
    ############################################################################
 
-   ### checks on 'grp' argument
+   # checks on the 'grp' argument
+
+   if (missing(grp))
+      stop(mstyle$stop("Argument 'grp' must be specified."))
 
    if (length(grp) != 1L)
       stop(mstyle$stop("Argument 'grp' must of length 1."))
@@ -88,16 +97,16 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    }
 
-   ### get grp variable
+   # get grp variable
 
    grp <- data[[grp.pos]]
 
-   ### make sure there are no missing values in group variable
+   # make sure there are no missing values in group variable
 
    if (anyNA(grp))
       stop(mstyle$stop("Variable specified via 'grp' argument should not contain missing values."))
 
-   ### get levels of the group variable
+   # get levels of the group variable
 
    if (is.factor(grp)) {
       lvls <- levels(grp)
@@ -107,9 +116,9 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    ############################################################################
 
-   ### checks on 'ref' argument
+   # checks on the 'ref' argument
 
-   ### if ref is not specified, use the most common group as the reference group
+   # if ref is not specified, use the most common group as the reference group
 
    if (missing(ref))
       ref <- names(sort(table(grp), decreasing=TRUE)[1])
@@ -124,19 +133,19 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    ############################################################################
 
-   ### reorder levels and data so that the reference level is always last
+   # reorder levels and data so that the reference level is always last
 
    lvls <- c(lvls[-ref.pos], lvls[ref.pos])
    data <- data[order(study, factor(grp, levels=lvls)),]
 
-   ### get study and group variables again
+   # get study and group variables again
 
    study <- data[[study.pos]]
    grp   <- data[[grp.pos]]
 
    ############################################################################
 
-   ### checks on 'grpvars' argument
+   # checks on the 'grpvars' argument
 
    if (!(is.character(grpvars) || is.numeric(grpvars)))
       stop(mstyle$stop("Argument 'grpvars' must either be a string or numeric vector."))
@@ -157,18 +166,18 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    }
 
-   ### in case the group variable is not specified as part of the group variables, add it
+   # in case the group variable is not specified as part of the group variables, add it
 
    if (!(grp.pos %in% grpvars.pos))
       grpvars.pos <- c(grp.pos, grpvars.pos)
 
-   ### and make sure that grp.pos is always in the first position of grpvars.pos
+   # and make sure that grp.pos is always in the first position of grpvars.pos
 
    grpvars.pos <- union(grp.pos, grpvars.pos)
 
    ############################################################################
 
-   ### restructure data set into wide format
+   # restructure data set into wide format
 
    restruct <- function(x) {
       if (nrow(x) > 1L) {
@@ -182,18 +191,18 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
    dat <- lapply(split(data, study), restruct)
    dat <- do.call(rbind, dat)
 
-   ### add postfix to outcome variable names
+   # add postfix to outcome variable names
 
    names(dat)[grpvars.pos] <- paste0(names(dat)[grpvars.pos], postfix[1])
    names(dat)[(nvars+1):ncol(dat)] <- paste0(names(dat)[(nvars+1):ncol(dat)], postfix[2])
 
-   ### fix row names
+   # fix row names
 
    rownames(dat) <- seq_len(nrow(dat))
 
    ############################################################################
 
-   ### generate comp variable
+   # generate comp variable
 
    grps <- .shorten(as.character(data[[grp.pos]]), minlen=minlen)
 
@@ -207,7 +216,7 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    comp <- unlist(sapply(split(grps, study), restruct))
 
-   ### generate design variable
+   # generate design variable
 
    restruct <- function(x) {
       if (length(x) > 1L) {
@@ -221,24 +230,24 @@ addid=TRUE, addcomp=TRUE, adddesign=TRUE, minlen=2, var.names=c("id","comp","des
 
    ############################################################################
 
-   ### add row id to dataset
+   # add row id to dataset
 
    if (addid) {
 
       dat[[var.names[1]]] <- seq_len(nrow(dat))
 
-      ### make sure that row id variable is always the first variable in the dataset
+      # make sure that row id variable is always the first variable in the dataset
       #id.pos <- which(names(dat) == "id")
       #dat <- dat[c(id.pos, seq_along(names(dat))[-id.pos])]
 
    }
 
-   ### add comp variable to dataset
+   # add comp variable to dataset
 
    if (addcomp)
       dat[[var.names[2]]] <- comp
 
-   ### add design variable to dataset
+   # add design variable to dataset
 
    if (adddesign)
       dat[[var.names[3]]] <- design

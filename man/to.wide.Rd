@@ -25,7 +25,7 @@ to.wide(data, study, grp, ref, grpvars, postfix=c(".1",".2"),
 \details{
    A meta-analytic dataset may be structured in a \sQuote{long} format, where each row in the dataset corresponds to a particular study group (e.g., treatment arm). Using this function, such a dataset can be restructured into a \sQuote{wide} format, where each group within a study is contrasted against a particular reference group.
 
-   The \code{study} and \code{group} arguments are used to specify the study and group variables in the dataset (either as character strings or as numbers indicating the column positions of these variables in the dataset). Optional argument \code{ref} is used to specify the reference group (this must be one of the groups in the \code{group} variable). Argument \code{grpvars} is used to specify (either as a character vector or by giving the column positions) of those variables in the dataset that correspond to group-level outcomes (the remaining variables are treated as study-level outcomes).
+   The \code{study} and \code{grp} arguments are used to specify the study and group variables in the dataset (either as character strings or as numbers indicating the column positions of these variables in the dataset). Optional argument \code{ref} is used to specify the reference group (this must be one of the groups in the \code{grp} variable). Argument \code{grpvars} is used to specify (either as a character vector or by giving the column positions) of those variables in the dataset that correspond to group-level outcomes (the remaining variables are treated as study-level outcomes).
 
    The dataset is restructured so that a two-group study will yield a single row in the restructured dataset, contrasting the first group against the second/reference group. For studies with more than two groups (often called \sQuote{multiarm} or \sQuote{multitreatment} studies in the medical literature), the reference group is repeated as many times as needed (so a three-group study would yield two rows in the restructured dataset, contrasting two groups against a common reference group).
 
@@ -33,9 +33,7 @@ to.wide(data, study, grp, ref, grpvars, postfix=c(".1",".2"),
 
    To distinguish the names of the group-level outcome variables for the two first and second group in the restructured dataset, the strings given for the \code{postfix} argument are placed after the respective variable names.
 
-   If requested, row id, comparison id, and design id variables are added to the restructured dataset. The row id is simply a unique number for each row in the dataset. The comparison id variable indicates which two groups have been compared against each other). The design id variable indicates which groups were included in a particular study. The group names are shortened for the comparison and design variables (to at least \code{minlen}; the actual length might be longer to ensure uniqueness of the group names).
-
-   The examples below illustrate the use of this function.
+   If requested, row id, comparison id, and design id variables are added to the restructured dataset. The row id is simply a unique number for each row in the dataset. The comparison id variable indicates which two groups have been compared against each other. The design id variable indicates which groups were included in a particular study. The group names are shortened for the comparison and design variables (to at least \code{minlen}; the actual length might be longer to ensure uniqueness of the group names).
 }
 \value{
    A data frame with rows contrasting groups against a reference group and an appropriate number of columns (depending on the number of group-level outcome variables).

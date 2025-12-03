@@ -41,7 +41,7 @@ funnel(x, \dots)
    \item{atransf}{optional argument to specify a function to transform the x-axis labels (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{atransf}.}
    \item{digits}{optional integer to specify the number of decimal places to which the tick mark labels of the x- and y-axis should be rounded. Can also be a vector of two integers, the first to specify the number of decimal places for the x-axis, the second for the y-axis labels (e.g., \code{digits=c(2,3)}). If unspecified, the function tries to set the argument to some sensible values.}
-   \item{level}{numeric value between 0 and 100 to specify the level of the pseudo confidence interval region (see \link[=misc-options]{here} for details). For \code{"rma"} objects, the default is to take the value from the object. May also be a vector of values to obtain multiple regions. See \sQuote{Examples}.}
+   \item{level}{numeric value between 0 and 100 to specify the level of the pseudo confidence interval region (see \link[=misc-options]{here} for details). For \code{"rma"} objects, the default is to take the value from the object. May also be a vector of values to obtain multiple regions (for contour-enhanced funnel plots). See \sQuote{Examples}.}
    \item{addtau2}{logical to specify whether the amount of heterogeneity should be accounted for when drawing the pseudo confidence interval region (the default is \code{FALSE}). Ignored when \code{x} is a meta-regression model and residuals are plotted. See \sQuote{Details}.}
    \item{type}{either \code{"rstandard"} (default) or \code{"rstudent"} to specify whether the usual or deleted residuals should be used in creating the funnel plot when \code{x} is a meta-regression model. See \sQuote{Details}.}
    \item{back}{optional character string to specify the color of the plotting region background.}
@@ -59,7 +59,9 @@ funnel(x, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   For equal- and random-effects models (i.e., models not involving moderators), the plot shows the observed effect sizes or outcomes on the x-axis against the corresponding standard errors (i.e., the square root of the sampling variances) on the y-axis. A vertical line indicates the estimate based on the model. A pseudo confidence interval region is drawn around this value with bounds equal to \mjeqn{\pm 1.96 \text{SE}}{±1.96*SE}, where \mjeqn{\text{SE}}{SE} is the standard error value from the y-axis (assuming \code{level=95}). If \code{addtau2=TRUE} (only for models of class \code{"rma.uni"}), then the bounds of the pseudo confidence interval region are equal to \mjeqn{\pm 1.96 \sqrt{\text{SE}^2 + \hat{\tau}^2}}{±1.96*\sqrt(SE^2 + \tau^2)}, where \mjeqn{\hat{\tau}^2}{\tau^2} is the amount of heterogeneity as estimated by the model.
+   For equal- and random-effects models (i.e., models not involving moderators), the plot shows the observed effect sizes or outcomes on the x-axis against the corresponding standard errors (i.e., the square root of the sampling variances) on the y-axis. A vertical line indicates the estimate based on the model (or at the value specified via the \code{refline} argument). A pseudo confidence interval region is drawn around this value with bounds equal to \mjeqn{\pm 1.96 \text{SE}}{±1.96*SE} (assuming \code{level=95}), where \mjeqn{\text{SE}}{SE} is the standard error value from the y-axis. If \code{addtau2=TRUE} (only for models of class \code{"rma.uni"}), then the bounds of the pseudo confidence interval region are equal to \mjeqn{\pm 1.96 \sqrt{\text{SE}^2 + \hat{\tau}^2}}{±1.96*\sqrt(SE^2 + \tau^2)}, where \mjeqn{\hat{\tau}^2}{\tau^2} is the amount of heterogeneity as estimated by the model.
+
+   The \code{level} argument can be an entire vector to highlight multiple pseudo confidence interval regions in the plot. The \code{shade} argument can be used to specify the corresponding colors (if unspecified, default colors are chosen). This way, one draw contour-enhanced funnel plots (Peters et al., 2008).
 
    For (mixed-effects) meta-regression models (i.e., models involving moderators), the plot shows the residuals on the x-axis against their corresponding standard errors. Either the usual or deleted residuals can be used for that purpose (set via the \code{type} argument). See \code{\link[=residuals.rma]{residuals}} for more details on the different types of residuals.
 
@@ -79,13 +81,13 @@ funnel(x, \dots)
    \item \code{yaxis="wi"} for the weights.
    }
 
-   However, only when \code{yaxis="sei"} (the default) will the pseudo confidence region have the expected (upside-down) funnel shape with straight lines. Also, when placing (a function of) the sample sizes on the y-axis or the weights, then the pseudo confidence region cannot be drawn. See Sterne and Egger (2001) for more details on the choice of the y-axis.
+   However, only when \code{yaxis="sei"} (the default) will the pseudo confidence region have the expected (upside-down) funnel shape with straight lines. Also, when placing (a function of) the sample sizes or the weights on the y-axis, then the pseudo confidence region cannot be drawn. See Sterne and Egger (2001) for more details on the choice of the y-axis.
 
    If the object passed to the function comes from the \code{\link{trimfill}} function, the studies that are filled in by the trim and fill method are also added to the funnel plot. The symbol to use for plotting the filled in studies can be specified via the \code{pch.fill} argument. Arguments \code{col} and \code{bg} can then be of length 2 to specify the (border) color and background color of the observed and filled in studies.
 
    One can also directly pass a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances (via \code{vi}), standard errors (via \code{sei}), and/or sample sizes (via \code{ni}) to the function. By default, the vertical reference line is then drawn at zero.
 
-   The arguments \code{back}, \code{shade}, and \code{hlines} can be set to \code{NULL} to suppress the shading and the horizontal reference line. One can also suppress the funnel by setting \code{refline} to \code{NULL}.
+   The arguments \code{back}, \code{shade}, and \code{hlines} can be set to \code{NULL} to suppress the shading and the horizontal reference line. One can also suppress the funnel by setting \code{refline} to \code{NULL}. Using \code{refline2}, one can also add a second reference line with a funnel to the plot (see \sQuote{Examples}).
 
    With the \code{label} argument, one can control whether points in the plot will be labeled. If \code{label="all"} (or \code{label=TRUE}), all points in the plot will be labeled. If \code{label="out"}, points falling outside of the pseudo confidence region will be labeled. Finally, one can also set this argument to a numeric value (between 1 and \mjseqn{k}) to specify how many of the most extreme points should be labeled (e.g., with \code{label=1} only the most extreme point are labeled, while with \code{label=3}, the most extreme, and the second and third most extreme points are labeled). With the \code{offset} argument, one can adjust the distance between the labels and the corresponding points.
 
@@ -158,12 +160,15 @@ funnel(res, atransf=exp, at=log(c(.125, .25, .5, 1, 2)), digits=3L, ylim=c(0,.8)
 ### contour-enhanced funnel plot centered at 0 (see Peters et al., 2008)
 funnel(res, level=c(90, 95, 99), shade=c("white", "gray55", "gray75"), refline=0, legend=TRUE)
 
+### default shades are chosen if the argument is not specified
+funnel(res, level=c(90, 95, 99), refline=0, legend=TRUE)
+
 ### same, but show risk ratio values on the x-axis and some further adjustments
-funnel(res, level=c(90, 95, 99), shade=c("white", "gray55", "gray75"), digits=3L, ylim=c(0,.8),
+funnel(res, level=c(90, 95, 99), digits=3L, ylim=c(0,.8),
        atransf=exp, at=log(c(.125, .25, .5, 1, 2, 4, 8)), refline=0, legend=TRUE)
 
 ### same, but show confidence interval levels in the legend
-funnel(res, level=c(90, 95, 99), shade=c("white", "gray55", "gray75"), digits=3L, ylim=c(0,.8),
+funnel(res, level=c(90, 95, 99), digits=3L, ylim=c(0,.8),
        atransf=exp, at=log(c(.125, .25, .5, 1, 2, 4, 8)), refline=0, legend=list(show="cis"))
 
 ### illustrate the use of vectors for 'pch' and 'col'

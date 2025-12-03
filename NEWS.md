@@ -1,4 +1,4 @@
-# metafor 4.9-20 (2025-12-01)
+# metafor 4.9-21 (2025-12-03)
 
 - argument `legend` can now be a list for `funnel()`, `labbe()`, `regplot()`, and `plot.permutest.rma.uni()` for more control over the look of the legend
 

@@ -33,7 +33,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                               "GEN")))
       stop(mstyle$stop("Unknown 'measure' specified."))
 
-   if (!is.element(method[1], c("FE","EE","CE","HS","HSk","HE","DL","DLIT","GENQ","GENQM","SJ","SJIT","PM","MP","PMM","ML","REML","EB")))
+   if (!is.element(method[1], c("FE","EE","CE","HS","HSk","HE","CO","VC","DL","DLIT","GENQ","GENQM","SJ","SJIT","PM","MP","PMM","ML","REML","EB")))
       stop(mstyle$stop("Unknown 'method' specified."))
 
    ### in case user specified more than one add/to value (as one can do with rma.mh() and rma.peto())
@@ -1346,7 +1346,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
          ### Hedges (HE) estimator (or initial value for ML, REML, EB)
 
-         if (is.element(method[1], c("HE","ML","REML","EB"))) {
+         if (is.element(method[1], c("HE","CO","VC","ML","REML","EB"))) {
 
             stXX  <- .invcalc(X=X, W=diag(k), k=k)
             P     <- diag(k) - X %*% tcrossprod(stXX,X)
@@ -1785,7 +1785,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                se.tau2 <- sqrt(1/sum(wi)^2 * (2*(k-p) + 4*max(tau2,0)*.tr(P) + 2*max(tau2,0)^2*sum(P*P))) # note: wi = 1/vi
             if (method[1] == "HSk")
                se.tau2 <- k/(k-p) * sqrt(1/sum(wi)^2 * (2*(k-p) + 4*max(tau2,0)*.tr(P) + 2*max(tau2,0)^2*sum(P*P)))
-            if (method[1] == "HE")
+            if (is.element(method[1], c("HE","CO","VC")))
                se.tau2 <- sqrt(1/(k-p)^2 * (2*sum(PV*t(PV)) + 4*max(tau2,0)*trPV + 2*max(tau2,0)^2*(k-p)))
             if (method[1] == "DL")
                se.tau2 <- sqrt(1/trP^2 * (2*(k-p) + 4*max(tau2,0)*trP + 2*max(tau2,0)^2*sum(P*P)))

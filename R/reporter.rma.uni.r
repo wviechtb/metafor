@@ -192,9 +192,9 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
    if (x$method == "HSk" && model == "ME")
       tau2.ref <- "[@brannick2019; @hunter1990; @viechtbauer2015]"
 
-   if (x$method == "HE" && model == "RE")
+   if (x$method %in% c("HE","CO","VC") && model == "RE")
       tau2.ref <- "[@hedges1985]"
-   if (x$method == "HE" && model == "ME")
+   if (x$method %in% c("HE","CO","VC") && model == "ME")
       tau2.ref <- "[@hedges1992]"
 
    if (x$method == "DL" && model == "RE")

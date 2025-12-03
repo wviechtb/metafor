@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-20</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-21</span>
       </span>
     </div>
 
@@ -140,12 +140,11 @@
     <div id="details">
     <h2>Details</h2>
     <p>A meta-analytic dataset may be structured in a ‘long’ format, where each row in the dataset corresponds to a particular study group (e.g., treatment arm). Using this function, such a dataset can be restructured into a ‘wide’ format, where each group within a study is contrasted against a particular reference group.</p>
-<p>The <code>study</code> and <code>group</code> arguments are used to specify the study and group variables in the dataset (either as character strings or as numbers indicating the column positions of these variables in the dataset). Optional argument <code>ref</code> is used to specify the reference group (this must be one of the groups in the <code>group</code> variable). Argument <code>grpvars</code> is used to specify (either as a character vector or by giving the column positions) of those variables in the dataset that correspond to group-level outcomes (the remaining variables are treated as study-level outcomes).</p>
+<p>The <code>study</code> and <code>grp</code> arguments are used to specify the study and group variables in the dataset (either as character strings or as numbers indicating the column positions of these variables in the dataset). Optional argument <code>ref</code> is used to specify the reference group (this must be one of the groups in the <code>grp</code> variable). Argument <code>grpvars</code> is used to specify (either as a character vector or by giving the column positions) of those variables in the dataset that correspond to group-level outcomes (the remaining variables are treated as study-level outcomes).</p>
 <p>The dataset is restructured so that a two-group study will yield a single row in the restructured dataset, contrasting the first group against the second/reference group. For studies with more than two groups (often called ‘multiarm’ or ‘multitreatment’ studies in the medical literature), the reference group is repeated as many times as needed (so a three-group study would yield two rows in the restructured dataset, contrasting two groups against a common reference group).</p>
 <p>If a study does not include the reference group, then another group from the study will be used as the reference group. This group is chosen based on the factor levels of the <code>grp</code> variable (i.e., the last level that occurs in the study becomes the reference group).</p>
 <p>To distinguish the names of the group-level outcome variables for the two first and second group in the restructured dataset, the strings given for the <code>postfix</code> argument are placed after the respective variable names.</p>
-<p>If requested, row id, comparison id, and design id variables are added to the restructured dataset. The row id is simply a unique number for each row in the dataset. The comparison id variable indicates which two groups have been compared against each other). The design id variable indicates which groups were included in a particular study. The group names are shortened for the comparison and design variables (to at least <code>minlen</code>; the actual length might be longer to ensure uniqueness of the group names).</p>
-<p>The examples below illustrate the use of this function.</p>
+<p>If requested, row id, comparison id, and design id variables are added to the restructured dataset. The row id is simply a unique number for each row in the dataset. The comparison id variable indicates which two groups have been compared against each other. The design id variable indicates which groups were included in a particular study. The group names are shortened for the comparison and design variables (to at least <code>minlen</code>; the actual length might be longer to ensure uniqueness of the group names).</p>
     </div>
     <div id="value">
     <h2>Value</h2>

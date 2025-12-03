@@ -2,20 +2,26 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE
 
    mstyle <- .get.mstyle()
 
+   if (missing(data))
+      stop(mstyle$stop("Argument 'data' must be specified."))
+
    if (!is.data.frame(data))
       data <- data.frame(data)
 
-   ### get variable names
+   # get variable names
 
    varnames <- names(data)
 
-   ### number of variables
+   # number of variables
 
    nvars <- length(varnames)
 
    ############################################################################
 
-   ### checks on 'grp1' argument
+   # checks on the 'grp1' argument
+
+   if (missing(grp1))
+      stop(mstyle$stop("Argument 'grp1' must be specified."))
 
    if (length(grp1) != 1L)
       stop(mstyle$stop("Argument 'grp1' must of length 1."))
@@ -39,18 +45,21 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE
 
    }
 
-   ### get grp1 variable
+   # get grp1 variable
 
    grp1 <- data[[grp1.pos]]
 
-   ### make sure there are no missing values in grp1 variable
+   # make sure there are no missing values in grp1 variable
 
    if (anyNA(grp1))
       stop(mstyle$stop("Variable specified via 'grp1' argument should not contain missing values."))
 
    ############################################################################
 
-   ### checks on 'grp2' argument
+   # checks on the 'grp2' argument
+
+   if (missing(grp2))
+      stop(mstyle$stop("Argument 'grp2' must be specified."))
 
    if (length(grp2) != 1L)
       stop(mstyle$stop("Argument 'grp2' must of length 1."))
@@ -74,18 +83,18 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE
 
    }
 
-   ### get grp2 variable
+   # get grp2 variable
 
    grp2 <- data[[grp2.pos]]
 
-   ### make sure there are no missing values in grp2 variable
+   # make sure there are no missing values in grp2 variable
 
    if (anyNA(grp2))
       stop(mstyle$stop("Variable specified via 'grp2' argument should not contain missing values."))
 
    ############################################################################
 
-   ### get all levels (of grp1 and grp2)
+   # get all levels (of grp1 and grp2)
 
    if (is.factor(grp1) && is.factor(grp2) && identical(levels(grp1), levels(grp2))) {
       lvls <- levels(grp1)
@@ -95,9 +104,9 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE
 
    ############################################################################
 
-   ### checks on 'last' argument
+   # checks on the 'last' argument
 
-   ### if last is not specified, place most common grp2 group last
+   # if last is not specified, place most common grp2 group last
 
    if (missing(last))
       last <- names(sort(table(grp2), decreasing=TRUE)[1])
@@ -105,7 +114,7 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE
    if (length(last) != 1L)
       stop(mstyle$stop("Argument 'last' must be of length one."))
 
-   ### if last is set to NA, leave last unchanged
+   # if last is set to NA, leave last unchanged
 
    if (is.na(last))
       last <- tail(lvls, 1)
@@ -117,29 +126,29 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE
 
    last <- lvls[last.pos]
 
-   ### reorder levels so that the reference level is always last
+   # reorder levels so that the reference level is always last
 
    lvls <- c(lvls[-last.pos], lvls[last.pos])
 
    ############################################################################
 
-   ### turn grp1 and grp2 into factors with all levels
+   # turn grp1 and grp2 into factors with all levels
 
    grp1 <- factor(grp1, levels=lvls)
    grp2 <- factor(grp2, levels=lvls)
 
-   ### create contrast matrix
+   # create contrast matrix
 
    X <- model.matrix(~ grp1 - 1, contrasts.arg = list(grp1 = "contr.treatment")) - model.matrix(~ grp2 - 1, contrasts.arg = list(grp2 = "contr.treatment"))
    attr(X, "assign") <- NULL
    attr(X, "contrasts") <- NULL
 
-   ### shorten variables names (if shorten=TRUE)
+   # shorten variables names (if shorten=TRUE)
 
    if (shorten)
       lvls <- .shorten(lvls, minlen=minlen)
 
-   ### add variable names
+   # add variable names
 
    if (check) {
       colnames(X) <- make.names(lvls, unique=TRUE)
@@ -147,7 +156,7 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE
       colnames(X) <- lvls
    }
 
-   ### append to original data if requested
+   # append to original data if requested
 
    if (append)
       X <- cbind(data, X)

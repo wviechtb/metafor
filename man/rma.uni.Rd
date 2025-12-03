@@ -65,7 +65,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \emph{These arguments pertain to the model / computations and output:}
 
    \item{intercept}{logical to specify whether an intercept should be added to the model (the default is \code{TRUE}). Ignored when \code{mods} is a formula.}
-   \item{method}{character string to specify whether an equal- or a random-effects model should be fitted. An equal-effects model is fitted when using \code{method="EE"}. A random-effects model is fitted by setting \code{method} equal to one of the following: \code{"DL"}, \code{"HE"}, \code{"HS"}, \code{"HSk"}, \code{"SJ"}, \code{"ML"}, \code{"REML"}, \code{"EB"}, \code{"PM"}, \code{"GENQ"}, \code{"PMM"}, or \code{"GENQM"}. The default is \code{"REML"}. See \sQuote{Details}.}
+   \item{method}{character string to specify whether an equal- or a random-effects model should be fitted. An equal-effects model is fitted when using \code{method="EE"}. A random-effects model is fitted by setting \code{method} equal to one of the following: \code{"DL"}, \code{"HE"} (or \code{"CO"}), \code{"HS"}, \code{"HSk"}, \code{"SJ"}, \code{"ML"}, \code{"REML"}, \code{"EB"}, \code{"PM"}, \code{"GENQ"}, \code{"PMM"}, or \code{"GENQM"}. The default is \code{"REML"}. See \sQuote{Details}.}
    \item{weighted}{logical to specify whether weighted (default) or unweighted estimation should be used to fit the model (the default is \code{TRUE}).}
    \item{test}{character string to specify how test statistics and confidence intervals for the fixed effects should be computed. By default (\code{test="z"}), Wald-type tests and CIs are obtained, which are based on a standard normal distribution. When \code{test="t"}, a t-distribution is used instead. When \code{test="knha"}, the method by Knapp and Hartung (2003) is used. See \sQuote{Details} and also \link[=misc-recs]{here} for some recommended practices.}
    \item{level}{numeric value between 0 and 100 to specify the confidence interval level (the default is 95; see \link[=misc-options]{here} for details).}
@@ -96,21 +96,21 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
       A \emph{random-effects model} can be fitted with the same code but setting the \code{method} argument to one of the various estimators for the amount of heterogeneity:
 
       \itemize{
-      \item \code{method="DL"} = DerSimonian-Laird estimator (DerSimonian & Laird, 1986; Raudenbush, 2009),
-      \item \code{method="HE"} = Hedges estimator (Hedges, 1983, 1992),
-      \item \code{method="HS"} = Hunter-Schmidt estimator (Hunter & Schmidt, 1990; Viechtbauer et al., 2015),
-      \item \code{method="HSk"} = Hunter-Schmidt estimator with a small sample-size correction (Brannick et al., 2019),
-      \item \code{method="SJ"} = Sidik-Jonkman estimator (Sidik & Jonkman, 2005b, 2007),
-      \item \code{method="ML"} = maximum likelihood estimator (Hardy & Thompson, 1996; Raudenbush, 2009),
-      \item \code{method="REML"} = restricted maximum likelihood estimator (Viechtbauer, 2005; Raudenbush, 2009)
-      \item \code{method="EB"} = empirical Bayes estimator (Morris, 1983; Berkey et al. 1995),
-      \item \code{method="PM"} = Paule-Mandel estimator (Paule & Mandel, 1982; Viechtbauer et al., 2015),
-      \item \code{method="GENQ"} = generalized Q-statistic estimator (DerSimonian & Kacker, 2007; Jackson et al., 2014),
-      \item \code{method="PMM"} = median-unbiased Paule-Mandel estimator (Viechtbauer, 2021),
-      \item \code{method="GENQM"} = median-unbiased generalized Q-statistic estimator (Viechtbauer, 2021).
+      \item \code{method="DL"} for the DerSimonian-Laird estimator (DerSimonian & Laird, 1986; Raudenbush, 2009),
+      \item \code{method="HE"} for the Hedges estimator (Cochran, 1954; Hedges, 1983, 1992),
+      \item \code{method="HS"} for the Hunter-Schmidt estimator (Hunter & Schmidt, 1990; Viechtbauer et al., 2015),
+      \item \code{method="HSk"} for the Hunter-Schmidt estimator with a small sample-size correction (Brannick et al., 2019),
+      \item \code{method="SJ"} for the Sidik-Jonkman estimator (Sidik & Jonkman, 2005b, 2007),
+      \item \code{method="ML"} for the maximum likelihood estimator (Hardy & Thompson, 1996; Raudenbush, 2009),
+      \item \code{method="REML"} for the restricted maximum likelihood estimator (Viechtbauer, 2005; Raudenbush, 2009)
+      \item \code{method="EB"} for the empirical Bayes estimator (Morris, 1983; Berkey et al. 1995),
+      \item \code{method="PM"} for the Paule-Mandel estimator (Paule & Mandel, 1982; Viechtbauer et al., 2015),
+      \item \code{method="GENQ"} for the generalized Q-statistic estimator (DerSimonian & Kacker, 2007; Jackson et al., 2014),
+      \item \code{method="PMM"} for the median-unbiased Paule-Mandel estimator (Viechtbauer, 2021),
+      \item \code{method="GENQM"} for the median-unbiased generalized Q-statistic estimator (Viechtbauer, 2021).
       }
 
-      For a description of the various estimators, see Brannick et al. (2019), DerSimonian and Kacker (2007), Raudenbush (2009), Veroniki et al. (2016), Viechtbauer (2005), and Viechtbauer et al. (2015). Note that the Hedges estimator is also called the \sQuote{variance component estimator} or \sQuote{Cochran estimator}, the Sidik-Jonkman estimator is also called the \sQuote{model error variance estimator}, the empirical Bayes estimator is actually identical to the Paule-Mandel estimator (Viechtbauer et al., 2015), and the generalized Q-statistic estimator is a general method-of-moments estimator (DerSimonian & Kacker, 2007) requiring the specification of weights (the HE and DL estimators are just special cases with equal and inverse sampling variance weights, respectively). Finally, the two median-unbiased estimators are versions of the Paule-Mandel and generalized Q-statistic estimators that equate the respective estimating equations not to their expected values, but to the medians of their theoretical distributions (Viechtbauer, 2021).
+      For a description of the various estimators, see Brannick et al. (2019), DerSimonian and Kacker (2007), Raudenbush (2009), Veroniki et al. (2016), Viechtbauer (2005), and Viechtbauer et al. (2015). Note that the Hedges estimator is also called the \sQuote{variance component estimator} or \sQuote{Cochran estimator} (hence, one can also use \code{method="VC"} or \code{method="CO"} to choose this estimator), the Sidik-Jonkman estimator is also called the \sQuote{model error variance estimator}, the empirical Bayes estimator is actually identical to the Paule-Mandel estimator (Viechtbauer et al., 2015), and the generalized Q-statistic estimator is a general method-of-moments estimator (DerSimonian & Kacker, 2007) requiring the specification of weights (the HE and DL estimators are just special cases with equal and inverse sampling variance weights, respectively). Finally, the two median-unbiased estimators are versions of the Paule-Mandel and generalized Q-statistic estimators that equate the respective estimating equations not to their expected values, but to the medians of their theoretical distributions (Viechtbauer, 2021).
 
       One or more moderators can be included in a model via the \code{mods} argument. A single moderator can be given as a (row or column) vector of length \mjseqn{k} specifying the values of the moderator. Multiple moderators are specified by giving an appropriate model matrix (i.e., \mjseqn{X}) with \mjseqn{k} rows and as many columns as there are moderator variables (e.g., \code{mods = cbind(mod1, mod2, mod3)}, where \code{mod1}, \code{mod2}, and \code{mod3} correspond to the names of the variables for three moderator variables). The intercept is added to the model matrix by default unless \code{intercept=FALSE}.
 
