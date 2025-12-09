@@ -42,7 +42,6 @@
 
    Under the \sQuote{Regular \mjseqn{R} Matrix} case (see \code{\link{matreg}}), the \code{sigma} function extracts the square root of the estimated error variance (by default, based on the unbiased estimate of the error variance). The \code{logLik}, \code{AIC}, and \code{BIC} functions extract the corresponding values (note: for compatibility with the behavior for \code{lm} objects, these values are based by default on ML estimation).
 
-
 }
 \value{
    Depending on the function, either a vector, a matrix, or a scalar with the extracted value(s).
@@ -54,7 +53,7 @@
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{matreg}} for the function to create \code{matreg} objects.
+   \code{\link{matreg}} for the function to create \code{matreg} objects and \code{\link{predict.matreg}} to compute predicted values based on \code{matreg} objects.
 }
 \examples{
 ### fit a regression model with lm() to the 'mtcars' dataset
@@ -73,7 +72,7 @@ BIC(res)
 S <- cov(mtcars)
 
 ### fit the same regression model using matreg()
-res <- matreg(y="mpg", x=c("hp","wt","am"), R=S, cov=TRUE,
+res <- matreg(mpg ~ hp + wt + am, R=S, cov=TRUE,
               means=colMeans(mtcars), n=nrow(mtcars))
 summary(res)
 coef(res)

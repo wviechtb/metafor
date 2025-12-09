@@ -226,6 +226,7 @@ reference:
       - contrmat
       - reporter
       - matreg
+      - predict.matreg
       - vec2mat
       - deltamethod
       - aggregate.escalc

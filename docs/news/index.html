@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-22</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.9-21" id="metafor-49-21-2025-12-03">metafor 4.9-21 (2025-12-03)<a class="anchor" aria-label="anchor" href="#metafor-49-21-2025-12-03"></a></h2>
+<h2 class="page-header" data-toc-text="4.9-22" id="metafor-49-22-2025-12-09">metafor 4.9-22 (2025-12-09)<a class="anchor" aria-label="anchor" href="#metafor-49-22-2025-12-09"></a></h2>
 <ul><li><p>argument <code>legend</code> can now be a list for <code><a href="../reference/funnel.html">funnel()</a></code>, <code><a href="../reference/labbe.html">labbe()</a></code>, <code><a href="../reference/regplot.html">regplot()</a></code>, and <code><a href="../reference/plot.permutest.rma.uni.html">plot.permutest.rma.uni()</a></code> for more control over the look of the legend</p></li>
 <li><p>added <code>hetvar</code> argument to <code><a href="../reference/predict.rma.html">predict.rma()</a></code> to manually specify the amount of heterogeneity for computing prediction intervals</p></li>
 <li><p>fixed how <code>intercept</code> (when unspecified) is set in <code><a href="../reference/predict.rma.html">predict.rma.ls()</a></code> when using <code>newscale</code></p></li>
@@ -99,11 +99,11 @@
 <li><p>can now use the <code>preddist</code> argument in <code><a href="../reference/forest.rma.html">forest.rma()</a></code> and <code><a href="../reference/addpoly.default.html">addpoly.default()</a></code> to provide the predictive distribution directly</p></li>
 <li><p>fixed <code><a href="../reference/permutest.html">permutest.rma.ls()</a></code> not running when <code>btt</code> and/or <code>att</code> is specified</p></li>
 <li><p><code><a href="../reference/ranktest.html">ranktest()</a></code> now also provides a p-value when the number of estimates is large</p></li>
-<li><p>added some more transformation functions</p></li>
-<li><p>added various methods for <code>matreg</code> objects</p></li>
+<li><p>added various methods and a <code><a href="../reference/predict.matreg.html">predict.matreg()</a></code> function for <code>matreg</code> objects; can now also specify a formula for the <code>y</code> argument of <code><a href="../reference/matreg.html">matreg()</a></code></p></li>
 <li><p><code><a href="../reference/deltamethod.html">deltamethod()</a></code> can now also do the second-order delta method</p></li>
 <li><p>for measures <code>"ROM"</code>, <code>"ROMC"</code>, <code>"CVR"</code>, and <code>"CVRC"</code>, the bias corrections based on the second-order Taylor expansions are now applied by default in <code><a href="../reference/escalc.html">escalc()</a></code> (use <code>correct=FALSE</code> to switch this off)</p></li>
 <li><p>all <code><a href="../reference/addpoly.html">addpoly()</a></code> functions now respect <code>alim</code> and <code>olim</code> as set by <code><a href="../reference/forest.html">forest()</a></code></p></li>
+<li><p>added some more transformation functions</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="4.8-0" id="metafor-48-0-2025-01-28">metafor 4.8-0 (2025-01-28)<small>2025-01-28</small><a class="anchor" aria-label="anchor" href="#metafor-48-0-2025-01-28"></a></h2>

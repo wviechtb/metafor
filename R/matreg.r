@@ -29,8 +29,28 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
 
    ### check/process y argument
 
-   if (length(y) != 1L)
-      stop(mstyle$stop("Argument 'y' should specify a single variable."))
+   is.formula <- FALSE
+
+   if (inherits(y, "formula")) {
+
+      is.formula <- TRUE
+
+      y.formula <- y
+
+      if (length(y.formula) != 3L)
+         stop(mstyle$stop("The formula specified via the 'y' argument does not have a left-hand side."))
+
+      y <- deparse1(y.formula[[2]])
+      x <- deparse1(y.formula[[3]])
+      x <- strsplit(x, "+", fixed=TRUE)[[1]]
+      x <- unique(trimws(x))
+
+   } else {
+
+      if (length(y) != 1L)
+         stop(mstyle$stop("Argument 'y' should specify a single variable."))
+
+   }
 
    if (is.character(y)) {
 
@@ -56,7 +76,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
 
    ### check/process x argument
 
-   if (missing(x)) # if not specified, use all other variables in R as predictors
+   if (!is.formula && missing(x)) # if x is not specified (and y is not a formula), use all other variables in R as predictors
       x <- seq_len(p)[-y]
 
    if (is.character(x)) {
@@ -98,6 +118,12 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
    if (!is.null(V) && !missing(n))
       stop(mstyle$stop("Either 'V' or 'n' must be specified, not both."))
 
+   if (!is.logical(cov) || is.na(cov) || length(cov) != 1L)
+      stop(mstyle$stop("Argument 'cov' must be either TRUE or FALSE."))
+
+   if (!is.logical(ztor) || is.na(ztor) || length(ztor) != 1L)
+      stop(mstyle$stop("Argument 'ztor' must be either TRUE or FALSE."))
+
    if (cov && ztor)
       stop(mstyle$stop("Cannot use a covariance matrix as input when 'ztor=TRUE'."))
 
@@ -121,7 +147,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
       V <- as.matrix(V)
 
       if (nrow(V) != ncol(V))
-      stop(mstyle$stop("Argument 'V' must be a square matrix."))
+         stop(mstyle$stop("Argument 'V' must be a square matrix."))
 
       V[upper.tri(V)] <- t(V)[upper.tri(V)]
 
@@ -309,7 +335,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
       res <- list(tab = data.frame(beta=b, se=se, tval=tval, df=df, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb,
                                    R2=R2, R2adj=R2adj, F=F, Fdf=c(m,df), Fp=Fp, p=p, df.residual=df,
                                    sigma2.ml=sigma2.ml, sigma2.reml=sigma2.reml, nobs=n, parms=parms, deviance=deviance,
-                                   fit.stats=fit.stats, digits=digits, test="t", level=level)
+                                   fit.stats=fit.stats, digits=digits, test="t", level=level, intercept=cov)
 
    } else {
 
@@ -395,7 +421,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
 
       res <- list(tab = data.frame(beta=b, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub), vb=vb,
                                    R2=R2, QM=QM, QMdf=c(m,NA_integer_), QMp=QMp, p=m, parms=m, digits=digits,
-                                   test="z", level=level)
+                                   test="z", level=level, intercept=cov)
 
    }
 

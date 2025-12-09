@@ -9,8 +9,8 @@ matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE,
        nearpd=FALSE, level=95, digits, \dots)
 }
 \arguments{
-   \item{y}{index (or name given as a character string) of the outcome variable.}
-   \item{x}{indices (or names given as a character vector) of the predictor variables.}
+   \item{y}{model formula or the index (given as a number) or name (given as a character string) of the outcome variable.}
+   \item{x}{indices (given as a numeric vector) or names (given as a character vector) of the predictor variables. Ignored when \code{y} is a formula.}
    \item{R}{correlation or covariance matrix (or only the lower triangular part including the diagonal).}
    \item{n}{sample size based on which the elements in the correlation/covariance matrix were computed.}
    \item{V}{variance-covariance matrix of the lower triangular elements of the correlation/covariance matrix. Either \code{V} or \code{n} should be specified, not both. See \sQuote{Details}.}
@@ -25,6 +25,8 @@ matreg(y, x, R, n, V, cov=FALSE, means, ztor=FALSE,
 \details{
 
    Let \mjseqn{R} be a \mjeqn{p \times p}{pxp} correlation or covariance matrix. Let \mjseqn{y} denote the row/column of the outcome variable and \mjseqn{x} the row(s)/column(s) of the predictor variable(s) in this matrix. Let \mjseqn{m} denote the length of \mjseqn{x} (i.e., the number of predictors). Let \mjeqn{R_{x,x}}{R[x,x]} and \mjeqn{R_{x,y}}{R[x,y]} denote the corresponding submatrices of \mjseqn{R}. Then \mjdeqn{b = R_{x,x}^{-1} R_{x,y}}{b = R[x,x]^(-1) R[x,y]} yields the standardized or raw regression coefficients (depending on whether \mjseqn{R} is a correlation or covariance matrix, respectively) when regressing the outcome variable on the predictor variable(s).
+
+   The \code{y} and \code{x} variables can be specified as character vectors (assuming that the matrix specified via \code{R} has corresponding row/column names) or as indices. One can also specify a model formula via argument \code{y}, giving the name of the outcome variable on the left-hand side and the name(s) of the predictor(s) on the right-hand side.
 
    \subsection{Regular R Matrix}{
 
@@ -89,7 +91,17 @@ summary(res)
 S <- cov(mtcars)
 
 ### fit the same regression model using matreg()
+res <- matreg(mpg ~ hp + wt + am, R=S, cov=TRUE,
+              means=colMeans(mtcars), n=nrow(mtcars))
+summary(res)
+
+### specify the outcome and predictors as character vectors
 res <- matreg(y="mpg", x=c("hp","wt","am"), R=S, cov=TRUE,
+              means=colMeans(mtcars), n=nrow(mtcars))
+summary(res)
+
+### specify the outcome and predictors as indices
+res <- matreg(y=1, x=c(4,6,9), R=S, cov=TRUE,
               means=colMeans(mtcars), n=nrow(mtcars))
 summary(res)
 

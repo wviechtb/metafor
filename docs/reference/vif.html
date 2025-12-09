@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-22</span>
       </span>
     </div>
 
@@ -227,7 +227,7 @@
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>If the original model fitted involved redundant predictors that were dropped from the model, then <code>sim=TRUE</code> cannot be used. In this case, one should remove any redundancies in the original model fitted before using this method.</p>
+    <p>If the model fitted involved redundant predictors that were dropped from the model, then <code>sim=TRUE</code> cannot be used. In this case, one should remove any redundancies in the model fitted before using this method.</p>
 <p>When using <code>sim=TRUE</code>, the model needs to be refitted (by default) 1000 times. When <code>sim=TRUE</code> is combined with <code>reestimate=TRUE</code>, then this value needs to be multiplied by the total number of (G)VIF values that are computed by the function. Hence, the combination of <code>sim=TRUE</code> with <code>reestimate=TRUE</code> is computationally expensive, especially for more complex models where model fitting can be slow.</p>
 <p>When refitting the model fails, the simulated (G)VIF value(s) will be missing. It can also happen that one or multiple model coefficients become inestimable due to redundancies in the model matrix after the reshuffling. In this case, the corresponding simulated (G)VIF value(s) will be set to <code>Inf</code> (as that is the value of (G)VIFs in the limit as we approach perfect multicollinearity).</p>
 <p>On machines with multiple cores, one can try to speed things up by delegating the model fitting to separate worker processes, that is, by setting <code>parallel="snow"</code> or <code>parallel="multicore"</code> and <code>ncpus</code> to some value larger than 1. Parallel processing makes use of the <code><a href="https://rdrr.io/r/parallel/parallel-package.html" class="external-link">parallel</a></code> package, using the <code><a href="https://rdrr.io/r/parallel/makeCluster.html" class="external-link">makePSOCKcluster</a></code> and <code><a href="https://rdrr.io/r/parallel/clusterApply.html" class="external-link">parLapply</a></code> functions when <code>parallel="snow"</code> or using <code><a href="https://rdrr.io/r/parallel/mclapply.html" class="external-link">mclapply</a></code> when <code>parallel="multicore"</code> (the latter only works on Unix/Linux-alikes).</p>

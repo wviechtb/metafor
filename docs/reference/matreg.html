@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-22</span>
       </span>
     </div>
 
@@ -103,10 +103,10 @@
     <h2>Arguments</h2>
     <p></p>
 <dl><dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>index (or name given as a character string) of the outcome variable.</p></dd>
+<dd><p>model formula or the index (given as a number) or name (given as a character string) of the outcome variable.</p></dd>
 
    <dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>indices (or names given as a character vector) of the predictor variables.</p></dd>
+<dd><p>indices (given as a numeric vector) or names (given as a character vector) of the predictor variables. Ignored when <code>y</code> is a formula.</p></dd>
 
    <dt id="arg-r">R<a class="anchor" aria-label="anchor" href="#arg-r"></a></dt>
 <dd><p>correlation or covariance matrix (or only the lower triangular part including the diagonal).</p></dd>
@@ -144,6 +144,7 @@
 
 
 <p>Let <em></em>\(R\) be a <em></em>\(p \times p\) correlation or covariance matrix. Let <em></em>\(y\) denote the row/column of the outcome variable and <em></em>\(x\) the row(s)/column(s) of the predictor variable(s) in this matrix. Let <em></em>\(m\) denote the length of <em></em>\(x\) (i.e., the number of predictors). Let <em></em>\(R_{x,x}\) and <em></em>\(R_{x,y}\) denote the corresponding submatrices of <em></em>\(R\). Then \[b = R_{x,x}^{-1} R_{x,y}\] yields the standardized or raw regression coefficients (depending on whether <em></em>\(R\) is a correlation or covariance matrix, respectively) when regressing the outcome variable on the predictor variable(s).</p>
+<p>The <code>y</code> and <code>x</code> variables can be specified as character vectors (assuming that the matrix specified via <code>R</code> has corresponding row/column names) or as indices. One can also specify a model formula via argument <code>y</code>, giving the name of the outcome variable on the left-hand side and the name(s) of the predictor(s) on the right-hand side.</p>
 <p></p><div class="section">
 <h3 id="regular-r-matrix">Regular R Matrix<a class="anchor" aria-label="anchor" href="#regular-r-matrix"></a></h3>
 
@@ -238,7 +239,45 @@
 <span class="r-in"><span><span class="va">S</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit the same regression model using matreg()</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">matreg</span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">hp</span> <span class="op">+</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">am</span>, R<span class="op">=</span><span class="va">S</span>, cov<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>              means<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>, n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="print.rma.html">summary</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate      se     tval  df    pval    ci.lb    ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt   34.0029  2.6427  12.8669  28  &lt;.0001  28.5896  39.4161  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp        -0.0375  0.0096  -3.9018  28  0.0005  -0.0572  -0.0178  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt        -2.8786  0.9050  -3.1808  28  0.0036  -4.7323  -1.0248   ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> am         2.0837  1.3764   1.5139  28  0.1413  -0.7358   4.9032      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 2.5375 on 28 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared: 0.8399,  Adjusted R-squared: 0.8227</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 48.9600 on 3 and 28 DF,  p-value: &lt;.0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### specify the outcome and predictors as character vectors</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">matreg</span><span class="op">(</span>y<span class="op">=</span><span class="st">"mpg"</span>, x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hp"</span>,<span class="st">"wt"</span>,<span class="st">"am"</span><span class="op">)</span>, R<span class="op">=</span><span class="va">S</span>, cov<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>              means<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>, n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="print.rma.html">summary</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          estimate      se     tval  df    pval    ci.lb    ci.ub      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> intrcpt   34.0029  2.6427  12.8669  28  &lt;.0001  28.5896  39.4161  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> hp        -0.0375  0.0096  -3.9018  28  0.0005  -0.0572  -0.0178  *** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> wt        -2.8786  0.9050  -3.1808  28  0.0036  -4.7323  -1.0248   ** </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> am         2.0837  1.3764   1.5139  28  0.1413  -0.7358   4.9032      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 2.5375 on 28 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared: 0.8399,  Adjusted R-squared: 0.8227</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 48.9600 on 3 and 28 DF,  p-value: &lt;.0001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### specify the outcome and predictors as indices</span></span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">matreg</span><span class="op">(</span>y<span class="op">=</span><span class="fl">1</span>, x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">6</span>,<span class="fl">9</span><span class="op">)</span>, R<span class="op">=</span><span class="va">S</span>, cov<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>              means<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>, n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="print.rma.html">summary</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

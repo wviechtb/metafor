@@ -16,7 +16,7 @@
 \arguments{
    \item{object}{an object of class \code{"rma"} or \code{"rma.ls"}.}
    \item{newmods}{optional vector or matrix to specify the values of the moderator values for which the predicted values should be calculated. See \sQuote{Details}.}
-   \item{intercept}{logical to specify whether the intercept should be included when calculating the predicted values for \code{newmods}. If unspecified, the intercept is automatically added when the original model also included an intercept.}
+   \item{intercept}{logical to specify whether the intercept should be included when calculating the predicted values for \code{newmods}. If unspecified, the intercept is automatically added when the model also included an intercept.}
    \item{tau2.levels}{optional vector to specify the levels of the inner factor when computing prediction intervals. Only relevant for models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) and when the model includes more than a single \mjseqn{\tau^2} value. See \sQuote{Details}.}
    \item{gamma2.levels}{optional vector to specify the levels of the inner factor when computing prediction intervals. Only relevant for models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) and when the model includes more than a single \mjseqn{\gamma^2} value. See \sQuote{Details}.}
    \item{hetvar}{optional numeric vector with the amount of heterogeneity for computing prediction intervals. See \sQuote{Details}.}

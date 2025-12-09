@@ -29,7 +29,7 @@ emmprep(x, verbose=FALSE, \dots)
 
    By default, the reference grid is created based on the data used for fitting the original model (which is typically the sensible thing to do). One can specify a different dataset with \code{emmprep(..., data=obj)}, where \code{obj} must be a data frame that contains the same variables as used in the original model fitted.
 
-   If the original model fitted involved redundant predictors that were dropped from the model (due to \sQuote{rank deficiencies}), then the function cannot be used. In this case, one should remove any redundancies in the original model fitted before using this function.
+   If the model fitted involved redundant predictors that were dropped from the model (due to \sQuote{rank deficiencies}), then the function cannot be used. In this case, one should remove any redundancies in the model fitted before using this function.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).

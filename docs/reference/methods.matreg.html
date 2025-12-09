@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-22</span>
       </span>
     </div>
 
@@ -153,8 +153,6 @@
     <h2>Details</h2>
     <p>The <code>coef</code> function extracts the estimated (standardized) regression coefficients from objects of class <code>"matreg"</code>. The <code>vcov</code> function extracts the corresponding variance-covariance matrix (note: the <code><a href="se.html">se</a></code> function can also be used to extract the standard errors). The <code>confint</code> function extracts the confidence intervals.</p>
 <p>Under the ‘Regular <em></em>\(R\) Matrix’ case (see <code><a href="matreg.html">matreg</a></code>), the <code>sigma</code> function extracts the square root of the estimated error variance (by default, based on the unbiased estimate of the error variance). The <code>logLik</code>, <code>AIC</code>, and <code>BIC</code> functions extract the corresponding values (note: for compatibility with the behavior for <code>lm</code> objects, these values are based by default on ML estimation).</p>
-
-
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -170,7 +168,7 @@
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="matreg.html">matreg</a></code> for the function to create <code>matreg</code> objects.</p></div>
+    <div class="dont-index"><p><code><a href="matreg.html">matreg</a></code> for the function to create <code>matreg</code> objects and <code><a href="predict.matreg.html">predict.matreg</a></code> to compute predicted values based on <code>matreg</code> objects.</p></div>
     </div>
 
     <div id="ref-examples">
@@ -230,7 +228,7 @@
 <span class="r-in"><span><span class="va">S</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit the same regression model using matreg()</span></span></span>
-<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="matreg.html">matreg</a></span><span class="op">(</span>y<span class="op">=</span><span class="st">"mpg"</span>, x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"hp"</span>,<span class="st">"wt"</span>,<span class="st">"am"</span><span class="op">)</span>, R<span class="op">=</span><span class="va">S</span>, cov<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="matreg.html">matreg</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">hp</span> <span class="op">+</span> <span class="va">wt</span> <span class="op">+</span> <span class="va">am</span>, R<span class="op">=</span><span class="va">S</span>, cov<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>              means<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>, n<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="print.rma.html">summary</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

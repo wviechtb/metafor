@@ -90,7 +90,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       for (j in seq_len(x$sigma2s)) {
 
          if (verbose)
-            message(mstyle$message(paste0("Computing the BLUPs for '", paste0("~ 1 | ", x$s.names[j]), "' term ... ")), appendLF = FALSE)
+            message(mstyle$message(paste0("Computing BLUPs for the '", paste0("~ 1 | ", x$s.names[j]), "' term ... ")), appendLF = FALSE)
 
          if (x$Rfix[j]) {
             if (x$sparse) {
@@ -175,12 +175,14 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
    if (x$withG) {
 
       if (is.element(x$struct[1], c("GEN","GDIAG"))) {
+
          if (verbose)
             message(mstyle$message("Computation of BLUPs not currently available for struct=\"GEN\"."))
+
       } else {
 
       if (verbose)
-         message(mstyle$message(paste0("Computing the BLUPs for '", paste(x$g.names, collapse=" | "), "' term ... ")), appendLF = FALSE)
+         message(mstyle$message(paste0("Computing BLUPs for the '", deparse(x$formulas[[1]]), "' term ... ")), appendLF = FALSE)
 
       G <- (x$Z.G1 %*% x$G %*% t(x$Z.G1)) * tcrossprod(x$Z.G2)
       GW <- G %*% W
@@ -252,7 +254,7 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
       } else {
 
       if (verbose)
-         message(mstyle$message(paste0("Computing the BLUPs for '", paste(x$h.names, collapse=" | "), "' term ... ")), appendLF = FALSE)
+         message(mstyle$message(paste0("Computing BLUPs for the '", deparse(x$formulas[[2]]), "' term ... ")), appendLF = FALSE)
 
       H <- (x$Z.H1 %*% x$H %*% t(x$Z.H1)) * tcrossprod(x$Z.H2)
       HW <- H %*% W

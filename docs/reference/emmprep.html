@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-21</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-22</span>
       </span>
     </div>
 
@@ -126,7 +126,7 @@
 <p>When the model object contains information about the outcome measure used in the analysis (which should be the case if the observed outcomes were computed with <code><a href="escalc.html">escalc</a></code> or if the <code>measure</code> argument was set when fitting the model), then information about the appropriate back-transformation (if available) is stored as part of the returned object. If so, the back-transformation is automatically applied when calling <code><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></code> with <code>type="response"</code>.</p>
 <p>The function also tries to extract the estimated value of <em></em>\(\tau^2\) (or more precisely, its square root) from the model object (when the model is a random/mixed-effects model). This value is only needed when computing prediction intervals (i.e., when <code>interval="predict"</code> in <code><a href="https://rvlenth.github.io/emmeans/reference/summary.emmGrid.html" class="external-link">predict.emmGrid</a></code>) or when applying the bias adjustment in the back-transformation (i.e., when <code>bias.adjust=TRUE</code> in <code><a href="https://rvlenth.github.io/emmeans/reference/summary.emmGrid.html" class="external-link">summary.emmGrid</a></code>). For some models (e.g., those fitted with <code><a href="rma.mv.html">rma.mv</a></code>), it is not possible to automatically extract the estimate. In this case, one can manually set the value with <code>emmprep(..., sigma=value)</code> (note: the argument is called <code>sigma</code>, following the conventions of <code><a href="https://rvlenth.github.io/emmeans/reference/summary.emmGrid.html" class="external-link">summary.emmGrid</a></code> and one must supply the square root of the <em></em>\(\tau^2\) estimate).</p>
 <p>By default, the reference grid is created based on the data used for fitting the original model (which is typically the sensible thing to do). One can specify a different dataset with <code>emmprep(..., data=obj)</code>, where <code>obj</code> must be a data frame that contains the same variables as used in the original model fitted.</p>
-<p>If the original model fitted involved redundant predictors that were dropped from the model (due to ‘rank deficiencies’), then the function cannot be used. In this case, one should remove any redundancies in the original model fitted before using this function.</p>
+<p>If the model fitted involved redundant predictors that were dropped from the model (due to ‘rank deficiencies’), then the function cannot be used. In this case, one should remove any redundancies in the model fitted before using this function.</p>
     </div>
     <div id="author">
     <h2>Author</h2>
