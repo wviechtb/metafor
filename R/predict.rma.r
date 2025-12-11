@@ -753,6 +753,8 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
 
    if (vcov & !do.transf) {
       out <- list(pred=out)
+      if (!inherits(vcovpred, "sparseMatrix"))
+         class(vcovpred) <- c("vcovmat", class(vcovpred))
       out$vcov <- vcovpred
    }
 

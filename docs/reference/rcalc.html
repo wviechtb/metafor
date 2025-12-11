@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-22</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-23</span>
       </span>
     </div>
 
@@ -141,7 +141,7 @@
 <dd><p>a data frame with the study identifier, the two variable identifiers, a variable pair identifier, the correlation coefficients (possibly transformed with Fisher's r-to-z transformation), and the (common) sample sizes.</p></dd>
 
    <dt>V</dt>
-<dd><p>corresponding variance-covariance matrix (given as a sparse matrix when <code>sparse=TRUE</code>).</p></dd>
+<dd><p>corresponding variance-covariance matrix (given as a sparse matrix when <code>sparse=TRUE</code>; otherwise a matrix with class <code>"vcovmat"</code>).</p></dd>
 
 
 </dl><p>Note that a particular covariance can only be computed when all of the correlation coefficients involved in the covariance equation are included in the dataset. If one or more coefficients needed for the computation are missing, then the resulting covariance will also be missing (i.e., <code>NA</code>).</p>
@@ -204,12 +204,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6     1 asom conf asom.conf -0.46 142</span>
 <span class="r-in"><span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">round</span>, <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">`1`</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           acog.perf asom.perf conf.perf acog.asom acog.conf asom.conf</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf    0.0035    0.0013   -0.0006   -0.0014    0.0025    0.0009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf    0.0013    0.0042   -0.0010   -0.0019    0.0013    0.0025</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf   -0.0006   -0.0010    0.0023    0.0006   -0.0015   -0.0011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom   -0.0014   -0.0019    0.0006    0.0043   -0.0018   -0.0012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf    0.0025    0.0013   -0.0015   -0.0018    0.0052    0.0019</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf    0.0009    0.0025   -0.0011   -0.0012    0.0019    0.0044</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf  0.0035    0.0013   -0.0006   -0.0014    0.0025    0.0009  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf  0.0013    0.0042   -0.0010   -0.0019    0.0013    0.0025  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf -0.0006   -0.0010    0.0023    0.0006   -0.0015   -0.0011  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom -0.0014   -0.0019    0.0006    0.0043   -0.0018   -0.0012  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf  0.0025    0.0013   -0.0015   -0.0018    0.0052    0.0019  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf  0.0009    0.0025   -0.0011   -0.0012    0.0019    0.0044  </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### examine data and var-cov matrix for study 6</span></span></span>
 <span class="r-in"><span><span class="va">dat</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op">==</span> <span class="fl">6</span>,<span class="op">]</span></span></span>
@@ -222,12 +222,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 18     6 asom conf asom.conf   NA 16</span>
 <span class="r-in"><span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">round</span>, <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">`6`</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           acog.perf asom.perf conf.perf acog.asom acog.conf asom.conf</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf    0.0434    0.0256        NA    0.0095        NA        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf    0.0256    0.0414        NA    0.0085        NA        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf        NA        NA        NA        NA        NA        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom    0.0095    0.0085        NA    0.0202        NA        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf        NA        NA        NA        NA        NA        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf        NA        NA        NA        NA        NA        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf  0.0434    0.0256              0.0095                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf  0.0256    0.0414              0.0085                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf                                                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom  0.0095    0.0085              0.0202                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf                                                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf                                                            </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### examine data and var-cov matrix for study 17</span></span></span>
 <span class="r-in"><span><span class="va">dat</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span> <span class="op">==</span> <span class="fl">17</span>,<span class="op">]</span></span></span>
@@ -240,12 +240,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 30    17 asom conf asom.conf    NA 45</span>
 <span class="r-in"><span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">round</span>, <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">`17`</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           acog.perf asom.perf conf.perf acog.asom acog.conf asom.conf</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf    0.0223        NA        NA        NA        NA        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf        NA    0.0186        NA        NA        NA        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf        NA        NA    0.0214        NA        NA        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom        NA        NA        NA        NA        NA        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf        NA        NA        NA        NA        NA        NA</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf        NA        NA        NA        NA        NA        NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf  0.0223                                                    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf            0.0186                                          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf                      0.0214                                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom                                                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf                                                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf                                                            </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">############################################################################</span></span></span>
 <span class="r-in"><span></span></span>
@@ -302,13 +302,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 asom conf asom.conf -0.46 142</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $V</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               acog.perf     asom.perf     conf.perf     acog.asom    acog.conf     asom.conf</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf  0.0034503989  0.0013265149 -0.0005545798 -0.0013967848  0.002501895  0.0009322372</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf  0.0013265149  0.0042005969 -0.0009521407 -0.0019433591  0.001264856  0.0025160783</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf -0.0005545798 -0.0009521407  0.0022592011  0.0005791091 -0.001533798 -0.0010692460</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom -0.0013967848 -0.0019433591  0.0005791091  0.0043049419 -0.001802689 -0.0012050560</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf  0.0025018954  0.0012648562 -0.0015337979 -0.0018026891  0.005191854  0.0018844047</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf  0.0009322372  0.0025160783 -0.0010692460 -0.0012050560  0.001884405  0.0044083302</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           acog.perf asom.perf conf.perf acog.asom acog.conf asom.conf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf  0.0035    0.0013   -0.0006   -0.0014    0.0025    0.0009  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf  0.0013    0.0042   -0.0010   -0.0019    0.0013    0.0025  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf -0.0006   -0.0010    0.0023    0.0006   -0.0015   -0.0011  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom -0.0014   -0.0019    0.0006    0.0043   -0.0018   -0.0012  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf  0.0025    0.0013   -0.0015   -0.0018    0.0052    0.0019  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf  0.0009    0.0025   -0.0011   -0.0012    0.0019    0.0044  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### an example where a list of correlation matrices is passed to rcalc()</span></span></span>
@@ -327,12 +327,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6  1 asom conf asom.conf -0.46 142</span>
 <span class="r-in"><span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">id</span>, <span class="va">round</span>, <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">`1`</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           acog.perf asom.perf conf.perf acog.asom acog.conf asom.conf</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf    0.0035    0.0013   -0.0006   -0.0014    0.0025    0.0009</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf    0.0013    0.0042   -0.0010   -0.0019    0.0013    0.0025</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf   -0.0006   -0.0010    0.0023    0.0006   -0.0015   -0.0011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom   -0.0014   -0.0019    0.0006    0.0043   -0.0018   -0.0012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf    0.0025    0.0013   -0.0015   -0.0018    0.0052    0.0019</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf    0.0009    0.0025   -0.0011   -0.0012    0.0019    0.0044</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf  0.0035    0.0013   -0.0006   -0.0014    0.0025    0.0009  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf  0.0013    0.0042   -0.0010   -0.0019    0.0013    0.0025  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf -0.0006   -0.0010    0.0023    0.0006   -0.0015   -0.0011  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom -0.0014   -0.0019    0.0006    0.0043   -0.0018   -0.0012  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf  0.0025    0.0013   -0.0015   -0.0018    0.0052    0.0019  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf  0.0009    0.0025   -0.0011   -0.0012    0.0019    0.0044  </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### examine data and var-cov matrix for study 3</span></span></span>
 <span class="r-in"><span><span class="va">dat</span><span class="op">[</span><span class="va">dat</span><span class="op">$</span><span class="va">id</span> <span class="op">==</span> <span class="fl">3</span>,<span class="op">]</span></span></span>
@@ -345,12 +345,12 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12  3 asom conf asom.conf -0.40 37</span>
 <span class="r-in"><span><span class="fu"><a href="blsplit.html">blsplit</a></span><span class="op">(</span><span class="va">V</span>, <span class="va">dat</span><span class="op">$</span><span class="va">id</span>, <span class="va">round</span>, <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">`3`</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           acog.perf asom.perf conf.perf acog.asom acog.conf asom.conf</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf    0.0144    0.0106   -0.0097   -0.0032    0.0021    0.0034</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf    0.0106    0.0270   -0.0109    0.0109   -0.0020    0.0001</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf   -0.0097   -0.0109    0.0277   -0.0013    0.0114   -0.0027</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom   -0.0032    0.0109   -0.0013    0.0148   -0.0044   -0.0066</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf    0.0021   -0.0020    0.0114   -0.0044    0.0165    0.0079</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf    0.0034    0.0001   -0.0027   -0.0066    0.0079    0.0196</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.perf  0.0144    0.0106   -0.0097   -0.0032    0.0021    0.0034  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.perf  0.0106    0.0270   -0.0109    0.0109   -0.0020    0.0001  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> conf.perf -0.0097   -0.0109    0.0277   -0.0013    0.0114   -0.0027  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.asom -0.0032    0.0109   -0.0013    0.0148   -0.0044   -0.0066  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> acog.conf  0.0021   -0.0020    0.0114   -0.0044    0.0165    0.0079  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> asom.conf  0.0034    0.0001   -0.0027   -0.0066    0.0079    0.0196  </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">############################################################################</span></span></span>
 </code></pre></div>

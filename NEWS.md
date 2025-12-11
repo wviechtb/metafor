@@ -1,4 +1,4 @@
-# metafor 4.9-22 (2025-12-09)
+# metafor 4.9-23 (2025-12-11)
 
 - argument `legend` can now be a list for `funnel()`, `labbe()`, `regplot()`, and `plot.permutest.rma.uni()` for more control over the look of the legend
 
@@ -23,6 +23,8 @@
 - for measures `"ROM"`, `"ROMC"`, `"CVR"`, and `"CVRC"`, the bias corrections based on the second-order Taylor expansions are now applied by default in `escalc()` (use `correct=FALSE` to switch this off)
 
 - all `addpoly()` functions now respect `alim` and `olim` as set by `forest()`
+
+- some functions (e.g., `vcalc()` and `rcalc()`) can now return variance-covariances matrices as objects of class `"vcovmat"`; these are printed nicely with `print.vcovmat()`
 
 - added some more transformation functions
 

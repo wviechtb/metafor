@@ -158,7 +158,7 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
       res <- list()
 
       for (i in seq_len(k)) {
-         res[[i]] <- rcalc(x[[i]], ni[i], upper=upper, rtoz=rtoz, ...)
+         res[[i]] <- rcalc(x[[i]], ni[i], upper=upper, rtoz=rtoz, sparse=sparse, ...)
       }
 
       if (is.null(names(x)))
@@ -338,6 +338,9 @@ rcalc <- function(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, ...) {
 
    var1.var2 <- paste0(dmat[,1], ".", dmat[,2])
    rownames(V) <- colnames(V) <- var1.var2
+
+   if (!sparse)
+      class(V) <- c("vcovmat", class(V))
 
    #return(list(dat=data.frame(var1=dmat[,1], var2=dmat[,2], var1.var2=var1.var2, yi=ri, vi=unname(diag(V)), ni=ni, stringsAsFactors=FALSE), V=V))
    return(list(dat=data.frame(var1=dmat[,1], var2=dmat[,2], var1.var2=var1.var2, yi=ri, ni=ni, stringsAsFactors=FALSE), V=V))

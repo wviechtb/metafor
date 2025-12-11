@@ -601,6 +601,8 @@ predict.rma.ls <- function(object, newmods, intercept, addx=FALSE, newscale, add
 
    if (vcov & !do.transf) {
       out <- list(pred=out)
+      if (!inherits(vcovpred, "sparseMatrix"))
+         class(vcovpred) <- c("vcovmat", class(vcovpred))
       out$vcov <- vcovpred
    }
 

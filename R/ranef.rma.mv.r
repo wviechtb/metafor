@@ -179,6 +179,18 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
          if (verbose)
             message(mstyle$message("Computation of BLUPs not currently available for struct=\"GEN\"."))
 
+         pred <- matrix(NA_real_, nrow=nlevels(x$mf.g$outer), ncol=ncol(x$mf.g)-1)
+
+         for (j in 1:nrow(pred)) {
+            incl <- which(x$mf.g$outer == levels(x$mf.g$outer)[j])
+            pred[j,] <- x$G %*% t(x$Z.G1[incl,,drop=FALSE]) %*% W[incl,incl] %*% cbind(ei[incl])
+         }
+
+         pred[abs(pred) < 100 * .Machine$double.eps] <- 0
+         rownames(pred) <- levels(x$mf.g$outer)
+         colnames(pred) <- colnames(x$Z.G1)
+         return(pred)
+
       } else {
 
       if (verbose)
@@ -350,6 +362,8 @@ ranef.rma.mv <- function(object, level, digits, transf, targs, verbose=FALSE, ..
    } else {
       if (isTRUE(ddd$vcov)) {
          out <- list(pred=out)
+         if (!inherits(vcov, "sparseMatrix"))
+            class(vcov) <- c("vcovmat", class(vcov))
          out$vcov <- vcov
       }
       return(out)

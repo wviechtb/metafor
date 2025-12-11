@@ -38,7 +38,7 @@ rcalc(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, \dots)
 \value{
    A list containing the following components:
    \item{dat}{a data frame with the study identifier, the two variable identifiers, a variable pair identifier, the correlation coefficients (possibly transformed with Fisher's r-to-z transformation), and the (common) sample sizes.}
-   \item{V}{corresponding variance-covariance matrix (given as a sparse matrix when \code{sparse=TRUE}).}
+   \item{V}{corresponding variance-covariance matrix (given as a sparse matrix when \code{sparse=TRUE}; otherwise a matrix with class \code{"vcovmat"}).}
 
    Note that a particular covariance can only be computed when all of the correlation coefficients involved in the covariance equation are included in the dataset. If one or more coefficients needed for the computation are missing, then the resulting covariance will also be missing (i.e., \code{NA}).
 }

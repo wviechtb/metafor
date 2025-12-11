@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-22</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-23</span>
       </span>
     </div>
 
@@ -152,54 +152,96 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### marginal var-cov matrix of the observed log risk ratios</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu">vcov</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"obs"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        1     2     3     4     5     6     7     8     9    10    11    12    13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1  0.436 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  0.000 0.305 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  0.000 0.000 0.526 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  0.000 0.000 0.000 0.131 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  0.000 0.000 0.000 0.000 0.162 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  0.000 0.000 0.000 0.000 0.000 0.118 0.000 0.000 0.000 0.000 0.000 0.000 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  0.000 0.000 0.000 0.000 0.000 0.000 0.334 0.000 0.000 0.000 0.000 0.000 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.115 0.000 0.000 0.000 0.000 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.167 0.000 0.000 0.000 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.184 0.000 0.000 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.123 0.000 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.643 0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.182</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1       2       3       4       5       6       7       8       9       10      11      12     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.4360 .       .       .       .       .       .       .       .       .       .       .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  .        0.3050 .       .       .       .       .       .       .       .       .       .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  .       .        0.5260 .       .       .       .       .       .       .       .       .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  .       .       .        0.1310 .       .       .       .       .       .       .       .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  .       .       .       .        0.1620 .       .       .       .       .       .       .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  .       .       .       .       .        0.1180 .       .       .       .       .       .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  .       .       .       .       .       .        0.3340 .       .       .       .       .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  .       .       .       .       .       .       .        0.1150 .       .       .       .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  .       .       .       .       .       .       .       .        0.1670 .       .       .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 .       .       .       .       .       .       .       .       .        0.1840 .       .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 .       .       .       .       .       .       .       .       .       .        0.1230 .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 .       .       .       .       .       .       .       .       .       .       .        0.6430</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 .       .       .       .       .       .       .       .       .       .       .       .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    13     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  0.1820</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### var-cov matrix of the fitted values</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu">vcov</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"fitted"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         1      2      3      4      5      6      7      8     9     10     11    12     13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.075  0.066  0.037 -0.024  0.009  0.059  0.006 -0.014 0.018  0.034  0.003 0.012 -0.011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2   0.066  0.072  0.040  0.011 -0.009  0.056 -0.004 -0.023 0.012  0.038 -0.007 0.014  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   0.037  0.040  0.026  0.014  0.004  0.032  0.006 -0.002 0.013  0.025  0.005 0.015  0.008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  -0.024  0.011  0.014  0.106 -0.022 -0.006 -0.005  0.003 0.000  0.018 -0.004 0.021  0.047</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   0.009 -0.009  0.004 -0.022  0.040  0.006  0.031  0.036 0.022  0.004  0.032 0.012  0.008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6   0.059  0.056  0.032 -0.006  0.006  0.048  0.005 -0.010 0.016  0.030  0.003 0.013 -0.002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   0.006 -0.004  0.006 -0.005  0.031  0.005  0.026  0.030 0.019  0.006  0.026 0.013  0.012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8  -0.014 -0.023 -0.002  0.003  0.036 -0.010  0.030  0.042 0.019 -0.001  0.032 0.014  0.020</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   0.018  0.012  0.013  0.000  0.022  0.016  0.019  0.019 0.017  0.013  0.019 0.014  0.010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10  0.034  0.038  0.025  0.018  0.004  0.030  0.006 -0.001 0.013  0.024  0.005 0.015  0.010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11  0.003 -0.007  0.005 -0.004  0.032  0.003  0.026  0.032 0.019  0.005  0.027 0.013  0.013</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12  0.012  0.014  0.015  0.021  0.012  0.013  0.013  0.014 0.014  0.015  0.013 0.015  0.017</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13 -0.011  0.000  0.008  0.047  0.008 -0.002  0.012  0.020 0.010  0.010  0.013 0.017  0.029</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1       2       3       4       5       6       7       8       9       10      11      12     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.0750  0.0660  0.0370 -0.0240  0.0090  0.0590  0.0060 -0.0140  0.0180  0.0340  0.0030  0.0120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2   0.0660  0.0720  0.0400  0.0110 -0.0090  0.0560 -0.0040 -0.0230  0.0120  0.0380 -0.0070  0.0140</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   0.0370  0.0400  0.0260  0.0140  0.0040  0.0320  0.0060 -0.0020  0.0130  0.0250  0.0050  0.0150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  -0.0240  0.0110  0.0140  0.1060 -0.0220 -0.0060 -0.0050  0.0030 .        0.0180 -0.0040  0.0210</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   0.0090 -0.0090  0.0040 -0.0220  0.0400  0.0060  0.0310  0.0360  0.0220  0.0040  0.0320  0.0120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   0.0590  0.0560  0.0320 -0.0060  0.0060  0.0480  0.0050 -0.0100  0.0160  0.0300  0.0030  0.0130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   0.0060 -0.0040  0.0060 -0.0050  0.0310  0.0050  0.0260  0.0300  0.0190  0.0060  0.0260  0.0130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  -0.0140 -0.0230 -0.0020  0.0030  0.0360 -0.0100  0.0300  0.0420  0.0190 -0.0010  0.0320  0.0140</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   0.0180  0.0120  0.0130 .        0.0220  0.0160  0.0190  0.0190  0.0170  0.0130  0.0190  0.0140</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  0.0340  0.0380  0.0250  0.0180  0.0040  0.0300  0.0060 -0.0010  0.0130  0.0240  0.0050  0.0150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  0.0030 -0.0070  0.0050 -0.0040  0.0320  0.0030  0.0260  0.0320  0.0190  0.0050  0.0270  0.0130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  0.0120  0.0140  0.0150  0.0210  0.0120  0.0130  0.0130  0.0140  0.0140  0.0150  0.0130  0.0150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13 -0.0110 .        0.0080  0.0470  0.0080 -0.0020  0.0120  0.0200  0.0100  0.0100  0.0130  0.0170</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    13     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1  -0.0110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   0.0080</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   0.0470</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   0.0080</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  -0.0020</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   0.0120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   0.0200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   0.0100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10  0.0100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11  0.0130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12  0.0170</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  0.0290</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### var-cov matrix of the residuals</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu">vcov</span><span class="op">(</span><span class="va">res</span>, type<span class="op">=</span><span class="st">"resid"</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         1      2      3      4      5      6      7      8      9     10     11     12     13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.361 -0.066 -0.037  0.024 -0.009 -0.059 -0.006  0.014 -0.018 -0.034 -0.003 -0.012  0.011</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2  -0.066  0.233 -0.040 -0.011  0.009 -0.056  0.004  0.023 -0.012 -0.038  0.007 -0.014  0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  -0.037 -0.040  0.501 -0.014 -0.004 -0.032 -0.006  0.002 -0.013 -0.025 -0.005 -0.015 -0.008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4   0.024 -0.011 -0.014  0.025  0.022  0.006  0.005 -0.003  0.000 -0.018  0.004 -0.021 -0.047</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -0.009  0.009 -0.004  0.022  0.122 -0.006 -0.031 -0.036 -0.022 -0.004 -0.032 -0.012 -0.008</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6  -0.059 -0.056 -0.032  0.006 -0.006  0.070 -0.005  0.010 -0.016 -0.030 -0.003 -0.013  0.002</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7  -0.006  0.004 -0.006  0.005 -0.031 -0.005  0.308 -0.030 -0.019 -0.006 -0.026 -0.013 -0.012</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   0.014  0.023  0.002 -0.003 -0.036  0.010 -0.030  0.073 -0.019  0.001 -0.032 -0.014 -0.020</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9  -0.018 -0.012 -0.013  0.000 -0.022 -0.016 -0.019 -0.019  0.150 -0.013 -0.019 -0.014 -0.010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10 -0.034 -0.038 -0.025 -0.018 -0.004 -0.030 -0.006  0.001 -0.013  0.160 -0.005 -0.015 -0.010</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11 -0.003  0.007 -0.005  0.004 -0.032 -0.003 -0.026 -0.032 -0.019 -0.005  0.096 -0.013 -0.013</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 12 -0.012 -0.014 -0.015 -0.021 -0.012 -0.013 -0.013 -0.014 -0.014 -0.015 -0.013  0.628 -0.017</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13  0.011  0.000 -0.008 -0.047 -0.008  0.002 -0.012 -0.020 -0.010 -0.010 -0.013 -0.017  0.153</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1       2       3       4       5       6       7       8       9       10      11      12     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.3610 -0.0660 -0.0370  0.0240 -0.0090 -0.0590 -0.0060  0.0140 -0.0180 -0.0340 -0.0030 -0.0120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  -0.0660  0.2330 -0.0400 -0.0110  0.0090 -0.0560  0.0040  0.0230 -0.0120 -0.0380  0.0070 -0.0140</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  -0.0370 -0.0400  0.5010 -0.0140 -0.0040 -0.0320 -0.0060  0.0020 -0.0130 -0.0250 -0.0050 -0.0150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4   0.0240 -0.0110 -0.0140  0.0250  0.0220  0.0060  0.0050 -0.0030 .       -0.0180  0.0040 -0.0210</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -0.0090  0.0090 -0.0040  0.0220  0.1220 -0.0060 -0.0310 -0.0360 -0.0220 -0.0040 -0.0320 -0.0120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  -0.0590 -0.0560 -0.0320  0.0060 -0.0060  0.0700 -0.0050  0.0100 -0.0160 -0.0300 -0.0030 -0.0130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  -0.0060  0.0040 -0.0060  0.0050 -0.0310 -0.0050  0.3080 -0.0300 -0.0190 -0.0060 -0.0260 -0.0130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   0.0140  0.0230  0.0020 -0.0030 -0.0360  0.0100 -0.0300  0.0730 -0.0190  0.0010 -0.0320 -0.0140</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  -0.0180 -0.0120 -0.0130 .       -0.0220 -0.0160 -0.0190 -0.0190  0.1500 -0.0130 -0.0190 -0.0140</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 -0.0340 -0.0380 -0.0250 -0.0180 -0.0040 -0.0300 -0.0060  0.0010 -0.0130  0.1600 -0.0050 -0.0150</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 -0.0030  0.0070 -0.0050  0.0040 -0.0320 -0.0030 -0.0260 -0.0320 -0.0190 -0.0050  0.0960 -0.0130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 -0.0120 -0.0140 -0.0150 -0.0210 -0.0120 -0.0130 -0.0130 -0.0140 -0.0140 -0.0150 -0.0130  0.6280</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  0.0110 .       -0.0080 -0.0470 -0.0080  0.0020 -0.0120 -0.0200 -0.0100 -0.0100 -0.0130 -0.0170</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    13     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   0.0110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2  .      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  -0.0080</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  -0.0470</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  -0.0080</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6   0.0020</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7  -0.0120</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8  -0.0200</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9  -0.0100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10 -0.0100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11 -0.0130</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12 -0.0170</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  0.1530</span>
 </code></pre></div>
     </div>
   </div>

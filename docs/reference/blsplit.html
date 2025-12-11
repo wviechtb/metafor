@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-22</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-23</span>
       </span>
     </div>
 
@@ -143,69 +143,69 @@
 <span class="r-in"><span><span class="va">Vs</span> <span class="op">&lt;-</span> <span class="fu">blsplit</span><span class="op">(</span><span class="va">V</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">Vs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]       [,2]       [,3]       [,4]       [,5]       [,6]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.07400000 0.03256182 0.03579642 0.02523284 0.02969485 0.04858296</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.03256182 0.03980000 0.02625218 0.01850511 0.02177744 0.03562949</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.03579642 0.02625218 0.04810000 0.02034336 0.02394075 0.03916883</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 0.02523284 0.01850511 0.02034336 0.02390000 0.01687579 0.02761004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] 0.02969485 0.02177744 0.02394075 0.01687579 0.03310000 0.03249242</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,] 0.04858296 0.03562949 0.03916883 0.02761004 0.03249242 0.08860000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]    [,2]    [,3]    [,4]    [,5]    [,6]   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  0.0740  0.0326  0.0358  0.0252  0.0297  0.0486</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.0326  0.0398  0.0263  0.0185  0.0218  0.0356</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.0358  0.0263  0.0481  0.0203  0.0239  0.0392</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]  0.0252  0.0185  0.0203  0.0239  0.0169  0.0276</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]  0.0297  0.0218  0.0239  0.0169  0.0331  0.0325</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]  0.0486  0.0356  0.0392  0.0276  0.0325  0.0886</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             [,1]        [,2]        [,3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.011500000 0.005609278 0.005187485</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.005609278 0.007600000 0.004217108</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.005187485 0.004217108 0.006500000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]    [,2]    [,3]   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  0.0115  0.0056  0.0052</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.0056  0.0076  0.0042</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.0052  0.0042  0.0065</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">Vs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="va">cov2cor</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4] [,5] [,6]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0  0.6  0.6  0.6  0.6  0.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.6  1.0  0.6  0.6  0.6  0.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.6  0.6  1.0  0.6  0.6  0.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]  0.6  0.6  0.6  1.0  0.6  0.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]  0.6  0.6  0.6  0.6  1.0  0.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]  0.6  0.6  0.6  0.6  0.6  1.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]    [,2]    [,3]    [,4]    [,5]    [,6]   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0000  0.6000  0.6000  0.6000  0.6000  0.6000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.6000  1.0000  0.6000  0.6000  0.6000  0.6000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.6000  0.6000  1.0000  0.6000  0.6000  0.6000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]  0.6000  0.6000  0.6000  1.0000  0.6000  0.6000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]  0.6000  0.6000  0.6000  0.6000  1.0000  0.6000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]  0.6000  0.6000  0.6000  0.6000  0.6000  1.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0  0.6  0.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.6  1.0  0.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.6  0.6  1.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]    [,2]    [,3]   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0000  0.6000  0.6000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.6000  1.0000  0.6000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.6000  0.6000  1.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### illustrate the use of the fun and args arguments</span></span></span>
 <span class="r-in"><span><span class="fu">blsplit</span><span class="op">(</span><span class="va">V</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">cov2cor</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3] [,4] [,5] [,6]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0  0.6  0.6  0.6  0.6  0.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.6  1.0  0.6  0.6  0.6  0.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.6  0.6  1.0  0.6  0.6  0.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]  0.6  0.6  0.6  1.0  0.6  0.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]  0.6  0.6  0.6  0.6  1.0  0.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]  0.6  0.6  0.6  0.6  0.6  1.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]    [,2]    [,3]    [,4]    [,5]    [,6]   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0000  0.6000  0.6000  0.6000  0.6000  0.6000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.6000  1.0000  0.6000  0.6000  0.6000  0.6000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.6000  0.6000  1.0000  0.6000  0.6000  0.6000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]  0.6000  0.6000  0.6000  1.0000  0.6000  0.6000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]  0.6000  0.6000  0.6000  0.6000  1.0000  0.6000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]  0.6000  0.6000  0.6000  0.6000  0.6000  1.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2] [,3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0  0.6  0.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.6  1.0  0.6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.6  0.6  1.0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]    [,2]    [,3]   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  1.0000  0.6000  0.6000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.6000  1.0000  0.6000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.6000  0.6000  1.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">blsplit</span><span class="op">(</span><span class="va">V</span>, cluster<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">study</span>, <span class="va">round</span>, <span class="fl">3</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       [,1]  [,2]  [,3]  [,4]  [,5]  [,6]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.074 0.033 0.036 0.025 0.030 0.049</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.033 0.040 0.026 0.019 0.022 0.036</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.036 0.026 0.048 0.020 0.024 0.039</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 0.025 0.019 0.020 0.024 0.017 0.028</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [5,] 0.030 0.022 0.024 0.017 0.033 0.032</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [6,] 0.049 0.036 0.039 0.028 0.032 0.089</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]    [,2]    [,3]    [,4]    [,5]    [,6]   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  0.0740  0.0330  0.0360  0.0250  0.0300  0.0490</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.0330  0.0400  0.0260  0.0190  0.0220  0.0360</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.0360  0.0260  0.0480  0.0200  0.0240  0.0390</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,]  0.0250  0.0190  0.0200  0.0240  0.0170  0.0280</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5,]  0.0300  0.0220  0.0240  0.0170  0.0330  0.0320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6,]  0.0490  0.0360  0.0390  0.0280  0.0320  0.0890</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       [,1]  [,2]  [,3]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.012 0.006 0.005</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.006 0.008 0.004</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.005 0.004 0.006</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1]    [,2]    [,3]   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]  0.0120  0.0060  0.0050</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]  0.0060  0.0080  0.0040</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,]  0.0050  0.0040  0.0060</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

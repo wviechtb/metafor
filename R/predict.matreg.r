@@ -255,6 +255,8 @@ predict.matreg <- function(object, newmods, intercept, addx=FALSE, level, adjust
 
    if (vcov & !do.transf) {
       out <- list(pred=out)
+      if (!inherits(vcovpred, "sparseMatrix"))
+         class(vcovpred) <- c("vcovmat", class(vcovpred))
       out$vcov <- vcovpred
    }
 

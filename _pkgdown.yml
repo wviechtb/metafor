@@ -244,6 +244,7 @@ reference:
       - methods.confint.rma
       - methods.anova.rma
       - methods.vif.rma
+      - methods.vcovmat
   - title: "Miscellaneous Documentation"
     desc: >
       Miscellaneous documentation on models, recommendations, and options.

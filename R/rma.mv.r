@@ -2679,6 +2679,9 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    weighted <- TRUE
 
+   if (!inherits(M, "sparseMatrix"))
+      class(M) <- c("vcovmat", class(M))
+
    if (is.null(ddd$outlist) || ddd$outlist == "nodata") {
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,

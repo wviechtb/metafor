@@ -72,6 +72,9 @@ vcov.rma <- function(object, type="fixed", ...) {
          if (na.act == "na.fail" && any(!object$not.na))
             stop(mstyle$stop("Missing values in data."))
 
+         if (!inherits(out, "sparseMatrix"))
+            class(out) <- c("vcovmat", class(out))
+
          return(out)
 
       } else {
@@ -97,6 +100,9 @@ vcov.rma <- function(object, type="fixed", ...) {
          out[!object$not.na,] <- NA_real_
          out[,!object$not.na] <- NA_real_
       }
+
+      if (!inherits(out, "sparseMatrix"))
+         class(out) <- c("vcovmat", class(out))
 
       return(out)
 
@@ -133,6 +139,9 @@ vcov.rma <- function(object, type="fixed", ...) {
          out[object$not.na, object$not.na] <- ve
          rownames(out) <- colnames(out) <- object$slab
       }
+
+      if (!inherits(out, "sparseMatrix"))
+         class(out) <- c("vcovmat", class(out))
 
       return(out)
 

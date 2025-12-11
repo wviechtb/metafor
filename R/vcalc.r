@@ -517,6 +517,9 @@ data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, ...) {
    if (.isTRUE(ddd$retdat))
       V <- data.frame(cluster, type, obs, grp1, grp2, time1, time2, w1, w2, vi, V=V)
 
+   if (!inherits(V, "sparseMatrix"))
+      class(V) <- c("vcovmat", "matrix", "array")
+
    return(V)
 
 }
