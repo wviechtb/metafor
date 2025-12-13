@@ -1409,6 +1409,21 @@
 
 }
 
+.print.vcovmat <- function(x, mstyle) {
+
+   for (i in seq_along(x)) {
+      x[i] <- gsub("NA", mstyle$na("NA"), x[i], fixed=TRUE)
+      x[i] <- gsub(" .", mstyle$legend(" ."), x[i], fixed=TRUE)
+      #if (i == 1) {
+      #   x[i] <- mstyle$section(x[i])
+      #} else {
+      #   x[i] <- gsub("^( ?\\S+)", mstyle$section("\\1"), x[i])
+      #}
+      cat(x[i], "\n")
+   }
+
+}
+
 #.set.mstyle.1 <- str2lang(".mstyle <- list(section=make_style(\"gray90\")$bold, header=make_style(\"skyblue1\")$bold$underline, body=make_style(\"skyblue2\"), text=make_style(\"slateblue3\"), result=make_style(\"slateblue1\"))")
 #eval(metafor:::.set.mstyle.1)
 
