@@ -174,14 +174,14 @@ robust.rma.uni <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, 
 
             wi    <- 1/(x$vi + x$tau2)
             wi    <- wi[ocl]
-            W     <- diag(wi, nrow=x$k, ncol=x$k)
+            W     <- .diag(wi)
             bread <- x$vb %*% crossprod(x$X[ocl,], W)
 
          } else {
 
             ### if weights were specified, then vb cannot be used
 
-            A     <- diag(x$weights[ocl], nrow=x$k, ncol=x$k)
+            A     <- .diag(x$weights[ocl])
             stXAX <- .invcalc(X=x$X[ocl,], W=A, k=x$k)
             bread <- stXAX %*% crossprod(x$X[ocl,], A)
 

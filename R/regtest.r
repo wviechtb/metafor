@@ -18,7 +18,7 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
 
    #########################################################################
 
-   ### check if data argument has been specified
+   ### check if the 'data' argument was specified
 
    if (missing(data))
       data <- NULL

@@ -20,12 +20,12 @@ weights.rma.uni <- function(object, type="diagonal", ...) {
 
    if (x$weighted) {
       if (is.null(x$weights)) {
-         W <- diag(1/(x$vi + x$tau2), nrow=x$k, ncol=x$k)
+         W <- .diag(1/(x$vi + x$tau2))
       } else {
-         W <- diag(x$weights, nrow=x$k, ncol=x$k)
+         W <- .diag(x$weights)
       }
    } else {
-      W <- diag(1/x$k, nrow=x$k, ncol=x$k)
+      W <- .diag(1/x$k)
    }
 
    #########################################################################

@@ -79,7 +79,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (missing(control))
       control <- list()
 
-   ### set defaults for digits
+   ### set defaults for 'digits'
 
    if (missing(digits)) {
       digits <- .set.digits(dmiss=TRUE)
@@ -117,7 +117,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
     test <- tolower(test)
 
    if (!is.element(test, c("z", "t", "knha", "hksj", "adhoc")))
-      stop(mstyle$stop("Invalid option selected for 'test' argument."))
+      stop(mstyle$stop("Unknown option specified for the 'test' argument."))
 
    if (test == "hksj")
       test <- "knha"
@@ -207,7 +207,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    formula.yi <- NULL
    formula.mods <- NULL
 
-   ### in case user specified v (instead of V), verbose is set to v, which is non-sensical
+   ### in case the user specified v (instead of V), verbose is set to v, which is non-sensical
    ### - if v is set to the name of a variable in 'data', it won't be found; can check for
    ###   this with try() and inherits(verbose, "try-error")
    ### - if v is set to vi or var (or anything else that might be interpreted as a function),
@@ -226,8 +226,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
                parallel = list(),         # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,                 # arguments for optimParallel()
                ncpus = 1L,                # arguments for optimParallel()
-               REMLf = TRUE,              # full REML likelihood (including all constants)
-               evtol = 1e-07,             # lower bound for eigenvalues to determine if model matrix is positive definite
+               REMLf = TRUE,              # should the full REML likelihood be computed (including all constants)
+               evtol = 1e-07,             # lower bound for eigenvalues to determine if the model matrix is positive definite
                nearpd = FALSE,            # to force the G, H, and M matrices to be positive definite
                hessianCtrl = list(r=8),   # arguments passed on to 'method.args' of hessian()
                hesstol = .Machine$double.eps^0.5, # threshold for detecting fixed elements in Hessian
@@ -259,7 +259,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (verbose > 1)
       message(mstyle$message("Extracting yi/V values ..."))
 
-   ### check if data argument has been specified
+   ### check if the 'data' argument was specified
 
    if (missing(data))
       data <- NULL
@@ -273,7 +273,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    mf <- match.call()
 
-   ### extract yi, V, W, ni, slab, subset, and mods values, possibly from the data frame specified via data (arguments not specified are NULL)
+   ### extract 'yi', 'V', 'W', 'ni', 'slab', 'subset', and 'mods' values, possibly from the data frame specified via 'data' (arguments not specified are NULL)
 
    yi     <- .getx("yi",     mf=mf, data=data)
    V      <- .getx("V",      mf=mf, data=data)
@@ -289,16 +289,16 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       formula.yi <- yi
       formula.mods <- formula.yi[-2]
       options(na.action = "na.pass")                   # set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
-      mods <- model.matrix(yi, data=data)              # extract model matrix (now mods is no longer a formula, so [a] further below is skipped)
-      attr(mods, "assign") <- NULL                     # strip assign attribute (not needed at the moment)
-      attr(mods, "contrasts") <- NULL                  # strip contrasts attribute (not needed at the moment)
-      yi <- model.response(model.frame(yi, data=data)) # extract yi values from model frame
+      mods <- model.matrix(yi, data=data)              # extract the model matrix (now 'mods' is no longer a formula, so [a] further below is skipped)
+      attr(mods, "assign") <- NULL                     # strip the 'assign' attribute (not used at the moment)
+      attr(mods, "contrasts") <- NULL                  # strip the 'contrasts' attribute (not used at the moment)
+      yi <- model.response(model.frame(yi, data=data)) # extract the 'yi' values from the model frame
       options(na.action = na.act)                      # set na.action back to na.act
-      names(yi) <- NULL                                # strip names (1:k) from yi (so res$yi is the same whether yi is a formula or not)
-      intercept <- FALSE                               # set to FALSE since formula now controls whether the intercept is included or not
-   }                                                   # note: code further below ([b]) actually checks whether intercept is included or not
+      names(yi) <- NULL                                # strip names (1:k) from 'yi' (so res$yi is the same whether 'yi' is a formula or not)
+      intercept <- FALSE                               # set 'intercept' to FALSE since the formula now controls whether the intercept is included
+   }                                                   # note: code further below ([b]) actually checks whether the intercept is included
 
-   ### in case user passed a data frame to yi, convert it to a vector (if possible)
+   ### in case the user passed a data frame to yi, convert it to a vector (if possible)
 
    if (is.data.frame(yi)) {
       if (ncol(yi) == 1L) {
@@ -308,7 +308,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       }
    }
 
-   ### in case user passed a matrix to yi, convert it to a vector (if possible)
+   ### in case the user passed a matrix to yi, convert it to a vector (if possible)
 
    if (.is.matrix(yi)) {
       if (nrow(yi) == 1L || ncol(yi) == 1L) {
@@ -377,7 +377,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ### check if user constrained V to 0 (can skip a lot of the steps below then)
 
-   if ((.is.vector(V) && length(V) == 1L && V == 0) || (.is.vector(V) && length(V) == k && !anyNA(V) && all(V == 0))) {
+   if ((.is.vector(V) && length(V) == 1L && V == 0) || (.is.vector(V) && length(V) == k && all(V == 0, na.rm=TRUE))) {
       V0 <- TRUE
    } else {
       V0 <- FALSE
@@ -391,7 +391,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       if (sparse) {
          V <- Diagonal(k, as.vector(V))
       } else {
-         V <- diag(as.vector(V), nrow=k, ncol=k)
+         V <- .diag(as.vector(V))
       }
    }
 
@@ -444,7 +444,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
          W <- .expand1(W, k)
 
-         A <- diag(W, nrow=length(W), ncol=length(W))
+         A <- .diag(W)
 
       } else {
 
@@ -516,17 +516,17 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    if (inherits(mods, "formula")) {
       formula.mods <- mods
-      if (isTRUE(all.equal(formula.mods, ~ 1))) { # needed so 'mods = ~ 1' without 'data' specified works
+      if (.is.tilde1(formula.mods)) {          # needed so 'mods = ~ 1' without 'data' specified works
          mods <- matrix(1, nrow=k, ncol=1)
          intercept <- FALSE
       } else {
          options(na.action = "na.pass")        # set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
-         mods <- model.matrix(mods, data=data) # extract model matrix
-         attr(mods, "assign") <- NULL          # strip assign attribute (not needed at the moment)
-         attr(mods, "contrasts") <- NULL       # strip contrasts attribute (not needed at the moment)
+         mods <- model.matrix(mods, data=data) # extract the model matrix
+         attr(mods, "assign") <- NULL          # strip the 'assign' attribute (not used at the moment)
+         attr(mods, "contrasts") <- NULL       # strip the 'contrasts' attribute (not used at the moment)
          options(na.action = na.act)           # set na.action back to na.act
-         intercept <- FALSE                    # set to FALSE since formula now controls whether the intercept is included or not
-      }                                        # note: code further below ([b]) actually checks whether intercept is included or not
+         intercept <- FALSE                    # set 'intercept' to FALSE since the formula now controls whether the intercept is included
+      }                                        # note: code further below ([b]) actually checks whether the intercept is included
    }
 
    ### turn a vector for mods into a column vector
@@ -539,15 +539,15 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (is.data.frame(mods))
       mods <- as.matrix(mods)
 
-   ### check if model matrix contains character variables
+   ### check if the model matrix contains character variables
 
    if (is.character(mods))
-      stop(mstyle$stop("Model matrix contains character variables."))
+      stop(mstyle$stop("The model matrix contains character variables."))
 
-   ### check if mods matrix has the right number of rows
+   ### check if the 'mods' matrix has the right number of rows
 
    if (!is.null(mods) && nrow(mods) != k)
-      stop(mstyle$stop(paste0("Number of rows in the model matrix (", nrow(mods), ") do not match the length of the outcome vector (", k, ").")))
+      stop(mstyle$stop(paste0("Number of rows in the model matrix (", nrow(mods), ") does not match the length of the outcome vector (", k, ").")))
 
    #########################################################################
    #########################################################################
@@ -884,12 +884,12 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    }
 
-   ### check if study labels are unique; if not, make them unique
+   ### check if the study labels are unique; if not, make them unique
 
    if (anyDuplicated(slab))
       slab <- .make.unique(slab)
 
-   ### add slab attribute back
+   ### add the 'slab' attribute back to 'yi'
 
    attr(yi, "slab") <- slab
 
@@ -897,7 +897,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    vi <- diag(V)
 
-   ### save full data (including potential NAs in yi/vi/V/W/ni/mods)
+   ### save the full data (including potential NAs in yi/vi/V/W/ni/mods)
 
    yi.f   <- yi
    vi.f   <- vi
@@ -1314,12 +1314,12 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    ### make sure that there is at least one column in X ([b])
 
    if (is.null(mods) && !intercept) {
-      warning(mstyle$warning("Must either include an intercept and/or moderators in model.\nCoerced intercept into the model."), call.=FALSE)
+      warning(mstyle$warning("Must either include an intercept and/or moderators in the model.\nCoerced an intercept into the model."), call.=FALSE)
       intercept <- TRUE
    }
 
    if (!is.null(mods) && ncol(mods) == 0L) {
-      warning(mstyle$warning("Cannot fit model with an empty model matrix. Coerced intercept into the model."), call.=FALSE)
+      warning(mstyle$warning("Cannot fit model with an empty model matrix. Coerced an intercept into the model."), call.=FALSE)
       intercept <- TRUE
    }
 
@@ -1349,7 +1349,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       }
    }
 
-   ### check whether intercept is included and if yes, move it to the first column (NAs already removed, so na.rm=TRUE for any() not necessary)
+   ### check whether the intercept is included and if yes, move it to the first column (NAs already removed, so na.rm=TRUE for any() not necessary)
 
    is.int <- apply(X, 2, .is.intercept)
    if (any(is.int)) {
@@ -1362,7 +1362,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       int.incl <- FALSE
    }
 
-   ### check whether model matrix is of full rank
+   ### check whether the model matrix is of full rank
 
    if (!.chkpd(crossprod(X), tol=con$evtol))
       stop(mstyle$stop("Model matrix not of full rank. Cannot fit model."))
@@ -1785,19 +1785,19 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (withH && !is.element(struct[2], c("CAR","SPEXP","SPGAU","SPLIN","SPRAT","SPSPH","PHYBM","PHYPL","PHYPD")) && any(con$phi.init <= -1 | con$phi.init >= 1))
       stop(mstyle$stop("Value(s) of 'phi.init' must be in (-1,1)."))
 
-   ### in case user manually set con$cholesky and specified only a single value
+   ### in case the user manually set con$cholesky and specified only a single value
 
    con$cholesky <- .expand1(con$cholesky, 2L)
 
    ### use of Cholesky factorization only applicable for models with "UN", "UNR", and "GEN" structure
 
-   if (!withG) # in case user set cholesky=TRUE and struct="UN", struct="UNR", or struct="GEN" even though there is no 1st 'inner | outer' term
+   if (!withG) # in case the user set cholesky=TRUE and struct="UN", struct="UNR", or struct="GEN" even though there is no 1st 'inner | outer' term
       con$cholesky[1] <- FALSE
 
    if (con$cholesky[1] && !is.element(struct[1], c("UN","UNR","GEN")))
       con$cholesky[1] <- FALSE
 
-   if (!withH) # in case user set cholesky=TRUE and struct="UN", struct="UNR", or struct="GEN" even though there is no 2nd 'inner | outer' term
+   if (!withH) # in case the user set cholesky=TRUE and struct="UN", struct="UNR", or struct="GEN" even though there is no 2nd 'inner | outer' term
       con$cholesky[2] <- FALSE
 
    if (con$cholesky[2] && !is.element(struct[2], c("UN","UNR","GEN")))
@@ -1883,7 +1883,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (length(optcontrol) == 0L)
       optcontrol <- list()
 
-   ### if control argument 'ncpus' is larger than 1, automatically switch to optimParallel optimizer
+   ### if control argument 'ncpus' is larger than 1, automatically switch to the 'optimParallel' optimizer
 
    if (ncpus > 1L)
       optimizer <- "optimParallel"
@@ -2322,7 +2322,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    if (inherits(QM, "try-error"))
       QM <- NA_real_
 
-   ### abbreviate some types of coefficient names
+   ### abbreviate certain coefficient names
 
    if (.isTRUE(ddd$abbrev)) {
       tmp <- colnames(X)

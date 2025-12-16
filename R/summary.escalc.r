@@ -32,7 +32,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, olim, digits, transf, ...) {
          yi.name <- attr(x, "yi.names")[1] # take the first entry to be the yi variable
       } else {                             # if not, see if 'yi' is in the object and assume that is the yi variable
          if (!is.element("yi", names(x)))
-            stop(mstyle$stop("Cannot determine name of the 'yi' variable."))
+            stop(mstyle$stop("Cannot determine the name of the 'yi' variable."))
          yi.name <- "yi"
       }
 
@@ -40,7 +40,7 @@ H0=0, append=TRUE, replace=TRUE, level=95, olim, digits, transf, ...) {
          vi.name <- attr(x, "vi.names")[1] # take the first entry to be the vi variable
       } else {                             # if not, see if 'vi' is in the object and assume that is the vi variable
          if (!is.element("vi", names(x)))
-            stop(mstyle$stop("Cannot determine name of the 'vi' variable."))
+            stop(mstyle$stop("Cannot determine the name of the 'vi' variable."))
          vi.name <- "vi"
       }
 

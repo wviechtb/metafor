@@ -36,8 +36,11 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
    # when adding measures, remember to add measures to .setlab()
 
-   if (!is.element(to, c("all","only0","if0all","none")))
+   if (!is.character(to) || length(to) != 1 || is.na(to) || !is.element(to, c("all","only0","if0all","none")))
       stop(mstyle$stop("Unknown 'to' argument specified."))
+
+   if (!is.logical(drop00) || length(drop00) != 1L || is.na(drop00))
+      stop(mstyle$stop("Unknown 'drop00' argument specified."))
 
    if (any(!is.element(vtype, c("UB","LS","LS2","LS3","HO","ST","CS","AV","AV2","AVHO","H0","H0a","H0b","MAX")), na.rm=TRUE)) # vtype can be an entire vector, so use any() and na.rm=TRUE
       stop(mstyle$stop("Unknown 'vtype' argument specified."))
@@ -82,7 +85,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
    .chkdots(ddd, c("onlyo1", "addyi", "addvi"))
 
-   ### set defaults or get onlyo1, addyi, and addvi arguments
+   ### set defaults or get 'onlyo1', 'addyi', and 'addvi' arguments
 
    onlyo1  <- .chkddd(ddd$onlyo1,  FALSE, .isTRUE(ddd$onlyo1))
    addyi   <- .chkddd(ddd$addyi,   TRUE,  .isTRUE(ddd$addyi))
@@ -96,7 +99,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
       digits <- .set.digits(digits, dmiss=FALSE)
    }
 
-   ### check if data argument has been specified
+   ### check if the 'data' argument was specified
 
    if (missing(data))
       data <- NULL
@@ -130,7 +133,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
    flip <- .getx("flip", mf=mf, data=data)
 
-   ### for certain measures, set add=0 by default unless user explicitly set the add argument
+   ### for certain measures, set 'add=0' by default unless the user explicitly set the 'add' argument
 
    addval <- mf[[match("add", names(mf))]]
 
@@ -2934,9 +2937,9 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
       sei <- .getx("sei", mf=mf, data=data, checknumeric=TRUE)
       ni  <- .getx("ni",  mf=mf, data=data, checknumeric=TRUE)
 
-      ### if neither vi nor sei is specified, then throw an error
-      ### if only sei is specified, then square those values to get vi
-      ### if vi is specified, use those values
+      ### if neither 'vi' nor 'sei' is specified, then throw an error
+      ### if only 'sei' is specified, then square those values to get 'vi'
+      ### if 'vi' is specified, use those values
 
       if (is.null(vi)) {
          if (is.null(sei)) {
@@ -3020,7 +3023,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
       if (anyNA(slab))
          stop(mstyle$stop("NAs in study labels."))
 
-      ### check if study labels are unique; if not, make them unique
+      ### check if the study labels are unique; if not, make them unique
 
       if (anyDuplicated(slab))
          slab <- .make.unique(slab)

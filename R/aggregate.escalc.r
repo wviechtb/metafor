@@ -49,7 +49,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
          yi.name <- attr(x, "yi.names")[1] # take the first entry to be the yi variable
       } else {                             # if not, see if 'yi' is in the object and assume that is the yi variable
          if (!is.element("yi", names(x)))
-            stop(mstyle$stop("Cannot determine name of the 'yi' variable."))
+            stop(mstyle$stop("Cannot determine the name of the 'yi' variable."))
          yi.name <- "yi"
       }
 
@@ -57,7 +57,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
          vi.name <- attr(x, "vi.names")[1] # take the first entry to be the vi variable
       } else {                             # if not, see if 'vi' is in the object and assume that is the vi variable
          if (!is.element("vi", names(x)))
-            stop(mstyle$stop("Cannot determine name of the 'vi' variable."))
+            stop(mstyle$stop("Cannot determine the name of the 'vi' variable."))
          vi.name <- "vi"
       }
 
@@ -183,7 +183,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
       }
 
       diag(R) <- 1
-      S <- diag(sqrt(as.vector(vi)), nrow=k, ncol=k)
+      S <- .diag(sqrt(as.vector(vi)))
       V <- S %*% R %*% S
 
    } else {
@@ -197,7 +197,7 @@ aggregate.escalc <- function(x, cluster, time, obs, V, struct="CS", rho, phi,
          if (length(V) != k)
             stop(mstyle$stop(paste0("Length of 'V' (", length(V), ") does not match the length of the data frame (", k, ").")))
 
-         V <- diag(as.vector(V), nrow=k, ncol=k)
+         V <- .diag(as.vector(V))
 
       }
 

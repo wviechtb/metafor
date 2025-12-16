@@ -307,7 +307,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
       intCtrl$rel.tol <- .Machine$double.eps^0.25
    }
 
-   ### if control argument 'ncpus' is larger than 1, automatically switch to optimParallel optimizer
+   ### if control argument 'ncpus' is larger than 1, automatically switch to the 'optimParallel' optimizer
 
    if (ncpus > 1L)
       optimizer <- "optimParallel"
@@ -1364,7 +1364,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
    ### fit statistics
 
    if (verbose > 1)
-      message(mstyle$message("Computing the fit statistics and log-likelihood ..."))
+      message(mstyle$message("Computing fit statistics and log-likelihood ..."))
 
    ### note: tau2 and delta are not counted as parameters when they were fixed by the user
    parms <- p + ifelse(is.element(x$method, c("FE","EE","CE")) || x$tau2.fix, 0, 1) + sum(is.na(delta.arg))
@@ -1435,7 +1435,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
    res$LRT.tau2  <- LRT.tau2
    res$LRTp.tau2 <- LRTp.tau2
 
-   res$M         <- diag(vi + tau2, nrow=k, ncol=k)
+   res$M         <- .diag(vi + tau2)
    res$model     <- "rma.uni.selmodel"
    res$parms     <- parms
    res$fit.stats <- fit.stats

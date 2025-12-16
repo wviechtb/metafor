@@ -266,7 +266,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
          if (!requireNamespace("CompQuadForm", quietly=TRUE))
             stop(mstyle$stop("Please install the 'CompQuadForm' package when method='QGEN'."))
 
-         A <- diag(weights, nrow=k, ncol=k)
+         A <- .diag(weights)
          stXAX <- .invcalc(X=X, W=A, k=k)
          P <- A - A %*% X %*% stXAX %*% t(X) %*% A
          Q <- crossprod(Y,P) %*% Y

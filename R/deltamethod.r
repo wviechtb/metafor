@@ -76,11 +76,8 @@ deltamethod <- function(x, vcov, fun, order=1, level, H0=0, digits) {
 
    #########################################################################
 
-   if (.is.vector(vcov) || nrow(vcov) == 1L || ncol(vcov) == 1L) {
-      vcov <- as.vector(vcov)
-      p <- length(vcov)
-      vcov <- diag(vcov, nrow=p, ncol=p)
-   }
+   if (.is.vector(vcov) || nrow(vcov) == 1L || ncol(vcov) == 1L)
+      vcov <- .diag(as.vector(vcov))
 
    if (!.is.square(vcov))
       stop(mstyle$stop("Argument 'vcov' must be a square matrix."))
@@ -107,7 +104,7 @@ deltamethod <- function(x, vcov, fun, order=1, level, H0=0, digits) {
    } else {
 
       if (length(args) != p)
-         stop(mstyle$stop(paste0("Number of function arguments (", length(args), ") do not match the number of coefficients (", p, ").")))
+         stop(mstyle$stop(paste0("Number of function arguments (", length(args), ") does not match the number of coefficients (", p, ").")))
 
       names(coef) <- args
       coef.transf <- try(do.call(fun, args=as.list(coef)))

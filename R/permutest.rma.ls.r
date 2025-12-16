@@ -17,7 +17,7 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, btt=x$btt, att=x$att, pr
 
    .chkdots(ddd, c("tol", "time", "seed", "verbose", "permci", "skip.beta", "skip.alpha", "fixed", "code1", "code2", "code3", "code4"))
 
-   if (!is.null(ddd$tol)) # in case user specified comptol in the old manner
+   if (!is.null(ddd$tol)) # in case the user specified comptol in the old manner
       comptol <- ddd$tol
 
    fixed <- .chkddd(ddd$fixed, FALSE, .isTRUE(ddd$fixed))

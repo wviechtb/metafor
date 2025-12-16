@@ -53,7 +53,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \emph{These arguments pertain to handling of zero cells/counts/frequencies:}
 
-   \item{add}{a non-negative number to specify the amount to add to zero cells, counts, or frequencies. See \sQuote{Details}.}
+   \item{add}{a non-negative number to specify the amount to add to zero cells, counts, or frequencies. See \sQuote{Details} and \sQuote{Note}.}
    \item{to}{a character string to specify when the values under \code{add} should be added (either \code{"all"}, \code{"only0"}, \code{"if0all"}, or \code{"none"}). See \sQuote{Details}.}
    \item{drop00}{logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes. See \sQuote{Details}.}
 

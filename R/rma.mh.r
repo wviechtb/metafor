@@ -51,13 +51,13 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
 
    .chkdots(ddd, c("outlist", "onlyo1", "addyi", "addvi", "time"))
 
-   ### set defaults or get onlyo1, addyi, and addvi arguments
+   ### set defaults or get 'onlyo1', 'addyi', and 'addvi' arguments
 
    onlyo1 <- .chkddd(ddd$onlyo1, FALSE)
    addyi  <- .chkddd(ddd$addyi,  TRUE)
    addvi  <- .chkddd(ddd$addvi,  TRUE)
 
-   ### set defaults for digits
+   ### set defaults for 'digits'
 
    if (missing(digits)) {
       digits <- .set.digits(dmiss=TRUE)
@@ -79,7 +79,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
    if (verbose)
       message(mstyle$message("Extracting the data and computing yi/vi values ..."))
 
-   ### check if data argument has been specified
+   ### check if the 'data' argument was specified
 
    if (missing(data))
       data <- NULL
@@ -171,7 +171,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
 
       }
 
-      ### check if study labels are unique; if not, make them unique
+      ### check if the study labels are unique; if not, make them unique
 
       if (anyDuplicated(slab))
          slab <- .make.unique(slab)
@@ -377,7 +377,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
 
       }
 
-      ### check if study labels are unique; if not, make them unique
+      ### check if the study labels are unique; if not, make them unique
 
       if (anyDuplicated(slab))
          slab <- .make.unique(slab)
@@ -723,7 +723,7 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
    ###### fit statistics
 
    if (verbose)
-      message(mstyle$message("Computing the fit statistics and log-likelihood ..."))
+      message(mstyle$message("Computing fit statistics and log-likelihood ..."))
 
    if (k.yi >= 1) {
 

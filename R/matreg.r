@@ -168,7 +168,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
 
       if (!is.null(V)) {
          zij <- R[lower.tri(R)]
-         Dmat <- diag(2 / (cosh(2*zij) + 1), nrow=length(zij), ncol=length(zij), names=FALSE)
+         Dmat <- .diag(2 / (cosh(2*zij) + 1), names=FALSE)
          V <- Dmat %*% V %*% Dmat
       }
 
@@ -348,7 +348,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
          b <- b * sdy / sdx
 
          Rxy <- S[x, y, drop=FALSE]
-         invRxx <- diag(1/sdx, nrow=m, ncol=m) %*% invRxx %*% diag(1/sdx, nrow=m, ncol=m)
+         invRxx <- .diag(1/sdx) %*% invRxx %*% .diag(1/sdx)
 
          Udiag <- TRUE
 

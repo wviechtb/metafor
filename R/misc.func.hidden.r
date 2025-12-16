@@ -182,6 +182,13 @@
 .sqrt <- function(x)
    sapply(x, function(x) if (is.na(x) || x < 0) NA_real_ else sqrt(x))
 
+### function to construct a diagonal matrix that also works if x is a scalar
+
+.diag <- function(x, names=TRUE) {
+   k <- NROW(x)
+   diag(x, nrow=k, ncol=k, names=names)
+}
+
 ### function to obtain the trace of a matrix
 
 .tr <- function(X)
@@ -199,6 +206,14 @@
 
 .is.intercept <- function(x, eps=1e-08)
    return(all(abs(x - 1) < eps))
+
+### function to check if a formula is simply '~ 1'
+
+.is.tilde1 <- function(f) {
+   # isTRUE(all.equal(f, ~ 1))
+   tt <- terms(f)
+   length(attr(tt, "term.labels")) == 0L && attr(tt, "intercept") == 1L
+}
 
 ### function to test whether a vector is a dummy variable (i.e., consists of only 0s and 1s)
 

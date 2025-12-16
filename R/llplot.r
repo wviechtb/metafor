@@ -45,7 +45,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    ddd <- list(...)
 
-   ### set defaults or get onlyo1, addyi, and addvi arguments
+   ### set defaults or get 'onlyo1', 'addyi', and 'addvi' arguments
 
    onlyo1 <- .chkddd(ddd$onlyo1, FALSE)
    addyi  <- .chkddd(ddd$addyi,  TRUE)
@@ -55,7 +55,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
 
    #########################################################################
 
-   ### check if data argument has been specified
+   ### check if the 'data' argument was specified
 
    if (missing(data))
       data <- NULL

@@ -2,7 +2,7 @@ replmiss <- function(x, y, data) {
 
    mstyle <- .get.mstyle()
 
-   ### check if data argument has been specified
+   # check if the 'data' argument was specified
 
    if (missing(data))
       data <- NULL
@@ -25,11 +25,11 @@ replmiss <- function(x, y, data) {
    if (length(x) == 0L)
       x <- rep(NA_real_, length(y))
 
-   ### in case user specified a constant for y to use for replacement
+   # in case the user specified a constant for 'y' to use for the replacement
 
    y <- .expand1(y, length(x))
 
-   ### check that x and y are of the same length
+   # check that 'x' and 'y' are of the same length
 
    if (length(x) != length(y))
       stop(mstyle$stop("Length of 'x' and 'y' are not the same."))

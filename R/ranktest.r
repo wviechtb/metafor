@@ -17,7 +17,7 @@ ranktest <- function(x, vi, sei, subset, data, digits, ...) {
 
    #########################################################################
 
-   ### check if data argument has been specified
+   ### check if the 'data' argument was specified
 
    if (missing(data))
       data <- NULL

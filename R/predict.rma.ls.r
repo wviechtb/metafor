@@ -328,7 +328,7 @@ predict.rma.ls <- function(object, newmods, intercept, addx=FALSE, newscale, add
          }
 
          if (length(tau2.f) != k.new)
-            stop(mstyle$stop(paste0("Dimensions of 'newmods' (", k.new, ") do not match dimensions of newscale (", length(tau2.f), ").")))
+            stop(mstyle$stop(paste0("Dimensions of 'newmods' (", k.new, ") do not match the dimensions of 'newscale' (", length(tau2.f), ").")))
 
       }
 

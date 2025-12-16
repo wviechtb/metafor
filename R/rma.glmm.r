@@ -25,7 +25,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    if (!is.element(coding, c(1/2, 1, 0)))
       stop(mstyle$stop("Unknown 'coding' option specified."))
 
-   ### in case user specified more than one add/to value (as one can do with rma.mh() and rma.peto())
+   ### in case the user specified more than one add/to value (as one can do with rma.mh() and rma.peto())
    ### (never apply any kind of continuity correction to the data used in the actual model fitting for models implemented in this function)
 
    if (length(add) > 1L)
@@ -91,19 +91,19 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
       test <- "t"
 
    if (!is.element(test, c("z", "t")))
-      stop(mstyle$stop("Invalid option selected for 'test' argument."))
+      stop(mstyle$stop("Unknown option specified for the 'test' argument."))
 
-   ### set defaults or get onlyo1, addyi, and addvi arguments
+   ### set defaults or get 'onlyo1', 'addyi', and 'addvi' arguments
 
    onlyo1 <- .chkddd(ddd$onlyo1, FALSE)
    addyi  <- .chkddd(ddd$addyi,  TRUE)
    addvi  <- .chkddd(ddd$addvi,  TRUE)
 
-   ### set default for i2def
+   ### set default for 'i2def'
 
    i2def <- .chkddd(ddd$i2def, "1")
 
-   ### set defaults for digits
+   ### set defaults for 'digits'
 
    if (missing(digits)) {
       digits <- .set.digits(dmiss=TRUE)
@@ -142,7 +142,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    if (verbose > 1)
       message(mstyle$message("Extracting the data and computing yi/vi values ..."))
 
-   ### check if data argument has been specified
+   ### check if the 'data' argument was specified
 
    if (missing(data))
       data <- NULL
@@ -275,15 +275,15 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    if (inherits(mods, "formula")) {
       formula.mods <- mods
-      if (isTRUE(all.equal(formula.mods, ~ 1))) { # needed so 'mods = ~ 1' without 'data' specified works
+      if (.is.tilde1(formula.mods)) { # needed so 'mods = ~ 1' without 'data' specified works
          mods <- matrix(1, nrow=k, ncol=1)
          intercept <- FALSE
       } else {
          options(na.action = "na.pass")        # set na.action to na.pass, so that NAs are not filtered out (we'll do that later)
-         mods <- model.matrix(mods, data=data) # extract model matrix
-         attr(mods, "assign") <- NULL          # strip assign attribute (not needed at the moment)
+         mods <- model.matrix(mods, data=data) # extract the model matrix
+         attr(mods, "assign") <- NULL          # strip the 'assign' attribute (not used at the moment)
          options(na.action = na.act)           # set na.action back to na.act
-         intercept <- FALSE                    # set to FALSE since formula now controls whether the intercept is included or not
+         intercept <- FALSE                    # set 'intercept' to FALSE since the formula now controls whether the intercept is included
       }
    }
 
@@ -297,15 +297,15 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    if (is.data.frame(mods))
       mods <- as.matrix(mods)
 
-   ### check if model matrix contains character variables
+   ### check if the model matrix contains character variables
 
    if (is.character(mods))
-      stop(mstyle$stop("Model matrix contains character variables."))
+      stop(mstyle$stop("The model matrix contains character variables."))
 
-   ### check if mods matrix has the right number of rows
+   ### check if the 'mods' matrix has the right number of rows
 
    if (!is.null(mods) && nrow(mods) != k)
-      stop(mstyle$stop(paste0("Number of rows in the model matrix (", nrow(mods), ") do not match the length of the the outcome vector (", k, ").")))
+      stop(mstyle$stop(paste0("Number of rows in the model matrix (", nrow(mods), ") does not match the length of the the outcome vector (", k, ").")))
 
    ### generate study labels if none are specified
 
@@ -345,12 +345,12 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    }
 
-   ### check if study labels are unique; if not, make them unique
+   ### check if the study labels are unique; if not, make them unique
 
    if (anyDuplicated(slab))
       slab <- .make.unique(slab)
 
-   ### add slab attribute back
+   ### add the 'slab' attribute back to 'yi'
 
    attr(yi, "slab") <- slab
 
@@ -378,7 +378,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
       }
    }
 
-   ### save full data (including potential NAs in table data, yi/vi/ni/mods) (after subsetting)
+   ### save the full data (including potential NAs in table data, yi/vi/ni/mods) (after subsetting)
 
    outdat.f <- list(ai=ai, bi=bi, ci=ci, di=di, x1i=x1i, x2i=x2i, t1i=t1i, t2i=t2i, xi=xi, mi=mi, ni=ni, ti=ti)
 
@@ -540,12 +540,12 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    ### make sure that there is at least one column in X
 
    if (is.null(mods) && !intercept) {
-      warning(mstyle$warning("Must either include an intercept and/or moderators in model.\nCoerced intercept into the model."), call.=FALSE)
+      warning(mstyle$warning("Must either include an intercept and/or moderators in the model.\nCoerced an intercept into the model."), call.=FALSE)
       intercept <- TRUE
    }
 
    if (!is.null(mods) && ncol(mods) == 0L) {
-      warning(mstyle$warning("Cannot fit model with an empty model matrix. Coerced intercept into the model."), call.=FALSE)
+      warning(mstyle$warning("Cannot fit model with an empty model matrix. Coerced an intercept into the model."), call.=FALSE)
       intercept <- TRUE
    }
 
@@ -579,7 +579,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    if (any(coef.na))
       X.yi <- X.yi[,!coef.na,drop=FALSE]
 
-   ### check whether intercept is included and if yes, move it to the first column (NAs already removed, so na.rm=TRUE for any() not necessary)
+   ### check whether the intercept is included and if yes, move it to the first column (NAs already removed, so na.rm=TRUE for any() not necessary)
 
    is.int <- apply(X, 2, .is.intercept)
    if (any(is.int)) {
@@ -640,7 +640,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                cl = NULL,                  # arguments for optimParallel()
                ncpus = 1L,                 # arguments for optimParallel()
                scaleX = TRUE,              # whether non-dummy variables in the X matrix should be rescaled before model fitting
-               evtol = 1e-07,              # lower bound for eigenvalues to determine if model matrix is positive definite
+               evtol = 1e-07,              # lower bound for eigenvalues to determine if the model matrix is positive definite
                dnchgcalc = "dFNCHypergeo", # method for calculating dnchg ("dFNCHypergeo" from BiasedUrn package or "dnoncenhypergeom")
                dnchgprec = 1e-10,          # precision for dFNCHypergeo()
                hesspack = "numDeriv",      # package for computing the Hessian (numDeriv or pracma)
@@ -678,7 +678,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
       nAGQ <- 1
    }
 
-   ### if control argument 'ncpus' is larger than 1, automatically switch to optimParallel optimizer
+   ### if control argument 'ncpus' is larger than 1, automatically switch to the 'optimParallel' optimizer
 
    if (ncpus > 1L)
       optimizer <- "optimParallel"
@@ -871,7 +871,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    }
 
-   ### check whether model matrix is of full rank
+   ### check whether the model matrix is of full rank
 
    if (!.chkpd(crossprod(X), tol=con$evtol))
       stop(mstyle$stop("Model matrix not of full rank. Cannot fit model."))
@@ -2512,7 +2512,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    ### calculation of I^2 and H^2
 
    wi    <- 1/vi
-   W     <- diag(wi, nrow=k.yi, ncol=k.yi)
+   W     <- .diag(wi)
    stXWX <- .invcalc(X=X.yi, W=W, k=k.yi)
    P     <- W - W %*% X.yi %*% stXWX %*% crossprod(X.yi,W)
    if (i2def == "1")
@@ -2554,7 +2554,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
       ddf <- NA_integer_
    }
 
-   ### abbreviate some types of coefficient names
+   ### abbreviate certain coefficient names
 
    if (.isTRUE(ddd$abbrev)) {
       tmp <- colnames(X)
@@ -2601,7 +2601,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    ###### fit statistics
 
    if (verbose > 1)
-      message(mstyle$message("Computing the fit statistics and log-likelihood ..."))
+      message(mstyle$message("Computing fit statistics and log-likelihood ..."))
 
    ll.ML     <- ifelse(is.element(method, c("FE","EE","CE")), ll.FE, ll.ML)
    ll.REML   <- NA_real_

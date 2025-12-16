@@ -1,9 +1,9 @@
 ############################################################################
 
-### function to calculate
-### solve(t(X) %*% W %*% X) = .invcalc(X=X, W=W, k=k)
-### solve(t(X) %*% X)       = .invcalc(X=X, W=diag(k), k=k)
-### via QR decomposition
+# function to calculate
+# solve(t(X) %*% W %*% X) = .invcalc(X=X, W=W, k=k)
+# solve(t(X) %*% X)       = .invcalc(X=X, W=diag(k), k=k)
+# via the QR decomposition
 
 .invcalc <- function(X, W, k) {
 
@@ -18,7 +18,7 @@
 
 ############################################################################
 
-### function for confint.rma.uni() with Q-profile method and for the PM estimator
+# function for confint.rma.uni() with the Q-profile method and for the PM estimator
 
 .QE.func <- function(tau2val, Y, vi, X, k, objective, verbose=FALSE, digits=4) {
 
@@ -41,7 +41,7 @@
 
 ############################################################################
 
-### function for confint.rma.uni() with method="GENQ"
+# function for confint.rma.uni() with method="GENQ"
 
 .GENQ.func <- function(tau2val, P, vi, Q, level, k, p, getlower, verbose=FALSE, digits=4) {
 
@@ -51,8 +51,8 @@
    lambda <- Re(eigen(S %*% P %*% S, symmetric=TRUE, only.values=TRUE)$values)
    tmp <- CompQuadForm::farebrother(Q, lambda[seq_len(k-p)])
 
-   ### starting with version 1.4.2 of CompQuadForm, the element is called 'Qq' (before it was called 'res')
-   ### this way, things should work regardless of the version of CompQuadForm that is installed
+   # starting with version 1.4.2 of CompQuadForm, the element is called 'Qq' (before it was called 'res')
+   # this way, things should work regardless of the version of CompQuadForm that is installed
 
    if (exists("res", tmp))
       tmp$Qq <- tmp$res
@@ -67,86 +67,6 @@
       cat(mstyle$verbose(paste("tau2 =", fmtx(tau2val, digits[["var"]], addwidth=4), "  objective =", fmtx(res, digits[["var"]], flag=" "), "\n")))
 
    return(res)
-
-}
-
-############################################################################
-
-### generate all possible permutations
-
-# .genperms <- function(k) {
-#
-#    v <- seq_len(k)
-#
-#    sub <- function(k, v) {
-#       if (k==1L) {
-#          matrix(v,1,k)
-#       } else {
-#          X  <-  NULL
-#          for(i in seq_len(k)) {
-#             X <- rbind(X, cbind(v[i], Recall(k-1, v[-i])))
-#          }
-#       X
-#       }
-#    }
-#
-#    return(sub(k, v[seq_len(k)]))
-#
-# }
-
-### generate all possible unique permutations
-
-.genuperms <- function(x) {
-
-   z <- NULL
-
-   sub <- function(x, y) {
-      len.x <- length(x)
-      if (len.x == 0L) {
-         return(y)
-      } else {
-         prev.num <- 0
-         for (i in seq_len(len.x)) {
-            num <- x[i]
-            if (num > prev.num) {
-               prev.num <- num
-               z <- rbind(z, Recall(x[-i], c(y,num)))
-            }
-         }
-         return(z)
-      }
-   }
-
-   return(sub(x, y=NULL))
-
-}
-
-.permci <- function(val, obj, j, exact, iter, progbar, level, digits, control) {
-
-   mstyle <- .get.mstyle()
-
-   ### fit model with shifted outcome
-   args <- list(yi=obj$yi - c(val*obj$X[,j]), vi=obj$vi, weights=obj$weights, mods=obj$X, intercept=FALSE, method=obj$method, weighted=obj$weighted,
-                test=obj$test, tau2=ifelse(obj$tau2.fix, obj$tau2, NA), control=obj$control, skipr2=TRUE)
-   res <- try(suppressWarnings(.do.call(rma.uni, args)), silent=TRUE)
-
-   if (inherits(res, "try-error"))
-      stop()
-
-   ### p-value based on permutation test
-   pval <- permutest(res, exact=exact, iter=iter, progbar=FALSE, control=control)$pval[j]
-
-   ### get difference between p-value and level
-   diff <- pval - level / ifelse(control$alternative == "two.sided", 1, 2)
-
-   ### show progress
-   if (progbar)
-      cat(mstyle$verbose(paste("pval =", fmtx(pval, digits[["pval"]]), " diff =", fmtx(diff, digits[["pval"]], flag=" "), " val =", fmtx(val, digits[["est"]], flag=" "), "\n")))
-
-   ### penalize negative differences, which should force the CI bound to correspond to a p-value of *at least* level
-   diff <- ifelse(diff < 0, diff*10, diff)
-
-   return(diff)
 
 }
 
@@ -168,7 +88,9 @@
    }
 }
 
-### -1 times the log-likelihood (regular or restricted) for location-scale model
+############################################################################
+
+# -1 times the log-likelihood (regular or restricted) for location-scale models
 
 .ll.rma.ls <- function(par, yi, vi, X, Z, reml, k, pX,
                        alpha.arg, beta.arg, verbose, digits,
@@ -190,7 +112,7 @@
 
    alpha <- ifelse(is.na(alpha.arg), alpha, alpha.arg)
 
-   ### compute predicted tau2 values
+   # compute predicted tau2 values
 
    if (link == "log") {
       tau2 <- exp(c(Z %*% alpha))
@@ -214,7 +136,8 @@
 
       } else {
 
-         ### compute weights / weights matrix
+         # compute weights / weight matrix
+
          wi <- 1/(vi + tau2)
          W <- diag(wi, nrow=k, ncol=k)
 
@@ -241,10 +164,12 @@
 
    if (llcomp) {
 
-      ### compute residual sum of squares
+      # compute residual sum of squares
+
       RSS <- sum(wi*c(yi - X %*% beta)^2)
 
-      ### compute log-likelihood
+      # compute log-likelihood
+
       if (!reml) {
          llval <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS
       } else {
