@@ -73,9 +73,9 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    # handle 'knha' argument from ... (note: overrides the 'test' argument)
 
-   if (.isFALSE(ddd$knha))
+   if (isFALSE(ddd$knha))
       test <- "z"
-   if (.isTRUE(ddd$knha))
+   if (isTRUE(ddd$knha))
       test <- "knha"
 
    test <- tolower(test)
@@ -107,7 +107,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    # handle arguments for location-scale models
 
    link <- .chkddd(ddd$link, "log", match.arg(ddd$link, c("log", "identity")))
-   optbeta <- .chkddd(ddd$optbeta, FALSE, .isTRUE(ddd$optbeta))
+   optbeta <- .chkddd(ddd$optbeta, FALSE, isTRUE(ddd$optbeta))
 
    if (optbeta && !weighted)
       stop(mstyle$stop("Must use 'weighted=TRUE' when 'optbeta=TRUE'."))
@@ -141,7 +141,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    # check 'reshet' argument
 
-   if (.isTRUE(ddd$reshet)) {
+   if (isTRUE(ddd$reshet)) {
       reshet <- TRUE
    } else {
       reshet <- FALSE
@@ -2550,7 +2550,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    # abbreviate certain coefficient names
 
-   if (.isTRUE(ddd$abbrev)) {
+   if (isTRUE(ddd$abbrev)) {
       tmp <- colnames(X)
       tmp <- gsub("relevel(factor(", "", tmp, fixed=TRUE)
       tmp <- gsub("\\), ref = \"[[:alnum:]]*\")", "", tmp)
@@ -2819,7 +2819,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    }
 
-   if (.isTRUE(ddd$pleasedonotreportI2thankyouverymuch)) {
+   if (isTRUE(ddd$pleasedonotreportI2thankyouverymuch)) {
       I2 <- NA
       H2 <- NA
    }
@@ -2917,10 +2917,10 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    time.end <- proc.time()
    res$time <- unname(time.end - time.start)[3]
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       .print.time(res$time)
 
-   if (verbose || .isTRUE(ddd$time))
+   if (verbose || isTRUE(ddd$time))
       cat("\n")
 
    if (model == "rma.ls") {

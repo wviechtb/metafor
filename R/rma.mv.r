@@ -109,9 +109,9 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 
-   if (.isFALSE(ddd$tdist))
+   if (isFALSE(ddd$tdist))
       test <- "z"
-   if (.isTRUE(ddd$tdist))
+   if (isTRUE(ddd$tdist))
       test <- "t"
 
     test <- tolower(test)
@@ -391,7 +391,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       if (sparse) {
          V <- Diagonal(k, as.vector(V))
       } else {
-         V <- .diag(as.vector(V))
+         V <- .diag(as.vector(V), dim=k)
       }
    }
 
@@ -1404,7 +1404,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ### check whether we are optimizing over the beta coefficients as well
 
-   optbeta <- .chkddd(ddd$optbeta, FALSE, .isTRUE(ddd$optbeta))
+   optbeta <- .chkddd(ddd$optbeta, FALSE, isTRUE(ddd$optbeta))
 
    if (optbeta && !is.null(A))
       stop(mstyle$stop("Cannot use custom weights when 'optbeta=TRUE'."))
@@ -1892,7 +1892,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma","calculus"))
 
-   if ((.isTRUE(cvvc) || cvvc %in% c("varcor","varcov","transf") || optbeta) && !requireNamespace(con$hesspack, quietly=TRUE))
+   if ((isTRUE(cvvc) || cvvc %in% c("varcor","varcov","transf") || optbeta) && !requireNamespace(con$hesspack, quietly=TRUE))
       stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to compute the Hessian.")))
 
    ### check if length of sigma2.init, tau2.init, rho.init, gamma2.init, and phi.init matches the number of variance components
@@ -2324,7 +2324,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ### abbreviate certain coefficient names
 
-   if (.isTRUE(ddd$abbrev)) {
+   if (isTRUE(ddd$abbrev)) {
       tmp <- colnames(X)
       tmp <- gsub("relevel(factor(", "", tmp, fixed=TRUE)
       tmp <- gsub("\\), ref = \"[[:alnum:]]*\")", "", tmp)
@@ -2394,7 +2394,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ###### compute Hessian
 
-   if (!optbeta && (!is.element(method, c("FE","EE","CE")) && !is.null(random)) && (.isTRUE(cvvc) || cvvc %in% c("varcor","varcov","transf"))) {
+   if (!optbeta && (!is.element(method, c("FE","EE","CE")) && !is.null(random)) && (isTRUE(cvvc) || cvvc %in% c("varcor","varcov","transf"))) {
 
       if (verbose > 1)
          message(mstyle$message("Computing the Hessian ...\n"))
@@ -2746,10 +2746,10 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    time.end <- proc.time()
    res$time <- unname(time.end - time.start)[3]
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       .print.time(res$time)
 
-   if (verbose || .isTRUE(ddd$time))
+   if (verbose || isTRUE(ddd$time))
       cat("\n")
 
    class(res) <- c("rma.mv", "rma")

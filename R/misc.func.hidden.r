@@ -184,8 +184,12 @@
 
 ### function to construct a diagonal matrix that also works if x is a scalar
 
-.diag <- function(x, names=TRUE) {
-   k <- NROW(x)
+.diag <- function(x, names=TRUE, dim) {
+   if (missing(dim)) {
+      k <- NROW(x)
+   } else {
+      k <- dim
+   }
    diag(x, nrow=k, ncol=k, names=names)
 }
 
@@ -1525,11 +1529,11 @@
 
 ### check if x is logical and TRUE/FALSE (NAs and NULL always evaluate as FALSE)
 
-.isTRUE <- function(x)
-   !is.null(x) && is.logical(x) && !is.na(x) && x
-
-.isFALSE <- function(x)
-   !is.null(x) && is.logical(x) && !is.na(x) && !x
+#isTRUE <- function(x)
+#   !is.null(x) && is.logical(x) && !is.na(x) && x
+#
+#isFALSE <- function(x)
+#   !is.null(x) && is.logical(x) && !is.na(x) && !x
 
 # not sure anymore why I implemented these; c(isTRUE(NULL), isTRUE(NA), isFALSE(NULL), isFALSE(NA)) are all FALSE
 

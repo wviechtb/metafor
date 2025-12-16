@@ -101,7 +101,7 @@ print.vif.rma <- function(x, digits=x$digits, ...) {
             if (!is.null(x$sim))
                res.table$prop <- fmtx(x$prop, 2)
 
-            if (.isTRUE(ddd$num)) {
+            if (isTRUE(ddd$num)) {
                width <- nchar(nrow(res.table))
                rownames(res.table) <- paste0(formatC(seq_len(nrow(res.table)), format="d", width=width), ") ", rownames(res.table))
             }

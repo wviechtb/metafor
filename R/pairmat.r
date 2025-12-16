@@ -26,7 +26,7 @@ pairmat <- function(x, btt, btt2, ...) {
 
    .chkdots(ddd, c("fixed"))
 
-   fixed <- .chkddd(ddd$fixed, FALSE, .isTRUE(ddd$fixed))
+   fixed <- .chkddd(ddd$fixed, FALSE, isTRUE(ddd$fixed))
 
    #########################################################################
 

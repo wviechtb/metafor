@@ -57,7 +57,7 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
 
    .chkdots(ddd, c("time", "LB", "code1", "code2"))
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    #########################################################################
@@ -107,7 +107,7 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
          cl <- parallel::makePSOCKcluster(ncpus)
          on.exit(parallel::stopCluster(cl), add=TRUE)
       }
-      if (.isTRUE(ddd$LB)) {
+      if (isTRUE(ddd$LB)) {
          res <- parallel::parLapplyLB(cl, seq_len(n), .dfbetas.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate, code2=ddd$code2)
          #res <- parallel::clusterApplyLB(cl, seq_len(n), .dfbetas.rma.mv, obj=x, parallel=parallel, cluster=cluster, ids=ids, reestimate=reestimate, code2=ddd$code2)
       } else {
@@ -155,7 +155,7 @@ dfbetas.rma.mv <- function(model, progbar=FALSE, cluster, reestimate=TRUE, paral
 
    out <- data.frame(out)
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

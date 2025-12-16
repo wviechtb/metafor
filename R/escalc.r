@@ -87,9 +87,9 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
    ### set defaults or get 'onlyo1', 'addyi', and 'addvi' arguments
 
-   onlyo1  <- .chkddd(ddd$onlyo1,  FALSE, .isTRUE(ddd$onlyo1))
-   addyi   <- .chkddd(ddd$addyi,   TRUE,  .isTRUE(ddd$addyi))
-   addvi   <- .chkddd(ddd$addvi,   TRUE,  .isTRUE(ddd$addvi))
+   onlyo1  <- .chkddd(ddd$onlyo1,  FALSE, isTRUE(ddd$onlyo1))
+   addyi   <- .chkddd(ddd$addyi,   TRUE,  isTRUE(ddd$addyi))
+   addvi   <- .chkddd(ddd$addvi,   TRUE,  isTRUE(ddd$addvi))
 
    ### set defaults for digits
 

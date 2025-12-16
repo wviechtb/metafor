@@ -24,7 +24,7 @@ rstudent.rma.mh <- function(model, digits, progbar=FALSE, ...) {
 
    .chkdots(ddd, c("time", "code1", "code2"))
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    if (!is.null(ddd[["code1"]]))
@@ -98,7 +98,7 @@ rstudent.rma.mh <- function(model, digits, progbar=FALSE, ...) {
 
    out$digits <- digits
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

@@ -168,8 +168,8 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
    lbox     <- function(..., grep, fixed, box.lty, at.lab) box(...)
    ltext    <- function(..., grep, fixed, box.lty, at.lab) text(...)
 
-   grep       <- .chkddd(ddd$grep,  FALSE, .isTRUE(ddd$grep))
-   fixed      <- .chkddd(ddd$fixed, FALSE, .isTRUE(ddd$fixed))
+   grep       <- .chkddd(ddd$grep,  FALSE, isTRUE(ddd$grep))
+   fixed      <- .chkddd(ddd$fixed, FALSE, isTRUE(ddd$fixed))
    box.lty    <- .chkddd(ddd$box.lty, par("lty"))
 
    ############################################################################
@@ -654,7 +654,7 @@ lcol, lwd, lty, legend=FALSE, xvals, ...) {
 
    ### add grid
 
-   if (.isTRUE(grid))
+   if (isTRUE(grid))
       grid(col=gridcol) # grid needs to be at x and y tick positions also if using y-axis transformation
 
    ### add refline

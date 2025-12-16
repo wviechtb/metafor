@@ -610,7 +610,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
 
    k <- length(yi)
 
-   if (is.numeric(label) || is.character(label) || .isTRUE(label)) {
+   if (is.numeric(label) || is.character(label) || isTRUE(label)) {
 
       if (is.na(refline))
          refline <- mean(yi, na.rm=TRUE)
@@ -622,7 +622,7 @@ label=FALSE, offset=0.4, legend=FALSE, ...) {
          if (label > k)
             label <- k
          label <- order(abs(yi - refline), decreasing=TRUE)[seq_len(label)]
-      } else if ((is.character(label) && label == "all") || .isTRUE(label)) {
+      } else if ((is.character(label) && label == "all") || isTRUE(label)) {
          label <- seq_len(k)
       } else if ((is.character(label) && label == "out")) {
          if (!is.element(yaxis, c("sei", "vi", "seinv", "vinv"))) {

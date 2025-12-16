@@ -34,9 +34,9 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
    .chkdots(ddd, c("time", "xlim", "extint", "code1", "code2"))
 
-   level <- .level(level, stopon100=.isTRUE(ddd$extint))
+   level <- .level(level, stopon100=isTRUE(ddd$extint))
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    if (!is.null(ddd$xlim)) {
@@ -153,7 +153,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
          }
       }
 
-      if (.isTRUE(ddd$time)) {
+      if (isTRUE(ddd$time)) {
          time.end <- proc.time()
          .print.time(unname(time.end - time.start)[3])
       }
@@ -405,7 +405,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
             if (!inherits(res, "try-error") && !is.na(res)) {
 
-               if (!.isTRUE(ddd$extint) && res < 0) {
+               if (!isTRUE(ddd$extint) && res < 0) {
 
                   vc.lb <- con$vc.min
                   lb.conv <- TRUE
@@ -421,7 +421,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
                } else {
 
-                  if (.isTRUE(ddd$extint)) {
+                  if (isTRUE(ddd$extint)) {
                      res <- try(uniroot(.profile.rma.mv, interval=c(con$vc.min, vc), tol=con$tol, maxiter=con$maxiter, extendInt="downX", obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
                   } else {
                      res <- try(uniroot(.profile.rma.mv, interval=c(con$vc.min, vc), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
@@ -462,7 +462,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
             if (!inherits(res, "try-error") && !is.na(res)) {
 
-               if (!.isTRUE(ddd$extint) && res < 0) {
+               if (!isTRUE(ddd$extint) && res < 0) {
 
                   vc.ub <- con$vc.max
                   ub.conv <- TRUE
@@ -478,7 +478,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
 
                } else {
 
-                  if (.isTRUE(ddd$extint)) {
+                  if (isTRUE(ddd$extint)) {
                      res <- try(uniroot(.profile.rma.mv, interval=c(vc, con$vc.max), tol=con$tol, maxiter=con$maxiter, extendInt="upX", obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
                   } else {
                      res <- try(uniroot(.profile.rma.mv, interval=c(vc, con$vc.max), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, sigma2.pos=sigma2.pos, tau2.pos=tau2.pos, rho.pos=rho.pos, gamma2.pos=gamma2.pos, phi.pos=phi.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
@@ -627,7 +627,7 @@ confint.rma.mv <- function(object, parm, level, fixed=FALSE, sigma2, tau2, rho, 
       #res$vc.min <- con$vc.min
    }
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

@@ -35,13 +35,13 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
 
    .chkdots(ddd, c("fixed", "intercept", "time", "LB", "joinb", "joina"))
 
-   fixed     <- .chkddd(ddd$fixed,     FALSE, .isTRUE(ddd$fixed))
-   intercept <- .chkddd(ddd$intercept, FALSE, .isTRUE(ddd$intercept))
+   fixed     <- .chkddd(ddd$fixed,     FALSE, isTRUE(ddd$fixed))
+   intercept <- .chkddd(ddd$intercept, FALSE, isTRUE(ddd$intercept))
 
    joinb <- ddd$joinb
    joina <- ddd$joina
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    ### process 'sim' argument (if TRUE, set sim to 1000, otherwise use given value)
@@ -215,7 +215,7 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
 
          if (parallel == "snow") {
 
-            if (.isTRUE(ddd$LB)) {
+            if (isTRUE(ddd$LB)) {
                vif.sim <- parallel::parLapplyLB(cl, seq_len(sim.loc), .compvifsim, obj=x, coef="beta", btt=btt, att=NULL, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, joinb=joinb)
             } else {
                vif.sim <- pbapply::pblapply(seq_len(sim.loc), .compvifsim, obj=x, coef="beta", btt=btt, att=NULL, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, joinb=joinb, cl=cl)
@@ -336,7 +336,7 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
 
          if (parallel == "snow") {
 
-            if (.isTRUE(ddd$LB)) {
+            if (isTRUE(ddd$LB)) {
                vif.sim <- parallel::parLapplyLB(cl, seq_len(sim.scale), .compvifsim, obj=x, coef="alpha", btt=NULL, att=att, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, joina=joina)
             } else {
                vif.sim <- pbapply::pblapply(seq_len(sim.scale), .compvifsim, obj=x, coef="alpha", btt=NULL, att=att, reestimate=reestimate, intercept=intercept, parallel=parallel, seed=seed, joina=joina, cl=cl)
@@ -374,7 +374,7 @@ vif.rma <- function(x, btt, att, table=FALSE, reestimate=FALSE, sim=FALSE, progb
 
    #########################################################################
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

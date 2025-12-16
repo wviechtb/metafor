@@ -201,7 +201,7 @@ digits, cols, grid=TRUE, pch=19, cex=1, lwd=2, ...) {
 
    ### add grid
 
-   if (.isTRUE(grid)) {
+   if (isTRUE(grid)) {
       abline(v=at,  lty="dotted", col=gridcol)
       abline(h=aty, lty="dotted", col=gridcol)
    }

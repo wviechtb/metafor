@@ -25,7 +25,7 @@ weights.rma.uni <- function(object, type="diagonal", ...) {
          W <- .diag(x$weights)
       }
    } else {
-      W <- .diag(1/x$k)
+      W <- .diag(1/x$k, dim=x$k)
    }
 
    #########################################################################

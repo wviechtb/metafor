@@ -23,7 +23,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          legend <- FALSE
          footsym <- rep("", 6)
       } else {
-         legend <- .isTRUE(ddd$legend)
+         legend <- isTRUE(ddd$legend)
       }
    }
 
@@ -252,7 +252,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       colnames(res.table)[ncol(res.table)] <- ""
    }
 
-   if (.isTRUE(ddd$num)) {
+   if (isTRUE(ddd$num)) {
       width <- nchar(nrow(res.table))
       rownames(res.table) <- paste0(formatC(seq_len(nrow(res.table)), format="d", width=width), ") ", rownames(res.table))
    }
@@ -305,7 +305,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          res.table[j, res.table[j,] == "NA"] <- ifelse(x$alpha.fix[j], "---", "NA")
       }
 
-      if (.isTRUE(ddd$num)) {
+      if (isTRUE(ddd$num)) {
          width <- nchar(nrow(res.table))
          rownames(res.table) <- paste0(formatC(seq_len(nrow(res.table)), format="d", width=width), ") ", rownames(res.table))
       }

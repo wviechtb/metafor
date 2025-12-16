@@ -52,7 +52,7 @@ qqnorm.rma.peto <- function(y, type="rstandard", pch=21, col, bg, grid=FALSE, la
 
    ### add grid (and redraw box)
 
-   if (.isTRUE(grid)) {
+   if (isTRUE(grid)) {
       grid(col=gridcol)
       box(..., bty="l")
    }
@@ -68,10 +68,10 @@ qqnorm.rma.peto <- function(y, type="rstandard", pch=21, col, bg, grid=FALSE, la
 
    ### labeling of points
 
-   if ((is.character(label) && label=="none") || .isFALSE(label))
+   if ((is.character(label) && label=="none") || isFALSE(label))
       return(invisible(sav))
 
-   if ((is.character(label) && label=="all") || .isTRUE(label))
+   if ((is.character(label) && label=="all") || isTRUE(label))
       label <- x$k
 
    if (is.numeric(label)) {

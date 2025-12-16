@@ -39,7 +39,7 @@ leave1out.rma.uni <- function(x, cluster, digits, transf, targs, progbar=FALSE, 
 
    .chkdots(ddd, c("time", "code1", "code2"))
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    #########################################################################
@@ -200,7 +200,7 @@ leave1out.rma.uni <- function(x, cluster, digits, transf, targs, progbar=FALSE, 
    out$digits <- digits
    out$transf <- transf
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

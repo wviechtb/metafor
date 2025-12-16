@@ -28,7 +28,7 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, collapse=FALSE, progba
 
    .chkdots(ddd, c("time", "decreasing", "code1", "code2"))
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    decreasing <- .chkddd(ddd$decreasing, FALSE)
@@ -178,7 +178,7 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, collapse=FALSE, progba
 
    ### if requested, apply transformation function
 
-   if (.isTRUE(transf) && is.element(x$measure, c("OR","RR","IRR"))) # if transf=TRUE, apply exp transformation to ORs, RRs, and IRRs
+   if (isTRUE(transf) && is.element(x$measure, c("OR","RR","IRR"))) # if transf=TRUE, apply exp transformation to ORs, RRs, and IRRs
       transf <- exp
 
    if (is.function(transf)) {
@@ -230,7 +230,7 @@ cumul.rma.mh <- function(x, order, digits, transf, targs, collapse=FALSE, progba
       attr(out$estimate, "measure") <- x$measure
    }
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

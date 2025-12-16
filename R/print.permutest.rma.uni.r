@@ -19,7 +19,7 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
          legend <- FALSE
          footsym <- rep("", 6)
       } else {
-         legend <- .isTRUE(ddd$legend)
+         legend <- isTRUE(ddd$legend)
       }
    }
 
@@ -60,7 +60,7 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
       colnames(res.table)[ncol(res.table)] <- ""
    }
 
-   if (.isTRUE(ddd$num)) {
+   if (isTRUE(ddd$num)) {
       width <- nchar(nrow(res.table))
       rownames(res.table) <- paste0(formatC(seq_len(nrow(res.table)), format="d", width=width), ") ", rownames(res.table))
    }
@@ -113,7 +113,7 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
          colnames(res.table)[ncol(res.table)] <- ""
       }
 
-      if (.isTRUE(ddd$num)) {
+      if (isTRUE(ddd$num)) {
          width <- nchar(nrow(res.table))
          rownames(res.table) <- paste0(formatC(seq_len(nrow(res.table)), format="d", width=width), ") ", rownames(res.table))
       }

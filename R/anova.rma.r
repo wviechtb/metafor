@@ -17,7 +17,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, adjust, digits, refi
    if (!is.null(ddd$L))
       X <- ddd$L
 
-   fixed <- .chkddd(ddd$fixed, FALSE, .isTRUE(ddd$fixed))
+   fixed <- .chkddd(ddd$fixed, FALSE, isTRUE(ddd$fixed))
 
    if (!missing(att) && !inherits(object, "rma.ls"))
       stop(mstyle$stop("Can only specify 'att' for location-scale models."))
@@ -294,7 +294,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, adjust, digits, refi
 
             # abbreviate some hyp elements
 
-            if (.isTRUE(ddd$abbrev)) {
+            if (isTRUE(ddd$abbrev)) {
                hyp[,1] <- gsub("factor(", "", hyp[,1], fixed=TRUE)
                hyp[,1] <- gsub(")", "", hyp[,1], fixed=TRUE)
             }
@@ -463,7 +463,7 @@ anova.rma <- function(object, object2, btt, X, att, Z, rhs, adjust, digits, refi
 
             # abbreviate some hyp elements
 
-            if (.isTRUE(ddd$abbrev)) {
+            if (isTRUE(ddd$abbrev)) {
                hyp[,1] <- gsub("factor(", "", hyp[,1], fixed=TRUE)
                hyp[,1] <- gsub(")", "", hyp[,1], fixed=TRUE)
             }

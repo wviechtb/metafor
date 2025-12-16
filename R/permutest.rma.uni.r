@@ -20,14 +20,14 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, btt=x$btt, permci=FALSE
    if (!is.null(ddd$tol)) # in case the user specified comptol in the old manner
       comptol <- ddd$tol
 
-   fixed <- .chkddd(ddd$fixed, FALSE, .isTRUE(ddd$fixed))
+   fixed <- .chkddd(ddd$fixed, FALSE, isTRUE(ddd$fixed))
 
    iter <- round(iter)
 
    if (iter <= 1)
       stop(mstyle$stop("Argument 'iter' must be >= 2."))
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    if (!missing(btt)) {
@@ -450,7 +450,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, btt=x$btt, permci=FALSE
    ci.lb <- x$ci.lb
    ci.ub <- x$ci.ub
 
-   if (.isTRUE(permci) || is.numeric(permci)) {
+   if (isTRUE(permci) || is.numeric(permci)) {
 
       level <- .level(x$level)
 
@@ -534,7 +534,7 @@ permutest.rma.uni <- function(x, exact=FALSE, iter=1000, btt=x$btt, permci=FALSE
    out$beta.perm <- data.frame(beta.perm)
    names(out$zval.perm) <- names(out$beta.perm) <- colnames(x$X)
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

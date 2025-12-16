@@ -133,7 +133,7 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
 
    ### add grid (and redraw box)
 
-   if (.isTRUE(grid)) {
+   if (isTRUE(grid)) {
       grid(col=gridcol)
       lbox(..., bty="l")
    }
@@ -153,10 +153,10 @@ label=FALSE, offset=0.3, pos=13, lty, ...) {
 
    ### labeling of points
 
-   if ((is.character(label) && label=="none") || .isFALSE(label))
+   if ((is.character(label) && label=="none") || isFALSE(label))
       return(invisible(sav))
 
-   if ((is.character(label) && label=="all") || .isTRUE(label))
+   if ((is.character(label) && label=="all") || isTRUE(label))
       label <- x$k
 
    if (is.numeric(label)) {

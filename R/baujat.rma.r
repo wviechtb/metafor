@@ -142,7 +142,7 @@ baujat.rma <- function(x, xlim, ylim, xlab, ylab, cex, symbol="ids", grid=TRUE, 
 
    ### add grid (and redraw box)
 
-   if (.isTRUE(grid)) {
+   if (isTRUE(grid)) {
       grid(col=gridcol)
       lbox(...)
    }

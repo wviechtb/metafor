@@ -28,7 +28,7 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, collapse=FALSE, prog
 
    .chkdots(ddd, c("time", "decreasing", "code1", "code2"))
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    decreasing <- .chkddd(ddd$decreasing, FALSE)
@@ -168,7 +168,7 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, collapse=FALSE, prog
 
    ### if requested, apply transformation function
 
-   if (.isTRUE(transf)) # if transf=TRUE, apply exp transformation to ORs
+   if (isTRUE(transf)) # if transf=TRUE, apply exp transformation to ORs
       transf <- exp
 
    if (is.function(transf)) {
@@ -220,7 +220,7 @@ cumul.rma.peto <- function(x, order, digits, transf, targs, collapse=FALSE, prog
       attr(out$estimate, "measure") <- x$measure
    }
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

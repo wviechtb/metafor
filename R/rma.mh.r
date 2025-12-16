@@ -822,10 +822,10 @@ correct=TRUE, level=95, verbose=FALSE, digits, ...) {
    time.end <- proc.time()
    res$time <- unname(time.end - time.start)[3]
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       .print.time(res$time)
 
-   if (verbose || .isTRUE(ddd$time))
+   if (verbose || isTRUE(ddd$time))
       cat("\n")
 
    class(res) <- c("rma.mh", "rma")

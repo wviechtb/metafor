@@ -20,21 +20,21 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, btt=x$btt, att=x$att, pr
    if (!is.null(ddd$tol)) # in case the user specified comptol in the old manner
       comptol <- ddd$tol
 
-   fixed <- .chkddd(ddd$fixed, FALSE, .isTRUE(ddd$fixed))
+   fixed <- .chkddd(ddd$fixed, FALSE, isTRUE(ddd$fixed))
 
-   if (.isTRUE(ddd$permci))
+   if (isTRUE(ddd$permci))
       warning(mstyle$warning("Permutation-based CIs for location-scale models not currently available."), call.=FALSE)
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
-   if (.isTRUE(ddd$skip.beta)) {
+   if (isTRUE(ddd$skip.beta)) {
       skip.beta <- TRUE
    } else {
       skip.beta <- FALSE
    }
 
-   if (.isTRUE(ddd$skip.alpha)) {
+   if (isTRUE(ddd$skip.alpha)) {
       skip.alpha <- TRUE
    } else {
       skip.alpha <- FALSE
@@ -738,7 +738,7 @@ permutest.rma.ls <- function(x, exact=FALSE, iter=1000, btt=x$btt, att=x$att, pr
    if (!skip.alpha)
       names(out$zval.alpha.perm) <- names(out$alpha.perm) <- colnames(x$Z)
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

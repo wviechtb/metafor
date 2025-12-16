@@ -85,9 +85,9 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    ### handle 'tdist' argument from ... (note: overrides test argument)
 
-   if (.isFALSE(ddd$tdist))
+   if (isFALSE(ddd$tdist))
       test <- "z"
-   if (.isTRUE(ddd$tdist))
+   if (isTRUE(ddd$tdist))
       test <- "t"
 
    if (!is.element(test, c("z", "t")))
@@ -964,7 +964,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
          rownames(X.fit) <- seq_len(2*k)
 
-         if (.isTRUE(ddd$retdat))
+         if (isTRUE(ddd$retdat))
             return(list(dat.grp=dat.grp, X.fit=X.fit, study=study, dat.off = if (!is.null(dat.off)) dat.off else NULL, const=const, group1=group1, group2=group2, group12=group12, group=group, dat.fam=dat.fam))
 
          ###################################################################
@@ -1430,7 +1430,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
          study <- factor(seq_len(k))         # study factor
          X.fit <- X
 
-         if (.isTRUE(ddd$retdat))
+         if (isTRUE(ddd$retdat))
             return(list(dat.grp=dat.grp, X.fit=X.fit, study=study, dat.off = if (!is.null(dat.off)) dat.off else NULL))
 
          ###################################################################
@@ -1968,7 +1968,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             X.fit.l <- cbind(group1*X.fit.l)                    # multiply by group1 dummy (including intercept, which becomes the group1 dummy)
             const   <- rep(1,length(event))
 
-            if (.isTRUE(ddd$retdat))
+            if (isTRUE(ddd$retdat))
                return(data.frame(event, group1, study.l, X.fit.l, const))
 
             ### fit FE model
@@ -2283,7 +2283,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
       study <- factor(seq_len(k)) # study factor
       X.fit <- X
 
-      if (.isTRUE(ddd$retdat))
+      if (isTRUE(ddd$retdat))
          return(list(dat.grp=dat.grp, X.fit=X.fit, study=study, dat.off = if (!is.null(dat.off)) dat.off else NULL, dat.fam=dat.fam))
 
       ### fit FE model
@@ -2556,7 +2556,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    ### abbreviate certain coefficient names
 
-   if (.isTRUE(ddd$abbrev)) {
+   if (isTRUE(ddd$abbrev)) {
       tmp <- colnames(X)
       tmp <- gsub("relevel(factor(", "", tmp, fixed=TRUE)
       tmp <- gsub("\\), ref = \"[[:alnum:]]*\")", "", tmp)
@@ -2671,7 +2671,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    }
 
-   if (.isTRUE(ddd$retfit)) {
+   if (isTRUE(ddd$retfit)) {
       res$res.FE <- res.FE
       if (!isTRUE(ddd$skiphet))
          res$res.QE <- res.QE
@@ -2682,10 +2682,10 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    time.end <- proc.time()
    res$time <- unname(time.end - time.start)[3]
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       .print.time(res$time)
 
-   if (verbose || .isTRUE(ddd$time))
+   if (verbose || isTRUE(ddd$time))
       cat("\n")
 
    class(res) <- c("rma.glmm", "rma")

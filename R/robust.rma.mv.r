@@ -208,7 +208,7 @@ robust.rma.mv <- function(x, cluster, adjust=TRUE, clubSandwich=FALSE, digits, .
 
       ### suggested in Hedges, Tipton, & Johnson (2010) -- analogous to HC1 adjustment
 
-      if (.isTRUE(adjust)) {
+      if (isTRUE(adjust)) {
          vb <- (n / dfs) * vb
          vbest <- "CR1"
       }

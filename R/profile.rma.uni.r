@@ -61,7 +61,7 @@ profile.rma.uni <- function(fitted,
 
    ddd <- list(...)
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    pred <- isTRUE(ddd$pred)
@@ -131,7 +131,7 @@ profile.rma.uni <- function(fitted,
 
       xlim <- c(vc.lb, vc.ub)
 
-      if (.isTRUE(ddd$sqrt))
+      if (isTRUE(ddd$sqrt))
          xlim <- sqrt(xlim)
 
    } else {
@@ -161,7 +161,7 @@ profile.rma.uni <- function(fitted,
 
    ### if sqrt=TRUE, then the sequence of vcs are tau values, so square them for the actual profiling
 
-   if (.isTRUE(ddd$sqrt))
+   if (isTRUE(ddd$sqrt))
       vcs <- vcs^2
 
    if (parallel == "no")
@@ -176,7 +176,7 @@ profile.rma.uni <- function(fitted,
          cl <- parallel::makePSOCKcluster(ncpus)
          on.exit(parallel::stopCluster(cl), add=TRUE)
       }
-      if (.isTRUE(ddd$LB)) {
+      if (isTRUE(ddd$LB)) {
          res <- parallel::parLapplyLB(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, pred=pred, blup=blup, newmods=newmods, code2=ddd$code2)
          #res <- parallel::clusterApplyLB(cl, vcs, .profile.rma.uni, obj=x, parallel=parallel, profile=TRUE, pred=pred, blup=blup, newmods=newmods, code2=ddd$code2)
          #res <- parallel::clusterMap(cl, .profile.rma.uni, vcs, MoreArgs=list(obj=x, parallel=parallel, profile=TRUE, pred=pred, blup=blup, newmods=newmods, code2=ddd$code2), .scheduling = "dynamic")
@@ -190,7 +190,7 @@ profile.rma.uni <- function(fitted,
 
    ### if sqrt=TRUE, then transform the tau^2 values back to tau values
 
-   if (.isTRUE(ddd$sqrt)) {
+   if (isTRUE(ddd$sqrt)) {
       vcs <- sqrt(vcs)
       vc  <- sqrt(x$tau2)
    } else {
@@ -219,7 +219,7 @@ profile.rma.uni <- function(fitted,
    if (all(is.na(lls)))
       warning(mstyle$warning("All model fits failed. Cannot draw profile likelihood plot."), call.=FALSE)
 
-   if (.isTRUE(ddd$exp)) {
+   if (isTRUE(ddd$exp)) {
       lls <- exp(lls)
       maxll <- exp(maxll)
    }
@@ -236,7 +236,7 @@ profile.rma.uni <- function(fitted,
          ylim <- rep(maxll, 2L)
       }
 
-      if (!.isTRUE(ddd$exp))
+      if (!isTRUE(ddd$exp))
          ylim <- ylim + c(-0.1, 0.1)
 
    } else {
@@ -248,7 +248,7 @@ profile.rma.uni <- function(fitted,
 
    }
 
-   if (.isTRUE(ddd$sqrt)) {
+   if (isTRUE(ddd$sqrt)) {
       xlab  <- expression(paste(tau, " Value"))
       title <- expression(paste("Profile Plot for ", tau))
    } else {
@@ -259,7 +259,7 @@ profile.rma.uni <- function(fitted,
    sav <- list(tau2=vcs, ll=lls, beta=beta, ci.lb=ci.lb, ci.ub=ci.ub, comps=1, xlim=xlim, ylim=ylim, method=x$method, vc=vc, maxll=maxll, xlab=xlab, title=title, exp=ddd$exp, sqrt=ddd$sqrt)
    class(sav) <- "profile.rma"
 
-   if (.isTRUE(ddd$sqrt))
+   if (isTRUE(ddd$sqrt))
       names(sav)[1] <- "tau"
 
    sav$I2 <- sapply(res, function(x) x$I2)
@@ -292,7 +292,7 @@ profile.rma.uni <- function(fitted,
 
    #########################################################################
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

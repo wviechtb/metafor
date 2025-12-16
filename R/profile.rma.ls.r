@@ -61,7 +61,7 @@ profile.rma.ls <- function(fitted, alpha,
 
    ddd <- list(...)
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    #########################################################################
@@ -117,7 +117,7 @@ profile.rma.ls <- function(fitted, alpha,
 
       sav$comps <- comps
 
-      if (.isTRUE(ddd$time)) {
+      if (isTRUE(ddd$time)) {
          time.end <- proc.time()
          .print.time(unname(time.end - time.start)[3])
       }
@@ -240,7 +240,7 @@ profile.rma.ls <- function(fitted, alpha,
          cl <- parallel::makePSOCKcluster(ncpus)
          on.exit(parallel::stopCluster(cl), add=TRUE)
       }
-      if (.isTRUE(ddd$LB)) {
+      if (isTRUE(ddd$LB)) {
          res <- parallel::parLapplyLB(cl, vcs, .profile.rma.ls, obj=x, comp=comp, alpha.pos=alpha.pos, parallel=parallel, profile=TRUE, code2=ddd$code2)
          #res <- parallel::clusterApplyLB(cl, vcs, .profile.rma.ls, obj=x, comp=comp, alpha.pos=alpha.pos, parallel=parallel, profile=TRUE, code2=ddd$code2)
          #res <- parallel::clusterMap(cl, .profile.rma.ls, vcs, MoreArgs=list(obj=x, comp=comp, alpha.pos=alpha.pos, parallel=parallel, profile=TRUE, code2=ddd$code2), .scheduling = "dynamic")
@@ -274,7 +274,7 @@ profile.rma.ls <- function(fitted, alpha,
    if (all(is.na(lls)))
       warning(mstyle$warning("All model fits failed. Cannot draw profile likelihood plot."), call.=FALSE)
 
-   if (.isTRUE(ddd$exp)) {
+   if (isTRUE(ddd$exp)) {
       lls <- exp(lls)
       maxll <- exp(maxll)
    }
@@ -291,7 +291,7 @@ profile.rma.ls <- function(fitted, alpha,
          ylim <- rep(maxll, 2L)
       }
 
-      if (!.isTRUE(ddd$exp))
+      if (!isTRUE(ddd$exp))
          ylim <- ylim + c(-0.1, 0.1)
 
    } else {
@@ -308,7 +308,7 @@ profile.rma.ls <- function(fitted, alpha,
          xlab  <- expression(paste(alpha, " Value"))
          title <- expression(paste("Profile Plot for ", alpha))
       } else {
-         if (.isTRUE(ddd$sub1))
+         if (isTRUE(ddd$sub1))
             alpha <- alpha - 1
          xlab  <- bquote(alpha[.(alpha)] ~ "Value")
          title <- bquote("Profile Plot for" ~ alpha[.(alpha)])
@@ -325,7 +325,7 @@ profile.rma.ls <- function(fitted, alpha,
 
    #########################################################################
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

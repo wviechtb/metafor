@@ -61,7 +61,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
 
    ddd <- list(...)
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    #########################################################################
@@ -131,7 +131,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
 
       sav$comps <- comps
 
-      if (.isTRUE(ddd$time)) {
+      if (isTRUE(ddd$time)) {
          time.end <- proc.time()
          .print.time(unname(time.end - time.start)[3])
       }
@@ -292,7 +292,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
          cl <- parallel::makePSOCKcluster(ncpus)
          on.exit(parallel::stopCluster(cl), add=TRUE)
       }
-      if (.isTRUE(ddd$LB)) {
+      if (isTRUE(ddd$LB)) {
          res <- parallel::parLapplyLB(cl, vcs, .profile.rma.uni.selmodel, obj=x, comp=comp, delta.pos=delta.pos, parallel=parallel, profile=TRUE, code2=ddd$code2)
          #res <- parallel::clusterApplyLB(cl, vcs, .profile.rma.uni.selmodel, obj=x, comp=comp, delta.pos=delta.pos, parallel=parallel, profile=TRUE, code2=ddd$code2)
          #res <- parallel::clusterMap(cl, .profile.rma.uni.selmodel, vcs, MoreArgs=list(obj=x, comp=comp, delta.pos=delta.pos, parallel=parallel, profile=TRUE, code2=ddd$code2), .scheduling = "dynamic")
@@ -326,7 +326,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
    if (all(is.na(lls)))
       warning(mstyle$warning("All model fits failed. Cannot draw profile likelihood plot."), call.=FALSE)
 
-   if (.isTRUE(ddd$exp)) {
+   if (isTRUE(ddd$exp)) {
       lls <- exp(lls)
       maxll <- exp(maxll)
    }
@@ -343,7 +343,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
          ylim <- rep(maxll, 2L)
       }
 
-      if (!.isTRUE(ddd$exp))
+      if (!isTRUE(ddd$exp))
          ylim <- ylim + c(-0.1, 0.1)
 
    } else {
@@ -380,7 +380,7 @@ profile.rma.uni.selmodel <- function(fitted, tau2, delta,
 
    #########################################################################
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

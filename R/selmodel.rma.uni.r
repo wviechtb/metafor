@@ -858,7 +858,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
    # above for the various models (note that this will not be the case with the default settings);
    # otherwise use .mapfun() / .mapinvfun() or the functions passed via ddd$mapfun / ddd$mapinvfun
 
-   if (.isTRUE(ddd$defmap) || any(is.infinite(delta.max))) {
+   if (isTRUE(ddd$defmap) || any(is.infinite(delta.max))) {
       ddd$mapfun <- delta.transf.fun
       ddd$mapinvfun <- delta.transf.fun.inv
    }
@@ -1477,10 +1477,10 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
    time.end <- proc.time()
    res$time <- unname(time.end - time.start)[3]
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       .print.time(res$time)
 
-   if (verbose || .isTRUE(ddd$time))
+   if (verbose || isTRUE(ddd$time))
       cat("\n")
 
    class(res) <- c("rma.uni.selmodel", class(res))

@@ -28,7 +28,7 @@ confint.rma.peto <- function(object, parm, level, digits, transf, targs, ...) {
 
    .chkdots(ddd, c("time"))
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    #########################################################################
@@ -42,7 +42,7 @@ confint.rma.peto <- function(object, parm, level, digits, transf, targs, ...) {
 
    ### if requested, apply transformation function
 
-   if (.isTRUE(transf)) # if transf=TRUE, apply exp transformation to ORs
+   if (isTRUE(transf)) # if transf=TRUE, apply exp transformation to ORs
       transf <- exp
 
    if (is.function(transf)) {
@@ -73,7 +73,7 @@ confint.rma.peto <- function(object, parm, level, digits, transf, targs, ...) {
 
    res$digits <- digits
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

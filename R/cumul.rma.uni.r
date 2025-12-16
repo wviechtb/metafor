@@ -36,7 +36,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, collapse=FALSE, progb
 
    .chkdots(ddd, c("time", "decreasing", "code1", "code2"))
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    decreasing <- .chkddd(ddd$decreasing, FALSE)
@@ -233,7 +233,7 @@ cumul.rma.uni <- function(x, order, digits, transf, targs, collapse=FALSE, progb
       attr(out$estimate, "measure") <- x$measure
    }
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

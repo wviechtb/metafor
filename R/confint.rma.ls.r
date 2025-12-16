@@ -34,9 +34,9 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
    .chkdots(ddd, c("time", "xlim", "extint", "code1", "code2"))
 
-   level <- .level(level, stopon100=.isTRUE(ddd$extint))
+   level <- .level(level, stopon100=isTRUE(ddd$extint))
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    if (!is.null(ddd$xlim)) {
@@ -88,7 +88,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
          }
       }
 
-      if (.isTRUE(ddd$time)) {
+      if (isTRUE(ddd$time)) {
          time.end <- proc.time()
          .print.time(unname(time.end - time.start)[3])
       }
@@ -227,7 +227,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
             if (!inherits(res, "try-error") && !is.na(res)) {
 
-               if (!.isTRUE(ddd$extint) && res < 0) {
+               if (!isTRUE(ddd$extint) && res < 0) {
 
                   vc.lb <- con$vc.min
                   lb.conv <- TRUE
@@ -235,7 +235,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
                } else {
 
-                  if (.isTRUE(ddd$extint)) {
+                  if (isTRUE(ddd$extint)) {
                      res <- try(uniroot(.profile.rma.ls, interval=c(con$vc.min, vc), tol=con$tol, maxiter=con$maxiter, extendInt="downX", obj=x, comp=comp, alpha.pos=alpha.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
                   } else {
                      res <- try(uniroot(.profile.rma.ls, interval=c(con$vc.min, vc), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, alpha.pos=alpha.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
@@ -276,7 +276,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
             if (!inherits(res, "try-error") && !is.na(res)) {
 
-               if (!.isTRUE(ddd$extint) && res < 0) {
+               if (!isTRUE(ddd$extint) && res < 0) {
 
                   vc.ub <- con$vc.max
                   ub.conv <- TRUE
@@ -284,7 +284,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
 
                } else {
 
-                  if (.isTRUE(ddd$extint)) {
+                  if (isTRUE(ddd$extint)) {
                      res <- try(uniroot(.profile.rma.ls, interval=c(vc, con$vc.max), tol=con$tol, maxiter=con$maxiter, extendInt="upX", obj=x, comp=comp, alpha.pos=alpha.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
                   } else {
                      res <- try(uniroot(.profile.rma.ls, interval=c(vc, con$vc.max), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, alpha.pos=alpha.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
@@ -400,7 +400,7 @@ confint.rma.ls <- function(object, parm, level, fixed=FALSE, alpha, digits, tran
       #res$vc.min <- con$vc.min
    }
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

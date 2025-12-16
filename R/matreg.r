@@ -133,7 +133,7 @@ matreg <- function(y, x, R, n, V, cov=FALSE, means, ztor=FALSE, nearpd=FALSE, le
 
    .chkdots(ddd, c("nearPD"))
 
-   if (.isTRUE(ddd$nearPD))
+   if (isTRUE(ddd$nearPD))
       nearpd <- TRUE
 
    ############################################################################

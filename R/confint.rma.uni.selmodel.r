@@ -45,9 +45,9 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
    .chkdots(ddd, c("time", "xlim", "extint", "code1", "code2"))
 
-   level <- .level(level, stopon100=.isTRUE(ddd$extint))
+   level <- .level(level, stopon100=isTRUE(ddd$extint))
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    if (!is.null(ddd$xlim)) {
@@ -110,7 +110,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
          }
       }
 
-      if (.isTRUE(ddd$time)) {
+      if (isTRUE(ddd$time)) {
          time.end <- proc.time()
          .print.time(unname(time.end - time.start)[3])
       }
@@ -265,7 +265,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
             if (!inherits(res, "try-error") && !is.na(res)) {
 
-               if (!.isTRUE(ddd$extint) && res < 0) {
+               if (!isTRUE(ddd$extint) && res < 0) {
 
                   vc.lb <- con$vc.min
                   lb.conv <- TRUE
@@ -278,7 +278,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
                } else {
 
-                  if (.isTRUE(ddd$extint)) {
+                  if (isTRUE(ddd$extint)) {
                      res <- try(uniroot(.profile.rma.uni.selmodel, interval=c(con$vc.min, vc), tol=con$tol, maxiter=con$maxiter, extendInt="downX", obj=x, comp=comp, delta.pos=delta.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
                   } else {
                      res <- try(uniroot(.profile.rma.uni.selmodel, interval=c(con$vc.min, vc), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, delta.pos=delta.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
@@ -319,7 +319,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
             if (!inherits(res, "try-error") && !is.na(res)) {
 
-               if (!.isTRUE(ddd$extint) && res < 0) {
+               if (!isTRUE(ddd$extint) && res < 0) {
 
                   vc.ub <- con$vc.max
                   ub.conv <- TRUE
@@ -332,7 +332,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
 
                } else {
 
-                  if (.isTRUE(ddd$extint)) {
+                  if (isTRUE(ddd$extint)) {
                      res <- try(uniroot(.profile.rma.uni.selmodel, interval=c(vc, con$vc.max), tol=con$tol, maxiter=con$maxiter, extendInt="upX", obj=x, comp=comp, delta.pos=delta.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
                   } else {
                      res <- try(uniroot(.profile.rma.uni.selmodel, interval=c(vc, con$vc.max), tol=con$tol, maxiter=con$maxiter, obj=x, comp=comp, delta.pos=delta.pos, confint=TRUE, objective=objective, verbose=verbose, check.conv=TRUE)$root, silent=TRUE)
@@ -453,7 +453,7 @@ confint.rma.uni.selmodel <- function(object, parm, level, fixed=FALSE, tau2, del
       #res$vc.min <- con$vc.min
    }
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }

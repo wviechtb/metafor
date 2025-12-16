@@ -52,7 +52,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl, ...) 
 
    .chkdots(ddd, c("seed", "time", "LB", "code1", "code2"))
 
-   if (.isTRUE(ddd$time))
+   if (isTRUE(ddd$time))
       time.start <- proc.time()
 
    ### total number of possible subsets
@@ -165,7 +165,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl, ...) 
       }
 
       if (inherits(x, "rma.uni")) {
-         if (.isTRUE(ddd$LB)) {
+         if (isTRUE(ddd$LB)) {
             res <- parallel::parLapplyLB(cl, asplit(incl, 1), .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, model=model, outlist=outlist, code2=ddd$code2)
          } else {
             res <- pbapply::pbapply(incl, 1, .profile.rma.uni, obj=x, parallel=parallel, subset=TRUE, model=model, outlist=outlist, code2=ddd$code2, cl=cl)
@@ -174,7 +174,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl, ...) 
       }
 
       if (inherits(x, "rma.mh")) {
-         if (.isTRUE(ddd$LB)) {
+         if (isTRUE(ddd$LB)) {
             res <- parallel::parLapplyLB(cl, asplit(incl, 1), .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, outlist=outlist, code2=ddd$code2)
          } else {
             res <- pbapply::pbapply(incl, 1, .profile.rma.mh, obj=x, parallel=parallel, subset=TRUE, outlist=outlist, code2=ddd$code2, cl=cl)
@@ -183,7 +183,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl, ...) 
       }
 
       if (inherits(x, "rma.peto")) {
-         if (.isTRUE(ddd$LB)) {
+         if (isTRUE(ddd$LB)) {
             res <- parallel::parLapplyLB(cl, asplit(incl, 1), .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, outlist=outlist, code2=ddd$code2)
          } else {
             res <- pbapply::pbapply(incl, 1, .profile.rma.peto, obj=x, parallel=parallel, subset=TRUE, outlist=outlist, code2=ddd$code2, cl=cl)
@@ -237,7 +237,7 @@ gosh.rma <- function(x, subsets, progbar=TRUE, parallel="no", ncpus=1, cl, ...) 
 
    ### print processing time
 
-   if (.isTRUE(ddd$time)) {
+   if (isTRUE(ddd$time)) {
       time.end <- proc.time()
       .print.time(unname(time.end - time.start)[3])
    }
