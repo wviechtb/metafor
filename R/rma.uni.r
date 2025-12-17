@@ -63,7 +63,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("vtype", "knha", "onlyo1", "addyi", "addvi", "correct", "i2def", "r2def", "skipr2", "abbrev", "dfs", "time", "outlist", "link", "optbeta", "alpha", "beta", "skiphes", "retopt", "reshet", "pleasedonotreportI2thankyouverymuch"))
+   .chkdots(ddd, c("vtype", "knha", "onlyo1", "addyi", "addvi", "correct", "i2def", "r2def", "skipr2", "abbrev", "dfs", "time", "outlist", "link", "optbeta", "alpha", "beta", "skiphes", "retopt", "reshet", "omega2", "pleasedonotreportI2thankyouverymuch"))
 
    if (is.null(ddd$vtype)) {
       vtype <- "LS"
@@ -109,11 +109,17 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    link <- .chkddd(ddd$link, "log", match.arg(ddd$link, c("log", "identity")))
    optbeta <- .chkddd(ddd$optbeta, FALSE, isTRUE(ddd$optbeta))
 
+   if (model == "rma.uni" && optbeta) {
+      warning(mstyle$warning("Argument 'optbeta' only relevant for location-scale models and hence ignored."), call.=FALSE)
+      optbeta <- FALSE
+   }
+
    if (optbeta && !weighted)
       stop(mstyle$stop("Must use 'weighted=TRUE' when 'optbeta=TRUE'."))
 
-   alpha <- .chkddd(ddd$alpha, NA_real_)
-   beta  <- .chkddd(ddd$beta,  NA_real_)
+   alpha  <- .chkddd(ddd$alpha,  NA_real_)
+   beta   <- .chkddd(ddd$beta,   NA_real_)
+   omega2 <- .chkddd(ddd$omega2, NA_real_)
 
    if (model == "rma.uni" && !missing(att))
       warning(mstyle$warning("Argument 'att' only relevant for location-scale models and hence ignored."), call.=FALSE)
@@ -141,10 +147,23 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    # check 'reshet' argument
 
-   if (isTRUE(ddd$reshet)) {
-      reshet <- TRUE
+   reshet <- isTRUE(ddd$reshet)
+
+   if (model == "rma.ls") {
+
+      if (reshet && link == "identity")
+         stop(mstyle$stop("Cannot use identity link when allowing for residual heteroscedasticity."))
+
+      if (reshet) {
+         method <- "ML"
+         optbeta <- TRUE
+      }
+
    } else {
-      reshet <- FALSE
+
+      if (reshet)
+         warning(mstyle$warning("Argument 'reshet' only relevant for location-scale models and hence ignored."), call.=FALSE)
+
    }
 
    #########################################################################
@@ -1253,8 +1272,11 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
                alpha.init = NULL,              # initial values for the scale parameters
                alpha.min = -Inf,               # min possible value(s) for the scale parameter(s)
                alpha.max = Inf,                # max possible value(s) for the scale parameter(s)
+               omega2.init = NULL,             # initial value for omega^2
                hessianCtrl=list(r=8),          # arguments passed on to 'method.args' of hessian()
-               scaleZ = TRUE))                 # rescale Z matrix (only if Z.int.incl, is.na(alpha[1]), all(is.infinite(con$alpha.min)), all(is.infinite(con$alpha.max)), !optbeta)
+               htransf = FALSE,                # when FALSE, Hessian is computed directly for the omega2 estimate (e.g., we get Var(omega^2)); when TRUE, Hessian is computed for the transformed estimate (e.g., we get Var(log(omega2)))
+               scaleZ = TRUE,                  # rescale Z matrix (only if Z.int.incl, is.na(alpha[1]), all(is.infinite(con$alpha.min)), all(is.infinite(con$alpha.max)), !optbeta)
+               mfmaxit = 10^5))                # iteration limit when reshet=TRUE (independent of the optimizer)
 
       # [d] can constrain the tau^2 values in location-scale models, but this is done in a very crude way
       # in the optimization (by returning Inf when any tau^2 value falls outside the bounds) and this is
@@ -1998,6 +2020,15 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       }
 
+      # checks on the 'omega2' argument
+
+      if (missing(omega2) || is.null(omega2) || all(is.na(omega2))) {
+         omega2 <- NA_real_
+      } else {
+         if (length(omega2) != 1)
+            stop(mstyle$stop("Length of the 'omega2' argument must be 1."))
+      }
+
       # rescale the 'Z' matrix (only for models with moderators, models including a non-fixed intercept term, when not placing constraints on alpha, and when not optimizing over beta)
 
       if (!Z.int.only && Z.int.incl && con$scaleZ && is.na(alpha[1]) && all(is.infinite(con$alpha.min)) && all(is.infinite(con$alpha.max)) && !optbeta) {
@@ -2105,6 +2136,22 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       }
 
+      if (is.null(con$omega2.init)) {
+
+         omega2.init <- log(0.1)
+
+      } else {
+
+         if (length(con$omega2.init) != 1L)
+            stop(mstyle$stop("Argument 'omega2.init' should specify a single value."))
+         if (is.na(con$omega2.init))
+            stop(mstyle$stop("No missing value allowed in 'omega2.init'."))
+         if (con$omega2.init <= 0)
+            stop(mstyle$stop("Value of 'omega2.init' must be > 0."))
+         omega2.init <- log(con$omega2.init)
+
+      }
+
       # set potential constraints on the 'alpha' values
 
       con$alpha.min <- .expand1(con$alpha.min, q)
@@ -2183,10 +2230,16 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       if (link == "log") {
 
-         optcall <- paste0(optimizer, "(", par.arg, "=c(beta.init, alpha.init), .ll.rma.ls, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
-                          "yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=verbose, digits=digits,
-                          REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
-                          tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
+         if (reshet) {
+            init.str <- "=c(beta.init, alpha.init, omega2.init), "
+         } else {
+            init.str <- "=c(beta.init, alpha.init), "
+         }
+
+         optcall <- paste0(optimizer, "(", par.arg, init.str, " .ll.rma.ls, ", ifelse(optimizer=="optim", "method=optmethod, ", ""),
+                          "yi=yi, vi=vi, X=X, Z=Z, reml=reml, alpha.arg=alpha, beta.arg=beta, omega2.arg=omega2, verbose=verbose, digits=digits,
+                          REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE, omega2.transf=TRUE,
+                          tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta, reshet=reshet, mfmaxit=con$mfmaxit", ctrl.arg, ")\n")
 
       }
 
@@ -2194,32 +2247,35 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
          if (optimizer == "constrOptim")
             optcall <- paste0("constrOptim(theta=c(beta.init, alpha.init), f=.ll.rma.ls, grad=NULL, ui=cbind(X0,Z), ci=rep(0,k),
-                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=verbose, digits=digits,
-                              REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
-                              tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
+                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, alpha.arg=alpha, beta.arg=beta, omega2.arg=omega2, verbose=verbose, digits=digits,
+                              REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE, omega2.transf=TRUE,
+                              tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta, reshet=reshet, mfmaxit=con$mfmaxit", ctrl.arg, ")\n")
 
          if (optimizer == "Rsolnp::solnp")
             optcall <- paste0("Rsolnp::solnp(pars=c(beta.init, alpha.init), fun=.ll.rma.ls, ineqfun=.rma.ls.ineqfun.pos, ineqLB=rep(0,k), ineqUB=rep(Inf,k),
-                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=verbose, digits=digits,
-                              REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
-                              tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
+                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, alpha.arg=alpha, beta.arg=beta, omega2.arg=omega2, verbose=verbose, digits=digits,
+                              REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE, omega2.transf=TRUE,
+                              tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta, reshet=reshet, mfmaxit=con$mfmaxit", ctrl.arg, ")\n")
 
          if (optimizer == "nloptr::nloptr")
             optcall <- paste0("nloptr::nloptr(x0=c(beta.init, alpha.init), eval_f=.ll.rma.ls, eval_g_ineq=.rma.ls.ineqfun.neg,
-                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=verbose, digits=digits,
-                              REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
-                              tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
+                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, alpha.arg=alpha, beta.arg=beta, omega2.arg=omega2, verbose=verbose, digits=digits,
+                              REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE, omega2.transf=TRUE,
+                              tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta, reshet=reshet, mfmaxit=con$mfmaxit", ctrl.arg, ")\n")
 
          if (is.element(optimizer, c("alabama::constrOptim.nl","alabama::auglag")))
             optcall <- paste0(optimizer, "(par=c(beta.init, alpha.init), fn=.ll.rma.ls, hin=.rma.ls.ineqfun.pos,
-                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=verbose, digits=digits,
-                              REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE,
-                              tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta", ctrl.arg, ")\n")
+                              yi=yi, vi=vi, X=X, Z=Z, reml=reml, alpha.arg=alpha, beta.arg=beta, omega2.arg=omega2, verbose=verbose, digits=digits,
+                              REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=TRUE, omega2.transf=TRUE,
+                              tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta, reshet=reshet, mfmaxit=con$mfmaxit", ctrl.arg, ")\n")
 
       }
 
       #print(optcall)
       #return(optcall)
+
+      iteration <- 0
+      try(assign("iteration", iteration, envir=.metafor), silent=TRUE)
 
       if (verbose) {
          opt.res <- try(eval(str2lang(optcall)), silent=!verbose)
@@ -2232,35 +2288,62 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       # convergence checks (if 'verbose = TRUE', print optimParallel log, if 'verbose > 2' print 'opt.res', and unify opt.res$par)
 
-      opt.res$par <- .chkconv(optimizer=optimizer, opt.res=opt.res, optcontrol=optcontrol, fun="rma", verbose=verbose)
+      opt.res <- .chkconv(optimizer=optimizer, opt.res=opt.res, optcontrol=optcontrol, fun="rma", verbose=verbose, paronly=FALSE)
+
+      if (optbeta) {
+         pos.beta  <- 1:p
+         pos.alpha <- (p+1):(p+q)
+         if (reshet) {
+            pos.omega2 <- p+q+1
+         } else {
+            pos.omega2 <- integer(0)
+         }
+      } else {
+         pos.alpha  <- 1:q
+         pos.beta   <- integer(0)
+         pos.omega2 <- integer(0)
+      }
 
       # back-transform in case constraints were placed on the 'alpha' values
 
-      if (optbeta) {
-         opt.res$par[-seq_len(p)] <- mapply(.mapfun.alpha, opt.res$par[-seq_len(p)], alpha.min, alpha.max)
-      } else {
-         opt.res$par <- mapply(.mapfun.alpha, opt.res$par, alpha.min, alpha.max)
-      }
+      opt.res$par[pos.alpha] <- mapply(.mapfun.alpha, opt.res$par[pos.alpha], alpha.min, alpha.max)
 
-      # replace fixed 'alpha' (and 'beta') values in opt.res$par
+      # replace fixed 'beta' and 'alpha' values in opt.res$par
 
-      if (optbeta) {
-         opt.res$par[seq_len(p)]  <- ifelse(is.na(beta),  opt.res$par[seq_len(p)],  beta)
-         opt.res$par[-seq_len(p)] <- ifelse(is.na(alpha), opt.res$par[-seq_len(p)], alpha)
-      } else {
-         opt.res$par <- ifelse(is.na(alpha), opt.res$par, alpha)
-      }
+      opt.res$par[pos.beta]  <- ifelse(is.na(beta),  opt.res$par[pos.beta],  beta)
+      opt.res$par[pos.alpha] <- ifelse(is.na(alpha), opt.res$par[pos.alpha], alpha)
+
+      # save for Hessian computation
+
+      beta.arg   <- beta
+      alpha.arg  <- alpha
+      omega2.arg <- omega2
+
+      # get the scale (and location) parameter estimates
+
+      beta     <- cbind(opt.res$par[pos.beta])
+      alpha    <- cbind(opt.res$par[pos.alpha])
+      lnomega2 <- unname(opt.res$par[pos.omega2])
+      omega2   <- exp(lnomega2)
 
       # try to compute var-cov matrix for the scale parameter estimates
 
       H <- NA_real_
 
       if (optbeta) {
-         va <- matrix(NA_real_, nrow=p+q, ncol=p+q)
-         hest <- c(is.na(beta), is.na(alpha))
+         if (reshet) {
+            va <- matrix(NA_real_, nrow=p+q+1, ncol=p+q+1)
+            hest <- c(is.na(beta.arg), is.na(alpha.arg), is.na(omega2.arg))
+            hesspars <- c(beta, alpha, omega2)
+         } else {
+            va <- matrix(NA_real_, nrow=p+q, ncol=p+q)
+            hest <- c(is.na(beta.arg), is.na(alpha.arg))
+            hesspars <- c(beta, alpha)
+         }
       } else {
          va <- matrix(NA_real_, nrow=q, ncol=q)
-         hest <- is.na(alpha)
+         hest <- is.na(alpha.arg)
+         hesspars <- c(alpha)
       }
 
       if (any(hest) && !isTRUE(ddd$skiphes)) {
@@ -2268,23 +2351,47 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          if (verbose > 1)
             message(mstyle$message("\nComputing the Hessian ..."))
 
-         if (con$hesspack == "numDeriv")
-            H <- try(numDeriv::hessian(func=.ll.rma.ls, x=opt.res$par, method.args=con$hessianCtrl, yi=yi, vi=vi, X=X,
-                                       Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=FALSE, digits=digits,
-                                       REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE,
-                                       tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta), silent=TRUE)
+         if (con$htransf) {
 
-         if (con$hesspack == "pracma")
-            H <- try(pracma::hessian(f=.ll.rma.ls, x0=opt.res$par, yi=yi, vi=vi, X=X,
-                                     Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=FALSE, digits=digits,
-                                     REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE,
-                                     tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta), silent=TRUE)
+            if (con$hesspack == "numDeriv")
+               H <- try(numDeriv::hessian(func=.ll.rma.ls, x=opt.res$par, method.args=con$hessianCtrl, yi=yi, vi=vi, X=X,
+                                          Z=Z, reml=reml, alpha.arg=alpha.arg, beta.arg=beta.arg, omega2.arg=omega2.arg, verbose=FALSE, digits=digits,
+                                          REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE, omega2.transf=TRUE,
+                                          tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta, reshet=reshet, mfmaxit=con$mfmaxit), silent=TRUE)
 
-         if (con$hesspack == "calculus")
-            H <- try(calculus::hessian(f=.ll.rma.ls, var=opt.res$par, params=list(yi=yi, vi=vi, X=X,
-                                     Z=Z, reml=reml, k=k, pX=p, alpha.arg=alpha, beta.arg=beta, verbose=FALSE, digits=digits,
-                                     REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE,
-                                     tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta)), silent=TRUE)
+            if (con$hesspack == "pracma")
+               H <- try(pracma::hessian(f=.ll.rma.ls, x0=opt.res$par, yi=yi, vi=vi, X=X,
+                                        Z=Z, reml=reml, alpha.arg=alpha.arg, beta.arg=beta.arg, omega2.arg=omega2.arg, verbose=FALSE, digits=digits,
+                                        REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE, omega2.transf=TRUE,
+                                        tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta, reshet=reshet, mfmaxit=con$mfmaxit), silent=TRUE)
+
+            if (con$hesspack == "calculus")
+               H <- try(calculus::hessian(f=.ll.rma.ls, var=opt.res$par, params=list(yi=yi, vi=vi, X=X,
+                                        Z=Z, reml=reml, alpha.arg=alpha.arg, beta.arg=beta.arg, omega2.arg=omega2.arg, verbose=FALSE, digits=digits,
+                                        REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE, omega2.transf=TRUE,
+                                        tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta, reshet=reshet, mfmaxit=con$mfmaxit)), silent=TRUE)
+
+         } else {
+
+            if (con$hesspack == "numDeriv")
+               H <- try(numDeriv::hessian(func=.ll.rma.ls, x=hesspars, method.args=con$hessianCtrl, yi=yi, vi=vi, X=X,
+                                          Z=Z, reml=reml, alpha.arg=alpha.arg, beta.arg=beta.arg, omega2.arg=omega2.arg, verbose=FALSE, digits=digits,
+                                          REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE, omega2.transf=FALSE,
+                                          tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta, reshet=reshet, mfmaxit=con$mfmaxit), silent=TRUE)
+
+            if (con$hesspack == "pracma")
+               H <- try(pracma::hessian(f=.ll.rma.ls, x0=hesspars, yi=yi, vi=vi, X=X,
+                                        Z=Z, reml=reml, alpha.arg=alpha.arg, beta.arg=beta.arg, omega2.arg=omega2.arg, verbose=FALSE, digits=digits,
+                                        REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE, omega2.transf=FALSE,
+                                        tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta, reshet=reshet, mfmaxit=con$mfmaxit), silent=TRUE)
+
+            if (con$hesspack == "calculus")
+               H <- try(calculus::hessian(f=.ll.rma.ls, var=hesspars, params=list(yi=yi, vi=vi, X=X,
+                                        Z=Z, reml=reml, alpha.arg=alpha.arg, beta.arg=beta.arg, omega2.arg=omega2.arg, verbose=FALSE, digits=digits,
+                                        REMLf=con$REMLf, link=link, mZ=mZ, alpha.min=alpha.min, alpha.max=alpha.max, alpha.transf=FALSE, omega2.transf=FALSE,
+                                        tau2.min=con$tau2.min, tau2.max=con$tau2.max, optbeta=optbeta, reshet=reshet, mfmaxit=con$mfmaxit)), silent=TRUE)
+
+         }
 
          if (inherits(H, "try-error")) {
 
@@ -2309,23 +2416,30 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       }
 
+      vo <- NA_real_
+
       if (optbeta) {
-         vba <- va
-         vb  <- va[seq_len(p),   seq_len(p), drop=FALSE]
-         va  <- va[-seq_len(p), -seq_len(p), drop=FALSE]
+         vbao <- va
+         vb <- vbao[pos.beta, pos.beta, drop=FALSE]
+         va <- vbao[pos.alpha, pos.alpha, drop=FALSE]
+         vo <- vbao[pos.omega2, pos.omega2]
       }
 
-      # get the scale (and location) parameter estimates
+      vo <- max(0, vo)
 
-      alpha.arg <- alpha
-      beta.arg  <- beta
+      crit.omega2 <- qnorm(level/2, lower.tail=FALSE)
 
-      if (optbeta) {
-         beta  <- cbind(opt.res$par[seq_len(p)])
-         alpha <- cbind(opt.res$par[-seq_len(p)])
+      if (con$htransf) {
+         se.omega2 <- sqrt(vo) * omega2 # delta method
+         ci.lb.omega2 <- exp(lnomega2 - crit.omega2 * sqrt(vo))
+         ci.ub.omega2 <- exp(lnomega2 + crit.omega2 * sqrt(vo))
       } else {
-         alpha <- cbind(opt.res$par)
+         se.omega2 <- sqrt(vo)
+         ci.lb.omega2 <- omega2 - crit.omega2 * se.omega2
+         ci.ub.omega2 <- omega2 + crit.omega2 * se.omega2
       }
+
+      ci.lb.omega2 <- max(0, ci.lb.omega2)
 
       if (any(alpha <= alpha.min + 10*.Machine$double.eps^0.25) || any(alpha >= alpha.max - 10*.Machine$double.eps^0.25))
          warning(mstyle$warning("One or more 'alpha' estimates are (almost) equal to their lower or upper bound.\nTreat results with caution (or consider adjusting 'alpha.min' and/or 'alpha.max')."), call.=FALSE)
@@ -2662,15 +2776,20 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       message(mstyle$message("Computing fit statistics and log-likelihood ..."))
 
    ### note: tau2 is not counted as a parameter when it was fixed by the user (same for fixed alpha values)
-   q.est <- ifelse(model == "rma.uni", 0, sum(is.na(alpha.arg)))
+   q.est <- ifelse(model == "rma.uni", 0, sum(is.na(alpha.arg)) + (reshet && is.na(omega2.arg)))
    parms <- ifelse(optbeta, sum(is.na(beta.arg)), p) + ifelse(model == "rma.uni", ifelse(is.element(method[1], c("FE","EE","CE")) || tau2.fix, 0, 1), q.est)
 
-   ll.ML    <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS.f
-   ll.REML  <- -1/2 * (k-p) * log(2*base::pi) + ifelse(con$REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
-               -1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS.f
+   if (reshet) {
+      ll.ML   <- -opt.res$value
+      ll.REML <- NA_real_
+   } else {
+      ll.ML    <- -1/2 * (k) * log(2*base::pi) - 1/2 * sum(log(vi + tau2)) - 1/2 * RSS.f
+      ll.REML  <- -1/2 * (k-p) * log(2*base::pi) + ifelse(con$REMLf, 1/2 * determinant(crossprod(X), logarithm=TRUE)$modulus, 0) +
+                  -1/2 * sum(log(vi + tau2)) - 1/2 * determinant(crossprod(X,W) %*% X, logarithm=TRUE)$modulus - 1/2 * RSS.f
+   }
 
    if (k > p) {
-      if (allvipos) {
+      if (allvipos && !reshet) {
          dev.ML <- -2 * (ll.ML - sum(dnorm(yi, mean=yi, sd=sqrt(vi), log=TRUE)))
       } else {
          dev.ML <- -2 * ll.ML
@@ -2879,38 +2998,46 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    if (model == "rma.ls") {
 
-      res$alpha          <- alpha
-      res$va             <- va
-      res$se.alpha       <- se.alpha
-      res$zval.alpha     <- zval.alpha
-      res$pval.alpha     <- pval.alpha
-      res$ci.lb.alpha    <- ci.lb.alpha
-      res$ci.ub.alpha    <- ci.ub.alpha
-      res$alpha.fix      <- !is.na(alpha.arg)
-      res$optbeta        <- optbeta
+      res$alpha           <- alpha
+      res$va              <- va
+      res$se.alpha        <- se.alpha
+      res$zval.alpha      <- zval.alpha
+      res$pval.alpha      <- pval.alpha
+      res$ci.lb.alpha     <- ci.lb.alpha
+      res$ci.ub.alpha     <- ci.ub.alpha
+      res$alpha.fix       <- !is.na(alpha.arg)
+      res$optbeta         <- optbeta
       if (optbeta) {
-         res$vba         <- vba
-         res$beta.fix    <- !is.na(beta.arg)
+         res$vbao         <- vbao
+         res$beta.fix     <- !is.na(beta.arg)
       }
-      res$q              <- q
-      res$alphas         <- q
-      res$link           <- link
-      res$Z              <- Z
-      res$Z.f            <- Z.f
-      res$tau2.f         <- rep(NA_real_, k.f)
-      res$tau2.f[not.na] <- tau2
-      res$att            <- att
-      res$m.alpha        <- m.alpha
-      res$ddf.alpha      <- ddf.alpha
-      res$QS             <- QS
-      res$QSdf           <- QSdf
-      res$QSp            <- QSp
-      res$formula.scale  <- formula.scale
-      res$Z.int.incl     <- Z.int.incl
-      res$Z.intercept    <- Z.int.incl
-      res$Z.int.only     <- Z.int.only
-      res$coef.na.Z      <- coef.na.Z
-      res$H              <- H
+      res$reshet          <- reshet
+      if (reshet) {
+         res$omega2       <- omega2
+         res$omega2.fix   <- !is.na(omega2.arg)
+         res$se.omega2    <- se.omega2
+         res$ci.lb.omega2 <- ci.lb.omega2
+         res$ci.ub.omega2 <- ci.ub.omega2
+      }
+      res$q               <- q
+      res$alphas          <- q
+      res$link            <- link
+      res$Z               <- Z
+      res$Z.f             <- Z.f
+      res$tau2.f          <- rep(NA_real_, k.f)
+      res$tau2.f[not.na]  <- tau2
+      res$att             <- att
+      res$m.alpha         <- m.alpha
+      res$ddf.alpha       <- ddf.alpha
+      res$QS              <- QS
+      res$QSdf            <- QSdf
+      res$QSp             <- QSp
+      res$formula.scale   <- formula.scale
+      res$Z.int.incl      <- Z.int.incl
+      res$Z.intercept     <- Z.int.incl
+      res$Z.int.only      <- Z.int.only
+      res$coef.na.Z       <- coef.na.Z
+      res$H               <- H
 
    }
 

@@ -613,7 +613,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
          delta.transf.fun <- rep("I", deltas)
          delta.transf.fun.inv <- rep("I", deltas)
          ddd$defmap <- TRUE # actual mapping is defined directly in .selmodel.ll.stepfun() for this special case
-         if (con$htransf)
+         if (isTRUE(con$htransf))
             stop(mstyle$stop("Cannot use 'htransf=TRUE' for this type of selection model."))
          #delta.lb <- rep(0, deltas)
          #delta.ub <- rep(1, deltas)

@@ -310,14 +310,23 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          rownames(res.table) <- paste0(formatC(seq_len(nrow(res.table)), format="d", width=width), ") ", rownames(res.table))
       }
 
-      if (length(x$alpha) == 1L)
+      if (x$reshet) {
+         res.table.omega2 <- c(fmtx(x$omega2, digits[["var"]]), fmtx(x$se.omega2, digits[["se"]]), "---", "---", fmtx(x$ci.lb.omega2, digits[["ci"]]), fmtx(x$ci.ub.omega2, digits[["ci"]]))
+         if (is.element(x$test, c("knha","adhoc","t")))
+            res.table.omega2 <- c(res.table.omega2[1:2], "---", res.table.omega2[-(1:2)])
+         if (signif.stars)
+            res.table.omega2 <- c(res.table.omega2, "")
+         res.table <- rbind(res.table, "omega^2"=res.table.omega2)
+      }
+
+      if (nrow(res.table) == 1L)
          res.table <- res.table[1,]
 
       cat("\n")
       cat(mstyle$section("Model Results (Scale):"))
       cat("\n\n")
 
-      if (length(x$alpha) == 1L) {
+      if (nrow(res.table) == 1L) {
          tmp <- capture.output(.print.vector(res.table))
       } else {
          tmp <- capture.output(print(res.table, quote=FALSE, right=TRUE, print.gap=2))

@@ -1761,7 +1761,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    ### checks on initial values set by the user (the initial values computed by the function are replaced by the user defined ones at this point)
 
    if (withS && any(con$sigma2.init <= 0))
-      stop(mstyle$stop("Value(s) of 'sigma2.init' must be > 0"))
+      stop(mstyle$stop("Value(s) of 'sigma2.init' must be > 0."))
 
    if (withG && any(con$tau2.init <= 0))
       stop(mstyle$stop("Value(s) of 'tau2.init' must be > 0."))

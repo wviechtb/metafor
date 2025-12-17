@@ -1859,7 +1859,7 @@
 
 }
 
-.chkconv <- function(optimizer, opt.res, optcontrol, fun, verbose) {
+.chkconv <- function(optimizer, opt.res, optcontrol, fun, verbose, paronly=TRUE) {
 
    mstyle <- .get.mstyle()
 
@@ -1906,7 +1906,22 @@
    if (optimizer=="Rsolnp::solnp")
       opt.res$par <- opt.res$pars
 
-   return(opt.res$par)
+   ### copy function value to 'value'
+
+   if (is.element(optimizer, c("nlminb", "nloptr::nloptr")))
+      opt.res$value <- opt.res$objective
+   if (is.element(optimizer, c("minqa::uobyqa","minqa::newuoa","minqa::bobyqa")))
+      opt.res$value <- opt.res$fval
+   if (optimizer=="nlm")
+      opt.res$value <- opt.res$minimum
+   if (optimizer=="Rsolnp::solnp")
+      opt.res$value <- tail(opt.res$values, 1)
+
+   if (paronly) {
+      return(opt.res$par)
+   } else {
+      return(opt.res)
+   }
 
 }
 

@@ -1096,7 +1096,7 @@
    iteration <- .getfromenv("iteration", default=NULL)
 
    if (isTRUE(iteration > mfmaxit))
-      stop(mstyle$stop(paste0("Maximum number of iterations (", mfmaxit, ") reached.")), call.=FALSE)
+      stop(mstyle$stop(paste0("Maximum number of iterations (mfmaxit=", mfmaxit, ") reached.")), call.=FALSE)
 
    if ((vctransf && verbose) || (!vctransf && (verbose > 1))) {
 
