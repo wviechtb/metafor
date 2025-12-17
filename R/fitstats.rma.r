@@ -54,7 +54,7 @@ fitstats.rma <- function(object, ..., REML) {
 
    }
 
-   rownames(out) <- c("logLik:", "deviance:", "AIC:", "BIC:", "AICc:")
+   rownames(out) <- c("logLik", "deviance", "AIC", "BIC", "AICc")
    return(out)
 
    #print(fmtx(out, object$digits[["fit"]]), quote=FALSE)
