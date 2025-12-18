@@ -4,8 +4,8 @@ fitstats.rma <- function(object, ..., REML) {
 
    .chkclass(class(object), must="rma")
 
-   ### unless REML argument is specified, method of first object determines
-   ### whether to show fit statistics based on the ML or REML likelihood
+   # unless the 'REML' argument was specified, the 'method' of the first object
+   # determines whether to show fit statistics based on the ML or REML likelihood
 
    if (missing(REML)) {
       if (object$method == "REML") {
@@ -17,7 +17,7 @@ fitstats.rma <- function(object, ..., REML) {
 
    if (missing(...)) {
 
-      ### if there is just 'object'
+      # if there is just 'object'
 
       if (REML) {
          out <- cbind(object$fit.stats$REML)
@@ -29,7 +29,7 @@ fitstats.rma <- function(object, ..., REML) {
 
    } else {
 
-      ### if there is 'object' and additional objects via ...
+      # if there is 'object' and additional objects via ...
 
       if (REML) {
          out <- sapply(list(object, ...), function(x) x$fit.stats$REML)
@@ -39,13 +39,13 @@ fitstats.rma <- function(object, ..., REML) {
 
       out <- data.frame(out)
 
-      ### get names of objects; same idea as in stats:::AIC.default
+      # get the names of the objects; same idea as in stats:::AIC.default
 
       cl <- match.call()
       cl$REML <- NULL
       names(out) <- as.character(cl[-1L])
 
-      ### check that all models were fitted to the same data
+      # check that all models were fitted to the same data
 
       chksums <- sapply(list(object, ...), function(x) x$chksumyi)
 

@@ -6,7 +6,7 @@ AIC.rma <- function(object, ..., k=2, correct=FALSE) {
 
    if (missing(...)) {
 
-      ### if there is just 'object'
+      # if there is just 'object'
 
       if (object$method == "REML") {
          out <- ifelse(correct, object$fit.stats["AICc","REML"], object$fit.stats["AIC","REML"])
@@ -16,7 +16,7 @@ AIC.rma <- function(object, ..., k=2, correct=FALSE) {
 
    } else {
 
-      ### if there is 'object' and additional objects via ...
+      # if there is 'object' and additional objects via ...
 
       if (object$method == "REML") {
          out <- sapply(list(object, ...), function(x) ifelse(correct, x$fit.stats["AICc","REML"], x$fit.stats["AIC","REML"]))
@@ -30,14 +30,14 @@ AIC.rma <- function(object, ..., k=2, correct=FALSE) {
       if (correct)
          names(out)[2] <- "AICc"
 
-      ### get names of objects; same idea as in stats:::AIC.default
+      # get the names of the objects; same idea as in stats:::AIC.default
 
       cl <- match.call()
       cl$k <- NULL
       cl$correct <- NULL
       rownames(out) <- as.character(cl[-1L])
 
-      ### check that all models were fitted to the same data
+      # check that all models were fitted to the same data
 
       chksums <- sapply(list(object, ...), function(x) x$chksumyi)
 

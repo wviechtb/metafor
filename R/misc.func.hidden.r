@@ -256,6 +256,34 @@
    is.numeric(x)
 }
 
+### function to test if two model matrices are nested
+
+.is.nested <- function(x1, x2) {
+
+   if (nrow(x1) != nrow(x2))
+      return(FALSE)
+
+   # compute ranks manually using qr()
+
+   #qrx1 <- try(qr(x1), silent=TRUE)
+   #qrx2 <- try(qr(x2), silent=TRUE)
+   #qrx1x2 <- try(qr(cbind(x1, x2)), silent=TRUE)
+
+   #if (inherits(qrx1, "try-error") || inherits(qrx2, "try-error") || inherits(qrx1x2, "try-error"))
+   #   return(FALSE)
+
+   #rank.f <- max(qrx1$rank, qrx2$rank)
+   #rank.c <- qrx1x2$rank
+
+   # use Matrix::rankMatrix()
+
+   rank.f <- c(max(rankMatrix(x1), rankMatrix(x2)))
+   rank.c <- c(rankMatrix(cbind(x1,x2)))
+
+   return(identical(rank.f, rank.c))
+
+}
+
 ### sapply()-like function but for matrices that always preserves the matrix dimensions (used in traceplot.rma.uni())
 
 .matapply <- function(x, FUN, targs=NULL) {
