@@ -1992,6 +1992,8 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       if (missing(alpha) || is.null(alpha) || all(is.na(alpha))) {
          alpha <- rep(NA_real_, q)
       } else {
+         if (any(is.infinite(alpha)))
+            stop(mstyle$stop("Infinite values in 'alpha' argument not allowed."))
          alpha <- .expand1(alpha, q)
          if (length(alpha) != q)
             stop(mstyle$stop(paste0("Length of the 'alpha' argument (", length(alpha), ") does not match the actual number of parameters (", q, ").")))
@@ -2789,9 +2791,9 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    }
 
    if (k > p) {
-      if (allvipos && !reshet) {
+      if (allvipos) {
          dev.ML <- -2 * (ll.ML - sum(dnorm(yi, mean=yi, sd=sqrt(vi), log=TRUE)))
-      } else {
+      } else { # when vi = 0, then dnorm(yi, yi, 0, log=TRUE) is Inf
          dev.ML <- -2 * ll.ML
       }
    } else {
