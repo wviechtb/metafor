@@ -2812,9 +2812,11 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    #########################################################################
 
-   # compute pseudo R^2 statistic for mixed-effects models with an intercept (only for rma.uni models)
+   # compute pseudo R^2 statistic (only for rma.uni models)
 
-   if (!int.only && int.incl && model == "rma.uni" && !isTRUE(ddd$skipr2)) {
+   is.nested.in.int.only <- .is.nested(X, cbind(rep(1,k)))
+
+   if (model == "rma.uni" && !int.only && is.nested.in.int.only && !isTRUE(ddd$skipr2)) {
 
       if (verbose > 1)
          message(mstyle$message("Computing R^2 ..."))
