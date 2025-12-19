@@ -43,8 +43,8 @@ fmtp2 <- function(p, cutoff=c(0.001,0.06), pname="p", sep=TRUE, add0=FALSE, quot
    if (cutoff[1] == 0)
       stop("The lower 'cutoff' value must be > 0.")
 
-   digits1 <- nchar(formatC(cutoff[1], format="f", digits=10, drop0trailing=T))-2
-   digits2 <- nchar(formatC(cutoff[2], format="f", digits=10, drop0trailing=T))-2
+   digits1 <- nchar(formatC(cutoff[1], format="f", digits=10, drop0trailing=TRUE))-2
+   digits2 <- nchar(formatC(cutoff[2], format="f", digits=10, drop0trailing=TRUE))-2
 
    if (sep) {
       if (pname != "")

@@ -643,7 +643,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                evtol = 1e-07,              # lower bound for eigenvalues to determine if the model matrix is positive definite
                dnchgcalc = "dFNCHypergeo", # method for calculating dnchg ("dFNCHypergeo" from BiasedUrn package or "dnoncenhypergeom")
                dnchgprec = 1e-10,          # precision for dFNCHypergeo()
-               hesspack = "numDeriv",      # package for computing the Hessian (numDeriv or pracma)
+               hesspack = "numDeriv",      # package for computing the Hessian (numDeriv, pracma, or calculus)
                tau2tol = 1e-04)            # for "CM.EL" + "ML", threshold for treating tau^2 values as effectively equal to 0
 
    ### replace defaults with any user-defined values
@@ -793,11 +793,32 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
       intCtrl$rel.tol <- .Machine$double.eps^0.25
    }
 
+   con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma","calculus"))
+
    pos.hessianCtrl <- pmatch(names(control), "hessianCtrl", nomatch=0)
    if (sum(pos.hessianCtrl) > 0) {
       hessianCtrl <- control[[which(pos.hessianCtrl == 1)]]
    } else {
-      hessianCtrl <- list(r=16)
+      hessianCtrl <- list()
+   }
+
+   if (con$hesspack == "numDeriv") {
+      if (is.null(control$hessianCtrl$r))
+         hessianCtrl$r <- 16
+   }
+   if (con$hesspack == "pracma") {
+      if (is.null(control$hessianCtrl$h)) {
+         hessianCtrl$h <- .Machine$double.eps^(1/4)
+      } else {
+         hessianCtrl$h <- control$hessianCtrl$h
+      }
+   }
+   if (con$hesspack == "calculus") {
+      if (is.null(control$hessianCtrl$accuracy)) {
+         hessianCtrl$accuracy <- 4
+      } else {
+         hessianCtrl$accuracy <- control$hessianCtrl$accuracy
+      }
    }
 
    #return(list(verbose=verbose, optimizer=optimizer, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, optCtrl=optCtrl, glmCtrl=glmCtrl, glmerCtrl=glmerCtrl, intCtrl=intCtrl, hessianCtrl=hessianCtrl))
@@ -846,7 +867,6 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
       }
 
       if (is.element(optimizer, c("optim","nlminb","uobyqa","newuoa","bobyqa","nloptr","nlm","hjk","nmk","mads","ucminf","lbfgsb3c","subplex","BBoptim","optimParallel","Rcgmin","Rvmmin"))) {
-         con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma","calculus"))
          if (!requireNamespace(con$hesspack, quietly=TRUE))
             stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to fit this model.")))
          if (con$dnchgcalc == "dFNCHypergeo") {
@@ -1775,9 +1795,9 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             if (con$hesspack == "numDeriv")
                h.FE <- numDeriv::hessian(.dnchg, x=res.FE$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
             if (con$hesspack == "pracma")
-               h.FE <- pracma::hessian(.dnchg, x0=res.FE$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
+               h.FE <- pracma::hessian(.dnchg, x0=res.FE$par, h=hessianCtrl$h, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
             if (con$hesspack == "calculus")
-               h.FE <- calculus::hessian(.dnchg, var=res.FE$par, params=list(ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec))
+               h.FE <- calculus::hessian(.dnchg, var=res.FE$par, accuracy=hessianCtrl$accuracy, stepsize=hessianCtrl$stepsize, params=list(ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec))
             #return(list(res.FE=res.FE, h.FE=h.FE))
 
             ### log-likelihood
@@ -1889,9 +1909,9 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                      if (con$hesspack == "numDeriv")
                         h.QE <- numDeriv::hessian(.dnchg, x=res.QE$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
                      if (con$hesspack == "pracma")
-                        h.QE <- pracma::hessian(.dnchg, x0=res.QE$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
+                        h.QE <- pracma::hessian(.dnchg, x0=res.QE$par, h=hessianCtrl$h, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec)
                      if (con$hesspack == "calculus")
-                        h.QE <- calculus::hessian(.dnchg, var=res.QE$par, params=list(ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec))
+                        h.QE <- calculus::hessian(.dnchg, var=res.QE$par, accuracy=hessianCtrl$accuracy, stepsize=hessianCtrl$stepsize, params=list(ai=ai, bi=bi, ci=ci, di=di, X.fit=X.QE, random=FALSE, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec))
                   }
 
                } else {
@@ -2128,9 +2148,9 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             if (con$hesspack == "numDeriv")
                h.ML <- numDeriv::hessian(.dnchg, x=res.ML$par, method.args=hessianCtrl, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=!tau2eff0, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
             if (con$hesspack == "pracma")
-               h.ML <- pracma::hessian(.dnchg, x0=res.ML$par, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=!tau2eff0, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
+               h.ML <- pracma::hessian(.dnchg, x0=res.ML$par, h=hessianCtrl$h, ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=!tau2eff0, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl)
             if (con$hesspack == "calculus")
-               h.ML <- calculus::hessian(.dnchg, var=res.ML$par, params=list(ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=!tau2eff0, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl))
+               h.ML <- calculus::hessian(.dnchg, var=res.ML$par, accuracy=hessianCtrl$accuracy, stepsize=hessianCtrl$stepsize, params=list(ai=ai, bi=bi, ci=ci, di=di, X.fit=X.fit, random=!tau2eff0, verbose=verbose, digits=digits, dnchgcalc=con$dnchgcalc, dnchgprec=con$dnchgprec, intCtrl=intCtrl))
             #return(list(res.ML, h.ML))
 
             ### log-likelihood
@@ -2562,7 +2582,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
       tmp <- gsub("\\), ref = \"[[:alnum:]]*\")", "", tmp)
       tmp <- gsub("poly(", "", tmp, fixed=TRUE)
       tmp <- gsub(", degree = [[:digit:]], raw = TRUE)", "^", tmp)
-      tmp <- gsub(", degree = [[:digit:]], raw = T)", "^", tmp)
+      tmp <- gsub(", degree = [[:digit:]], raw = TRUE)", "^", tmp)
       tmp <- gsub(", degree = [[:digit:]])", "^", tmp)
       tmp <- gsub("rcs\\([[:alnum:]]*, [[:digit:]]\\)", "", tmp)
       tmp <- gsub("factor(", "", tmp, fixed=TRUE)

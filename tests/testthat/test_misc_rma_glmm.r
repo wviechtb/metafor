@@ -107,13 +107,13 @@ test_that("rma.glmm() works correctly for 'CM.EL' model.", {
    skip_on_cran()
 
    expect_warning(res1  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL"))
-   expect_warning(res2  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="Nelder-Mead", hessianCtrl=list(d=0.00001))))
+   expect_warning(res2  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="Nelder-Mead", hessianCtrl=list(r=6, d=0.00001))))
    expect_warning(res3  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="BFGS")))
    expect_warning(res4  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="bobyqa")))
    expect_warning(res5  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="nloptr")))
    expect_warning(res6  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="hjk")))
-   expect_warning(res7  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="nmk", hessianCtrl=list(r=4))))
-   expect_warning(res8  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="mads", hessianCtrl=list(r=4))))
+   expect_warning(res7  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="nmk", hessianCtrl=list(r=2, d=0.000001))))
+   expect_warning(res8  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="mads", hessianCtrl=list(r=2, d=0.000001))))
    expect_warning(res9  <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="ucminf", optCtrl=list(xtol=1e-6))))
    expect_warning(res10 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="lbfgsb3c")))
    expect_warning(res11 <- rma.glmm(measure="OR", ai=ai, n1i=n1i, ci=ci, n2i=n2i, data=dat, model="CM.EL", control=list(optimizer="subplex", hessianCtrl=list(r=4))))
@@ -137,13 +137,13 @@ test_that("rma.glmm() works correctly for 'CM.EL' model.", {
    expect_equivalent(coef(res14), -1.353158, tolerance=.tol[["coef"]])
 
    expect_equivalent(c(vcov(res1)),  0.1232445, tolerance=.tol[["var"]])
-   expect_equivalent(c(vcov(res2)),  0.1227803, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res2)),  0.1205896, tolerance=.tol[["var"]])
    expect_equivalent(c(vcov(res3)),  0.1231863, tolerance=.tol[["var"]])
    expect_equivalent(c(vcov(res4)),  0.1231865, tolerance=.tol[["var"]])
    expect_equivalent(c(vcov(res5)),  0.1230846, tolerance=.tol[["var"]])
    expect_equivalent(c(vcov(res6)),  0.1231713, tolerance=.tol[["var"]])
-   expect_equivalent(c(vcov(res7)),  0.0412516, tolerance=.tol[["var"]]) # :(
-   expect_equivalent(c(vcov(res8)),  0.0404966, tolerance=.tol[["var"]]) # :(
+   expect_equivalent(c(vcov(res7)),  0.1216026, tolerance=.tol[["var"]])
+   expect_equivalent(c(vcov(res8)),  0.1229283, tolerance=.tol[["var"]])
    expect_equivalent(c(vcov(res9)),  0.1232442, tolerance=.tol[["var"]])
    expect_equivalent(c(vcov(res10)), 0.1232348, tolerance=.tol[["var"]])
    expect_equivalent(c(vcov(res11)), 0.0404973, tolerance=.tol[["var"]]) # :(

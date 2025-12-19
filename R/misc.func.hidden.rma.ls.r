@@ -23,14 +23,14 @@
 .ll.rma.ls <- function(par, yi, vi, X, Z, reml,
                        alpha.arg, beta.arg, omega2.arg, verbose, digits,
                        REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, omega2.transf,
-                       tau2.min, tau2.max, optbeta, reshet, mfmaxit) {
+                       tau2.min, tau2.max, optbeta, randhet, mfmaxit) {
 
    mstyle <- .get.mstyle()
 
    k <- length(yi)
    p <- ncol(X)
 
-   if (reshet) {
+   if (randhet) {
 
       omega2 <- par[length(par)]
 
@@ -86,9 +86,9 @@
       } else {
 
          if (omega2 <= sqrt(.Machine$double.eps))
-            reshet <- FALSE
+            randhet <- FALSE
 
-         if (reshet) {
+         if (randhet) {
 
             llcomp <- FALSE
 
@@ -171,7 +171,7 @@
       if (optbeta)
          cat(mstyle$verbose(paste0("  beta = ", paste(fmtx(beta,  digits[["est"]], flag=" "), collapse=" "))))
       cat(mstyle$verbose(paste0("  alpha = ",   paste(fmtx(alpha, digits[["est"]], flag=" "), collapse=" "))))
-      if (reshet)
+      if (randhet)
          cat(mstyle$verbose(paste0("  omega2 = ", paste(fmtx(omega2, digits[["var"]]), collapse=" "))))
       cat("\n")
    }
@@ -182,7 +182,7 @@
 
 }
 
-.rma.ls.ineqfun.pos <- function(par, yi, vi, X, Z, reml, alpha.arg, beta.arg, omega2.arg, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, omega2.transf, tau2.min, tau2.max, optbeta, reshet, mfmaxit) {
+.rma.ls.ineqfun.pos <- function(par, yi, vi, X, Z, reml, alpha.arg, beta.arg, omega2.arg, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, omega2.transf, tau2.min, tau2.max, optbeta, randhet, mfmaxit) {
 
    if (optbeta) {
       alpha <- par[-seq_len(ncol(X))]
@@ -201,7 +201,7 @@
 
 }
 
-.rma.ls.ineqfun.neg <- function(par, yi, vi, X, Z, reml, alpha.arg, beta.arg, omega2.arg, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, omega2.transf, tau2.min, tau2.max, optbeta, reshet, mfmaxit) {
+.rma.ls.ineqfun.neg <- function(par, yi, vi, X, Z, reml, alpha.arg, beta.arg, omega2.arg, verbose, digits, REMLf, link, mZ, alpha.min, alpha.max, alpha.transf, omega2.transf, tau2.min, tau2.max, optbeta, randhet, mfmaxit) {
 
    if (optbeta) {
       alpha <- par[-seq_len(ncol(X))]

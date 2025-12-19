@@ -243,11 +243,11 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
                parallel = list(),     # parallel argument for optimParallel() (note: 'cl' argument in parallel is not passed; this is directly specified via 'cl')
                cl = NULL,             # arguments for optimParallel()
                ncpus = 1L,            # arguments for optimParallel()
-               beta.fix = FALSE,      # fix beta in Hessian computation
-               tau2.fix = FALSE,      # fix tau2 in Hessian computation
-               delta.fix = FALSE,     # fix delta in Hessian computation
+               hes.beta.fix = FALSE,  # fix beta in Hessian computation
+               hes.tau2.fix = FALSE,  # fix tau2 in Hessian computation
+               hes.delta.fix = FALSE, # fix delta in Hessian computation
                htransf = FALSE,       # when FALSE, Hessian is computed directly for the delta and tau^2 estimates (e.g., we get Var(tau^2)); when TRUE, Hessian is computed for the transformed estimates (e.g., we get Var(log(tau2)))
-               hessianCtrl=list(r=6), # arguments passed on to 'method.args' of hessian()
+               hessianCtrl=NULL,      # arguments passed on to 'method.args' of hessian(); see [c]
                hesspack = "numDeriv", # package for computing the Hessian (numDeriv or pracma)
                scaleX = !betaspec)    # whether non-dummy variables in the X matrix should be rescaled before model fitting [a]
 
@@ -384,10 +384,25 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
       tau2.init <- log(con$tau2.init)
    }
 
+   ### checks on hesspack and hessianCtrl ([c])
+
    con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma","calculus"))
 
    if (!isTRUE(ddd$skiphes) && !requireNamespace(con$hesspack, quietly=TRUE))
       stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to compute the Hessian.")))
+
+   if (con$hesspack == "numDeriv") {
+      if (is.null(con$hessianCtrl$r))
+         con$hessianCtrl$r <- 6
+   }
+   if (con$hesspack == "pracma") {
+      if (is.null(con$hessianCtrl$h))
+         con$hessianCtrl$h <- .Machine$double.eps^(1/4)
+   }
+   if (con$hesspack == "calculus") {
+      if (is.null(con$hessianCtrl$accuracy))
+         con$hessianCtrl$accuracy <- 4
+   }
 
    ############################################################################
 
@@ -1080,26 +1095,26 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
 
    ############################################################################
 
-   ### computing (inverse) Hessian
+   ### computing the Hessian and its inverse
 
    H        <- NA_real_
    vb       <- matrix(NA_real_, nrow=p, ncol=p)
    se.tau2  <- NA_real_
    vd       <- matrix(NA_real_, nrow=deltas, ncol=deltas)
 
-   if (con$beta.fix) {
+   if (con$hes.beta.fix) {
       beta.hes <- c(beta)
    } else {
       beta.hes <- beta.arg
    }
 
-   if (con$tau2.fix || tau2 < con$tau2tol) {
+   if (con$hes.tau2.fix || tau2 < con$tau2tol) {
       tau2.hes <- tau2
    } else {
       tau2.hes <- tau2.arg
    }
 
-   if (con$delta.fix) {
+   if (con$hes.delta.fix) {
       delta.hes <- delta
    } else {
       if (type == "stepfun") {
@@ -1130,7 +1145,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
                alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n")
 
          if (con$hesspack == "pracma")
-            hescall <- paste0("pracma::hessian(", .selmodel.ll, ", x0=opt.res$par,
+            hescall <- paste0("pracma::hessian(", .selmodel.ll, ", x0=opt.res$par, h=con$hessianCtrl$h,
                yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
                deltas=deltas, delta.arg=delta.hes, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
                tau2.arg=tau2.hes, tau2.transf=TRUE, tau2.max=tau2.max, beta.arg=beta.hes,
@@ -1138,7 +1153,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
                alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n")
 
          if (con$hesspack == "calculus")
-            hescall <- paste0("calculus::hessian(", .selmodel.ll, ", var=c(opt.res$par),
+            hescall <- paste0("calculus::hessian(", .selmodel.ll, ", var=c(opt.res$par), accuracy=con$hessianCtrl$accuracy, stepsize=con$hessianCtrl$stepsize,
                params=list(yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
                deltas=deltas, delta.arg=delta.hes, delta.transf=TRUE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
                tau2.arg=tau2.hes, tau2.transf=TRUE, tau2.max=tau2.max, beta.arg=beta.hes,
@@ -1158,7 +1173,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
                alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n")
 
          if (con$hesspack == "pracma")
-            hescall <- paste0("pracma::hessian(", .selmodel.ll, ", x0=c(beta, tau2, delta),
+            hescall <- paste0("pracma::hessian(", .selmodel.ll, ", x0=c(beta, tau2, delta), h=con$hessianCtrl$h,
                yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
                deltas=deltas, delta.arg=delta.hes, delta.transf=FALSE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
                tau2.arg=tau2.hes, tau2.transf=FALSE, tau2.max=tau2.max, beta.arg=beta.hes,
@@ -1166,7 +1181,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
                alternative=alternative, pval.min=pval.min, intCtrl=intCtrl, verbose=ifelse(verbose > 3, verbose, 0), digits=digits)\n")
 
          if (con$hesspack == "calculus")
-            hescall <- paste0("calculus::hessian(", .selmodel.ll, ", var=c(beta, tau2, delta),
+            hescall <- paste0("calculus::hessian(", .selmodel.ll, ", var=c(beta, tau2, delta), accuracy=con$hessianCtrl$accuracy, stepsize=con$hessianCtrl$stepsize,
                params=list(yi=yi, vi=vi, X=X, preci=preci, subset=subset, k=k, pX=p, pvals=pvals,
                deltas=deltas, delta.arg=delta.hes, delta.transf=FALSE, mapfun=mapfun, delta.min=delta.min, delta.max=delta.max, decreasing=decreasing,
                tau2.arg=tau2.hes, tau2.transf=FALSE, tau2.max=tau2.max, beta.arg=beta.hes,
@@ -1177,7 +1192,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
 
       #return(hescall)
 
-      H <- try(eval(str2lang(hescall)), silent=F)
+      H <- try(eval(str2lang(hescall)), silent=TRUE)
 
       #return(H)
 

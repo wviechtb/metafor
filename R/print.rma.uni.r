@@ -310,7 +310,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
          rownames(res.table) <- paste0(formatC(seq_len(nrow(res.table)), format="d", width=width), ") ", rownames(res.table))
       }
 
-      if (x$reshet) {
+      if (x$randhet) {
          res.table.omega2 <- c(fmtx(x$omega2, digits[["var"]]), fmtx(x$se.omega2, digits[["se"]]), "---", "---", fmtx(x$ci.lb.omega2, digits[["ci"]]), fmtx(x$ci.ub.omega2, digits[["ci"]]))
          if (is.element(x$test, c("knha","adhoc","t")))
             res.table.omega2 <- c(res.table.omega2[1:2], "---", res.table.omega2[-(1:2)])

@@ -229,8 +229,8 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
                REMLf = TRUE,              # should the full REML likelihood be computed (including all constants)
                evtol = 1e-07,             # lower bound for eigenvalues to determine if the model matrix is positive definite
                nearpd = FALSE,            # to force the G, H, and M matrices to be positive definite
-               hessianCtrl = list(r=8),   # arguments passed on to 'method.args' of hessian()
-               hesstol = .Machine$double.eps^0.5, # threshold for detecting fixed elements in Hessian
+               hessianCtrl = NULL,        # arguments passed on to 'method.args' of hessian(); see [c]
+               hesstol = .Machine$double.eps^0.5, # threshold for detecting fixed elements in the Hessian
                hesspack = "numDeriv",     # package for computing the Hessian (numDeriv or pracma)
                check.k.gtr.1 = TRUE,      # check that s.nlevels > 1 and g.levels.k > 1
                mfmaxit = Inf)             # iteration limit (independent of the optimizer)
@@ -1890,10 +1890,25 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    reml <- ifelse(method == "REML", TRUE, FALSE)
 
+   ### checks on hesspack and hessianCtrl ([c])
+
    con$hesspack <- match.arg(con$hesspack, c("numDeriv","pracma","calculus"))
 
    if ((isTRUE(cvvc) || cvvc %in% c("varcor","varcov","transf") || optbeta) && !requireNamespace(con$hesspack, quietly=TRUE))
       stop(mstyle$stop(paste0("Please install the '", con$hesspack, "' package to compute the Hessian.")))
+
+   if (con$hesspack == "numDeriv") {
+      if (is.null(con$hessianCtrl$r))
+         con$hessianCtrl$r <- 8
+   }
+   if (con$hesspack == "pracma") {
+      if (is.null(con$hessianCtrl$h))
+         con$hessianCtrl$h <- .Machine$double.eps^(1/4)
+   }
+   if (con$hesspack == "calculus") {
+      if (is.null(con$hessianCtrl$accuracy))
+         con$hessianCtrl$accuracy <- 4
+   }
 
    ### check if length of sigma2.init, tau2.init, rho.init, gamma2.init, and phi.init matches the number of variance components
    ### note: if a particular component is not included, reset (transformed) initial values (in case the user still specified multiple initial values)
@@ -2163,7 +2178,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
       if (con$hesspack == "pracma")
          hessian <- try(pracma::hessian(f=.ll.rma.mv, x0=opt.res$par,
-            reml=reml, Y=Y, M=V, A=A, X=X, k=k, pX=p,
+            h=con$hessianCtrl$h, reml=reml, Y=Y, M=V, A=A, X=X, k=k, pX=p,
             D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
             sigma2.arg=sigma2, tau2.arg=tau2, rho.arg=rho, gamma2.arg=gamma2, phi.arg=phi, beta.arg=beta.arg,
             sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
@@ -2175,6 +2190,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
       if (con$hesspack == "calculus")
          hessian <- try(calculus::hessian(f=.ll.rma.mv, var=opt.res$par,
+            accuracy=con$hessianCtrl$accuracy, stepsize=con$hessianCtrl$stepsize,
             params = list(reml=reml, Y=Y, M=V, A=A, X=X, k=k, pX=p,
             D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
             sigma2.arg=sigma2, tau2.arg=tau2, rho.arg=rho, gamma2.arg=gamma2, phi.arg=phi, beta.arg=beta.arg,
@@ -2330,7 +2346,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       tmp <- gsub("\\), ref = \"[[:alnum:]]*\")", "", tmp)
       tmp <- gsub("poly(", "", tmp, fixed=TRUE)
       tmp <- gsub(", degree = [[:digit:]], raw = TRUE)", "^", tmp)
-      tmp <- gsub(", degree = [[:digit:]], raw = T)", "^", tmp)
+      tmp <- gsub(", degree = [[:digit:]], raw = TRUE)", "^", tmp)
       tmp <- gsub(", degree = [[:digit:]])", "^", tmp)
       tmp <- gsub("rcs\\([[:alnum:]]*, [[:digit:]]\\)", "", tmp)
       tmp <- gsub("factor(", "", tmp, fixed=TRUE)
@@ -2424,7 +2440,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
          if (con$hesspack == "pracma")
             hessian <- try(pracma::hessian(f=.ll.rma.mv, x0 = c(sigma2, tau2, cov1, gamma2, cov2),
-               reml=reml, Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
+               h=con$hessianCtrl$h, reml=reml, Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
                D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
                sigma2.arg=sigma2.arg, tau2.arg=tau2.arg, rho.arg=rho.arg, gamma2.arg=gamma2.arg, phi.arg=phi.arg, beta.arg=beta.arg,
                sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
@@ -2435,6 +2451,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
          if (con$hesspack == "calculus")
             hessian <- try(calculus::hessian(f=.ll.rma.mv, var = c(sigma2, tau2, cov1, gamma2, cov2),
+               accuracy=con$hessianCtrl$accuracy, stepsize=con$hessianCtrl$stepsize,
                params=list(reml=reml, Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
                D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
                sigma2.arg=sigma2.arg, tau2.arg=tau2.arg, rho.arg=rho.arg, gamma2.arg=gamma2.arg, phi.arg=phi.arg, beta.arg=beta.arg,
@@ -2462,7 +2479,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
          if (con$hesspack == "pracma")
             hessian <- try(pracma::hessian(f=.ll.rma.mv, x0 = if (cvvc=="transf") opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
-               reml=reml, Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
+               h=con$hessianCtrl$h, reml=reml, Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
                D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
                sigma2.arg=sigma2.arg, tau2.arg=tau2.arg, rho.arg=rho.arg, gamma2.arg=gamma2.arg, phi.arg=phi.arg, beta.arg=beta.arg,
                sigma2s=sigma2s, tau2s=tau2s, rhos=rhos, gamma2s=gamma2s, phis=phis,
@@ -2474,6 +2491,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
          if (con$hesspack == "calculus")
             hessian <- try(calculus::hessian(f=.ll.rma.mv, var = if (cvvc=="transf") opt.res$par else c(sigma2, tau2, rho, gamma2, phi),
+               accuracy=con$hessianCtrl$accuracy, stepsize=con$hessianCtrl$stepsize,
                params=list(reml=reml, Y=Y, M=V, A=NULL, X=X, k=k, pX=p,
                D.S=D.S, Z.G1=Z.G1, Z.G2=Z.G2, Z.H1=Z.H1, Z.H2=Z.H2, g.Dmat=g.Dmat, h.Dmat=h.Dmat,
                sigma2.arg=sigma2.arg, tau2.arg=tau2.arg, rho.arg=rho.arg, gamma2.arg=gamma2.arg, phi.arg=phi.arg, beta.arg=beta.arg,

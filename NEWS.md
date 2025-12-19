@@ -1,4 +1,4 @@
-# metafor 4.9-28 (2025-12-18)
+# metafor 4.9-29 (2025-12-19)
 
 - argument `legend` can now be a list for `funnel()`, `labbe()`, `regplot()`, and `plot.permutest.rma.uni()` for more control over the look of the legend
 
@@ -25,6 +25,8 @@
 - all `addpoly()` functions now respect `alim` and `olim` as set by `forest()`
 
 - some functions (e.g., `vcalc()` and `rcalc()`) can now return variance-covariances matrices as objects of class `"vcovmat"`; these are printed nicely with `print.vcovmat()`
+
+- `rma()` nows calculates R^2 as long as a standard random-effects model is nested within the fitted mixed-effects model
 
 - added some more transformation functions
 
