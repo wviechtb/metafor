@@ -45,7 +45,9 @@ transf.ztor.int <- function(xi, targs=NULL) {
 
    targs <- .chktargsint(targs)
 
-   tau <- sqrt(targs$tau2)
+   tau2 <- targs$tau2
+   tau2[tau2 < .Machine$double.eps] <- 0
+   tau <- sqrt(tau2)
 
    if (is.null(targs$lower))
       targs$lower <- xi-10*tau
@@ -64,7 +66,7 @@ transf.ztor.int <- function(xi, targs=NULL) {
       }
    }
 
-   if (targs$tau2 == 0) {
+   if (tau2 == 0) {
       zi <- transf.ztor(xi)
    } else {
       zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
@@ -78,6 +80,7 @@ transf.ztor.mode <- function(xi, targs=NULL) {
 
    if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
       stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
+
    if (is.list(targs)) {
       tau2 <- targs$tau2
    } else {
@@ -90,6 +93,7 @@ transf.ztor.mode <- function(xi, targs=NULL) {
    if (tau2 < 0)
       stop("Value of 'tau2' must be >= 0 to use this transformation function.", call.=FALSE)
 
+   tau2[tau2 < .Machine$double.eps] <- 0
    tau <- sqrt(tau2)
 
    dfun <- function(x, mu, tau)
@@ -127,7 +131,9 @@ transf.ztor2 <- function(xi)
 #
 #   targs <- .chktargsint(targs)
 #
-#   tau <- sqrt(targs$tau2)
+#   tau2 <- targs$tau2
+#   tau2[tau2 < .Machine$double.eps] <- 0
+#   tau <- sqrt(tau2)
 #
 #   if (is.null(targs$lower))
 #      targs$lower <- xi-10*tau
@@ -146,7 +152,7 @@ transf.ztor2 <- function(xi)
 #      }
 #   }
 #
-#   if (targs$tau2 == 0) {
+#   if (tau2 == 0) {
 #      zi <- exp(xi)
 #   } else {
 #      zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
@@ -165,6 +171,7 @@ transf.exp.mode <- function(xi, targs=NULL) {
 
    if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
       stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
+
    if (is.list(targs)) {
       tau2 <- targs$tau2
    } else {
@@ -176,6 +183,8 @@ transf.exp.mode <- function(xi, targs=NULL) {
 
    if (tau2 < 0)
       stop("Value of 'tau2' must be >= 0 to use this transformation function.", call.=FALSE)
+
+   tau2[tau2 < .Machine$double.eps] <- 0
 
    return(c(exp(xi - tau2)))
 
@@ -193,7 +202,9 @@ transf.ilogit.int <- function(xi, targs=NULL) {
 
    targs <- .chktargsint(targs)
 
-   tau <- sqrt(targs$tau2)
+   tau2 <- targs$tau2
+   tau2[tau2 < .Machine$double.eps] <- 0
+   tau <- sqrt(tau2)
 
    if (is.null(targs$lower))
       targs$lower <- xi-10*tau
@@ -212,7 +223,7 @@ transf.ilogit.int <- function(xi, targs=NULL) {
       }
    }
 
-   if (targs$tau2 == 0) {
+   if (tau2 == 0) {
       zi <- transf.ilogit(xi)
    } else {
       zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
@@ -226,6 +237,7 @@ transf.ilogit.mode <- function(xi, targs=NULL) {
 
    if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
       stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
+
    if (is.list(targs)) {
       tau2 <- targs$tau2
    } else {
@@ -238,6 +250,7 @@ transf.ilogit.mode <- function(xi, targs=NULL) {
    if (tau2 < 0)
       stop("Value of 'tau2' must be >= 0 to use this transformation function.", call.=FALSE)
 
+   tau2[tau2 < .Machine$double.eps] <- 0
    tau <- sqrt(tau2)
 
    xs <- seq(0, 1, length=10^5)
@@ -282,6 +295,10 @@ transf.iarcsin.int <- function(xi, targs=NULL) {
 
    targs <- .chktargsint(targs)
 
+   tau2 <- targs$tau2
+   tau2[tau2 < .Machine$double.eps] <- 0
+   tau <- sqrt(tau2)
+
    tau <- sqrt(targs$tau2)
 
    if (is.null(targs$lower))
@@ -301,7 +318,7 @@ transf.iarcsin.int <- function(xi, targs=NULL) {
       }
    }
 
-   if (targs$tau2 == 0) {
+   if (tau2 == 0) {
       zi <- transf.iarcsin(xi)
    } else {
       zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
@@ -323,6 +340,7 @@ transf.iarcsin.mode <- function(xi, targs=NULL) {
 
    if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
       stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
+
    if (is.list(targs)) {
       tau2 <- targs$tau2
    } else {
@@ -335,6 +353,7 @@ transf.iarcsin.mode <- function(xi, targs=NULL) {
    if (tau2 < 0)
       stop("Value of 'tau2' must be >= 0 to use this transformation function.", call.=FALSE)
 
+   tau2[tau2 < .Machine$double.eps] <- 0
    tau <- sqrt(tau2)
 
    dfun <- function(x, mu, tau)
@@ -367,6 +386,10 @@ transf.iprobit.int <- function(xi, targs=NULL) {
 
    targs <- .chktargsint(targs)
 
+   tau2 <- targs$tau2
+   tau2[tau2 < .Machine$double.eps] <- 0
+   tau <- sqrt(tau2)
+
    tau <- sqrt(targs$tau2)
 
    if (is.null(targs$lower))
@@ -386,7 +409,7 @@ transf.iprobit.int <- function(xi, targs=NULL) {
       }
    }
 
-   if (targs$tau2 == 0) {
+   if (tau2 == 0) {
       zi <- pnorm(xi)
    } else {
       zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
@@ -400,6 +423,7 @@ transf.iprobit.mode <- function(xi, targs=NULL) {
 
    if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
       stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
+
    if (is.list(targs)) {
       tau2 <- targs$tau2
    } else {
@@ -412,6 +436,7 @@ transf.iprobit.mode <- function(xi, targs=NULL) {
    if (tau2 < 0)
       stop("Value of 'tau2' must be >= 0 to use this transformation function.", call.=FALSE)
 
+   tau2[tau2 < .Machine$double.eps] <- 0
    tau <- sqrt(tau2)
 
    dfun <- function(x, mu, tau)
@@ -509,7 +534,9 @@ transf.iahw.int <- function(xi, targs=NULL) {
 
    targs <- .chktargsint(targs)
 
-   tau <- sqrt(targs$tau2)
+   tau2 <- targs$tau2
+   tau2[tau2 < .Machine$double.eps] <- 0
+   tau <- sqrt(tau2)
 
    if (is.null(targs$lower))
       targs$lower <- 0
@@ -528,7 +555,7 @@ transf.iahw.int <- function(xi, targs=NULL) {
       }
    }
 
-   if (targs$tau2 == 0) {
+   if (tau2 == 0) {
       zi <- transf.ztor(xi)
    } else {
       zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
@@ -550,6 +577,7 @@ transf.iahw.mode <- function(xi, targs=NULL) {
 
    if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
       stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
+
    if (is.list(targs)) {
       tau2 <- targs$tau2
    } else {
@@ -562,6 +590,7 @@ transf.iahw.mode <- function(xi, targs=NULL) {
    if (tau2 < 0)
       stop("Value of 'tau2' must be >= 0 to use this transformation function.", call.=FALSE)
 
+   tau2[tau2 < .Machine$double.eps] <- 0
    tau <- sqrt(tau2)
 
    dfun <- function(x, mu, tau)
@@ -604,7 +633,9 @@ transf.iabt.int <- function(xi, targs=NULL) {
 
    targs <- .chktargsint(targs)
 
-   tau <- sqrt(targs$tau2)
+   tau2 <- targs$tau2
+   tau2[tau2 < .Machine$double.eps] <- 0
+   tau <- sqrt(tau2)
 
    if (is.null(targs$lower))
       targs$lower <- 0
@@ -623,7 +654,7 @@ transf.iabt.int <- function(xi, targs=NULL) {
       }
    }
 
-   if (targs$tau2 == 0) {
+   if (tau2 == 0) {
       zi <- transf.ztor(xi)
    } else {
       zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
@@ -645,6 +676,7 @@ transf.iabt.mode <- function(xi, targs=NULL) {
 
    if (is.null(targs) || (is.list(targs) && is.null(targs$tau2)))
       stop("Must specify a 'tau2' value via the 'targs' argument.", call.=FALSE)
+
    if (is.list(targs)) {
       tau2 <- targs$tau2
    } else {
@@ -657,6 +689,7 @@ transf.iabt.mode <- function(xi, targs=NULL) {
    if (tau2 < 0)
       stop("Value of 'tau2' must be >= 0 to use this transformation function.", call.=FALSE)
 
+   tau2[tau2 < .Machine$double.eps] <- 0
    tau <- sqrt(tau2)
 
    dfun <- function(x, mu, tau)
@@ -705,7 +738,9 @@ transf.dtocles.int <- function(xi, targs=NULL) {
 
    targs <- .chktargsint(targs)
 
-   tau <- sqrt(targs$tau2)
+   tau2 <- targs$tau2
+   tau2[tau2 < .Machine$double.eps] <- 0
+   tau <- sqrt(tau2)
 
    if (is.null(targs$lower))
       targs$lower <- xi-10*tau
@@ -724,7 +759,7 @@ transf.dtocles.int <- function(xi, targs=NULL) {
       }
    }
 
-   if (targs$tau2 == 0) {
+   if (tau2 == 0) {
       zi <- transf.dtocles(xi)
    } else {
       zi <- mapply(xi, FUN=cfunc, tau=tau, lower=targs$lower, upper=targs$upper)
