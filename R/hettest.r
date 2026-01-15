@@ -16,7 +16,9 @@ hettest <- function(x, vi, sei, subset, data,
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    test <- tolower(test)
-   test <- match.arg(test, c("score", "lrt"))
+   test <- match.arg(test, c("score", "lrt", "wald"))
+
+   method <- match.arg(method, c("ML", "REML"))
 
    #########################################################################
 
@@ -279,12 +281,49 @@ hettest <- function(x, vi, sei, subset, data,
 
       }
 
+      if (test == "wald") {
+
+         out <- .hettest.wald(yi, vi, method=method, res0=res0, mom=mom)
+
+         x2   <- out$statistic
+         df   <- out$df
+         pval <- out$pval
+
+         if (boot) {
+
+            if (progbar)
+               pbar <- pbapply::startpb(min=0, max=iter)
+
+            for (b in seq_len(iter)) {
+
+               if (progbar)
+                  pbapply::setpb(pbar, b)
+
+               tmp <- try(rma(sim[,b], vi, method=method), silent=TRUE)
+
+               if (inherits(tmp, "try-error"))
+                  next
+
+               tmp <- .hettest.wald(sim[,b], vi, method=method, res0=tmp, mom=mom)
+               x2.boot[b] <- tmp$statistic
+
+            }
+
+            if (progbar)
+               pbapply::closepb(pbar)
+
+            pval <- mean(x2.boot >= x2, na.rm=TRUE)
+
+         }
+
+      }
+
       res <- list(x2=x2, df=df, pval=pval, digits=digits)
 
       if (boot)
          res$x2.boot <- x2.boot
 
-      if (test == "lrt")
+      if (test %in% c("lrt","wald"))
          res$tau2i <- out$tau2i
 
       class(res) <- "hettest"

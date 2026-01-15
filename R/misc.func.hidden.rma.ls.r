@@ -69,7 +69,7 @@
       tau2 <- c(Z %*% alpha)
    }
 
-   if (any(is.na(tau2)) || any(tau2 < tau2.min) || any(tau2 > tau2.max) || is.na(omega2)) {
+   if (anyNA(tau2) || any(tau2 < tau2.min) || any(tau2 > tau2.max) || is.na(omega2)) {
 
       llval <- -Inf
       llcomp <- FALSE

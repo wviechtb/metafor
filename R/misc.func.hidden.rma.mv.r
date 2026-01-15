@@ -199,9 +199,9 @@
          Z.G1 <- cbind(rep(1,k))
       } else {
          if (sparse) {
-            Z.G1 <- sparse.model.matrix(~ mf.g[[1]] - 1)
+            Z.G1 <- sparse.model.matrix(~ 0 + mf.g[[1]])
          } else {
-            Z.G1 <- model.matrix(~ mf.g[[1]] - 1)
+            Z.G1 <- model.matrix(~ 0 + mf.g[[1]])
          }
       }
 
@@ -231,9 +231,9 @@
       Z.G2 <- cbind(rep(1,k))
    } else {
       if (sparse) {
-         Z.G2 <- sparse.model.matrix(~ mf.g[[nvars]] - 1)
+         Z.G2 <- sparse.model.matrix(~ 0 + mf.g[[nvars]])
       } else {
-         Z.G2 <- model.matrix(~ mf.g[[nvars]] - 1)
+         Z.G2 <- model.matrix(~ 0 + mf.g[[nvars]])
       }
    }
 

@@ -936,7 +936,7 @@ selmodel.rma.uni <- function(x, type, alternative="greater", prec, subset, delta
          return(ptable)
 
       if (any(ptable[["k"]] == 0L)) {
-         if (!isTRUE(ddd$skipintcheck) && type == "stepfun" && any(is.na(delta[-1])))
+         if (!isTRUE(ddd$skipintcheck) && type == "stepfun" && anyNA(delta[-1]))
             warning(mstyle$warning(paste0("One or more intervals do not contain any observed p-values.")), call.=FALSE)
          if (!isTRUE(ddd$skipintcheck) && type != "stepfun")
             warning(mstyle$warning(paste0("One of the intervals does not contain any observed p-values.")), call.=FALSE)

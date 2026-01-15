@@ -51,8 +51,12 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
-   if (missing(tau2))
+   if (missing(tau2)) {
       tau2 <- NULL
+   } else {
+      if (length(tau2) != 1L)
+         stop(mstyle$stop("Argument 'tau2' must be a scalar."))
+   }
 
    if (missing(control))
       control <- list()
@@ -818,7 +822,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
          if (!.all.specified(n1i, n2i))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments."))
 
-         k.all <- max(sapply(list(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi, ai), length))
+         k.all <- max(lengths(list(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi, ai)))
 
          vtype <- .expand1(vtype, k.all)
 
@@ -1169,7 +1173,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    # note: need to save 'coef.na' for functions that modify the data/model and then refit the model (regtest() and the
    # various function that leave out an observation); so we can check if there are redundant/dropped predictors then
 
-   tmp <- try(lm(yi ~ X - 1), silent=TRUE)
+   tmp <- try(lm(yi ~ 0 + X), silent=TRUE)
    if (inherits(tmp, "lm")) {
       coef.na <- is.na(coef(tmp))
    } else {
@@ -1965,7 +1969,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       # drop redundant predictors
 
-      tmp <- try(lm(yi ~ Z - 1), silent=TRUE)
+      tmp <- try(lm(yi ~ 0 + Z), silent=TRUE)
       if (inherits(tmp, "lm")) {
          coef.na.Z <- is.na(coef(tmp))
       } else {

@@ -1337,7 +1337,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    ### note: need to save coef.na for functions that modify the data/model and then refit the model (regtest() and the
    ### various function that leave out an observation); so we can check if there are redundant/dropped predictors then
 
-   tmp <- try(lm(yi ~ X - 1), silent=TRUE)
+   tmp <- try(lm(yi ~ 0 + X), silent=TRUE)
    if (inherits(tmp, "try-error")) {
       stop(mstyle$stop("Error in check for redundant predictors."))
    } else {
@@ -1448,9 +1448,9 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
             Z.S[[j]] <- cbind(rep(1,k))
          } else {
             if (sparse) {
-               Z.S[[j]] <- sparse.model.matrix(~ mf.s[[j]] - 1) # cannot use this for factors with a single level
+               Z.S[[j]] <- sparse.model.matrix(~ 0 + mf.s[[j]]) # cannot use this for factors with a single level
             } else {
-               Z.S[[j]] <- model.matrix(~ mf.s[[j]] - 1) # cannot use this for factors with a single level
+               Z.S[[j]] <- model.matrix(~ 0 + mf.s[[j]]) # cannot use this for factors with a single level
             }
          }
          attr(Z.S[[j]], "assign")    <- NULL
@@ -1644,7 +1644,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
       ### note: if V is sparse diagonal with 0 along the diagonal, U will not be a 'try-error'
       ### but have Inf along the diagonal, so need to check for this as well
 
-      total <- sigma(lm(Y ~ X - 1))^2
+      total <- sigma(lm(Y ~ 0 + X))^2
 
       if (is.na(total)) # if X is a saturated model, then sigma() yields NaN
          total <- var(as.vector(Y)) / 100

@@ -47,6 +47,53 @@
 
 }
 
+.hettest.wald <- function(yi, vi, method, res0, mom) {
+
+   k <- length(yi)
+
+   if (mom) {
+      hi <- hatvalues(res0)
+      vari <- resid(res0)^2 / (1-hi)
+      tau2i <- pmax(0, vari - vi)
+   } else {
+      tau2i <- try(.hettest.esttau2i(yi, vi, method=method), silent=TRUE)
+   }
+
+   if (inherits(tau2i, "try-error"))
+      stop(mstyle$stop("Could not estimate the tau^2_i values."))
+
+   out <- 1
+
+   if (method == "ML") {
+      V <- diag(2 * (tau2i + vi)^2)
+   } else {
+      wi <- 1 / (tau2i + vi)
+      sumwi <- sum(wi)
+      V <- matrix(NA_real_, nrow=k, ncol=k)
+      for (i in 1:k) {
+         for (j in 1:k) {
+            V[i,j] <- 1 / (2 * sumwi^2 * (tau2i[i] + vi[i])^2 * (tau2i[j] + vi[j])^2)
+         }
+      }
+      diag(V) <- (tau2i + vi - 1/sumwi)^2 / (2 * (tau2i + vi)^4)
+   }
+   X <- -diag(k)
+   X[,out] <- 1
+   X <- X[-out,]
+   tau2i.diff <- c(X %*% tau2i)
+   V.diff <- X %*% V %*% t(X)
+   W.diff <- try(solve(V.diff), silent=TRUE)
+   if (inherits(W.diff, "try-error")) {
+      x2 <- NA
+   } else {
+      x2 <- c(tau2i.diff %*% W.diff %*% tau2i.diff)
+   }
+   pval <- pchisq(x2, df=k-1, lower.tail=FALSE)
+
+   return(list(statistic=x2, df=k-1, pval=pval, tau2i=tau2i))
+
+}
+
 .hettest.esttau2i <- function(yi, vi, method) {
 
    k <- length(yi)
@@ -60,7 +107,7 @@
          conv <- 0
       }
       tau2i.old <- tau2i
-      wi <- 1/(tau2i + vi)
+      wi <- 1 / (tau2i + vi)
       sumwi <- sum(wi)
       mu_hat <- sum(wi*yi) / sumwi
       if (method == "ML") {

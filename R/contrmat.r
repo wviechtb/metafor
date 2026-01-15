@@ -139,7 +139,7 @@ contrmat <- function(data, grp1, grp2, last, shorten=FALSE, minlen=2, check=TRUE
 
    # create contrast matrix
 
-   X <- model.matrix(~ grp1 - 1, contrasts.arg = list(grp1 = "contr.treatment")) - model.matrix(~ grp2 - 1, contrasts.arg = list(grp2 = "contr.treatment"))
+   X <- model.matrix(~ 0 + grp1, contrasts.arg = list(grp1 = "contr.treatment")) - model.matrix(~ 0 + grp2, contrasts.arg = list(grp2 = "contr.treatment"))
    attr(X, "assign") <- NULL
    attr(X, "contrasts") <- NULL
 

@@ -242,7 +242,7 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
 
    ### check if X of full rank (if not, cannot carry out the test)
 
-   tmp <- lm(yi ~ X - 1)
+   tmp <- lm(yi ~ 0 + X)
    coef.na <- is.na(coef(tmp))
    if (any(coef.na))
       stop(mstyle$stop("Model matrix no longer of full rank after addition of predictor. Cannot fit model."))
@@ -262,7 +262,7 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
    } else {
 
       yi   <- c(yi) # remove attributes
-      fit  <- lm(yi ~ X - 1, weights=1/vi)
+      fit  <- lm(yi ~ 0 + X, weights=1/vi)
       tmp  <- summary(fit)
       zval <- coef(tmp)[p+1,3]
       pval <- coef(tmp)[p+1,4]

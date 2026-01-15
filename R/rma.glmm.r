@@ -564,7 +564,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
    ### drop redundant predictors
    ### note: yi may have become shorter than X due to the omission of NAs, so just use a fake yi vector here
 
-   tmp <- lm(rep(0,k) ~ X - 1)
+   tmp <- lm(rep(0,k) ~ 0 + X)
    coef.na <- is.na(coef(tmp))
    if (any(coef.na)) {
       warning(mstyle$warning("Redundant predictors dropped from the model."), call.=FALSE)
@@ -574,7 +574,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    ### need to do this separately for X.yi, since model matrix may have fewer rows due to removal of NA/NA pairs for yi/vi
 
-   tmp <- lm(yi ~ X.yi - 1)
+   tmp <- lm(yi ~ 0 + X.yi)
    coef.na <- is.na(coef(tmp))
    if (any(coef.na))
       X.yi <- X.yi[,!coef.na,drop=FALSE]
@@ -1001,9 +1001,9 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                message(mstyle$message("Fitting the FE model ..."))
 
             if (k > 1) {
-               res.FE <- try(glm(dat.grp ~ -1 + X.fit + study, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
+               res.FE <- try(glm(dat.grp ~ 0 + X.fit + study, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
             } else {
-               res.FE <- try(glm(dat.grp ~ -1 + X.fit + const, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
+               res.FE <- try(glm(dat.grp ~ 0 + X.fit + const, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
             }
 
             if (inherits(res.FE, "try-error"))
@@ -1026,8 +1026,8 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                   message(mstyle$message("Fitting the saturated model ..."))
 
                if (k > 1) {
-                  X.QE   <- model.matrix(~ -1 + X.fit + study + study:group1)
-                  res.QE <- try(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
+                  X.QE   <- model.matrix(~ 0 + X.fit + study + study:group1)
+                  res.QE <- try(glm(dat.grp ~ 0 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
                } else {
                   res.QE <- res.FE
                }
@@ -1064,27 +1064,27 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
                if (package == "lme4") {
                   if (verbose) {
-                     res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + study + (group - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+                     res.ML <- try(lme4::glmer(dat.grp ~ 0 + X.fit + study + (0 + group | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
                   } else {
-                     res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + study + (group - 1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+                     res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ 0 + X.fit + study + (0 + group | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
                   }
                }
 
                if (package == "GLMMadaptive") {
                   if (is.element(measure, c("OR","RR","RD"))) {
                      dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study, group=group)
-                     res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + study, random = ~ group - 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+                     res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ 0 + X.fit + study, random = ~ 0 + group | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
                   } else {
                      dat.mm <- data.frame(xi=dat.grp, study=study, group=group)
-                     res.ML <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + study + offset(dat.off), random = ~ group - 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+                     res.ML <- try(GLMMadaptive::mixed_model(xi ~ 0 + X.fit + study + offset(dat.off), random = ~ 0 + group | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
                   }
                }
 
                if (package == "glmmTMB") {
                   if (verbose) {
-                     res.ML <- try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + study + (group - 1 | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
+                     res.ML <- try(glmmTMB::glmmTMB(dat.grp ~ 0 + X.fit + study + (0 + group | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
                   } else {
-                     res.ML <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + study + (group - 1 | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
+                     res.ML <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ 0 + X.fit + study + (0 + group | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
                   }
                }
 
@@ -1167,27 +1167,27 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
             if (package == "lme4") {
                if (verbose) {
-                  res.FE <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+                  res.FE <- try(lme4::glmer(dat.grp ~ 0 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
                } else {
-                  res.FE <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+                  res.FE <- suppressMessages(try(lme4::glmer(dat.grp ~ 0 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
                }
             }
 
             if (package == "GLMMadaptive") {
                if (is.element(measure, c("OR","RR","RD"))) {
                   dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study, const=const)
-                  res.FE <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + const, random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+                  res.FE <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ 0 + X.fit + const, random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
                } else {
                   dat.mm <- data.frame(xi=dat.grp, study=study, const=const)
-                  res.FE <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + const + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+                  res.FE <- try(GLMMadaptive::mixed_model(xi ~ 0 + X.fit + const + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
                }
             }
 
             if (package == "glmmTMB") {
                if (verbose) {
-                  res.FE <- try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
+                  res.FE <- try(glmmTMB::glmmTMB(dat.grp ~ 0 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
                } else {
-                  res.FE <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
+                  res.FE <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ 0 + X.fit + const + (1 | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
                }
             }
 
@@ -1212,15 +1212,15 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
                if (k > 1) {
 
-                  X.QE   <- model.matrix(~ -1 + X.fit + const + study:group1)
-                  res.QE <- try(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl), silent=TRUE)
+                  X.QE   <- model.matrix(~ 0 + X.fit + const + study:group1)
+                  res.QE <- try(glm(dat.grp ~ 0 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl), silent=TRUE)
                   X.QE   <- X.QE[,!is.na(coef(res.QE)),drop=FALSE]
 
                   if (package == "lme4") {
                      if (verbose) {
-                        res.QE <- try(lme4::glmer(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])), nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+                        res.QE <- try(lme4::glmer(dat.grp ~ 0 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])), nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
                      } else {
-                        res.QE <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])), nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+                        res.QE <- suppressMessages(try(lme4::glmer(dat.grp ~ 0 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=c(sqrt(lme4::VarCorr(res.FE)[[1]][1])), nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
                      }
                   }
 
@@ -1228,18 +1228,18 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                      glmerCtrl$max_coef_value <- 50
                      if (is.element(measure, c("OR","RR","RD"))) {
                         dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study)
-                        res.QE <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.QE, random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl, initial_values=list(D=matrix(res.FE$D[1,1]))), silent=!verbose)
+                        res.QE <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ 0 + X.QE, random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl, initial_values=list(D=matrix(res.FE$D[1,1]))), silent=!verbose)
                      } else {
                         dat.mm <- data.frame(xi=dat.grp, study=study)
-                        res.QE <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.QE + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+                        res.QE <- try(GLMMadaptive::mixed_model(xi ~ 0 + X.QE + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
                      }
                   }
 
                   if (package == "glmmTMB") {
                      if (verbose) {
-                        res.QE <- try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=list(theta=sqrt(glmmTMB::VarCorr(res.FE)[[1]][[1]][[1]])), verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
+                        res.QE <- try(glmmTMB::glmmTMB(dat.grp ~ 0 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=list(theta=sqrt(glmmTMB::VarCorr(res.FE)[[1]][[1]][[1]])), verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
                      } else {
-                        res.QE <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=list(theta=sqrt(glmmTMB::VarCorr(res.FE)[[1]][[1]][[1]])), verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
+                        res.QE <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ 0 + X.QE + (1 | study), offset=dat.off, family=dat.fam, start=list(theta=sqrt(glmmTMB::VarCorr(res.FE)[[1]][[1]][[1]])), verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
                      }
                   }
 
@@ -1294,15 +1294,15 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                if (package == "lme4") {
                   if (verbose) {
                      if (cor) {
-                        res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (group | study),  offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+                        res.ML <- try(lme4::glmer(dat.grp ~ 0 + X.fit + const + (group | study),  offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
                      } else {
-                        res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (group || study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+                        res.ML <- try(lme4::glmer(dat.grp ~ 0 + X.fit + const + (group || study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
                      }
                   } else {
                      if (cor) {
-                        res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (group | study),  offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+                        res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ 0 + X.fit + const + (group | study),  offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
                      } else {
-                        res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + const + (group || study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+                        res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ 0 + X.fit + const + (group || study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
                      }
                   }
                }
@@ -1311,16 +1311,16 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                   if (is.element(measure, c("OR","RR","RD"))) {
                      dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study, const=const, group=group)
                      if (cor) {
-                        res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + const, random = ~ group | study,  data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+                        res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ 0 + X.fit + const, random = ~ group | study,  data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
                      } else {
-                        res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + const, random = ~ group || study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+                        res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ 0 + X.fit + const, random = ~ group || study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
                      }
                   } else {
                      dat.mm <- data.frame(xi=dat.grp, study=study, const=const, group=group)
                      if (cor) {
-                        res.ML <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + const + offset(dat.off), random = ~ group | study,  data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+                        res.ML <- try(GLMMadaptive::mixed_model(xi ~ 0 + X.fit + const + offset(dat.off), random = ~ group | study,  data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
                      } else {
-                        res.ML <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + const + offset(dat.off), random = ~ group || study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+                        res.ML <- try(GLMMadaptive::mixed_model(xi ~ 0 + X.fit + const + offset(dat.off), random = ~ group || study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
                      }
                   }
                }
@@ -1328,15 +1328,15 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                if (package == "glmmTMB") {
                   if (verbose) {
                      if (cor) {
-                        res.ML <- try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + const + (group | study),                   offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
+                        res.ML <- try(glmmTMB::glmmTMB(dat.grp ~ 0 + X.fit + const + (group | study),                   offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
                      } else {
-                        res.ML <- try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + const + (1 | study) + (group - 1 | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
+                        res.ML <- try(glmmTMB::glmmTMB(dat.grp ~ 0 + X.fit + const + (1 | study) + (0 + group | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
                      }
                   } else {
                      if (cor) {
-                        res.ML <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + const + (group | study),                   offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
+                        res.ML <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ 0 + X.fit + const + (group | study),                   offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
                      } else {
-                        res.ML <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + const + (1 | study) + (group - 1 | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
+                        res.ML <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ 0 + X.fit + const + (1 | study) + (0 + group | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
                      }
                   }
                }
@@ -1464,7 +1464,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
          if (verbose)
             message(mstyle$message("Fitting the FE model ..."))
 
-         res.FE <- try(glm(dat.grp ~ -1 + X.fit, offset=dat.off, family=binomial, control=glmCtrl), silent=!verbose)
+         res.FE <- try(glm(dat.grp ~ 0 + X.fit, offset=dat.off, family=binomial, control=glmCtrl), silent=!verbose)
 
          if (inherits(res.FE, "try-error"))
             stop(mstyle$stop(paste0("Cannot fit FE model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))))
@@ -1486,8 +1486,8 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                message(mstyle$message("Fitting the saturated model ..."))
 
             if (k > 1) {
-               X.QE   <- model.matrix(~ -1 + X.fit + study)
-               res.QE <- try(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=binomial, control=glmCtrl), silent=!verbose)
+               X.QE   <- model.matrix(~ 0 + X.fit + study)
+               res.QE <- try(glm(dat.grp ~ 0 + X.QE, offset=dat.off, family=binomial, control=glmCtrl), silent=!verbose)
             } else {
                res.QE <- res.FE
             }
@@ -1529,22 +1529,22 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
             if (package == "lme4") {
                if (verbose) {
-                  res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=binomial, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+                  res.ML <- try(lme4::glmer(dat.grp ~ 0 + X.fit + (1 | study), offset=dat.off, family=binomial, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
                } else {
-                  res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=binomial, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+                  res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ 0 + X.fit + (1 | study), offset=dat.off, family=binomial, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
                }
             }
 
             if (package == "GLMMadaptive") {
                dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study)
-               res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=binomial, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+               res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ 0 + X.fit + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=binomial, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
             }
 
             if (package == "glmmTMB") {
                if (verbose) {
-                  res.ML <- try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=binomial, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
+                  res.ML <- try(glmmTMB::glmmTMB(dat.grp ~ 0 + X.fit + (1 | study), offset=dat.off, family=binomial, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
                } else {
-                  res.ML <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=binomial, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
+                  res.ML <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ 0 + X.fit + (1 | study), offset=dat.off, family=binomial, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
                }
             }
 
@@ -2027,7 +2027,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
                b.QE <- coef(res.QE, complete=TRUE) # res.QE is from CM.AL model
                is.aliased <- is.na(b.QE)
 
-               X.QE.l <- model.matrix(~ -1 + X.fit.l + study.l:group1)
+               X.QE.l <- model.matrix(~ 0 + X.fit.l + study.l:group1)
                X.QE.l <- X.QE.l[,!is.aliased,drop=FALSE]
                X.QE   <- X.QE[,!is.aliased,drop=FALSE]
 
@@ -2311,7 +2311,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
       if (verbose)
          message(mstyle$message("Fitting the FE model ..."))
 
-      res.FE <- try(glm(dat.grp ~ -1 + X.fit, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
+      res.FE <- try(glm(dat.grp ~ 0 + X.fit, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
 
       if (inherits(res.FE, "try-error"))
          stop(mstyle$stop(paste0("Cannot fit FE model", ifelse(verbose, ".", " (set 'verbose=TRUE' to obtain further details)."))))
@@ -2334,11 +2334,11 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
             message(mstyle$message("Fitting the saturated model ..."))
 
          if (k > 1) {
-            X.QE <- model.matrix(~ -1 + X.fit + study)
+            X.QE <- model.matrix(~ 0 + X.fit + study)
             if (verbose) {
-               res.QE <- try(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
+               res.QE <- try(glm(dat.grp ~ 0 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl), silent=!verbose)
             } else {
-               res.QE <- try(suppressWarnings(glm(dat.grp ~ -1 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl)), silent=!verbose)
+               res.QE <- try(suppressWarnings(glm(dat.grp ~ 0 + X.QE, offset=dat.off, family=dat.fam, control=glmCtrl)), silent=!verbose)
             }
          } else {
             res.QE <- res.FE
@@ -2378,27 +2378,27 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
          if (package == "lme4") {
             if (verbose) {
-               res.ML <- try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
+               res.ML <- try(lme4::glmer(dat.grp ~ 0 + X.fit + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose)
             } else {
-               res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
+               res.ML <- suppressMessages(try(lme4::glmer(dat.grp ~ 0 + X.fit + (1 | study), offset=dat.off, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=do.call(lme4::glmerControl, glmerCtrl)), silent=!verbose))
             }
          }
 
          if (package == "GLMMadaptive") {
             if (is.element(measure, c("PLO","PR","PLN"))) {
                dat.mm <- data.frame(xi=dat.grp[,"xi"], mi=dat.grp[,"mi"], study=study)
-               res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ -1 + X.fit, random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+               res.ML <- try(GLMMadaptive::mixed_model(cbind(xi,mi) ~ 0 + X.fit, random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
             } else {
                dat.mm <- data.frame(xi=dat.grp, study=study)
-               res.ML <- try(GLMMadaptive::mixed_model(xi ~ -1 + X.fit + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
+               res.ML <- try(GLMMadaptive::mixed_model(xi ~ 0 + X.fit + offset(dat.off), random = ~ 1 | study, data=dat.mm, family=dat.fam, nAGQ=nAGQ, verbose=verbose, control=glmerCtrl), silent=!verbose)
             }
          }
 
          if (package == "glmmTMB") {
             if (verbose) {
-               res.ML <- try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
+               res.ML <- try(glmmTMB::glmmTMB(dat.grp ~ 0 + X.fit + (1 | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose)
             } else {
-               res.ML <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ -1 + X.fit + (1 | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
+               res.ML <- suppressMessages(try(glmmTMB::glmmTMB(dat.grp ~ 0 + X.fit + (1 | study), offset=dat.off, family=dat.fam, verbose=verbose, data=NULL, control=do.call(glmmTMB::glmmTMBControl, glmerCtrl)), silent=!verbose))
             }
          }
 
