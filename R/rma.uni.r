@@ -54,7 +54,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    if (missing(tau2)) {
       tau2 <- NULL
    } else {
-      if (length(tau2) != 1L)
+      if (!is.null(tau2) && length(tau2) != 1L)
          stop(mstyle$stop("Argument 'tau2' must be a scalar."))
    }
 

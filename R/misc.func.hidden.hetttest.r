@@ -35,7 +35,7 @@
    }
 
    if (inherits(tau2i, "try-error"))
-      stop(mstyle$stop("Could not estimate the tau^2_i values."))
+      stop("Could not estimate the tau^2_i values.")
 
    res1 <- rma(yi, vi=vi+tau2i, method=method, tau2=0)
 
@@ -60,7 +60,7 @@
    }
 
    if (inherits(tau2i, "try-error"))
-      stop(mstyle$stop("Could not estimate the tau^2_i values."))
+      stop("Could not estimate the tau^2_i values.")
 
    out <- 1
 
@@ -69,14 +69,18 @@
    } else {
       wi <- 1 / (tau2i + vi)
       sumwi <- sum(wi)
-      V <- matrix(NA_real_, nrow=k, ncol=k)
+      I <- matrix(NA_real_, nrow=k, ncol=k)
       for (i in 1:k) {
          for (j in 1:k) {
-            V[i,j] <- 1 / (2 * sumwi^2 * (tau2i[i] + vi[i])^2 * (tau2i[j] + vi[j])^2)
+            I[i,j] <- 1 / (2 * sumwi^2 * (tau2i[i] + vi[i])^2 * (tau2i[j] + vi[j])^2)
          }
       }
-      diag(V) <- (tau2i + vi - 1/sumwi)^2 / (2 * (tau2i + vi)^4)
+      diag(I) <- (tau2i + vi - 1/sumwi)^2 / (2 * (tau2i + vi)^4)
+      V <- try(solve(I), silent=TRUE)
+      if (inherits(V, "try-error"))
+         V <- matrix(NA_real_, nrow=k, ncol=k)
    }
+   se.tau2i <- sqrt(diag(V))
    X <- -diag(k)
    X[,out] <- 1
    X <- X[-out,]
@@ -90,7 +94,7 @@
    }
    pval <- pchisq(x2, df=k-1, lower.tail=FALSE)
 
-   return(list(statistic=x2, df=k-1, pval=pval, tau2i=tau2i))
+   return(list(statistic=x2, df=k-1, pval=pval, tau2i=tau2i, se.tau2i=se.tau2i))
 
 }
 

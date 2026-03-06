@@ -1,5 +1,4 @@
-hettest <- function(x, vi, sei, subset, data,
-   method="REML", test="score", boot=TRUE, progbar=TRUE, digits, ...) {
+hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=TRUE, progbar=TRUE, digits, ...) {
 
    #########################################################################
 
@@ -325,6 +324,9 @@ hettest <- function(x, vi, sei, subset, data,
 
       if (test %in% c("lrt","wald"))
          res$tau2i <- out$tau2i
+
+      if (test  == "wald")
+         res$se.tau2i <- out$se.tau2i
 
       class(res) <- "hettest"
       return(res)
