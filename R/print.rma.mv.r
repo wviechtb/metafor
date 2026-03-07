@@ -427,7 +427,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
 
    if (signif.legend || legend) {
       cat("\n")
-      cat(mstyle$legend("---"))
+      cat(mstyle$legend("----"))
    }
 
    if (signif.legend) {

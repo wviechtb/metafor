@@ -135,7 +135,7 @@ print.permutest.rma.uni <- function(x, digits=x$digits, signif.stars=getOption("
 
    if (signif.legend || legend) {
       cat("\n")
-      cat(mstyle$legend("---"))
+      cat(mstyle$legend("----"))
    }
 
    if (signif.legend) {

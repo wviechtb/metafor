@@ -37,7 +37,7 @@ print.deltamethod <- function(x, digits=x$digits, signif.stars=getOption("show.s
 
    if (signif.legend) {
       cat("\n")
-      cat(mstyle$legend("---"))
+      cat(mstyle$legend("----"))
       cat("\n")
       cat(mstyle$legend("Signif. codes: "), mstyle$legend(attr(signif, "legend")))
       cat("\n")

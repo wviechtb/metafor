@@ -1997,7 +1997,7 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
          vcs <- data.frame(vcs, stringsAsFactors=FALSE)
          rownames(vcs) <- c("initial", "specified")
          vcs <- rbind(included=ifelse(c(rep(withS, sigma2s), rep(withG, tau2s), rep(withG, rhos), rep(withH, gamma2s), rep(withH, phis)), "Yes", "No"), fixed=unlist(vc.fix), vcs)
-         tmp <- capture.output(print(vcs, na.print="---"))
+         tmp <- capture.output(print(vcs, na.print="----"))
          .print.output(tmp, mstyle$verbose)
          cat("\n")
       }

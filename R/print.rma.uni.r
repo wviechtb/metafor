@@ -301,8 +301,8 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       }
 
       for (j in seq_len(nrow(res.table))) {
-         res.table[j, is.na(res.table[j,])]  <- ifelse(x$alpha.fix[j], "---", "NA")
-         res.table[j, res.table[j,] == "NA"] <- ifelse(x$alpha.fix[j], "---", "NA")
+         res.table[j, is.na(res.table[j,])]  <- ifelse(x$alpha.fix[j], "----", "NA")
+         res.table[j, res.table[j,] == "NA"] <- ifelse(x$alpha.fix[j], "----", "NA")
       }
 
       if (isTRUE(ddd$num)) {
@@ -311,9 +311,9 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       }
 
       if (x$randhet) {
-         res.table.omega2 <- c(fmtx(x$omega2, digits[["var"]]), fmtx(x$se.omega2, digits[["se"]]), "---", "---", fmtx(x$ci.lb.omega2, digits[["ci"]]), fmtx(x$ci.ub.omega2, digits[["ci"]]))
+         res.table.omega2 <- c(fmtx(x$omega2, digits[["var"]]), fmtx(x$se.omega2, digits[["se"]]), "----", "----", fmtx(x$ci.lb.omega2, digits[["ci"]]), fmtx(x$ci.ub.omega2, digits[["ci"]]))
          if (is.element(x$test, c("knha","adhoc","t")))
-            res.table.omega2 <- c(res.table.omega2[1:2], "---", res.table.omega2[-(1:2)])
+            res.table.omega2 <- c(res.table.omega2[1:2], "----", res.table.omega2[-(1:2)])
          if (signif.stars)
             res.table.omega2 <- c(res.table.omega2, "")
          res.table <- rbind(res.table, "omega^2"=res.table.omega2)
@@ -363,8 +363,8 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
       }
 
       for (j in seq_len(nrow(res.table))) {
-         res.table[j, is.na(res.table[j,])]  <- ifelse(x$delta.fix[j], "---", "NA")
-         res.table[j, res.table[j,] == "NA"] <- ifelse(x$delta.fix[j], "---", "NA")
+         res.table[j, is.na(res.table[j,])]  <- ifelse(x$delta.fix[j], "----", "NA")
+         res.table[j, res.table[j,] == "NA"] <- ifelse(x$delta.fix[j], "----", "NA")
       }
 
       if (length(x$delta) == 1L)
@@ -390,7 +390,7 @@ print.rma.uni <- function(x, digits, showfit=FALSE, signif.stars=getOption("show
 
    if (signif.legend || legend) {
       cat("\n")
-      cat(mstyle$legend("---"))
+      cat(mstyle$legend("----"))
    }
 
    if (signif.legend) {

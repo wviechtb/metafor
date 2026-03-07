@@ -162,7 +162,7 @@ print.rma.glmm <- function(x, digits, showfit=FALSE, signif.stars=getOption("sho
 
    if (signif.legend) {
       cat("\n")
-      cat(mstyle$legend("---"))
+      cat(mstyle$legend("----"))
       cat("\n")
       cat(mstyle$legend("Signif. codes: "), mstyle$legend(attr(signif, "legend")))
       cat("\n")

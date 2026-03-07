@@ -266,7 +266,7 @@ reporter.rma.uni <- function(x, dir, filename, format="html_document", open=TRUE
 
    ### yaml header
 
-   header <- paste0("---\n")
+   header <- paste0("----\n")
    header <- paste0(header, "output:\n")
    if (format == "html_document")
       header <- paste0(header, "  html_document:\n    toc: true\n    toc_float:\n      collapsed: false\n")
