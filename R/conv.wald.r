@@ -191,7 +191,7 @@ conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
 
    ### convert Wald-type CIs to sampling variances
 
-   vi <- ((ci.ub-ci.lb)/(2*crit))^2
+   vi <- ifelse(is.na(ci.lb), ((ci.ub-out)/crit)^2, ((ci.ub-ci.lb)/(2*crit))^2)
 
    ### check if yi is about halfway between CI bounds
 
