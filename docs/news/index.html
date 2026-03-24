@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-31</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-32</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="4.9-31" id="metafor-49-31-2026-03-11">metafor 4.9-31 (2026-03-11)<a class="anchor" aria-label="anchor" href="#metafor-49-31-2026-03-11"></a></h2>
+<h2 class="page-header" data-toc-text="4.9-32" id="metafor-49-32-2026-03-24">metafor 4.9-32 (2026-03-24)<a class="anchor" aria-label="anchor" href="#metafor-49-32-2026-03-24"></a></h2>
 <ul><li><p>argument <code>legend</code> can now be a list for <code><a href="../reference/funnel.html">funnel()</a></code>, <code><a href="../reference/labbe.html">labbe()</a></code>, <code><a href="../reference/regplot.html">regplot()</a></code>, and <code><a href="../reference/plot.permutest.rma.uni.html">plot.permutest.rma.uni()</a></code> for more control over the look of the legend</p></li>
 <li><p>added <code>hetvar</code> argument to <code><a href="../reference/predict.rma.html">predict.rma()</a></code> to manually specify the amount of heterogeneity for computing prediction intervals</p></li>
 <li><p>fixed how <code>intercept</code> (when unspecified) is set in <code><a href="../reference/predict.rma.html">predict.rma.ls()</a></code> when using <code>newscale</code></p></li>
@@ -105,6 +105,7 @@
 <li><p>all <code><a href="../reference/addpoly.html">addpoly()</a></code> functions now respect <code>alim</code> and <code>olim</code> as set by <code><a href="../reference/forest.html">forest()</a></code></p></li>
 <li><p>some functions (e.g., <code><a href="../reference/vcalc.html">vcalc()</a></code> and <code><a href="../reference/rcalc.html">rcalc()</a></code>) can now return variance-covariances matrices as objects of class <code>"vcovmat"</code>; these are printed nicely with <code><a href="../reference/methods.vcovmat.html">print.vcovmat()</a></code></p></li>
 <li><p><code><a href="../reference/rma.uni.html">rma()</a></code> nows calculates R^2 as long as a standard random-effects model is nested within the fitted mixed-effects model</p></li>
+<li><p><code><a href="../reference/conv.2x2.html">conv.2x2()</a></code> can now reconstruct tables for diagnostic studies based on diagnostic statistics (sensitivity, specificity, positive predictive value, negative predictive value)</p></li>
 <li><p>added some more transformation functions</p></li>
 </ul></div>
     <div class="section level2">

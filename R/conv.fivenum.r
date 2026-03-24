@@ -70,7 +70,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
    if (!.equal.length(min, q1, median, q3, max, n))
       stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
-   k <- max(length(min), length(q1), length(median), length(q3), length(max), length(n))
+   k <- .maxlength(min, q1, median, q3, max, n)
 
    if (is.null(min))
       min <- rep(NA_real_, k)

@@ -1368,7 +1368,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
          if (!.all.specified(n1i, n2i))
             stop(mstyle$stop("Cannot compute outcomes. Check that all of the required information is specified\n  via the appropriate arguments."))
 
-         k.all <- max(lengths(list(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi, ai)))
+         k.all <- .maxlength(m1i, m2i, sd1i, sd2i, n1i, n2i, di, ti, pi, ai)
 
          vtype <- .expand1(vtype, k.all)
 

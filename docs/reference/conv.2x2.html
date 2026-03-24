@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-31</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-32</span>
       </span>
     </div>
 
@@ -95,8 +95,8 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">conv.2x2</span><span class="op">(</span><span class="va">ori</span>, <span class="va">ri</span>, <span class="va">x2i</span>, <span class="va">ni</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, correct<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">data</span>, <span class="va">include</span>,</span>
-<span>         var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ai"</span>,<span class="st">"bi"</span>,<span class="st">"ci"</span>,<span class="st">"di"</span><span class="op">)</span>, append<span class="op">=</span><span class="cn">TRUE</span>, replace<span class="op">=</span><span class="st">"ifna"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">conv.2x2</span><span class="op">(</span><span class="va">ori</span>, <span class="va">ri</span>, <span class="va">x2i</span>, <span class="va">ni</span>, <span class="va">n1i</span>, <span class="va">n2i</span>, <span class="va">sens</span>, <span class="va">spec</span>, <span class="va">ppv</span>, <span class="va">npv</span>, correct<span class="op">=</span><span class="cn">TRUE</span>, drop01<span class="op">=</span><span class="cn">TRUE</span>, <span class="va">data</span>,</span>
+<span>         <span class="va">include</span>, var.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ai"</span>,<span class="st">"bi"</span>,<span class="st">"ci"</span>,<span class="st">"di"</span><span class="op">)</span>, append<span class="op">=</span><span class="cn">TRUE</span>, replace<span class="op">=</span><span class="st">"ifna"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -120,8 +120,23 @@
    <dt id="arg-n-i">n2i<a class="anchor" aria-label="anchor" href="#arg-n-i"></a></dt>
 <dd><p>vector with the marginal counts for the outcome of interest on the second variable.</p></dd>
 
+   <dt id="arg-sens">sens<a class="anchor" aria-label="anchor" href="#arg-sens"></a></dt>
+<dd><p>optional vector with the sensitivities corresponding to the tables.</p></dd>
+
+   <dt id="arg-spec">spec<a class="anchor" aria-label="anchor" href="#arg-spec"></a></dt>
+<dd><p>optional vector with the specificities corresponding to the tables.</p></dd>
+
+   <dt id="arg-ppv">ppv<a class="anchor" aria-label="anchor" href="#arg-ppv"></a></dt>
+<dd><p>optional vector with the positive predictive values corresponding to the tables.</p></dd>
+
+   <dt id="arg-npv">npv<a class="anchor" aria-label="anchor" href="#arg-npv"></a></dt>
+<dd><p>optional vector with the negative predictive values corresponding to the tables.</p></dd>
+
    <dt id="arg-correct">correct<a class="anchor" aria-label="anchor" href="#arg-correct"></a></dt>
 <dd><p>optional logical (or vector thereof) to specify whether chi-square statistics were computed using Yates's correction for continuity (the default is <code>TRUE</code>).</p></dd>
+
+   <dt id="arg-drop-">drop01<a class="anchor" aria-label="anchor" href="#arg-drop-"></a></dt>
+<dd><p>logical to specify whether studies where <code>sens</code>, <code>spec</code>, <code>ppv</code>, and/or <code>npv</code> is equal to 0 or 1 should be dropped (the default is <code>TRUE</code>).</p></dd>
 
    <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
@@ -138,6 +153,9 @@
    <dt id="arg-replace">replace<a class="anchor" aria-label="anchor" href="#arg-replace"></a></dt>
 <dd><p>character string or logical to specify how values in <code>var.names</code> should be replaced (only relevant when using the <code>data</code> argument and if variables in <code>var.names</code> already exist in the data frame). See the ‘Value’ section for more details.</p></dd>
 
+   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>other arguments.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -148,10 +166,22 @@
 <p></p><ol><li><p>If the odds ratio \[OR = \frac{a_i d_i}{b_i c_i}\] is known, then the cell frequencies can be reconstructed (Bonett, 2007). Odds ratios can be specified via the <code>ori</code> argument.</p></li>
 <li><p>If the phi coefficient \[\phi = \frac{a_i d_i - b_i c_i}{\sqrt{n_{1i}(n_i-n_{1i})n_{2i}(n_i-n_{2i})}}\] is known, then the cell frequencies can again be reconstructed (own derivation). Phi coefficients can be specified via the <code>ri</code> argument.</p></li>
 <li><p>If the chi-square statistic from Pearson's chi-square test of independence is known (which can be specified via the <code>x2i</code> argument), then it can be used to recalculate the phi coefficient and hence again the cell frequencies can be reconstructed. However, the chi-square statistic does not carry information about the sign of the phi coefficient. Therefore, values specified via the <code>x2i</code> argument can be positive or negative, which allows the specification of the correct sign. Also, when using a chi-square statistic as input, it is assumed that it was computed using Yates's correction for continuity (unless <code>correct=FALSE</code>). If the chi-square statistic is not known, but its p-value, one can first back-calculate the chi-square statistic using <code>qchisq(&lt;p-value&gt;, df=1, lower.tail=FALSE)</code>.</p></li>
-</ol><p>Typically, the odds ratio, phi coefficient, or chi-square statistic (or its p-value) that can be extracted from a study will be rounded to a certain degree. The calculations underlying the function are exact only for unrounded values. Rounding can therefore introduce some discrepancies.</p>
+</ol><p>Typically, the odds ratio, phi coefficient, or chi-square statistic (or its p-value) that can be extracted from a study will be rounded to a certain degree. The calculations underlying the function are exact only for unrounded values. Rounding can therefore introduce some discrepancies between the actual cell frequencies and the reconstructed ones.</p>
 <p>If a marginal total is unknown, then external information needs to be used to ‘guestimate’ the number of individuals that experienced the outcome of interest on this variable. Depending on the accuracy of such an estimate, the reconstructed cell frequencies will be more or less accurate and need to be treated with due caution.</p>
 <p>The true marginal counts also put constraints on the possible values for the odds ratio, phi coefficient, and chi-square statistic. If a marginal count is replaced by a guestimate which is not compatible with the given statistic, one or more reconstructed cell frequencies may be negative. The function issues a warning if this happens and sets the cell frequencies to <code>NA</code> for such a study.</p>
 <p>If only one of the two marginal counts is unknown but a 95% CI for the odds ratio is also available, then the <a href="https://cran.r-project.org/package=estimraw" class="external-link">estimraw</a> package can also be used to reconstruct the corresponding cell frequencies (Di Pietrantonj, 2006; but see Veroniki et al., 2013, for some cautions).</p>
+<p></p><div class="section">
+<h3 id="diagnostic-studies">Diagnostic Studies<a class="anchor" aria-label="anchor" href="#diagnostic-studies"></a></h3>
+
+
+<p>The present function can also be used to reconstruct <em></em>\(2 \times 2\) table data for diagnostic studies. Here, the table is assumed to be of the form:</p><table class="table table"><tr><td></td><td> </td><td>case</td><td> </td><td>control</td></tr><tr><td>test+</td><td> </td><td><code>ai</code></td><td> </td><td><code>bi</code></td></tr><tr><td>test-</td><td> </td><td><code>ci</code></td><td> </td><td><code>di</code></td></tr></table><p>where <code>ai</code> denotes the number of true positives, <code>bi</code> the number of false positives, <code>ci</code> the number of false negatives, and <code>di</code> the number of true negatives.</p>
+<p>If the total sample size (<code>ni = ai + bi + ci + di</code>) and the marginal totals are known (i.e, the number of positive tests, <code>n1i</code>, and the number of cases, <code>n2i</code>), then the diagnostic odds ratio would be sufficient to reconstruct the table and the present function can be used as described above.</p>
+<p>On the other hand, if the total sample size of the study (i.e., <code>ni = ai + bi + ci + di</code>), the sensitivity (i.e., <code>sens = ai / (ai + ci)</code>), specificity (i.e., <code>spec = di / (bi + di)</code>), positive predictive value (i.e., <code>ppv = ai / (ai + bi)</code>), and negative predictive value (i.e., <code>npv = di / (ci + di)</code>) are known, then this is also sufficient information to recreate the table. Actually, only three of the four diagnostic accuracy measures are needed to reconstruct the table.</p>
+<p>In practice, when such accuracy measures are reported, the values are typically rounded to some extent. This introduces inaccuracies into the reconstruction. The present function uses optimization methods to reconstruct the table counts so that the discrepancy between the reported measures and the reconstructed ones are minimized. This is not guaranteed to reconstruct the actual table exactly, but should usually yield a close match, especially if all four measures are available. In some rare cases, the reconstruction may also fail even if all four measures are reported. This often happens if at least one of the reported accuracy measures is equal to 0 or 1. By default (i.e., when <code>drop01=TRUE</code>), such studies are automatically dropped (i.e., the reconstructed cell frequencies are set to <code>NA</code>).</p>
+<p></p>
+</div>
+
+
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -177,7 +207,9 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">### demonstration that the reconstruction of the 2x2 table works</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### demonstration that the reconstruction of the 2x2 table works</span></span></span>
 <span class="r-in"><span><span class="co">### (note: the values in rows 2, 3, and 4 correspond to those in row 1)</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>ai<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">36</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>, bi<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">86</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>, ci<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">20</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>, di<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">98</span>,<span class="cn">NA</span>,<span class="cn">NA</span>,<span class="cn">NA</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  oddsratio<span class="op">=</span><span class="cn">NA</span>, phi<span class="op">=</span><span class="cn">NA</span>, chisq<span class="op">=</span><span class="cn">NA</span>, ni<span class="op">=</span><span class="cn">NA</span>, n1i<span class="op">=</span><span class="cn">NA</span>, n2i<span class="op">=</span><span class="cn">NA</span><span class="op">)</span></span></span>
@@ -266,6 +298,63 @@
 <span class="r-in"><span><span class="fu">conv.2x2</span><span class="op">(</span>x2i<span class="op">=</span><span class="va">chisq</span>, ni<span class="op">=</span><span class="fl">72</span>, n1i<span class="op">=</span><span class="fl">42</span>, n2i<span class="op">=</span><span class="fl">40</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ai bi ci di</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 28 14 12 18</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### reconstruct the 2x2 table counts for a diagnostic study</span></span></span>
+<span class="r-in"><span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">28</span>,<span class="fl">5</span>,<span class="fl">7</span>,<span class="fl">18</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fl">2</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tab</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      [,1] [,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,]   28    5</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,]    7   18</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### reconstruct from the diagnostic odds ratio and the marginals</span></span></span>
+<span class="r-in"><span><span class="va">dor</span>   <span class="op">&lt;-</span> <span class="va">tab</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">*</span> <span class="va">tab</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">]</span> <span class="op">/</span> <span class="op">(</span><span class="va">tab</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">]</span> <span class="op">*</span> <span class="va">tab</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">cases</span> <span class="op">&lt;-</span> <span class="va">tab</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">tab</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">pos</span>   <span class="op">&lt;-</span> <span class="va">tab</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">tab</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">conv.2x2</span><span class="op">(</span>ori<span class="op">=</span><span class="va">dor</span>, n1i<span class="op">=</span><span class="va">pos</span>, n2i<span class="op">=</span><span class="va">cases</span>, ni<span class="op">=</span><span class="va">n</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ai bi ci di</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 28  5  7 18</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### reconstruct from the diagnostic accuracy measures</span></span></span>
+<span class="r-in"><span><span class="va">sens</span> <span class="op">&lt;-</span> <span class="va">tab</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">tab</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">spec</span> <span class="op">&lt;-</span> <span class="va">tab</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">]</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">tab</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ppv</span>  <span class="op">&lt;-</span> <span class="va">tab</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">tab</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">npv</span>  <span class="op">&lt;-</span> <span class="va">tab</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">]</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">tab</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">n</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">tab</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">conv.2x2</span><span class="op">(</span>sens<span class="op">=</span><span class="va">sens</span>, spec<span class="op">=</span><span class="va">spec</span>, ppv<span class="op">=</span><span class="va">ppv</span>, npv<span class="op">=</span><span class="va">npv</span>, ni<span class="op">=</span><span class="va">n</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ai bi ci di</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 28  5  7 18</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### show that only three out of the four diagnostic statistics are needed</span></span></span>
+<span class="r-in"><span><span class="fu">conv.2x2</span><span class="op">(</span>sens<span class="op">=</span><span class="va">sens</span>, spec<span class="op">=</span><span class="va">spec</span>, ppv<span class="op">=</span><span class="va">ppv</span>, ni<span class="op">=</span><span class="va">n</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ai bi ci di</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 28  5  7 18</span>
+<span class="r-in"><span><span class="fu">conv.2x2</span><span class="op">(</span>sens<span class="op">=</span><span class="va">sens</span>, spec<span class="op">=</span><span class="va">spec</span>, npv<span class="op">=</span><span class="va">npv</span>, ni<span class="op">=</span><span class="va">n</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ai bi ci di</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 28  5  7 18</span>
+<span class="r-in"><span><span class="fu">conv.2x2</span><span class="op">(</span>sens<span class="op">=</span><span class="va">sens</span>, ppv<span class="op">=</span><span class="va">ppv</span>, npv<span class="op">=</span><span class="va">npv</span>, ni<span class="op">=</span><span class="va">n</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ai bi ci di</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 28  5  7 18</span>
+<span class="r-in"><span><span class="fu">conv.2x2</span><span class="op">(</span>spec<span class="op">=</span><span class="va">spec</span>, ppv<span class="op">=</span><span class="va">ppv</span>, npv<span class="op">=</span><span class="va">npv</span>, ni<span class="op">=</span><span class="va">n</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ai bi ci di</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 28  5  7 18</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### reconstruct the 2x2 table counts from rounded statistics</span></span></span>
+<span class="r-in"><span><span class="va">dor</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">dor</span>,  digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">sens</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">spec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">spec</span>, digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ppv</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">ppv</span>,  digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">npv</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">npv</span>,  digits<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">conv.2x2</span><span class="op">(</span>ori<span class="op">=</span><span class="va">dor</span>, n1i<span class="op">=</span><span class="va">pos</span>, n2i<span class="op">=</span><span class="va">cases</span>, ni<span class="op">=</span><span class="va">n</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ai bi ci di</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 28  5  7 18</span>
+<span class="r-in"><span><span class="fu">conv.2x2</span><span class="op">(</span>sens<span class="op">=</span><span class="va">sens</span>, spec<span class="op">=</span><span class="va">spec</span>, ppv<span class="op">=</span><span class="va">ppv</span>, npv<span class="op">=</span><span class="va">npv</span>, ni<span class="op">=</span><span class="va">n</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ai bi ci di</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 28  5  7 18</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">############################################################################</span></span></span>
 </code></pre></div>
     </div>
   </div>

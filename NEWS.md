@@ -1,4 +1,4 @@
-# metafor 4.9-31 (2026-03-11)
+# metafor 4.9-32 (2026-03-24)
 
 - argument `legend` can now be a list for `funnel()`, `labbe()`, `regplot()`, and `plot.permutest.rma.uni()` for more control over the look of the legend
 
@@ -27,6 +27,8 @@
 - some functions (e.g., `vcalc()` and `rcalc()`) can now return variance-covariances matrices as objects of class `"vcovmat"`; these are printed nicely with `print.vcovmat()`
 
 - `rma()` nows calculates R^2 as long as a standard random-effects model is nested within the fitted mixed-effects model
+
+- `conv.2x2()` can now reconstruct tables for diagnostic studies based on diagnostic statistics (sensitivity, specificity, positive predictive value, negative predictive value)
 
 - added some more transformation functions
 

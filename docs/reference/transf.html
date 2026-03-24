@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-31</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-32</span>
       </span>
     </div>
 
@@ -226,7 +226,7 @@
 <li><p><code>transf.clestod</code>: inverse of the former.</p></li>
 <li><p><code>transf.dtocles.int</code>: integral transformation function for the <code>transf.dtocles</code> transformation. See ‘Note’.</p></li>
 <li><p><code>transf.dtocliffd</code>: transformation of standardized mean differences to Cliff's delta values.</p></li>
-<li><p><code>transf.dtobesd</code>: transformation of standardized mean differences to binomial effect size display values (Rosenthal &amp; Rubin, 1982). Note that the function only provides the proportion in the first group scoring above the median (the proportion in the second group scoring above the median is simply one minus this value).</p></li>
+<li><p><code>transf.dtobesd</code>: transformation of standardized mean differences to binomial effect size display values (Rosenthal &amp; Rubin, 1982). Note that the function only provides the proportion of individuals in the first group scoring above the median (of the scores of the two group combined). The proportion of individuals in the second group scoring above the median is simply one minus this value.</p></li>
 <li><p><code>transf.dtomd</code>: transformation of standardized mean differences to mean differences given a known standard deviation (which needs to be specified via the <code>targs</code> argument). For example: <code>transf.dtomd(0.5, targs=15)</code>.</p></li>
 <li><p><code>transf.dtorpb</code>: transformation of standardized mean differences to point-biserial correlations. Arguments <code>n1i</code> and <code>n2i</code> denote the number of individuals in the first and second group, respectively. If <code>n1i</code> and <code>n2i</code> are not specified, the function assumes <code>n1i = n2i</code> and uses the approximate formula <em></em>\(r_{pb} = \frac{d}{\sqrt{d^2 + 4}}\). If <code>n1i</code> and <code>n2i</code> are specified, the function uses the exact transformation formula <em></em>\(r_{pb} = \frac{d}{\sqrt{d^2 + h}}\), where <em></em>\(h = \frac{m}{n_1} + \frac{m}{n_2}\) and <em></em>\(m = n_1 + n_2 - 2\) (Jacobs &amp; Viechtbauer, 2017).</p></li>
 <li><p><code>transf.dtorbis</code>: transformation of standardized mean differences to biserial correlations. Like <code>transf.dtorpb</code>, but the point-biserial correlations are then transformed to biserial correlations with <em></em>\(r_{bis} = \frac{\sqrt{p(1-p)}}{f(z_p)} r_{pb}\), where <em></em>\(p = \frac{n_1}{n_1+n_2}\) and <em></em>\(f(z_p)\) denotes the density of the standard normal distribution at value <em></em>\(z_p\), which is the point for which <em></em>\(P(Z \gt z_p) = p\), with <em></em>\(Z\) denoting a random variable following a standard normal distribution (Jacobs &amp; Viechtbauer, 2017).</p></li>

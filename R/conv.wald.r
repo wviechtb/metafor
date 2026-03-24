@@ -105,7 +105,7 @@ conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
    if (!.equal.length(out, ci.lb, ci.ub, zval, pval, n))
       stop(mstyle$stop("Supplied data vectors are not all of the same length."))
 
-   k <- max(length(out), length(ci.lb), length(ci.ub), length(zval), length(pval), length(n))
+   k <- .maxlength(out, ci.lb, ci.ub, zval, pval, n)
 
    if (is.null(out))
       out <- rep(NA_real_, k)
@@ -231,7 +231,7 @@ conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
    ### note: if both (ci.lb,ci.ub) and zval/pval is available, then this favors
    ### the back-calculation based on (ci.lb,ci.ub) which seems reasonable
 
-   ### TODO: could consider checking if the back-calculated vi's differs in this case
+   ### TODO: could consider checking if the back-calculated vi's differ in this case
    ### (or if x$vi is already available)
 
    ### replace missing x$vi values

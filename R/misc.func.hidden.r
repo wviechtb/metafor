@@ -731,6 +731,11 @@
 
 }
 
+### get the maximum length of a bunch of vectors
+
+.maxlength <- function(...)
+   max(lengths(list(...), use.names=FALSE))
+
 ############################################################################
 
 ### set axis label (for forest, funnel, and labbe functions)

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-31</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.9-32</span>
       </span>
     </div>
 
@@ -187,7 +187,7 @@
 <p>Now variables <code>yi</code> and <code>vi</code> in the dataset are complete.</p>
 <p>If the CI was not a 95% CI, then one can specify the appropriate level via the <code>level</code> argument. This can also be an entire vector in case different studies used different levels.</p>
 <p>By default (i.e., when <code>check=TRUE</code>), the function carries out a rough check to examine if the point estimate falls (approximately) halfway between the CI bounds (on the transformed scale) for each study for which the conversion was carried out. A warning is issued if there are studies where this is not the case. This may indicate that a particular CI was not a Wald-type CI or was computed on a different scale (in which case the back-calculation above would be inappropriate), but can also arise due to rounding of the reported values (in which case the back-calculation would still be appropriate, albeit possibly a bit inaccurate). Care should be taken when using such back-calculated values in a meta-analysis.</p>
-<p>When the CI bounds are log transformed (as in the example above) and rounded, then using the lower bound in the back-calculation can be more inaccurate than using the upper CI bound and the point estimate. When the lower CI bounds are not specified or are missing for a study, then the function automatically uses the formula \[v_i = \left(\frac{\text{ci.ub} - \text{yi}}{z_{crit}}\right)^2\] for the back-calculation. In the example above, we could therefore do:</p>
+<p>When the CI bounds are log transformed (as in the example above) and rounded, then using the lower bound in the back-calculation can be more inaccurate than using the upper CI bound and the point estimate for the back-calculation. When the lower CI bounds are not specified or are missing for a study, then the function automatically uses the formula \[v_i = \left(\frac{\text{ci.ub} - \text{yi}}{z_{crit}}\right)^2\] for the back-calculation (after first applying the transformation specified via <code>transf</code>). In the example above, we could therefore do:</p>
 <div class="sourceCode"><pre><code><span></span>
 <span><span class="va">dat3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conv.wald.html">conv.wald</a></span><span class="op">(</span>out<span class="op">=</span><span class="va">oddsratio</span>, ci.ub<span class="op">=</span><span class="va">upper</span>, data<span class="op">=</span><span class="va">dat</span>, transf<span class="op">=</span><span class="va">log</span><span class="op">)</span></span>
 <span><span class="va">dat3</span></span>
