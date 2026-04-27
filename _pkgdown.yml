@@ -159,7 +159,6 @@ reference:
       - fitstats
       - simulate.rma
       - update.rma
-      - hettest
   - title: "Model Diagnostics"
     desc: >
       Functions for identifying outliers / influential studies, sensitivity analyses, and checking for multicollinearity.

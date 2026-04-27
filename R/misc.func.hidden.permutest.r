@@ -10,7 +10,7 @@
 #       if (k==1L) {
 #          matrix(v,1,k)
 #       } else {
-#          X  <-  NULL
+#          X <-  NULL
 #          for(i in seq_len(k)) {
 #             X <- rbind(X, cbind(v[i], Recall(k-1, v[-i])))
 #          }

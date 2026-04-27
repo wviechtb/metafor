@@ -51,7 +51,7 @@ rcalc(x, ni, data, rtoz=FALSE, nfun="min", sparse=FALSE, \dots)
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
 }
 \references{
-   Fisher, R. A. (1921). On the \dQuote{probable error} of a coefficient of correlation deduced from a small sample. \emph{Metron}, \bold{1}, 1--32. \verb{http://hdl.handle.net/2440/15169}
+   Fisher, R. A. (1921). On the \dQuote{probable error} of a coefficient of correlation deduced from a small sample. \emph{Metron}, \bold{1}, 1--32. \verb{https://hdl.handle.net/2440/15169}
 
    Olkin, I., & Finn, J. D. (1990). Testing correlated correlations. \emph{Psychological Bulletin}, \bold{108}(2), 330--333. \verb{https://doi.org/10.1037/0033-2909.108.2.330}
 

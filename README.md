@@ -5,7 +5,7 @@ metafor: A Meta-Analysis Package for R
 [![R build status](https://github.com/wviechtb/metafor/workflows/R-CMD-check/badge.svg)](https://github.com/wviechtb/metafor/actions)
 [![Code Coverage](https://codecov.io/gh/wviechtb/metafor/branch/master/graph/badge.svg)](https://app.codecov.io/gh/wviechtb/metafor)
 [![CRAN Version](https://www.r-pkg.org/badges/version/metafor)](https://cran.r-project.org/package=metafor)
-[![devel Version](https://img.shields.io/badge/devel-4.9--32-brightgreen.svg)](https://www.metafor-project.org/doku.php/installation#development_version)
+[![devel Version](https://img.shields.io/badge/devel-5.1--0-brightgreen.svg)](https://www.metafor-project.org/doku.php/installation#development_version)
 [![Monthly Downloads](https://cranlogs.r-pkg.org/badges/metafor)](https://cranlogs.r-pkg.org/badges/metafor)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/metafor)](https://cranlogs.r-pkg.org/badges/grand-total/metafor)
 
@@ -57,7 +57,7 @@ This builds the package from source based on the current version on [GitHub](htt
 ## Example
 
 ```r
-# load metafor package
+# load the metafor package
 library(metafor)
 
 # examine the BCG vaccine dataset
@@ -124,7 +124,14 @@ dat
 ```
 
 ```r
-# fit random-effects model
+# the dataset now includes two new variables:
+# yi - the observed log risk ratios
+# vi - the corresponding sampling variances
+```
+
+```r
+# fit a random-effects model (with REML estimation and using the Knapp & Hartung method for
+# testing the pooled estimate and for constructing confidence/prediction intervals)
 res <- rma(yi, vi, data=dat, test="knha")
 res
 ```
@@ -161,18 +168,18 @@ predict(res, transf=exp, digits=2)
 
 ```r
 # forest plot
-forest(res, atransf=exp, at=log(c(.05, .25, 1, 4)), xlim=c(-16,6),
-       ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5,-8,-6,-4.5),
-       header="Author(s) and Year", shade="zebra")
-text(c(-9.5,-8,-6,-4.5), 15,   c("TB+", "TB-", "TB+", "TB-"), font=2)
-text(c(-8.75,-5.25),     15.8, c("Vaccinated", "Control"),    font=2)
+forest(res, atransf=exp, at=log(c(0.05, 0.25, 1, 4)), xlim=c(-16, 6),
+       ilab=cbind(tpos, tneg, cpos, cneg), ilab.xpos=c(-9.5, -8, -6, -4.5),
+       header="Author(s) and Year", ilab.lab=c("TB+", "TB-", "TB+", "TB-"),
+       shade="zebra")
+text(c(-8.75, -5.25), 15.8, c("Vaccinated", "Control"), font=2)
 ```
 
 ![](man/figures/ex_forest_plot.png)
 
 ```r
-# funnel plot
-funnel(res, ylim=c(0,0.8), las=1)
+# contour-enhanced funnel plot
+funnel(res, ylim=c(0, 0.8), level=c(90, 95, 99), refline=0, las=1, legend=TRUE)
 ```
 
 ![](man/figures/ex_funnel_plot.png)
@@ -224,10 +231,10 @@ res
 ```
 
 ```r
-# bubble plot (with points outside of the prediction interval labeled)
+# bubble plot
 regplot(res, mod="ablat", pi=TRUE, xlab="Absolute Latitude",
-        xlim=c(0,60), predlim=c(0,60), transf=exp, refline=1, legend=TRUE,
-        label="piout", labsize=0.9, bty="l", las=1, digits=1)
+        xlim=c(0, 60), predlim=c(0, 60), transf=exp, refline=1,
+        legend=TRUE, bty="l", las=1, digits=1)
 ```
 
 ![](man/figures/ex_bubble_plot.png)

@@ -5,8 +5,9 @@
    Function to reconstruct the cell frequencies of \mjeqn{2 \times 2}{2x2} tables based on other summary statistics. \loadmathjax
 }
 \usage{
-conv.2x2(ori, ri, x2i, ni, n1i, n2i, sens, spec, ppv, npv, correct=TRUE, drop01=TRUE, data,
-         include, var.names=c("ai","bi","ci","di"), append=TRUE, replace="ifna", \dots)
+conv.2x2(ori, ri, x2i, ni, n1i, n2i, sens, spec, ppv, npv,
+         correct=TRUE, drop01=TRUE, data, include, var.names=c("ai","bi","ci","di"),
+         append=TRUE, replace="ifna", \dots)
 }
 \arguments{
    \item{ori}{optional vector with the odds ratios corresponding to the tables.}

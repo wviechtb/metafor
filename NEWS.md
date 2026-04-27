@@ -1,4 +1,8 @@
-# metafor 4.9-32 (2026-03-24)
+# metafor 5.1-0 (2026-04-27)
+
+- version bump for the development version
+
+# metafor 5.0-1 (2026-04-26)
 
 - argument `legend` can now be a list for `funnel()`, `labbe()`, `regplot()`, and `plot.permutest.rma.uni()` for more control over the look of the legend
 
@@ -24,9 +28,9 @@
 
 - all `addpoly()` functions now respect `alim` and `olim` as set by `forest()`
 
-- some functions (e.g., `vcalc()` and `rcalc()`) can now return variance-covariances matrices as objects of class `"vcovmat"`; these are printed nicely with `print.vcovmat()`
+- some functions (e.g., `vcalc()` and `rcalc()`) can now return variance-covariance matrices as objects of class `"vcovmat"`; these are printed nicely with `print.vcovmat()`
 
-- `rma()` nows calculates R^2 as long as a standard random-effects model is nested within the fitted mixed-effects model
+- `rma()` now calculates R^2 as long as a standard random-effects model is nested within the fitted mixed-effects model
 
 - `conv.2x2()` can now reconstruct tables for diagnostic studies based on diagnostic statistics (sensitivity, specificity, positive predictive value, negative predictive value)
 

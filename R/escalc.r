@@ -1589,7 +1589,7 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
 
                ### estimate assuming H0: rho=0 (technically correct)
                if (is.element(vtype[i], c("H0","H0a")))
-                  vi[i] <- (1-yi[i]^2) / (ni[i]-2)
+                  vi[i] <- (1-yi[i]^2) / (ni[i]-2) # should this be n-1?
 
                ### estimate assuming H0: rho=0 (alternative formula that works better for the z-test)
                if (vtype[i] == "H0b")

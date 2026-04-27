@@ -84,6 +84,7 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
 
    pi.type  <- .chkddd(ddd$pi.type, "default", tolower(ddd$pi.type))
    predtype <- .chkddd(ddd$predtype, pi.type, tolower(ddd$predtype))
+   predtype <- match.arg(predtype, c("default","simple","riley","t"))
 
    if (x$int.only && !is.null(newmods))
       stop(mstyle$stop("Cannot specify new moderator values for models without moderators."))

@@ -214,7 +214,7 @@ transf.lnortortet.digby(xi)
 
    Digby, P. G. N. (1983). Approximating the tetrachoric correlation coefficient. \emph{Biometrics}, \bold{39}(3), 753--757. \verb{https://doi.org/10.2307/2531104}
 
-   Fisher, R. A. (1921). On the \dQuote{probable error} of a coefficient of correlation deduced from a small sample. \emph{Metron}, \bold{1}, 1--32. \verb{http://hdl.handle.net/2440/15169}
+   Fisher, R. A. (1921). On the \dQuote{probable error} of a coefficient of correlation deduced from a small sample. \emph{Metron}, \bold{1}, 1--32. \verb{https://hdl.handle.net/2440/15169}
 
    Freeman, M. F., & Tukey, J. W. (1950). Transformations related to the angular and the square root. \emph{Annals of Mathematical Statistics}, \bold{21}(4), 607--611. \verb{https://doi.org/10.1214/aoms/1177729756}
 

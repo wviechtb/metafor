@@ -2533,6 +2533,23 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       se.alpha <- sqrt(diag(va))
 
+      # abbreviate certain coefficient names
+
+      if (isTRUE(ddd$abbrev)) {
+         tmp <- colnames(Z)
+         tmp <- gsub("relevel(factor(", "", tmp, fixed=TRUE)
+         tmp <- gsub("\\), ref = \"[[:alnum:]]*\")", "", tmp)
+         tmp <- gsub("poly(", "", tmp, fixed=TRUE)
+         tmp <- gsub(", degree = [[:digit:]], raw = TRUE)", "^", tmp)
+         tmp <- gsub(", degree = [[:digit:]], raw = TRUE)", "^", tmp)
+         tmp <- gsub(", degree = [[:digit:]])", "^", tmp)
+         tmp <- gsub("rcs\\([[:alnum:]]*, [[:digit:]]\\)", "", tmp)
+         tmp <- gsub("factor(", "", tmp, fixed=TRUE)
+         tmp <- gsub("I(", "", tmp, fixed=TRUE)
+         tmp <- gsub(")", "", tmp, fixed=TRUE)
+         colnames(Z) <- tmp
+      }
+
       rownames(alpha) <- rownames(va) <- colnames(va) <- colnames(Z)
 
       names(se.alpha) <- NULL
