@@ -59,7 +59,8 @@ res <- rma(yi, vi, data=dat)
 res
 
 ### funnel plot as in Henmi and Copas (2010)
-funnel(res, yaxis="seinv", refline=0, xlim=c(-3,3), ylim=c(.5,3.5), steps=7, digits=1, back="white")
+funnel(res, yaxis="seinv", refline=0, xlim=c(-3,3), ylim=c(0.5,3.5),
+       steps=7, digits=1, back="white")
 
 ### use method by Henmi and Copas (2010) as a sensitivity analysis
 hc(res)

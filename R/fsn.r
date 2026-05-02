@@ -1,4 +1,4 @@
-fsn <- function(x, vi, sei, subset, data, type, alpha=.05, target,
+fsn <- function(x, vi, sei, subset, data, type, alpha=0.05, target,
                 method, exact=FALSE, verbose=FALSE, digits, ...) {
 
    #########################################################################

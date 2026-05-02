@@ -5,7 +5,7 @@
    Function to compute the fail-safe N (also called a file drawer analysis). \loadmathjax
 }
 \usage{
-fsn(x, vi, sei, subset, data, type, alpha=.05, target,
+fsn(x, vi, sei, subset, data, type, alpha=0.05, target,
     method, exact=FALSE, verbose=FALSE, digits, \dots)
 }
 \arguments{
@@ -15,7 +15,7 @@ fsn(x, vi, sei, subset, data, type, alpha=.05, target,
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be used for the calculation (ignored if \code{x} is an object of class \code{"rma"}).}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{type}{optional character string to specify the type of method to use for the calculation of the fail-safe N. Possible options are \code{"Rosenthal"} (the default when \code{x} is a vector with the observed effect sizes or outcomes), \code{"Orwin"}, \code{"Rosenberg"}, or \code{"General"} (the default when \code{x} is an object of class \code{"rma"}). Can be abbreviated. See \sQuote{Details}.}
-   \item{alpha}{target alpha level for the Rosenthal, Rosenberg, and General methods (the default is .05).}
+   \item{alpha}{target alpha level for the Rosenthal, Rosenberg, and General methods (the default is 0.05).}
    \item{target}{target average effect size or outcome for the Orwin and General methods.}
    \item{method}{optional character string to specify the model fitting method for \code{type="General"} (if unspecified, either \code{"REML"} by default or the method that was used in fitting the \code{"rma"} model). See \code{\link{rma.uni}} for options.}
    \item{exact}{logical to specify whether the general method should be based on exact (but slower) or approximate (but faster) calculations.}
@@ -30,7 +30,7 @@ fsn(x, vi, sei, subset, data, type, alpha=.05, target,
 
    \subsection{Rosenthal Method}{
 
-      The Rosenthal method (\code{type="Rosenthal"}) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the (one-tailed) combined significance level (i.e., p-value) to a particular alpha level, which can be specified via the \code{alpha} argument (.05 by default). The calculation is based on Stouffer's method for combining p-values and is described in Rosenthal (1979). Note that the method is primarily of interest for historical reasons, but the other methods described below are more closely aligned with the way meta-analyses are typically conducted in practice.
+      The Rosenthal method (\code{type="Rosenthal"}) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the (one-tailed) combined significance level (i.e., p-value) to a particular alpha level, which can be specified via the \code{alpha} argument (0.05 by default). The calculation is based on Stouffer's method for combining p-values and is described in Rosenthal (1979). Note that the method is primarily of interest for historical reasons, but the other methods described below are more closely aligned with the way meta-analyses are typically conducted in practice.
 
    }
 
@@ -42,13 +42,13 @@ fsn(x, vi, sei, subset, data, type, alpha=.05, target,
 
    \subsection{Rosenberg Method}{
 
-      The Rosenberg method (\code{type="Rosenberg"}) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on an equal-effects model) to a particular alpha level, which can be specified via the \code{alpha} argument (.05 by default). The method is described in Rosenberg (2005). Note that the p-value is calculated based on a standard normal distribution (instead of a t-distribution, as suggested by Rosenberg, 2005), but the difference is typically negligible.
+      The Rosenberg method (\code{type="Rosenberg"}) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on an equal-effects model) to a particular alpha level, which can be specified via the \code{alpha} argument (0.05 by default). The method is described in Rosenberg (2005). Note that the p-value is calculated based on a standard normal distribution (instead of a t-distribution, as suggested by Rosenberg, 2005), but the difference is typically negligible.
 
    }
 
    \subsection{General Method}{
 
-      This method is a generalization of the methods by Orwin and Rosenberg (see Viechtbauer, 2024). By default (i.e., when \code{target} is not specified), it calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on a chosen model) to a particular alpha level, which can be specified via the \code{alpha} argument (.05 by default). The type of model that is used in the calculation is chosen via the \code{method} argument. If this is unspecified, then a random-effects model is automatically used (using \code{method="REML"}) or the method that was used in fitting the \code{"rma"} model (see \code{\link{rma.uni}} for options). Therefore, when setting \code{method="EE"}, then an equal-effects model is used, which yields (essentially) identical results as Rosenberg's method.
+      This method is a generalization of the methods by Orwin and Rosenberg (see Viechtbauer, 2024). By default (i.e., when \code{target} is not specified), it calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on a chosen model) to a particular alpha level, which can be specified via the \code{alpha} argument (0.05 by default). The type of model that is used in the calculation is chosen via the \code{method} argument. If this is unspecified, then a random-effects model is automatically used (using \code{method="REML"}) or the method that was used in fitting the \code{"rma"} model (see \code{\link{rma.uni}} for options). Therefore, when setting \code{method="EE"}, then an equal-effects model is used, which yields (essentially) identical results as Rosenberg's method.
 
       If \code{target} is specified, then the method calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the average effect size / outcome (as estimated based on a chosen model) to a target value (as specified via the \code{target} argument). As described above, the type of model that is used in the calculation is chosen via the \code{method} argument. When setting \code{method="EE"}, then an equal-effects model is used, which yields (essentially) identical results as Orwin's method with inverse-variance weights.
 

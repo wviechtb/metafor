@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-1</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fsn</span><span class="op">(</span><span class="va">x</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">subset</span>, <span class="va">data</span>, <span class="va">type</span>, alpha<span class="op">=</span><span class="fl">.05</span>, <span class="va">target</span>,</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fsn</span><span class="op">(</span><span class="va">x</span>, <span class="va">vi</span>, <span class="va">sei</span>, <span class="va">subset</span>, <span class="va">data</span>, <span class="va">type</span>, alpha<span class="op">=</span><span class="fl">0.05</span>, <span class="va">target</span>,</span>
 <span>    <span class="va">method</span>, exact<span class="op">=</span><span class="cn">FALSE</span>, verbose<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -121,7 +121,7 @@
 <dd><p>optional character string to specify the type of method to use for the calculation of the fail-safe N. Possible options are <code>"Rosenthal"</code> (the default when <code>x</code> is a vector with the observed effect sizes or outcomes), <code>"Orwin"</code>, <code>"Rosenberg"</code>, or <code>"General"</code> (the default when <code>x</code> is an object of class <code>"rma"</code>). Can be abbreviated. See ‘Details’.</p></dd>
 
    <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
-<dd><p>target alpha level for the Rosenthal, Rosenberg, and General methods (the default is .05).</p></dd>
+<dd><p>target alpha level for the Rosenthal, Rosenberg, and General methods (the default is 0.05).</p></dd>
 
    <dt id="arg-target">target<a class="anchor" aria-label="anchor" href="#arg-target"></a></dt>
 <dd><p>target average effect size or outcome for the Orwin and General methods.</p></dd>
@@ -150,7 +150,7 @@
 <h3 id="rosenthal-method">Rosenthal Method<a class="anchor" aria-label="anchor" href="#rosenthal-method"></a></h3>
 
 
-<p>The Rosenthal method (<code>type="Rosenthal"</code>) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the (one-tailed) combined significance level (i.e., p-value) to a particular alpha level, which can be specified via the <code>alpha</code> argument (.05 by default). The calculation is based on Stouffer's method for combining p-values and is described in Rosenthal (1979). Note that the method is primarily of interest for historical reasons, but the other methods described below are more closely aligned with the way meta-analyses are typically conducted in practice.</p>
+<p>The Rosenthal method (<code>type="Rosenthal"</code>) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the (one-tailed) combined significance level (i.e., p-value) to a particular alpha level, which can be specified via the <code>alpha</code> argument (0.05 by default). The calculation is based on Stouffer's method for combining p-values and is described in Rosenthal (1979). Note that the method is primarily of interest for historical reasons, but the other methods described below are more closely aligned with the way meta-analyses are typically conducted in practice.</p>
 <p></p>
 </div>
 
@@ -166,7 +166,7 @@
 <h3 id="rosenberg-method">Rosenberg Method<a class="anchor" aria-label="anchor" href="#rosenberg-method"></a></h3>
 
 
-<p>The Rosenberg method (<code>type="Rosenberg"</code>) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on an equal-effects model) to a particular alpha level, which can be specified via the <code>alpha</code> argument (.05 by default). The method is described in Rosenberg (2005). Note that the p-value is calculated based on a standard normal distribution (instead of a t-distribution, as suggested by Rosenberg, 2005), but the difference is typically negligible.</p>
+<p>The Rosenberg method (<code>type="Rosenberg"</code>) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on an equal-effects model) to a particular alpha level, which can be specified via the <code>alpha</code> argument (0.05 by default). The method is described in Rosenberg (2005). Note that the p-value is calculated based on a standard normal distribution (instead of a t-distribution, as suggested by Rosenberg, 2005), but the difference is typically negligible.</p>
 <p></p>
 </div>
 
@@ -174,7 +174,7 @@
 <h3 id="general-method">General Method<a class="anchor" aria-label="anchor" href="#general-method"></a></h3>
 
 
-<p>This method is a generalization of the methods by Orwin and Rosenberg (see Viechtbauer, 2024). By default (i.e., when <code>target</code> is not specified), it calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on a chosen model) to a particular alpha level, which can be specified via the <code>alpha</code> argument (.05 by default). The type of model that is used in the calculation is chosen via the <code>method</code> argument. If this is unspecified, then a random-effects model is automatically used (using <code>method="REML"</code>) or the method that was used in fitting the <code>"rma"</code> model (see <code><a href="rma.uni.html">rma.uni</a></code> for options). Therefore, when setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Rosenberg's method.</p>
+<p>This method is a generalization of the methods by Orwin and Rosenberg (see Viechtbauer, 2024). By default (i.e., when <code>target</code> is not specified), it calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on a chosen model) to a particular alpha level, which can be specified via the <code>alpha</code> argument (0.05 by default). The type of model that is used in the calculation is chosen via the <code>method</code> argument. If this is unspecified, then a random-effects model is automatically used (using <code>method="REML"</code>) or the method that was used in fitting the <code>"rma"</code> model (see <code><a href="rma.uni.html">rma.uni</a></code> for options). Therefore, when setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Rosenberg's method.</p>
 <p>If <code>target</code> is specified, then the method calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the average effect size / outcome (as estimated based on a chosen model) to a target value (as specified via the <code>target</code> argument). As described above, the type of model that is used in the calculation is chosen via the <code>method</code> argument. When setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Orwin's method with inverse-variance weights.</p>
 <p>The method uses an iterative algorithm for calculating the fail-safe N, which can be computationally expensive especially when N is large. By default, the method uses approximate (but faster) calculations, but when setting <code>exact=TRUE</code>, the method uses exact (but slower) calculations. The difference between the two is typically negligible. If N is larger than <em></em>\(10^7\), then the calculated number is given as <code>&gt;1e+07</code>.</p>
 <p></p>

@@ -302,9 +302,9 @@ transf.iarcsin.int <- function(xi, targs=NULL) {
    tau <- sqrt(targs$tau2)
 
    if (is.null(targs$lower))
-      targs$lower <- 0
+      targs$lower <- max(0, xi-10*tau)
    if (is.null(targs$upper))
-      targs$upper <- base::pi/2
+      targs$upper <- min(base::pi/2, xi+10*tau)
 
    toint <- function(zval, xi, tau)
       transf.iarcsin(zval) * dnorm(zval, mean=xi, sd=tau) / (pnorm((base::pi/2-xi)/tau) - pnorm(-xi/tau))
@@ -539,9 +539,9 @@ transf.iahw.int <- function(xi, targs=NULL) {
    tau <- sqrt(tau2)
 
    if (is.null(targs$lower))
-      targs$lower <- 0
+      targs$lower <- max(0, xi-10*tau)
    if (is.null(targs$upper))
-      targs$upper <- 1
+      targs$upper <- min(1, xi+10*tau)
 
    toint <- function(zval, xi, tau)
       transf.iahw(zval) * dnorm(zval, mean=xi, sd=tau) / (pnorm((1-xi)/tau) - pnorm(-xi/tau))
@@ -638,7 +638,7 @@ transf.iabt.int <- function(xi, targs=NULL) {
    tau <- sqrt(tau2)
 
    if (is.null(targs$lower))
-      targs$lower <- 0
+      targs$lower <- max(0, xi-10*tau)
    if (is.null(targs$upper))
       targs$upper <- xi+10*tau
 

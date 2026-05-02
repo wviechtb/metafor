@@ -155,7 +155,7 @@ with(dat, funnel(yi, vi))
 funnel(res, refline=0)
 
 ### adjust the position of the x-axis labels, number of digits, and y-axis limits
-funnel(res, atransf=exp, at=log(c(.125, .25, .5, 1, 2)), digits=3L, ylim=c(0,.8))
+funnel(res, atransf=exp, at=log(c(0.125, 0.25, 0.5, 1, 2)), digits=3L, ylim=c(0,0.8))
 
 ### contour-enhanced funnel plot centered at 0 (see Peters et al., 2008)
 funnel(res, level=c(90, 95, 99), shade=c("white", "gray55", "gray75"), refline=0, legend=TRUE)
@@ -164,19 +164,19 @@ funnel(res, level=c(90, 95, 99), shade=c("white", "gray55", "gray75"), refline=0
 funnel(res, level=c(90, 95, 99), refline=0, legend=TRUE)
 
 ### same, but show risk ratio values on the x-axis and some further adjustments
-funnel(res, level=c(90, 95, 99), digits=3L, ylim=c(0,.8),
-       atransf=exp, at=log(c(.125, .25, .5, 1, 2, 4, 8)), refline=0, legend=TRUE)
+funnel(res, level=c(90, 95, 99), digits=3L, ylim=c(0,0.8),
+       atransf=exp, at=log(c(0.125, 0.25, 0.5, 1, 2, 4, 8)), refline=0, legend=TRUE)
 
 ### same, but show confidence interval levels in the legend
-funnel(res, level=c(90, 95, 99), digits=3L, ylim=c(0,.8),
-       atransf=exp, at=log(c(.125, .25, .5, 1, 2, 4, 8)), refline=0, legend=list(show="cis"))
+funnel(res, level=c(90, 95, 99), digits=3L, ylim=c(0,0.8),
+       atransf=exp, at=log(c(0.125, 0.25, 0.5, 1, 2, 4, 8)), refline=0, legend=list(show="cis"))
 
 ### illustrate the use of vectors for 'pch' and 'col'
 res <- rma(yi, vi, data=dat, subset=2:10)
-funnel(res, pch=ifelse(yi > -1, 19, 21), col=ifelse(sqrt(vi) > .3, "red", "blue"))
+funnel(res, pch=ifelse(yi > -1, 19, 21), col=ifelse(sqrt(vi) > 0.3, "red", "blue"))
 
 ### can add a second funnel via (undocumented) argument refline2
-funnel(res, atransf=exp, at=log(c(.125, .25, .5, 1, 2, 4)), digits=3L, ylim=c(0,.8), refline2=0)
+funnel(res, atransf=exp, at=log(c(0.125, 0.25, 0.5, 1, 2, 4)), digits=3L, ylim=c(0,0.8), refline2=0)
 
 ### mixed-effects model with absolute latitude in the model
 res <- rma(yi, vi, mods = ~ ablat, data=dat)

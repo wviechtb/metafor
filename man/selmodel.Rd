@@ -59,7 +59,7 @@ selmodel(x, \dots)
       \if{html}{\figure{selmodel-preston.png}{options: width=600}}
       \if{latex}{\figure{selmodel-preston.pdf}{options: width=4in}}
 
-      Here, these functions are extended to allow for the possibility that \mjseqn{w(p_i) = 1} for p-values below a certain significance threshold denoted by \mjseqn{\alpha} (e.g., to model the case that the relative likelihood of selection is equally high for all significant studies but decreases monotonically for p-values above the significance threshold). To fit such a selection model, one should specify the \mjseqn{\alpha} value (with \mjteqn{0 < \alpha < 1}{0 \lt \alpha \lt 1}{0 < \alpha < 1}) via the \code{steps} argument. There should be at least one observed p-value below and one observed p-value above the chosen threshold to fit these models. The selection functions are then given by \mjseqn{\text{min}(1, w(p_i) / w(\alpha))}. \ifelse{text}{}{The figure below shows some examples of the relative likelihood of selection when \code{steps=.05}.}
+      Here, these functions are extended to allow for the possibility that \mjseqn{w(p_i) = 1} for p-values below a certain significance threshold denoted by \mjseqn{\alpha} (e.g., to model the case that the relative likelihood of selection is equally high for all significant studies but decreases monotonically for p-values above the significance threshold). To fit such a selection model, one should specify the \mjseqn{\alpha} value (with \mjteqn{0 < \alpha < 1}{0 \lt \alpha \lt 1}{0 < \alpha < 1}) via the \code{steps} argument. There should be at least one observed p-value below and one observed p-value above the chosen threshold to fit these models. The selection functions are then given by \mjseqn{\text{min}(1, w(p_i) / w(\alpha))}. \ifelse{text}{}{The figure below shows some examples of the relative likelihood of selection when \code{steps=0.05}.}
 
       \if{html}{\figure{selmodel-preston-step.png}{options: width=600}}
       \if{latex}{\figure{selmodel-preston-step.pdf}{options: width=4in}}
@@ -110,16 +110,16 @@ selmodel(x, \dots)
 
       When \code{type="stepfun"}, the function can be used to fit \sQuote{step function models} as described by Iyengar and Greenhouse (1988), Hedges (1992), Vevea and Hedges (1995), Vevea and Woods (2005), and others. For these models, one must specify one or multiple values via the \code{steps} argument, which define intervals in which the relative likelihood of selection is constant. Let \mjtdeqn{\alpha_1 < \alpha_2 < \ldots < \alpha_c}{\alpha_1 \lt \alpha_2 \lt \ldots \lt \alpha_c}{\alpha_1 < \alpha_2 < \ldots < \alpha_c} denote these cutpoints sorted in increasing order, with the constraint that \mjseqn{\alpha_c = 1} (if the highest value specified via \code{steps} is not 1, the function will automatically add this cutpoint), and define \mjseqn{\alpha_0 = 0}. The selection function is then given by \mjseqn{w(p_i) = \delta_j} for \mjteqn{\alpha_{j-1} < p_i \le \alpha_j}{\alpha_{j-1} \lt p_i \le \alpha_j}{\alpha_{j-1} < p_i \le \alpha_j} where \mjseqn{\delta_j \ge 0}. To make the model identifiable, we set \mjseqn{\delta_1 = 1}. The \mjseqn{\delta_j} values therefore denote the likelihood of selection in the various intervals relative to the interval for p-values between 0 and \mjseqn{\alpha_1}. Hence, the null hypothesis \mjeqn{\text{H}_0{:}\; \delta_j = 1}{H_0: \delta_j = 1} for \mjseqn{j = 1, \ldots, c} implies no selection.
 
-      For example, if \code{steps=c(.05, .10, .50, 1)}, then \mjseqn{\delta_2} is the likelihood of selection for p-values between .05 and .10, \mjseqn{\delta_3} is the likelihood of selection for p-values between .10 and .50, and \mjseqn{\delta_4} is the likelihood of selection for p-values between .50 and 1 relative to the likelihood of selection for p-values between 0 and .05. \ifelse{text}{}{The figure below shows the corresponding selection function for some arbitrarily chosen \mjseqn{\delta_j} values.}
+      For example, if \code{steps=c(0.05, 0.10, 0.50, 1)}, then \mjseqn{\delta_2} is the likelihood of selection for p-values between 0.05 and 0.10, \mjseqn{\delta_3} is the likelihood of selection for p-values between 0.10 and 0.50, and \mjseqn{\delta_4} is the likelihood of selection for p-values between 0.50 and 1 relative to the likelihood of selection for p-values between 0 and 0.05. \ifelse{text}{}{The figure below shows the corresponding selection function for some arbitrarily chosen \mjseqn{\delta_j} values.}
 
       \if{html}{\figure{selmodel-stepfun.png}{options: width=600}}
       \if{latex}{\figure{selmodel-stepfun.pdf}{options: width=4in}}
 
       There should be at least one observed p-value within each interval to fit this model. If there are no p-values between \mjseqn{\alpha_0 = 0} and \mjseqn{\alpha_1} (i.e., within the first interval for which \mjseqn{\delta_1 = 1}), then estimates of \mjseqn{\delta_2, \ldots, \delta_c} will try to drift to infinity. If there are no p-values between \mjseqn{\alpha_{j-1}} and \mjseqn{\alpha_j} for \mjseqn{j = 2, \ldots, c}, then \mjseqn{\delta_j} will try to drift to zero. In either case, results should be treated with great caution. A common practice is then to collapse and/or adjust the intervals until all intervals contain at least one study. By setting \code{ptable=TRUE}, the function simply returns the p-value table and does not attempt any model fitting.
 
-      Note that when \code{alternative="greater"} or \code{alternative="less"} (i.e., when we assume that the relative likelihood of selection is not only related to the p-values of the studies, but also the directionality of the outcomes), then it would usually make sense to divide conventional levels of significance (e.g., .05) by 2 before passing these values to the \code{steps} argument. For example, if we think that studies were selected for positive outcomes that are significant at two-tailed \mjseqn{\alpha = .05}, then we should use \code{alternative="greater"} in combination with \code{steps=c(.025, 1)}.
+      Note that when \code{alternative="greater"} or \code{alternative="less"} (i.e., when we assume that the relative likelihood of selection is not only related to the p-values of the studies, but also the directionality of the outcomes), then it would usually make sense to divide conventional levels of significance (e.g., 0.05) by 2 before passing these values to the \code{steps} argument. For example, if we think that studies were selected for positive outcomes that are significant at two-tailed \mjseqn{\alpha = 0.05}, then we should use \code{alternative="greater"} in combination with \code{steps=c(0.025, 1)}.
 
-      When specifying a single cutpoint in the context of a random-effects model (typically \code{steps=c(.025, 1)} with either \code{alternative="greater"} or \code{alternative="less"}), this model is sometimes called the \sQuote{three-parameter selection model} (3PSM), corresponding to the parameters \mjseqn{\mu}, \mjseqn{\tau^2}, and \mjseqn{\delta_2} (e.g., Carter et al., 2019; McShane et al., 2016; Pustejovsky & Rodgers, 2019). The same idea but in the context of an equal-effects model was also described by Iyengar and Greenhouse (1988).
+      When specifying a single cutpoint in the context of a random-effects model (typically \code{steps=c(0.025, 1)} with either \code{alternative="greater"} or \code{alternative="less"}), this model is sometimes called the \sQuote{three-parameter selection model} (3PSM), corresponding to the parameters \mjseqn{\mu}, \mjseqn{\tau^2}, and \mjseqn{\delta_2} (e.g., Carter et al., 2019; McShane et al., 2016; Pustejovsky & Rodgers, 2019). The same idea but in the context of an equal-effects model was also described by Iyengar and Greenhouse (1988).
 
       Note that \mjseqn{\delta_j} (for \mjseqn{j = 2, \ldots, c}) can be larger than 1 (implying a greater likelihood of selection for p-values in the corresponding interval relative to the first interval). With \code{control=list(delta.max=1)}, one can enforce that the likelihood of selection for p-values above the first cutpoint can never be greater than the likelihood of selection for p-values below it. This constraint should be used with caution, as it may force \mjseqn{\delta_j} estimates to fall on the boundary of the parameter space. Alternatively, one can set \code{decreasing=TRUE}, in which case the \mjseqn{\delta_j} values must be a monotonically decreasing function of the p-values (which also forces \mjseqn{\delta_j \le 1}). This feature should be considered experimental.
 
@@ -273,7 +273,7 @@ sel <- selmodel(res, type="beta", subset=score<10)
 sel
 
 # use a truncated beta selection function (need to switch optimizers to get convergence)
-sel <- selmodel(res, type="beta", steps=c(.025,0.975), control=list(optimizer="nlminb"))
+sel <- selmodel(res, type="beta", steps=c(0.025,0.975), control=list(optimizer="nlminb"))
 sel
 }
 
@@ -386,7 +386,7 @@ funnel(res, atransf=exp, at=log(c(0.25,0.5,1,2,4,8)), ylim=c(0,0.8))
 
 # step function selection model
 \dontrun{
-sel <- selmodel(res, type="stepfun", alternative="greater", steps=c(.025,.10,.50,1))
+sel <- selmodel(res, type="stepfun", alternative="greater", steps=c(0.025,0.10,0.50,1))
 sel
 
 # plot the selection function
@@ -412,11 +412,11 @@ res
 
 # step function selection model (3PSM)
 \dontrun{
-sel <- selmodel(res, type="stepfun", alternative="greater", steps=.025)
+sel <- selmodel(res, type="stepfun", alternative="greater", steps=0.025)
 sel
 
 # step function selection model that only applies to the non-preregistered studies
-sel <- selmodel(res, type="stepfun", alternative="greater", steps=.025,
+sel <- selmodel(res, type="stepfun", alternative="greater", steps=0.025,
                 subset=Preregistered=="Not Pre-Registered")
 sel
 }

@@ -1,6 +1,6 @@
 tes <- function(x, vi, sei, subset, data,
-   H0=0, alternative="two.sided", alpha=.05, theta, tau2,
-   test, tes.alternative="greater", progbar=TRUE, tes.alpha=.10,
+   H0=0, alternative="two.sided", alpha=0.05, theta, tau2,
+   test, tes.alternative="greater", progbar=TRUE, tes.alpha=0.10,
    digits, ...) {
 
    # allow multiple alpha values? plot for pval as a function of alpha?

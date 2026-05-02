@@ -1,6 +1,6 @@
-# metafor 5.1-0 (2026-04-27)
+# metafor 5.1-1 (2026-05-02)
 
-- version bump for the development version
+- adjusted the default bounds for some of the integral transformations to avoid numerical issues
 
 # metafor 5.0-1 (2026-04-26)
 

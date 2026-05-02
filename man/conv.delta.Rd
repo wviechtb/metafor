@@ -108,7 +108,7 @@ dat <- data.frame(study=1:6,
          ai=c(NA,NA,NA,26,NA,NA), bi=c(NA,NA,NA,58,NA,NA),
          ci=c(NA,NA,NA,11,NA,NA), di=c(NA,NA,NA,74,NA,NA),
          or=c(NA,NA,NA,NA,2.56,NA), lower=c(NA,NA,NA,NA,1.23,NA), upper=c(NA,NA,NA,NA,5.30,NA),
-         corr=c(NA,NA,NA,NA,NA,.32), ntot=c(NA,NA,NA,NA,NA,86))
+         corr=c(NA,NA,NA,NA,NA,0.32), ntot=c(NA,NA,NA,NA,NA,86))
 dat
 
 ### study types:
@@ -166,7 +166,7 @@ rma(yi, vi, data=dat, method="EE")
 ### preparation steps for a meta-analysis of correlation coefficients
 
 dat <- data.frame(study=1:6,
-         ri=c(.42,NA,NA,NA,NA,NA),
+         ri=c(0.42,NA,NA,NA,NA,NA),
          tval=c(NA,2.85,NA,NA,NA,NA),
          phi=c(NA,NA,NA,0.27,NA,NA),
          ni=c(93,182,NA,112,NA,NA),

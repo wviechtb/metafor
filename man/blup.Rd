@@ -73,7 +73,7 @@ blup(res, transf=exp)
 ### illustrate shrinkage of BLUPs towards the (estimated) population average
 res <- rma(yi, vi, data=dat)
 blups <- blup(res)$pred
-plot(NA, NA, xlim=c(.8,2.4), ylim=c(-2,0.5), pch=19,
+plot(NA, NA, xlim=c(0.8,2.4), ylim=c(-2,0.5), pch=19,
      xaxt="n", bty="n", xlab="", ylab="Log Risk Ratio")
 segments(rep(1,13), dat$yi, rep(2,13), blups, col="darkgray")
 points(rep(1,13), dat$yi, pch=19)

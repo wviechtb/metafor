@@ -45,9 +45,9 @@ fmtt(val, tname, df, df1, df2, pval, digits=4,
    \item{\dots}{other arguments.}
 }
 \details{
-   The \code{fmtp} function takes one or multiple p-values as input and rounds them to the chosen number of digits. For p-values that are smaller than \code{10^(-digits)} (e.g., \code{0.0001} for \code{digits=4}), the value is shown to fall below this bound (e.g., \code{<.0001}). One can further customize the way the output of the values is formatted via the \code{pname}, \code{equal}, \code{sep}, \code{add0}, and \code{quote} arguments.
+   The \code{fmtp} function takes one or multiple p-values as input and rounds them to the chosen number of digits. For p-values that are smaller than \code{10^(-digits)} (e.g., \code{0.0001} for \code{digits=4}), the value is shown to fall below this bound (e.g., \code{<0.0001}). One can further customize the way the output of the values is formatted via the \code{pname}, \code{equal}, \code{sep}, \code{add0}, and \code{quote} arguments.
 
-   The \code{fmtp2} function is an alternative function to format p-values, which yields output that essentially matches APA style guidelines. Values that fall below the first cutoff are printed as such (e.g., a p-value of .00002 would be printed as \code{p < .001}), values that fall in between the first and second cutoff are printed as exact p-values with the number of digits determined by the first cutoff (e.g., a p-value of .01723 would be printed as \code{p = .017}), and values falling above the second cutoff are printed as exact p-values with the number of digits determined by the second cutoff (e.g., a p-value of .08432 would be printed as \code{p = .08}). Note that the second cutoff is by default \code{.06} to show that p-values in the range of .051 and .054 are above .05.
+   The \code{fmtp2} function is an alternative function to format p-values, which yields output that essentially matches APA style guidelines. Values that fall below the first cutoff are printed as such (e.g., a p-value of 0.00002 would be printed as \code{p < 0.001}), values that fall in between the first and second cutoff are printed as exact p-values with the number of digits determined by the first cutoff (e.g., a p-value of 0.01723 would be printed as \code{p = 0.017}), and values falling above the second cutoff are printed as exact p-values with the number of digits determined by the second cutoff (e.g., a p-value of 0.08432 would be printed as \code{p = 0.08}). Note that the second cutoff is by default \code{0.06} to show that p-values in the range of 0.051 and 0.054 are above 0.05.
 
    The \code{fmtx} function takes one or multiple numeric values as input and rounds them to the chosen number of digits, without using scientific notation and without dropping trailing zeros (using \code{\link{formatC}}).
 
@@ -67,13 +67,13 @@ fmtt(val, tname, df, df1, df2, pval, digits=4,
 }
 \examples{
 # examples for fmtp()
-fmtp(c(.0002, .00008), quote=TRUE, digits=4)
-fmtp(c(.0002, .00008), quote=TRUE, digits=4, equal=TRUE)
-fmtp(c(.0002, .00008), quote=TRUE, digits=4, equal=TRUE, sep=TRUE)
-fmtp(c(.0002, .00008), quote=TRUE, digits=4, equal=TRUE, sep=TRUE, add0=TRUE)
+fmtp(c(0.0002, 0.00008), quote=TRUE, digits=4)
+fmtp(c(0.0002, 0.00008), quote=TRUE, digits=4, equal=TRUE)
+fmtp(c(0.0002, 0.00008), quote=TRUE, digits=4, equal=TRUE, sep=TRUE)
+fmtp(c(0.0002, 0.00008), quote=TRUE, digits=4, equal=TRUE, sep=TRUE, add0=TRUE)
 
 # example for fmtp2()
-fmtp2(c(.0005, .001, .002, .0423, .0543, .0578, .0623, .5329), quote=TRUE)
+fmtp2(c(0.0005, 0.001, 0.002, 0.0423, 0.0543, 0.0578, 0.0623, 0.5329), quote=TRUE)
 
 # examples for fmtx()
 fmtx(c(1.0002, 2.00008, 3.00004), digits=4)
