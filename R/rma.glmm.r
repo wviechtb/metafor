@@ -254,7 +254,7 @@ test="z", level=95, btt, nAGQ=7, verbose=FALSE, digits, control, ...) {
 
    }
 
-   args <- c(args, list(measure=measure, vtype=vtype))
+   args <- c(args, list(measure=measure, vtype=vtype, cutoff=NA_real_))
 
    dat <- .do.call(escalc, args)
 

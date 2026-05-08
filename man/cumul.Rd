@@ -5,7 +5,7 @@
 \alias{cumul.rma.peto}
 \title{Cumulative Meta-Analysis for 'rma' Objects}
 \description{
-   Function to carry out a \sQuote{cumulative meta-analysis}, by repeatedly fitting the specified model adding one study at a time. \loadmathjax
+   Function to carry out a \sQuote{cumulative meta-analysis}, by repeatedly fitting the specified model adding one estimate at a time. \loadmathjax
 }
 \usage{
 cumul(x, \dots)
@@ -16,27 +16,29 @@ cumul(x, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, or \code{"rma.peto"}.}
-   \item{order}{optional argument to specify a variable based on which the studies will be ordered for the cumulative meta-analysis.}
+   \item{order}{optional argument to specify a variable based on which the estimates will be ordered for the cumulative meta-analysis.}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
    \item{transf}{optional argument to specify a function to transform the model coefficients and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
-   \item{collapse}{logical to specify whether studies with the same value of the \code{order} variable should be added simultaneously (the default is \code{FALSE}).}
+   \item{collapse}{logical to specify whether estimates with the same value of the \code{order} variable should be added simultaneously (the default is \code{FALSE}).}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
 \details{
+   A cumulative meta-analysis describes the accumulation of evidence (e.g., about the effectiveness of a particular treatment or intervention) as the effect sizes estimates are added to the analysis in (typically) chronological order (Chalmers & Lau, 1993; Lau et al., 1995). Therefore, given \mjseqn{k} estimates, we conduct \mjseqn{k} meta-analyses, first only including the first estimate, then including the first and second estimate, then estimates 1 through 3, and so on, until all \mjseqn{k} estimates are included.
+
    For \code{"rma.uni"} objects, the model specified via \code{x} must be a model without moderators (i.e., either an equal- or a random-effects model).
 
-   If argument \code{order} is not specified, the studies are added according to their order in the original dataset.
+   If argument \code{order} is not specified, the estimates are added according to their order in the original dataset.
 
-   When a variable is specified for \code{order}, the variable is assumed to be of the same length as the original dataset that was used in the model fitting (and if the \code{data} argument was used in the original model fit, then the variable will be searched for within this data frame first). Any subsetting and removal of studies with missing values that was applied during the model fitting is also automatically applied to the variable specified via the \code{order} argument.
+   When a variable is specified for \code{order}, the variable is assumed to be of the same length as the original dataset that was used in the model fitting (and if the \code{data} argument was used in the original model fit, then the variable will be searched for within this data frame first). Any subsetting and removal of rows with missing values that was applied during the model fitting is also automatically applied to the variable specified via the \code{order} argument.
 
-   By default, studies are added one at a time. However, if a variable is specified for the \code{order} argument and \code{collapse=TRUE}, then studies with the same value of the \code{order} variable are added simultaneously.
+   By default, estimates are added one at a time. However, if a variable is specified for the \code{order} argument and \code{collapse=TRUE}, then estimates with the same value of the \code{order} variable are added simultaneously.
 }
 \value{
    An object of class \code{c("list.rma","cumul.rma")}. The object is a list containing the following components:
-   \item{k}{number of studies included in the analysis.}
-   \item{estimate}{estimated (average) outcomes.}
+   \item{k}{number of estimates included in the analysis.}
+   \item{estimate}{the pooled estimates.}
    \item{se}{corresponding standard errors.}
    \item{zval}{corresponding test statistics.}
    \item{pval}{corresponding p-values.}
@@ -55,7 +57,7 @@ cumul(x, \dots)
    The object is formatted and printed with the \code{\link[=print.list.rma]{print}} function. To format the results as a data frame, one can use the \code{\link[=as.data.frame.list.rma]{as.data.frame}} function. A forest plot showing the results from the cumulative meta-analysis can be obtained with \code{\link[=forest.cumul.rma]{forest}}. Alternatively, \code{\link[=plot.cumul.rma]{plot}} can also be used to visualize the results.
 }
 \note{
-   When using the \code{transf} option, the transformation is applied to the estimated coefficients and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output.
+   When using the \code{transf} option, the transformation is applied to the pooled estimates and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).

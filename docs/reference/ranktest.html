@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-2</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@
     <h2>Arguments</h2>
     <p></p>
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>a vector with the observed effect sizes or outcomes or an object of class <code>"rma"</code>.</p></dd>
+<dd><p>a vector with the effect size estimates or an object of class <code>"rma"</code>.</p></dd>
 
    <dt id="arg-vi">vi<a class="anchor" aria-label="anchor" href="#arg-vi"></a></dt>
 <dd><p>vector with the corresponding sampling variances (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
@@ -125,8 +125,8 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The function carries out the rank correlation test as described by Begg and Mazumdar (1994). The test can be used to examine whether the observed effect sizes or outcomes and the corresponding sampling variances are correlated. A high correlation would indicate that the funnel plot is asymmetric, which may be a result of publication bias.</p>
-<p>One can either pass a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>. When passing a model object, the model must be a model without moderators (i.e., either an equal- or a random-effects model).</p>
+    <p>The function carries out the rank correlation test as described by Begg and Mazumdar (1994). The test can be used to examine whether the effect size estimates and the corresponding sampling variances are correlated. A high correlation would indicate that the funnel plot is asymmetric, which may be a result of publication bias.</p>
+<p>One can either pass a vector with the effect size estimates (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>. When passing a model object, the model must be a model without moderators (i.e., either an equal- or a random-effects model).</p>
     </div>
     <div id="value">
     <h2>Value</h2>
@@ -175,7 +175,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Kendall's tau = 0.0256, p = 0.9524</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### can also pass the observed outcomes and corresponding sampling variances to the function</span></span></span>
+<span class="r-in"><span><span class="co">### can also pass the effect size estimates and corresponding sampling variances to the function</span></span></span>
 <span class="r-in"><span><span class="fu">ranktest</span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rank Correlation Test for Funnel Plot Asymmetry</span>

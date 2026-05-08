@@ -35,7 +35,7 @@ dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
 res
 
-### extract model coefficients
+### extract the model coefficients
 coef(res)
 
 ### extract the standard errors

@@ -1,28 +1,28 @@
 \name{vcalc}
 \alias{vcalc}
-\title{Construct or Approximate the Variance-Covariance Matrix of Dependent Effect Sizes or Outcomes}
+\title{Construct or Approximate the Variance-Covariance Matrix of Dependent Effect Size Estimates}
 \description{
-   Function to construct or approximate the variance-covariance matrix of dependent effect sizes or outcomes, or more precisely, of their sampling errors (i.e., the \code{V} matrix in \code{\link{rma.mv}}). \loadmathjax
+   Function to construct or approximate the variance-covariance matrix of dependent effect size estimates, or more precisely, of their sampling errors (i.e., the \code{V} matrix in \code{\link{rma.mv}}). \loadmathjax
 }
 \usage{
 vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
       data, rho, phi, rvars, checkpd=TRUE, nearpd=FALSE, sparse=FALSE, \dots)
 }
 \arguments{
-   \item{vi}{numeric vector to specify the sampling variances of the observed effect sizes or outcomes.}
+   \item{vi}{numeric vector to specify the sampling variances of the effect size estimates.}
    \item{cluster}{vector to specify the clustering variable (e.g., study).}
    \item{subgroup}{optional vector to specify different (independent) subgroups within clusters.}
-   \item{obs}{optional vector to distinguish different observed effect sizes or outcomes corresponding to the same construct or response/dependent variable.}
-   \item{type}{optional vector to distinguish different types of constructs or response/dependent variables underlying the observed effect sizes or outcomes.}
-   \item{time1}{optional numeric vector to specify the time points when the observed effect sizes or outcomes were obtained (in the first condition if the observed effect sizes or outcomes represent contrasts between two conditions).}
-   \item{time2}{optional numeric vector to specify the time points when the observed effect sizes or outcomes were obtained in the second condition (only relevant when the observed effect sizes or outcomes represent contrasts between two conditions).}
-   \item{grp1}{optional vector to specify the group of the first condition when the observed effect sizes or outcomes represent contrasts between two conditions.}
-   \item{grp2}{optional vector to specify the group of the second condition when the observed effect sizes or outcomes represent contrasts between two conditions.}
-   \item{w1}{optional numeric vector to specify the size of the group (or more generally, the inverse-sampling variance weight) of the first condition when the observed effect sizes or outcomes represent contrasts between two conditions.}
-   \item{w2}{optional numeric vector to specify the size of the group (or more generally, the inverse-sampling variance weight) of the second condition when the observed effect sizes or outcomes represent contrasts between two conditions.}
+   \item{obs}{optional vector to distinguish different estimates corresponding to the same construct or response/dependent variable.}
+   \item{type}{optional vector to distinguish different types of constructs or response/dependent variables underlying the estimates.}
+   \item{time1}{optional numeric vector to specify the time points when the estimates were obtained (in the first condition if the estimates represent contrasts between two conditions).}
+   \item{time2}{optional numeric vector to specify the time points when the estimates were obtained in the second condition (only relevant when the estimates represent contrasts between two conditions).}
+   \item{grp1}{optional vector to specify the group of the first condition when the estimates represent contrasts between two conditions.}
+   \item{grp2}{optional vector to specify the group of the second condition when the estimates represent contrasts between two conditions.}
+   \item{w1}{optional numeric vector to specify the size of the group (or more generally, the inverse-sampling variance weight) of the first condition when the estimates represent contrasts between two conditions.}
+   \item{w2}{optional numeric vector to specify the size of the group (or more generally, the inverse-sampling variance weight) of the second condition when the estimates represent contrasts between two conditions.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
-   \item{rho}{argument to specify the correlation(s) of observed effect sizes or outcomes measured concurrently. See \sQuote{Details}.}
-   \item{phi}{argument to specify the autocorrelation of observed effect sizes or outcomes measured at different time points. See \sQuote{Details}.}
+   \item{rho}{argument to specify the correlation(s) of estimates measured concurrently. See \sQuote{Details}.}
+   \item{phi}{argument to specify the autocorrelation of estimates measured at different time points. See \sQuote{Details}.}
    \item{rvars}{optional argument for specifying the variables that correspond to the correlation matrices of the studies (if this is specified, all arguments above except for \code{cluster} and \code{subgroup} are ignored). See \sQuote{Details}.}
    \item{checkpd}{logical to specify whether to check that the variance-covariance matrices within clusters are positive definite (the default is \code{TRUE}). See \sQuote{Note}.}
    \item{nearpd}{logical to specify whether the \code{\link[Matrix]{nearPD}} function from the \href{https://cran.r-project.org/package=Matrix}{Matrix} package should be used on variance-covariance matrices that are not positive definite. See \sQuote{Note}.}
@@ -30,45 +30,45 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
    \item{\dots}{other arguments.}
 }
 \details{
-   Standard meta-analytic models (such as those that can be fitted with the \code{\link{rma.uni}} function) assume that the observed effect sizes or outcomes (or more precisely, their sampling errors) are independent. This assumption is typically violated whenever multiple observed effect sizes or outcomes are computed based on the same sample of subjects (or whatever the study units are) or if there is at least partial overlap of subjects that contribute information to the computation of multiple effect sizes or outcomes.
+   Standard meta-analytic models (such as those that can be fitted with the \code{\link{rma.uni}} function) assume that the effect size estimates (or more precisely, their sampling errors) are independent. This assumption is typically violated whenever multiple estimates are computed based on the same sample of subjects (or whatever the study units are) or if there is at least partial overlap of subjects that contribute information to the computation of multiple estimates.
 
-   The present function can be used to construct or approximate the variance-covariance matrix of the sampling errors of dependent effect sizes or outcomes for a wide variety of circumstances (this variance-covariance matrix is the so-called \code{V} matrix that may be needed as input for multilevel/multivariate meta-analytic models as can be fitted with the \code{\link{rma.mv}} function; see also \link[=misc-recs]{here} for some recommendations on a general workflow for meta-analyses involving complex dependency structures).
+   The present function can be used to construct or approximate the variance-covariance matrix of the sampling errors of dependent effect size estimates for a wide variety of circumstances (this variance-covariance matrix is the so-called \code{V} matrix that may be needed as input for multilevel/multivariate meta-analytic models as can be fitted with the \code{\link{rma.mv}} function; see also \link[=misc-recs]{here} for some recommendations on a general workflow for meta-analyses involving complex dependency structures).
 
    Argument \code{cluster} is used to specify the clustering variable. Rows with the same value of this variable are allowed to be dependent, while rows with different values are assumed to be independent. Typically, \code{cluster} will be a study identifier.
 
    Within the same cluster, there may be different subgroups with no overlap of subjects across subgroups. Argument \code{subgroup} can be used to distinguish such subgroups. Rows with the same value of this variable within a cluster are allowed to be dependent, while rows with different values are assumed to be independent even if they come from the same cluster. Therefore, from hereon, \sQuote{cluster} really refers to the combination of \code{cluster} and \code{subgroup}.
 
-   Multiple effect sizes or outcomes belonging to the same cluster may be dependent due to a variety of reasons:
+   Multiple estimates belonging to the same cluster may be dependent due to a variety of reasons:
    \enumerate{
-   \item The same construct of interest (e.g., severity of depression) may have been measured using different scales or instruments within a study (e.g., using the Beck Depression Inventory (BDI) and the Hamilton Depression Rating Scale (HDRS)) based on which multiple effect sizes can be computed for the same group of subjects (e.g., contrasting a treatment versus a control group with respect to each scale). In this case, we have multiple effect sizes that are different \sQuote{observations} of the effect with respect to the same type of construct.
+   \item The same construct of interest (e.g., severity of depression) may have been measured using different scales or instruments within a study (e.g., using the Beck Depression Inventory (BDI) and the Hamilton Depression Rating Scale (HDRS)) based on which multiple effect size estimates can be computed for the same group of subjects (e.g., contrasting a treatment versus a control group with respect to each scale). In this case, we have multiple estimates that are different \sQuote{observations} of the effect with respect to the same type of construct.
 
-   Argument \code{obs} is then used to distinguish different effect sizes corresponding to the same construct. If \code{obs} is specified, then argument \code{rho} must also be used to specify the degree of correlation among the sampling errors of the different effect sizes. Since this correlation is typically not known, the correlation among the various scales (or a rough \sQuote{guestimate} thereof) can be used as a proxy (i.e., the (typical) correlation between BDI and HDRS measurements).
+   Argument \code{obs} is then used to distinguish different effect size estimates corresponding to the same construct. If \code{obs} is specified, then argument \code{rho} must also be used to specify the degree of correlation among the sampling errors of the different estimates. Since this correlation is typically unknown, the correlation among the various scales (or a rough \sQuote{guestimate} thereof) can be used as a proxy (i.e., the (typical) correlation between BDI and HDRS measurements).
 
    One can also pass an entire correlation matrix via \code{rho} to specify, for each possible pair of \code{obs} values, the corresponding correlation. The row/column names of the matrix must then correspond to the unique values of the \code{obs} variable.
 
-   \item Multiple types of constructs (or more generally, types of response/dependent variables) may have been measured in the same group of subjects (e.g., severity of depression as measured with the Beck Depression Inventory (BDI) and severity of anxiety as measured with the State-Trait Anxiety Inventory (STAI)). If this is of interest for a meta-analysis, effect sizes can then be computed with respect to each \sQuote{type} of construct.
+   \item Multiple types of constructs (or more generally, types of response/dependent variables) may have been measured in the same group of subjects (e.g., severity of depression as measured with the Beck Depression Inventory (BDI) and severity of anxiety as measured with the State-Trait Anxiety Inventory (STAI)). If this is of interest for a meta-analysis, effect size estimates can then be computed with respect to each \sQuote{type} of construct.
 
-   Argument \code{type} is then used to distinguish effect sizes corresponding to these different types of constructs. If \code{type} is specified, then argument \code{rho} must also be used to specify the degree of correlation among the sampling errors of effect sizes belonging to these different types. As above, the correlation among the various scales is typically used here as a proxy (i.e., the (typical) correlation between BDI and STAI measurements).
+   Argument \code{type} is then used to distinguish estimates corresponding to these different types of constructs. If \code{type} is specified, then argument \code{rho} must also be used to specify the degree of correlation among the sampling errors of estimates belonging to these different types. As above, the correlation among the various scales is typically used here as a proxy (i.e., the (typical) correlation between BDI and STAI measurements).
 
    One can also pass an entire correlation matrix via \code{rho} to specify, for each possible pair of \code{type} values, the corresponding correlation. The row/column names of the matrix must then correspond to the unique values of the \code{type} variable.
 
-   \item If there are multiple types of constructs, multiple scales or instruments may also have been used (in at least some of the studies) to measure the same construct and hence there may again be multiple effect sizes that are \sQuote{observations} of the same type of construct. Arguments \code{type} and \code{obs} should then be used together to specify the various construct types and observations thereof. In this case, argument \code{rho} must be a vector of two values, the first to specify the within-construct correlation and the second to specify the between-construct correlation.
+   \item If there are multiple types of constructs, multiple scales or instruments may also have been used (in at least some of the studies) to measure the same construct and hence there may again be multiple effect size estimates that are \sQuote{observations} of the same type of construct. Arguments \code{type} and \code{obs} should then be used together to specify the various construct types and observations thereof. In this case, argument \code{rho} must be a vector of two values, the first to specify the within-construct correlation and the second to specify the between-construct correlation.
 
    One can also specify a list with two elements for \code{rho}, the first element being either a scalar or an entire correlation matrix for the within-construct correlation(s) and the second element being a scalar or an entire correlation matrix for the between-construct correlation(s). As above, any matrices specified must have row/column names corresponding to the unique values of the \code{obs} and/or \code{type} variables.
 
-   \item The same construct and scale may have been assessed/used multiple times, allowing the computation of multiple effect sizes for the same group of subjects at different time points (e.g., right after the end of a treatment, at a short-term follow-up, and at a long-term follow-up). Argument \code{time1} is then used to specify the time points when the observed effect sizes were obtained. Argument \code{phi} must then also be used to specify the autocorrelation among the sampling errors of two effect sizes that differ by one unit on the \code{time1} variable. As above, the autocorrelation of the measurements themselves can be used here as a proxy.
+   \item The same construct and scale may have been assessed/used multiple times, allowing the computation of multiple estimates for the same group of subjects at different time points (e.g., right after the end of a treatment, at a short-term follow-up, and at a long-term follow-up). Argument \code{time1} is then used to specify the time points when the estimates were obtained. Argument \code{phi} must then also be used to specify the autocorrelation among the sampling errors of two estimates that differ by one unit on the \code{time1} variable. As above, the autocorrelation of the measurements themselves can be used here as a proxy.
 
-   If multiple constructs and/or multiple scales have also been assessed at the various time points, then arguments \code{type} and/or \code{obs} (together with argument \code{rho}) should be used as needed to differentiate effect sizes corresponding to the different constructs and/or scales.
+   If multiple constructs and/or multiple scales have also been assessed at the various time points, then arguments \code{type} and/or \code{obs} (together with argument \code{rho}) should be used as needed to differentiate estimates corresponding to the different constructs and/or scales.
 
-   \item Many effect sizes or outcome measures (e.g., raw or standardized mean differences, log-transformed ratios of means, log risk/odds ratios and risk differences) reflect the difference between two conditions (i.e., a contrast). Within a study, there may be more than two conditions, allowing the computation of multiple such contrasts (e.g., treatment A versus a control condition and treatment B versus the same control condition) and hence corresponding effect sizes. The reuse of information from the \sQuote{shared} condition (in this example, the control condition) then induces correlation among the effect sizes.
+   \item Many effect size measures (e.g., raw or standardized mean differences, log-transformed ratios of means, log risk/odds ratios and risk differences) reflect the difference between two conditions (i.e., a contrast). Within a study, there may be more than two conditions, allowing the computation of multiple such contrasts (e.g., treatment A versus a control condition and treatment B versus the same control condition) and hence corresponding effect size estimates. The reuse of information from the \sQuote{shared} condition (in this example, the control condition) then induces correlation among the estimates.
 
-   To account for this, arguments \code{grp1} and \code{grp2} should be used to specify (within each cluster) which two groups were compared in the computation of each effect size (e.g., in the example above, the coding could be \code{grp1=c(2,3)} and \code{grp2=c(1,1)}; whether numbers or strings are used as identifiers is irrelevant).
+   To account for this, arguments \code{grp1} and \code{grp2} should be used to specify (within each cluster) which two groups were compared in the computation of each estimate (e.g., in the example above, the coding could be \code{grp1=c(2,3)} and \code{grp2=c(1,1)}; whether numbers or strings are used as identifiers is irrelevant).
 
-   The degree of correlation between two contrast-type effect sizes that is induced by the use of a shared condition is a function of the size of the groups involved in the computation of the two effect sizes (or, more generally, the inverse-sampling variance weights of the condition-specific outcomes). By default, the group sizes (weights) are assumed to be identical across conditions, which implies a correlation of 0.5. If the group sizes (weights) are known, they can be specified via arguments \code{w1} and \code{w2} (in which case this information is used by the function to calculate a more accurate estimate of the correlation induced by the shared condition).
+   The degree of correlation between two contrast-type effect size estimates that is induced by the use of a shared condition is a function of the size of the groups involved in the computation of the two estimates (or, more generally, the inverse-sampling variance weights of the condition-specific outcomes). By default, the group sizes (weights) are assumed to be identical across conditions, which implies a correlation of 0.5. If the group sizes (weights) are known, they can be specified via arguments \code{w1} and \code{w2} (in which case this information is used by the function to calculate a more accurate estimate of the correlation induced by the shared condition).
 
-   Moreover, a contrast-type effect size can be based on a between- or a within-subjects design. When at least one or more of the contrast-type effect sizes are based on a within-subjects design, then \code{time1} and \code{time2} should be used in combination with \code{grp1} and \code{grp2} to specify for each effect size the group(s) and time point(s) involved.
+   Moreover, a contrast-type effect size estimate can be based on a between- or a within-subjects design. When at least one or more of the contrast-type effect size estimates are based on a within-subjects design, then \code{time1} and \code{time2} should be used in combination with \code{grp1} and \code{grp2} to specify for each estimate the group(s) and time point(s) involved.
 
-   For example, \code{grp1=c(2,3)} and \code{grp2=c(1,1)} as above in combination with \code{time1=c(1,1)} and \code{time2=c(1,1)} would imply a between-subjects design involving three groups where two effect sizes were computed contrasting groups 2 and 3 versus group 1 at a single time point. On the other hand, \code{grp1=c(1,1)} and \code{grp2=c(1,1)} in combination with \code{time1=c(2,3)} and \code{time2=c(1,1)} would imply a within-subjects design where two effect sizes were computed contrasting time points 2 and 3 versus time point 1 in a single group. Argument \code{phi} is then used as above to specify the autocorrelation of the measurements within groups (i.e., for the within-subjects design above, it would be the autocorrelation between time points 2 and 1 or equivalently, between time points 3 and 2).
+   For example, \code{grp1=c(2,3)} and \code{grp2=c(1,1)} as above in combination with \code{time1=c(1,1)} and \code{time2=c(1,1)} would imply a between-subjects design involving three groups where two estimates were computed contrasting groups 2 and 3 versus group 1 at a single time point. On the other hand, \code{grp1=c(1,1)} and \code{grp2=c(1,1)} in combination with \code{time1=c(2,3)} and \code{time2=c(1,1)} would imply a within-subjects design where two estimates were computed contrasting time points 2 and 3 versus time point 1 in a single group. Argument \code{phi} is then used as above to specify the autocorrelation of the measurements within groups (i.e., for the within-subjects design above, it would be the autocorrelation between time points 2 and 1 or equivalently, between time points 3 and 2).
    }
 
    All of the arguments above can be specified together to account for a fairly wide variety of dependency types.
@@ -114,11 +114,11 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{escalc}} for a function to compute the observed effect sizes or outcomes (and corresponding sampling variances) for which a variance-covariance matrix could be constructed.
+   \code{\link{escalc}} for a function to compute the effect size estimates (and corresponding sampling variances) for which a variance-covariance matrix could be constructed.
 
    \code{\link{rcalc}} for a function to construct the variance-covariance matrix of dependent correlation coefficients.
 
-   \code{\link{rma.mv}} for a model fitting function that can be used to meta-analyze dependent effect sizes or outcomes.
+   \code{\link{rma.mv}} for a model fitting function that can be used to meta-analyze dependent effect size estimates.
 }
 \examples{
 ############################################################################
@@ -128,7 +128,7 @@ vcalc(vi, cluster, subgroup, obs, type, time1, time2, grp1, grp2, w1, w2,
 dat <- dat.assink2016
 head(dat, 9)
 
-### assume that the effect sizes within studies are correlated with rho=0.6
+### assume that the effect size estimates within studies are correlated with rho=0.6
 V <- vcalc(vi, cluster=study, obs=esid, data=dat, rho=0.6)
 
 ### show part of V matrix for studies 1 and 2
@@ -137,8 +137,8 @@ round(V[dat$study \%in\% c(1,2), dat$study \%in\% c(1,2)], 4)
 ### or show as list of matrices
 blsplit(V, dat$study, round, 4)[1:2]
 
-### use a correlation of 0.7 for effect sizes corresponding to the same type of
-### delinquent behavior and a correlation of 0.5 for effect sizes corresponding
+### use a correlation of 0.7 for estimates corresponding to the same type of
+### delinquent behavior and a correlation of 0.5 for estimates corresponding
 ### to different types of delinquent behavior
 V <- vcalc(vi, cluster=study, type=deltype, obs=esid, data=dat, rho=c(0.7, 0.5))
 blsplit(V, dat$study, round, 3)[16]
@@ -182,8 +182,8 @@ blsplit(V, dat$study, cov2cor)[1:5]
 dat <- dat.kalaian1996
 head(dat, 12)
 
-### construct the variance-covariance matrix assuming rho = 0.66 for effect sizes
-### corresponding to the 'verbal' and 'math' outcome types
+### construct the variance-covariance matrix assuming rho = 0.66 for effect size
+### estimates corresponding to the 'verbal' and 'math' outcome types
 V <- vcalc(vi, cluster=study, type=outcome, data=dat, rho=0.66)
 round(V[1:12,1:12], 4)
 
@@ -203,8 +203,8 @@ round(cov2cor(V), 2)
 ### or show as a list of matrices
 blsplit(V, dat$author, function(x) round(cov2cor(x), 2))
 
-### construct the variance-covariance matrix assuming rho = 0.4 for effect sizes
-### corresponding to the 'PD' and 'AL' outcome types
+### construct the variance-covariance matrix assuming rho = 0.4 for effect size
+### estimates corresponding to the 'PD' and 'AL' outcome types
 V <- vcalc(vi=vi, cluster=trial, type=outcome, data=dat, rho=0.4)
 round(V,4)
 cov2cor(V)

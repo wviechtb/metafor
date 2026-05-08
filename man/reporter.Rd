@@ -25,7 +25,7 @@ reporter(x, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   The function dynamically generates an analysis report based on the model object. The report includes information about the model that was fitted, the distribution of the observed effect sizes or outcomes, the estimate of the average outcome based on the fitted model, tests and statistics that are informative about potential (residual) heterogeneity in the outcomes, checks for outliers and/or influential studies, and tests for funnel plot asymmetry. By default, a forest plot and a funnel plot are also provided (these can be suppressed by setting \code{forest=FALSE} and/or \code{funnel=FALSE}).
+   The function dynamically generates an analysis report based on the model object. The report includes information about the model that was fitted, the distribution of the effect size estimates, the pooled estimate based on the fitted model, tests and statistics that are informative about potential heterogeneity in the true effects, checks for outliers and/or influential studies, and tests for funnel plot asymmetry. By default, a forest plot and a funnel plot are also provided (these can be suppressed by setting \code{forest=FALSE} and/or \code{funnel=FALSE}).
 }
 \value{
    The function generates either a html, pdf, or docx file and returns (invisibly) the path to the generated document.

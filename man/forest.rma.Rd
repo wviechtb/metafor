@@ -22,11 +22,11 @@
    \item{addpred}{logical to specify whether the prediction interval should be added to the plot (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{predstyle}{character string to specify the style of the prediction interval (either \code{"line"} (the default), \code{"polygon"}, \code{"bar"}, \code{"shade"}, or \code{"dist"}). Can be abbreviated. Setting this to something else than \code{"line"} automatically sets \code{addpred=TRUE}.}
    \item{preddist}{optional list of two elements to manually specify the predictive distribution.}
-   \item{showweights}{logical to specify whether the annotations should also include the weights given to the observed outcomes during the model fitting (the default is \code{FALSE}). See \sQuote{Details}.}
+   \item{showweights}{logical to specify whether the annotations should also include the weights given to the estimates during the model fitting (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{header}{logical to specify whether column headings should be added to the plot (the default is \code{TRUE}). Can also be a character vector to specify the left and right headings (or only the left one).}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function sets the horizontal plot limits to some sensible values.}
    \item{alim}{the x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.}
-   \item{olim}{optional argument to specify observation/outcome limits. If unspecified, no limits are used.}
+   \item{olim}{optional argument to specify observation limits. If unspecified, no limits are used.}
    \item{ylim}{the y-axis limits of the plot. If unspecified, the function sets the y-axis limits to some sensible values. Can also be a single value to set the lower bound (while the upper bound is still set automatically).}
    \item{predlim}{optional argument to specify the limits of the predictive distribution when \code{predstyle="dist"}.}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function sets the tick mark positions/labels to some sensible values.}
@@ -43,15 +43,15 @@
    \item{ilab.xpos}{optional numeric vector to specify the horizontal position(s) of the variable(s) given via \code{ilab}.}
    \item{ilab.pos}{integer(s) (either 1, 2, 3, or 4) to specify the alignment of the variable(s) given via \code{ilab} (2 means right, 4 means left aligned). If unspecified, the default is to center the values.}
    \item{order}{optional character string to specify how the studies should be ordered. Can also be a variable based on which the studies will be ordered. See \sQuote{Details}.}
-   \item{transf}{optional argument to specify a function to transform the observed outcomes, pooled estimate, fitted values, and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify a function to transform the estimates and confidence/prediction interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument to specify a function to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
-   \item{rows}{optional vector to specify the rows (or more generally, the positions) for plotting the outcomes. Can also be a single value to specify the row of the first outcome (the remaining outcomes are then plotted below this starting row).}
+   \item{rows}{optional vector to specify the rows (or more generally, the positions) for plotting the estimates. Can also be a single value to specify the row of the first estimate (the remaining estimates are then plotted below this starting row).}
    \item{efac}{vertical expansion factor for confidence interval limits, arrows, and the polygon. The default value of 1 should usually work fine. Can also be a vector of two numbers, the first for CI limits and arrows, the second for the polygon. Can also be a vector of three numbers, the first for CI limits, the second for arrows, the third for the polygon. Can also include a fourth element to adjust the height of the prediction interval/distribution when \code{predstyle} is not \code{"line"}.}
-   \item{pch}{plotting symbol to use for the observed outcomes. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
-   \item{psize}{optional numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values.}
+   \item{pch}{plotting symbol to use for the estimates. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
+   \item{psize}{optional numeric value to specify the point sizes for the estimates. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values.}
    \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
-   \item{colout}{optional character string to specify the color of the observed outcomes. Can also be a vector.}
+   \item{colout}{optional character string to specify the color of the estimates. Can also be a vector.}
    \item{col}{optional character string to specify the color of the polygon.}
    \item{border}{optional character string to specify the border color of the polygon.}
    \item{shade}{optional character string or a (logical or numeric) vector for shading rows of the plot. See \sQuote{Details}.}
@@ -65,7 +65,7 @@
 }
 \details{
 
-   The plot shows the observed effect sizes or outcomes (by default as filled squares) with corresponding \code{level}\% confidence intervals (as horizontal lines extending from the observed outcomes). The confidence intervals are computed with \mjeqn{y_i \pm z_{crit} \sqrt{v_i}}{y_i ± z_crit \sqrt{v_i}}, where \mjseqn{y_i} denotes the observed outcome in the \mjeqn{i\text{th}}{ith} study, \mjseqn{v_i} the corresponding sampling variance (and hence \mjseqn{\sqrt{v_i}} is the corresponding standard error), and \mjeqn{z_{crit}}{z_crit} is the appropriate critical value from a standard normal distribution (e.g., \mjseqn{1.96} for a 95\% CI).
+   The plot shows the effect size estimates (by default as filled squares) with corresponding \code{level}\% confidence intervals (as horizontal lines extending from the observed values). The confidence intervals are computed with \mjeqn{y_i \pm z_{crit} \sqrt{v_i}}{y_i ± z_crit \sqrt{v_i}}, where \mjseqn{y_i} denotes the estimate in the \mjeqn{i\text{th}}{ith} study, \mjseqn{v_i} the corresponding sampling variance (and hence \mjseqn{\sqrt{v_i}} is the corresponding standard error), and \mjeqn{z_{crit}}{z_crit} is the appropriate critical value from a standard normal distribution (e.g., \mjseqn{1.96} for a 95\% CI).
 
    \subsection{Equal- and Random-Effects Models}{
 
@@ -102,7 +102,7 @@
 
    \subsection{Applying a Transformation}{
 
-      With the \code{transf} argument, the observed outcomes, pooled estimate, fitted values, confidence interval bounds, and prediction interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, one could use \code{transf=exp} to obtain a forest plot showing odds ratios. Note that when the transformation is non-linear (as is the case for \code{transf=exp}), the interval bounds will be asymmetric (which is visually not so appealing). Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations. For example, when using \code{atransf=exp}, the x-axis will correspond to a log scale. See \link{transf} for some other useful transformation functions in the context of a meta-analysis. See below for examples.
+      With the \code{transf} argument, the estimates and confidence/prediction interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, one could use \code{transf=exp} to obtain a forest plot showing the odds ratios. Note that when the transformation is non-linear (as is the case for \code{transf=exp}), the interval bounds will be asymmetric (which is visually not so appealing). Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations. For example, when using \code{atransf=exp}, the x-axis will correspond to a log scale. See \link{transf} for some other useful transformation functions in the context of a meta-analysis. See below for examples.
 
    }
 
@@ -111,7 +111,7 @@
       By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \mjseqn{k}, the second study in row \mjseqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{order} argument:
 
       \itemize{
-      \item \code{order="obs"}: the studies are ordered by the observed outcomes,
+      \item \code{order="est"}: the studies are ordered by the estimates,
       \item \code{order="fit"}: the studies are ordered by the fitted values,
       \item \code{order="prec"}: the studies are ordered by their sampling variances,
       \item \code{order="resid"}: the studies are ordered by the size of their residuals,
@@ -120,7 +120,7 @@
       \item \code{order="abs.rstandard"}: the studies are ordered by the size of their absolute standardized residuals.
       }
 
-      Alternatively, it is also possible to set \code{order} equal to a variable based on which the studies will be ordered. One can also use the \code{rows} argument to specify the rows (or more generally, the positions) for plotting the outcomes.
+      Alternatively, it is also possible to set \code{order} equal to a variable based on which the studies will be ordered. One can also use the \code{rows} argument to specify the rows (or more generally, the positions) for plotting the estimates.
 
    }
 
@@ -156,7 +156,7 @@ text(c(-8.75, -5.25), res$k+2.8, c("Vaccinated", "Control"), cex=0.75, font=2)
 
       Additional pooled estimates can be added to the plot as polygons with the \code{\link{addpoly}} function. See the documentation for that function for examples.
 
-      When \code{showweights=TRUE}, the annotations will include information about the weights given to the observed outcomes during the model fitting. For simple models (such as those fitted with the \code{\link{rma.uni}} function), these weights correspond to the \sQuote{inverse-variance weights} (but are given in percent). For models fitted with the \code{\link{rma.mv}} function, the weights are based on the diagonal of the weight matrix. Note that the weighting structure is typically more complex in such models (i.e., the weight matrix is usually not just a diagonal matrix) and the weights shown therefore do not reflect this complexity. See \code{\link[=weights.rma]{weights}} for more details (for the special case that \code{x} is an intercept-only \code{"rma.mv"} model, one can also set \code{showweights="rowsum"} to show the \sQuote{row-sum weights}).
+      When \code{showweights=TRUE}, the annotations will include information about the weights given to the estimates during the model fitting. For simple models (such as those fitted with the \code{\link{rma.uni}} function), these weights correspond to the \sQuote{inverse-variance weights} (but are given in percent). For models fitted with the \code{\link{rma.mv}} function, the weights are based on the diagonal of the weight matrix. Note that the weighting structure is typically more complex in such models (i.e., the weight matrix is usually not just a diagonal matrix) and the weights shown therefore do not reflect this complexity. See \code{\link[=weights.rma]{weights}} for more details (for the special case that \code{x} is an intercept-only \code{"rma.mv"} model, one can also set \code{showweights="rowsum"} to show the \sQuote{row-sum weights}).
 
    }
 
@@ -182,7 +182,7 @@ text(c(-8.75, -5.25), res$k+2.8, c("Vaccinated", "Control"), cex=0.75, font=2)
 
    If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the \code{cex}, \code{cex.lab}, and \code{cex.axis} arguments are then useful to adjust the symbol and text sizes.
 
-   If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{olim} argument to enforce those limits (the observed outcomes and confidence/prediction intervals cannot exceed those bounds then).
+   If the estimates are bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{olim} argument to enforce those limits (i.e., the estimates and confidence/prediction interval bounds cannot exceed those limits then).
 
    The models without moderators, the \code{col} argument can also be a vector of two elements, the first for the color of the polygon, the second for the color of the line for the prediction interval. For \code{predstyle="polygon"} and \code{predstyle="bar"}, \code{col[2]} can be used to adjust the polygon/bar color and \code{border[2]} the border color. For \code{predstyle="shade"}, \code{col} can be a vector of up to three elements, where \code{col[2]} and \code{col[3]} specify the colors for the center and the ends of the shading region. For \code{predstyle="dist"}, \code{col} can be a vector of up to four elements, \code{col[2]} for the tail regions, \code{col[3]} for the color above/below zero, \code{col[4]} for the opposite side (transparent by default), and \code{border[2]} for the color of the lines. Setting a color to \code{NA} makes it transparent.
 

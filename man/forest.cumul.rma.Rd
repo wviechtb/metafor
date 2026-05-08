@@ -19,7 +19,7 @@
    \item{header}{logical to specify whether column headings should be added to the plot (the default is \code{TRUE}). Can also be a character vector to specify the left and right headings (or only the left one).}
    \item{xlim}{horizontal limits of the plot region. If unspecified, the function sets the horizontal plot limits to some sensible values.}
    \item{alim}{the x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.}
-   \item{olim}{argument to specify observation/outcome limits. If unspecified, no limits are used.}
+   \item{olim}{argument to specify observation limits. If unspecified, no limits are used.}
    \item{ylim}{the y-axis limits of the plot. If unspecified, the function sets the y-axis limits to some sensible values. Can also be a single value to set the lower bound (while the upper bound is still set automatically).}
    \item{at}{position of the x-axis tick marks and corresponding labels. If unspecified, the function sets the tick mark positions/labels to some sensible values.}
    \item{steps}{the number of tick marks for the x-axis (the default is 5). Ignored when the positions are specified via the \code{at} argument.}
@@ -34,7 +34,7 @@
    \item{transf}{optional argument to specify a function to transform the estimates and confidence interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{atransf}{optional argument to specify a function to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
-   \item{rows}{optional vector to specify the rows (or more generally, the positions) for plotting the outcomes. Can also be a single value to specify the row of the first outcome (the remaining outcomes are then plotted below this starting row).}
+   \item{rows}{optional vector to specify the rows (or more generally, the positions) for plotting the estimates. Can also be a single value to specify the row of the first estimate (the remaining estimates are then plotted below this starting row).}
    \item{efac}{vertical expansion factor for confidence interval limits and arrows. The default value of 1 should usually work fine. Can also be a vector of two numbers, the first for CI limits, the second for arrows.}
    \item{pch}{plotting symbol to use for the estimates. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
    \item{psize}{numeric value to specify the point sizes for the estimates (the default is 1). Can also be a vector of values.}
@@ -49,7 +49,7 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   The plot shows the estimated pooled outcome with corresponding confidence interval bounds as one study at a time is added to the analysis.
+   The \code{\link{cumul}} function can be used to conduct a cumulative meta-analysis. Passing an object created by this function to \code{forest()} creates a cumulative forest plot that shows the pooled estimate with corresponding confidence interval bounds as one estimate at a time is added to the analysis.
 
    See \code{\link{forest.default}} and \code{\link{forest.rma}} for further details on the purpose of the various arguments.
 }
@@ -60,7 +60,7 @@
 
    If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the \code{cex}, \code{cex.lab}, and \code{cex.axis} arguments are then useful to adjust the symbol and text sizes.
 
-   If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{olim} argument to enforce those limits (the observed outcomes and confidence intervals cannot exceed those bounds then).
+   If the estimates are bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the \code{olim} argument to enforce those limits (i.e., the pooled estimates and confidence interval bounds cannot exceed those limits then).
 
    The \code{lty} argument can also be a vector of two elements, the first for specifying the line type of the individual CIs (\code{"solid"} by default), the second for the line type of the horizontal line that is automatically added to the plot (\code{"solid"} by default; set to \code{"blank"} to remove it).
 }

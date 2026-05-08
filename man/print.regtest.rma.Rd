@@ -20,7 +20,7 @@
    \item the model used for the regression test
    \item the predictor used for the regression test
    \item the results from the fitted model (only when \code{ret.fit=TRUE})
-   \item the test statistic of the test that the predictor is unreleated to the outcomes
+   \item the test statistic for the regression test
    \item the degrees of freedom of the test statistic (only if the test statistic follows a t-distribution)
    \item the corresponding p-value
    \item the \sQuote{limit estimate} and its corresponding CI (only for predictors \code{"sei"} \code{"vi"}, \code{"ninv"}, or \code{"sqrtninv"} and when the model does not contain any additional moderators)

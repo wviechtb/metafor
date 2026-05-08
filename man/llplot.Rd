@@ -1,8 +1,8 @@
 \name{llplot}
 \alias{llplot}
-\title{Plot of Likelihoods for Individual Studies}
+\title{Plot of Likelihood Functions for Individual Studies}
 \description{
-   Function to plot the likelihood of a certain parameter corresponding to an effect size or outcome measure given the study data. \loadmathjax
+   Function to plot the likelihood functions of the true effects given the study data. \loadmathjax
 }
 \usage{
 llplot(measure, yi, vi, sei, ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE,
@@ -10,8 +10,8 @@ llplot(measure, yi, vi, sei, ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE
        lty, lwd, col, level=99.99, refline=0, \dots)
 }
 \arguments{
-   \item{measure}{a character string to specify for which effect size or outcome measure the likelihoods should be calculated. See \sQuote{Details} for possible options and how the data should then be specified.}
-   \item{yi}{vector with the observed effect sizes or outcomes.}
+   \item{measure}{a character string to specify for which effect size or outcome measure the likelihood functions should be drawn. See \sQuote{Details} for possible options and how the data should then be specified.}
+   \item{yi}{vector with the effect size estimates.}
    \item{vi}{vector with the corresponding sampling variances.}
    \item{sei}{vector with the corresponding standard errors.}
    \item{ai}{vector to specify the \mjeqn{2 \times 2}{2x2} table frequencies (upper left cell).}
@@ -32,16 +32,16 @@ llplot(measure, yi, vi, sei, ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE
    \item{lty}{the line types (either a single value or a vector of length \mjseqn{k}). If unspecified, the function sets the line types according to some characteristics of the likelihood function. See \sQuote{Details}.}
    \item{lwd}{the line widths (either a single value or a vector of length \mjseqn{k}). If unspecified, the function sets the widths according to the sampling variances (so that the line is thicker for more precise studies and vice-versa).}
    \item{col}{the line colors (either a single value or a vector of length \mjseqn{k}). If unspecified, the function uses various shades of gray according to the sampling variances (so that darker shades are used for more precise studies and vice-versa).}
-   \item{level}{numeric value between 0 and 100 to specify the plotting limits for each likelihood line in terms of the confidence interval (the default is 99.99).}
+   \item{level}{numeric value between 0 and 100 to specify the plotting limits for each likelihood function in terms of the confidence interval (the default is 99.99).}
    \item{refline}{numeric value to specify the location of the vertical \sQuote{reference} line (the default is 0). The line can be suppressed by setting this argument to \code{NA}.}
    \item{\dots}{other arguments.}
 }
 \details{
    At the moment, the function only accepts \code{measure="GEN"} or \code{measure="OR"}.
 
-   For \code{measure="GEN"}, one must specify arguments \code{yi} for the observed effect sizes or outcomes and \code{vi} for the corresponding sampling variances (instead of specifying \code{vi}, one can specify the standard errors via the \code{sei} argument). The function then plots the likelihood of the true effect size or outcome based on a normal sampling distribution with observed outcome as given by \code{yi} and variance as given by \code{vi} for each study.
+   For \code{measure="GEN"}, one must specify arguments \code{yi} for the effect size estimates and \code{vi} for the corresponding sampling variances (instead of specifying \code{vi}, one can specify the standard errors via the \code{sei} argument). The function then plots the likelihood function of the true effect based on a normal sampling distribution with the observed estimate as given by \code{yi} and variance as given by \code{vi} for each study.
 
-   For \code{measure="OR"}, one must specify arguments \code{ai}, \code{bi}, \code{ci}, and \code{di}, which denote the cell frequencies of the \mjeqn{2 \times 2}{2x2} tables. Alternatively, one can specify \code{ai}, \code{ci}, \code{n1i}, and \code{n2i}. See \code{\link{escalc}} function for more details. The function then plots the likelihood of the true log odds ratio based on the non-central hypergeometric distribution for each \mjeqn{2 \times 2}{2x2} table. Since studies with no cases (or only cases) in both groups have a flat likelihood and are not informative about the odds ratio, they are dropped by default (i.e., \code{drop00=TRUE}) and are hence not drawn (if \code{drop00=FALSE}, these likelihoods are indicated by dotted lines). For studies that have a single zero count, the MLE of the odds ratio is infinite and these likelihoods are indicated by dashed lines.
+   For \code{measure="OR"}, one must specify arguments \code{ai}, \code{bi}, \code{ci}, and \code{di}, which denote the cell frequencies of the \mjeqn{2 \times 2}{2x2} tables. Alternatively, one can specify \code{ai}, \code{ci}, \code{n1i}, and \code{n2i}. See \code{\link{escalc}} function for more details. The function then plots the likelihood function of the true log odds ratio based on the non-central hypergeometric distribution for each \mjeqn{2 \times 2}{2x2} table. Since studies with no cases (or only cases) in both groups have a flat likelihood and are not informative about the odds ratio, they are dropped by default (i.e., \code{drop00=TRUE}) and are hence not drawn (if \code{drop00=FALSE}, these likelihoods are indicated by dotted lines). For studies that have a single zero count, the MLE of the odds ratio is infinite and these likelihoods are indicated by dashed lines.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
@@ -58,7 +58,7 @@ llplot(measure, yi, vi, sei, ai, bi, ci, di, n1i, n2i, data, subset, drop00=TRUE
 ### calculate log risk ratios and corresponding sampling variances
 dat <- escalc(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat.bcg)
 
-### draw likelihoods
+### draw likelihood functions
 llplot(measure="GEN", yi=yi, vi=vi, data=dat, lwd=1, refline=NA, xlim=c(-3,2))
 
 ### create plot (Figure 2 in van Houwelingen, Zwinderman, & Stijnen, 1993)

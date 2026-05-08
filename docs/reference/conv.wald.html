@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-2</span>
       </span>
     </div>
 
@@ -104,7 +104,7 @@
     <h2>Arguments</h2>
     <p></p>
 <dl><dt id="arg-out">out<a class="anchor" aria-label="anchor" href="#arg-out"></a></dt>
-<dd><p>vector with the observed effect sizes or outcomes.</p></dd>
+<dd><p>vector with the effect size estimates.</p></dd>
 
    <dt id="arg-ci-lb">ci.lb<a class="anchor" aria-label="anchor" href="#arg-ci-lb"></a></dt>
 <dd><p>vector with the lower bounds of the corresponding Wald-type CIs.</p></dd>
@@ -134,10 +134,10 @@
 <dd><p>optional argument to specify a function to transform <code>out</code>, <code>ci.lb</code>, and <code>ci.ub</code> (e.g., <code>transf=log</code>). If unspecified, no transformation is used.</p></dd>
 
    <dt id="arg-check">check<a class="anchor" aria-label="anchor" href="#arg-check"></a></dt>
-<dd><p>logical to specify whether the function should carry out a check to examine if the point estimates fall (approximately) halfway between the CI bounds (the default is <code>TRUE</code>).</p></dd>
+<dd><p>logical to specify whether the function should carry out a check to examine if the estimates fall (approximately) halfway between the CI bounds (the default is <code>TRUE</code>).</p></dd>
 
    <dt id="arg-var-names">var.names<a class="anchor" aria-label="anchor" href="#arg-var-names"></a></dt>
-<dd><p>character vector with two elements to specify the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (if <code>data</code> is an object of class <code>"escalc"</code>, the <code>var.names</code> are taken from the object; otherwise the defaults are <code>"yi"</code> and <code>"vi"</code>).</p></dd>
+<dd><p>character vector with two elements to specify the name of the variable for the estimates and the name of the variable for the corresponding sampling variances (if <code>data</code> is an object of class <code>"escalc"</code>, the <code>var.names</code> are taken from the object; otherwise the defaults are <code>"yi"</code> and <code>"vi"</code>).</p></dd>
 
    <dt id="arg-append">append<a class="anchor" aria-label="anchor" href="#arg-append"></a></dt>
 <dd><p>logical to specify whether the data frame provided via the <code>data</code> argument should be returned together with the estimated values (the default is <code>TRUE</code>).</p></dd>
@@ -151,14 +151,14 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The <code><a href="escalc.html">escalc</a></code> function can be used to compute a wide variety of effect sizes or ‘outcome measures’. However, the inputs required to compute certain measures with this function may not be reported for all of the studies. Under certain circumstances, other information (such as point estimates and corresponding confidence intervals and/or test statistics) may be available that can be converted into the appropriate format needed for a meta-analysis. The purpose of the present function is to facilitate this process.</p>
-<p>The function typically takes a data frame created with the <code><a href="escalc.html">escalc</a></code> function as input via the <code>data</code> argument. This object should contain variables <code>yi</code> and <code>vi</code> (unless argument <code>var.names</code> was used to adjust these variable names when the <code>"escalc"</code> object was created) for the observed effect sizes or outcomes and the corresponding sampling variances, respectively. For some studies, the values for these variables may be missing.</p>
+    <p>The <code><a href="escalc.html">escalc</a></code> function can be used to compute a wide variety of effect size measures. However, the inputs required to compute certain measures with this function may not be reported for all of the studies. Under certain circumstances, other information may be available that can be converted into the appropriate format needed for a meta-analysis. The purpose of the present function is to facilitate this process.</p>
+<p>The function typically takes a data frame created with the <code><a href="escalc.html">escalc</a></code> function as input via the <code>data</code> argument. This object should contain variables <code>yi</code> and <code>vi</code> (unless argument <code>var.names</code> was used to adjust these variable names when the <code>"escalc"</code> object was created) for the effect size estimates and the corresponding sampling variances, respectively. For some studies, the values for these variables may be missing.</p>
 <p></p><div class="section">
-<h3 id="converting-point-estimates-and-confidence-intervals">Converting Point Estimates and Confidence Intervals<a class="anchor" aria-label="anchor" href="#converting-point-estimates-and-confidence-intervals"></a></h3>
+<h3 id="converting-estimates-and-confidence-intervals">Converting Estimates and Confidence Intervals<a class="anchor" aria-label="anchor" href="#converting-estimates-and-confidence-intervals"></a></h3>
 
 
-<p>In some studies, the effect size estimate or observed outcome may already be reported. If so, such values can be supplied via the <code>out</code> argument and are then substituted for missing <code>yi</code> values. At times, it may be necessary to transform the reported values (e.g., reported odds ratios to log odds ratios). Via argument <code>transf</code>, an appropriate transformation function can be specified (e.g., <code>transf=log</code>), in which case <em></em>\(y_i = f(\text{out})\) where <em></em>\(f(\cdot)\) is the function specified via <code>transf</code>.</p>
-<p>Moreover, a confidence interval (CI) may have been reported together with the estimate. The bounds of the CI can be supplied via arguments <code>ci.lb</code> and <code>ci.ub</code>, which are also transformed if a function is specified via <code>transf</code>. Assume that the bounds were obtained from a Wald-type CI of the form <em></em>\(y_i \pm z_{crit} \sqrt{v_i}\) (on the transformed scale if <code>transf</code> is specified), where <em></em>\(v_i\) is the sampling variance corresponding to the effect size estimate or observed outcome (so that <em></em>\(\sqrt{v_i}\) is the corresponding standard error) and <em></em>\(z_{crit}\) is the appropriate critical value from a standard normal distribution (e.g., <em></em>\(1.96\) for a 95% CI). Then \[v_i = \left(\frac{\text{ci.ub} - \text{ci.lb}}{2 \times z_{crit}}\right)^2\] is used to back-calculate the sampling variances of the (transformed) effect size estimates or observed outcomes and these values are then substituted for missing <code>vi</code> values in the dataset.</p>
+<p>In some studies, the effect size estimate of interest may already be reported. If so, such values can be supplied via the <code>out</code> argument and are then substituted for missing <code>yi</code> values. At times, it may be necessary to transform the reported values (e.g., reported odds ratios to log odds ratios). Via argument <code>transf</code>, an appropriate transformation function can be specified (e.g., <code>transf=log</code>), in which case <em></em>\(y_i = f(\text{out})\) where <em></em>\(f(\cdot)\) is the function specified via <code>transf</code>.</p>
+<p>Moreover, a confidence interval (CI) may have been reported together with the effect size estimate. The bounds of the CI can be supplied via arguments <code>ci.lb</code> and <code>ci.ub</code>, which are also transformed if a function is specified via <code>transf</code>. Assume that the bounds were obtained from a Wald-type CI of the form <em></em>\(y_i \pm z_{crit} \sqrt{v_i}\) (on the transformed scale if <code>transf</code> is specified), where <em></em>\(v_i\) is the sampling variance corresponding to the estimate (so that <em></em>\(\sqrt{v_i}\) is the corresponding standard error) and <em></em>\(z_{crit}\) is the appropriate critical value from a standard normal distribution (e.g., <em></em>\(1.96\) for a 95% CI). Then \[v_i = \left(\frac{\text{ci.ub} - \text{ci.lb}}{2 \times z_{crit}}\right)^2\] is used to back-calculate the sampling variances of the (transformed) estimates and these values are then substituted for missing <code>vi</code> values in the dataset.</p>
 <p>For example, consider the following dataset of three RCTs used as input for a meta-analysis of log odds ratios:</p>
 <div class="sourceCode"><pre><code><span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>study <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,</span>
@@ -186,8 +186,8 @@
 
 <p>Now variables <code>yi</code> and <code>vi</code> in the dataset are complete.</p>
 <p>If the CI was not a 95% CI, then one can specify the appropriate level via the <code>level</code> argument. This can also be an entire vector in case different studies used different levels.</p>
-<p>By default (i.e., when <code>check=TRUE</code>), the function carries out a rough check to examine if the point estimate falls (approximately) halfway between the CI bounds (on the transformed scale) for each study for which the conversion was carried out. A warning is issued if there are studies where this is not the case. This may indicate that a particular CI was not a Wald-type CI or was computed on a different scale (in which case the back-calculation above would be inappropriate), but can also arise due to rounding of the reported values (in which case the back-calculation would still be appropriate, albeit possibly a bit inaccurate). Care should be taken when using such back-calculated values in a meta-analysis.</p>
-<p>When the CI bounds are log transformed (as in the example above) and rounded, then using the lower bound in the back-calculation can be more inaccurate than using the upper CI bound and the point estimate for the back-calculation. When the lower CI bounds are not specified or are missing for a study, then the function automatically uses the formula \[v_i = \left(\frac{\text{ci.ub} - \text{yi}}{z_{crit}}\right)^2\] for the back-calculation (after first applying the transformation specified via <code>transf</code>). In the example above, we could therefore do:</p>
+<p>By default (i.e., when <code>check=TRUE</code>), the function carries out a rough check to examine if the estimate falls (approximately) halfway between the CI bounds (on the transformed scale) for each study for which the conversion was carried out. A warning is issued if there are studies where this is not the case. This may indicate that a particular CI was not a Wald-type CI or was computed on a different scale (in which case the back-calculation above would be inappropriate), but can also arise due to rounding of the reported values (in which case the back-calculation would still be appropriate, albeit possibly a bit inaccurate). Care should be taken when using such back-calculated values in a meta-analysis.</p>
+<p>When the CI bounds are log transformed (as in the example above) and rounded, then using the lower bound in the back-calculation can be more inaccurate than using the upper CI bound and the estimate for the back-calculation. When the lower CI bounds are not specified or are missing for a study, then the function automatically uses the formula \[v_i = \left(\frac{\text{ci.ub} - \text{yi}}{z_{crit}}\right)^2\] for the back-calculation (after first applying the transformation specified via <code>transf</code>). In the example above, we could therefore do:</p>
 <div class="sourceCode"><pre><code><span></span>
 <span><span class="va">dat3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/conv.wald.html">conv.wald</a></span><span class="op">(</span>out<span class="op">=</span><span class="va">oddsratio</span>, ci.ub<span class="op">=</span><span class="va">upper</span>, data<span class="op">=</span><span class="va">dat</span>, transf<span class="op">=</span><span class="va">log</span><span class="op">)</span></span>
 <span><span class="va">dat3</span></span>
@@ -197,7 +197,7 @@
 <span><span class="co"># 2     2        NA   183        NA   188      0.64  0.33  1.22 -0.4463 0.1083</span></span>
 <span><span class="co"># 3     3         4    46         7    44        NA    NA    NA -0.6864 0.4437</span></span></code></pre></div>
 
-<p>In this case, the check that the point estimate falls halfway between the CI bounds is of course skipped.</p>
+<p>In this case, the check that the estimate falls halfway between the CI bounds is of course skipped.</p>
 <p></p>
 </div>
 
@@ -240,8 +240,8 @@ dat
     </div>
     <div id="value">
     <h2>Value</h2>
-    <p>If the <code>data</code> argument was not specified or <code>append=FALSE</code>, a data frame of class <code>c("escalc","data.frame")</code> with two variables called <code>var.names[1]</code> (by default <code>"yi"</code>) and <code>var.names[2]</code> (by default <code>"vi"</code>) with the (transformed) observed effect sizes or outcomes and the corresponding sampling variances (computed as described above).</p>
-<p>If <code>data</code> was specified and <code>append=TRUE</code>, then the original data frame is returned. If <code>var.names[1]</code> is a variable in <code>data</code> and <code>replace="ifna"</code> (or <code>replace=FALSE</code>), then only missing values in this variable are replaced with the (possibly transformed) observed effect sizes or outcomes from <code>out</code> (where possible) and otherwise a new variable called <code>var.names[1]</code> is added to the data frame. Similarly, if <code>var.names[2]</code> is a variable in <code>data</code> and <code>replace="ifna"</code> (or <code>replace=FALSE</code>), then only missing values in this variable are replaced with the sampling variances back-calculated as described above (where possible) and otherwise a new variable called <code>var.names[2]</code> is added to the data frame.</p>
+    <p>If the <code>data</code> argument was not specified or <code>append=FALSE</code>, a data frame of class <code>c("escalc","data.frame")</code> with two variables called <code>var.names[1]</code> (by default <code>"yi"</code>) and <code>var.names[2]</code> (by default <code>"vi"</code>) with the (transformed) estimates and the corresponding sampling variances (computed as described above).</p>
+<p>If <code>data</code> was specified and <code>append=TRUE</code>, then the original data frame is returned. If <code>var.names[1]</code> is a variable in <code>data</code> and <code>replace="ifna"</code> (or <code>replace=FALSE</code>), then only missing values in this variable are replaced with the (possibly transformed) estimates from <code>out</code> (where possible) and otherwise a new variable called <code>var.names[1]</code> is added to the data frame. Similarly, if <code>var.names[2]</code> is a variable in <code>data</code> and <code>replace="ifna"</code> (or <code>replace=FALSE</code>), then only missing values in this variable are replaced with the sampling variances back-calculated as described above (where possible) and otherwise a new variable called <code>var.names[2]</code> is added to the data frame.</p>
 <p>If <code>replace="all"</code> (or <code>replace=TRUE</code>), then all values in <code>var.names[1]</code> and <code>var.names[2]</code> are replaced, even for cases where the value in <code>var.names[1]</code> and <code>var.names[2]</code> is not missing.</p>
     </div>
     <div id="note">

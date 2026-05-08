@@ -168,21 +168,21 @@ add=x$add, to=x$to, transf, targs, pch=21, psize, plim=c(0.5,3.5), col, bg, lty,
 
    if (is.element(x$measure, c("RR","OR","RD","AS"))) {
       if (flip) {
-         args.x <- list(measure=measure, xi=dat.ai, mi=dat.bi, add=add, to=to, addyi=addyi, addvi=addvi)
-         args.y <- list(measure=measure, xi=dat.ci, mi=dat.di, add=add, to=to, addyi=addyi, addvi=addvi)
+         args.x <- list(measure=measure, xi=dat.ai, mi=dat.bi, add=add, to=to, addyi=addyi, addvi=addvi, cutoff=NA_real_)
+         args.y <- list(measure=measure, xi=dat.ci, mi=dat.di, add=add, to=to, addyi=addyi, addvi=addvi, cutoff=NA_real_)
       } else {
-         args.x <- list(measure=measure, xi=dat.ci, mi=dat.di, add=add, to=to, addyi=addyi, addvi=addvi)
-         args.y <- list(measure=measure, xi=dat.ai, mi=dat.bi, add=add, to=to, addyi=addyi, addvi=addvi)
+         args.x <- list(measure=measure, xi=dat.ci, mi=dat.di, add=add, to=to, addyi=addyi, addvi=addvi, cutoff=NA_real_)
+         args.y <- list(measure=measure, xi=dat.ai, mi=dat.bi, add=add, to=to, addyi=addyi, addvi=addvi, cutoff=NA_real_)
       }
    }
 
    if (is.element(x$measure, c("IRR","IRD","IRSD"))) {
       if (flip) {
-         args.x <- list(measure=measure, xi=dat.x1i, ti=dat.y1i, add=add, to=to, addyi=addyi, addvi=addvi)
-         args.y <- list(measure=measure, xi=dat.x2i, ti=dat.y2i, add=add, to=to, addyi=addyi, addvi=addvi)
+         args.x <- list(measure=measure, xi=dat.x1i, ti=dat.y1i, add=add, to=to, addyi=addyi, addvi=addvi, cutoff=NA_real_)
+         args.y <- list(measure=measure, xi=dat.x2i, ti=dat.y2i, add=add, to=to, addyi=addyi, addvi=addvi, cutoff=NA_real_)
       } else {
-         args.x <- list(measure=measure, xi=dat.x2i, ti=dat.y2i, add=add, to=to, addyi=addyi, addvi=addvi)
-         args.y <- list(measure=measure, xi=dat.x1i, ti=dat.y1i, add=add, to=to, addyi=addyi, addvi=addvi)
+         args.x <- list(measure=measure, xi=dat.x2i, ti=dat.y2i, add=add, to=to, addyi=addyi, addvi=addvi, cutoff=NA_real_)
+         args.y <- list(measure=measure, xi=dat.x1i, ti=dat.y1i, add=add, to=to, addyi=addyi, addvi=addvi, cutoff=NA_real_)
       }
    }
 

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-2</span>
       </span>
     </div>
 
@@ -103,7 +103,7 @@
     <h2>Arguments</h2>
     <p></p>
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>a vector with the observed effect sizes or outcomes or an object of class <code>"rma"</code>.</p></dd>
+<dd><p>a vector with the effect size estimates or an object of class <code>"rma"</code>.</p></dd>
 
    <dt id="arg-vi">vi<a class="anchor" aria-label="anchor" href="#arg-vi"></a></dt>
 <dd><p>vector with the corresponding sampling variances (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
@@ -118,13 +118,13 @@
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
 
    <dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>optional character string to specify the type of method to use for the calculation of the fail-safe N. Possible options are <code>"Rosenthal"</code> (the default when <code>x</code> is a vector with the observed effect sizes or outcomes), <code>"Orwin"</code>, <code>"Rosenberg"</code>, or <code>"General"</code> (the default when <code>x</code> is an object of class <code>"rma"</code>). Can be abbreviated. See ‘Details’.</p></dd>
+<dd><p>optional character string to specify the type of method to use for the calculation of the fail-safe N. Possible options are <code>"Rosenthal"</code> (the default when <code>x</code> is a vector with estimates), <code>"Orwin"</code>, <code>"Rosenberg"</code>, or <code>"General"</code> (the default when <code>x</code> is an object of class <code>"rma"</code>). Can be abbreviated. See ‘Details’.</p></dd>
 
    <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
 <dd><p>target alpha level for the Rosenthal, Rosenberg, and General methods (the default is 0.05).</p></dd>
 
    <dt id="arg-target">target<a class="anchor" aria-label="anchor" href="#arg-target"></a></dt>
-<dd><p>target average effect size or outcome for the Orwin and General methods.</p></dd>
+<dd><p>target pooled estimate for the Orwin and General methods.</p></dd>
 
    <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>optional character string to specify the model fitting method for <code>type="General"</code> (if unspecified, either <code>"REML"</code> by default or the method that was used in fitting the <code>"rma"</code> model). See <code><a href="rma.uni.html">rma.uni</a></code> for options.</p></dd>
@@ -145,7 +145,7 @@
     <div id="details">
     <h2>Details</h2>
     <p>The function can be used to calculate the ‘fail-safe N’, that is, the minimum number of studies averaging null results that would have to be added to a given set of <em></em>\(k\) studies to change the conclusion of a meta-analysis. If this number is small (in relation to the actual number of studies), then this indicates that the results based on the observed studies are not robust to publication bias (of the form assumed by the method, that is, where a set of studies averaging null results is missing). The method is also called a ‘file drawer analysis’ as it assumes that there is a set of studies averaging null results hiding in file drawers, which can overturn the findings from a meta-analysis. There are various types of methods that are all based on the same principle, which are described in more detail further below. Note that <em>the fail-safe N is not an estimate of the number of missing studies</em>, only how many studies must be hiding in file drawers for the findings to be overturned.</p>
-<p>One can either pass a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>. When passing a model object, the model must be a model without moderators (i.e., either an equal- or a random-effects model).</p>
+<p>One can either pass a vector with the effect size estimates (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>. When passing a model object, the model must be a model without moderators (i.e., either an equal- or a random-effects model).</p>
 <p></p><div class="section">
 <h3 id="rosenthal-method">Rosenthal Method<a class="anchor" aria-label="anchor" href="#rosenthal-method"></a></h3>
 
@@ -158,7 +158,7 @@
 <h3 id="orwin-method">Orwin Method<a class="anchor" aria-label="anchor" href="#orwin-method"></a></h3>
 
 
-<p>The Orwin method (<code>type="Orwin"</code>) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the (unweighted or weighted) average effect size / outcome to a target value (as specified via the <code>target</code> argument). The method is described in Orwin (1983). When <code>vi</code> (or <code>sei</code>) is not specified, the method is based on the unweighted average of the effect sizes / outcomes; otherwise, the method uses the inverse-variance weighted average. If the <code>target</code> argument is not specified, then the target value will be equal to the observed average effect size / outcome divided by 2 (which is entirely arbitrary and will always lead to a fail-safe N number that is equal to <em></em>\(k\)). One should really set <code>target</code> to a value that reflects an effect size / outcome that would be considered to be practically irrelevant. Note that if <code>target</code> has the opposite sign as the actually observed average, then its sign is automatically flipped.</p>
+<p>The Orwin method (<code>type="Orwin"</code>) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the pooled estimate to a target value (as specified via the <code>target</code> argument). The method is described in Orwin (1983). When <code>vi</code> (or <code>sei</code>) is not specified, the method is based on the unweighted average of the estimates; otherwise, the method uses the inverse-variance weighted average. If the <code>target</code> argument is not specified, then the target value will be equal to the (unweighted) average of the estimates divided by 2 (which is entirely arbitrary and will always lead to a fail-safe N number that is equal to <em></em>\(k\)). One should really set <code>target</code> to a value that reflects a pooled estimate that would be considered to be practically irrelevant. Note that if <code>target</code> has the opposite sign as the actually observed average, then its sign is automatically flipped.</p>
 <p></p>
 </div>
 
@@ -166,7 +166,7 @@
 <h3 id="rosenberg-method">Rosenberg Method<a class="anchor" aria-label="anchor" href="#rosenberg-method"></a></h3>
 
 
-<p>The Rosenberg method (<code>type="Rosenberg"</code>) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on an equal-effects model) to a particular alpha level, which can be specified via the <code>alpha</code> argument (0.05 by default). The method is described in Rosenberg (2005). Note that the p-value is calculated based on a standard normal distribution (instead of a t-distribution, as suggested by Rosenberg, 2005), but the difference is typically negligible.</p>
+<p>The Rosenberg method (<code>type="Rosenberg"</code>) calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the pooled estimate (as estimated based on an equal-effects model) to a particular alpha level, which can be specified via the <code>alpha</code> argument (0.05 by default). The method is described in Rosenberg (2005). Note that the p-value is calculated based on a standard normal distribution (instead of a t-distribution, as suggested by Rosenberg, 2005), but the difference is typically negligible.</p>
 <p></p>
 </div>
 
@@ -174,8 +174,8 @@
 <h3 id="general-method">General Method<a class="anchor" aria-label="anchor" href="#general-method"></a></h3>
 
 
-<p>This method is a generalization of the methods by Orwin and Rosenberg (see Viechtbauer, 2024). By default (i.e., when <code>target</code> is not specified), it calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the average effect size / outcome (as estimated based on a chosen model) to a particular alpha level, which can be specified via the <code>alpha</code> argument (0.05 by default). The type of model that is used in the calculation is chosen via the <code>method</code> argument. If this is unspecified, then a random-effects model is automatically used (using <code>method="REML"</code>) or the method that was used in fitting the <code>"rma"</code> model (see <code><a href="rma.uni.html">rma.uni</a></code> for options). Therefore, when setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Rosenberg's method.</p>
-<p>If <code>target</code> is specified, then the method calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the average effect size / outcome (as estimated based on a chosen model) to a target value (as specified via the <code>target</code> argument). As described above, the type of model that is used in the calculation is chosen via the <code>method</code> argument. When setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Orwin's method with inverse-variance weights.</p>
+<p>This method is a generalization of the methods by Orwin and Rosenberg (see Viechtbauer, 2024). By default (i.e., when <code>target</code> is not specified), it calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the significance level (i.e., p-value) of the pooled estimate (as estimated based on a chosen model) to a particular alpha level, which can be specified via the <code>alpha</code> argument (0.05 by default). The type of model that is used in the calculation is chosen via the <code>method</code> argument. If this is unspecified, then a random-effects model is automatically used (using <code>method="REML"</code>) or the method that was used in fitting the <code>"rma"</code> model (see <code><a href="rma.uni.html">rma.uni</a></code> for options). Therefore, when setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Rosenberg's method.</p>
+<p>If <code>target</code> is specified, then the method calculates the minimum number of studies averaging null results that would have to be added to a given set of studies to reduce the pooled estimate (as estimated based on a chosen model) to a target value (as specified via the <code>target</code> argument). As described above, the type of model that is used in the calculation is chosen via the <code>method</code> argument. When setting <code>method="EE"</code>, then an equal-effects model is used, which yields (essentially) identical results as Orwin's method with inverse-variance weights.</p>
 <p>The method uses an iterative algorithm for calculating the fail-safe N, which can be computationally expensive especially when N is large. By default, the method uses approximate (but faster) calculations, but when setting <code>exact=TRUE</code>, the method uses exact (but slower) calculations. The difference between the two is typically negligible. If N is larger than <em></em>\(10^7\), then the calculated number is given as <code>&gt;1e+07</code>.</p>
 <p></p>
 </div>
@@ -192,7 +192,7 @@
 <dd><p>the calculated fail-safe N.</p></dd>
 
    <dt>est</dt>
-<dd><p>the average effect size / outcome based on the observed studies.</p></dd>
+<dd><p>the pooled estimate based on the observed studies.</p></dd>
 
    <dt>tau2</dt>
 <dd><p>the estimated amount of heterogeneity based on the observed studies.</p></dd>
@@ -204,10 +204,10 @@
 <dd><p>the specified target alpha level.</p></dd>
 
    <dt>target</dt>
-<dd><p>the target average effect size / outcome.</p></dd>
+<dd><p>the target pooled estimate.</p></dd>
 
    <dt>est.fsn</dt>
-<dd><p>the average effect size / outcome when combining the observed studies with those in the file drawer.</p></dd>
+<dd><p>the pooled estimate when combining the observed studies with those in the file drawer.</p></dd>
 
    <dt>tau2</dt>
 <dd><p>the estimated amount of heterogeneity when combining the observed studies with those in the file drawer.</p></dd>
@@ -223,7 +223,7 @@
     </div>
     <div id="note">
     <h2>Note</h2>
-    <p>If the significance level of the observed studies is already above the specified alpha level or if the average effect size / outcome of the observed studies is already below the target average effect size / outcome, then the fail-safe N value is zero.</p>
+    <p>If the significance level of the pooled estimate is already above the specified alpha level or if the pooled estimate is already below the target value for the given set of studies, then the fail-safe N value is zero.</p>
     </div>
     <div id="author">
     <h2>Author</h2>

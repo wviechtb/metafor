@@ -8,7 +8,7 @@
 ranktest(x, vi, sei, subset, data, digits, \dots)
 }
 \arguments{
-   \item{x}{a vector with the observed effect sizes or outcomes or an object of class \code{"rma"}.}
+   \item{x}{a vector with the effect size estimates or an object of class \code{"rma"}.}
    \item{vi}{vector with the corresponding sampling variances (ignored if \code{x} is an object of class \code{"rma"}).}
    \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included in the test (ignored if \code{x} is an object of class \code{"rma"}).}
@@ -17,9 +17,9 @@ ranktest(x, vi, sei, subset, data, digits, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   The function carries out the rank correlation test as described by Begg and Mazumdar (1994). The test can be used to examine whether the observed effect sizes or outcomes and the corresponding sampling variances are correlated. A high correlation would indicate that the funnel plot is asymmetric, which may be a result of publication bias.
+   The function carries out the rank correlation test as described by Begg and Mazumdar (1994). The test can be used to examine whether the effect size estimates and the corresponding sampling variances are correlated. A high correlation would indicate that the funnel plot is asymmetric, which may be a result of publication bias.
 
-   One can either pass a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}. When passing a model object, the model must be a model without moderators (i.e., either an equal- or a random-effects model).
+   One can either pass a vector with the effect size estimates (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}. When passing a model object, the model must be a model without moderators (i.e., either an equal- or a random-effects model).
 }
 \value{
    An object of class \code{"ranktest"}. The object is a list containing the following components:
@@ -54,7 +54,7 @@ res <- rma(yi, vi, data=dat)
 ### carry out the rank correlation test
 ranktest(res)
 
-### can also pass the observed outcomes and corresponding sampling variances to the function
+### can also pass the effect size estimates and corresponding sampling variances to the function
 ranktest(yi, vi, data=dat)
 }
 \keyword{htest}

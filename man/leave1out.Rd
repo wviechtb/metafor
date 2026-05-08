@@ -18,19 +18,19 @@ leave1out(x, \dots)
    \item{x}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, or \code{"rma.peto"}.}
    \item{cluster}{optional vector to specify a clustering variable.}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is to take the value from the object.}
-   \item{transf}{optional argument to specify a function to transform the model coefficients and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
+   \item{transf}{optional argument to specify a function to transform the estimates and interval bounds (e.g., \code{transf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified under \code{transf}.}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{FALSE}).}
    \item{\dots}{other arguments.}
 }
 \details{
-   In a leave-one-out analysis, the same model is repeatedly fitted, leaving out one study at a time. By doing so, we can assess how much the results are influenced by each individual study. It is also possible to specify a \code{cluster} variable, in which case each cluster level is left out in turn.
+   In a leave-one-out analysis, the same model is repeatedly fitted, leaving out one study at a time. By doing so, we can assess how much the results (e.g., the pooled estimate and the amount of heterogeneity) are influenced by each individual study. It is also possible to specify a \code{cluster} variable, in which case each cluster level is left out in turn.
 
    Note that for \code{"rma.uni"} objects, the model specified via \code{x} must be a model without moderators (i.e., either an equal- or a random-effects model).
 }
 \value{
    An object of class \code{"list.rma"}. The object is a list containing the following components:
-   \item{estimate}{estimated (average) outcomes.}
+   \item{estimate}{pooled estimates.}
    \item{se}{corresponding standard errors.}
    \item{zval}{corresponding test statistics.}
    \item{pval}{corresponding p-values.}
@@ -38,7 +38,7 @@ leave1out(x, \dots)
    \item{ci.ub}{upper bounds of the confidence intervals.}
    \item{Q}{test statistics for the test of heterogeneity.}
    \item{Qp}{corresponding p-values.}
-   \item{tau2}{estimated amount of heterogeneity (only for random-effects models).}
+   \item{tau2}{estimated amounts of heterogeneity (only for random-effects models).}
    \item{I2}{values of \mjseqn{I^2}.}
    \item{H2}{values of \mjseqn{H^2}.}
 

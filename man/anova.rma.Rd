@@ -53,7 +53,7 @@
    \item{QMdf}{corresponding degrees of freedom.}
    \item{QMp}{corresponding p-value.}
    \item{btt}{indices of the coefficients tested by the Wald-type test.}
-   \item{k}{number of outcomes included in the analysis.}
+   \item{k}{number of estimates included in the analysis.}
    \item{p}{number of coefficients in the model (including the intercept).}
    \item{m}{number of coefficients included in the Wald-type test.}
    \item{\dots}{some additional elements/values.}

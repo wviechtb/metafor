@@ -42,7 +42,7 @@ as.data.frame(sav)
 ### copy data into 'dat'
 dat <- dat.berkey1998
 
-### construct block diagonal var-cov matrix of the observed outcomes based on variables v1i and v2i
+### construct the block diagonal var-cov matrix of the estimates based on variables v1i and v2i
 V <- vcalc(vi=1, cluster=author, rvars=c(v1i, v2i), data=dat)
 
 ### fit multivariate model

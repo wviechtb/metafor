@@ -58,11 +58,11 @@ test_that("escalc() works correctly for measure='SMD/SMDH/ROM'", {
 
    dat <- dat.normand1999
 
-   sav <- escalc(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1:4)
+   sav <- expect_warning(escalc(measure="SMD", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1:4))
    expect_equivalent(sav$yi, c(-0.3552, -0.3479, -2.3176, -1.8880), tolerance=.tol[["est"]])
    expect_equivalent(sav$vi, c( 0.0131,  0.0645,  0.0458,  0.1606), tolerance=.tol[["var"]])
 
-   sav <- escalc(measure="SMDH", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1:4)
+   sav <- expect_warning(escalc(measure="SMDH", m1i=m1i, sd1i=sd1i, n1i=n1i, m2i=m2i, sd2i=sd2i, n2i=n2i, data=dat, subset=1:4))
    expect_equivalent(sav$yi, c(-0.3553, -0.3465, -2.3018, -1.8880), tolerance=.tol[["est"]])
    expect_equivalent(sav$vi, c( 0.0132,  0.0674,  0.0515,  0.1961), tolerance=.tol[["var"]])
 

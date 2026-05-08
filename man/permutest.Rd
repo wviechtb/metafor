@@ -28,13 +28,13 @@ permutest(x, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   For models without moderators, the permutation test is carried out by permuting the signs of the observed effect sizes or outcomes. The (two-sided) p-value of the permutation test is then equal to the proportion of times that the absolute value of the test statistic under the permuted data is as extreme or more extreme than under the actually observed data. See Follmann and Proschan (1999) for more details.
+   For models without moderators, the permutation test is carried out by permuting the signs of the estimates. The (two-sided) p-value of the permutation test is then equal to the proportion of times that the absolute value of the test statistic under the permuted data is as extreme or more extreme than under the actually observed data. See Follmann and Proschan (1999) for more details.
 
    For models with moderators, the permutation test is carried out by permuting the rows of the model matrix (i.e., \mjseqn{X}). The (two-sided) p-value for a particular model coefficient is then equal to the proportion of times that the absolute value of the test statistic for the coefficient under the permuted data is as extreme or more extreme than under the actually observed data. Similarly, for the omnibus test, the p-value is the proportion of times that the test statistic for the omnibus test is as extreme or more extreme than the actually observed one (argument \code{btt} can be used to specify which coefficients should be included in this test). See Higgins and Thompson (2004) and Viechtbauer et al. (2015) for more details.
 
    \subsection{Exact versus Approximate Permutation Tests}{
 
-      If \code{exact=TRUE}, the function will try to carry out an exact permutation test. An exact permutation test requires fitting the model to each possible permutation. However, the number of possible permutations increases rapidly with the number of outcomes/studies (i.e., \mjseqn{k}). For models without moderators, there are \mjseqn{2^k} possible permutations of the signs. Therefore, for \mjseqn{k=5}, there are 32 possible permutations, for \mjseqn{k=10}, there are already 1024, and for \mjseqn{k=20}, there are over one million such permutations.
+      If \code{exact=TRUE}, the function will try to carry out an exact permutation test. An exact permutation test requires fitting the model to each possible permutation. However, the number of possible permutations increases rapidly with the number of estimates (i.e., \mjseqn{k}). For models without moderators, there are \mjseqn{2^k} possible permutations of the signs. Therefore, for \mjseqn{k=5}, there are 32 possible permutations, for \mjseqn{k=10}, there are already 1024, and for \mjseqn{k=20}, there are over one million such permutations.
 
       For models with moderators, the increase in the number of possible permutations is even more severe. The total number of possible permutations of the model matrix is \mjseqn{k!}. Therefore, for \mjseqn{k=5}, there are 120 possible permutations, for \mjseqn{k=10}, there are 3,628,800, and for \mjseqn{k=20}, there are over \mjeqn{10^{18}}{10^18} permutations of the model matrix.
 
@@ -50,7 +50,7 @@ permutest(x, \dots)
 
    \subsection{Permutation-Based Confidence Intervals}{
 
-      When \code{permci=TRUE}, the function also tries to obtain permutation-based confidence intervals (CIs) of the model coefficient(s). This is done by shifting the observed effect sizes or outcomes by some amount and finding the most extreme values for this amount for which the permutation-based test would just lead to non-rejection. The calculation of such CIs is computationally expensive and may take a long time to complete. For models with moderators, one can also set \code{permci} to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as \code{NA} in the output.
+      When \code{permci=TRUE}, the function also tries to obtain permutation-based confidence intervals (CIs) of the model coefficient(s). This is done by shifting the effect size estimates by some amount and finding the most extreme values for this amount for which the permutation-based test would just lead to non-rejection. The calculation of such CIs is computationally expensive and may take a long time to complete. For models with moderators, one can also set \code{permci} to a vector of indices to specify for which coefficient(s) a permutation-based CI should be obtained. When the algorithm fails to determine a particular CI bound, it will be shown as \code{NA} in the output.
 
    }
 

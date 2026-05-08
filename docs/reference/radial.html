@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-2</span>
       </span>
     </div>
 
@@ -111,7 +111,7 @@
 <dd><p>an object of class <code>"rma"</code>.</p></dd>
 
    <dt id="arg-center">center<a class="anchor" aria-label="anchor" href="#arg-center"></a></dt>
-<dd><p>logical to specify whether the plot should be centered horizontally at the model estimate (the default is <code>FALSE</code>).</p></dd>
+<dd><p>logical to specify whether the plot should be centered horizontally at the pooled estimate (the default is <code>FALSE</code>).</p></dd>
 
    <dt id="arg-xlim">xlim<a class="anchor" aria-label="anchor" href="#arg-xlim"></a></dt>
 <dd><p>x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.</p></dd>
@@ -176,12 +176,12 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>Radial plots (also sometimes called Galbraith plots) were introduced by Galbraith (1988a, 1988b, 1994) as a way to plot estimates with different precisions. In meta-analyses, they are an interesting alternative to forest plots, especially when the number of observed effect sizes or outcomes is large (in which case the forest plot would be very large).</p>
-<p>For an equal-effects model, the plot shows the inverse of the standard errors on the horizontal axis (i.e., <em></em>\(1/\sqrt{v_i}\), where <em></em>\(v_i\) is the sampling variance of the observed effect size or outcome) against the observed effect sizes or outcomes standardized by their corresponding standard errors on the vertical axis (i.e., <em></em>\(y_i/\sqrt{v_i}\)). Since the vertical axis corresponds to standardized values, it is referred to as the z-axis within this function. On the right hand side of the plot, an arc is drawn (referred to as the y-axis within this function) corresponding to the observed effect sizes or outcomes. A line projected from (0,0) through a particular point within the plot onto this arc indicates the value of the observed effect size or outcome for that point.</p>
-<p>For a random-effects model, the function uses <em></em>\(1/\sqrt{v_i + \tau^2}\) for the horizontal axis, where <em></em>\(\tau^2\) is the amount of heterogeneity as estimated based on the model. For the z-axis, <em></em>\(y_i/\sqrt{v_i + \tau^2}\) is used to compute standardized values of the observed effect sizes or outcomes.</p>
-<p>The second (inner/smaller) arc that is drawn on the right hand side indicates the model estimate (in the middle of the arc) and the corresponding confidence interval (at the ends of the arc).</p>
+    <p>Radial plots (also sometimes called Galbraith plots) were introduced by Galbraith (1988a, 1988b, 1994) as a way to plot estimates with different precisions. In meta-analyses, they are an interesting alternative to forest plots, especially when the number of effect size estimates is large (in which case the forest plot would be very large).</p>
+<p>For an equal-effects model, the plot shows the inverse of the standard errors on the horizontal axis (i.e., <em></em>\(1/\sqrt{v_i}\), where <em></em>\(v_i\) is the sampling variance of the estimates) against the effect size estimates standardized by their corresponding standard errors on the vertical axis (i.e., <em></em>\(y_i/\sqrt{v_i}\)). Since the vertical axis corresponds to standardized values, it is referred to as the z-axis within this function. On the right hand side of the plot, an arc is drawn (referred to as the y-axis within this function) corresponding to the estimates. A line projected from (0,0) through a particular point within the plot onto this arc indicates the value of the estimate for that point.</p>
+<p>For a random-effects model, the function uses <em></em>\(1/\sqrt{v_i + \tau^2}\) for the horizontal axis, where <em></em>\(\tau^2\) is the amount of heterogeneity as estimated based on the model. For the z-axis, <em></em>\(y_i/\sqrt{v_i + \tau^2}\) is used to compute standardized values of the effect size estimates.</p>
+<p>The second (inner/smaller) arc that is drawn on the right hand side indicates the pooled estimate (in the middle of the arc) and the corresponding confidence interval (at the ends of the arc).</p>
 <p>The shaded region in the plot is the z-axis error region. For <code>level=95</code> (or if this was the <code>level</code> value when the model was fitted), this corresponds to z-axis values equal to <em></em>\(\pm 1.96\). Under the assumptions of the equal/random-effects models, approximately 95% of the points should fall within this region.</p>
-<p>When <code>center=TRUE</code>, the values on the y-axis are centered around the model estimate. As a result, the plot is centered horizontally at the model estimate.</p>
+<p>When <code>center=TRUE</code>, the values on the y-axis are centered around the pooled estimate. As a result, the plot is centered horizontally at the pooled estimate.</p>
 <p>If the z-axis label on the left is too close to the actual z-axis and/or the arc on the right is clipped, then this can be solved by increasing the margins on the right and/or left (see <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></code> and in particular the <code>mar</code> argument).</p>
 <p>Note that radial plots cannot be drawn for models that contain moderators.</p>
     </div>
@@ -246,8 +246,8 @@
 <span class="r-in"><span><span class="co">### draw radial plot</span></span></span>
 <span class="r-in"><span><span class="fu">radial</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### the line from (0,0) with a slope equal to the log risk ratio from the 4th study points</span></span></span>
-<span class="r-in"><span><span class="co">### to the corresponding effect size value on the arc (i.e., -1.44)</span></span></span>
+<span class="r-in"><span><span class="co">### the line from (0,0) with a slope equal to the log risk ratio from the 4th study</span></span></span>
+<span class="r-in"><span><span class="co">### points to the corresponding effect size estimate on the arc (i.e., -1.44)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">0</span>, b<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span>, lty<span class="op">=</span><span class="st">"dotted"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="radial-1.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span><span class="va">dat</span><span class="op">$</span><span class="va">yi</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span></span></span>
@@ -260,7 +260,7 @@
 <span class="r-in"><span><span class="fu">radial</span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="radial-2.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### center the values around the model estimate</span></span></span>
+<span class="r-in"><span><span class="co">### center the values around the pooled estimate</span></span></span>
 <span class="r-in"><span><span class="fu">radial</span><span class="op">(</span><span class="va">res</span>, center<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="radial-3.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-2</span>
       </span>
     </div>
 
@@ -110,7 +110,7 @@
     <h2>Arguments</h2>
     <p></p>
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>vector of length <em></em>\(k\) with the observed effect sizes or outcomes.</p></dd>
+<dd><p>vector of length <em></em>\(k\) with the estimates.</p></dd>
 
    <dt id="arg-vi">vi<a class="anchor" aria-label="anchor" href="#arg-vi"></a></dt>
 <dd><p>vector of length <em></em>\(k\) with the corresponding sampling variances.</p></dd>
@@ -140,7 +140,7 @@
 <dd><p>the x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.</p></dd>
 
    <dt id="arg-olim">olim<a class="anchor" aria-label="anchor" href="#arg-olim"></a></dt>
-<dd><p>argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
+<dd><p>argument to specify observation limits. If unspecified, no limits are used.</p></dd>
 
    <dt id="arg-ylim">ylim<a class="anchor" aria-label="anchor" href="#arg-ylim"></a></dt>
 <dd><p>the y-axis limits of the plot. If unspecified, the function sets the y-axis limits to some sensible values. Can also be a single value to set the lower bound (while the upper bound is still set automatically).</p></dd>
@@ -188,7 +188,7 @@
 <dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the plot.</p></dd>
 
    <dt id="arg-transf">transf<a class="anchor" aria-label="anchor" href="#arg-transf"></a></dt>
-<dd><p>optional argument to specify a function to transform the observed outcomes and corresponding confidence interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dd><p>optional argument to specify a function to transform the estimates and corresponding confidence interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
 
    <dt id="arg-atransf">atransf<a class="anchor" aria-label="anchor" href="#arg-atransf"></a></dt>
 <dd><p>optional argument to specify a function to transform the x-axis labels and annotations (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
@@ -197,22 +197,22 @@
 <dd><p>optional arguments needed by the function specified via <code>transf</code> or <code>atransf</code>.</p></dd>
 
    <dt id="arg-rows">rows<a class="anchor" aria-label="anchor" href="#arg-rows"></a></dt>
-<dd><p>optional vector to specify the rows (or more generally, the positions) for plotting the outcomes. Can also be a single value to specify the row of the first outcome (the remaining outcomes are then plotted below this starting row).</p></dd>
+<dd><p>optional vector to specify the rows (or more generally, the positions) for plotting the estimates. Can also be a single value to specify the row of the first estimate (the remaining estimates are then plotted below this starting row).</p></dd>
 
    <dt id="arg-efac">efac<a class="anchor" aria-label="anchor" href="#arg-efac"></a></dt>
 <dd><p>vertical expansion factor for confidence interval limits and arrows. The default value of 1 should usually work fine. Can also be a vector of two numbers, the first for CI limits, the second for arrows.</p></dd>
 
    <dt id="arg-pch">pch<a class="anchor" aria-label="anchor" href="#arg-pch"></a></dt>
-<dd><p>plotting symbol to use for the observed outcomes. By default, a filled square is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options. Can also be a vector of values.</p></dd>
+<dd><p>plotting symbol to use for the estimates. By default, a filled square is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options. Can also be a vector of values.</p></dd>
 
    <dt id="arg-psize">psize<a class="anchor" aria-label="anchor" href="#arg-psize"></a></dt>
-<dd><p>optional numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the precision of the estimates. Can also be a vector of values.</p></dd>
+<dd><p>optional numeric value to specify the point sizes for the estimates. If unspecified, the point sizes are a function of the precision of the estimates. Can also be a vector of values.</p></dd>
 
    <dt id="arg-plim">plim<a class="anchor" aria-label="anchor" href="#arg-plim"></a></dt>
 <dd><p>numeric vector of length 2 to scale the point sizes (ignored when <code>psize</code> is specified). See ‘Details’.</p></dd>
 
    <dt id="arg-col">col<a class="anchor" aria-label="anchor" href="#arg-col"></a></dt>
-<dd><p>optional character string to specify the color of the observed outcomes. Can also be a vector.</p></dd>
+<dd><p>optional character string to specify the color of the estimates. Can also be a vector.</p></dd>
 
    <dt id="arg-shade">shade<a class="anchor" aria-label="anchor" href="#arg-shade"></a></dt>
 <dd><p>optional character string or a (logical or numeric) vector for shading rows of the plot. See ‘Details’.</p></dd>
@@ -243,12 +243,12 @@
     <h2>Details</h2>
 
 
-<p>The plot shows the observed effect sizes or outcomes (by default as filled squares) with corresponding <code>level</code>% confidence intervals (as horizontal lines extending from the observed outcomes). To use the function, one should specify the observed outcomes (via the <code>x</code> argument) together with the corresponding sampling variances (via the <code>vi</code> argument) or with the corresponding standard errors (via the <code>sei</code> argument). The confidence intervals are computed with <em></em>\(y_i \pm z_{crit} \sqrt{v_i}\), where <em></em>\(y_i\) denotes the observed outcome in the <em></em>\(i\text{th}\) study, <em></em>\(v_i\) the corresponding sampling variance (and hence <em></em>\(\sqrt{v_i}\) is the corresponding standard error), and <em></em>\(z_{crit}\) is the appropriate critical value from a standard normal distribution (e.g., <em></em>\(1.96\) for a 95% CI). Alternatively, one can directly specify the confidence interval bounds via the <code>ci.lb</code> and <code>ci.ub</code> arguments.</p>
+<p>The plot shows the effect size estimates (by default as filled squares) with corresponding <code>level</code>% confidence intervals (as horizontal lines extending from the estimates). To use the function, one should specify the estimates (via the <code>x</code> argument) together with the corresponding sampling variances (via the <code>vi</code> argument) or with the corresponding standard errors (via the <code>sei</code> argument). The confidence intervals are computed with <em></em>\(y_i \pm z_{crit} \sqrt{v_i}\), where <em></em>\(y_i\) denotes the estimate in the <em></em>\(i\text{th}\) study, <em></em>\(v_i\) the corresponding sampling variance (and hence <em></em>\(\sqrt{v_i}\) is the corresponding standard error), and <em></em>\(z_{crit}\) is the appropriate critical value from a standard normal distribution (e.g., <em></em>\(1.96\) for a 95% CI). Alternatively, one can directly specify the confidence interval bounds via the <code>ci.lb</code> and <code>ci.ub</code> arguments.</p>
 <p></p><div class="section">
 <h3 id="applying-a-transformation">Applying a Transformation<a class="anchor" aria-label="anchor" href="#applying-a-transformation"></a></h3>
 
 
-<p>With the <code>transf</code> argument, the observed outcomes and corresponding confidence interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, then one could use <code>transf=exp</code> to obtain a forest plot showing the odds ratios. Alternatively, one can use the <code>atransf</code> argument to transform the x-axis labels and annotations (e.g., <code>atransf=exp</code>). See also <a href="transf.html">transf</a> for some other useful transformation functions in the context of a meta-analysis. The examples below illustrate the use of these arguments.</p>
+<p>With the <code>transf</code> argument, the estimates and corresponding confidence interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, one could use <code>transf=exp</code> to obtain a forest plot showing the odds ratios. Note that when the transformation is non-linear (as is the case for <code>transf=exp</code>), the interval bounds will be asymmetric (which is visually not so appealing). Alternatively, one can use the <code>atransf</code> argument to transform the x-axis labels and annotations. For example, when using <code>atransf=exp</code>, the x-axis will correspond to a log scale. See <a href="transf.html">transf</a> for some other useful transformation functions in the context of a meta-analysis. See below for examples.</p>
 <p></p>
 </div>
 
@@ -257,9 +257,9 @@
 
 
 <p>By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row <em></em>\(k\), the second study in row <em></em>\(k-1\), and so on, until the last study, which is placed in the first row). The studies can be reordered with the <code>order</code> argument:</p>
-<p></p><ul><li><p><code>order="obs"</code>: the studies are ordered by the observed outcomes,</p></li>
+<p></p><ul><li><p><code>order="est"</code>: the studies are ordered by the estimates,</p></li>
 <li><p><code>order="prec"</code>: the studies are ordered by their sampling    variances.</p></li>
-</ul><p>Alternatively, it is also possible to set <code>order</code> equal to a variable based on which the studies will be ordered (see ‘Examples’). One can also use the <code>rows</code> argument to specify the rows (or more generally, the positions) for plotting the outcomes.</p>
+</ul><p>Alternatively, it is also possible to set <code>order</code> equal to a variable based on which the studies will be ordered (see ‘Examples’). One can also use the <code>rows</code> argument to specify the rows (or more generally, the positions) for plotting the estimates.</p>
 <p></p>
 </div>
 
@@ -276,7 +276,7 @@
 <h3 id="adjusting-the-point-sizes">Adjusting the Point Sizes<a class="anchor" aria-label="anchor" href="#adjusting-the-point-sizes"></a></h3>
 
 
-<p>By default (i.e., when <code>psize</code> is not specified), the point sizes are a function of the precision (i.e., inverse standard errors) of the outcomes. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard errors of the estimates, their areas are proportional to the inverse sampling variances, which corresponds to the weights they would receive in an equal-effects model. However, the point sizes are rescaled so that the smallest point size is <code>plim[1]</code> and the largest point size is <code>plim[2]</code>. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set <code>plim[2]</code> to <code>NA</code>, in which case the points are rescaled so that the smallest point size corresponds to <code>plim[1]</code> and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set <code>plim[1]</code> to <code>NA</code>, in which case the points are rescaled so that the largest point size corresponds to <code>plim[2]</code> and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set <code>plim[3]</code>, which enforces a minimal point size.</p>
+<p>By default (i.e., when <code>psize</code> is not specified), the point sizes are a function of the precision (i.e., inverse standard errors) of the estimates. This way, more precise estimates are visually more prominent in the plot. By making the point sizes a function of the inverse standard errors of the estimates, their areas are proportional to the inverse sampling variances, which corresponds to the weights they would receive in an equal-effects model. However, the point sizes are rescaled so that the smallest point size is <code>plim[1]</code> and the largest point size is <code>plim[2]</code>. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights in such a model. If exactly relative point sizes are desired, one can set <code>plim[2]</code> to <code>NA</code>, in which case the points are rescaled so that the smallest point size corresponds to <code>plim[1]</code> and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set <code>plim[1]</code> to <code>NA</code>, in which case the points are rescaled so that the largest point size corresponds to <code>plim[2]</code> and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set <code>plim[3]</code>, which enforces a minimal point size.</p>
 <p></p>
 </div>
 
@@ -294,7 +294,7 @@
     <p>The function sets some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.</p>
 <p>The function actually returns some information about the chosen values invisibly. Printing this information is useful as a starting point to customize the plot.</p>
 <p>If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the <code>cex</code>, <code>cex.lab</code>, and <code>cex.axis</code> arguments are then useful to adjust the symbol and text sizes.</p>
-<p>If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those limits (the observed outcomes and confidence intervals cannot exceed those bounds then).</p>
+<p>If the estimates are bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those limits (i.e., the estimates and confidence interval bounds cannot exceed those limits then).</p>
 <p>The <code>lty</code> argument can also be a vector of two elements, the first for specifying the line type of the individual CIs (<code>"solid"</code> by default), the second for the line type of the horizontal line that is automatically added to the plot (<code>"solid"</code> by default; set to <code>"blank"</code> to remove it).</p>
     </div>
     <div id="additional-optional-arguments">
@@ -350,12 +350,12 @@
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="forest.default-3.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### forest plot of the observed risk ratios (transform outcomes)</span></span></span>
+<span class="r-in"><span><span class="co">### forest plot of the observed risk ratios (transform the estimates)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, transf<span class="op">=</span><span class="va">exp</span>, alim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span><span class="op">)</span>, steps<span class="op">=</span><span class="fl">5</span>,</span></span>
 <span class="r-in"><span>                 xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2.5</span>,<span class="fl">4</span><span class="op">)</span>, refline<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="forest.default-4.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### forest plot of the observed risk ratios (transformed x-axis)</span></span></span>
+<span class="r-in"><span><span class="co">### forest plot of the observed risk ratios (transform the x-axis)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, atransf<span class="op">=</span><span class="va">exp</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>,<span class="fl">0.25</span>,<span class="fl">1</span>,<span class="fl">4</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                 xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>,<span class="fl">8</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="forest.default-5.png" alt="" width="1728" height="1536"></span>

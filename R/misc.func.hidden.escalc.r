@@ -337,3 +337,55 @@
 }
 
 ############################################################################
+
+.chkyisize <- function(yi, measure, cutoff) {
+
+   mstyle <- .get.mstyle()
+
+   if (is.null(cutoff)) {
+
+      cutoff <- NA_real_
+      addtxt <- NULL
+
+      if (is.element(measure, c("SMD","SMDH","SMD1","SMD1H"))) {
+         cutoff <- 2
+         addtxt <- "Maybe the specified SDs are actually SEs?"
+      }
+
+   } else {
+
+      if (!is.numeric(cutoff)) {
+         warning(mstyle$warning(paste0("Argument 'cutoff' must be numeric.")), call.=FALSE)
+         return()
+      }
+
+      if (length(cutoff) != 1L) {
+         warning(mstyle$warning(paste0("Argument 'cutoff' must specify a single value.")), call.=FALSE)
+         return()
+      }
+
+      cutoff <- abs(cutoff)
+
+   }
+
+   sig <- digest::digest(yi)
+   yichecks <- .getfromenv("yichecks")
+
+   if (!is.element(sig, yichecks) && !is.na(cutoff)) {
+
+      if (any(abs(yi) > cutoff, na.rm=TRUE)) {
+         txt <- paste0("One or more ", measure, " values are unusually large (i.e., abs(yi) > ", cutoff, ").")
+         if (!is.null(addtxt))
+            txt <- paste0(txt, "\n", addtxt)
+         warning(mstyle$warning(txt), call.=FALSE)
+         tmp <- .getfromenv("runyicheck", default=list())
+         tmp[[measure]] <- FALSE
+         yichecks <- head(c(sig, yichecks), 100) # so that yichecks doesn't grow indefinitely (e.g., in simulation studies)
+         try(assign("yichecks", yichecks, envir=.metafor), silent=TRUE)
+      }
+
+   }
+
+}
+
+############################################################################

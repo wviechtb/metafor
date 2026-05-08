@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-2</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@
     <p><em>These arguments pertain to data input:</em></p>
 <p></p>
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>a vector with the observed effect sizes or outcomes or an object of class <code>"rma"</code>.</p></dd>
+<dd><p>a vector with the effect size estimates or an object of class <code>"rma"</code>.</p></dd>
 
    <dt id="arg-vi">vi<a class="anchor" aria-label="anchor" href="#arg-vi"></a></dt>
 <dd><p>vector with the corresponding sampling variances (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
@@ -122,25 +122,25 @@
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
 
 
-   </dl><p><em>These arguments pertain to the tests of the observed effect sizes or outcomes:</em></p>
+   </dl><p><em>These arguments pertain to the tests of the effect size estimates:</em></p>
 <p></p>
 <dl><dt id="arg-h-">H0<a class="anchor" aria-label="anchor" href="#arg-h-"></a></dt>
-<dd><p>numeric value to specify the value of the effect size or outcome under the null hypothesis (the default is 0).</p></dd>
+<dd><p>numeric value to specify the value under the null hypothesis (the default is 0).</p></dd>
 
    <dt id="arg-alternative">alternative<a class="anchor" aria-label="anchor" href="#arg-alternative"></a></dt>
-<dd><p>character string to specify the sidedness of the hypothesis when testing the observed effect sizes or outcomes. Possible options are <code>"two.sided"</code> (the default), <code>"greater"</code>, or <code>"less"</code>. Can be abbreviated.</p></dd>
+<dd><p>character string to specify the sidedness of the hypothesis when testing the effect size estimates. Possible options are <code>"two.sided"</code> (the default), <code>"greater"</code>, or <code>"less"</code>. Can be abbreviated.</p></dd>
 
    <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
-<dd><p>alpha level for testing the observed effect sizes or outcomes (the default is 0.05).</p></dd>
+<dd><p>alpha level for testing the effect size estimates (the default is 0.05).</p></dd>
 
 
    </dl><p><em>These arguments pertain to the power of the tests:</em></p>
 <p></p>
 <dl><dt id="arg-theta">theta<a class="anchor" aria-label="anchor" href="#arg-theta"></a></dt>
-<dd><p>optional numeric value to specify the value of the true effect size or outcome under the alternative hypothesis. If unspecified, it will be estimated based on the data or the value is taken from the <code>"rma"</code> object.</p></dd>
+<dd><p>optional numeric value to specify the value of the (average) true effect under the alternative hypothesis. If unspecified, it will be estimated based on the data or the value is taken from the <code>"rma"</code> object.</p></dd>
 
    <dt id="arg-tau-">tau2<a class="anchor" aria-label="anchor" href="#arg-tau-"></a></dt>
-<dd><p>optional numeric value to specify the amount of heterogeneity in the true effect sizes or outcomes. If unspecified, the true effect sizes or outcomes are assumed to be homogeneous or the value is taken from the <code>"rma"</code> object.</p></dd>
+<dd><p>optional numeric value to specify the amount of heterogeneity in the true effects. If unspecified, the true effects are assumed to be homogeneous or the value is taken from the <code>"rma"</code> object.</p></dd>
 
 
    </dl><p><em>These arguments pertain to the test of excess significance:</em></p>
@@ -170,9 +170,9 @@
     <div id="details">
     <h2>Details</h2>
     <p>The function carries out the test of excess significance described by Ioannidis and Trikalinos (2007). The test can be used to examine whether the observed number of significant findings is greater than the number of significant findings expected given the power of the tests. An overabundance of significant tests may suggest that the collection of studies is not representative of all studies conducted on a particular topic.</p>
-<p>One can either pass a vector with the observed effect sizes or outcomes (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>.</p>
-<p>The observed effect sizes or outcomes are tested for significance based on a standard Wald-type test, that is, by comparing \[z_i = \frac{y_i - \text{H}_0}{\sqrt{v_i}}\] against the appropriate critical value(s) of a standard normal distribution (e.g., <em></em>\(\pm 1.96\) for <code>alternative="two.sided"</code> and <code>alpha=0.05</code>, which are the defaults). Let <em></em>\(O\) denote the observed number of significant tests.</p>
-<p>Given a particular value for the true effect or outcome denoted by <em></em>\(\theta\) (which, if it is unspecified, is determined by computing the inverse-variance weighted average of the observed effect sizes or outcomes or the value is taken from the model object), let <em></em>\(1-\beta_i\) denote the power of the <em></em>\(i\text{th}\) test (where <em></em>\(\beta_i\) denotes the Type II error probability). If <em></em>\(\tau^2 \gt 0\), let <em></em>\(1-\beta_i\) denote the expected power (computed based on integrating the power over a normal distribution with mean <em></em>\(\theta\) and variance <em></em>\(\tau^2\)). Let <em></em>\(E = \sum_{i=1}^k (1-\beta_i)\) denote the expected number of significant tests.</p>
+<p>One can either pass a vector with the effect size estimates (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>.</p>
+<p>The effect size estimates are tested for significance based on a standard Wald-type test, that is, by comparing \[z_i = \frac{y_i - \text{H}_0}{\sqrt{v_i}}\] against the appropriate critical value(s) of a standard normal distribution (e.g., <em></em>\(\pm 1.96\) for <code>alternative="two.sided"</code> and <code>alpha=0.05</code>, which are the defaults). Let <em></em>\(O\) denote the observed number of significant tests.</p>
+<p>Given a particular value for the (average) true effect denoted by <em></em>\(\theta\) (which, if it is unspecified, is determined by computing the inverse-variance weighted average of the effect size estimates or the value is taken from the model object), let <em></em>\(1-\beta_i\) denote the power of the <em></em>\(i\text{th}\) test (where <em></em>\(\beta_i\) denotes the Type II error probability). If <em></em>\(\tau^2 \gt 0\), let <em></em>\(1-\beta_i\) denote the expected power (computed based on integrating the power over a normal distribution with mean <em></em>\(\theta\) and variance <em></em>\(\tau^2\)). Let <em></em>\(E = \sum_{i=1}^k (1-\beta_i)\) denote the expected number of significant tests.</p>
 <p>The test of excess significance then tests if <em></em>\(O\) is significantly greater (if <code>tes.alternative="greater"</code>) than <em></em>\(E\). This can be done using Pearson's chi-square test (if <code>test="chi2"</code>), a binomial test (if <code>test="binomial"</code>), or an exact test (if <code>test="exact"</code>). The latter is described in Francis (2013). If argument <code>test</code> is unspecified, the default is to do an exact test if the number of elements in the sum that needs to be computed is less than or equal to <code>10^6</code> and to do a chi-square test otherwise.</p>
 <p>One can also iteratively find the value of <em></em>\(\theta\) such that the p-value of the test of excess significance is equal to <code>tes.alpha</code> (which is <code>0.10</code> by default). The resulting value is called the ‘limit estimate’ and is denoted <em></em>\(\theta_{lim}\) by Ioannidis and Trikalinos (2007). Note that the limit estimate is not computable if the p-value is larger than <code>tes.alpha</code> even if <em></em>\(\theta = \text{H}_0\).</p>
     </div>
@@ -219,8 +219,8 @@
     <h2>Note</h2>
     <p>When <code>tes.alternative="greater"</code> (the default), then the function tests if <em></em>\(O\) is significantly greater than <em></em>\(E\) and hence this is indeed a test of excess significance. When <code>tes.alternative="two.sided"</code>, then the function tests if <em></em>\(O\) differs significantly from <em></em>\(E\) in either direction and hence it would be more apt to describe this as a test of (in)consistency (between <em></em>\(O\) and <em></em>\(E\)). Finally, one can also set <code>tes.alternative="less"</code>, in which case the function tests if <em></em>\(O\) is significantly lower than <em></em>\(E\), which could be considered a test of excess non-significance.</p>
 <p>When <code>tes.alternative="two.sided"</code>, one can actually compute two limit estimates. The function attempts to compute both.</p>
-<p>The function computes the significance and power of the studies based on Wald-type tests regardless of the effect size or outcome measure used as input. This works as an adequate approximation as long as the within-study sample sizes are not too small.</p>
-<p>Note that the test is not a test for publication bias but a test whether the set of studies includes an unusual number of significant findings given the power of the studies. The general usefulness of the test and its usefulness under particular circumstances (e.g., when there is substantial heterogeneity in the true effect sizes or outcomes) has been the subject of considerable debate. See Francis (2013) and the commentaries on this article in the same issue of the journal.</p>
+<p>The function computes the significance and power of the studies based on Wald-type tests regardless of the effect size measure used as input. This works as an adequate approximation as long as the within-study sample sizes are not too small.</p>
+<p>Note that the test is not a test for publication bias but a test whether the set of studies includes an unusual number of significant findings given the power of the studies. The general usefulness of the test and its usefulness under particular circumstances (e.g., when there is substantial heterogeneity in the true effects) has been the subject of considerable debate. See Francis (2013) and the commentaries on this article in the same issue of the journal.</p>
     </div>
     <div id="author">
     <h2>Author</h2>

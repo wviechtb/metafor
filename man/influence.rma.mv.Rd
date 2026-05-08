@@ -19,7 +19,7 @@
 \arguments{
    \item{model}{an object of class \code{"rma.mv"}.}
    \item{progbar}{logical to specify whether a progress bar should be shown (the default is \code{FALSE}).}
-   \item{cluster}{optional vector to specify a clustering variable to use for computing the Cook's distances or DFBETAS values. If unspecified, these measures are computed for the individual observed effect sizes or outcomes.}
+   \item{cluster}{optional vector to specify a clustering variable to use for computing the Cook's distances and DFBETAS values. If unspecified, these measures are computed based on the individual estimates.}
    \item{reestimate}{logical to specify whether variance/correlation components should be re-estimated after deletion of the \mjeqn{i\text{th}}{ith} case (the default is \code{TRUE}).}
    \item{parallel}{character string to specify whether parallel processing should be used (the default is \code{"no"}). For parallel processing, set to either \code{"snow"} or \code{"multicore"}. See \sQuote{Note}.}
    \item{ncpus}{integer to specify the number of processes to use in the parallel processing.}
@@ -73,15 +73,15 @@ dat <- dat.konstantopoulos2011
 res <- rma.mv(yi, vi, random = ~ 1 | district/school, data=dat)
 print(res, digits=3)
 
-### Cook's distance for each observed outcome
+### compute Cook's distance for each estimate
 x <- cooks.distance(res)
 x
-plot(x, type="o", pch=19, xlab="Observed Outcome", ylab="Cook's Distance")
+plot(x, type="o", pch=19, xlab="Observed Outcome", ylab="Cook's Distance", las=1)
 
-### Cook's distance for each district
+### compute Cook's distance for each district
 x <- cooks.distance(res, cluster=district)
 x
-plot(x, type="o", pch=19, xlab="District", ylab="Cook's Distance", xaxt="n")
+plot(x, type="o", pch=19, xlab="District", ylab="Cook's Distance", xaxt="n", las=1)
 axis(side=1, at=seq_along(x), labels=as.numeric(names(x)))
 
 ### hat values

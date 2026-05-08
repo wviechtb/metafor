@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-2</span>
       </span>
     </div>
 
@@ -124,7 +124,7 @@
 <dd><p>the x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.</p></dd>
 
    <dt id="arg-olim">olim<a class="anchor" aria-label="anchor" href="#arg-olim"></a></dt>
-<dd><p>argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
+<dd><p>argument to specify observation limits. If unspecified, no limits are used.</p></dd>
 
    <dt id="arg-ylim">ylim<a class="anchor" aria-label="anchor" href="#arg-ylim"></a></dt>
 <dd><p>the y-axis limits of the plot. If unspecified, the function sets the y-axis limits to some sensible values. Can also be a single value to set the lower bound (while the upper bound is still set automatically).</p></dd>
@@ -169,7 +169,7 @@
 <dd><p>optional arguments needed by the function specified via <code>transf</code> or <code>atransf</code>.</p></dd>
 
    <dt id="arg-rows">rows<a class="anchor" aria-label="anchor" href="#arg-rows"></a></dt>
-<dd><p>optional vector to specify the rows (or more generally, the positions) for plotting the outcomes. Can also be a single value to specify the row of the first outcome (the remaining outcomes are then plotted below this starting row).</p></dd>
+<dd><p>optional vector to specify the rows (or more generally, the positions) for plotting the estimates. Can also be a single value to specify the row of the first estimate (the remaining estimates are then plotted below this starting row).</p></dd>
 
    <dt id="arg-efac">efac<a class="anchor" aria-label="anchor" href="#arg-efac"></a></dt>
 <dd><p>vertical expansion factor for confidence interval limits and arrows. The default value of 1 should usually work fine. Can also be a vector of two numbers, the first for CI limits, the second for arrows.</p></dd>
@@ -210,7 +210,7 @@
 </dl></div>
     <div id="details">
     <h2>Details</h2>
-    <p>The plot shows the estimated pooled outcome with corresponding confidence interval bounds as one study at a time is added to the analysis.</p>
+    <p>The <code><a href="cumul.html">cumul</a></code> function can be used to conduct a cumulative meta-analysis. Passing an object created by this function to <code><a href="forest.html">forest()</a></code> creates a cumulative forest plot that shows the pooled estimate with corresponding confidence interval bounds as one estimate at a time is added to the analysis.</p>
 <p>See <code><a href="forest.default.html">forest.default</a></code> and <code><a href="forest.rma.html">forest.rma</a></code> for further details on the purpose of the various arguments.</p>
     </div>
     <div id="note">
@@ -218,7 +218,7 @@
     <p>The function sets some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.</p>
 <p>The function actually returns some information about the chosen values invisibly. Printing this information is useful as a starting point to customize the plot.</p>
 <p>If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the <code>cex</code>, <code>cex.lab</code>, and <code>cex.axis</code> arguments are then useful to adjust the symbol and text sizes.</p>
-<p>If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those limits (the observed outcomes and confidence intervals cannot exceed those bounds then).</p>
+<p>If the estimates are bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those limits (i.e., the pooled estimates and confidence interval bounds cannot exceed those limits then).</p>
 <p>The <code>lty</code> argument can also be a vector of two elements, the first for specifying the line type of the individual CIs (<code>"solid"</code> by default), the second for the line type of the horizontal line that is automatically added to the plot (<code>"solid"</code> by default; set to <code>"blank"</code> to remove it).</p>
     </div>
     <div id="author">

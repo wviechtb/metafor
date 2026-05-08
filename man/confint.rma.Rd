@@ -89,7 +89,7 @@
 
    For objects of class \code{"rma.uni.selmodel"} or \code{"rma.ls"}, the function also sets some sensible defaults for the end points of the interval to be searched for the CI bounds (of the \mjseqn{\tau^2}, \mjseqn{\delta}, and \mjseqn{\alpha} parameter(s)). One can again adjust the end points and the number of retries (as described above) with \code{control=list(vc.min=value, vc.max=value, eptries=value)}.
 
-   The Q-profile and generalized Q-statistic methods are both exact under the assumptions of the random- and mixed-effects models (i.e., normally distributed observed and true effect sizes or outcomes and known sampling variances). In practice, these assumptions are usually only approximately true, turning CIs for \mjseqn{\tau^2} also into approximations. Profile likelihood CIs are not exact by construction and rely on the asymptotic behavior of the likelihood ratio statistic, so they may be inaccurate in small samples, but they are inherently consistent with the use of ML/REML estimation.
+   The Q-profile and generalized Q-statistic methods are both exact under the assumptions of the random- and mixed-effects models (i.e., normally distributed observed and true effects and known sampling variances). In practice, these assumptions are usually only approximately true, turning CIs for \mjseqn{\tau^2} also into approximations. Profile likelihood CIs are not exact by construction and rely on the asymptotic behavior of the likelihood ratio statistic, so they may be inaccurate in small samples, but they are inherently consistent with the use of ML/REML estimation.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).

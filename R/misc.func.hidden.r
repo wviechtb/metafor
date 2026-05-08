@@ -605,6 +605,7 @@
 .getfromenv <- function(what, element, envir=.metafor, default=NULL) {
 
    x <- try(get(what, envir=envir, inherits=FALSE), silent=TRUE)
+
    if (inherits(x, "try-error")) {
       return(default)
    } else {

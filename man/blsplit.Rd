@@ -23,7 +23,7 @@ blsplit(x, cluster, fun, args, sort=FALSE)
 \seealso{
    \code{\link{bldiag}} for a function to create a block diagonal matrix based on sub-matrices.
 
-   \code{\link{vcalc}} for a function to construct a variance-covariance matrix of dependent effect sizes or outcomes, which often has a block diagonal structure.
+   \code{\link{vcalc}} for a function to construct a variance-covariance matrix of dependent estimates, which often has a block diagonal structure.
 }
 \examples{
 ### copy data into 'dat'

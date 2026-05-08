@@ -9,7 +9,7 @@ regtest(x, vi, sei, ni, subset, data,
         model="rma", predictor="sei", ret.fit=FALSE, digits, \dots)
 }
 \arguments{
-   \item{x}{a vector with the observed effect sizes or outcomes or an object of class \code{"rma"}.}
+   \item{x}{a vector with the effect size estimates or an object of class \code{"rma"}.}
    \item{vi}{vector with the corresponding sampling variances (ignored if \code{x} is an object of class \code{"rma"}).}
    \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
    \item{ni}{optional vector with the corresponding sample sizes (only relevant when using the sample sizes (or a transformation thereof) as predictor).}
@@ -22,9 +22,9 @@ regtest(x, vi, sei, ni, subset, data,
    \item{\dots}{other arguments.}
 }
 \details{
-   Various tests for funnel plot asymmetry have been suggested in the literature, including the rank correlation test by Begg and Mazumdar (1994) and the regression test by Egger et al. (1997). Extensions, modifications, and further developments of the regression test are described (among others) by Macaskill et al. (2001), Sterne and Egger (2005), Harbord et al. (2006), Peters et al. (2006), \enc{Rücker}{Ruecker} et al. (2008), and Moreno et al. (2009). The various versions of the regression test differ in terms of the model (either a weighted regression model with a multiplicative dispersion term or a fixed/mixed-effects meta-regression model is used), in terms of the predictor variable that the observed effect sizes or outcomes are hypothesized to be related to when publication bias is present (suggested predictors include the standard error, the sampling variance, and the sample size or transformations thereof), and in terms of the outcome measure used (e.g., for \mjeqn{2 \times 2}{2x2} table data, one has the choice between various outcome measures). The idea behind the various tests is the same though: If there is a relationship between the observed effect sizes or outcomes and the chosen predictor, then this usually implies asymmetry in the funnel plot, which in turn may be an indication of publication bias.
+   Various tests for funnel plot asymmetry have been suggested in the literature, including the rank correlation test by Begg and Mazumdar (1994) and the regression test by Egger et al. (1997). Extensions, modifications, and further developments of the regression test are described (among others) by Macaskill et al. (2001), Sterne and Egger (2005), Harbord et al. (2006), Peters et al. (2006), \enc{Rücker}{Ruecker} et al. (2008), and Moreno et al. (2009). The various versions of the regression test differ in terms of the model (either a weighted regression model with a multiplicative dispersion term or a fixed/mixed-effects meta-regression model is used), in terms of the predictor variable that the estimates are hypothesized to be related to when publication bias is present (suggested predictors include the standard error, the sampling variance, and the sample size or transformations thereof), and in terms of the effect size measure used (e.g., for \mjeqn{2 \times 2}{2x2} table data, one has the choice between various measures). The idea behind the various tests is the same though: If there is a relationship between the estimates and the chosen predictor, then this usually implies asymmetry in the funnel plot, which in turn may be an indication of publication bias.
 
-   The \code{regtest} function can be used to carry out various versions of the regression test. One can either pass a vector with the observed effect sizes or outcomes (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}.
+   The \code{regtest} function can be used to carry out various versions of the regression test. One can either pass a vector with the effect size estimates (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}.
 
    The model type for the regression test is chosen via the \code{model} argument, with \code{model="lm"} for a weighted regression model with a multiplicative dispersion term or \code{model="rma"} for a (mixed-effects) meta-regression model (the default).
 
@@ -39,13 +39,13 @@ regtest(x, vi, sei, ni, subset, data,
    \item \code{predictor="sqrtninv"} for the inverse square root of the sample sizes.
    }
 
-   The outcome measure used for the regression test is simply determined by the values passed to the function or the measure that was used in fitting the original model (when passing an object of class \code{"rma"} to the function).
+   The effect size measure used for the regression test is simply determined by the values passed to the function or the measure that was used in fitting the original model (when passing an object of class \code{"rma"} to the function).
 
-   When using the sample sizes (or a transformation thereof) as the predictor, one can use the \code{ni} argument to specify the sample sizes. When \code{x} is a vector with the observed effect sizes or outcomes and it was computed with \code{\link{escalc}}, then the sample sizes should automatically be stored as an attribute of \code{x} and \code{ni} does not need to be specified. This should also be the case when passing an object of class \code{"rma"} to the function and the input to the model fitting function came from \code{\link{escalc}}.
+   When using the sample sizes (or a transformation thereof) as the predictor, one can use the \code{ni} argument to specify the sample sizes. When \code{x} is a vector with the estimates and it was computed with \code{\link{escalc}}, then the sample sizes should automatically be stored as an attribute of \code{x} and \code{ni} does not need to be specified. This should also be the case when passing an object of class \code{"rma"} to the function and the input to the model fitting function came from \code{\link{escalc}}.
 
    When passing an object of class \code{"rma"} to the function, arguments such as \code{method}, \code{weighted}, and \code{test} as used during the initial model fitting are also used for the regression test. If the model already included one or more moderators, then \code{regtest} will add the chosen predictor to the moderator(s) already included in the model. This way, one can test for funnel plot asymmetry after accounting first for the influence of the moderator(s) already included in the model.
 
-   The model used for conducting the regression test can also be used to obtain a \sQuote{limit estimate} of the (average) true effect or outcome. In particular, when the standard errors, sampling variances, or inverse (square root) sample sizes are used as the predictor, the model intercept in essence reflects the estimate under infinite precision. This is sometimes (cautiously) interpreted as an estimate of the (average) true effect or outcome that is adjusted for publication bias.
+   The model used for conducting the regression test can also be used to obtain a \sQuote{limit estimate} of the pooled effect. In particular, when the standard errors, sampling variances, or inverse (square root) sample sizes are used as the predictor, the model intercept in essence reflects the estimate under infinite precision. This is sometimes (cautiously) interpreted as the pooled estimate adjusted for publication bias.
 }
 \value{
    An object of class \code{"regtest"}. The object is a list containing the following components:
@@ -66,7 +66,7 @@ regtest(x, vi, sei, ni, subset, data,
 
    When conducting a classical \sQuote{Egger test}, the test of the limit estimate is the same as the \sQuote{precision-effect test} (PET) of Stanley and Doucouliagos (2014). The limit estimate when using the sampling variance as predictor is sometimes called the \sQuote{precision-effect estimate with SE} (PEESE) (Stanley & Doucouliagos, 2014). A conditional procedure where we use the limit estimate when PET is not significant (i.e., when using the standard error as predictor) and the PEESE (i.e., when using the sampling variance as predictor) when PET is significant is sometimes called the PET-PEESE procedure (Stanley & Doucouliagos, 2014).
 
-   All of the tests do not directly test for publication bias, but for a relationship between the observed effect sizes or outcomes and the chosen predictor. If such a relationship is present, then this usually implies asymmetry in the funnel plot, which in turn may be an indication of publication bias. However, it is important to keep in mind that there can be other reasons besides publication bias that could lead to asymmetry in the funnel plot. For example, the sampling variances can be inherently corrected with the observed effect sizes for various effect size measures, which can induce artificial asymmetry in the funnel plot unrelated to publication bias (Macaskill et al., 2001; Moreno et al., 2009; Peters et al., 2006; Pustejovsky & Rodgers, 2019; Zwetsloot et al., 2017). Using the sample sizes (or some transformation thereof) as the predictor can mitigate this issue.
+   All of the tests do not directly test for publication bias, but for a relationship between the estimates and the chosen predictor. If such a relationship is present, then this usually implies asymmetry in the funnel plot, which in turn may be an indication of publication bias. However, it is important to keep in mind that there can be other reasons besides publication bias that could lead to asymmetry in the funnel plot. For example, the sampling variances can be inherently corrected with the estimates for various effect size measures, which can induce artificial asymmetry in the funnel plot unrelated to publication bias (Macaskill et al., 2001; Moreno et al., 2009; Peters et al., 2006; Pustejovsky & Rodgers, 2019; Zwetsloot et al., 2017). Using the sample sizes (or some transformation thereof) as the predictor can mitigate this issue.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
@@ -117,7 +117,7 @@ regtest(res, model="lm")
 ### mixed-effects meta-regression version of the Egger test
 regtest(res)
 
-### same tests, but passing outcomes directly
+### same tests, but passing the estimates to the function directly
 regtest(yi, vi, data=dat, model="lm")
 regtest(yi, vi, data=dat)
 

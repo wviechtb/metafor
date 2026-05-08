@@ -10,13 +10,13 @@
 }
 \arguments{
    \item{object}{an object of class \code{"rma"}.}
-   \item{type}{character string to specify the type of variance-covariance matrix to return: \code{type="fixed"} returns the variance-covariance matrix of the fixed effects (the default), \code{type="obs"} returns the marginal variance-covariance matrix of the observed effect sizes or outcomes, \code{type="fitted"} returns the variance-covariance matrix of the fitted values, \code{type="resid"} returns the variance-covariance matrix of the residuals.}
+   \item{type}{character string to specify the type of variance-covariance matrix to return: \code{type="fixed"} returns the variance-covariance matrix of the fixed effects (the default), \code{type="obs"} returns the marginal variance-covariance matrix of the effect size estimates, \code{type="fitted"} returns the variance-covariance matrix of the fitted values, \code{type="resid"} returns the variance-covariance matrix of the residuals.}
    \item{\dots}{other arguments.}
 }
 \details{
    Note that \code{type="obs"} currently only works for object of class \code{"rma.uni"} and \code{"rma.mv"}.
 
-   For objects of class \code{"rma.uni"}, the marginal variance-covariance matrix of the observed effect sizes or outcomes is a diagonal matrix with \mjeqn{\hat{\tau}^2 + v_i}{\tau^2 + v_i} along the diagonal, where \mjeqn{\hat{\tau}^2}{\tau^2} is the estimated amount of (residual) heterogeneity (set to 0 in equal-effects models) and \mjseqn{v_i} is the sampling variance of the \mjeqn{i\text{th}}{ith} study.
+   For objects of class \code{"rma.uni"}, the marginal variance-covariance matrix of the effect size estimates is a diagonal matrix with \mjeqn{\hat{\tau}^2 + v_i}{\tau^2 + v_i} along the diagonal, where \mjeqn{\hat{\tau}^2}{\tau^2} is the estimated amount of (residual) heterogeneity (set to 0 in equal-effects models) and \mjseqn{v_i} is the sampling variance of the \mjeqn{i\text{th}}{ith} study.
 
    For objects of class \code{"rma.mv"}, the structure can be more complex and depends on the random effects included in the model.
 }

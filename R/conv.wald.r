@@ -251,7 +251,7 @@ conv.wald <- function(out, ci.lb, ci.ub, zval, pval, n, data, include,
 
    #escall <- paste0("escalc(measure='", measure, "', data=x, yi=", yi.name, ", vi=", vi.name, ", var.names=c('", yi.name, "','", vi.name, "'))")
    #x <- eval(str2lang(escall))
-   x <- escalc(measure=measure, data=x, yi=x[[yi.name]], vi=x[[vi.name]], var.names=c(yi.name,vi.name))
+   x <- escalc(measure=measure, data=x, yi=x[[yi.name]], vi=x[[vi.name]], var.names=c(yi.name,vi.name), cutoff=NA_real_)
 
    if (!append)
       x <- x[,c(yi.name, vi.name)]

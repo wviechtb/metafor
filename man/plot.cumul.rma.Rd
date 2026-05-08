@@ -31,7 +31,7 @@
 \details{
    The function can be used to visualize the results from a cumulative meta-analysis as obtained with the \code{\link{cumul}} function.
 
-   The plot shows the model estimate (i.e., the estimated overall/average outcome) on the x-axis and some measure of heterogeneity on the y-axis in the cumulative order of the results in the \code{"cumul.rma"} object. By default, \mjseqn{\tau^2} is shown on the y-axis for a random-effects model and \mjseqn{I^2} otherwise, but one can also use argument \code{yaxis} to specify the measure of heterogeneity to place on the y-axis.
+   The plot shows the pooled estimate on the x-axis and some measure of heterogeneity on the y-axis in the cumulative order of the results in the \code{"cumul.rma"} object. By default, \mjseqn{\tau^2} is shown on the y-axis for a random-effects model and \mjseqn{I^2} otherwise, but one can also use argument \code{yaxis} to specify the measure of heterogeneity to place on the y-axis.
 
    The color gradient of the points/lines indicates the order of the cumulative results (by default, light gray at the beginning, dark gray at the end). A different set of colors can be chosen via the \code{cols} argument. See \sQuote{Examples}.
 }
@@ -42,7 +42,7 @@
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link[=cumul.rma.uni]{cumul}} for the function to conduct a cumulative meta-analysis.
+   \code{\link{cumul}} for the function to conduct a cumulative meta-analysis.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances
@@ -54,7 +54,7 @@ res <- rma(yi, vi, data=dat)
 ### cumulative meta-analysis (in the order of publication year)
 sav <- cumul(res, order=year)
 
-### plot of model estimate and tau^2 over time
+### plot of the pooled estimates and tau^2 over time
 plot(sav)
 
 ### illustrate some other plot options

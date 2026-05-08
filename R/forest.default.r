@@ -379,9 +379,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
       if (length(order) == 1L) {
 
-         order <- match.arg(order, c("obs", "yi", "prec", "vi"))
+         order <- match.arg(order, c("est", "obs", "yi", "prec", "vi"))
 
-         if (order == "obs" || order == "yi")
+         if (order == "est" || order == "obs" || order == "yi")
             sort.vec <- order(yi)
          if (order == "prec" || order == "vi")
             sort.vec <- order(vi, yi)

@@ -177,7 +177,7 @@ lty, lwd, col, level=99.99, refline=0, ...) {
          di <- .getsubset(di, subset)
       }
 
-      dat <- .do.call(escalc, measure="OR", ai=ai, bi=bi, ci=ci, di=di, drop00=drop00, onlyo1=onlyo1, addyi=addyi, addvi=addvi)
+      dat <- .do.call(escalc, measure="OR", ai=ai, bi=bi, ci=ci, di=di, drop00=drop00, onlyo1=onlyo1, addyi=addyi, addvi=addvi, cutoff=NA_real_)
 
       yi <- dat$yi # one or more yi/vi pairs may be NA/NA
       vi <- dat$vi # one or more yi/vi pairs may be NA/NA

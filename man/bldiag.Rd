@@ -24,7 +24,7 @@ bldiag(\dots, order)
 dat <- dat.berkey1998
 dat
 
-### construct list with the variance-covariance matrices of the observed outcomes for the studies
+### construct list with the variance-covariance matrices of the effect sizes within the studies
 V <- lapply(split(dat[c("v1i","v2i")], dat$trial), as.matrix)
 V
 

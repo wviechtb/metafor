@@ -15,7 +15,7 @@ radial(x, \dots)
 }
 \arguments{
    \item{x}{an object of class \code{"rma"}.}
-   \item{center}{logical to specify whether the plot should be centered horizontally at the model estimate (the default is \code{FALSE}).}
+   \item{center}{logical to specify whether the plot should be centered horizontally at the pooled estimate (the default is \code{FALSE}).}
    \item{xlim}{x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.}
    \item{zlim}{z-axis limits. If unspecified, the function sets the z-axis limits to some sensible values (note that the z-axis limits are the actual vertical limit of the plotting region).}
    \item{xlab}{title for the x-axis. If unspecified, the function sets an appropriate axis title.}
@@ -38,17 +38,17 @@ radial(x, \dots)
    \item{\dots}{other arguments.}
 }
 \details{
-   Radial plots (also sometimes called Galbraith plots) were introduced by Galbraith (1988a, 1988b, 1994) as a way to plot estimates with different precisions. In meta-analyses, they are an interesting alternative to forest plots, especially when the number of observed effect sizes or outcomes is large (in which case the forest plot would be very large).
+   Radial plots (also sometimes called Galbraith plots) were introduced by Galbraith (1988a, 1988b, 1994) as a way to plot estimates with different precisions. In meta-analyses, they are an interesting alternative to forest plots, especially when the number of effect size estimates is large (in which case the forest plot would be very large).
 
-   For an equal-effects model, the plot shows the inverse of the standard errors on the horizontal axis (i.e., \mjeqn{1/\sqrt{v_i}}{1/\sqrt(v_i)}, where \mjseqn{v_i} is the sampling variance of the observed effect size or outcome) against the observed effect sizes or outcomes standardized by their corresponding standard errors on the vertical axis (i.e., \mjeqn{y_i/\sqrt{v_i}}{y_i/\sqrt(v_i)}). Since the vertical axis corresponds to standardized values, it is referred to as the z-axis within this function. On the right hand side of the plot, an arc is drawn (referred to as the y-axis within this function) corresponding to the observed effect sizes or outcomes. A line projected from (0,0) through a particular point within the plot onto this arc indicates the value of the observed effect size or outcome for that point.
+   For an equal-effects model, the plot shows the inverse of the standard errors on the horizontal axis (i.e., \mjeqn{1/\sqrt{v_i}}{1/\sqrt(v_i)}, where \mjseqn{v_i} is the sampling variance of the estimates) against the effect size estimates standardized by their corresponding standard errors on the vertical axis (i.e., \mjeqn{y_i/\sqrt{v_i}}{y_i/\sqrt(v_i)}). Since the vertical axis corresponds to standardized values, it is referred to as the z-axis within this function. On the right hand side of the plot, an arc is drawn (referred to as the y-axis within this function) corresponding to the estimates. A line projected from (0,0) through a particular point within the plot onto this arc indicates the value of the estimate for that point.
 
-   For a random-effects model, the function uses \mjeqn{1/\sqrt{v_i + \tau^2}}{1/\sqrt(v_i + \tau^2)} for the horizontal axis, where \mjseqn{\tau^2} is the amount of heterogeneity as estimated based on the model. For the z-axis, \mjeqn{y_i/\sqrt{v_i + \tau^2}}{y_i/\sqrt(v_i + \tau^2)} is used to compute standardized values of the observed effect sizes or outcomes.
+   For a random-effects model, the function uses \mjeqn{1/\sqrt{v_i + \tau^2}}{1/\sqrt(v_i + \tau^2)} for the horizontal axis, where \mjseqn{\tau^2} is the amount of heterogeneity as estimated based on the model. For the z-axis, \mjeqn{y_i/\sqrt{v_i + \tau^2}}{y_i/\sqrt(v_i + \tau^2)} is used to compute standardized values of the effect size estimates.
 
-   The second (inner/smaller) arc that is drawn on the right hand side indicates the model estimate (in the middle of the arc) and the corresponding confidence interval (at the ends of the arc).
+   The second (inner/smaller) arc that is drawn on the right hand side indicates the pooled estimate (in the middle of the arc) and the corresponding confidence interval (at the ends of the arc).
 
    The shaded region in the plot is the z-axis error region. For \code{level=95} (or if this was the \code{level} value when the model was fitted), this corresponds to z-axis values equal to \mjeqn{\pm 1.96}{±1.96}. Under the assumptions of the equal/random-effects models, approximately 95\% of the points should fall within this region.
 
-   When \code{center=TRUE}, the values on the y-axis are centered around the model estimate. As a result, the plot is centered horizontally at the model estimate.
+   When \code{center=TRUE}, the values on the y-axis are centered around the pooled estimate. As a result, the plot is centered horizontally at the pooled estimate.
 
    If the z-axis label on the left is too close to the actual z-axis and/or the arc on the right is clipped, then this can be solved by increasing the margins on the right and/or left (see \code{\link{par}} and in particular the \code{mar} argument).
 
@@ -88,8 +88,8 @@ res <- rma(yi, vi, data=dat, method="EE")
 ### draw radial plot
 radial(res)
 
-### the line from (0,0) with a slope equal to the log risk ratio from the 4th study points
-### to the corresponding effect size value on the arc (i.e., -1.44)
+### the line from (0,0) with a slope equal to the log risk ratio from the 4th study
+### points to the corresponding effect size estimate on the arc (i.e., -1.44)
 abline(a=0, b=dat$yi[4], lty="dotted")
 dat$yi[4]
 
@@ -99,7 +99,7 @@ res <- rma(yi, vi, data=dat)
 ### draw radial plot
 radial(res)
 
-### center the values around the model estimate
+### center the values around the pooled estimate
 radial(res, center=TRUE)
 
 ### show risk ratio values on the y-axis arc

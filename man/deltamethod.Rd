@@ -42,7 +42,7 @@ deltamethod(x, vcov, fun, order=1, level, H0=0, digits)
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{conv.delta}} for a function to apply the (univariate) delta method to observed effect sizes or outcomes and their sampling variances.
+   \code{\link{conv.delta}} for a function to apply the (univariate) delta method to a set of estimates and their sampling variances.
 }
 \examples{
 ############################################################################

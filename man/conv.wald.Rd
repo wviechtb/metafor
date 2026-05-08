@@ -10,7 +10,7 @@ conv.wald(out, ci.lb, ci.ub, zval, pval, n, data, include,
           var.names, append=TRUE, replace="ifna", \dots)
 }
 \arguments{
-   \item{out}{vector with the observed effect sizes or outcomes.}
+   \item{out}{vector with the effect size estimates.}
    \item{ci.lb}{vector with the lower bounds of the corresponding Wald-type CIs.}
    \item{ci.ub}{vector with the upper bounds of the corresponding Wald-type CIs.}
    \item{zval}{vector with the Wald-type test statistics.}
@@ -20,22 +20,22 @@ conv.wald(out, ci.lb, ci.ub, zval, pval, n, data, include,
    \item{include}{optional (logical or numeric) vector to specify the subset of studies for which the conversion should be carried out.}
    \item{level}{numeric value (or vector) to specify the confidence interval level(s) (the default is 95; see \link[=misc-options]{here} for details).}
    \item{transf}{optional argument to specify a function to transform \code{out}, \code{ci.lb}, and \code{ci.ub} (e.g., \code{transf=log}). If unspecified, no transformation is used.}
-   \item{check}{logical to specify whether the function should carry out a check to examine if the point estimates fall (approximately) halfway between the CI bounds (the default is \code{TRUE}).}
-   \item{var.names}{character vector with two elements to specify the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (if \code{data} is an object of class \code{"escalc"}, the \code{var.names} are taken from the object; otherwise the defaults are \code{"yi"} and \code{"vi"}).}
+   \item{check}{logical to specify whether the function should carry out a check to examine if the estimates fall (approximately) halfway between the CI bounds (the default is \code{TRUE}).}
+   \item{var.names}{character vector with two elements to specify the name of the variable for the estimates and the name of the variable for the corresponding sampling variances (if \code{data} is an object of class \code{"escalc"}, the \code{var.names} are taken from the object; otherwise the defaults are \code{"yi"} and \code{"vi"}).}
    \item{append}{logical to specify whether the data frame provided via the \code{data} argument should be returned together with the estimated values (the default is \code{TRUE}).}
    \item{replace}{character string or logical to specify how values in \code{var.names} should be replaced (only relevant when using the \code{data} argument and if variables in \code{var.names} already exist in the data frame). See the \sQuote{Value} section for more details.}
    \item{\dots}{other arguments.}
 }
 \details{
-   The \code{\link{escalc}} function can be used to compute a wide variety of effect sizes or \sQuote{outcome measures}. However, the inputs required to compute certain measures with this function may not be reported for all of the studies. Under certain circumstances, other information (such as point estimates and corresponding confidence intervals and/or test statistics) may be available that can be converted into the appropriate format needed for a meta-analysis. The purpose of the present function is to facilitate this process.
+   The \code{\link{escalc}} function can be used to compute a wide variety of effect size measures. However, the inputs required to compute certain measures with this function may not be reported for all of the studies. Under certain circumstances, other information may be available that can be converted into the appropriate format needed for a meta-analysis. The purpose of the present function is to facilitate this process.
 
-   The function typically takes a data frame created with the \code{\link{escalc}} function as input via the \code{data} argument. This object should contain variables \code{yi} and \code{vi} (unless argument \code{var.names} was used to adjust these variable names when the \code{"escalc"} object was created) for the observed effect sizes or outcomes and the corresponding sampling variances, respectively. For some studies, the values for these variables may be missing.
+   The function typically takes a data frame created with the \code{\link{escalc}} function as input via the \code{data} argument. This object should contain variables \code{yi} and \code{vi} (unless argument \code{var.names} was used to adjust these variable names when the \code{"escalc"} object was created) for the effect size estimates and the corresponding sampling variances, respectively. For some studies, the values for these variables may be missing.
 
-   \subsection{Converting Point Estimates and Confidence Intervals}{
+   \subsection{Converting Estimates and Confidence Intervals}{
 
-      In some studies, the effect size estimate or observed outcome may already be reported. If so, such values can be supplied via the \code{out} argument and are then substituted for missing \code{yi} values. At times, it may be necessary to transform the reported values (e.g., reported odds ratios to log odds ratios). Via argument \code{transf}, an appropriate transformation function can be specified (e.g., \code{transf=log}), in which case \mjseqn{y_i = f(\text{out})} where \mjeqn{f(\cdot)}{f(.)} is the function specified via \code{transf}.
+      In some studies, the effect size estimate of interest may already be reported. If so, such values can be supplied via the \code{out} argument and are then substituted for missing \code{yi} values. At times, it may be necessary to transform the reported values (e.g., reported odds ratios to log odds ratios). Via argument \code{transf}, an appropriate transformation function can be specified (e.g., \code{transf=log}), in which case \mjseqn{y_i = f(\text{out})} where \mjeqn{f(\cdot)}{f(.)} is the function specified via \code{transf}.
 
-      Moreover, a confidence interval (CI) may have been reported together with the estimate. The bounds of the CI can be supplied via arguments \code{ci.lb} and \code{ci.ub}, which are also transformed if a function is specified via \code{transf}. Assume that the bounds were obtained from a Wald-type CI of the form \mjeqn{y_i \pm z_{crit} \sqrt{v_i}}{y_i ± z_crit \sqrt{v_i}} (on the transformed scale if \code{transf} is specified), where \mjseqn{v_i} is the sampling variance corresponding to the effect size estimate or observed outcome (so that \mjseqn{\sqrt{v_i}} is the corresponding standard error) and \mjeqn{z_{crit}}{z_crit} is the appropriate critical value from a standard normal distribution (e.g., \mjseqn{1.96} for a 95\% CI). Then \mjdeqn{v_i = \left(\frac{\text{ci.ub} - \text{ci.lb}}{2 \times z_{crit}}\right)^2}{v_i = ((ci.ub - ci.lb) / (2*z_crit))^2} is used to back-calculate the sampling variances of the (transformed) effect size estimates or observed outcomes and these values are then substituted for missing \code{vi} values in the dataset.
+      Moreover, a confidence interval (CI) may have been reported together with the effect size estimate. The bounds of the CI can be supplied via arguments \code{ci.lb} and \code{ci.ub}, which are also transformed if a function is specified via \code{transf}. Assume that the bounds were obtained from a Wald-type CI of the form \mjeqn{y_i \pm z_{crit} \sqrt{v_i}}{y_i ± z_crit \sqrt{v_i}} (on the transformed scale if \code{transf} is specified), where \mjseqn{v_i} is the sampling variance corresponding to the estimate (so that \mjseqn{\sqrt{v_i}} is the corresponding standard error) and \mjeqn{z_{crit}}{z_crit} is the appropriate critical value from a standard normal distribution (e.g., \mjseqn{1.96} for a 95\% CI). Then \mjdeqn{v_i = \left(\frac{\text{ci.ub} - \text{ci.lb}}{2 \times z_{crit}}\right)^2}{v_i = ((ci.ub - ci.lb) / (2*z_crit))^2} is used to back-calculate the sampling variances of the (transformed) estimates and these values are then substituted for missing \code{vi} values in the dataset.
 
       For example, consider the following dataset of three RCTs used as input for a meta-analysis of log odds ratios:
 
@@ -69,9 +69,9 @@ dat2
 
       If the CI was not a 95\% CI, then one can specify the appropriate level via the \code{level} argument. This can also be an entire vector in case different studies used different levels.
 
-      By default (i.e., when \code{check=TRUE}), the function carries out a rough check to examine if the point estimate falls (approximately) halfway between the CI bounds (on the transformed scale) for each study for which the conversion was carried out. A warning is issued if there are studies where this is not the case. This may indicate that a particular CI was not a Wald-type CI or was computed on a different scale (in which case the back-calculation above would be inappropriate), but can also arise due to rounding of the reported values (in which case the back-calculation would still be appropriate, albeit possibly a bit inaccurate). Care should be taken when using such back-calculated values in a meta-analysis.
+      By default (i.e., when \code{check=TRUE}), the function carries out a rough check to examine if the estimate falls (approximately) halfway between the CI bounds (on the transformed scale) for each study for which the conversion was carried out. A warning is issued if there are studies where this is not the case. This may indicate that a particular CI was not a Wald-type CI or was computed on a different scale (in which case the back-calculation above would be inappropriate), but can also arise due to rounding of the reported values (in which case the back-calculation would still be appropriate, albeit possibly a bit inaccurate). Care should be taken when using such back-calculated values in a meta-analysis.
 
-      When the CI bounds are log transformed (as in the example above) and rounded, then using the lower bound in the back-calculation can be more inaccurate than using the upper CI bound and the point estimate for the back-calculation. When the lower CI bounds are not specified or are missing for a study, then the function automatically uses the formula \mjdeqn{v_i = \left(\frac{\text{ci.ub} - \text{yi}}{z_{crit}}\right)^2}{v_i = ((ci.ub - yi) / z_crit)^2} for the back-calculation (after first applying the transformation specified via \code{transf}). In the example above, we could therefore do:
+      When the CI bounds are log transformed (as in the example above) and rounded, then using the lower bound in the back-calculation can be more inaccurate than using the upper CI bound and the estimate for the back-calculation. When the lower CI bounds are not specified or are missing for a study, then the function automatically uses the formula \mjdeqn{v_i = \left(\frac{\text{ci.ub} - \text{yi}}{z_{crit}}\right)^2}{v_i = ((ci.ub - yi) / z_crit)^2} for the back-calculation (after first applying the transformation specified via \code{transf}). In the example above, we could therefore do:
 
 \preformatted{
 dat3 <- conv.wald(out=oddsratio, ci.ub=upper, data=dat, transf=log)
@@ -82,7 +82,7 @@ dat3
 # 2     2        NA   183        NA   188      0.64  0.33  1.22 -0.4463 0.1083
 # 3     3         4    46         7    44        NA    NA    NA -0.6864 0.4437}
 
-      In this case, the check that the point estimate falls halfway between the CI bounds is of course skipped.
+      In this case, the check that the estimate falls halfway between the CI bounds is of course skipped.
 
    }
 
@@ -127,9 +127,9 @@ dat4
    Optionally, one can use the \code{n} argument to supply the total sample sizes of the studies. This has no relevance for the calculations done by the present function, but some other functions may use this information (e.g., when drawing a funnel plot with the \code{\link{funnel}} function and one adjusts the \code{yaxis} argument to one of the options that puts the sample sizes or some transformation thereof on the y-axis).
 }
 \value{
-   If the \code{data} argument was not specified or \code{append=FALSE}, a data frame of class \code{c("escalc","data.frame")} with two variables called \code{var.names[1]} (by default \code{"yi"}) and \code{var.names[2]} (by default \code{"vi"}) with the (transformed) observed effect sizes or outcomes and the corresponding sampling variances (computed as described above).
+   If the \code{data} argument was not specified or \code{append=FALSE}, a data frame of class \code{c("escalc","data.frame")} with two variables called \code{var.names[1]} (by default \code{"yi"}) and \code{var.names[2]} (by default \code{"vi"}) with the (transformed) estimates and the corresponding sampling variances (computed as described above).
 
-   If \code{data} was specified and \code{append=TRUE}, then the original data frame is returned. If \code{var.names[1]} is a variable in \code{data} and \code{replace="ifna"} (or \code{replace=FALSE}), then only missing values in this variable are replaced with the (possibly transformed) observed effect sizes or outcomes from \code{out} (where possible) and otherwise a new variable called \code{var.names[1]} is added to the data frame. Similarly, if \code{var.names[2]} is a variable in \code{data} and \code{replace="ifna"} (or \code{replace=FALSE}), then only missing values in this variable are replaced with the sampling variances back-calculated as described above (where possible) and otherwise a new variable called \code{var.names[2]} is added to the data frame.
+   If \code{data} was specified and \code{append=TRUE}, then the original data frame is returned. If \code{var.names[1]} is a variable in \code{data} and \code{replace="ifna"} (or \code{replace=FALSE}), then only missing values in this variable are replaced with the (possibly transformed) estimates from \code{out} (where possible) and otherwise a new variable called \code{var.names[1]} is added to the data frame. Similarly, if \code{var.names[2]} is a variable in \code{data} and \code{replace="ifna"} (or \code{replace=FALSE}), then only missing values in this variable are replaced with the sampling variances back-calculated as described above (where possible) and otherwise a new variable called \code{var.names[2]} is added to the data frame.
 
    If \code{replace="all"} (or \code{replace=TRUE}), then all values in \code{var.names[1]} and \code{var.names[2]} are replaced, even for cases where the value in \code{var.names[1]} and \code{var.names[2]} is not missing.
 }

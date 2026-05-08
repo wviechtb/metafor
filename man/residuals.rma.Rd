@@ -46,7 +46,7 @@
 \details{
    The observed residuals (obtained with \code{residuals}) are simply equal to the \sQuote{observed - fitted} values. These can be obtained with \code{residuals(object)} (using the default \code{type="response"}).
 
-   Dividing the observed residuals by the model-implied standard errors of the observed effect sizes or outcomes yields Pearson (or semi-standardized) residuals. These can be obtained with \code{residuals(object, type="pearson")}.
+   Dividing the observed residuals by the model-implied standard errors of the estimates yields Pearson (or semi-standardized) residuals. These can be obtained with \code{residuals(object, type="pearson")}.
 
    Dividing the observed residuals by their corresponding standard errors yields (internally) standardized residuals. These can be obtained with \code{rstandard(model)} or \code{residuals(object, type="rstandard")}.
 
@@ -54,9 +54,9 @@
 
    If a particular case fits the model, its standardized residual follows (asymptotically) a standard normal distribution. A large standardized residual for a case therefore may suggest that the case does not fit the assumed model (i.e., it may be an outlier).
 
-   For \code{"rma.uni"} objects, \code{rstandard(model, type="conditional")} computes conditional residuals, which are the deviations of the observed effect sizes or outcomes from the best linear unbiased predictions (BLUPs) of the study-specific true effect sizes or outcomes (see \code{\link[=blup.rma.uni]{blup}}).
+   For \code{"rma.uni"} objects, \code{rstandard(model, type="conditional")} computes conditional residuals, which are the deviations of the effect size estimates from the best linear unbiased predictions (BLUPs) of the study-specific true effects (see \code{\link[=blup.rma.uni]{blup}}).
 
-   For \code{"rma.mv"} objects, one can specify a clustering variable (via the \code{cluster} argument). If specified, \code{rstandard(model)} and \code{rstudent(model)} also compute cluster-level multivariate (internally or externally) standardized residuals. If all outcomes within a cluster fit the model, then the multivariate standardized residual for the cluster follows (asymptotically) a chi-square distribution with \mjseqn{k_i} degrees of freedom (where \mjseqn{k_i} denotes the number of outcomes within the cluster).
+   For \code{"rma.mv"} objects, one can specify a clustering variable (via the \code{cluster} argument). If specified, \code{rstandard(model)} and \code{rstudent(model)} also compute cluster-level multivariate (internally or externally) standardized residuals. If all estimates within a cluster fit the model, then the multivariate standardized residual for the cluster follows (asymptotically) a chi-square distribution with \mjseqn{k_i} degrees of freedom (where \mjseqn{k_i} denotes the number of estimates within the cluster).
 
    See also \code{\link{influence.rma.uni}} and \code{\link{influence.rma.mv}} for other leave-one-out diagnostics that are useful for detecting influential cases in models fitted with the \code{\link{rma.uni}} and \code{\link{rma.mv}} functions.
 }
@@ -68,7 +68,7 @@
 
    When a clustering variable is specified for \code{"rma.mv"} objects, the returned object is a list with the first element (named \code{obs}) as described above and a second element (named \code{cluster}) of class \code{"list.rma"} with:
    \item{X2}{cluster-level multivariate standardized residuals.}
-   \item{k}{number of observed effect sizes or outcomes within the clusters.}
+   \item{k}{number of estimates within the clusters.}
 
    The object is formatted and printed with \code{\link[=print.list.rma]{print}}. To format the results as a data frame, one can use the \code{\link[=as.data.frame.list.rma]{as.data.frame}} function.
 }

@@ -22,7 +22,7 @@ This page documents some miscellaneous options and features that do not fit very
       where the elements control the displayed number of digits for various aspects of the output, namely:
 
       \itemize{
-      \item \code{est} for estimates (e.g., effect sizes, model coefficients, predicted values),
+      \item \code{est} for estimates (e.g., effect size estimates, model coefficients, predicted values),
       \item \code{se} for standard errors,
       \item \code{test} for test statistics,
       \item \code{pval} for p-values,

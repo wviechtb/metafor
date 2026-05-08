@@ -29,14 +29,14 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \item{ti}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{ni}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{mods}{optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \mjseqn{k} specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \mjseqn{k} rows and as many columns as there are moderator variables. Alternatively, a model \code{\link{formula}} can be used to specify the model. See \sQuote{Details}.}
-   \item{measure}{character string to specify the outcome measure to use for the meta-analysis. Possible options are \code{"OR"} for the (log transformed) odds ratio, \code{"IRR"} for the (log transformed) incidence rate ratio, \code{"PLO"} for the (logit transformed) proportion, or \code{"IRLN"} for the (log transformed) incidence rate.}
+   \item{measure}{character string to specify the effect size measure to use for the meta-analysis. Possible options are \code{"OR"} for the (log transformed) odds ratio, \code{"IRR"} for the (log transformed) incidence rate ratio, \code{"PLO"} for the (logit transformed) proportion, or \code{"IRLN"} for the (log transformed) incidence rate.}
    \item{data}{optional data frame containing the data supplied to the function.}
    \item{slab}{optional vector with labels for the \mjseqn{k} studies.}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.}
 
    \emph{These arguments pertain to handling of zero cells/counts/frequencies:}
 
-   \item{add}{non-negative number to specify the amount to add to zero cells, counts, or frequencies when calculating the observed effect sizes or outcomes of the individual studies. See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{add}{non-negative number to specify the amount to add to zero cells, counts, or frequencies when calculating the effect size estimates of the individual studies. See below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{to}{character string to specify when the values under \code{add} should be added (either \code{"only0"}, \code{"all"}, \code{"if0all"}, or \code{"none"}). See below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{drop00}{logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped. See the documentation of the \code{\link{escalc}} function for more details.}
 
@@ -60,7 +60,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 
    \subsection{Specifying the Data}{
 
-      The function can be used in combination with the following effect sizes or outcome measures:
+      The function can be used in combination with the following effect size measures:
 
       \itemize{
       \item \code{measure="OR"} for (log transformed) odds ratios,
@@ -84,7 +84,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
       \item \code{model="CM.EL"} for a conditional generalized linear mixed-effects model (exact likelihood).
       }
 
-      For \code{measure="OR"}, models \code{"UM.FS"} and \code{"UM.RS"} are essentially (mixed-effects) logistic regression models, while for \code{measure="IRR"}, these models are (mixed-effects) Poisson regression models. The difference between \code{"UM.FS"} and \code{"UM.RS"} is how study level variability (i.e., differences in outcomes across studies irrespective of group membership) is modeled. One can choose between using fixed study effects (which means that \mjseqn{k} dummy variables are added to the model) or random study effects (which means that random effects corresponding to the levels of the study factor are added to the model).
+      For \code{measure="OR"}, models \code{"UM.FS"} and \code{"UM.RS"} are essentially (mixed-effects) logistic regression models, while for \code{measure="IRR"}, these models are (mixed-effects) Poisson regression models. The difference between \code{"UM.FS"} and \code{"UM.RS"} is how study level variability is modeled. One can choose between using fixed study effects (which means that \mjseqn{k} dummy variables are added to the model) or random study effects (which means that random effects corresponding to the levels of the study factor are added to the model).
 
       The conditional model (\code{model="CM.EL"}) avoids having to model study level variability by conditioning on the total numbers of cases/events in each study. For \code{measure="OR"}, this leads to a non-central hypergeometric distribution for the data within each study and the corresponding model is then a (mixed-effects) conditional logistic model. Fitting this model can be difficult and computationally expensive. When the number of cases in each study is small relative to the group sizes, one can approximate the exact likelihood by a binomial distribution, which leads to a regular (mixed-effects) logistic regression model (\code{model="CM.AL"}). For \code{measure="IRR"}, the conditional model leads directly to a binomial distribution for the data within each study and the resulting model is again a (mixed-effects) logistic regression model (no approximate likelihood model is needed here).
 
@@ -136,11 +136,11 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
 
    }
 
-   \subsection{Observed Effect Sizes or Outcomes of the Individual Studies}{
+   \subsection{Calculating Effect Size Estimates of the Individual Studies}{
 
-      The various models do not require the calculation of the observed effect sizes or outcomes of the individual studies (e.g., the observed log odds ratios of the \mjseqn{k} studies) and directly make use of the cell/event counts. Zero cells/events are not a problem (except in extreme cases, such as when one of the two outcomes never occurs or when there are no events in any of the studies). Therefore, it is unnecessary to add some constant to the cell/event counts when there are zero cells/events.
+      The various models do not require the calculation of the effect size estimates of the individual studies (e.g., the observed log odds ratios of the \mjseqn{k} studies) and directly make use of the cell/event counts. Zero cells/events are not a problem (except in extreme cases, such as when one of the two outcomes never occurs or when there are no events in any of the studies). Therefore, it is unnecessary to add some constant to the cell/event counts when there are zero cells/events.
 
-      However, for plotting and various other functions, it is necessary to calculate the observed effect sizes or outcomes for the \mjseqn{k} studies. Here, zero cells/events can be problematic, so adding a constant value to the cell/event counts ensures that all \mjseqn{k} values can be calculated. The \code{add} and \code{to} arguments are used to specify what value should be added to the cell/event counts and under what circumstances when calculating the observed effect sizes or outcomes. The documentation of the \code{\link{escalc}} function explains how the \code{add} and \code{to} arguments work. Note that \code{drop00} is set to \code{TRUE} by default, since studies where \code{ai=ci=0} or \code{bi=di=0} or studies where \code{x1i=x2i=0} are uninformative about the size of the effect.
+      However, for plotting and various other functions, it is necessary to calculate the effect size estimates for the \mjseqn{k} studies. Here, zero cells/events can be problematic, so adding a constant value to the cell/event counts ensures that all \mjseqn{k} values can be calculated. The \code{add} and \code{to} arguments are used to specify what value should be added to the cell/event counts and under what circumstances when calculating the estimates. The documentation of the \code{\link{escalc}} function explains how the \code{add} and \code{to} arguments work. Note that \code{drop00} is set to \code{TRUE} by default, since studies where \code{ai=ci=0} or \code{bi=di=0} or studies where \code{x1i=x2i=0} are uninformative about the size of the effect.
 
    }
 
@@ -168,7 +168,7 @@ rma.glmm(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, xi, mi, ti, ni,
    \item{I2}{value of \mjseqn{I^2}.}
    \item{H2}{value of \mjseqn{H^2}.}
    \item{int.only}{logical that indicates whether the model is an intercept-only model.}
-   \item{yi, vi, X}{the vector of outcomes, the corresponding sampling variances, and the model matrix.}
+   \item{yi, vi, X}{the vector of estimates, the corresponding sampling variances, and the model matrix.}
    \item{fit.stats}{a list with the log-likelihood, deviance, AIC, BIC, and AICc values.}
    \item{\dots}{some additional elements/values.}
 }

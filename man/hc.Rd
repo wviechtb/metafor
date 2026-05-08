@@ -3,7 +3,7 @@
 \alias{hc.rma.uni}
 \title{Meta-Analysis based on the Method by Henmi and Copas (2010)}
 \description{
-   Function to obtain an estimate of the average true outcome and corresponding confidence interval under a random-effects model using the method described by Henmi and Copas (2010).
+   Function to obtain a pooled estimate and corresponding confidence interval under a random-effects model using the method described by Henmi and Copas (2010).
 }
 \usage{
 hc(object, \dots)
@@ -21,16 +21,16 @@ hc(object, \dots)
 \details{
    The model specified via \code{object} must be a model without moderators (i.e., either an equal- or a random-effects model).
 
-   When using the usual method for fitting a random-effects model (i.e., weighted estimation with inverse-variance weights), the weights assigned to smaller and larger studies become more uniform as the amount of heterogeneity increases. As a consequence, the estimated average outcome could become increasingly biased under certain forms of publication bias (where smaller studies on one side of the funnel plot are missing). The method by Henmi and Copas (2010) counteracts this problem by providing an estimate of the average true outcome that is based on inverse-variance weights as used under an equal-effects model, which are not affected by the amount of heterogeneity. The amount of heterogeneity is still estimated (with the DerSimonian-Laird estimator) and incorporated into the standard error of the estimated average outcome and the corresponding confidence interval.
+   When using the usual methods for fitting a random-effects model (i.e., weighted estimation with inverse-variance weights), the weights assigned to smaller and larger studies become more uniform as the amount of heterogeneity increases. As a consequence, the pooled estimate can become increasingly biased under certain forms of publication bias (where smaller studies on one side of the funnel plot are missing). The method by Henmi and Copas (2010) counteracts this problem by providing a pooled estimate that is based on inverse-variance weights as used under an equal-effects model, which are not affected by the amount of heterogeneity. The amount of heterogeneity is still estimated (with the DerSimonian-Laird estimator) and incorporated into the standard error of the pooled estimate and the corresponding confidence interval.
 
    Currently, there is only a method for handling objects of class \code{"rma.uni"} with the \code{hc} function. It therefore provides a method for conducting a sensitivity analysis after the model has been fitted with the \code{\link{rma.uni}} function.
 }
 \value{
    An object of class \code{"hc.rma.uni"}. The object is a list containing the following components:
-   \item{beta}{estimated average true outcome.}
+   \item{beta}{the pooled estimate.}
    \item{se}{corresponding standard error.}
-   \item{ci.lb}{lower bound of the confidence intervals for the average true outcome.}
-   \item{ci.ub}{upper bound of the confidence intervals for the average true outcome.}
+   \item{ci.lb}{lower bound of the confidence interval.}
+   \item{ci.ub}{upper bound of the confidence interval.}
    \item{\dots}{some additional elements/values.}
 
    The results are formatted and printed with the \code{\link[=print.hc.rma.uni]{print}} function.

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-2</span>
       </span>
     </div>
 
@@ -129,7 +129,7 @@
 <dd><p>optional list of two elements to manually specify the predictive distribution.</p></dd>
 
    <dt id="arg-showweights">showweights<a class="anchor" aria-label="anchor" href="#arg-showweights"></a></dt>
-<dd><p>logical to specify whether the annotations should also include the weights given to the observed outcomes during the model fitting (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
+<dd><p>logical to specify whether the annotations should also include the weights given to the estimates during the model fitting (the default is <code>FALSE</code>). See ‘Details’.</p></dd>
 
    <dt id="arg-header">header<a class="anchor" aria-label="anchor" href="#arg-header"></a></dt>
 <dd><p>logical to specify whether column headings should be added to the plot (the default is <code>TRUE</code>). Can also be a character vector to specify the left and right headings (or only the left one).</p></dd>
@@ -141,7 +141,7 @@
 <dd><p>the x-axis limits. If unspecified, the function sets the x-axis limits to some sensible values.</p></dd>
 
    <dt id="arg-olim">olim<a class="anchor" aria-label="anchor" href="#arg-olim"></a></dt>
-<dd><p>optional argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
+<dd><p>optional argument to specify observation limits. If unspecified, no limits are used.</p></dd>
 
    <dt id="arg-ylim">ylim<a class="anchor" aria-label="anchor" href="#arg-ylim"></a></dt>
 <dd><p>the y-axis limits of the plot. If unspecified, the function sets the y-axis limits to some sensible values. Can also be a single value to set the lower bound (while the upper bound is still set automatically).</p></dd>
@@ -192,7 +192,7 @@
 <dd><p>optional character string to specify how the studies should be ordered. Can also be a variable based on which the studies will be ordered. See ‘Details’.</p></dd>
 
    <dt id="arg-transf">transf<a class="anchor" aria-label="anchor" href="#arg-transf"></a></dt>
-<dd><p>optional argument to specify a function to transform the observed outcomes, pooled estimate, fitted values, and confidence interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
+<dd><p>optional argument to specify a function to transform the estimates and confidence/prediction interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
 
    <dt id="arg-atransf">atransf<a class="anchor" aria-label="anchor" href="#arg-atransf"></a></dt>
 <dd><p>optional argument to specify a function to transform the x-axis labels and annotations (e.g., <code>atransf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used.</p></dd>
@@ -201,22 +201,22 @@
 <dd><p>optional arguments needed by the function specified via <code>transf</code> or <code>atransf</code>.</p></dd>
 
    <dt id="arg-rows">rows<a class="anchor" aria-label="anchor" href="#arg-rows"></a></dt>
-<dd><p>optional vector to specify the rows (or more generally, the positions) for plotting the outcomes. Can also be a single value to specify the row of the first outcome (the remaining outcomes are then plotted below this starting row).</p></dd>
+<dd><p>optional vector to specify the rows (or more generally, the positions) for plotting the estimates. Can also be a single value to specify the row of the first estimate (the remaining estimates are then plotted below this starting row).</p></dd>
 
    <dt id="arg-efac">efac<a class="anchor" aria-label="anchor" href="#arg-efac"></a></dt>
 <dd><p>vertical expansion factor for confidence interval limits, arrows, and the polygon. The default value of 1 should usually work fine. Can also be a vector of two numbers, the first for CI limits and arrows, the second for the polygon. Can also be a vector of three numbers, the first for CI limits, the second for arrows, the third for the polygon. Can also include a fourth element to adjust the height of the prediction interval/distribution when <code>predstyle</code> is not <code>"line"</code>.</p></dd>
 
    <dt id="arg-pch">pch<a class="anchor" aria-label="anchor" href="#arg-pch"></a></dt>
-<dd><p>plotting symbol to use for the observed outcomes. By default, a filled square is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options. Can also be a vector of values.</p></dd>
+<dd><p>plotting symbol to use for the estimates. By default, a filled square is used. See <code><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></code> for other options. Can also be a vector of values.</p></dd>
 
    <dt id="arg-psize">psize<a class="anchor" aria-label="anchor" href="#arg-psize"></a></dt>
-<dd><p>optional numeric value to specify the point sizes for the observed outcomes. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values.</p></dd>
+<dd><p>optional numeric value to specify the point sizes for the estimates. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values.</p></dd>
 
    <dt id="arg-plim">plim<a class="anchor" aria-label="anchor" href="#arg-plim"></a></dt>
 <dd><p>numeric vector of length 2 to scale the point sizes (ignored when <code>psize</code> is specified). See ‘Details’.</p></dd>
 
    <dt id="arg-colout">colout<a class="anchor" aria-label="anchor" href="#arg-colout"></a></dt>
-<dd><p>optional character string to specify the color of the observed outcomes. Can also be a vector.</p></dd>
+<dd><p>optional character string to specify the color of the estimates. Can also be a vector.</p></dd>
 
    <dt id="arg-col">col<a class="anchor" aria-label="anchor" href="#arg-col"></a></dt>
 <dd><p>optional character string to specify the color of the polygon.</p></dd>
@@ -253,7 +253,7 @@
     <h2>Details</h2>
 
 
-<p>The plot shows the observed effect sizes or outcomes (by default as filled squares) with corresponding <code>level</code>% confidence intervals (as horizontal lines extending from the observed outcomes). The confidence intervals are computed with <em></em>\(y_i \pm z_{crit} \sqrt{v_i}\), where <em></em>\(y_i\) denotes the observed outcome in the <em></em>\(i\text{th}\) study, <em></em>\(v_i\) the corresponding sampling variance (and hence <em></em>\(\sqrt{v_i}\) is the corresponding standard error), and <em></em>\(z_{crit}\) is the appropriate critical value from a standard normal distribution (e.g., <em></em>\(1.96\) for a 95% CI).</p>
+<p>The plot shows the effect size estimates (by default as filled squares) with corresponding <code>level</code>% confidence intervals (as horizontal lines extending from the observed values). The confidence intervals are computed with <em></em>\(y_i \pm z_{crit} \sqrt{v_i}\), where <em></em>\(y_i\) denotes the estimate in the <em></em>\(i\text{th}\) study, <em></em>\(v_i\) the corresponding sampling variance (and hence <em></em>\(\sqrt{v_i}\) is the corresponding standard error), and <em></em>\(z_{crit}\) is the appropriate critical value from a standard normal distribution (e.g., <em></em>\(1.96\) for a 95% CI).</p>
 <p></p><div class="section">
 <h3 id="equal-and-random-effects-models">Equal- and Random-Effects Models<a class="anchor" aria-label="anchor" href="#equal-and-random-effects-models"></a></h3>
 
@@ -290,7 +290,7 @@
 <h3 id="applying-a-transformation">Applying a Transformation<a class="anchor" aria-label="anchor" href="#applying-a-transformation"></a></h3>
 
 
-<p>With the <code>transf</code> argument, the observed outcomes, pooled estimate, fitted values, confidence interval bounds, and prediction interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, one could use <code>transf=exp</code> to obtain a forest plot showing odds ratios. Note that when the transformation is non-linear (as is the case for <code>transf=exp</code>), the interval bounds will be asymmetric (which is visually not so appealing). Alternatively, one can use the <code>atransf</code> argument to transform the x-axis labels and annotations. For example, when using <code>atransf=exp</code>, the x-axis will correspond to a log scale. See <a href="transf.html">transf</a> for some other useful transformation functions in the context of a meta-analysis. See below for examples.</p>
+<p>With the <code>transf</code> argument, the estimates and confidence/prediction interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, one could use <code>transf=exp</code> to obtain a forest plot showing the odds ratios. Note that when the transformation is non-linear (as is the case for <code>transf=exp</code>), the interval bounds will be asymmetric (which is visually not so appealing). Alternatively, one can use the <code>atransf</code> argument to transform the x-axis labels and annotations. For example, when using <code>atransf=exp</code>, the x-axis will correspond to a log scale. See <a href="transf.html">transf</a> for some other useful transformation functions in the context of a meta-analysis. See below for examples.</p>
 <p></p>
 </div>
 
@@ -299,14 +299,14 @@
 
 
 <p>By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row <em></em>\(k\), the second study in row <em></em>\(k-1\), and so on, until the last study, which is placed in the first row). The studies can be reordered with the <code>order</code> argument:</p>
-<p></p><ul><li><p><code>order="obs"</code>: the studies are ordered by the observed outcomes,</p></li>
+<p></p><ul><li><p><code>order="est"</code>: the studies are ordered by the estimates,</p></li>
 <li><p><code>order="fit"</code>: the studies are ordered by the fitted values,</p></li>
 <li><p><code>order="prec"</code>: the studies are ordered by their sampling variances,</p></li>
 <li><p><code>order="resid"</code>: the studies are ordered by the size of their residuals,</p></li>
 <li><p><code>order="rstandard"</code>: the studies are ordered by the size of their standardized residuals,</p></li>
 <li><p><code>order="abs.resid"</code>: the studies are ordered by the size of their absolute residuals,</p></li>
 <li><p><code>order="abs.rstandard"</code>: the studies are ordered by the size of their absolute standardized residuals.</p></li>
-</ul><p>Alternatively, it is also possible to set <code>order</code> equal to a variable based on which the studies will be ordered. One can also use the <code>rows</code> argument to specify the rows (or more generally, the positions) for plotting the outcomes.</p>
+</ul><p>Alternatively, it is also possible to set <code>order</code> equal to a variable based on which the studies will be ordered. One can also use the <code>rows</code> argument to specify the rows (or more generally, the positions) for plotting the estimates.</p>
 <p></p>
 </div>
 
@@ -326,7 +326,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">8.75</span>, <span class="op">-</span><span class="fl">5.25</span><span class="op">)</span>, <span class="va">res</span><span class="op">$</span><span class="va">k</span><span class="op">+</span><span class="fl">2.8</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vaccinated"</span>, <span class="st">"Control"</span><span class="op">)</span>, cex<span class="op">=</span><span class="fl">0.75</span>, font<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p></p>
 <p>Additional pooled estimates can be added to the plot as polygons with the <code><a href="addpoly.html">addpoly</a></code> function. See the documentation for that function for examples.</p>
-<p>When <code>showweights=TRUE</code>, the annotations will include information about the weights given to the observed outcomes during the model fitting. For simple models (such as those fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function), these weights correspond to the ‘inverse-variance weights’ (but are given in percent). For models fitted with the <code><a href="rma.mv.html">rma.mv</a></code> function, the weights are based on the diagonal of the weight matrix. Note that the weighting structure is typically more complex in such models (i.e., the weight matrix is usually not just a diagonal matrix) and the weights shown therefore do not reflect this complexity. See <code><a href="weights.rma.html">weights</a></code> for more details (for the special case that <code>x</code> is an intercept-only <code>"rma.mv"</code> model, one can also set <code>showweights="rowsum"</code> to show the ‘row-sum weights’).</p>
+<p>When <code>showweights=TRUE</code>, the annotations will include information about the weights given to the estimates during the model fitting. For simple models (such as those fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function), these weights correspond to the ‘inverse-variance weights’ (but are given in percent). For models fitted with the <code><a href="rma.mv.html">rma.mv</a></code> function, the weights are based on the diagonal of the weight matrix. Note that the weighting structure is typically more complex in such models (i.e., the weight matrix is usually not just a diagonal matrix) and the weights shown therefore do not reflect this complexity. See <code><a href="weights.rma.html">weights</a></code> for more details (for the special case that <code>x</code> is an intercept-only <code>"rma.mv"</code> model, one can also set <code>showweights="rowsum"</code> to show the ‘row-sum weights’).</p>
 <p></p>
 </div>
 
@@ -354,7 +354,7 @@
 <p>The function actually returns some information about the chosen values invisibly. Printing this information is useful as a starting point to customize the plot (see ‘Examples’).</p>
 <p>For arguments <code>slab</code> and <code>ilab</code> and when specifying vectors for arguments <code>pch</code>, <code>psize</code>, <code>order</code>, and/or <code>colout</code> (and when <code>shade</code> is a logical vector), the variables specified are assumed to be of the same length as the data originally passed to the model fitting function (and if the <code>data</code> argument was used in the original model fit, then the variables will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.</p>
 <p>If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the <code>cex</code>, <code>cex.lab</code>, and <code>cex.axis</code> arguments are then useful to adjust the symbol and text sizes.</p>
-<p>If the outcome measure used for creating the plot is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those limits (the observed outcomes and confidence/prediction intervals cannot exceed those bounds then).</p>
+<p>If the estimates are bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those limits (i.e., the estimates and confidence/prediction interval bounds cannot exceed those limits then).</p>
 <p>The models without moderators, the <code>col</code> argument can also be a vector of two elements, the first for the color of the polygon, the second for the color of the line for the prediction interval. For <code>predstyle="polygon"</code> and <code>predstyle="bar"</code>, <code>col[2]</code> can be used to adjust the polygon/bar color and <code>border[2]</code> the border color. For <code>predstyle="shade"</code>, <code>col</code> can be a vector of up to three elements, where <code>col[2]</code> and <code>col[3]</code> specify the colors for the center and the ends of the shading region. For <code>predstyle="dist"</code>, <code>col</code> can be a vector of up to four elements, <code>col[2]</code> for the tail regions, <code>col[3]</code> for the color above/below zero, <code>col[4]</code> for the opposite side (transparent by default), and <code>border[2]</code> for the color of the lines. Setting a color to <code>NA</code> makes it transparent.</p>
 <p>The <code>lty</code> argument can also be a vector of up to three elements, the first for specifying the line type of the individual CIs (<code>"solid"</code> by default), the second for the line type of the prediction interval (<code>"dotted"</code> by default), the third for the line type of the horizontal lines that are automatically added to the plot (<code>"solid"</code> by default; set to <code>"blank"</code> to remove them).</p>
     </div>

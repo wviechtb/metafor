@@ -25,9 +25,9 @@ rma.peto(ai, bi, ci, di, n1i, n2i,
 
    \emph{These arguments pertain to handling of zero cells/counts/frequencies:}
 
-   \item{add}{non-negative number to specify the amount to add to zero cells when calculating the observed effect sizes of the individual studies. Can also be a vector of two numbers, where the first number is used in the calculation of the observed effect sizes and the second number is used when applying Peto's method. See below and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{to}{character string to specify when the values under \code{add} should be added (either \code{"only0"}, \code{"all"}, \code{"if0all"}, or \code{"none"}). Can also be a character vector, where the first string again applies when calculating the observed effect sizes or outcomes and the second string when applying Peto's method. See below and the documentation of the \code{\link{escalc}} function for more details.}
-   \item{drop00}{logical to specify whether studies with no cases (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes (the outcomes for such studies are set to \code{NA}). Can also be a vector of two logicals, where the first applies to the calculation of the observed effect sizes or outcomes and the second when applying Peto's method. See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{add}{non-negative number to specify the amount to add to zero cells when calculating the effect size estimates of the individual studies. Can also be a vector of two numbers, where the first number is used in the calculation of the estimates and the second number is used when applying Peto's method. See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{to}{character string to specify when the values under \code{add} should be added (either \code{"only0"}, \code{"all"}, \code{"if0all"}, or \code{"none"}). Can also be a character vector, where the first string again applies when calculating the effect size estimates and the second string when applying Peto's method. See below and the documentation of the \code{\link{escalc}} function for more details.}
+   \item{drop00}{logical to specify whether studies with no cases (or only cases) in both groups should be dropped when calculating the effect size estimates (the values for such studies are set to \code{NA}). Can also be a vector of two logicals, where the first applies to the calculation of the estimates and the second when applying Peto's method. See below and the documentation of the \code{\link{escalc}} function for more details.}
 
    \emph{These arguments pertain to the model / computations and output:}
 
@@ -55,7 +55,7 @@ rma.peto(ai, bi, ci, di, n1i, n2i,
 
    }
 
-   \subsection{Observed Effect Sizes or Outcomes of the Individual Studies}{
+   \subsection{Calculating Effect Size Estimates of the Individual Studies}{
 
       Peto's method itself does not require the calculation of the observed log odds ratios of the individual studies and directly makes use of the cell frequencies in the \mjeqn{2 \times 2}{2x2} tables. Zero cells are not a problem (except in extreme cases, such as when one of the two outcomes never occurs in any of the tables). Therefore, it is unnecessary to add some constant to the cell counts when there are zero cells.
 

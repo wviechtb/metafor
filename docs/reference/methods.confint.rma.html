@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-2</span>
       </span>
     </div>
 
@@ -155,7 +155,7 @@
 <span class="r-in"><span><span class="co">### copy data into 'dat'</span></span></span>
 <span class="r-in"><span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wviechtb.github.io/metadat/reference/dat.berkey1998.html" class="external-link">dat.berkey1998</a></span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### construct block diagonal var-cov matrix of the observed outcomes based on variables v1i and v2i</span></span></span>
+<span class="r-in"><span><span class="co">### construct the block diagonal var-cov matrix of the estimates based on variables v1i and v2i</span></span></span>
 <span class="r-in"><span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fu"><a href="vcalc.html">vcalc</a></span><span class="op">(</span>vi<span class="op">=</span><span class="fl">1</span>, cluster<span class="op">=</span><span class="va">author</span>, rvars<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">v1i</span>, <span class="va">v2i</span><span class="op">)</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit multivariate model</span></span></span>

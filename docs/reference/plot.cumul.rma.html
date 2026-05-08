@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-2</span>
       </span>
     </div>
 
@@ -159,7 +159,7 @@
     <div id="details">
     <h2>Details</h2>
     <p>The function can be used to visualize the results from a cumulative meta-analysis as obtained with the <code><a href="cumul.html">cumul</a></code> function.</p>
-<p>The plot shows the model estimate (i.e., the estimated overall/average outcome) on the x-axis and some measure of heterogeneity on the y-axis in the cumulative order of the results in the <code>"cumul.rma"</code> object. By default, <em></em>\(\tau^2\) is shown on the y-axis for a random-effects model and <em></em>\(I^2\) otherwise, but one can also use argument <code>yaxis</code> to specify the measure of heterogeneity to place on the y-axis.</p>
+<p>The plot shows the pooled estimate on the x-axis and some measure of heterogeneity on the y-axis in the cumulative order of the results in the <code>"cumul.rma"</code> object. By default, <em></em>\(\tau^2\) is shown on the y-axis for a random-effects model and <em></em>\(I^2\) otherwise, but one can also use argument <code>yaxis</code> to specify the measure of heterogeneity to place on the y-axis.</p>
 <p>The color gradient of the points/lines indicates the order of the cumulative results (by default, light gray at the beginning, dark gray at the end). A different set of colors can be chosen via the <code>cols</code> argument. See ‘Examples’.</p>
     </div>
     <div id="author">
@@ -186,7 +186,7 @@
 <span class="r-in"><span><span class="co">### cumulative meta-analysis (in the order of publication year)</span></span></span>
 <span class="r-in"><span><span class="va">sav</span> <span class="op">&lt;-</span> <span class="fu"><a href="cumul.html">cumul</a></span><span class="op">(</span><span class="va">res</span>, order<span class="op">=</span><span class="va">year</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">### plot of model estimate and tau^2 over time</span></span></span>
+<span class="r-in"><span><span class="co">### plot of the pooled estimates and tau^2 over time</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">sav</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.cumul.rma-1.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>

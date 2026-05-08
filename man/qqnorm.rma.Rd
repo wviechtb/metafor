@@ -28,7 +28,7 @@
 \arguments{
    \item{y}{an object of class \code{"rma.uni"}, \code{"rma.mh"}, or \code{"rma.peto"}. The method is not (yet) implemented for objects of class \code{"rma.glmm"} or \code{"rma.mv"}.}
    \item{type}{character string (either \code{"rstandard"} (default) or \code{"rstudent"}) to specify whether standardized residuals or studentized deleted residuals should be used in creating the plot. See \sQuote{Details}.}
-   \item{pch}{plotting symbol to use for the observed outcomes. By default, an open circle is used. See \code{\link{points}} for other options.}
+   \item{pch}{plotting symbol to use for the points. By default, an open circle is used. See \code{\link{points}} for other options.}
    \item{col}{optional character string to specify the (border) color of the points.}
    \item{bg}{optional character string to specify the background color of open plot symbols.}
    \item{grid}{logical to specify whether a grid should be added to the plot (the default is \code{FALSE}). Can also be a color name.}

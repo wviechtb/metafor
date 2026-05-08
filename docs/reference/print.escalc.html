@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-2</span>
       </span>
     </div>
 
@@ -119,10 +119,10 @@
 <dd><p>character string with four elements to specify the variable names for the standard errors, test statistics, and lower/upper confidence interval bounds.</p></dd>
 
    <dt id="arg-var-names">var.names<a class="anchor" aria-label="anchor" href="#arg-var-names"></a></dt>
-<dd><p>character string with two elements to specify the variable names for the observed effect sizes or outcomes and the sampling variances (the default is to take the value from the object if possible).</p></dd>
+<dd><p>character string with two elements to specify the variable names for the estimates and the corresponding sampling variances (the default is to take the value from the object if possible).</p></dd>
 
    <dt id="arg-h-">H0<a class="anchor" aria-label="anchor" href="#arg-h-"></a></dt>
-<dd><p>numeric value to specify the value of the effect size or outcome under the null hypothesis (the default is 0).</p></dd>
+<dd><p>numeric value to specify the value under the null hypothesis (the default is 0).</p></dd>
 
    <dt id="arg-append">append<a class="anchor" aria-label="anchor" href="#arg-append"></a></dt>
 <dd><p>logical to specify whether the data frame specified via the <code>object</code> argument should be returned together with the additional variables that are calculated by the <code>summary</code> function (the default is <code>TRUE</code>).</p></dd>
@@ -134,10 +134,10 @@
 <dd><p>numeric value between 0 and 100 to specify the confidence interval level (the default is 95; see <a href="misc-options.html">here</a> for details).</p></dd>
 
    <dt id="arg-olim">olim<a class="anchor" aria-label="anchor" href="#arg-olim"></a></dt>
-<dd><p>argument to specify observation/outcome limits. If unspecified, no limits are used.</p></dd>
+<dd><p>argument to specify observation limits. If unspecified, no limits are used.</p></dd>
 
    <dt id="arg-transf">transf<a class="anchor" aria-label="anchor" href="#arg-transf"></a></dt>
-<dd><p>argument to specify a function to transform the observed effect sizes or outcomes and interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via <code>...</code>.</p></dd>
+<dd><p>argument to specify a function to transform the estimates and interval bounds (e.g., <code>transf=exp</code>; see also <a href="transf.html">transf</a>). If unspecified, no transformation is used. Any additional arguments needed for the function specified here can be passed via <code>...</code>.</p></dd>
 
    <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments.</p></dd>
@@ -145,10 +145,10 @@
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The <code>print.escalc</code> function formats and prints the data frame, so that the observed effect sizes or outcomes and sampling variances are rounded (to the number of digits specified).</p>
+    <p>The <code>print.escalc</code> function formats and prints the data frame, so that the estimates and sampling variances are rounded (to the number of digits specified).</p>
 <p>The <code>summary.escalc</code> function creates an object that is a data frame containing the original data (if <code>append=TRUE</code>) and the following components:</p>
 <dl><dt>yi</dt>
-<dd><p>observed effect sizes or outcomes (transformed if <code>transf</code> is specified).</p></dd>
+<dd><p>estimates (transformed if <code>transf</code> is specified).</p></dd>
 
    <dt>vi</dt>
 <dd><p>corresponding sampling variances.</p></dd>
@@ -169,7 +169,7 @@
 <dd><p>upper confidence interval bounds (transformed if <code>transf</code> is specified).</p></dd>
 
 
-</dl><p>When the <code>transf</code> argument is specified, elements <code>vi</code>, <code>sei</code>, <code>zi</code>, and <code>pval</code> are not included (since these only apply to the untransformed effect sizes or outcomes).</p>
+</dl><p>When the <code>transf</code> argument is specified, elements <code>vi</code>, <code>sei</code>, <code>zi</code>, and <code>pval</code> are not included (since these only apply to the untransformed estimates).</p>
 <p>Note that the actual variable names above depend on the <code>out.names</code> (and <code>var.names</code>) arguments. If the data frame already contains variables with names as specified by the <code>out.names</code> argument, the values for these variables will be overwritten when <code>replace=TRUE</code> (which is the default). By setting <code>replace=FALSE</code>, only values that are <code>NA</code> will be replaced.</p>
 <p>The <code>print.escalc</code> function again formats and prints the data frame, rounding the added variables to the number of digits specified.</p>
     </div>
@@ -177,7 +177,7 @@
     <h2>Note</h2>
     <p>If some transformation function has been specified for the <code>transf</code> argument, then <code>yi</code>, <code>ci.lb</code>, and <code>ci.ub</code> will be transformed accordingly. However, <code>vi</code> and <code>sei</code> then still reflect the sampling variances and standard errors of the untransformed values.</p>
 <p>The <code>summary.escalc</code> function computes <code>level</code>% Wald-type confidence intervals, which may or may not be the most accurate method for computing confidence intervals for the chosen effect size or outcome measure.</p>
-<p>If the outcome measure used is bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those observation/outcome limits (the observed outcomes and confidence intervals cannot exceed those bounds then).</p>
+<p>If the estimates are bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those limits (i.e., the estimates and confidence interval bounds cannot exceed those limits then).</p>
     </div>
     <div id="author">
     <h2>Author</h2>

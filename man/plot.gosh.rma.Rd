@@ -30,7 +30,7 @@
    \item{\dots}{other arguments.}
 }
 \details{
-   For models without moderators, the function draws a scatter plot of the model estimates on the x-axis against the chosen measure of heterogeneity on the y-axis for the various subsets. Histograms of the respective distributions (with kernel density estimates superimposed) are shown in the margins (when \code{xhist=TRUE} and \code{yhist=TRUE}).
+   For models without moderators, the function draws a scatter plot of the pooled estimates on the x-axis against the chosen measure of heterogeneity on the y-axis for the various subsets. Histograms of the respective distributions (with kernel density estimates superimposed) are shown in the margins (when \code{xhist=TRUE} and \code{yhist=TRUE}).
 
    For models with moderators, the function draws a scatter plot matrix (with the \code{\link{pairs}} function) of the chosen measure of heterogeneity and each of the model coefficients. Histograms of the variables plotted are shown along the diagonal, with kernel density estimates of the distributions superimposed. Arguments \code{xlim}, \code{ylim}, \code{xhist}, and \code{yhist} are then ignored, while argument \code{hh} can be used to compress/stretch the height of the distributions shown along the diagonal.
 }

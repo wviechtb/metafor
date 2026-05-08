@@ -1,5 +1,6 @@
 escalc <- function(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i, m1i, m2i, sd1i, sd2i, xi, mi, ri, ti, fi, pi, sdi, r2i, ni, yi, vi, sei,
-data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", correct=TRUE, var.names=c("yi","vi"), add.measure=FALSE, append=TRUE, replace=TRUE, digits, ...) {
+data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS", correct=TRUE, cutoff,
+var.names=c("yi","vi"), add.measure=FALSE, append=TRUE, replace=TRUE, digits, ...) {
 
    ### check argument specifications
 
@@ -3002,6 +3003,13 @@ data, slab, flip, subset, include, add=1/2, to="only0", drop00=FALSE, vtype="LS"
       yi[is.NaN] <- NA_real_
       vi[is.NaN] <- NA_real_
    }
+
+   ### check for unusually large estimates for a given measure
+
+   if (missing(cutoff))
+      cutoff <- NULL
+
+   .chkyisize(yi, measure=measure, cutoff=cutoff)
 
    ### check for negative vi's (should not happen, but just in case)
 

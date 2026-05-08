@@ -10,7 +10,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
                 sdi, r2i, ni, yi, vi, sei,
        data, slab, flip, subset, include,
        add=1/2, to="only0", drop00=FALSE,
-       vtype="LS", correct=TRUE,
+       vtype="LS", correct=TRUE, cutoff,
        var.names=c("yi","vi"), add.measure=FALSE,
        append=TRUE, replace=TRUE, digits, \dots)
 }
@@ -42,12 +42,12 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{sdi}{vector with the standard deviations.}
    \item{r2i}{vector with the \mjseqn{R^2} values.}
    \item{ni}{vector with the sample/group sizes.}
-   \item{yi}{vector with the observed effect sizes or outcomes.}
+   \item{yi}{vector with the effect size estimates.}
    \item{vi}{vector with the corresponding sampling variances.}
    \item{sei}{vector with the corresponding standard errors.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{slab}{optional vector with labels for the studies.}
-   \item{flip}{optional logical to indicate whether to flip the sign of the effect sizes or outcomes. Can also be a vector. Can also be a numeric vector to specify a multiplier.}
+   \item{flip}{optional logical to indicate whether to flip the sign of the estimates. Can also be a vector. Can also be a numeric vector to specify a multiplier.}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that will be included in the data frame returned by the function.}
    \item{include}{optional (logical or numeric) vector to specify the subset of studies for which the measure should be calculated. See the \sQuote{Value} section for more details.}
 
@@ -55,28 +55,29 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \item{add}{a non-negative number to specify the amount to add to zero cells, counts, or frequencies. See \sQuote{Details} and \sQuote{Note}.}
    \item{to}{a character string to specify when the values under \code{add} should be added (either \code{"all"}, \code{"only0"}, \code{"if0all"}, or \code{"none"}). See \sQuote{Details}.}
-   \item{drop00}{logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the observed effect sizes or outcomes. See \sQuote{Details}.}
+   \item{drop00}{logical to specify whether studies with no cases/events (or only cases) in both groups should be dropped when calculating the estimates. See \sQuote{Details}.}
 
    \emph{These arguments pertain to the computations:}
 
    \item{vtype}{a character string to specify the type of sampling variances to calculate. Can also be a vector. See \sQuote{Details}.}
-   \item{correct}{logical to specify whether a bias correction should be applied to the effect sizes or outcomes (the default is \code{TRUE}).}
+   \item{correct}{logical to specify whether a bias correction should be applied to the estimates (the default is \code{TRUE}).}
+   \item{cutoff}{optional numeric value to specify a cutoff for flagging large estimates. See \sQuote{Details}.}
 
    \emph{These arguments pertain to the formatting of the returned data frame:}
 
-   \item{var.names}{character vector with two elements to specify the name of the variable for the observed effect sizes or outcomes and the name of the variable for the corresponding sampling variances (the defaults are \code{"yi"} and \code{"vi"}).}
-   \item{add.measure}{logical to specify whether a variable should be added to the data frame (with default name \code{"measure"}) that indicates the type of outcome measure computed. When using this option, \code{var.names} can have a third element to change this variable name.}
-   \item{append}{logical to specify whether the data frame provided via the \code{data} argument should be returned together with the observed effect sizes or outcomes and corresponding sampling variances (the default is \code{TRUE}).}
+   \item{var.names}{character vector with two elements to specify the name of the variable for the estimates and the name of the variable for the corresponding sampling variances (the defaults are \code{"yi"} and \code{"vi"}).}
+   \item{add.measure}{logical to specify whether a variable should be added to the data frame (with default name \code{"measure"}) that indicates the type of measure computed. When using this option, \code{var.names} can have a third element to change this variable name.}
+   \item{append}{logical to specify whether the data frame provided via the \code{data} argument should be returned together with the estimates and corresponding sampling variances (the default is \code{TRUE}).}
    \item{replace}{logical to specify whether existing values for \code{yi} and \code{vi} in the data frame should be replaced. Only relevant when \code{append=TRUE} and the data frame already contains the \code{yi} and \code{vi} variables. If \code{replace=TRUE} (the default), all of the existing values will be overwritten. If \code{replace=FALSE}, only \code{NA} values will be replaced. See the \sQuote{Value} section for more details.}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded. If unspecified, the default is 4. Note that the values are stored without rounding in the returned object. See also \link[=misc-options]{here} for further details on how to control the number of digits in the output.}
    \item{\dots}{other arguments.}
 }
 \details{
-   Before a meta-analysis can be conducted, the relevant results from each study must be quantified in such a way that the resulting values can be further aggregated and compared. Depending on (a) the goals of the meta-analysis, (b) the design and types of studies included, and (c) the information provided therein, one of the various effect sizes or outcome measures described below may be appropriate for the meta-analysis and can be computed with the \code{escalc} function.
+   Before a meta-analysis can be conducted, the relevant results from each study must be quantified in such a way that the resulting values can be further aggregated and compared. Depending on (a) the goals of the meta-analysis, (b) the design and types of studies included, and (c) the information provided therein, one of the various effect sizes or \sQuote{outcome measures} described below may be appropriate for the meta-analysis and can be computed with the \code{escalc} function.
 
-   The \code{measure} argument is a character string to specify the outcome measure that should be calculated (see below for the various options), arguments \code{ai} through \code{ni} are then used to specify the information needed to calculate the various measures (depending on the chosen outcome measure, different arguments need to be specified), and \code{data} can be used to specify a data frame containing the variables given to the previous arguments. The \code{add}, \code{to}, and \code{drop00} arguments may be needed when dealing with frequency or count data that needs special handling when some of the frequencies or counts are equal to zero (see below for details). Finally, the \code{vtype} argument is used to specify how the sampling variances should be computed (again, see below for details).
+   The \code{measure} argument is a character string to specify the measure that should be calculated (see below for the various options), arguments \code{ai} through \code{ni} are then used to specify the information needed to calculate the various measures (depending on the chosen measure, different arguments need to be specified), and \code{data} can be used to specify a data frame containing the variables given to the previous arguments. The \code{add}, \code{to}, and \code{drop00} arguments may be needed when dealing with frequency or count data that needs special handling when some of the frequencies or counts are equal to zero (see below for details). Finally, the \code{vtype} argument is used to specify how the sampling variances should be computed (again, see below for details).
 
-   To provide a structure to the various effect sizes or outcome measures that can be calculated with the \code{escalc} function, we can distinguish between measures that are used to:
+   To provide a structure to the measures that can be calculated with the \code{escalc} function, we can distinguish between measures that are used to:
 
    \tabular{lll}{
    \ics \tab (1) \tab contrast two independent (either experimentally created or naturally occurring) groups, \cr
@@ -94,7 +95,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    Below, these number and letter codes are used (also in combination) to make it easier to quickly find a measure suitable for a particular meta-analysis (e.g., search for \code{(1b)} to find measures that describe the difference between two groups with respect to a dichotomous variable or \code{(2a)} for measures that quantify the association between two quantitative variables).
 
-   \subsection{(1) Outcome Measures for Two-Group Comparisons}{
+   \subsection{(1) Measures for Two-Group Comparisons}{
 
       In many meta-analyses, the goal is to synthesize the results from studies that compare or contrast two groups. The groups may be experimentally defined (e.g., a treatment and a control group created via random assignment) or may occur naturally (e.g., men and women, employees working under high- versus low-stress conditions, people/animals/plants exposed to some environmental risk factor versus those not exposed, patients versus controls).
 
@@ -109,7 +110,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          \bold{Measures for Differences in Central Tendency}
 
-         Often, interest is focused on differences between the two groups with respect to their central tendency. The raw mean difference, the standardized mean difference, and the (log transformed) ratio of means (also called the log \sQuote{response ratio}) are useful outcome measures when meta-analyzing studies of this type.
+         Often, interest is focused on differences between the two groups with respect to their central tendency. The raw mean difference, the standardized mean difference, and the (log transformed) ratio of means (also called the log \sQuote{response ratio}) are useful measures when meta-analyzing studies of this type.
 
          The options for the \code{measure} argument are then:
 
@@ -125,7 +126,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          For \code{measure="SMD"}, the positive bias in the standardized mean difference (i.e., in a Cohen's d value) is automatically corrected for within the function, yielding Hedges' g (Hedges, 1981). Similarly, the analogous bias correction is applied for \code{measure="SMDH"} (Bonett, 2009), \code{measure="SMD1"} (Hedges, 1981), and \code{measure="SMD1H"}. With \code{correct=FALSE}, these bias corrections can be switched off.
 
-         For \code{measure="ROM"}, the log is taken of the ratio of means (i.e., \mjeqn{\log(\text{m1i}/\text{m2i})}{log(m1i/m2i)}), which makes this outcome measure symmetric around 0 and results in a sampling distribution that is closer to normality. Hence, this measure cannot be computed when \code{m1i} and \code{m2i} have opposite signs (in fact, this measure is only meant to be used for ratio scale measurements, where both means should be positive anyway). Note that a bias correction is also applied to this measure (Lajeunesse, 2015, equation 8) unless \code{correct=FALSE}.
+         For \code{measure="ROM"}, the log is taken of the ratio of means (i.e., \mjeqn{\log(\text{m1i}/\text{m2i})}{log(m1i/m2i)}), which makes this measure symmetric around 0 and results in a sampling distribution that is closer to normality. Hence, this measure cannot be computed when \code{m1i} and \code{m2i} have opposite signs (in fact, this measure is only meant to be used for ratio scale measurements, where both means should be positive anyway). Note that a bias correction is also applied to this measure (Lajeunesse, 2015, equation 8) unless \code{correct=FALSE}.
 
          For \code{measure="SMD"}, if the means and standard deviations are unknown for some studies, various other inputs can be used to recover the standardized mean differences. In the case that the standardized mean differences (Cohen's d values) are directly available (e.g., they are reported in some studies), then these can be specified via argument \code{di}. If the point-biserial correlations (between the group dummy variable and the quantitative response/dependent variable) are known, these can be specified via argument \code{ri}. If the t-statistics from an independent samples (Student's) t-test are available, these can be specified via argument \code{ti}. Note that the sign of these inputs is then taken to be the sign of the standardized mean differences. If only the two-sided p-values corresponding to the t-tests are known, one can specify those values via argument \code{pi} (which are then transformed into the t-statistics and then further into the standardized mean differences). However, since a two-sided p-value does not carry information about the sign of the test statistic (and hence neither about the standardized mean difference), the sign of the p-values (which can be negative) is used as the sign of the standardized mean differences (e.g., \code{escalc(measure="SMD", pi=-0.018, n1i=20, n2i=20)} yields a negative standardized mean difference of \code{-0.7664}). See \href{https://www.metafor-project.org/doku.php/tips:assembling_data_smd}{here} for a more detailed illustration of using the \code{ti} and \code{pi} arguments.
 
@@ -165,7 +166,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          For example, in a set of randomized clinical trials, group 1 and group 2 may refer to the treatment and placebo/control group, respectively, with outcome 1 denoting some event of interest (e.g., death, complications, failure to improve under the treatment) and outcome 2 its complement. Similarly, in a set of cohort studies, group 1 and group 2 may denote those who engage in and those who do not engage in a potentially harmful behavior (e.g., smoking), with outcome 1 denoting the development of a particular disease (e.g., lung cancer) during the follow-up period. Finally, in a set of case-control studies, group 1 and group 2 may refer to those with the disease (i.e., cases) and those free of the disease (i.e., controls), with outcome 1 denoting, for example, exposure to some environmental risk factor in the past and outcome 2 non-exposure. Note that in all of these examples, the stratified sampling scheme fixes the row totals (i.e., the group sizes) by design.
 
-         A meta-analysis of studies reporting results in terms of \mjeqn{2 \times 2}{2x2} tables can be based on one of several different outcome measures, including the risk ratio (also called the relative risk), the odds ratio, the risk difference, and the arcsine square root transformed risk difference (e.g., Fleiss & Berlin, 2009, \enc{Rücker}{Ruecker} et al., 2009). For any of these outcome measures, one needs to specify the cell frequencies via the \code{ai}, \code{bi}, \code{ci}, and \code{di} arguments (or alternatively, one can use the \code{ai}, \code{ci}, \code{n1i}, and \code{n2i} arguments).
+         A meta-analysis of studies reporting results in terms of \mjeqn{2 \times 2}{2x2} tables can be based on one of several different measures, including the risk ratio (also called the relative risk), the odds ratio, the risk difference, and the arcsine square root transformed risk difference (e.g., Fleiss & Berlin, 2009, \enc{Rücker}{Ruecker} et al., 2009). For any of these measures, one needs to specify the cell frequencies via the \code{ai}, \code{bi}, \code{ci}, and \code{di} arguments (or alternatively, one can use the \code{ai}, \code{ci}, \code{n1i}, and \code{n2i} arguments).
 
          The options for the \code{measure} argument are then:
 
@@ -177,9 +178,9 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \item \code{"PETO"} for the \emph{log odds ratio} estimated with Peto's method (Yusuf et al., 1985).
          }
 
-         Let \mjeqn{\text{p1i} = \text{ai}/\text{n1i}}{p1i = ai/n1i} and \mjeqn{\text{p2i} = \text{ci}/\text{n2i}}{p2i = ci/n2i} denote the proportion of individuals with outcome 1 in group 1 and group 2, respectively. Then the log risk ratio is computed with \mjeqn{\log(\text{p1i}/\text{p2i})}{log(p1i/p2i)}, the log odds ratio with \mjeqn{\log\mathopen{}\left(\left(\frac{\text{p1i}}{1-\text{p1i}}\right) \middle/ \left(\frac{\text{p2i}}{1-\text{p2i}}\right) \right)\mathclose{}}{log((p1i/(1-p1i))/(p2i/(1-p2i)))}, the risk difference with \mjeqn{\text{p1i}-\text{p2i}}{p1i-p2i}, and the arcsine square root transformed risk difference with \mjeqn{\text{asin}(\sqrt{\text{p1i}})-\text{asin}(\sqrt{\text{p2i}})}{asin(sqrt(p1i))-asin(sqrt(p2i))}. See Yusuf et al. (1985) for the computation of the log odds ratio when \code{measure="PETO"}. Note that the log is taken of the risk ratio and the odds ratio, which makes these outcome measures symmetric around 0 and results in corresponding sampling distributions that are closer to normality. Also, when multiplied by 2, the arcsine square root transformed risk difference is identical to Cohen's h (Cohen, 1988). For all of these measures, a positive value indicates that the proportion of individuals with outcome 1 is larger in group 1 compared to group 2.
+         Let \mjeqn{\text{p1i} = \text{ai}/\text{n1i}}{p1i = ai/n1i} and \mjeqn{\text{p2i} = \text{ci}/\text{n2i}}{p2i = ci/n2i} denote the proportion of individuals with outcome 1 in group 1 and group 2, respectively. Then the log risk ratio is computed with \mjeqn{\log(\text{p1i}/\text{p2i})}{log(p1i/p2i)}, the log odds ratio with \mjeqn{\log\mathopen{}\left(\left(\frac{\text{p1i}}{1-\text{p1i}}\right) \middle/ \left(\frac{\text{p2i}}{1-\text{p2i}}\right) \right)\mathclose{}}{log((p1i/(1-p1i))/(p2i/(1-p2i)))}, the risk difference with \mjeqn{\text{p1i}-\text{p2i}}{p1i-p2i}, and the arcsine square root transformed risk difference with \mjeqn{\text{asin}(\sqrt{\text{p1i}})-\text{asin}(\sqrt{\text{p2i}})}{asin(sqrt(p1i))-asin(sqrt(p2i))}. See Yusuf et al. (1985) for the computation of the log odds ratio when \code{measure="PETO"}. Note that the log is taken of the risk ratio and the odds ratio, which makes these measures symmetric around 0 and results in corresponding sampling distributions that are closer to normality. Also, when multiplied by 2, the arcsine square root transformed risk difference is identical to Cohen's h (Cohen, 1988). For all of these measures, a positive value indicates that the proportion of individuals with outcome 1 is larger in group 1 compared to group 2.
 
-         Cell entries with a zero count can be problematic, especially for the risk ratio and the odds ratio. Adding a small constant to the cells of the \mjeqn{2 \times 2}{2x2} tables is a common solution to this problem. When \code{to="only0"} (the default), the value of \code{add} (the default is \code{1/2}; but see \sQuote{Note}) is added to each cell of those \mjeqn{2 \times 2}{2x2} tables with at least one cell equal to 0. When \code{to="all"}, the value of \code{add} is added to each cell of all \mjeqn{2 \times 2}{2x2} tables. When \code{to="if0all"}, the value of \code{add} is added to each cell of all \mjeqn{2 \times 2}{2x2} tables, but only when there is at least one \mjeqn{2 \times 2}{2x2} table with a zero cell. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed table frequencies is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to \code{NA}). Also, studies where \code{ai=ci=0} or \code{bi=di=0} may be considered to be uninformative about the size of the effect and dropping such studies has sometimes been recommended (Higgins et al., 2019). This can be done by setting \code{drop00=TRUE}. The values for such studies will then be set to \code{NA} (i.e., missing).
+         Cell entries with a zero count can be problematic, especially for the risk ratio and the odds ratio. Adding a small constant to the cells of the \mjeqn{2 \times 2}{2x2} tables is a common solution to this problem. When \code{to="only0"} (the default), the value of \code{add} (the default is \code{1/2}; but see \sQuote{Note}) is added to each cell of those \mjeqn{2 \times 2}{2x2} tables with at least one cell equal to 0. When \code{to="all"}, the value of \code{add} is added to each cell of all \mjeqn{2 \times 2}{2x2} tables. When \code{to="if0all"}, the value of \code{add} is added to each cell of all \mjeqn{2 \times 2}{2x2} tables, but only when there is at least one \mjeqn{2 \times 2}{2x2} table with a zero cell. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed table frequencies is made. Depending on the measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to \code{NA}). Also, studies where \code{ai=ci=0} or \code{bi=di=0} may be considered to be uninformative about the size of the effect and dropping such studies has sometimes been recommended (Higgins et al., 2019). This can be done by setting \code{drop00=TRUE}. The values for such studies will then be set to \code{NA} (i.e., missing).
 
          Datasets corresponding to data of this type are provided in \code{\link[metadat]{dat.bcg}}, \code{\link[metadat]{dat.collins1985a}}, \code{\link[metadat]{dat.collins1985b}}, \code{\link[metadat]{dat.egger2001}}, \code{\link[metadat]{dat.hine1989}}, \code{\link[metadat]{dat.laopaiboon2015}}, \code{\link[metadat]{dat.lee2004}}, \code{\link[metadat]{dat.li2007}}, \code{\link[metadat]{dat.linde2005}}, \code{\link[metadat]{dat.nielweise2007}}, and \code{\link[metadat]{dat.yusuf1985}}.
 
@@ -196,7 +197,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          group 2 \tab \ics \tab \code{x2i}       \tab \ics \tab \code{t2i}}
          where \code{x1i} and \code{x2i} denote the number of events in the first and the second group, respectively, and \code{t1i} and \code{t2i} the corresponding total person-times at risk. Often, the person-time is measured in years, so that \code{t1i} and \code{t2i} denote the total number of follow-up years in the two groups.
 
-         This form of data is fundamentally different from what was described in the previous section, since the total follow-up time may differ even for groups of the same size and the individuals studied may experience the event of interest multiple times. Hence, different outcome measures than the ones described in the previous section need to be considered when data are reported in this format. These include the incidence rate ratio, the incidence rate difference, and the square root transformed incidence rate difference (Bagos & Nikolopoulos, 2009; Rothman et al., 2008). For any of these outcome measures, one needs to specify the total number of events via the \code{x1i} and \code{x2i} arguments and the corresponding total person-time values via the \code{t1i} and \code{t2i} arguments.
+         This form of data is fundamentally different from what was described in the previous section, since the total follow-up time may differ even for groups of the same size and the individuals studied may experience the event of interest multiple times. Hence, different measures than the ones described in the previous section need to be considered when data are reported in this format. These include the incidence rate ratio, the incidence rate difference, and the square root transformed incidence rate difference (Bagos & Nikolopoulos, 2009; Rothman et al., 2008). For any of these measures, one needs to specify the total number of events via the \code{x1i} and \code{x2i} arguments and the corresponding total person-time values via the \code{t1i} and \code{t2i} arguments.
 
          The options for the \code{measure} argument are then:
 
@@ -206,9 +207,9 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          \item \code{"IRSD"} for the \emph{square root transformed incidence rate difference}.
          }
 
-         Let \mjeqn{\text{ir1i} = \text{x1i}/\text{t1i}}{ir1i = x1i/t1i} and \mjeqn{\text{ir2i} = \text{x2i}/\text{t2i}}{ir2i = x2i/t2i} denote the observed incidence rates in each group. Then the log incidence rate ratio is computed with \mjeqn{\log(\text{ir1i}/\text{ir2i})}{log(ir1i/ir2i)}, the incidence rate difference with \mjeqn{\text{ir1i}-\text{ir2i}}{ir1i-ir2i}, and the square root transformed incidence rate difference with \mjeqn{\sqrt{\text{ir1i}}-\sqrt{\text{ir2i}}}{sqrt(ir1i)-sqrt(ir2i)}. Note that the log is taken of the incidence rate ratio, which makes this outcome measure symmetric around 0 and results in a sampling distribution that is closer to normality.
+         Let \mjeqn{\text{ir1i} = \text{x1i}/\text{t1i}}{ir1i = x1i/t1i} and \mjeqn{\text{ir2i} = \text{x2i}/\text{t2i}}{ir2i = x2i/t2i} denote the observed incidence rates in each group. Then the log incidence rate ratio is computed with \mjeqn{\log(\text{ir1i}/\text{ir2i})}{log(ir1i/ir2i)}, the incidence rate difference with \mjeqn{\text{ir1i}-\text{ir2i}}{ir1i-ir2i}, and the square root transformed incidence rate difference with \mjeqn{\sqrt{\text{ir1i}}-\sqrt{\text{ir2i}}}{sqrt(ir1i)-sqrt(ir2i)}. Note that the log is taken of the incidence rate ratio, which makes this measure symmetric around 0 and results in a sampling distribution that is closer to normality.
 
-         Studies with zero events in one or both groups can be problematic, especially for the incidence rate ratio. Adding a small constant to the number of events is a common solution to this problem. When \code{to="only0"} (the default), the value of \code{add} (the default is \code{1/2}; but see \sQuote{Note}) is added to \code{x1i} and \code{x2i} only in the studies that have zero events in one or both groups. When \code{to="all"}, the value of \code{add} is added to \code{x1i} and \code{x2i} in all studies. When \code{to="if0all"}, the value of \code{add} is added to \code{x1i} and \code{x2i} in all studies, but only when there is at least one study with zero events in one or both groups. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed number of events is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to \code{NA}). Like for \mjeqn{2 \times 2}{2x2} table data, studies where \code{x1i=x2i=0} may be considered to be uninformative about the size of the effect and dropping such studies has sometimes been recommended. This can be done by setting \code{drop00=TRUE}. The values for such studies will then be set to \code{NA}.
+         Studies with zero events in one or both groups can be problematic, especially for the incidence rate ratio. Adding a small constant to the number of events is a common solution to this problem. When \code{to="only0"} (the default), the value of \code{add} (the default is \code{1/2}; but see \sQuote{Note}) is added to \code{x1i} and \code{x2i} only in the studies that have zero events in one or both groups. When \code{to="all"}, the value of \code{add} is added to \code{x1i} and \code{x2i} in all studies. When \code{to="if0all"}, the value of \code{add} is added to \code{x1i} and \code{x2i} in all studies, but only when there is at least one study with zero events in one or both groups. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed number of events is made. Depending on the measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to \code{NA}). Like for \mjeqn{2 \times 2}{2x2} table data, studies where \code{x1i=x2i=0} may be considered to be uninformative about the size of the effect and dropping such studies has sometimes been recommended. This can be done by setting \code{drop00=TRUE}. The values for such studies will then be set to \code{NA}.
 
          Datasets corresponding to data of this type are provided in \code{\link[metadat]{dat.hart1999}} and \code{\link[metadat]{dat.nielweise2008}}.
 
@@ -216,7 +217,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
       \subsection{(1d) Transforming SMDs to ORs and Vice-Versa}{
 
-         In some meta-analyses, one may encounter studies that contrast two groups with respect to a quantitative response variable (case 1a above) and other studies that contrast the same two groups with respect to a dichotomous variable (case 2b above). If both types of studies are to be combined in the same analysis, one needs to compute the same outcome measure across all studies.
+         In some meta-analyses, one may encounter studies that contrast two groups with respect to a quantitative response variable (case 1a above) and other studies that contrast the same two groups with respect to a dichotomous variable (case 2b above). If both types of studies are to be combined in the same analysis, one needs to compute the same measure across all studies.
 
          For this, one may need to transform standardized mean differences into log odds ratios (e.g., Cox & Snell, 1989; Chinn, 2000; Hasselblad & Hedges, 1995; \enc{Sánchez-Meca}{Sanchez-Meca} et al., 2003). Here, the data need to be specified as described under (1a) and the options for the \code{measure} argument are then:
 
@@ -243,13 +244,13 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    }
 
-   \subsection{(2) Outcome Measures for Variable Association}{
+   \subsection{(2) Measures for Variable Association}{
 
-      Meta-analyses are often used to synthesize studies that examine the direction and strength of the association between two variables measured concurrently and/or without manipulation by experimenters. In this section, a variety of outcome measures will be discussed that may be suitable for a meta-analysis with this purpose. We can distinguish between measures that are applicable when both variables are measured on quantitative scales, when both variables measured are dichotomous, and when the two variables are of mixed types.
+      Meta-analyses are often used to synthesize studies that examine the direction and strength of the association between two variables measured concurrently and/or without manipulation by experimenters. In this section, a variety of measures will be discussed that may be suitable for a meta-analysis with this purpose. We can distinguish between measures that are applicable when both variables are measured on quantitative scales, when both variables measured are dichotomous, and when the two variables are of mixed types.
 
       \subsection{(2a) Measures for Two Quantitative Variables}{
 
-         The (Pearson or product-moment) correlation coefficient quantifies the direction and strength of the (linear) relationship between two quantitative variables and is therefore frequently used as the outcome measure for meta-analyses. Two alternative measures are a bias-corrected version of the correlation coefficient and Fisher's r-to-z transformed correlation coefficient.
+         The (Pearson or product-moment) correlation coefficient quantifies the direction and strength of the (linear) relationship between two quantitative variables and is therefore frequently used in meta-analyses. Two alternative measures are a bias-corrected version of the correlation coefficient and Fisher's r-to-z transformed correlation coefficient.
 
          For these measures, one needs to specify \code{ri}, the vector with the raw correlation coefficients, and \code{ni}, the corresponding sample sizes. The options for the \code{measure} argument are then:
 
@@ -282,7 +283,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          The phi coefficient and the odds ratio are commonly used measures of association for \mjeqn{2 \times 2}{2x2} table data (e.g., Fleiss & Berlin, 2009). The latter is particularly advantageous, as it is directly comparable to values obtained from stratified sampling (as described earlier). Yule's Q and Yule's Y (Yule, 1912) are additional measures of association for \mjeqn{2 \times 2}{2x2} table data (although they are not typically used in meta-analyses). Finally, assuming that the two dichotomous variables are actually dichotomized versions of the responses on two underlying quantitative scales (and assuming that the two variables follow a bivariate normal distribution), it is also possible to estimate the correlation between the two quantitative variables using the tetrachoric correlation coefficient (Pearson, 1900; Kirk, 1973).
 
-         For any of these outcome measures, one needs to specify the cell frequencies via the \code{ai}, \code{bi}, \code{ci}, and \code{di} arguments (or alternatively, one can use the \code{ai}, \code{ci}, \code{n1i}, and \code{n2i} arguments). The options for the \code{measure} argument are then:
+         For any of these measures, one needs to specify the cell frequencies via the \code{ai}, \code{bi}, \code{ci}, and \code{di} arguments (or alternatively, one can use the \code{ai}, \code{ci}, \code{n1i}, and \code{n2i} arguments). The options for the \code{measure} argument are then:
 
          \itemize{
          \item \code{"OR"} for the \emph{log odds ratio},
@@ -302,7 +303,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
       \subsection{(2d) Measures for Mixed Variable Types}{
 
-         We can also consider outcome measures that can be used to describe the relationship between two variables, where one variable is dichotomous and the other variable measures some quantitative characteristic. In that case, it is likely that study authors again report summary statistics, such as the mean and standard deviation of the measurements within the two groups (defined by the dichotomous variable). Based on this information, one can compute the point-biserial correlation coefficient (Tate, 1954) as a measure of association between the two variables. If the dichotomous variable is actually a dichotomized version of the responses on an underlying quantitative scale (and assuming that the two variables follow a bivariate normal distribution), it is also possible to estimate the correlation between the two variables using the biserial correlation coefficient (Pearson, 1909; Soper, 1914; Jacobs & Viechtbauer, 2017).
+         We can also consider measures that can be used to describe the relationship between two variables, where one variable is dichotomous and the other variable measures some quantitative characteristic. In that case, it is likely that study authors again report summary statistics, such as the mean and standard deviation of the measurements within the two groups (defined by the dichotomous variable). Based on this information, one can compute the point-biserial correlation coefficient (Tate, 1954) as a measure of association between the two variables. If the dichotomous variable is actually a dichotomized version of the responses on an underlying quantitative scale (and assuming that the two variables follow a bivariate normal distribution), it is also possible to estimate the correlation between the two variables using the biserial correlation coefficient (Pearson, 1909; Soper, 1914; Jacobs & Viechtbauer, 2017).
 
          Here, one again needs to specify \code{m1i} and \code{m2i} for the observed means of the two groups, \code{sd1i} and \code{sd2i} for the observed standard deviations, and \code{n1i} and \code{n2i} for the number of individuals in each group. The options for the \code{measure} argument are then:
 
@@ -321,13 +322,13 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    }
 
-   \subsection{(3) Outcome Measures for Individual Groups}{
+   \subsection{(3) Measures for Individual Groups}{
 
-      In this section, outcome measures will be described which may be useful when the goal of a meta-analysis is to synthesize studies that characterize some property of individual groups. We will again distinguish between measures that are applicable when the characteristic assessed is a quantitative variable, a dichotomous variable, or when the characteristic represents an event count.
+      In this section, measures will be described which may be useful when the goal of a meta-analysis is to synthesize studies that characterize some property of individual groups. We will again distinguish between measures that are applicable when the characteristic assessed is a quantitative variable, a dichotomous variable, or when the characteristic represents an event count.
 
       \subsection{(3a) Measures for Quantitative Variables}{
 
-         The goal of a meta-analysis may be to characterize individual groups, where the response, characteristic, or dependent variable assessed in the individual studies is measured on some quantitative scale. In the simplest case, the raw mean for the quantitative variable is reported for each group, which then becomes the observed outcome for the meta-analysis. Here, one needs to specify \code{mi}, \code{sdi}, and \code{ni} for the observed means, the observed standard deviations, and the sample sizes, respectively. One can also compute the \sQuote{single-group standardized mean}, where the mean is divided by the standard deviation (when first subtracting some fixed constant from each mean, then this is the \sQuote{single-group standardized mean difference}). If focus is solely on the variability of the measurements, then the log transformed standard deviation is a useful measure (Nakagawa et al., 2015; Raudenbush & Bryk, 1987). For this measure, one only needs to specify \code{sdi} and \code{ni}. For ratio scale measurements, the log transformed mean or the log transformed coefficient of variation may also be of interest (Nakagawa et al., 2015).
+         The goal of a meta-analysis may be to characterize individual groups, where the response, characteristic, or dependent variable assessed in the individual studies is measured on some quantitative scale. In the simplest case, the raw mean for the quantitative variable is reported for each group, which then becomes the estimate of interest for the meta-analysis. Here, one needs to specify \code{mi}, \code{sdi}, and \code{ni} for the observed means, the observed standard deviations, and the sample sizes, respectively. One can also compute the \sQuote{single-group standardized mean}, where the mean is divided by the standard deviation (when first subtracting some fixed constant from each mean, then this is the \sQuote{single-group standardized mean difference}). If focus is solely on the variability of the measurements, then the log transformed standard deviation is a useful measure (Nakagawa et al., 2015; Raudenbush & Bryk, 1987). For this measure, one only needs to specify \code{sdi} and \code{ni}. For ratio scale measurements, the log transformed mean or the log transformed coefficient of variation may also be of interest (Nakagawa et al., 2015).
 
          The options for the \code{measure} argument are:
 
@@ -358,7 +359,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          However, for reasons discussed in Schwarzer et al. (2019) and \enc{Röver}{Roever} and Friede (2022), the use of double arcsine transformed proportions for a meta-analysis is not recommended.
 
-         Zero cell entries can be problematic for certain outcome measures. When \code{to="only0"} (the default), the value of \code{add} (the default is \code{1/2}; but see \sQuote{Note}) is added to \code{xi} and \code{mi} only for studies where \code{xi} or \code{mi} is equal to 0. When \code{to="all"}, the value of \code{add} is added to \code{xi} and \code{mi} in all studies. When \code{to="if0all"}, the value of \code{add} is added in all studies, but only when there is at least one study with a zero value for \code{xi} or \code{mi}. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed values is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to \code{NA}).
+         Zero cell entries can be problematic for certain measures. When \code{to="only0"} (the default), the value of \code{add} (the default is \code{1/2}; but see \sQuote{Note}) is added to \code{xi} and \code{mi} only for studies where \code{xi} or \code{mi} is equal to 0. When \code{to="all"}, the value of \code{add} is added to \code{xi} and \code{mi} in all studies. When \code{to="if0all"}, the value of \code{add} is added in all studies, but only when there is at least one study with a zero value for \code{xi} or \code{mi}. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed values is made. Depending on the measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to \code{NA}).
 
          Datasets corresponding to data of this type are provided in \code{\link[metadat]{dat.pritz1997}}, \code{\link[metadat]{dat.debruin2009}}, \code{\link[metadat]{dat.hannum2020}}, and \code{\link[metadat]{dat.crisafulli2020}}.
 
@@ -377,19 +378,19 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          Measures \code{"IR"} and \code{"IRLN"} can also be used when meta-analyzing standardized incidence ratios (SIRs), where the observed number of events is divided by the expected number of events. In this case, arguments \code{xi} and \code{ti} are used to specify the observed and expected number of events in the studies. Since SIRs are not symmetric around 1, it is usually more appropriate to meta-analyze the log transformed SIRs (i.e., using measure \code{"IRLN"}), which are symmetric around 0.
 
-         Studies with zero events can be problematic, especially for the log transformed incidence rate. Adding a small constant to the number of events is a common solution to this problem. When \code{to="only0"} (the default), the value of \code{add} (the default is \code{1/2}; but see \sQuote{Note}) is added to \code{xi} only in the studies that have zero events. When \code{to="all"}, the value of \code{add} is added to \code{xi} in all studies. When \code{to="if0all"}, the value of \code{add} is added to \code{xi} in all studies, but only when there is at least one study with zero events. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed number of events is made. Depending on the outcome measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to \code{NA}).
+         Studies with zero events can be problematic, especially for the log transformed incidence rate. Adding a small constant to the number of events is a common solution to this problem. When \code{to="only0"} (the default), the value of \code{add} (the default is \code{1/2}; but see \sQuote{Note}) is added to \code{xi} only in the studies that have zero events. When \code{to="all"}, the value of \code{add} is added to \code{xi} in all studies. When \code{to="if0all"}, the value of \code{add} is added to \code{xi} in all studies, but only when there is at least one study with zero events. Setting \code{to="none"} or \code{add=0} has the same effect: No adjustment to the observed number of events is made. Depending on the measure and the data, this may lead to division by zero (when this occurs, the resulting value is recoded to \code{NA}).
 
       }
 
    }
 
-   \subsection{(4) Outcome Measures for Change or Matched Pairs}{
+   \subsection{(4) Measures for Change or Matched Pairs}{
 
       The purpose of a meta-analysis may be to assess the amount of change within individual groups (e.g., before and after a treatment or under two different treatments) or when dealing with matched pairs designs.
 
       \subsection{(4a) Measures for Quantitative Variables}{
 
-         When the response or dependent variable assessed in the individual studies is measured on some quantitative scale, the raw mean change, standardized versions thereof, the common language effect size (area under the curve), or the (log transformed) ratio of means (log response ratio) can be used as outcome measures (Becker, 1988; Gibbons et al., 1993; Lajeunesse, 2011; Morris, 2000). Here, one needs to specify \code{m1i} and \code{m2i}, the observed means at the two measurement occasions, \code{sd1i} and \code{sd2i} for the corresponding observed standard deviations, \code{ri} for the correlation between the measurements at the two measurement occasions, and \code{ni} for the sample size. The options for the \code{measure} argument are then:
+         When the response or dependent variable assessed in the individual studies is measured on some quantitative scale, the raw mean change, standardized versions thereof, the common language effect size (area under the curve), or the (log transformed) ratio of means (log response ratio) can be used as measures (Becker, 1988; Gibbons et al., 1993; Lajeunesse, 2011; Morris, 2000). Here, one needs to specify \code{m1i} and \code{m2i}, the observed means at the two measurement occasions, \code{sd1i} and \code{sd2i} for the corresponding observed standard deviations, \code{ri} for the correlation between the measurements at the two measurement occasions, and \code{ni} for the sample size. The options for the \code{measure} argument are then:
 
          \itemize{
          \item \code{"MC"} for the \emph{raw mean change},
@@ -431,7 +432,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
          trt 2 \tab \ics \tab \code{ai+ci} \tab \ics \tab \code{bi+di}}
          which is of the same form as a \mjeqn{2 \times 2}{2x2} table that would arise in a study comparing/contrasting two independent groups.
 
-         The options for the \code{measure} argument that will compute outcome measures based on the marginal table are:
+         The options for the \code{measure} argument that will compute estimates based on the marginal table are:
 
          \itemize{
          \item \code{"MPRR"} for the matched pairs \emph{marginal log risk ratio},
@@ -441,7 +442,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          See Becker and Balagtas (1993), Curtin et al. (2002), Elbourne et al. (2002), Fagerland et al. (2014), May and Johnson (1997), Newcombe (1998), Stedman et al. (2011), and Zou (2007) for discussions of these measures.
 
-         The options for the \code{measure} argument that will compute outcome measures based on the paired table are:
+         The options for the \code{measure} argument that will compute estimates based on the paired table are:
 
          \itemize{
          \item \code{"MPORC"} for the \emph{conditional log odds ratio},
@@ -456,9 +457,9 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    }
 
-   \subsection{(5) Other Outcome Measures for Meta-Analyses}{
+   \subsection{(5) Other Measures for Meta-Analyses}{
 
-      Other outcome measures are sometimes used for meta-analyses that do not directly fall into the categories above. These are described in this section.
+      Other measures are sometimes used for meta-analyses that do not directly fall into the categories above. These are described in this section.
 
       \subsection{Cronbach's alpha and Transformations Thereof}{
 
@@ -522,7 +523,7 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
          Ziegler et al. (2011) describe the use of meta-analytic methods to examine deviations from the Hardy-Weinberg equilibrium across multiple studies. The relative excess heterozygosity (REH) is the proposed measure for such a meta-analysis, which can be computed by setting \code{measure="REH"}. Here, one needs to specify \code{ai} for the number of individuals with homozygous dominant alleles, \code{bi} for the number of individuals with heterozygous alleles, and \code{ci} for the number of individuals with homozygous recessives alleles.
 
-         Note that the log is taken of the REH values, which makes this outcome measure symmetric around 0 and results in a sampling distribution that is closer to normality.
+         Note that the log is taken of the REH values, which makes this measure symmetric around 0 and results in a sampling distribution that is closer to normality.
 
          A dataset corresponding to data of this type is provided in \code{\link[metadat]{dat.frank2008}}.
 
@@ -532,15 +533,23 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \subsection{(6) Converting a Data Frame to an 'escalc' Object}{
 
-      The function can also be used to convert a regular data frame to an \sQuote{escalc} object. One simply sets the \code{measure} argument to one of the options described above (or to \code{measure="GEN"} for a generic outcome measure not further specified) and passes the observed effect sizes or outcomes via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (or the standard errors via the \code{sei} argument) to the function.
+      The function can also be used to convert a regular data frame to an \sQuote{escalc} object. One simply sets the \code{measure} argument to one of the options described above (or to \code{measure="GEN"} for a set of generic estimates not further specified) and passes the estimates via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument (or the standard errors via the \code{sei} argument) to the function.
+
+   }
+
+   \subsection{Flagging Large Estimates}{
+
+      For some of the measures above, the function runs a check to examine if one or more of the computed estimates are unusually large. This may happen due to data extraction or reporting errors and might warrant double-checking the values used as input to the function.
+
+      At the moment, this check is conducted for standardized mean differences (i.e., measure \code{"SMD"}) and its variants. A common mistake when computing such measures is that standard errors of the means are used in place of standard deviations. Recall that a standardized mean difference (before the bias correction) is given by \mjeqn{d = (\text{m1i}-\text{m2i})/\text{sdi}}{(m1i-m2i)/sdi}, where \mjeqn{\text{sdi} = \sqrt{\frac{(\text{n1i}-1)\text{sd1i}^2 + (\text{n2i}-1)\text{sd2i}^2}{\text{n1i}+\text{n2i}-2}}}{sdi = sqrt(((n1i-1)*sd1i^2 + (n2i-1)*sd2i^2) / (n1i+n2i-2))} is the pooled standard deviation and \code{sd1i} and \code{sd2i} are the standard deviations of the two groups -- see section (1a). When using the standard errors of the means in place of the standard deviations, then the computed \mjseqn{d} value will be too large. An excessively large \mjseqn{d} value might be an indication that such a mistake was made. Since this invalidates all meta-analytic results computed based on such a value, the function checks if any of the calculated standardized mean differences are larger than 2 in absolute value. This cutoff is somewhat arbitrary and can be adjusted via the \code{cutoff} argument. The check can be skipped by setting \code{cutoff=NA}. Also, to avoid annoyance due to false positives, the check is only conducted once for a given set of estimates within a session.
 
    }
 
    \subsection{Other Arguments}{
 
-      Argument \code{slab} can be used to specify (study) labels for the effect sizes or outcomes. These labels are passed on to other functions and used as needed (e.g., for labeling the studies in a forest plot). Note that missing values in the study labels are not allowed.
+      Argument \code{slab} can be used to specify (study) labels for the estimates. These labels are passed on to other functions and used as needed (e.g., for labeling the estimates in a forest plot). Note that missing values in the labels are not allowed.
 
-      The \code{flip} argument, when set to \code{TRUE}, can be used to flip the sign of the effect sizes or outcomes. This can also be a logical vector to indicate for which studies the sign should be flipped. The argument can also be a numeric vector to specify a multiplier for the effect sizes or outcomes (the corresponding sampling variances are adjusted accordingly).
+      The \code{flip} argument, when set to \code{TRUE}, can be used to flip the sign of the estimates. This can also be a logical vector to indicate for which studies the sign should be flipped. The argument can also be a numeric vector to specify a multiplier for the estimates (the corresponding sampling variances are adjusted accordingly).
 
       The \code{subset} argument can be used to select the studies that will be included in the data frame returned by the function. On the other hand, the \code{include} argument simply selects for which studies the measure will be computed (if it shouldn't be computed for all of them).
 
@@ -549,16 +558,16 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 }
 \value{
    An object of class \code{c("escalc","data.frame")}. The object is a data frame containing the following components:
-   \item{yi}{vector with the observed effect sizes or outcomes.}
+   \item{yi}{vector with the estimates.}
    \item{vi}{vector with the corresponding sampling variances.}
 
    If a data frame was specified via the \code{data} argument and \code{append=TRUE}, then variables \code{yi} and \code{vi} are appended to this data frame. Note that the \code{var.names} argument actually specifies the names of these two variables (\code{"yi"} and \code{"vi"} are the defaults).
 
    If the data frame already contains two variables with names as specified by the \code{var.names} argument, the values for these two variables will be overwritten when \code{replace=TRUE} (which is the default). By setting \code{replace=FALSE}, only values that are \code{NA} will be replaced.
 
-   The object is formatted and printed with the \code{\link[=print.escalc]{print}} function. The \code{\link[=summary.escalc]{summary}} function can be used to obtain confidence intervals for the individual outcomes. See \code{\link{methods.escalc}} for some additional method functions for \code{"escalc"} objects.
+   The object is formatted and printed with the \code{\link[=print.escalc]{print}} function. The \code{\link[=summary.escalc]{summary}} function can be used to obtain confidence intervals around the estimates. See \code{\link{methods.escalc}} for some additional method functions for \code{"escalc"} objects.
 
-   With the \code{\link[=aggregate.escalc]{aggregate}} function, one can aggregate multiple effect sizes or outcomes belonging to the same study (or some other clustering variable) into a single combined effect size or outcome.
+   With the \code{\link[=aggregate.escalc]{aggregate}} function, one can aggregate multiple estimates belonging to the same study (or some other clustering variable) into a single combined estimate.
 }
 \note{
    The variable names specified under \code{var.names} should be syntactically valid variable names. If necessary, they are adjusted so that they are.
@@ -710,13 +719,13 @@ escalc(measure, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \code{\link{conv.wald}} for a function to convert Wald-type confidence intervals and test statistics to sampling variances.
 
-   \code{\link{conv.delta}} for a function to transform observed effect sizes or outcomes and their sampling variances using the delta method.
+   \code{\link{conv.delta}} for a function to transform estimates and their sampling variances using the delta method.
 
-   \code{\link{vcalc}} for a function to construct or approximate the variance-covariance matrix of dependent effect sizes or outcomes.
+   \code{\link{vcalc}} for a function to construct or approximate the variance-covariance matrix of dependent estimates.
 
    \code{\link{rcalc}} for a function to construct the variance-covariance matrix of dependent correlation coefficients.
 
-   \code{\link{rma.uni}} and \code{\link{rma.mv}} for model fitting functions that can take the calculated effect sizes or outcomes (and the corresponding sampling variances) as input.
+   \code{\link{rma.uni}} and \code{\link{rma.mv}} for model fitting functions that can take the calculated estimates (and the corresponding sampling variances) as input.
 
    \code{\link{rma.mh}}, \code{\link{rma.peto}}, and \code{\link{rma.glmm}} for model fitting functions that take similar inputs.
 }

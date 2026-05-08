@@ -67,7 +67,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("vtype", "knha", "onlyo1", "addyi", "addvi", "correct", "i2def", "r2def", "skipr2", "abbrev", "dfs", "time", "outlist", "link", "optbeta", "alpha", "beta", "skiphes", "retopt", "randhet", "omega2", "pleasedonotreportI2thankyouverymuch"))
+   .chkdots(ddd, c("vtype", "knha", "onlyo1", "addyi", "addvi", "correct", "cutoff", "i2def", "r2def", "skipr2", "abbrev", "dfs", "time", "outlist", "link", "optbeta", "alpha", "beta", "skiphes", "retopt", "randhet", "omega2", "pleasedonotreportI2thankyouverymuch"))
 
    if (is.null(ddd$vtype)) {
       vtype <- "LS"
@@ -96,12 +96,13 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
       model <- "rma.ls"
    }
 
-   # set defaults or get 'onlyo1', 'addyi', 'addvi', and 'correct' arguments
+   # set defaults or get 'onlyo1', 'addyi', 'addvi', 'correct', and 'cutoff' arguments
 
    onlyo1  <- .chkddd(ddd$onlyo1,  FALSE)
    addyi   <- .chkddd(ddd$addyi,   TRUE)
    addvi   <- .chkddd(ddd$addvi,   TRUE)
    correct <- .chkddd(ddd$correct, TRUE)
+   cutoff  <- .chkddd(ddd$cutoff)
 
    # set defaults for 'i2def' and 'r2def'
 
@@ -867,7 +868,7 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       }
 
-      args <- c(args, list(measure=measure, vtype=vtype, correct=correct))
+      args <- c(args, list(measure=measure, vtype=vtype, correct=correct, cutoff=cutoff))
 
       dat <- .do.call(escalc, args)
 
