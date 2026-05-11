@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-3</span>
       </span>
     </div>
 
@@ -201,7 +201,7 @@
 <dd><p>optional argument to include one or more predictors for the scale part in a location-scale model. See ‘Details’.</p></dd>
 
    <dt id="arg-measure">measure<a class="anchor" aria-label="anchor" href="#arg-measure"></a></dt>
-<dd><p>character string to specify the type of data supplied to the function. When <code>measure="GEN"</code> (default), the effect size estimates and corresponding sampling variances should be supplied to the function via the <code>yi</code> and <code>vi</code> arguments, respectively (instead of the sampling variances, one can supply the standard errors via the <code>sei</code> argument). Alternatively, one can set <code>measure</code> to one of the effect size measures described under the documentation for the <code><a href="escalc.html">escalc</a></code> function in which case one must specify the required data via the appropriate arguments (see <code><a href="escalc.html">escalc</a></code>).</p></dd>
+<dd><p>character string to specify the type of data supplied to the function. See ‘Details’.</p></dd>
 
    <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>optional data frame containing the data supplied to the function.</p></dd>
@@ -272,7 +272,7 @@
 <h3 id="specifying-the-data">Specifying the Data<a class="anchor" aria-label="anchor" href="#specifying-the-data"></a></h3>
 
 
-<p>The function can be used in combination with any of the usual effect size measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, log transformed ratios of means, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation), or, more generally, any set of estimates (with corresponding sampling variances) one would like to analyze. Simply specify the estimates via the <code>yi</code> argument and the corresponding sampling variances via the <code>vi</code> argument. Instead of specifying <code>vi</code>, one can specify the standard errors (the square root of the sampling variances) via the <code>sei</code> argument. The <code><a href="escalc.html">escalc</a></code> function can be used to compute a wide variety of effect size measures (and the corresponding sampling variances) based on various summary statistics.</p>
+<p>The function can be used in combination with any of the usual effect size measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, log transformed ratios of means, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation), or, more generally, any set of estimates (with corresponding sampling variances) one would like to analyze. Simply specify the estimates via the <code>yi</code> argument and the corresponding sampling variances via the <code>vi</code> argument. Instead of specifying <code>vi</code>, one can specify the standard errors (the square root of the sampling variances) via the <code>sei</code> argument. The <code><a href="escalc.html">escalc</a></code> function can be used to compute a wide variety of effect size measures (and the corresponding sampling variances) based on various summary statistics. If the estimates were computed with some other software and they are one of the types of measures implemented in <code><a href="escalc.html">escalc</a></code>, one can use the <code>measure</code> argument to declare what the estimates actually represent (this is for example useful so that plots based on a model object automatically use correct axis labels).</p>
 <p>Note that the second argument of the function is used to specify the sampling variances of the estimates, not the standard errors. So, assuming that the variable with the standard errors is called ‘<code>stderrs</code>’, writing <code>rma(yi, stderrs)</code> would incorrectly pass the standard errors of the estimates to the second argument for the sampling variances, which would yield incorrect results. Instead, <code>rma(yi, sei=stderrs)</code> or <code>rma(yi, stderrs^2)</code> would yield correct results. See <a href="https://www.metafor-project.org/doku.php/tips:input_to_rma_function" class="external-link">here</a> for further details.</p>
 <p>Alternatively, the function can automatically calculate the values of a chosen effect size measure (and the corresponding sampling variances) when supplied with the necessary data. The <code><a href="escalc.html">escalc</a></code> function describes which measures are currently implemented and what data/arguments should then be specified/used. The <code>measure</code> argument should then be set to the desired measure.</p>
 <p></p>
@@ -585,6 +585,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit a random-effects model supplying the 2x2 table cell frequencies to the function</span></span></span>
+<span class="r-in"><span><span class="co">### and requesting that log risk ratios (measure="RR") should be computed based on the data</span></span></span>
 <span class="r-in"><span><span class="fu">rma</span><span class="op">(</span>measure<span class="op">=</span><span class="st">"RR"</span>, ai<span class="op">=</span><span class="va">tpos</span>, bi<span class="op">=</span><span class="va">tneg</span>, ci<span class="op">=</span><span class="va">cpos</span>, di<span class="op">=</span><span class="va">cneg</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random-Effects Model (k = 13; tau^2 estimator: REML)</span>

@@ -354,13 +354,16 @@
 
    } else {
 
-      if (!is.numeric(cutoff)) {
-         warning(mstyle$warning(paste0("Argument 'cutoff' must be numeric.")), call.=FALSE)
+      if (length(cutoff) != 1L) {
+         stop(mstyle$stop(paste0("Argument 'cutoff' must specify a single value.")), call.=FALSE)
          return()
       }
 
-      if (length(cutoff) != 1L) {
-         warning(mstyle$warning(paste0("Argument 'cutoff' must specify a single value.")), call.=FALSE)
+      if (is.na(cutoff))
+         cutoff <- NA_real_ # so that cutoff=NA does not trigger the following warning
+
+      if (!is.numeric(cutoff)) {
+         stop(mstyle$stop(paste0("Argument 'cutoff' must be numeric.")), call.=FALSE)
          return()
       }
 
@@ -368,7 +371,7 @@
 
    }
 
-   sig <- digest::digest(yi)
+   sig <- digest::digest(as.vector(yi))
    yichecks <- .getfromenv("yichecks")
 
    if (!is.element(sig, yichecks) && !is.na(cutoff)) {

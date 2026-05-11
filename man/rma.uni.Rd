@@ -51,7 +51,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{ni}{see below and the documentation of the \code{\link{escalc}} function for more details.}
    \item{mods}{optional argument to include one or more moderators in the model. A single moderator can be given as a vector of length \mjseqn{k} specifying the values of the moderator. Multiple moderators are specified by giving a matrix with \mjseqn{k} rows and as many columns as there are moderator variables. Alternatively, a model \code{\link{formula}} can be used to specify the model. See \sQuote{Details}.}
    \item{scale}{optional argument to include one or more predictors for the scale part in a location-scale model. See \sQuote{Details}.}
-   \item{measure}{character string to specify the type of data supplied to the function. When \code{measure="GEN"} (default), the effect size estimates and corresponding sampling variances should be supplied to the function via the \code{yi} and \code{vi} arguments, respectively (instead of the sampling variances, one can supply the standard errors via the \code{sei} argument). Alternatively, one can set \code{measure} to one of the effect size measures described under the documentation for the \code{\link{escalc}} function in which case one must specify the required data via the appropriate arguments (see \code{\link{escalc}}).}
+   \item{measure}{character string to specify the type of data supplied to the function. See \sQuote{Details}.}
    \item{data}{optional data frame containing the data supplied to the function.}
    \item{slab}{optional vector with labels for the \mjseqn{k} studies.}
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be used for the analysis.}
@@ -81,7 +81,7 @@ rma(yi, vi, sei, weights, ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
 
    \subsection{Specifying the Data}{
 
-      The function can be used in combination with any of the usual effect size measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, log transformed ratios of means, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation), or, more generally, any set of estimates (with corresponding sampling variances) one would like to analyze. Simply specify the estimates via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument. Instead of specifying \code{vi}, one can specify the standard errors (the square root of the sampling variances) via the \code{sei} argument. The \code{\link{escalc}} function can be used to compute a wide variety of effect size measures (and the corresponding sampling variances) based on various summary statistics.
+      The function can be used in combination with any of the usual effect size measures used in meta-analyses (e.g., log risk ratios, log odds ratios, risk differences, mean differences, standardized mean differences, log transformed ratios of means, raw correlation coefficients, correlation coefficients transformed with Fisher's r-to-z transformation), or, more generally, any set of estimates (with corresponding sampling variances) one would like to analyze. Simply specify the estimates via the \code{yi} argument and the corresponding sampling variances via the \code{vi} argument. Instead of specifying \code{vi}, one can specify the standard errors (the square root of the sampling variances) via the \code{sei} argument. The \code{\link{escalc}} function can be used to compute a wide variety of effect size measures (and the corresponding sampling variances) based on various summary statistics. If the estimates were computed with some other software and they are one of the types of measures implemented in \code{\link{escalc}}, one can use the \code{measure} argument to declare what the estimates actually represent (this is for example useful so that plots based on a model object automatically use correct axis labels).
 
       Note that the second argument of the function is used to specify the sampling variances of the estimates, not the standard errors. So, assuming that the variable with the standard errors is called \sQuote{\code{stderrs}}, writing \code{rma(yi, stderrs)} would incorrectly pass the standard errors of the estimates to the second argument for the sampling variances, which would yield incorrect results. Instead, \code{rma(yi, sei=stderrs)} or \code{rma(yi, stderrs^2)} would yield correct results. See \href{https://www.metafor-project.org/doku.php/tips:input_to_rma_function}{here} for further details.
 
@@ -329,6 +329,7 @@ dat$sei <- sqrt(dat$vi)
 rma(yi, sei=sei, data=dat)
 
 ### fit a random-effects model supplying the 2x2 table cell frequencies to the function
+### and requesting that log risk ratios (measure="RR") should be computed based on the data
 rma(measure="RR", ai=tpos, bi=tneg, ci=cpos, di=cneg, data=dat)
 
 ### fit a mixed-effects model with two moderators (absolute latitude and publication year)

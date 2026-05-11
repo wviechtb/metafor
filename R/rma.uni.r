@@ -324,6 +324,10 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       attr(yi, "measure") <- measure
 
+      # check for unusually large estimates for a given measure
+
+      .chkyisize(as.vector(yi), measure=measure, cutoff=cutoff)
+
       # extract 'vi' and 'sei' values (but only if 'yi' wasn't an 'escalc' object)
 
       if (!yi.escalc) {

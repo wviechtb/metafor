@@ -3009,7 +3009,7 @@ var.names=c("yi","vi"), add.measure=FALSE, append=TRUE, replace=TRUE, digits, ..
    if (missing(cutoff))
       cutoff <- NULL
 
-   .chkyisize(yi, measure=measure, cutoff=cutoff)
+   .chkyisize(as.vector(yi), measure=measure, cutoff=cutoff)
 
    ### check for negative vi's (should not happen, but just in case)
 

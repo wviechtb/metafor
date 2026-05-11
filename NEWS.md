@@ -1,6 +1,6 @@
-# metafor 5.1-2 (2026-05-08)
+# metafor 5.1-3 (2026-05-11)
 
-- `escalc()` now warns about unusually large standardized mean differences (possibly a result of using SEs instead of SDs in their calculation)
+- `escalc()` and `rma()` now warn about unusually large standardized mean differences (possibly a result of using SEs instead of SDs in their calculation)
 
 - adjusted the default bounds for some of the integral transformations to avoid numerical issues
 

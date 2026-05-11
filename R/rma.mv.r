@@ -93,7 +93,9 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
 
    ddd <- list(...)
 
-   .chkdots(ddd, c("tdist", "outlist", "time", "dist", "abbrev", "restart", "optbeta", "beta", "vccon", "retopt", "lambda1", "lambda2"))
+   .chkdots(ddd, c("cutoff", "tdist", "outlist", "time", "dist", "abbrev", "restart", "optbeta", "beta", "vccon", "retopt", "lambda1", "lambda2"))
+
+   cutoff  <- .chkddd(ddd$cutoff)
 
    if (is.null(ddd$lambda1)) {
       lambda1 <- 0
@@ -343,6 +345,10 @@ cvvc=FALSE, sparse=FALSE, verbose=FALSE, digits, control, ...) {
    ### add measure attribute (back) to the yi vector
 
    attr(yi, "measure") <- measure
+
+   ### check for unusually large estimates for a given measure
+
+   #.chkyisize(as.vector(yi), measure=measure, cutoff=cutoff)
 
    ### some checks on V (and turn V into a diagonal matrix if it is a column/row vector)
 
