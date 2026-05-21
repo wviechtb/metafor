@@ -103,7 +103,7 @@ regtest <- function(x, vi, sei, ni, subset, data, model="rma", predictor="sei", 
    } else {
 
       if (!.is.vector(x))
-         stop(mstyle$stop("Argument 'x' must be a vector or an 'rma' model object."))
+         stop(mstyle$stop("Argument 'x' must be a vector with estimates or an 'rma' model object."))
 
       yi <- x
 

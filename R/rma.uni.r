@@ -2353,8 +2353,13 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
 
       beta     <- cbind(opt.res$par[pos.beta])
       alpha    <- cbind(opt.res$par[pos.alpha])
-      lnomega2 <- unname(opt.res$par[pos.omega2]) # numeric(0) if !randhet
-      omega2   <- exp(lnomega2)                   # numeric(0) if !randhet
+      if (is.na(omega2.arg)) {
+         lnomega2 <- unname(opt.res$par[pos.omega2]) # numeric(0) if !randhet
+         omega2   <- exp(lnomega2)                   # numeric(0) if !randhet
+      } else {
+         lnomega2 <- log(omega2.arg)
+         omega2 <- omega2.arg
+      }
 
       # try to compute var-cov matrix for the scale parameter estimates (and omega^2)
 

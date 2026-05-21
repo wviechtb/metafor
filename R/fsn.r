@@ -94,7 +94,7 @@ fsn <- function(x, vi, sei, subset, data, type, alpha=0.05, target,
    } else {
 
       if (!.is.vector(x))
-         stop(mstyle$stop("Argument 'x' must be a vector or an 'rma' model object."))
+         stop(mstyle$stop("Argument 'x' must be a vector with estimates or an 'rma' model object."))
 
       ### select/match type
 

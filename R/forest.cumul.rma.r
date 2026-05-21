@@ -858,7 +858,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    sav <- c(res, list(level=level, annotate=annotate, digits=digits[[1]], width=width,
                       transf=transf, atransf=atransf, targs=targs, alim=alim, olim=olim,
-                      rowadj=rowadj, fonts=fonts[1:2], annosym=annosym))
+                      efac=efac, rowadj=rowadj, fonts=fonts[1:2], annosym=annosym))
    try(assign("forest", sav, envir=.metafor), silent=TRUE)
 
    invisible(res)

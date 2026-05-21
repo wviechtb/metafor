@@ -60,7 +60,7 @@ ranktest <- function(x, vi, sei, subset, data, digits, ...) {
    } else {
 
       if (!.is.vector(x))
-         stop(mstyle$stop("Argument 'x' must be a vector or an 'rma' model object."))
+         stop(mstyle$stop("Argument 'x' must be a vector with estimates or an 'rma' model object."))
 
       yi <- x
 
