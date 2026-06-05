@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-4</span>
       </span>
     </div>
 
@@ -105,13 +105,13 @@
 <dd><p>a vector with the effect size estimates or an object of class <code>"rma"</code>.</p></dd>
 
    <dt id="arg-vi">vi<a class="anchor" aria-label="anchor" href="#arg-vi"></a></dt>
-<dd><p>vector with the corresponding sampling variances (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
+<dd><p>vector with the corresponding sampling variances. Ignored if <code>x</code> is an object of class <code>"rma"</code>.</p></dd>
 
    <dt id="arg-sei">sei<a class="anchor" aria-label="anchor" href="#arg-sei"></a></dt>
 <dd><p>vector with the corresponding standard errors (note: only one of the two, <code>vi</code> or <code>sei</code>, needs to be specified).</p></dd>
 
    <dt id="arg-subset">subset<a class="anchor" aria-label="anchor" href="#arg-subset"></a></dt>
-<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the test (ignored if <code>x</code> is an object of class <code>"rma"</code>).</p></dd>
+<dd><p>optional (logical or numeric) vector to specify the subset of studies that should be included in the test. Ignored if <code>x</code> is an object of class <code>"rma"</code>.</p></dd>
 
    <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>optional data frame containing the variables given to the arguments above.</p></dd>
@@ -126,7 +126,7 @@
     <div id="details">
     <h2>Details</h2>
     <p>The function carries out the rank correlation test as described by Begg and Mazumdar (1994). The test can be used to examine whether the effect size estimates and the corresponding sampling variances are correlated. A high correlation would indicate that the funnel plot is asymmetric, which may be a result of publication bias.</p>
-<p>One can either pass a vector with the effect size estimates (via <code>x</code>) and the corresponding sampling variances via <code>vi</code> (or the standard errors via <code>sei</code>) to the function or an object of class <code>"rma"</code>. When passing a model object, the model must be a model without moderators (i.e., either an equal- or a random-effects model).</p>
+<p>Via argument <code>x</code>, one can either pass a vector with the effect size estimates to the function (and then the corresponding sampling variances via <code>vi</code> or the standard errors via <code>sei</code>) or an object of class <code>"rma"</code>. When passing a model object to argument <code>x</code>, the model must be a model without moderators (i.e., either an equal- or a random-effects model).</p>
     </div>
     <div id="value">
     <h2>Value</h2>

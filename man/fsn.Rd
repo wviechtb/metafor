@@ -10,9 +10,9 @@ fsn(x, vi, sei, subset, data, type, alpha=0.05, target,
 }
 \arguments{
    \item{x}{a vector with the effect size estimates or an object of class \code{"rma"}.}
-   \item{vi}{vector with the corresponding sampling variances (ignored if \code{x} is an object of class \code{"rma"}).}
+   \item{vi}{vector with the corresponding sampling variances. Ignored if \code{x} is an object of class \code{"rma"}.}
    \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
-   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be used for the calculation (ignored if \code{x} is an object of class \code{"rma"}).}
+   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be used for the calculation. Ignored if \code{x} is an object of class \code{"rma"}.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{type}{optional character string to specify the type of method to use for the calculation of the fail-safe N. Possible options are \code{"Rosenthal"} (the default when \code{x} is a vector with estimates), \code{"Orwin"}, \code{"Rosenberg"}, or \code{"General"} (the default when \code{x} is an object of class \code{"rma"}). Can be abbreviated. See \sQuote{Details}.}
    \item{alpha}{target alpha level for the Rosenthal, Rosenberg, and General methods (the default is 0.05).}
@@ -26,7 +26,7 @@ fsn(x, vi, sei, subset, data, type, alpha=0.05, target,
 \details{
    The function can be used to calculate the \sQuote{fail-safe N}, that is, the minimum number of studies averaging null results that would have to be added to a given set of \mjseqn{k} studies to change the conclusion of a meta-analysis. If this number is small (in relation to the actual number of studies), then this indicates that the results based on the observed studies are not robust to publication bias (of the form assumed by the method, that is, where a set of studies averaging null results is missing). The method is also called a \sQuote{file drawer analysis} as it assumes that there is a set of studies averaging null results hiding in file drawers, which can overturn the findings from a meta-analysis. There are various types of methods that are all based on the same principle, which are described in more detail further below. Note that \emph{the fail-safe N is not an estimate of the number of missing studies}, only how many studies must be hiding in file drawers for the findings to be overturned.
 
-   One can either pass a vector with the effect size estimates (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}. When passing a model object, the model must be a model without moderators (i.e., either an equal- or a random-effects model).
+   Via argument \code{x}, one can either pass a vector with the effect size estimates to the function (and then the corresponding sampling variances via \code{vi} or the standard errors via \code{sei}) or an object of class \code{"rma"}. When passing a model object to argument \code{x}, the model must be a model without moderators (i.e., either an equal- or a random-effects model).
 
    \subsection{Rosenthal Method}{
 

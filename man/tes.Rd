@@ -15,9 +15,9 @@ tes(x, vi, sei, subset, data, H0=0, alternative="two.sided", alpha=0.05, theta, 
    \emph{These arguments pertain to data input:}
 
    \item{x}{a vector with the effect size estimates or an object of class \code{"rma"}.}
-   \item{vi}{vector with the corresponding sampling variances (ignored if \code{x} is an object of class \code{"rma"}).}
+   \item{vi}{vector with the corresponding sampling variances. Ignored if \code{x} is an object of class \code{"rma"}.}
    \item{sei}{vector with the corresponding standard errors (note: only one of the two, \code{vi} or \code{sei}, needs to be specified).}
-   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included (ignored if \code{x} is an object of class \code{"rma"}).}
+   \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be included. Ignored if \code{x} is an object of class \code{"rma"}.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
 
    \emph{These arguments pertain to the tests of the effect size estimates:}
@@ -46,7 +46,7 @@ tes(x, vi, sei, subset, data, H0=0, alternative="two.sided", alpha=0.05, theta, 
 \details{
    The function carries out the test of excess significance described by Ioannidis and Trikalinos (2007). The test can be used to examine whether the observed number of significant findings is greater than the number of significant findings expected given the power of the tests. An overabundance of significant tests may suggest that the collection of studies is not representative of all studies conducted on a particular topic.
 
-   One can either pass a vector with the effect size estimates (via \code{x}) and the corresponding sampling variances via \code{vi} (or the standard errors via \code{sei}) to the function or an object of class \code{"rma"}.
+   Via argument \code{x}, one can either pass a vector with the effect size estimates to the function (and then the corresponding sampling variances via \code{vi} or the standard errors via \code{sei}) or an object of class \code{"rma"}.
 
    The effect size estimates are tested for significance based on a standard Wald-type test, that is, by comparing \mjdeqn{z_i = \frac{y_i - \text{H}_0}{\sqrt{v_i}}}{z_i = (y_i - H_0) / sqrt(v_i)} against the appropriate critical value(s) of a standard normal distribution (e.g., \mjeqn{\pm 1.96}{±1.96} for \code{alternative="two.sided"} and \code{alpha=0.05}, which are the defaults). Let \mjseqn{O} denote the observed number of significant tests.
 

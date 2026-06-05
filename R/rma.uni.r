@@ -3037,6 +3037,8 @@ test="z", level=95, btt, att, tau2, verbose=FALSE, digits, control, ...) {
    p.eff <- p
    k.eff <- k
 
+   class(M) <- c("vcovmat", class(M))
+
    if (is.null(ddd$outlist) || ddd$outlist == "nodata") {
 
       res <- list(b=beta, beta=beta, se=se, zval=zval, pval=pval, ci.lb=ci.lb, ci.ub=ci.ub, vb=vb,

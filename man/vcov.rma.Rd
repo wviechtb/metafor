@@ -10,7 +10,7 @@
 }
 \arguments{
    \item{object}{an object of class \code{"rma"}.}
-   \item{type}{character string to specify the type of variance-covariance matrix to return: \code{type="fixed"} returns the variance-covariance matrix of the fixed effects (the default), \code{type="obs"} returns the marginal variance-covariance matrix of the effect size estimates, \code{type="fitted"} returns the variance-covariance matrix of the fitted values, \code{type="resid"} returns the variance-covariance matrix of the residuals.}
+   \item{type}{character string to specify the type of variance-covariance matrix to return: \code{type="fixed"} returns the variance-covariance matrix of the fixed effects (the default), \code{type="obs"} (or equivalently, \code{type="marginal"}) returns the marginal variance-covariance matrix of the effect size estimates, \code{type="fitted"} returns the variance-covariance matrix of the fitted values, \code{type="resid"} returns the variance-covariance matrix of the residuals.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -43,7 +43,7 @@ res <- rma(yi, vi, mods = ~ ablat + year, data=dat)
 vcov(res)
 
 ### marginal var-cov matrix of the observed log risk ratios
-round(vcov(res, type="obs"), 3)
+round(vcov(res, type="marginal"), 3)
 
 ### var-cov matrix of the fitted values
 round(vcov(res, type="fitted"), 3)

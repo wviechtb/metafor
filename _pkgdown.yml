@@ -157,6 +157,7 @@ reference:
       - ranef
       - blup
       - fitstats
+      - hettest
       - simulate.rma
       - update.rma
   - title: "Model Diagnostics"
@@ -179,6 +180,7 @@ reference:
       - print.confint.rma
       - print.fsn
       - print.gosh.rma
+      - print.hettest
       - print.hc.rma.uni
       - print.list.rma
       - print.permutest.rma.uni

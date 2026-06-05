@@ -10,11 +10,11 @@ vcov.rma <- function(object, type="fixed", ...) {
    if (!is.element(na.act, c("na.omit", "na.exclude", "na.fail", "na.pass")))
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
-   type <- match.arg(type, c("fixed", "beta", "alpha", "delta", "obs", "fitted", "resid"))
+   type <- match.arg(type, c("fixed", "beta", "alpha", "delta", "obs", "marginal", "fitted", "resid"))
 
    #########################################################################
 
-   if (type=="fixed") {
+   if (type == "fixed") {
 
       out <- object$vb
 
@@ -28,14 +28,14 @@ vcov.rma <- function(object, type="fixed", ...) {
 
    }
 
-   if (type=="beta") {
+   if (type == "beta") {
 
       out <- object$vb
       return(out)
 
    }
 
-   if (type=="alpha") {
+   if (type == "alpha") {
 
       if (!inherits(object, "rma.ls"))
          stop(mstyle$stop("Can only extract var-cov matrix of alpha coefficients for location-scale models."))
@@ -45,7 +45,7 @@ vcov.rma <- function(object, type="fixed", ...) {
 
    }
 
-   if (type=="delta") {
+   if (type == "delta") {
 
       if (!inherits(object, "rma.uni.selmodel"))
          stop(mstyle$stop("Can only extract var-cov matrix of delta coefficients for selection models."))
@@ -57,7 +57,7 @@ vcov.rma <- function(object, type="fixed", ...) {
 
    #########################################################################
 
-   if (type=="obs") {
+   if (type %in% c("obs","marginal")) {
 
       if (inherits(object, c("rma.uni","rma.mv"))) {
 
@@ -87,7 +87,7 @@ vcov.rma <- function(object, type="fixed", ...) {
 
    #########################################################################
 
-   if (type=="fitted") {
+   if (type == "fitted") {
 
       out <- object$X.f %*% object$vb %*% t(object$X.f)
 
@@ -110,7 +110,7 @@ vcov.rma <- function(object, type="fixed", ...) {
 
    #########################################################################
 
-   if (type=="resid") {
+   if (type == "resid") {
 
       ### the SEs of the residuals cannot be estimated consistently for "robust.rma" objects
 

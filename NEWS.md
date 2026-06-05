@@ -4,6 +4,8 @@
 
 - adjusted the default bounds for some of the integral transformations to avoid numerical issues
 
+- added `hettest()` function to test for heteroscedastic heterogeneity
+
 - improved the documentation a bit
 
 # metafor 5.0-1 (2026-04-26)
