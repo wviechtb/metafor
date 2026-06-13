@@ -13,7 +13,12 @@
       #x2 <- sum(Ui^2 / Iii) # not the same!
       I <- outer(X = 1 / (sqrt(2) * S * vari^2), Y = 1 / (sqrt(2) * S * vari^2))
       diag(I) <- 1/2 * (wi - 1 / (S * vari^2))^2
-      x2 <- c(t(Ui) %*% solve(I) %*% Ui)
+      invI <- try(solve(I), silent=TRUE)
+      if (inherits(invI, "try-error")) {
+         mstyle <- .get.mstyle()
+         stop(mstyle$stop("Could not invert the informatrion matrix."), call.=FALSE)
+      }
+      x2 <- c(t(Ui) %*% invI %*% Ui)
    } else {
       #Ui <- 1/2 * wi^2 * (yi - mu_hat)^2 - 1/2 * wi
       #Iii <- 1 / (2*vari^2)
@@ -27,7 +32,7 @@
 
 }
 
-.hettest.lrt <- function(yi, vi, method, res0, mom) {
+.hettest.lrt <- function(yi, vi, method, res0, mom, tau2i.init, threshold, maxiter) {
 
    k <- length(yi)
 
@@ -36,11 +41,13 @@
       vari <- resid(res0)^2 / (1-hi)
       tau2i <- pmax(0, vari - vi)
    } else {
-      tau2i <- try(.hettest.esttau2i(yi, vi, method=method), silent=TRUE)
+      tau2i <- try(.hettest.esttau2i(yi, vi, method=method, tau2i.init=tau2i.init, threshold=threshold, maxiter=maxiter), silent=TRUE)
    }
 
-   if (inherits(tau2i, "try-error"))
-      stop("Could not estimate the tau^2_i values.")
+   if (inherits(tau2i, "try-error")) {
+      mstyle <- .get.mstyle()
+      stop(mstyle$stop("Could not estimate the tau^2_i values."), call.=FALSE)
+   }
 
    res1 <- rma(yi, vi=vi+tau2i, method=method, tau2=0)
 
@@ -52,7 +59,7 @@
 
 }
 
-.hettest.wald <- function(yi, vi, method, res0, mom) {
+.hettest.wald <- function(yi, vi, method, res0, mom, tau2i.init, threshold, maxiter) {
 
    k <- length(yi)
 
@@ -61,11 +68,13 @@
       vari <- resid(res0)^2 / (1-hi)
       tau2i <- pmax(0, vari - vi)
    } else {
-      tau2i <- try(.hettest.esttau2i(yi, vi, method=method), silent=TRUE)
+      tau2i <- try(.hettest.esttau2i(yi, vi, method=method, tau2i.init=tau2i.init, threshold=threshold, maxiter=maxiter), silent=TRUE)
    }
 
-   if (inherits(tau2i, "try-error"))
-      stop("Could not estimate the tau^2_i values.")
+   if (inherits(tau2i, "try-error")) {
+      mstyle <- .get.mstyle()
+      stop(mstyle$stop("Could not estimate the tau^2_i values."), call.=FALSE)
+   }
 
    vari <- tau2i + vi
 
@@ -99,17 +108,17 @@
 
 }
 
-.hettest.esttau2i <- function(yi, vi, method) {
+.hettest.esttau2i <- function(yi, vi, method, tau2i.init, threshold, maxiter) {
 
    k <- length(yi)
-   tau2i <- rep(0.2, k) # TODO: what should be the default value here?
+   tau2i <- tau2i.init
    diffs <- rep(1, k)
    conv <- 1
    iter <- 1
-   while (any(diffs > 10^-8)) { # TODO: need to be able to adjust this
-      if (iter > 1000) { # TODO: need to be able to adjust this
-         break
+   while (any(diffs > threshold)) {
+      if (iter > maxiter) {
          conv <- 0
+         break
       }
       tau2i.old <- tau2i
       wi <- 1 / (tau2i + vi)

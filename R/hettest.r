@@ -1,11 +1,6 @@
-hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=TRUE, progbar=TRUE, digits, ...) {
+hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=TRUE, progbar=TRUE, digits, control, ...) {
 
    #########################################################################
-
-   # control arguments for .hettest.esttau2i maxiter and threshold
-   # what about the lrt for the random heteroscedastic heterogeneity model?
-   # it's analogous to the lrt for tau^2 - probably doesn't work as well, so
-   # one has to get this via anova(), not this function
 
    mstyle <- .get.mstyle()
 
@@ -17,7 +12,15 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
    test <- tolower(test)
    test <- match.arg(test, c("lrt", "wald", "score"))
 
-   method <- match.arg(method, c("ML", "REML"))
+   # check 'method' argument
+
+   method <- method[1] # just in case
+
+   if (!is.element(method, c("ML","REML")))
+      stop(mstyle$warning("Test must be based on ML/REML estimation."), call.=FALSE)
+
+   if (missing(control))
+      control <- list()
 
    #########################################################################
 
@@ -175,18 +178,6 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
          iter <- 1000
       }
 
-      # set default for 'progbar'
-
-      if (missing(progbar))
-         progbar <- ifelse(boot, TRUE, FALSE)
-
-      # check 'method' argument
-
-      method <- method[1] # just in case
-
-      if (!is.element(method, c("ML","REML")))
-         warning(mstyle$warning("Test must be based on ML/REML estimation."), call.=FALSE)
-
       #########################################################################
 
       if (is.null(ddd$model)) {
@@ -217,9 +208,36 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
 
       #########################################################################
 
+      # initial value(s) for tau2i in .hettest.esttau2i()
+
+      tau2i.init <- rep(res0$tau2, k)
+      tau2i.init[tau2i.init <= 0.01] <- 0.01
+
+      # control settings
+
+      con <- list(tau2i.init = tau2i.init,
+                  threshold  = 10^-8,
+                  maxiter    = 1000)
+
+      con.pos <- pmatch(names(control), names(con))
+      con[c(na.omit(con.pos))] <- control[!is.na(con.pos)]
+
+      con$tau2i.init <- .expand1(con$tau2i.init, k)
+
+      if (anyNA(con$tau2i.init))
+         stop(mstyle$stop(paste0("No missing values allowed in 'tau2i.init'.")))
+
+      if (any(con$tau2i.init < 0))
+         stop(mstyle$stop("Value(s) of 'tau2i.init' must be >= 0."))
+
+      if (length(con$tau2i.init) != k)
+         stop(mstyle$stop(paste0("Length of the 'tau2i.init' argument (", length(con$tau2i.init), ") does not match the actual number of variance components (", k, ").")))
+
+      #########################################################################
+
       if (test == "lrt") {
 
-         out <- .hettest.lrt(yi, vi, method=method, res0=res0, mom=mom)
+         out <- .hettest.lrt(yi, vi, method=method, res0=res0, mom=mom, tau2i.init=con$tau2i.init, threshold=con$threshold, maxiter=con$maxiter)
 
          x2   <- out$statistic
          df   <- out$df
@@ -240,7 +258,9 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
                if (inherits(tmp, "try-error"))
                   next
 
-               tmp <- .hettest.lrt(sim[,b], vi, method=method, res0=tmp, mom=mom)
+               tmp <- try(.hettest.lrt(sim[,b], vi, method=method, res0=tmp, mom=mom, tau2i.init=con$tau2i.init, threshold=con$threshold, maxiter=con$maxiter), silent=TRUE)
+               if (inherits(tmp, "try-error"))
+                  next
                x2.boot[b] <- tmp$statistic
 
             }
@@ -256,7 +276,7 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
 
       if (test == "wald") {
 
-         out <- .hettest.wald(yi, vi, method=method, res0=res0, mom=mom)
+         out <- .hettest.wald(yi, vi, method=method, res0=res0, mom=mom, tau2i.init=con$tau2i.init, threshold=con$threshold, maxiter=con$maxiter)
 
          x2   <- out$statistic
          df   <- out$df
@@ -277,7 +297,9 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
                if (inherits(tmp, "try-error"))
                   next
 
-               tmp <- .hettest.wald(sim[,b], vi, method=method, res0=tmp, mom=mom)
+               tmp <- try(.hettest.wald(sim[,b], vi, method=method, res0=tmp, mom=mom, tau2i.init=con$tau2i.init, threshold=con$threshold, maxiter=con$maxiter), silent=TRUE)
+               if (inherits(tmp, "try-error"))
+                  next
                x2.boot[b] <- tmp$statistic
 
             }
@@ -306,7 +328,7 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
             vari <- resid(res0)^2 / (1-hi)
             tau2i <- pmax(0, vari - vi)
          } else {
-            tau2i <- try(.hettest.esttau2i(yi, vi, method=method), silent=TRUE)
+            tau2i <- try(.hettest.esttau2i(yi, vi, method=method, tau2i.init=con$tau2i.init, threshold=con$threshold, maxiter=con$maxiter), silent=TRUE)
             if (inherits(tau2i, "try-error"))
                tau2i <- NA
          }
@@ -326,7 +348,9 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
                if (inherits(tmp, "try-error"))
                   next
 
-               tmp <- .hettest.scoretest(sim[,b], vi, mu_hat=coef(tmp), tau2_hat=tmp$tau2, method=method)
+               tmp <- try(.hettest.scoretest(sim[,b], vi, mu_hat=coef(tmp), tau2_hat=tmp$tau2, method=method), silent=TRUE)
+               if (inherits(tmp, "try-error"))
+                  next
                x2.boot[b] <- tmp$statistic
 
             }

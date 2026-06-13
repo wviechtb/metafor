@@ -7,7 +7,7 @@
 }
 \usage{
 hettest(x, vi, sei, subset, data, method="REML",
-        test="score", boot=TRUE, progbar=TRUE, digits, \dots)
+        test="score", boot=TRUE, progbar=TRUE, digits, control, \dots)
 
 \method{print}{hettest}(x, digits=x$digits, \dots)
 }
@@ -22,6 +22,7 @@ hettest(x, vi, sei, subset, data, method="REML",
    \item{boot}{logical to specify whether bootstrapping should be used (the default is \code{TRUE}). Can also be a number to specify the number of bootstrap samples to take.}
    \item{progbar}{logical to specify whether a progress bar should be shown when using bootstrapping (the default is \code{TRUE}).}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded.}
+   \item{control}{optional list of control values. See \sQuote{Note}.}
    \item{\dots}{other arguments.}
 }
 \details{
@@ -55,7 +56,10 @@ hettest(x, vi, sei, subset, data, method="REML",
    \item{x2.boot}{the bootstrap values of the test statistic (only when \code{boot=TRUE}).}
    \item{\dots}{some additional elements/values.}
 
-   The results are formatted and printed with the \code{print} function.
+   The results are formatted and printed with the \code{print} function. When bootstrapping, the output shows for how many bootstrap samples the calculations could be completed.
+}
+\note{
+   The saturated random-effects model is fitted with an iterative algorithm, alternating between the computation of the \mjseqn{\tau^2_i} estimates and the estimate of \mjseqn{\mu}. By default, the initial \mjseqn{\tau^2_i} values are set equal to the \mjseqn{\tau^2} estimate from the standard random-effects model. This process continues for a maximum of 1000 iterations until the change in all of the estimated \mjseqn{\tau^2_i} values is smaller than \mjeqn{10^{-8}}{10^(-8)} from one iteration to the next. The starting \mjseqn{\tau^2_i} values, threshold, and maximum number of iterations can be adjusted via the \code{control} argument by setting \code{control=list(tau2i.init=values, threshold=value, maxiter=value)}.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
