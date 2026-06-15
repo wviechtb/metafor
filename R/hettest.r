@@ -10,7 +10,9 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
       stop(mstyle$stop("Unknown 'na.action' specified under options()."))
 
    test <- tolower(test)
-   test <- match.arg(test, c("lrt", "wald", "score"))
+
+   if (!is.element(test, c("lrt", "wald", "score", "ks1", "ks2", "ad1", "ad2")))
+      stop(mstyle$stop("Unknown option specified for the 'test' argument."))
 
    # check 'method' argument
 
@@ -151,7 +153,7 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
 
             yi <- yi[not.na]
             vi <- vi[not.na]
-            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted from test.")), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted from the test.")), call.=FALSE)
 
          }
 
@@ -176,6 +178,8 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
          boot <- TRUE
       } else {
          iter <- 1000
+         if (is.element(test, c("ks1", "ks2", "ad1", "ad2")))
+            boot <- TRUE
       }
 
       #########################################################################
@@ -200,7 +204,11 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
          if (!is.null(ddd$seed))
             set.seed(ddd$seed)
 
-         x2.boot <- rep(NA_real_, iter)
+         if (is.element(test, c("lrt", "wald", "score"))) {
+            x2.boot <- rep(NA_real_, iter)
+         } else {
+            statistic.boot <- rep(NA_real_, iter)
+         }
          sim <- simulate(res0, iter)
          sim[,1] <- c(yi) # make sure that first bootstrap dataset corresponds to the actual data
 
@@ -364,12 +372,60 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
 
       }
 
+      if (test %in% c("ks1", "ks2", "ad1", "ad2")) {
+
+         tau2i <- NA
+         df <- NA
+
+         ri <- resid(res0, type="pearson")
+
+         statistic <- switch(test,
+            ks1 = {.ks.test(ri, pnorm)},
+            ks2 = {.ks.test(ri^2, pchisq, df=1)},
+            ad1 = {.ad.test(ri, pnorm)},
+            ad2 = {.ad.test(ri^2, pchisq, df=1)},
+         )
+
+         if (progbar)
+            pbar <- pbapply::startpb(min=0, max=iter)
+
+         for (b in seq_len(iter)) {
+
+            if (progbar)
+               pbapply::setpb(pbar, b)
+
+            tmp <- try(rma(sim[,b], vi, method=method), silent=TRUE)
+
+            if (inherits(tmp, "try-error"))
+               next
+
+            ri <- resid(tmp, type="pearson")
+
+            statistic.boot[b] <- switch(test,
+               ks1 = {.ks.test(ri, pnorm)},
+               ks2 = {.ks.test(ri^2, pchisq, df=1)},
+               ad1 = {.ad.test(ri, pnorm)},
+               ad2 = {.ad.test(ri^2, pchisq, df=1)},
+            )
+
+         }
+
+         if (progbar)
+            pbapply::closepb(pbar)
+
+         pval <- mean(statistic.boot >= statistic, na.rm=TRUE)
+
+      }
+
       #########################################################################
 
-      res <- list(x2=x2, df=df, pval=pval, method=method, test=test, boot=boot, iter=iter, digits=digits)
-
-      if (boot)
-         res$x2.boot <- x2.boot
+      if (is.element(test, c("lrt", "wald", "score"))) {
+         res <- list(x2=x2, df=df, pval=pval, method=method, test=test, boot=boot, iter=iter, digits=digits)
+         if (boot)
+            res$x2.boot <- x2.boot
+      } else {
+         res <- list(statistic=statistic, pval=pval, method=method, test=test, boot=boot, iter=iter, digits=digits, statistic.boot=statistic.boot)
+      }
 
       if (test %in% c("lrt","wald")) {
          res$tau2i <- out$tau2i

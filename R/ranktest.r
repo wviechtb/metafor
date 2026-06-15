@@ -120,7 +120,7 @@ ranktest <- function(x, vi, sei, subset, data, digits, ...) {
 
             yi <- yi[not.na]
             vi <- vi[not.na]
-            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted from test.")), call.=FALSE)
+            warning(mstyle$warning(paste(sum(has.na), ifelse(sum(has.na) > 1, "studies", "study"), "with NAs omitted from the test.")), call.=FALSE)
 
          }
 

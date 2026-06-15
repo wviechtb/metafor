@@ -71,3 +71,52 @@
 }
 
 ############################################################################
+
+.re.fit.quick <- function(yi, vi, method) {
+
+   k <- length(yi)
+   wi <- 1 / vi
+   theta <- sum(wi * yi) / sum(wi)
+   Q <- sum(wi * (yi - theta)^2)
+   tau2 <- max(0.01, (Q - (k-1)) / (sum(wi) - sum(wi^2) / sum(wi)))
+
+   threshold <- 10^-8
+   maxiter <- 1000
+
+   diff <- 1
+   conv <- 1
+   iter <- 1
+
+   while (diff > threshold) {
+      if (iter > maxiter) {
+         conv <- 0
+         break
+      }
+      tau2.old <- tau2
+      wi <- 1 / (tau2 + vi)
+      sumwi <- sum(wi)
+      mu <- sum(wi*yi) / sumwi
+      if (method == "ML") {
+         tau2 <- sum(wi^2 * ((yi - mu)^2 - vi)) / sum(wi^2)
+      } else {
+         tau2 <- sum(wi^2 * ((yi - mu)^2 - vi)) / sum(wi^2) + 1/sumwi
+      }
+      tau2 <- max(0, tau2)
+      diff <- abs(tau2 - tau2.old)
+      iter <- iter + 1
+   }
+
+   if (conv == 0)
+      stop()
+
+   if (method == "ML") {
+      ll <- sum(dnorm(yi, mean=mu, sd=sqrt(vi + tau2), log=TRUE))
+   } else {
+      ll <- sum(dnorm(yi, mean=mu, sd=sqrt(vi + tau2), log=TRUE)) + 1/2 * log(2*k*pi) - 1/2 * log(sumwi)
+   }
+
+   return(c(mu, tau2, ll))
+
+}
+
+############################################################################

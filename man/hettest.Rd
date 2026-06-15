@@ -18,7 +18,7 @@ hettest(x, vi, sei, subset, data, method="REML",
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be used for the calculation. Ignored if \code{x} is an object of class \code{"rma"}.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{method}{character string to specify whether the test should be based on maximum likelihood (\code{"ML"}) or restricted maximum likelihood (\code{"REML"}) estimation. The default is \code{"REML"}. Ignored if \code{x} is an object of class \code{"rma"}.}
-   \item{test}{character string to specify which test to run. Either \code{"lrt"}, \code{"wald"}, or \code{"score"} (the default).}
+   \item{test}{character string (case insensitive) to specify which test to run. Either \code{"lrt"}, \code{"wald"}, or \code{"score"} (the default).}
    \item{boot}{logical to specify whether bootstrapping should be used (the default is \code{TRUE}). Can also be a number to specify the number of bootstrap samples to take.}
    \item{progbar}{logical to specify whether a progress bar should be shown when using bootstrapping (the default is \code{TRUE}).}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded.}
@@ -56,10 +56,12 @@ hettest(x, vi, sei, subset, data, method="REML",
    \item{x2.boot}{the bootstrap values of the test statistic (only when \code{boot=TRUE}).}
    \item{\dots}{some additional elements/values.}
 
-   The results are formatted and printed with the \code{print} function. When bootstrapping, the output shows for how many bootstrap samples the calculations could be completed.
+   The results are formatted and printed with the \code{print} function.
 }
 \note{
    The saturated random-effects model is fitted with an iterative algorithm, alternating between the computation of the \mjseqn{\tau^2_i} estimates and the estimate of \mjseqn{\mu}. By default, the initial \mjseqn{\tau^2_i} values are set equal to the \mjseqn{\tau^2} estimate from the standard random-effects model. This process continues for a maximum of 1000 iterations until the change in all of the estimated \mjseqn{\tau^2_i} values is smaller than \mjeqn{10^{-8}}{10^(-8)} from one iteration to the next. The starting \mjseqn{\tau^2_i} values, threshold, and maximum number of iterations can be adjusted via the \code{control} argument by setting \code{control=list(tau2i.init=values, threshold=value, maxiter=value)}.
+
+   When bootstrapping, the iterative algorithm must be run for each bootstrap sample. In rare cases, the algorithm may not converge. The output shows for how many bootstrap samples the calculations could be completed.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).

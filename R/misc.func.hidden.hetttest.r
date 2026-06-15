@@ -141,11 +141,21 @@
 
 }
 
-.pchisqmix <- function(x2, df, tol = 1e-12) {
-   j <- 1:df
-   weights <- dbinom(j, df, 0.5)
-   p <- sum(weights * pchisq(x2, df=j, lower.tail=FALSE))
-   if (x2 < tol)
-      p <- p + dbinom(0, df, 0.5)
-   return(p)
+.ks.test <- function(x, cdf, ...) {
+   k <- length(x)
+   x <- sort(x)
+   Fx <- cdf(x, ...)
+   Dplus  <- max((1:k)/k - Fx)
+   Dminus <- max(Fx - (0:(k-1))/k)
+   max(Dplus, Dminus)
+}
+
+.ad.test <- function(x, cdf, ...) {
+   k <- length(x)
+   x <- sort(x)
+   Fx <- cdf(x, ...)
+   eps <- .Machine$double.eps
+   Fx <- pmin(pmax(Fx, eps), 1 - eps)
+   A2 <- -k - mean((2*(1:k)-1) * (log(Fx) + log(1 - rev(Fx))))
+   A2
 }
