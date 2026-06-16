@@ -72,16 +72,13 @@
 
 ############################################################################
 
-.re.fit.quick <- function(yi, vi, method) {
+.re.fit.quick <- function(yi, vi, method, threshold=10^-5, maxiter=100) {
 
    k <- length(yi)
    wi <- 1 / vi
    theta <- sum(wi * yi) / sum(wi)
    Q <- sum(wi * (yi - theta)^2)
    tau2 <- max(0.01, (Q - (k-1)) / (sum(wi) - sum(wi^2) / sum(wi)))
-
-   threshold <- 10^-8
-   maxiter <- 1000
 
    diff <- 1
    conv <- 1
@@ -99,7 +96,7 @@
       if (method == "ML") {
          tau2 <- sum(wi^2 * ((yi - mu)^2 - vi)) / sum(wi^2)
       } else {
-         tau2 <- sum(wi^2 * ((yi - mu)^2 - vi)) / sum(wi^2) + 1/sumwi
+         tau2 <- sum(wi^2 * ((yi - mu)^2 - vi)) / sum(wi^2) + 1 / sumwi
       }
       tau2 <- max(0, tau2)
       diff <- abs(tau2 - tau2.old)
@@ -115,7 +112,11 @@
       ll <- sum(dnorm(yi, mean=mu, sd=sqrt(vi + tau2), log=TRUE)) + 1/2 * log(2*k*pi) - 1/2 * log(sumwi)
    }
 
-   return(c(mu, tau2, ll))
+   fit.stats <- matrix(NA_real_, nrow=5, ncol=2)
+   dimnames(fit.stats) <- list(c("ll","dev","AIC","BIC","AICc"), c("ML","REML"))
+   fit.stats["ll",method] <- ll
+
+   return(list(beta=mu, tau2=tau2, fit.stats=fit.stats))
 
 }
 

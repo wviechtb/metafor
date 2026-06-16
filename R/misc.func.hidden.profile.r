@@ -92,9 +92,9 @@
             I2 <- max(0, 100 * (Q - (k-1)) / Q)
             H2 <- Q / (k-1)
             if (model == 2L) {
-               tau2 <- max(0, (Q - (k-1)) / (sumwi - sum(wi^2)/sumwi))
+               tau2 <- max(0, (Q - (k-1)) / (sumwi - sum(wi^2) / sumwi))
                wi <- 1 / (vi + tau2)
-               est <- sum(wi*yi)/sum(wi)
+               est <- sum(wi*yi) / sum(wi)
             }
          }
          sav <- list(beta = est, k = k, QE = Q, I2 = I2, H2 = H2, tau2 = tau2)

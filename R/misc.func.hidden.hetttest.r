@@ -54,7 +54,7 @@
       llsat <- sum(dnorm(yi, mean=mu_hat, sd=sqrt(vari), log=TRUE)) + 1/2 * log(2*k*pi) - 1/2 * log(sum(wi))
    }
 
-   x2 <- c(-2 * (logLik(res0) - llsat))
+   x2 <- c(-2 * (res0$fit.stats["ll",method] - llsat))
    pval <- pchisq(x2, df=k-1, lower.tail=FALSE)
 
    return(list(statistic=x2, df=k-1, pval=pval))

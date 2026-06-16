@@ -202,7 +202,7 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
 
       # calculate the Pearson residuals
 
-      ri <- c(yi - res0$b[1]) / sqrt(vi + res0$tau2)
+      ri <- c(yi - res0$beta[1]) / sqrt(vi + res0$tau2)
 
       # simulate yi values for the bootstrapping
 
@@ -289,7 +289,7 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
 
       }
 
-      if (!is.na(statistic[j]) && boot[j]) {
+      if (!is.na(statistic[j]) && any(boot)) {
 
          if (progbar)
             pbar <- pbapply::startpb(min=0, max=iter)
@@ -299,12 +299,16 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
             if (progbar)
                pbapply::setpb(pbar, b)
 
-            res0.boot <- try(rma(sim[,b], vi, method=method), silent=TRUE)
+            if (mom) {
+               res0.boot <- try(rma(sim[,b], vi, method=method), silent=TRUE)
+            } else {
+               res0.boot <- try(.re.fit.quick(sim[,b], vi, method=method, threshold=con$threshold, maxiter=con$maxiter), silent=TRUE)
+            }
 
             if (inherits(res0.boot, "try-error"))
                next
 
-            ri.boot <- c(sim[,b] - res0.boot$b[1]) / sqrt(vi + res0.boot$tau2)
+            ri.boot <- c(sim[,b] - res0.boot$beta[1]) / sqrt(vi + res0.boot$tau2)
 
             tau2i.boot <- rep(NA_real_, k)
 
@@ -316,22 +320,26 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
 
             for (j in seq_len(ntest)) {
 
-               if (test[j] == "lrt")
-                  tmp <- .hettest.lrt(sim[,b], vi, method=method, res0=res0.boot, tau2i=tau2i.boot)
-               if (test[j] == "wald")
-                  tmp <- .hettest.wald(sim[,b], vi, method=method, tau2i=tau2i.boot)
-               if (test[j] == "score")
-                  tmp <- .hettest.score(sim[,b], vi, method=method, res0=res0.boot)
-               if (test[j] == "ks1")
-                  tmp <- .hettest.ks(ri.boot, pnorm)
-               if (test[j] == "ks2")
-                  tmp <- .hettest.ks(ri.boot^2, pchisq, df=1)
-               if (test[j] == "ad1")
-                  tmp <- .hettest.ad(ri.boot, pnorm)
-               if (test[j] == "ad2")
-                  tmp <- .hettest.ad(ri.boot^2, pchisq, df=1)
+               if (boot[j]) {
 
-               statistic.boot[b,j] <- tmp$statistic
+                  if (test[j] == "lrt")
+                     tmp <- .hettest.lrt(sim[,b], vi, method=method, res0=res0.boot, tau2i=tau2i.boot)
+                  if (test[j] == "wald")
+                     tmp <- .hettest.wald(sim[,b], vi, method=method, tau2i=tau2i.boot)
+                  if (test[j] == "score")
+                     tmp <- .hettest.score(sim[,b], vi, method=method, res0=res0.boot)
+                  if (test[j] == "ks1")
+                     tmp <- .hettest.ks(ri.boot, pnorm)
+                  if (test[j] == "ks2")
+                     tmp <- .hettest.ks(ri.boot^2, pchisq, df=1)
+                  if (test[j] == "ad1")
+                     tmp <- .hettest.ad(ri.boot, pnorm)
+                  if (test[j] == "ad2")
+                     tmp <- .hettest.ad(ri.boot^2, pchisq, df=1)
+
+                  statistic.boot[b,j] <- tmp$statistic
+
+               }
 
             }
 
@@ -340,7 +348,12 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
          if (progbar)
             pbapply::closepb(pbar)
 
-         pval[j] <- mean(statistic.boot[,j] > statistic[j], na.rm=TRUE)
+         for (j in seq_len(ntest)) {
+
+            if (boot[j])
+               pval[j] <- mean(statistic.boot[,j] > statistic[j], na.rm=TRUE)
+
+         }
 
       }
 
