@@ -11,7 +11,7 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
 
    test <- tolower(test)
 
-   if (!is.element(test, c("lrt", "wald", "score", "ks1", "ks2", "ad1", "ad2")))
+   if (!any(is.element(test, c("lrt", "wald", "score", "ks1", "ks2", "ad1", "ad2"))))
       stop(mstyle$stop("Unknown option specified for the 'test' argument."))
 
    # check 'method' argument
@@ -23,6 +23,8 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
 
    if (missing(control))
       control <- list()
+
+   ntest <- length(test)
 
    #########################################################################
 
@@ -172,14 +174,13 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
       # set defaults for 'boot' (can be numeric to specify the number of iterations)
 
       if (is.numeric(boot)) {
-         boot <- round(boot[1])
-         boot[boot <= 1] <- 1
+         boot <- max(1, round(boot[1]))
          iter <- boot
-         boot <- TRUE
+         boot <- rep(TRUE, ntest)
       } else {
          iter <- 1000
-         if (is.element(test, c("ks1", "ks2", "ad1", "ad2")))
-            boot <- TRUE
+         boot <- .expand1(boot, ntest)
+         boot[is.element(test, c("ks1", "ks2", "ad1", "ad2"))] <- TRUE
       }
 
       #########################################################################
@@ -199,16 +200,19 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
 
       }
 
-      if (boot) {
+      # calculate the Pearson residuals
+
+      ri <- c(yi - res0$b[1]) / sqrt(vi + res0$tau2)
+
+      # simulate yi values for the bootstrapping
+
+      if (any(boot)) {
 
          if (!is.null(ddd$seed))
             set.seed(ddd$seed)
 
-         if (is.element(test, c("lrt", "wald", "score"))) {
-            x2.boot <- rep(NA_real_, iter)
-         } else {
-            statistic.boot <- rep(NA_real_, iter)
-         }
+         statistic.boot <- matrix(NA_real_, nrow=iter, ncol=length(test))
+
          sim <- simulate(res0, iter)
          sim[,1] <- c(yi) # make sure that first bootstrap dataset corresponds to the actual data
 
@@ -243,148 +247,49 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
 
       #########################################################################
 
-      if (test == "lrt") {
+      # estimate the tau^2_i values (needed for the LRT and Wald-type test, but also get them when carrying out a score test)
 
-         out <- .hettest.lrt(yi, vi, method=method, res0=res0, mom=mom, tau2i.init=con$tau2i.init, threshold=con$threshold, maxiter=con$maxiter)
+      tau2i <- rep(NA_real_, k)
+      tau2i <- try(.hettest.esttau2i(yi, vi, method=method, res0=res0, mom=mom, tau2i.init=con$tau2i.init, threshold=con$threshold, maxiter=con$maxiter), silent=TRUE)
 
-         x2   <- out$statistic
-         df   <- out$df
-         pval <- out$pval
+      if (inherits(tau2i, "try-error") && any(is.element(test, c("lrt", "wald"))))
+         stop(mstyle$stop("Could not estimate the tau^2_i values."), call.=FALSE)
 
-         if (boot) {
+      #########################################################################
 
-            if (progbar)
-               pbar <- pbapply::startpb(min=0, max=iter)
+      # carry out the test(s)
 
-            for (b in seq_len(iter)) {
+      statistic <- double(ntest)
+      df        <- integer(ntest)
+      pval      <- double(ntest)
 
-               if (progbar)
-                  pbapply::setpb(pbar, b)
+      for (j in seq_len(ntest)) {
 
-               tmp <- try(rma(sim[,b], vi, method=method), silent=TRUE)
+         if (test[j] == "lrt")
+            out <- .hettest.lrt(yi, vi, method=method, res0=res0, tau2i=tau2i)
+         if (test[j] == "wald")
+            out <- .hettest.wald(yi, vi, method=method, tau2i=tau2i)
+         if (test[j] == "score")
+            out <- .hettest.score(yi, vi, method=method, res0=res0)
+         if (test[j] == "ks1")
+            out <- .hettest.ks(ri, pnorm)
+         if (test[j] == "ks2")
+            out <- .hettest.ks(ri^2, pchisq, df=1)
+         if (test[j] == "ad1")
+            out <- .hettest.ad(ri, pnorm)
+         if (test[j] == "ad2")
+            out <- .hettest.ad(ri^2, pchisq, df=1)
 
-               if (inherits(tmp, "try-error"))
-                  next
+         statistic[j] <- out$statistic
+         df[j] <- out$df
+         pval[j] <- out$pval
 
-               tmp <- try(.hettest.lrt(sim[,b], vi, method=method, res0=tmp, mom=mom, tau2i.init=con$tau2i.init, threshold=con$threshold, maxiter=con$maxiter), silent=TRUE)
-               if (inherits(tmp, "try-error"))
-                  next
-               x2.boot[b] <- tmp$statistic
-
-            }
-
-            if (progbar)
-               pbapply::closepb(pbar)
-
-            pval <- mean(x2.boot >= x2, na.rm=TRUE)
-
-         }
-
-      }
-
-      if (test == "wald") {
-
-         out <- .hettest.wald(yi, vi, method=method, res0=res0, mom=mom, tau2i.init=con$tau2i.init, threshold=con$threshold, maxiter=con$maxiter)
-
-         x2   <- out$statistic
-         df   <- out$df
-         pval <- out$pval
-
-         if (boot) {
-
-            if (progbar)
-               pbar <- pbapply::startpb(min=0, max=iter)
-
-            for (b in seq_len(iter)) {
-
-               if (progbar)
-                  pbapply::setpb(pbar, b)
-
-               tmp <- try(rma(sim[,b], vi, method=method), silent=TRUE)
-
-               if (inherits(tmp, "try-error"))
-                  next
-
-               tmp <- try(.hettest.wald(sim[,b], vi, method=method, res0=tmp, mom=mom, tau2i.init=con$tau2i.init, threshold=con$threshold, maxiter=con$maxiter), silent=TRUE)
-               if (inherits(tmp, "try-error"))
-                  next
-               x2.boot[b] <- tmp$statistic
-
-            }
-
-            if (progbar)
-               pbapply::closepb(pbar)
-
-            pval <- mean(x2.boot >= x2, na.rm=TRUE)
-
-         }
+         if (test[j] == "wald")
+            se.tau2i <- out$se.tau2i
 
       }
 
-      if (test == "score") {
-
-         out <- .hettest.scoretest(yi, vi, mu_hat=coef(res0), tau2_hat=res0$tau2, method=method)
-
-         x2   <- out$statistic
-         df   <- out$df
-         pval <- out$pval
-
-         # the score test does not require that we estimate the tau^2_i values, but do this anyway
-
-         if (mom) {
-            hi <- hatvalues(res0)
-            vari <- resid(res0)^2 / (1-hi)
-            tau2i <- pmax(0, vari - vi)
-         } else {
-            tau2i <- try(.hettest.esttau2i(yi, vi, method=method, tau2i.init=con$tau2i.init, threshold=con$threshold, maxiter=con$maxiter), silent=TRUE)
-            if (inherits(tau2i, "try-error"))
-               tau2i <- NA
-         }
-
-         if (boot) {
-
-            if (progbar)
-               pbar <- pbapply::startpb(min=0, max=iter)
-
-            for (b in seq_len(iter)) {
-
-               if (progbar)
-                  pbapply::setpb(pbar, b)
-
-               tmp <- try(rma(sim[,b], vi, method=method), silent=TRUE)
-
-               if (inherits(tmp, "try-error"))
-                  next
-
-               tmp <- try(.hettest.scoretest(sim[,b], vi, mu_hat=coef(tmp), tau2_hat=tmp$tau2, method=method), silent=TRUE)
-               if (inherits(tmp, "try-error"))
-                  next
-               x2.boot[b] <- tmp$statistic
-
-            }
-
-            if (progbar)
-               pbapply::closepb(pbar)
-
-            pval <- mean(x2.boot >= x2, na.rm=TRUE)
-
-         }
-
-      }
-
-      if (test %in% c("ks1", "ks2", "ad1", "ad2")) {
-
-         tau2i <- NA
-         df <- NA
-
-         ri <- resid(res0, type="pearson")
-
-         statistic <- switch(test,
-            ks1 = {.ks.test(ri, pnorm)},
-            ks2 = {.ks.test(ri^2, pchisq, df=1)},
-            ad1 = {.ad.test(ri, pnorm)},
-            ad2 = {.ad.test(ri^2, pchisq, df=1)},
-         )
+      if (!is.na(statistic[j]) && boot[j]) {
 
          if (progbar)
             pbar <- pbapply::startpb(min=0, max=iter)
@@ -394,47 +299,60 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
             if (progbar)
                pbapply::setpb(pbar, b)
 
-            tmp <- try(rma(sim[,b], vi, method=method), silent=TRUE)
+            res0.boot <- try(rma(sim[,b], vi, method=method), silent=TRUE)
 
-            if (inherits(tmp, "try-error"))
+            if (inherits(res0.boot, "try-error"))
                next
 
-            ri <- resid(tmp, type="pearson")
+            ri.boot <- c(sim[,b] - res0.boot$b[1]) / sqrt(vi + res0.boot$tau2)
 
-            statistic.boot[b] <- switch(test,
-               ks1 = {.ks.test(ri, pnorm)},
-               ks2 = {.ks.test(ri^2, pchisq, df=1)},
-               ad1 = {.ad.test(ri, pnorm)},
-               ad2 = {.ad.test(ri^2, pchisq, df=1)},
-            )
+            tau2i.boot <- rep(NA_real_, k)
+
+            if (any(is.element(test, c("lrt", "wald")))) {
+               tau2i.boot <- try(.hettest.esttau2i(sim[,b], vi, method=method, res0=res0.boot, mom=mom, tau2i.init=con$tau2i.init, threshold=con$threshold, maxiter=con$maxiter), silent=TRUE)
+               if (inherits(tau2i.boot, "try-error"))
+                  next
+            }
+
+            for (j in seq_len(ntest)) {
+
+               if (test[j] == "lrt")
+                  tmp <- .hettest.lrt(sim[,b], vi, method=method, res0=res0.boot, tau2i=tau2i.boot)
+               if (test[j] == "wald")
+                  tmp <- .hettest.wald(sim[,b], vi, method=method, tau2i=tau2i.boot)
+               if (test[j] == "score")
+                  tmp <- .hettest.score(sim[,b], vi, method=method, res0=res0.boot)
+               if (test[j] == "ks1")
+                  tmp <- .hettest.ks(ri.boot, pnorm)
+               if (test[j] == "ks2")
+                  tmp <- .hettest.ks(ri.boot^2, pchisq, df=1)
+               if (test[j] == "ad1")
+                  tmp <- .hettest.ad(ri.boot, pnorm)
+               if (test[j] == "ad2")
+                  tmp <- .hettest.ad(ri.boot^2, pchisq, df=1)
+
+               statistic.boot[b,j] <- tmp$statistic
+
+            }
 
          }
 
          if (progbar)
             pbapply::closepb(pbar)
 
-         pval <- mean(statistic.boot >= statistic, na.rm=TRUE)
+         pval[j] <- mean(statistic.boot[,j] > statistic[j], na.rm=TRUE)
 
       }
 
       #########################################################################
 
-      if (is.element(test, c("lrt", "wald", "score"))) {
-         res <- list(x2=x2, df=df, pval=pval, method=method, test=test, boot=boot, iter=iter, digits=digits)
-         if (boot)
-            res$x2.boot <- x2.boot
-      } else {
-         res <- list(statistic=statistic, pval=pval, method=method, test=test, boot=boot, iter=iter, digits=digits, statistic.boot=statistic.boot)
-      }
+      res <- list(statistic=statistic, df=df, pval=pval, method=method, test=test, boot=boot, iter=iter, digits=digits, tau2i=tau2i)
 
-      if (test %in% c("lrt","wald")) {
-         res$tau2i <- out$tau2i
-      } else {
-         res$tau2i <- tau2i
-      }
+      if (is.element("wald", test))
+         res$se.tau2i <- se.tau2i
 
-      if (test  == "wald")
-         res$se.tau2i <- out$se.tau2i
+      if (any(boot))
+         res$statistic.boot <- statistic.boot
 
       class(res) <- "hettest"
       return(res)

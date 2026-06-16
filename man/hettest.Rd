@@ -48,12 +48,12 @@ hettest(x, vi, sei, subset, data, method="REML",
 }
 \value{
    An object of class \code{"hettest"}. The object is a list containing the following components:
-   \item{x2}{the test statistic.}
+   \item{statistic}{the test statistic.}
    \item{df}{the degrees of freedom.}
    \item{pval}{the p-value.}
    \item{tau2i}{the estimated \mjseqn{\tau^2_i} values from the saturated random-effects model.}
    \item{se.tau2i}{the corresponding standard errors (only when running a Wald-type test).}
-   \item{x2.boot}{the bootstrap values of the test statistic (only when \code{boot=TRUE}).}
+   \item{statistic.boot}{the bootstrap values of the test statistic (only when \code{boot=TRUE}).}
    \item{\dots}{some additional elements/values.}
 
    The results are formatted and printed with the \code{print} function.
