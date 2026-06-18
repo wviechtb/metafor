@@ -11,7 +11,7 @@
        level=95, refline=0, digits=2L, width,
        xlab, slab, ilab, ilab.lab, ilab.xpos, ilab.pos,
        order, subset, transf, atransf, targs, rows,
-       efac=1, pch, psize, plim=c(0.5,1.5), col,
+       efac=1, pch, psize, plim=c(0.5,1.5), col, colci,
        shade, colshade, lty, fonts, cex, cex.lab, cex.axis, \dots)
 }
 \arguments{
@@ -50,6 +50,7 @@
    \item{psize}{optional numeric value to specify the point sizes for the estimates. If unspecified, the point sizes are a function of the precision of the estimates. Can also be a vector of values.}
    \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
    \item{col}{optional character string to specify the color of the estimates. Can also be a vector.}
+   \item{colci}{optional character string to specify the color of the CI lines. Can also be a vector.}
    \item{shade}{optional character string or a (logical or numeric) vector for shading rows of the plot. See \sQuote{Details}.}
    \item{colshade}{optional argument to specify the color for the shading.}
    \item{lty}{optional argument to specify the line type for the confidence intervals. If unspecified, the function sets this to \code{"solid"} by default.}

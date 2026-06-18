@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-9</span>
       </span>
     </div>
 
@@ -124,7 +124,7 @@
 <dd><p>character string to specify whether the test should be based on maximum likelihood (<code>"ML"</code>) or restricted maximum likelihood (<code>"REML"</code>) estimation. The default is <code>"REML"</code>. Ignored if <code>x</code> is an object of class <code>"rma"</code>.</p></dd>
 
    <dt id="arg-test">test<a class="anchor" aria-label="anchor" href="#arg-test"></a></dt>
-<dd><p>character string to specify which test to run. Either <code>"lrt"</code>, <code>"wald"</code>, or <code>"score"</code> (the default).</p></dd>
+<dd><p>character string (case insensitive) to specify which test to run. Either <code>"lrt"</code>, <code>"wald"</code>, or <code>"score"</code> (the default).</p></dd>
 
    <dt id="arg-boot">boot<a class="anchor" aria-label="anchor" href="#arg-boot"></a></dt>
 <dd><p>logical to specify whether bootstrapping should be used (the default is <code>TRUE</code>). Can also be a number to specify the number of bootstrap samples to take.</p></dd>
@@ -159,7 +159,7 @@
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code>"hettest"</code>. The object is a list containing the following components:</p>
-<dl><dt>x2</dt>
+<dl><dt>statistic</dt>
 <dd><p>the test statistic.</p></dd>
 
    <dt>df</dt>
@@ -174,18 +174,19 @@
    <dt>se.tau2i</dt>
 <dd><p>the corresponding standard errors (only when running a Wald-type test).</p></dd>
 
-   <dt>x2.boot</dt>
+   <dt>statistic.boot</dt>
 <dd><p>the bootstrap values of the test statistic (only when <code>boot=TRUE</code>).</p></dd>
 
    <dt>...</dt>
 <dd><p>some additional elements/values.</p></dd>
 
 
-</dl><p>The results are formatted and printed with the <code>print</code> function. When bootstrapping, the output shows for how many bootstrap samples the calculations could be completed.</p>
+</dl><p>The results are formatted and printed with the <code>print</code> function.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
     <p>The saturated random-effects model is fitted with an iterative algorithm, alternating between the computation of the <em></em>\(\tau^2_i\) estimates and the estimate of <em></em>\(\mu\). By default, the initial <em></em>\(\tau^2_i\) values are set equal to the <em></em>\(\tau^2\) estimate from the standard random-effects model. This process continues for a maximum of 1000 iterations until the change in all of the estimated <em></em>\(\tau^2_i\) values is smaller than <em></em>\(10^{-8}\) from one iteration to the next. The starting <em></em>\(\tau^2_i\) values, threshold, and maximum number of iterations can be adjusted via the <code>control</code> argument by setting <code>control=list(tau2i.init=values, threshold=value, maxiter=value)</code>.</p>
+<p>When bootstrapping, the iterative algorithm must be run for each bootstrap sample. In rare cases, the algorithm may not converge. The output shows for how many bootstrap samples the calculations could be completed (this should usually be ‘1000 / 1000’).</p>
     </div>
     <div id="author">
     <h2>Author</h2>

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-9</span>
       </span>
     </div>
 
@@ -103,7 +103,7 @@
 <span>       level<span class="op">=</span><span class="va">x</span><span class="op">$</span><span class="va">level</span>, refline<span class="op">=</span><span class="fl">0</span>, digits<span class="op">=</span><span class="fl">2L</span>, <span class="va">width</span>,</span>
 <span>       <span class="va">xlab</span>, <span class="va">slab</span>, <span class="va">mlab</span>, <span class="va">ilab</span>, <span class="va">ilab.lab</span>, <span class="va">ilab.xpos</span>, <span class="va">ilab.pos</span>,</span>
 <span>       <span class="va">order</span>, <span class="va">transf</span>, <span class="va">atransf</span>, <span class="va">targs</span>, <span class="va">rows</span>,</span>
-<span>       efac<span class="op">=</span><span class="fl">1</span>, <span class="va">pch</span>, <span class="va">psize</span>, plim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>,<span class="fl">1.5</span><span class="op">)</span>, <span class="va">colout</span>, <span class="va">col</span>, <span class="va">border</span>,</span>
+<span>       efac<span class="op">=</span><span class="fl">1</span>, <span class="va">pch</span>, <span class="va">psize</span>, plim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>,<span class="fl">1.5</span><span class="op">)</span>, <span class="va">colout</span>, <span class="va">colci</span>, <span class="va">col</span>, <span class="va">border</span>,</span>
 <span>       <span class="va">shade</span>, <span class="va">colshade</span>, <span class="va">lty</span>, <span class="va">fonts</span>, <span class="va">cex</span>, <span class="va">cex.lab</span>, <span class="va">cex.axis</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -217,6 +217,9 @@
 
    <dt id="arg-colout">colout<a class="anchor" aria-label="anchor" href="#arg-colout"></a></dt>
 <dd><p>optional character string to specify the color of the estimates. Can also be a vector.</p></dd>
+
+   <dt id="arg-colci">colci<a class="anchor" aria-label="anchor" href="#arg-colci"></a></dt>
+<dd><p>optional character string to specify the color of the CI lines. Can also be a vector.</p></dd>
 
    <dt id="arg-col">col<a class="anchor" aria-label="anchor" href="#arg-col"></a></dt>
 <dd><p>optional character string to specify the color of the polygon.</p></dd>
@@ -352,7 +355,7 @@
     <h2>Note</h2>
     <p>The function sets some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.</p>
 <p>The function actually returns some information about the chosen values invisibly. Printing this information is useful as a starting point to customize the plot (see ‘Examples’).</p>
-<p>For arguments <code>slab</code> and <code>ilab</code> and when specifying vectors for arguments <code>pch</code>, <code>psize</code>, <code>order</code>, and/or <code>colout</code> (and when <code>shade</code> is a logical vector), the variables specified are assumed to be of the same length as the data originally passed to the model fitting function (and if the <code>data</code> argument was used in the original model fit, then the variables will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.</p>
+<p>For arguments <code>slab</code> and <code>ilab</code> and when specifying vectors for arguments <code>pch</code>, <code>psize</code>, <code>order</code>, <code>colout</code> and/or <code>colci</code> (and when <code>shade</code> is a logical vector), the variables specified are assumed to be of the same length as the data originally passed to the model fitting function (and if the <code>data</code> argument was used in the original model fit, then the variables will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.</p>
 <p>If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the <code>cex</code>, <code>cex.lab</code>, and <code>cex.axis</code> arguments are then useful to adjust the symbol and text sizes.</p>
 <p>If the estimates are bounded (e.g., correlations are bounded between -1 and +1, proportions are bounded between 0 and 1), one can use the <code>olim</code> argument to enforce those limits (i.e., the estimates and confidence/prediction interval bounds cannot exceed those limits then).</p>
 <p>The models without moderators, the <code>col</code> argument can also be a vector of two elements, the first for the color of the polygon, the second for the color of the line for the prediction interval. For <code>predstyle="polygon"</code> and <code>predstyle="bar"</code>, <code>col[2]</code> can be used to adjust the polygon/bar color and <code>border[2]</code> the border color. For <code>predstyle="shade"</code>, <code>col</code> can be a vector of up to three elements, where <code>col[2]</code> and <code>col[3]</code> specify the colors for the center and the ends of the shading region. For <code>predstyle="dist"</code>, <code>col</code> can be a vector of up to four elements, <code>col[2]</code> for the tail regions, <code>col[3]</code> for the color above/below zero, <code>col[4]</code> for the opposite side (transparent by default), and <code>border[2]</code> for the color of the lines. Setting a color to <code>NA</code> makes it transparent.</p>

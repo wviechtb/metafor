@@ -12,7 +12,7 @@
        level=x$level, refline=0, digits=2L, width,
        xlab, slab, mlab, ilab, ilab.lab, ilab.xpos, ilab.pos,
        order, transf, atransf, targs, rows,
-       efac=1, pch, psize, plim=c(0.5,1.5), colout, col, border,
+       efac=1, pch, psize, plim=c(0.5,1.5), colout, colci, col, border,
        shade, colshade, lty, fonts, cex, cex.lab, cex.axis, \dots)
 }
 \arguments{
@@ -52,6 +52,7 @@
    \item{psize}{optional numeric value to specify the point sizes for the estimates. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values.}
    \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
    \item{colout}{optional character string to specify the color of the estimates. Can also be a vector.}
+   \item{colci}{optional character string to specify the color of the CI lines. Can also be a vector.}
    \item{col}{optional character string to specify the color of the polygon.}
    \item{border}{optional character string to specify the border color of the polygon.}
    \item{shade}{optional character string or a (logical or numeric) vector for shading rows of the plot. See \sQuote{Details}.}
@@ -178,7 +179,7 @@ text(c(-8.75, -5.25), res$k+2.8, c("Vaccinated", "Control"), cex=0.75, font=2)
 
    The function actually returns some information about the chosen values invisibly. Printing this information is useful as a starting point to customize the plot (see \sQuote{Examples}).
 
-   For arguments \code{slab} and \code{ilab} and when specifying vectors for arguments \code{pch}, \code{psize}, \code{order}, and/or \code{colout} (and when \code{shade} is a logical vector), the variables specified are assumed to be of the same length as the data originally passed to the model fitting function (and if the \code{data} argument was used in the original model fit, then the variables will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.
+   For arguments \code{slab} and \code{ilab} and when specifying vectors for arguments \code{pch}, \code{psize}, \code{order}, \code{colout} and/or \code{colci} (and when \code{shade} is a logical vector), the variables specified are assumed to be of the same length as the data originally passed to the model fitting function (and if the \code{data} argument was used in the original model fit, then the variables will be searched for within this data frame first). Any subsetting and removal of studies with missing values is automatically applied to the variables specified via these arguments.
 
    If the number of studies is quite large, the labels, annotations, and symbols may become quite small and impossible to read. Stretching the plot window vertically may then provide a more readable figure (one should call the function again after adjusting the window size, so that the label/symbol sizes can be properly adjusted). Also, the \code{cex}, \code{cex.lab}, and \code{cex.axis} arguments are then useful to adjust the symbol and text sizes.
 

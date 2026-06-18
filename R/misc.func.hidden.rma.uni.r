@@ -106,6 +106,10 @@
    if (conv == 0)
       stop()
 
+   wi <- 1 / (tau2 + vi)
+   sumwi <- sum(wi)
+   mu <- sum(wi*yi) / sumwi
+
    if (method == "ML") {
       ll <- sum(dnorm(yi, mean=mu, sd=sqrt(vi + tau2), log=TRUE))
    } else {
@@ -116,7 +120,12 @@
    dimnames(fit.stats) <- list(c("ll","dev","AIC","BIC","AICc"), c("ML","REML"))
    fit.stats["ll",method] <- ll
 
-   return(list(beta=mu, tau2=tau2, fit.stats=fit.stats))
+   ei <- yi - mu
+   hi <- wi / sumwi
+
+   out <- list(beta=mu, tau2=tau2, fit.stats=fit.stats, ei=ei, hi=hi)
+
+   return(out)
 
 }
 

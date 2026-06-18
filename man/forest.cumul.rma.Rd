@@ -10,7 +10,7 @@
        refline=0, digits=2L, width,
        xlab, ilab, ilab.lab, ilab.xpos, ilab.pos,
        transf, atransf, targs, rows,
-       efac=1, pch, psize, col, shade, colshade,
+       efac=1, pch, psize, col, colci, shade, colshade,
        lty, fonts, cex, cex.lab, cex.axis, \dots)
 }
 \arguments{
@@ -39,6 +39,7 @@
    \item{pch}{plotting symbol to use for the estimates. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
    \item{psize}{numeric value to specify the point sizes for the estimates (the default is 1). Can also be a vector of values.}
    \item{col}{optional character string to specify the color of the estimates. Can also be a vector.}
+   \item{colci}{optional character string to specify the color of the CI lines. Can also be a vector.}
    \item{shade}{optional character string or a (logical or numeric) vector for shading rows of the plot.}
    \item{colshade}{optional argument to specify the color for the shading.}
    \item{lty}{optional argument to specify the line type for the confidence intervals. If unspecified, the function sets this to \code{"solid"} by default.}

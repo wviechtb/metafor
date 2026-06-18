@@ -2,8 +2,8 @@
 
    if (mom) {
 
-      hi <- hatvalues(res0)
-      vari <- resid(res0)^2 / (1-hi)
+      hi <- res0$hi
+      vari <- res0$ei^2 / (1-hi)
       tau2i <- pmax(0, vari - vi)
 
    } else {

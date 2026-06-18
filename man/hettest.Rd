@@ -61,7 +61,7 @@ hettest(x, vi, sei, subset, data, method="REML",
 \note{
    The saturated random-effects model is fitted with an iterative algorithm, alternating between the computation of the \mjseqn{\tau^2_i} estimates and the estimate of \mjseqn{\mu}. By default, the initial \mjseqn{\tau^2_i} values are set equal to the \mjseqn{\tau^2} estimate from the standard random-effects model. This process continues for a maximum of 1000 iterations until the change in all of the estimated \mjseqn{\tau^2_i} values is smaller than \mjeqn{10^{-8}}{10^(-8)} from one iteration to the next. The starting \mjseqn{\tau^2_i} values, threshold, and maximum number of iterations can be adjusted via the \code{control} argument by setting \code{control=list(tau2i.init=values, threshold=value, maxiter=value)}.
 
-   When bootstrapping, the iterative algorithm must be run for each bootstrap sample. In rare cases, the algorithm may not converge. The output shows for how many bootstrap samples the calculations could be completed.
+   When bootstrapping, the iterative algorithm must be run for each bootstrap sample. In rare cases, the algorithm may not converge. The output shows for how many bootstrap samples the calculations could be completed (this should usually be \sQuote{1000 / 1000}).
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).

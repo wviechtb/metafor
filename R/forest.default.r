@@ -3,7 +3,7 @@ annotate=TRUE,                                               showweights=FALSE, 
 xlim, alim, olim, ylim,          at, steps=5, level=95,      refline=0, digits=2L, width,
 xlab, slab,       ilab, ilab.lab, ilab.xpos, ilab.pos, order, subset,
 transf, atransf, targs, rows,
-efac=1, pch, psize, plim=c(0.5,1.5),         col,         shade, colshade,
+efac=1, pch, psize, plim=c(0.5,1.5),         col, colci,  shade, colshade,
 lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    #########################################################################
@@ -63,6 +63,9 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
    if (missing(col))
       col <- NULL
+
+   if (missing(colci))
+      colci <- col
 
    if (missing(shade))
       shade <- NULL
@@ -291,7 +294,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       stop(mstyle$stop("Length of 'yi' does not match the length of 'vi', 'sei', or the ('ci.lb','ci.ub')."))
 
    ### note: slab (if specified), ilab (if specified), pch (if vector), psize (if
-   ###       vector), col (if vector), subset (if specified), order (if vector)
+   ###       vector), col (if vector), colci (if vector), subset (if specified), order (if vector)
    ###       must have the same length as yi (including NAs) even when subsetting eventually
 
    slab.null <- FALSE
@@ -340,6 +343,14 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          stop(mstyle$stop(paste0("Length of the 'col' argument (", length(col), ") does not correspond to the number of outcomes (", k, ").")))
    } else {
       col <- rep(par("fg"), k)
+   }
+
+   if (!is.null(colci)) {
+      colci <- .expand1(colci, k) # col can be a single value (which is then repeated)
+      if (length(colci) != k)
+         stop(mstyle$stop(paste0("Length of the 'colci' argument (", length(colci), ") does not correspond to the number of outcomes (", k, ").")))
+   } else {
+      colci <- rep(par("fg"), k)
    }
 
    shade.type <- "none"
@@ -408,6 +419,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       pch    <- pch[sort.vec]
       psize  <- psize[sort.vec]                 # if NULL, remains NULL
       col    <- col[sort.vec]
+      colci  <- colci[sort.vec]
       subset <- subset[sort.vec]                # if NULL, remains NULL
       if (shade.type == "logical")
          shade <- shade[sort.vec]
@@ -426,6 +438,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       pch   <- .getsubset(pch,   subset)
       psize <- .getsubset(psize, subset)        # if NULL, remains NULL
       col   <- .getsubset(col,   subset)
+      colci <- .getsubset(colci, subset)
       if (shade.type == "logical")
          shade <- .getsubset(shade, subset)
 
@@ -456,6 +469,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    pch   <- pch[k:1]
    psize <- psize[k:1]                          # if NULL, remains NULL
    col   <- col[k:1]
+   colci <- colci[k:1]
    rows  <- rows[k:1]
    if (shade.type == "logical")
       shade <- shade[k:1]
@@ -478,6 +492,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          pch   <- pch[not.na]
          psize <- psize[not.na]                 # if NULL, remains NULL
          col   <- col[not.na]
+         colci <- colci[not.na]
          if (shade.type == "logical")
             shade <- shade[not.na]
 
@@ -854,31 +869,31 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       ### if the lower bound is actually larger than upper x-axis limit, then everything is to the right and just draw a polygon pointing in that direction
       if (ci.lb[i] >= alim[2]) {
          lpolygon(x=c(alim[2], alim[2]-arrowwidth, alim[2]-arrowwidth, alim[2]),
-                  y=c(rows[i], rows[i]+arrowheight, rows[i]-arrowheight, rows[i]), col=col[i], border=col[i], ...)
+                  y=c(rows[i], rows[i]+arrowheight, rows[i]-arrowheight, rows[i]), col=colci[i], border=colci[i], ...)
          next
       }
 
       ### if the upper bound is actually lower than lower x-axis limit, then everything is to the left and just draw a polygon pointing in that direction
       if (ci.ub[i] <= alim[1]) {
          lpolygon(x=c(alim[1], alim[1]+arrowwidth, alim[1]+arrowwidth, alim[1]),
-                  y=c(rows[i], rows[i]+arrowheight, rows[i]-arrowheight, rows[i]), col=col[i], border=col[i], ...)
+                  y=c(rows[i], rows[i]+arrowheight, rows[i]-arrowheight, rows[i]), col=colci[i], border=colci[i], ...)
          next
       }
 
-      lsegments(max(ci.lb[i], alim[1]), rows[i], min(ci.ub[i], alim[2]), rows[i], lty=lty[1], col=col[i], ...)
+      lsegments(max(ci.lb[i], alim[1]), rows[i], min(ci.ub[i], alim[2]), rows[i], lty=lty[1], col=colci[i], ...)
 
       if (ci.lb[i] >= alim[1]) {
-         lsegments(ci.lb[i], rows[i]-ciendheight, ci.lb[i], rows[i]+ciendheight, col=col[i], ...)
+         lsegments(ci.lb[i], rows[i]-ciendheight, ci.lb[i], rows[i]+ciendheight, col=colci[i], ...)
       } else {
          lpolygon(x=c(alim[1], alim[1]+arrowwidth, alim[1]+arrowwidth, alim[1]),
-                  y=c(rows[i], rows[i]+arrowheight, rows[i]-arrowheight, rows[i]), col=col[i], border=col[i], ...)
+                  y=c(rows[i], rows[i]+arrowheight, rows[i]-arrowheight, rows[i]), col=colci[i], border=colci[i], ...)
       }
 
       if (ci.ub[i] <= alim[2]) {
-         lsegments(ci.ub[i], rows[i]-ciendheight, ci.ub[i], rows[i]+ciendheight, col=col[i], ...)
+         lsegments(ci.ub[i], rows[i]-ciendheight, ci.ub[i], rows[i]+ciendheight, col=colci[i], ...)
       } else {
          lpolygon(x=c(alim[2], alim[2]-arrowwidth, alim[2]-arrowwidth, alim[2]),
-                  y=c(rows[i], rows[i]+arrowheight, rows[i]-arrowheight, rows[i]), col=col[i], border=col[i], ...)
+                  y=c(rows[i], rows[i]+arrowheight, rows[i]-arrowheight, rows[i]), col=colci[i], border=colci[i], ...)
       }
 
    }

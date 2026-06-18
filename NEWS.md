@@ -1,10 +1,12 @@
-# metafor 5.1-8 (2026-06-16)
+# metafor 5.1-9 (2026-06-18)
 
 - `escalc()` and `rma()` now warn about unusually large standardized mean differences (possibly a result of using SEs instead of SDs in their calculation)
 
 - adjusted the default bounds for some of the integral transformations to avoid numerical issues
 
 - added `hettest()` function to test for heteroscedastic heterogeneity
+
+- added `colci` argument to `forest.default()`, `forest.rma()`, and `forest.cumul.rma()`
 
 - improved the documentation a bit
 

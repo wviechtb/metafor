@@ -86,7 +86,7 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
       if (!.is.vector(x))
          stop(mstyle$stop("Argument 'x' must be a vector with estimates or an 'rma' model object."))
 
-      yi <- x
+      yi <- c(x)
 
       # check if 'yi' is numeric
 
@@ -185,11 +185,22 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
 
       #########################################################################
 
+      # control settings
+
+      con <- list(tau2i.init = NULL,
+                  threshold  = 10^-8,
+                  maxiter    = 1000)
+
+      con.pos <- pmatch(names(control), names(con))
+      con[c(na.omit(con.pos))] <- control[!is.na(con.pos)]
+
+      #########################################################################
+
       if (is.null(ddd$model)) {
 
          # fit the null model
 
-         res0 <- try(rma(yi, vi, method=method, verbose=verbose), silent=!verbose)
+         res0 <- try(.re.fit.quick(yi, vi, method=method, threshold=con$threshold, maxiter=con$maxiter), silent=TRUE)
 
          if (inherits(res0, "try-error"))
             stop(mstyle$stop("Could not fit the null model."))
@@ -197,42 +208,21 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
       } else {
 
          res0 <- ddd$model
+         res0$ei <- yi - res0$beta[1]
+         wi <- 1 / (vi + res0$tau2)
+         res0$hi <- wi / sum(wi)
 
       }
-
-      # calculate the Pearson residuals
-
-      ri <- c(yi - res0$beta[1]) / sqrt(vi + res0$tau2)
-
-      # simulate yi values for the bootstrapping
-
-      if (any(boot)) {
-
-         if (!is.null(ddd$seed))
-            set.seed(ddd$seed)
-
-         statistic.boot <- matrix(NA_real_, nrow=iter, ncol=length(test))
-
-         sim <- simulate(res0, iter)
-         sim[,1] <- c(yi) # make sure that first bootstrap dataset corresponds to the actual data
-
-      }
-
-      #########################################################################
 
       # initial value(s) for tau2i in .hettest.esttau2i()
 
-      tau2i.init <- rep(res0$tau2, k)
-      tau2i.init[tau2i.init <= 0.01] <- 0.01
+      if (is.null(con$tau2i.init)) {
 
-      # control settings
+         tau2i.init <- rep(res0$tau2, k)
+         tau2i.init[tau2i.init <= 0.01] <- 0.01
+         con$tau2i.init <- tau2i.init
 
-      con <- list(tau2i.init = tau2i.init,
-                  threshold  = 10^-8,
-                  maxiter    = 1000)
-
-      con.pos <- pmatch(names(control), names(con))
-      con[c(na.omit(con.pos))] <- control[!is.na(con.pos)]
+      }
 
       con$tau2i.init <- .expand1(con$tau2i.init, k)
 
@@ -244,6 +234,26 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
 
       if (length(con$tau2i.init) != k)
          stop(mstyle$stop(paste0("Length of the 'tau2i.init' argument (", length(con$tau2i.init), ") does not match the actual number of variance components (", k, ").")))
+
+      # calculate the Pearson residuals
+
+      mu_hat <- res0$beta[1]
+      vari <- vi + res0$tau2
+      ri <- c(yi - mu_hat) / sqrt(vari)
+
+      # simulate yi values for the bootstrapping
+
+      if (any(boot)) {
+
+         if (!is.null(ddd$seed))
+            set.seed(ddd$seed)
+
+         statistic.boot <- matrix(NA_real_, nrow=iter, ncol=length(test))
+
+         sim <- replicate(iter, rnorm(k, mean=mu_hat, sd=sqrt(vari)))
+         sim[,1] <- c(yi) # make sure that first bootstrap dataset corresponds to the actual data
+
+      }
 
       #########################################################################
 
@@ -299,11 +309,7 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
             if (progbar)
                pbapply::setpb(pbar, b)
 
-            if (mom) {
-               res0.boot <- try(rma(sim[,b], vi, method=method), silent=TRUE)
-            } else {
-               res0.boot <- try(.re.fit.quick(sim[,b], vi, method=method, threshold=con$threshold, maxiter=con$maxiter), silent=TRUE)
-            }
+            res0.boot <- try(.re.fit.quick(sim[,b], vi, method=method, threshold=con$threshold, maxiter=con$maxiter), silent=TRUE)
 
             if (inherits(res0.boot, "try-error"))
                next
