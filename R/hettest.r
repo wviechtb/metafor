@@ -11,7 +11,7 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
 
    test <- tolower(test)
 
-   if (!any(is.element(test, c("lrt", "wald", "score", "ks1", "ks2", "ad1", "ad2"))))
+   if (!any(is.element(test, c("lrt", "wald", "score", "ksn", "ksx2", "adn", "adx2"))))
       stop(mstyle$stop("Unknown option specified for the 'test' argument."))
 
    # check 'method' argument
@@ -180,7 +180,7 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
       } else {
          iter <- 1000
          boot <- .expand1(boot, ntest)
-         boot[is.element(test, c("ks1", "ks2", "ad1", "ad2"))] <- TRUE
+         boot[is.element(test, c("ksn", "ksx2", "adn", "adx2"))] <- TRUE
       }
 
       #########################################################################
@@ -281,13 +281,13 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
             out <- .hettest.wald(yi, vi, method=method, tau2i=tau2i)
          if (test[j] == "score")
             out <- .hettest.score(yi, vi, method=method, res0=res0)
-         if (test[j] == "ks1")
+         if (test[j] == "ksn")
             out <- .hettest.ks(ri, pnorm)
-         if (test[j] == "ks2")
+         if (test[j] == "ksx2")
             out <- .hettest.ks(ri^2, pchisq, df=1)
-         if (test[j] == "ad1")
+         if (test[j] == "adn")
             out <- .hettest.ad(ri, pnorm)
-         if (test[j] == "ad2")
+         if (test[j] == "adx2")
             out <- .hettest.ad(ri^2, pchisq, df=1)
 
          statistic[j] <- out$statistic
@@ -334,13 +334,13 @@ hettest <- function(x, vi, sei, subset, data, method="REML", test="score", boot=
                      tmp <- .hettest.wald(sim[,b], vi, method=method, tau2i=tau2i.boot)
                   if (test[j] == "score")
                      tmp <- .hettest.score(sim[,b], vi, method=method, res0=res0.boot)
-                  if (test[j] == "ks1")
+                  if (test[j] == "ksn")
                      tmp <- .hettest.ks(ri.boot, pnorm)
-                  if (test[j] == "ks2")
+                  if (test[j] == "ksx2")
                      tmp <- .hettest.ks(ri.boot^2, pchisq, df=1)
-                  if (test[j] == "ad1")
+                  if (test[j] == "adn")
                      tmp <- .hettest.ad(ri.boot, pnorm)
-                  if (test[j] == "ad2")
+                  if (test[j] == "adx2")
                      tmp <- .hettest.ad(ri.boot^2, pchisq, df=1)
 
                   statistic.boot[b,j] <- tmp$statistic

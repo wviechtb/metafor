@@ -14,7 +14,7 @@ print.hettest <- function(x, digits=x$digits, ...) {
       cat("\n\n")
       cat(mstyle$text(paste0("Estimation method: "), ifelse(x$method == "ML", "Maximum likelihood", "Restricted maximum likelihood")))
       cat("\n")
-      cat(mstyle$text(paste0("Test type:         "), sapply(x$test[j], switch, "lrt"="Likelihood ratio test", "wald"="Wald-type test", "score"="Score test", "ks1"="Kolmogorov-Smirnov test (normal)", "ks2"="Kolmogorov-Smirnov test (chi-squared)", "ad1"="Anderson-Darling test (normal)", "ad2"="Anderson-Darling test (chi-squared)", USE.NAMES=FALSE)))
+      cat(mstyle$text(paste0("Test type:         "), sapply(x$test[j], switch, "lrt"="Likelihood ratio test", "wald"="Wald-type test", "score"="Score test", "ksn"="Kolmogorov-Smirnov test (normal)", "ksx2"="Kolmogorov-Smirnov test (chi-squared)", "adn"="Anderson-Darling test (normal)", "adx2"="Anderson-Darling test (chi-squared)", USE.NAMES=FALSE)))
       cat("\n")
       cat(mstyle$text(paste0("Bootstrapping:     "), ifelse(x$boot[j], "Yes", "No"), ifelse(x$boot[j], paste0(" (", sum(!is.na(x$statistic.boot[,j])), "/", x$iter, " iterations)"), "")))
       cat("\n\n")
