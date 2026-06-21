@@ -863,7 +863,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    for (i in seq_len(k)) {
 
       ### need to skip missings (if check below will otherwise throw an error)
-      if (is.na(yi[i]) || is.na(ci.lb[i]) || is.na(ci.ub[i]))
+      if (is.na(yi[i]) || is.na(ci.lb[i]) || is.na(ci.ub[i]) || is.na(colci[i]))
          next
 
       ### if the lower bound is actually larger than upper x-axis limit, then everything is to the right and just draw a polygon pointing in that direction
