@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-10</span>
       </span>
     </div>
 
@@ -124,7 +124,7 @@
 <dd><p>character string to specify whether the test should be based on maximum likelihood (<code>"ML"</code>) or restricted maximum likelihood (<code>"REML"</code>) estimation. The default is <code>"REML"</code>. Ignored if <code>x</code> is an object of class <code>"rma"</code>.</p></dd>
 
    <dt id="arg-test">test<a class="anchor" aria-label="anchor" href="#arg-test"></a></dt>
-<dd><p>character string (case insensitive) to specify which test to run. Either <code>"lrt"</code>, <code>"wald"</code>, or <code>"score"</code> (the default).</p></dd>
+<dd><p>character string (case insensitive) to specify which test to run. See ‘Details’.</p></dd>
 
    <dt id="arg-boot">boot<a class="anchor" aria-label="anchor" href="#arg-boot"></a></dt>
 <dd><p>logical to specify whether bootstrapping should be used (the default is <code>TRUE</code>). Can also be a number to specify the number of bootstrap samples to take.</p></dd>
@@ -155,6 +155,12 @@
 <li><p><code>test="score"</code> for a score test.</p></li>
 </ul><p>The likelihood ratio test compares the fit of the standard random-effects model with a saturated random-effects model where each study has a study-specific <em></em>\(\tau^2_i\) value. The Wald-type test directly tests all <em></em>\(k-1\) contrasts between the estimated <em></em>\(\tau^2_i\) values. Finally, the score test evaluates whether allowing study-specific <em></em>\(\tau^2_i\) values would improve model fit based on the score vector and the information matrix evaluated under the standard random-effects model, without requiring estimation of the saturated model. This tends to make this test more stable, yielding better control of the Type I error rate, and therefore is the default option.</p>
 <p>However, the assumed null distribution for all of these tests (a chi-square distribution with <em></em>\(k-1\) degrees of freedom) is not correct. Therefore, when <code>boot=TRUE</code> (the default), the function uses parametric bootstrapping to obtain a p-value for a given test. By default, 1000 bootstrap samples are taken, but one can also specify the number of samples to take via the <code>boot</code> argument. When <code>progbar=TRUE</code> (the default), a progress bar is shown to indicate the progress of the bootstrapping.</p>
+<p>One can also use the function to carry out several goodness-of-fit tests based on the Pearson residuals obtained from the standard random-effects model (see also the <code><a href="residuals.rma.html">residuals</a></code> functions, which can compute such residuals). If the assumptions underlying the model are correct (including the assumption that the heterogeneity is homoscedastic), then the Pearson residuals are asymptotically standard normal. Accordingly, one can use the Kolmogorov-Smirnov (KS) test or the Anderson-Darling (AD) test to test if this assumption holds. Alternatively, one can use these test to test if the squared Pearson residuals are chi-square distributed with one degree of freedom. Therefore, additional options for the <code>test</code> argument are:</p>
+<p></p><ul><li><p><code>test="ksn"</code> to test if the Pearson residuals are standard normal using the KS test,</p></li>
+<li><p><code>test="ksx2"</code> to test if the squared Pearson residuals are chi-squared distributed with one degree of freedom using the KS test,</p></li>
+<li><p><code>test="adn"</code> to test if the Pearson residuals are standard normal using the AD test,</p></li>
+<li><p><code>test="adx2"</code> to test if the squared Pearson residuals are chi-squared distributed with one degree of freedom using the AD test.</p></li>
+</ul><p>In the present context, we cannot rely on known properties of these tests to obtain the corresponding p-values. Therefore, bootstrapping is always used for these tests to examine how extreme the observed statistics of the KS and AD tests are under their corresponding bootstrap distributions.</p>
     </div>
     <div id="value">
     <h2>Value</h2>

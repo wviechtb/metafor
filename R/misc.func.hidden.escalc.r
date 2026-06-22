@@ -349,7 +349,7 @@
 
       if (is.element(measure, c("SMD","SMDH","SMD1","SMD1H"))) {
          cutoff <- 2
-         addtxt <- "Maybe the specified SDs are actually SEs?"
+         addtxt <- "Maybe SEs were used in place of SDs to compute them?"
       }
 
    } else {

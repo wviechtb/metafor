@@ -18,7 +18,7 @@ hettest(x, vi, sei, subset, data, method="REML",
    \item{subset}{optional (logical or numeric) vector to specify the subset of studies that should be used for the calculation. Ignored if \code{x} is an object of class \code{"rma"}.}
    \item{data}{optional data frame containing the variables given to the arguments above.}
    \item{method}{character string to specify whether the test should be based on maximum likelihood (\code{"ML"}) or restricted maximum likelihood (\code{"REML"}) estimation. The default is \code{"REML"}. Ignored if \code{x} is an object of class \code{"rma"}.}
-   \item{test}{character string (case insensitive) to specify which test to run. Either \code{"lrt"}, \code{"wald"}, or \code{"score"} (the default).}
+   \item{test}{character string (case insensitive) to specify which test to run. See \sQuote{Details}.}
    \item{boot}{logical to specify whether bootstrapping should be used (the default is \code{TRUE}). Can also be a number to specify the number of bootstrap samples to take.}
    \item{progbar}{logical to specify whether a progress bar should be shown when using bootstrapping (the default is \code{TRUE}).}
    \item{digits}{optional integer to specify the number of decimal places to which the printed results should be rounded.}
@@ -44,6 +44,17 @@ hettest(x, vi, sei, subset, data, method="REML",
    The likelihood ratio test compares the fit of the standard random-effects model with a saturated random-effects model where each study has a study-specific \mjseqn{\tau^2_i} value. The Wald-type test directly tests all \mjseqn{k-1} contrasts between the estimated \mjseqn{\tau^2_i} values. Finally, the score test evaluates whether allowing study-specific \mjseqn{\tau^2_i} values would improve model fit based on the score vector and the information matrix evaluated under the standard random-effects model, without requiring estimation of the saturated model. This tends to make this test more stable, yielding better control of the Type I error rate, and therefore is the default option.
 
    However, the assumed null distribution for all of these tests (a chi-square distribution with \mjseqn{k-1} degrees of freedom) is not correct. Therefore, when \code{boot=TRUE} (the default), the function uses parametric bootstrapping to obtain a p-value for a given test. By default, 1000 bootstrap samples are taken, but one can also specify the number of samples to take via the \code{boot} argument. When \code{progbar=TRUE} (the default), a progress bar is shown to indicate the progress of the bootstrapping.
+
+   One can also use the function to carry out several goodness-of-fit tests based on the Pearson residuals obtained from the standard random-effects model (see also the \code{\link[=residuals.rma]{residuals}} functions, which can compute such residuals). If the assumptions underlying the model are correct (including the assumption that the heterogeneity is homoscedastic), then the Pearson residuals are asymptotically standard normal. Accordingly, one can use the Kolmogorov-Smirnov (KS) test or the Anderson-Darling (AD) test to test if this assumption holds. Alternatively, one can use these test to test if the squared Pearson residuals are chi-square distributed with one degree of freedom. Therefore, additional options for the \code{test} argument are:
+
+   \itemize{
+   \item \code{test="ksn"} to test if the Pearson residuals are standard normal using the KS test,
+   \item \code{test="ksx2"} to test if the squared Pearson residuals are chi-squared distributed with one degree of freedom using the KS test,
+   \item \code{test="adn"} to test if the Pearson residuals are standard normal using the AD test,
+   \item \code{test="adx2"} to test if the squared Pearson residuals are chi-squared distributed with one degree of freedom using the AD test.
+   }
+
+   In the present context, we cannot rely on known properties of these tests to obtain the corresponding p-values. Therefore, bootstrapping is always used for these tests to examine how extreme the observed statistics of the KS and AD tests are under their corresponding bootstrap distributions.
 
 }
 \value{
