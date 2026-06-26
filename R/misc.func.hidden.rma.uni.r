@@ -92,7 +92,7 @@
    if (method == "HE")
       tau2 <- max(0, var(yi) - mean(vi))
 
-   if (method %in% c("DL","ML","REM","EB"))
+   if (method %in% c("DL","ML","REML","EB"))
       tau2 <- max(0, (Q - (k-1)) / (sumwi - sum(wi^2) / sumwi))
 
    if (method == "SJ") {
