@@ -15,7 +15,7 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
       }
    }
 
-   replace <- match.arg(replace, c("ifna","all"))
+   replace <- match.arg(replace, c("ifna","all","complete"))
 
    ### get ... argument and check for extra/superfluous arguments
 
@@ -550,9 +550,14 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
          if (replace=="ifna") {
             attr(data[[var.names[1]]], "est") <- is.na(data[[var.names[1]]]) & !is.na(means)
             data[[var.names[1]]] <- replmiss(data[[var.names[1]]], means)
-         } else {
+         }
+         if (replace=="all") {
             attr(data[[var.names[1]]], "est") <- !is.na(means)
             data[[var.names[1]]][!is.na(means)] <- means[!is.na(means)]
+         }
+         if (replace=="complete") {
+            attr(data[[var.names[1]]], "est") <- !is.na(means)
+            data[[var.names[1]]] <- means
          }
       } else {
          data <- cbind(data, means)
@@ -563,9 +568,14 @@ conv.fivenum <- function(min, q1, median, q3, max, n, data, include,
          if (replace=="ifna") {
             attr(data[[var.names[2]]], "est") <- is.na(data[[var.names[2]]]) & !is.na(sds)
             data[[var.names[2]]] <- replmiss(data[[var.names[2]]], sds)
-         } else {
+         }
+         if (replace=="all") {
             attr(data[[var.names[2]]], "est") <- !is.na(sds)
             data[[var.names[2]]][!is.na(sds)] <- sds[!is.na(sds)]
+         }
+         if (replace=="complete") {
+            attr(data[[var.names[2]]], "est") <- !is.na(sds)
+            data[[var.names[2]]] <- sds
          }
       } else {
          data <- cbind(data, sds)

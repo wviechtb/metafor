@@ -298,7 +298,7 @@ print.rma.mv <- function(x, digits, showfit=FALSE, signif.stars=getOption("show.
             H[lower.tri(H)] <- phi
             H[upper.tri(H)] <- t(H)[upper.tri(H)]
             diag(H) <- 1
-            #H[upper.tri(H)] <- ""
+            H[upper.tri(H)] <- ""
 
             if (length(x$phi) == 1L) {
                H.info <- matrix(NA_real_, nrow=2, ncol=2)

@@ -12,6 +12,8 @@ print.vcovmat <- function(x, digits=4, tol, zero=".", na="NA", ...) {
    if (missing(tol))
       tol <- 10 * .Machine$double.eps
 
+   xx <- formatC(unclass(x), format="f", digits=digits, flag=" ", drop0trailing=TRUE)
+   digits <- max(0, min(digits, max(nchar(c(unclass(xx)))-3)))
    xx <- formatC(unclass(x), format="f", digits=digits, flag=if (any(x < 0, na.rm=TRUE)) " " else "")
 
    if (any(ina <- is.na(x)))

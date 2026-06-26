@@ -33,7 +33,7 @@ conv.delta(yi, vi, ni, data, include, transf, var.names, append=TRUE, replace="i
 
    If \code{data} was specified and \code{append=TRUE}, then the original data frame is returned. If \code{var.names[1]} is a variable in \code{data} and \code{replace="ifna"} (or \code{replace=FALSE}), then only missing values in this variable are replaced with the transformed estimates (where possible) and otherwise a new variable called \code{var.names[1]} is added to the data frame. Similarly, if \code{var.names[2]} is a variable in \code{data} and \code{replace="ifna"} (or \code{replace=FALSE}), then only missing values in this variable are replaced with the sampling variances calculated as described above (where possible) and otherwise a new variable called \code{var.names[2]} is added to the data frame.
 
-   If \code{replace="all"} (or \code{replace=TRUE}), then all values in \code{var.names[1]} and \code{var.names[2]} are replaced, even for cases where the value in \code{var.names[1]} and \code{var.names[2]} is not missing.
+   If \code{replace="all"} (or \code{replace=TRUE}), then all values in \code{var.names[1]} and \code{var.names[2]} are replaced, even for cases where the value in \code{var.names[1]} and \code{var.names[2]} is not missing. However, non-missing values are never replaced with missing values. To also allow this (i.e., to completely replace all values), use \code{replace="complete"}.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).

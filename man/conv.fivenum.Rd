@@ -83,7 +83,7 @@ conv.fivenum(min, q1, median, q3, max, n, data, include,
 
    If \code{data} was specified and \code{append=TRUE}, then the original data frame is returned. If \code{var.names[1]} is a variable in \code{data} and \code{replace="ifna"} (or \code{replace=FALSE}), then only missing values in this variable are replaced with the estimated means (where possible) and otherwise a new variable called \code{var.names[1]} is added to the data frame. Similarly, if \code{var.names[2]} is a variable in \code{data} and \code{replace="ifna"} (or \code{replace=FALSE}), then only missing values in this variable are replaced with the estimated SDs (where possible) and otherwise a new variable called \code{var.names[2]} is added to the data frame.
 
-   If \code{replace="all"} (or \code{replace=TRUE}), then all values in \code{var.names[1]} and \code{var.names[2]} where an estimated mean and SD can be computed are replaced, even for cases where the value in \code{var.names[1]} and \code{var.names[2]} is not missing.
+   If \code{replace="all"} (or \code{replace=TRUE}), then all values in \code{var.names[1]} and \code{var.names[2]} where an estimated mean and SD can be computed are replaced, even for cases where the value in \code{var.names[1]} and \code{var.names[2]} is not missing. However, non-missing values are never replaced with missing values. To also allow this (i.e., to completely replace all values), use \code{replace="complete"}.
 
    When missing values in \code{var.names[1]} are replaced, an attribute called \code{"est"} is added to the variable, which is a logical vector that is \code{TRUE} for values that were estimated. The same is done when missing values in \code{var.names[2]} are replaced.
 

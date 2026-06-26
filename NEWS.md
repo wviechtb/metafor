@@ -1,4 +1,4 @@
-# metafor 5.1-10 (2026-06-22)
+# metafor 5.1-11 (2026-06-26)
 
 - `escalc()` and `rma()` now warn about unusually large standardized mean differences (possibly a result of using SEs instead of SDs in their calculation)
 
@@ -7,6 +7,10 @@
 - added `hettest()` function to test for heteroscedastic heterogeneity
 
 - added `colci` argument to `forest.default()`, `forest.rma()`, and `forest.cumul.rma()`
+
+- corrected a bug in `conv.2x2()` where some values for the `ci` and `di` cells could be incorrectly replaced when `replace=="all"`
+
+- can now also use `replace="complete"` in `conv.2x2()`, `conv.delta()`, `conv.fivenum()`, and `conv.wald()` to also replace non-missing values with NAs
 
 - improved the documentation a bit
 

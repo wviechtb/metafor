@@ -81,7 +81,7 @@ conv.2x2(ori, ri, x2i, ni, n1i, n2i, sens, spec, ppv, npv,
 
    If \code{data} was specified and \code{append=TRUE}, then the original data frame is returned. If \code{var.names[j]} (for \mjeqn{\text{j} \in \\\\{1, \ldots, 4\\\\}}{for j in \{1, ..., 4\}}) is a variable in \code{data} and \code{replace="ifna"} (or \code{replace=FALSE}), then only missing values in this variable are replaced with the estimated frequencies (where possible) and otherwise a new variable called \code{var.names[j]} is added to the data frame.
 
-   If \code{replace="all"} (or \code{replace=TRUE}), then all values in \code{var.names[j]} where a reconstructed cell frequency can be computed are replaced, even for cases where the value in \code{var.names[j]} is not missing.
+   If \code{replace="all"} (or \code{replace=TRUE}), then all values in \code{var.names[j]} where a reconstructed cell frequency can be computed are replaced, even for cases where the value in \code{var.names[j]} is not missing. However, non-missing values are never replaced with missing values. To also allow this (i.e., to completely replace all values), use \code{replace="complete"}.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).

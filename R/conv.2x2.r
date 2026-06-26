@@ -11,7 +11,7 @@ conv.2x2 <- function(ori, ri, x2i, ni, n1i, n2i, sens, spec, ppv, npv, correct=T
       }
    }
 
-   replace <- match.arg(replace, c("ifna","all"))
+   replace <- match.arg(replace, c("ifna","all","complete"))
 
    ### get ... argument and check for extra/superfluous arguments
 
@@ -339,44 +339,48 @@ conv.2x2 <- function(ori, ri, x2i, ni, n1i, n2i, sens, spec, ppv, npv, correct=T
    if (has.data && append) {
 
       if (is.element(var.names[1], names(data))) {
-         if (replace=="ifna") {
+         if (replace=="ifna")
             data[[var.names[1]]] <- replmiss(data[[var.names[1]]], ai)
-         } else {
+         if (replace=="all")
             data[[var.names[1]]][!is.na(ai)] <- ai[!is.na(ai)]
-         }
+         if (replace=="complete")
+            data[[var.names[1]]] <- ai
       } else {
          data <- cbind(data, ai)
          names(data)[length(names(data))] <- var.names[1]
       }
 
       if (is.element(var.names[2], names(data))) {
-         if (replace=="ifna") {
+         if (replace=="ifna")
             data[[var.names[2]]] <- replmiss(data[[var.names[2]]], bi)
-         } else {
+         if (replace=="all")
             data[[var.names[2]]][!is.na(bi)] <- bi[!is.na(bi)]
-         }
+         if (replace=="complete")
+            data[[var.names[2]]] <- bi
       } else {
          data <- cbind(data, bi)
          names(data)[length(names(data))] <- var.names[2]
       }
 
       if (is.element(var.names[3], names(data))) {
-         if (replace=="ifna") {
+         if (replace=="ifna")
             data[[var.names[3]]] <- replmiss(data[[var.names[3]]], ci)
-         } else {
-            data[[var.names[3]]][!is.na(ci)] <- ai[!is.na(ci)]
-         }
+         if (replace=="all")
+            data[[var.names[3]]][!is.na(ci)] <- ci[!is.na(ci)]
+         if (replace=="complete")
+            data[[var.names[3]]] <- ci[!is.na(ci)]
       } else {
          data <- cbind(data, ci)
          names(data)[length(names(data))] <- var.names[3]
       }
 
       if (is.element(var.names[4], names(data))) {
-         if (replace=="ifna") {
+         if (replace=="ifna")
             data[[var.names[4]]] <- replmiss(data[[var.names[4]]], di)
-         } else {
-            data[[var.names[4]]][!is.na(di)] <- ai[!is.na(di)]
-         }
+         if (replace=="all")
+            data[[var.names[4]]][!is.na(di)] <- di[!is.na(di)]
+         if (replace=="complete")
+            data[[var.names[4]]] <- di
       } else {
          data <- cbind(data, di)
          names(data)[length(names(data))] <- var.names[4]

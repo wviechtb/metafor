@@ -16,7 +16,7 @@ conv.delta <- function(yi, vi, ni, data, include, transf, var.names, append=TRUE
       }
    }
 
-   replace <- match.arg(replace, c("ifna","all"))
+   replace <- match.arg(replace, c("ifna","all","complete"))
 
    #########################################################################
 
@@ -213,11 +213,12 @@ conv.delta <- function(yi, vi, ni, data, include, transf, var.names, append=TRUE
 
    ### replace missing x$yi values
 
-   if (replace=="ifna") {
+   if (replace=="ifna")
       x[[yi.name]] <- replmiss(x[[yi.name]], yi.t)
-   } else {
+   if (replace=="all")
       x[[yi.name]][!is.na(yi.t)] <- yi.t[!is.na(yi.t)]
-   }
+   if (replace=="complete")
+      x[[yi.name]] <- yi.t
 
    ### replace missing ni values with ni attributes values from the source and target variables
    ### and then add ni attribute to target variable (if at least one value is not missing)
@@ -231,11 +232,12 @@ conv.delta <- function(yi, vi, ni, data, include, transf, var.names, append=TRUE
 
    ### replace missing x$vi values
 
-   if (replace=="ifna") {
+   if (replace=="ifna")
       x[[vi.name]] <- replmiss(x[[vi.name]], vi.t)
-   } else {
+   if (replace=="all")
       x[[vi.name]][!is.na(vi.t)] <- vi.t[!is.na(vi.t)]
-   }
+   if (replace=="complete")
+      x[[vi.name]] <- vi.t
 
    #escall <- paste0("escalc(data=x, yi=", yi.name, ", vi=", vi.name, ", var.names=c('", yi.name, "','", vi.name, "'))")
    #x <- eval(str2lang(escall))
