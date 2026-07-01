@@ -1,4 +1,4 @@
-# metafor 5.1-11 (2026-06-26)
+# metafor 5.1-12 (2026-07-01)
 
 - `escalc()` and `rma()` now warn about unusually large standardized mean differences (possibly a result of using SEs instead of SDs in their calculation)
 
@@ -11,6 +11,8 @@
 - corrected a bug in `conv.2x2()` where some values for the `ci` and `di` cells could be incorrectly replaced when `replace=="all"`
 
 - can now also use `replace="complete"` in `conv.2x2()`, `conv.delta()`, `conv.fivenum()`, and `conv.wald()` to also replace non-missing values with NAs
+
+- the `predict()` functions gain argument `prob` to obtain probabilistic estimates from the predictive distribution
 
 - improved the documentation a bit
 

@@ -1,4 +1,4 @@
-predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, hetvar,
+predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, hetvar, prob,
                         addx=FALSE, level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
    #########################################################################
@@ -52,6 +52,9 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
       if (!is.numeric(hetvar))
          stop(mstyle$stop("Argument 'hetvar' must be a numeric vector."))
    }
+
+   if (missing(prob))
+      prob <- NULL
 
    if (missing(level))
       level <- x$level
@@ -351,6 +354,8 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
 
    #########################################################################
 
+   # compute confidence intervals
+
    if (inherits(x, "robust.rma") && x$robumethod == "clubSandwich") {
 
       if (x$coef_test == "saddlepoint")
@@ -364,7 +369,7 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
       pred  <- cs.lc$Est
       se    <- cs.lc$SE
       vpred <- se^2
-      ddf   <- cs.lc$df
+      ddf   <- cs.lc$df # Inf when coef_test="z"
 
       crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/ifelse(adjust, 2*k.new, 2), df=ddf[j], lower.tail=FALSE) else NA_real_)
 
@@ -374,6 +379,8 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
       ci.ub <- pred + crit * se
 
       x$test <- switch(x$coef_test, "z"="z", "naive-t"="t", "naive-tp"="t", "Satterthwaite"="t")
+
+      pi.dist <- "t"
 
    } else {
 
@@ -404,8 +411,10 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
          crit <- sapply(seq_along(ddf), function(j) if (ddf[j] > 0) qt(level/ifelse(adjust, 2*k.new, 2), df=ddf[j], lower.tail=FALSE) else NA_real_)
+         pi.dist <- "t"
       } else {
          crit <- qnorm(level/ifelse(adjust, 2*k.new, 2), lower.tail=FALSE)
+         pi.dist <- "norm"
       }
 
       vpred[vpred < 0] <- NA_real_
@@ -415,14 +424,17 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
 
    }
 
-   #########################################################################
-
    if (vcov)
       vcovpred <- symmpart(X.new %*% x$vb %*% t(X.new))
+
+   #########################################################################
+
+   # compute prediction intervals
 
    if (predtype == "simple") {
       crit <- qnorm(level/ifelse(adjust, 2*k.new, 2), lower.tail=FALSE)
       vpred <- 0
+      pi.dist <- "norm"
    }
 
    pi.ddf <- ddf
@@ -434,6 +446,7 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
          pi.ddf <- ddf
       pi.ddf[pi.ddf < 1] <- 1
       crit <- sapply(seq_along(pi.ddf), function(j) if (pi.ddf[j] > 0) qt(level/ifelse(adjust, 2*k.new, 2), df=pi.ddf[j], lower.tail=FALSE) else NA_real_)
+      pi.dist <- "t"
    }
 
    if (is.null(ddd$newvi)) {
@@ -444,10 +457,6 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
       if (length(newvi) != k.new)
          stop(mstyle$stop(paste0("Length of the 'newvi' argument (", length(newvi), ") does not match the number of predicted values (", k.new, ").")))
    }
-
-   #########################################################################
-
-   # prediction intervals
 
    pi.se <- NULL
 
@@ -575,6 +584,26 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
 
    }
 
+   if (!is.null(prob)) {
+
+      if (adjust)
+         stop(mstyle$stop("Cannot use 'prob' argument when adjust=TRUE."), call.=FALSE)
+
+      lower.tail <- grepl("<", prob, fixed=TRUE)
+      probtxt <- gsub("[<=>]", "", prob)
+      probval <- try(eval(parse(text=probtxt)), silent=TRUE)
+      if (inherits(probval, "try-error")) {
+         prob <- NULL
+      } else {
+         if (pi.dist == "norm") {
+            probval <- pnorm((probval - pred) / pi.se, lower.tail=lower.tail)
+         } else {
+            probval <- pt((probval - pred) / pi.se, df=pi.ddf, lower.tail=lower.tail)
+         }
+      }
+
+   }
+
    #########################################################################
 
    # apply transformation function if one has been specified
@@ -656,6 +685,9 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
 
    out <- list(pred=pred[not.na], se=se[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], pi.lb=pi.lb[not.na], pi.ub=pi.ub[not.na], cr.lb=pi.lb[not.na], cr.ub=pi.ub[not.na])
 
+   if (!is.null(prob))
+      out$prob <- probval[not.na]
+
    if (vcov)
       vcovpred <- vcovpred[not.na,not.na,drop=FALSE]
 
@@ -701,12 +733,10 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
    if (x$test != "z")
       out$ddf <- ddf
 
-   if ((x$test != "z" || is.element(predtype, c("riley","t"))) && predtype != "simple") {
-      out$pi.dist <- "t"
+   out$pi.dist <- pi.dist
+
+   if (pi.dist == "t")
       out$pi.ddf <- pi.ddf
-   } else {
-      out$pi.dist <- "norm"
-   }
 
    out$pi.se <- pi.se
 
@@ -714,9 +744,8 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
 
    attr(out$pi.lb, "level") <- level
    attr(out$pi.lb, "dist") <- out$pi.dist
-   if (out$pi.dist == "t") {
+   if (out$pi.dist == "t")
       attr(out$pi.lb, "ddf") <- out$pi.ddf
-   }
    attr(out$pi.lb, "se") <- pi.se
 
    # for rma.mv models with a GEN structure, remove PI bounds

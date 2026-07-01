@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-12</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">metafor.news</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 5.1-10 (2026-06-22)                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Changes in version 5.1-12 (2026-07-01)                 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - escalc() and rma() now warn about unusually large standardized mean</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     differences (possibly a result of using SEs instead of SDs in their</span>
@@ -128,6 +128,16 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - added colci argument to forest.default(), forest.rma(), and</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     forest.cumul.rma()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - corrected a bug in conv.2x2() where some values for the ci and di</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     cells could be incorrectly replaced when replace=="all"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - can now also use replace="complete" in conv.2x2(), conv.delta(),</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     conv.fivenum(), and conv.wald() to also replace non-missing values</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     with NAs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   - the predict() functions gain argument prob to obtain probabilistic</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     estimates from the predictive distribution</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   - improved the documentation a bit</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

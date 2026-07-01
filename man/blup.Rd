@@ -3,7 +3,7 @@
 \alias{blup.rma.uni}
 \title{Best Linear Unbiased Predictions for 'rma.uni' Objects}
 \description{
-   Function to compute best linear unbiased predictions (BLUPs) of the study-specific true effects (by combining the fitted values based on the fixed effects and the estimated contributions of the random effects) for objects of class \code{"rma.uni"}. Corresponding standard errors and prediction interval bounds are also provided. \loadmathjax
+   Function to compute the best linear unbiased predictions (BLUPs) of the study-specific true effects for objects of class \code{"rma.uni"}. Corresponding standard errors and prediction interval bounds are also provided. \loadmathjax
 }
 \usage{
 blup(x, \dots)
@@ -29,19 +29,18 @@ blup(x, \dots)
    The object is formatted and printed with the \code{\link[=print.list.rma]{print}} function. To format the results as a data frame, one can use the \code{\link[=as.data.frame.list.rma]{as.data.frame}} function.
 }
 \note{
-   For best linear unbiased predictions of only the random effects, see \code{\link{ranef}}.
+   The standard random effects model assumes \mjeqn{y_i | \theta_i \sim N(\theta_i, v_i)}{y_i | \theta_i ~ N(\theta_i, v_i)} and \mjeqn{\theta_i \sim N(\mu, \tau^2)}{\theta_i ~ N(\mu, \tau^2)}. So \mjseqn{\theta_i} denotes the true effect in the \mjseqn{i}th study and \mjseqn{y_i} the corresponding observed effect. While \mjseqn{y_i} is an estimate of \mjseqn{\theta_i}, we can use information from the random-effects model to obtain better estimates of the \mjseqn{\theta_i} values. These are the so-called best linear unbiased predictions (BLUPs) of the study-specific true effects, also sometimes called shrunken estimates, as they represent a compromise between the observed effect in the \mjseqn{i}th study (i.e., \mjseqn{y_i}) and the estimated average effect obtained from the random-effects model (i.e., \mjseqn{\hat{\mu}}). They can also be regarded as \sQuote{empirical Bayes} estimates under certain assumptions.
 
-   For predicted/fitted values that are based only on the fixed effects of the model, see \code{\link[=fitted.rma]{fitted}} and \code{\link[=predict.rma]{predict}}.
+   To be precise, it should be noted that the function actually computes empirical BLUPs (eBLUPs), since the predicted values are a function of the estimated value of \mjseqn{\tau^2}.
 
-   For conditional residuals (the deviations of the observed effect sizes from the BLUPs), see \code{rstandard.rma.uni} with \code{type="conditional"}.
+   By default, a standard normal distribution is used to construct corresponding prediction intervals. When the model was fitted with \code{test="t"}, \code{test="knha"}, \code{test="hksj"}, or \code{test="adhoc"}, then a t-distribution with \mjseqn{k-p} degrees of freedom is used.
+
 
    Equal-effects models do not contain random study effects. The BLUPs for these models will therefore be equal to the fitted values, that is, those obtained with \code{\link[=fitted.rma]{fitted}} and \code{\link[=predict.rma]{predict}}.
 
    When using the \code{transf} argument, the transformation is applied to the predicted values and the corresponding interval bounds. The standard errors are then set equal to \code{NA} and are omitted from the printed output.
 
-   By default, a standard normal distribution is used to construct the prediction intervals. When the model was fitted with \code{test="t"}, \code{test="knha"}, \code{test="hksj"}, or \code{test="adhoc"}, then a t-distribution with \mjseqn{k-p} degrees of freedom is used.
 
-   To be precise, it should be noted that the function actually computes empirical BLUPs (eBLUPs), since the predicted values are a function of the estimated value of \mjseqn{\tau^2}.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
@@ -53,12 +52,16 @@ blup(x, \dots)
 
    Robinson, G. K. (1991). That BLUP is a good thing: The estimation of random effects. \emph{Statistical Science}, \bold{6}(1), 15--32. \verb{https://doi.org/10.1214/ss/1177011926}
 
+   van Aert, R. C. M., Schmid, C. H., Svensson, D., & Jackson, D. (2021). Study specific prediction intervals for random-effects meta-analysis: A tutorial. \emph{Research Synthesis Methods}, \bold{12}(4), 429--447. \verb{https://doi.org/10.1002/jrsm.1490}
+
    Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. \emph{Journal of Statistical Software}, \bold{36}(3), 1--48. \verb{https://doi.org/10.18637/jss.v036.i03}
 }
 \seealso{
-   \code{\link{rma.uni}} for the function to fit models for which BLUPs can be extracted.
+   \code{\link{rma.uni}} for the function to fit models for which BLUPs can be computed.
 
    \code{\link[=predict.rma]{predict}} and \code{\link[=fitted.rma]{fitted}} for functions to compute the predicted/fitted values based only on the fixed effects and \code{\link{ranef}} for a function to compute the BLUPs based only on the random effects.
+
+   For conditional residuals (the deviations of the observed effect sizes from the BLUPs), see \code{\link[=rstandard.rma.uni]{rstandard}} with \code{type="conditional"}.
 }
 \examples{
 ### calculate log risk ratios and corresponding sampling variances

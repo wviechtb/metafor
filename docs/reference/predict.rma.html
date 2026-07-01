@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-12</span>
       </span>
     </div>
 
@@ -96,12 +96,12 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'rma'</span></span>
-<span><span class="fu">predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">newmods</span>, <span class="va">intercept</span>, <span class="va">tau2.levels</span>, <span class="va">gamma2.levels</span>, <span class="va">hetvar</span>,</span>
+<span><span class="fu">predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">newmods</span>, <span class="va">intercept</span>, <span class="va">tau2.levels</span>, <span class="va">gamma2.levels</span>, <span class="va">hetvar</span>, <span class="va">prob</span>,</span>
 <span>        addx<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">level</span>, adjust<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, vcov<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'rma.ls'</span></span>
 <span><span class="fu">predict</span><span class="op">(</span><span class="va">object</span>, <span class="va">newmods</span>, <span class="va">intercept</span>, addx<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">newscale</span>, addz<span class="op">=</span><span class="cn">FALSE</span>,</span>
-<span>        <span class="va">level</span>, adjust<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, vcov<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span>        <span class="va">prob</span>, <span class="va">level</span>, adjust<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">digits</span>, <span class="va">transf</span>, <span class="va">targs</span>, vcov<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -124,6 +124,9 @@
 
    <dt id="arg-hetvar">hetvar<a class="anchor" aria-label="anchor" href="#arg-hetvar"></a></dt>
 <dd><p>optional numeric vector with the amount of heterogeneity for computing prediction intervals. See ‘Details’.</p></dd>
+
+   <dt id="arg-prob">prob<a class="anchor" aria-label="anchor" href="#arg-prob"></a></dt>
+<dd><p>optional character string to obtain probabilistic estimates from predictive distributions. See ‘Details’.</p></dd>
 
    <dt id="arg-addx">addx<a class="anchor" aria-label="anchor" href="#arg-addx"></a></dt>
 <dd><p>logical to specify whether the values of the moderator variables should be added to the returned object. See ‘Examples’.</p></dd>
@@ -162,7 +165,8 @@
 <p>For a random-effects model, <code>predict(object)</code> returns the estimated (average) effect in the hypothetical population of studies from which the set of studies included in the meta-analysis are assumed to be a random selection. This is the same as the estimated intercept in the random-effects model (i.e., <em></em>\(\hat{\mu}\)).</p>
 <p>For models including one or more moderators, <code>predict(object)</code> returns <em></em>\(\hat{y} = Xb\), where <em></em>\(X\) denotes the model matrix (see <code><a href="model.matrix.rma.html">model.matrix</a></code>) and <em></em>\(b\) the estimated model coefficient (see <code><a href="coef.rma.html">coef</a></code>), or in words, the estimated (average) effects for values of the moderator(s) equal to those of the <em></em>\(k\) studies included in the meta-analysis (i.e., the ‘fitted values’ for the <em></em>\(k\) studies).</p>
 <p>For models including <em></em>\(p'\) moderator variables, new moderator values (for <em></em>\(k_{new}\) hypothetical new studies) can be specified by setting <code>newmods</code> equal to a <em></em>\(k_{new} \times p'\) matrix with the corresponding new moderator values (if <code>newmods</code> is a vector, then only a single predicted value is computed unless the model only includes a single moderator variable, in which case predicted values corresponding to all the vector values are computed). If the model object includes an intercept (so that the model matrix has <em></em>\(p' + 1\) columns), then it will be automatically added to <code>newmods</code> unless one sets <code>intercept=FALSE</code>; alternatively, if <code>newmods</code> is a <em></em>\(k_{new} \times (p'+1)\) matrix, then the <code>intercept</code> argument is ignored and the first column of the matrix determines whether the intercept is included when computing the predicted values or not. Note that any factors in the original model get turned into the appropriate contrast variables within the <code><a href="rma.uni.html">rma.uni</a></code> function, so that <code>newmods</code> should actually include the values for the contrast variables. If the matrix specified via <code>newmods</code> has row names, then these are used to label the predicted values in the output. Examples are shown below.</p>
-<p>For random/mixed-effects models, a prediction interval is also computed (Riley et al., 2011, but see ‘Note’). The interval estimates where <code>level</code>% of the true effects fall in the hypothetical population of studies (and hence where the true effect of a new study from the population of studies should fall in <code>level</code>% of the cases).</p>
+<p>For random/mixed-effects models, a prediction interval is also computed (Riley et al., 2011, but see ‘Note’). The interval estimates where <code>level</code>% of the true effects fall in the population of studies (and hence where the true effect of a new study from the population of studies should fall in <code>level</code>% of the cases).</p>
+<p>Analogously, argument <code>prob</code> can be used to specify a string along the lines of <code>prob="&lt;0"</code> or <code>prob="&gt;0"</code> to estimate based on the predictive distribution the proportion of true effects below/above 0 (or some other cutoff, such as a minimally clinically useful value). Equivalently, this is the probability that the true effect in a new study (from the same population of studies) will fall below/above the specified cutoff value (e.g., <em></em>\(\textrm{Pr}(\theta_{i,new} &lt; 0)\) or <em></em>\(\textrm{Pr}(\theta_{i,new} &gt; 0)\)).</p>
 <p>For random-effects models that were fitted with the <code><a href="rma.mv.html">rma.mv</a></code> function, the model may actually include multiple <em></em>\(\tau^2\) values (i.e., when the <code>random</code> argument includes an ‘<code>~ inner | outer</code>’ term and <code>struct="HCS"</code>, <code>struct="DIAG"</code>, <code>struct="HAR"</code>, or <code>struct="UN"</code>). In that case, the function will provide prediction intervals for each level of the inner factor (since the prediction intervals differ depending on the <em></em>\(\tau^2\) value). Alternatively, one can use the <code>tau2.levels</code> argument to specify for which level(s) the prediction interval should be provided. If the model includes a second ‘<code>~ inner | outer</code>’ term with multiple <em></em>\(\gamma^2\) values, prediction intervals for each combination of levels of the inner factors will be provided. Alternatively, one can use the <code>tau2.levels</code> and <code>gamma2.levels</code> arguments to specify for which level combination(s) the prediction interval should be provided.</p>
 <p>When using the <code>newmods</code> argument for mixed-effects models that were fitted with the <code><a href="rma.mv.html">rma.mv</a></code> function, if the model includes multiple <em></em>\(\tau^2\) (and multiple <em></em>\(\gamma^2\)) values, then one must use the <code>tau2.levels</code> (and <code>gamma2.levels</code>) argument to specify the levels of the inner factor(s) (i.e., a vector of length <em></em>\(k_{new}\)) to obtain the appropriate prediction interval(s). Alternatively, one can use the <code>hetvar</code> argument to specify a vector with the amount of heterogeneity for the predicted values.</p>
 <p>For location-scale models fitted with the <code><a href="rma.uni.html">rma.uni</a></code> function, one can use <code>newmods</code> to specify the values of the <em></em>\(p'\) moderator variables included in the model and <code>newscale</code> to specify the values of the <em></em>\(q'\) scale variables included in the model. Whenever <code>newmods</code> is specified, the function computes predicted effects for the specified moderators values. To obtain the corresponding prediction intervals, one must also specify the corresponding <code>newscale</code> values. If only <code>newscale</code> is specified (and not <code>newmods</code>), the function computes the predicted log-transformed <em></em>\(\tau^2\) values (when using a log link) for the specified scale values. By setting <code>transf=exp</code>, one can then obtain the predicted <em></em>\(\tau^2\) values.</p>
@@ -188,6 +192,9 @@
 
    <dt>pi.ub</dt>
 <dd><p>upper bound of the prediction interval(s) (only for random/mixed-effects models).</p></dd>
+
+   <dt>prob</dt>
+<dd><p>probabilistic estimate(s) from the predictive distribution (only when <code>prob</code> was specified).</p></dd>
 
    <dt>tau2.level</dt>
 <dd><p>the level(s) of the inner factor (only for models of class <code>"rma.mv"</code> with multiple <em></em>\(\tau^2\) values).</p></dd>
@@ -273,6 +280,13 @@
 <span class="r-in"><span><span class="co">### note: the prediction interval is not printed here, because the regular back-</span></span></span>
 <span class="r-in"><span><span class="co">### transformation gives the correct bounds for the PI (the integral transformation</span></span></span>
 <span class="r-in"><span><span class="co">### is only needed to obtain the estimated average risk ratio and its CI)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">### estimate the probability that the true log risk ratio is below 0 in a new study</span></span></span>
+<span class="r-in"><span><span class="fu">predict</span><span class="op">(</span><span class="va">res</span>, digits<span class="op">=</span><span class="fl">2</span>, prob<span class="op">=</span><span class="st">"&lt;0"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   pred   se ci.lb ci.ub pi.lb pi.ub prob </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  -0.71 0.18 -1.07 -0.36 -1.87  0.44 0.89 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### fit mixed-effects model with absolute latitude as a moderator</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="rma.uni.html">rma</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, mods <span class="op">=</span> <span class="op">~</span> <span class="va">ablat</span>, data<span class="op">=</span><span class="va">dat</span><span class="op">)</span></span></span>

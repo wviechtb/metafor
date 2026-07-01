@@ -11,7 +11,7 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
    mstyle <- .get.mstyle()
 
-   .chkclass(class(object), must="rma.uni", notav=c("robust.rma", "rma.ls", "rma.gen"))
+   .chkclass(class(object), must="rma.uni", notav=c("rma.ls", "rma.gen"))
 
    if (!missing(parm))
       warning(mstyle$warning("Argument 'parm' (currently) ignored."), call.=FALSE)
@@ -24,7 +24,6 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
    vi <- x$vi
    X  <- x$X
    Y  <- cbind(yi)
-   weights <- x$weights
 
    if (missing(level))
       level <- x$level
@@ -265,6 +264,11 @@ confint.rma.uni <- function(object, parm, level, fixed=FALSE, random=TRUE, type,
 
          if (!requireNamespace("CompQuadForm", quietly=TRUE))
             stop(mstyle$stop("Please install the 'CompQuadForm' package when method='QGEN'."))
+
+         weights <- x$weights
+
+         if (is.null(weights))
+            stop(mstyle$stop("Cannot extract weights from the model object."))
 
          A <- .diag(weights)
          stXAX <- .invcalc(X=X, W=A, k=k)

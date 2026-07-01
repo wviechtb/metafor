@@ -97,9 +97,9 @@
 
    if (method == "SJ") {
       tau2.0 <- var(yi) * (k-1) / k
-      wi <- 1 / (vi / tau2.0 + 1)
-      mu <- sum(wi*yi) / sum(wi)
-      tau2 <- sum(wi * (yi - mu)^2) / (k-1)
+      ri <- tau2.0 / (vi + tau2.0)
+      mu <- sum(ri*yi) / sum(ri)
+      tau2 <- sum(ri * (yi - mu)^2) / (k-1)
    }
 
    if (method %in% c("ML","REML","EB")) {

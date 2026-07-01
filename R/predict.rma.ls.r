@@ -1,5 +1,5 @@
 predict.rma.ls <- function(object, newmods, intercept, addx=FALSE, newscale, addz=FALSE,
-                           level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
+                           prob, level, adjust=FALSE, digits, transf, targs, vcov=FALSE, ...) {
 
    #########################################################################
 
@@ -34,6 +34,9 @@ predict.rma.ls <- function(object, newmods, intercept, addx=FALSE, newscale, add
 
    if (missing(newscale))
       newscale <- NULL
+
+   if (missing(prob))
+      prob <- NULL
 
    if (missing(level))
       level <- x$level
@@ -356,8 +359,10 @@ predict.rma.ls <- function(object, newmods, intercept, addx=FALSE, newscale, add
 
       if (is.element(x$test, c("knha","adhoc","t"))) {
          crit <- if (ddf > 0) qt(level/ifelse(adjust, 2*k.new, 2), df=ddf, lower.tail=FALSE) else NA_real_
+         pi.dist <- "t"
       } else {
          crit <- qnorm(level/ifelse(adjust, 2*k.new, 2), lower.tail=FALSE)
+         pi.dist <- "norm"
       }
 
    } else {
@@ -393,6 +398,7 @@ predict.rma.ls <- function(object, newmods, intercept, addx=FALSE, newscale, add
       if (predtype == "simple") {
          crit <- qnorm(level/ifelse(adjust, 2*k.new, 2), lower.tail=FALSE)
          vpred <- 0
+         pi.dist <- "norm"
       }
 
       pi.ddf <- ddf
@@ -404,6 +410,7 @@ predict.rma.ls <- function(object, newmods, intercept, addx=FALSE, newscale, add
             pi.ddf <- x$k - x$p
          pi.ddf[pi.ddf < 1] <- 1
          crit <- qt(level/ifelse(adjust, 2*k.new, 2), df=pi.ddf, lower.tail=FALSE)
+         pi.dist <- "t"
       }
 
       if (is.null(ddd$newvi)) {
@@ -421,6 +428,26 @@ predict.rma.ls <- function(object, newmods, intercept, addx=FALSE, newscale, add
       pi.lb <- pred - crit * pi.se
       pi.ub <- pred + crit * pi.se
 
+      if (!is.null(prob)) {
+
+         if (adjust)
+            stop(mstyle$stop("Cannot use 'prob' argument when adjust=TRUE."), call.=FALSE)
+
+         lower.tail <- grepl("<", prob, fixed=TRUE)
+         probtxt <- gsub("[<=>]", "", prob)
+         probval <- try(eval(parse(text=probtxt)), silent=TRUE)
+         if (inherits(probval, "try-error")) {
+            probval <- NULL
+         } else {
+            if (pi.dist == "norm") {
+               probval <- pnorm((probval - pred) / pi.se, lower.tail=lower.tail)
+            } else {
+               probval <- pt((probval - pred) / pi.se, df=pi.ddf, lower.tail=lower.tail)
+            }
+         }
+
+      }
+
    } else {
 
       if (vcov)
@@ -428,6 +455,7 @@ predict.rma.ls <- function(object, newmods, intercept, addx=FALSE, newscale, add
 
       pi.lb <- NA_real_
       pi.ub <- NA_real_
+      prob <- NULL
 
    }
 
@@ -533,6 +561,9 @@ predict.rma.ls <- function(object, newmods, intercept, addx=FALSE, newscale, add
 
    out <- list(pred=pred[not.na], se=se[not.na], ci.lb=ci.lb[not.na], ci.ub=ci.ub[not.na], pi.lb=pi.lb[not.na], pi.ub=pi.ub[not.na], cr.lb=pi.lb[not.na], cr.ub=pi.ub[not.na])
 
+   if (!is.null(prob))
+      out$prob <- probval[not.na]
+
    if (vcov)
       vcovpred <- vcovpred[not.na,not.na,drop=FALSE]
 
@@ -583,18 +614,14 @@ predict.rma.ls <- function(object, newmods, intercept, addx=FALSE, newscale, add
       out$ddf <- ddf
 
    if (pred.mui) {
-      if ((x$test != "z" || is.element(predtype, c("riley","t"))) && predtype != "simple") {
-         out$pi.dist <- "t"
+      out$pi.dist <- pi.dist
+      if (pi.dist == "t")
          out$pi.ddf <- pi.ddf
-      } else {
-         out$pi.dist <- "norm"
-      }
       out$pi.se <- pi.se
       attr(out$pi.lb, "level") <- level
       attr(out$pi.lb, "dist") <- out$pi.dist
-      if (out$pi.dist == "t") {
+      if (out$pi.dist == "t")
          attr(out$pi.lb, "ddf") <- out$pi.ddf
-      }
       attr(out$pi.lb, "se") <- pi.se
    }
 

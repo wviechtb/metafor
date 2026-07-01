@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.1-12</span>
       </span>
     </div>
 
@@ -242,7 +242,7 @@ dat
     <h2>Value</h2>
     <p>If the <code>data</code> argument was not specified or <code>append=FALSE</code>, a data frame of class <code>c("escalc","data.frame")</code> with two variables called <code>var.names[1]</code> (by default <code>"yi"</code>) and <code>var.names[2]</code> (by default <code>"vi"</code>) with the (transformed) estimates and the corresponding sampling variances (computed as described above).</p>
 <p>If <code>data</code> was specified and <code>append=TRUE</code>, then the original data frame is returned. If <code>var.names[1]</code> is a variable in <code>data</code> and <code>replace="ifna"</code> (or <code>replace=FALSE</code>), then only missing values in this variable are replaced with the (possibly transformed) estimates from <code>out</code> (where possible) and otherwise a new variable called <code>var.names[1]</code> is added to the data frame. Similarly, if <code>var.names[2]</code> is a variable in <code>data</code> and <code>replace="ifna"</code> (or <code>replace=FALSE</code>), then only missing values in this variable are replaced with the sampling variances back-calculated as described above (where possible) and otherwise a new variable called <code>var.names[2]</code> is added to the data frame.</p>
-<p>If <code>replace="all"</code> (or <code>replace=TRUE</code>), then all values in <code>var.names[1]</code> and <code>var.names[2]</code> are replaced, even for cases where the value in <code>var.names[1]</code> and <code>var.names[2]</code> is not missing.</p>
+<p>If <code>replace="all"</code> (or <code>replace=TRUE</code>), then all values in <code>var.names[1]</code> and <code>var.names[2]</code> are replaced, even for cases where the value in <code>var.names[1]</code> and <code>var.names[2]</code> is not missing. However, non-missing values are never replaced with missing values. To also allow this (i.e., to completely replace all values), use <code>replace="complete"</code>.</p>
     </div>
     <div id="note">
     <h2>Note</h2>

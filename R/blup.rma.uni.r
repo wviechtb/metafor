@@ -66,7 +66,7 @@ blup.rma.uni <- function(x, level, digits, transf, targs, ...) {
 
       Xi <- matrix(x$X.f[i,], nrow=1)
 
-      pred[i]  <- li[i] * x$yi.f[i] + (1 - li[i])   * Xi %*% x$beta
+      pred[i]  <- li[i] * x$yi.f[i] + (1 - li[i]) * Xi %*% x$beta
 
       if (li[i] == 1) {
          vpred[i] <- li[i] * x$vi.f[i]

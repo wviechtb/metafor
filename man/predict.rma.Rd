@@ -7,11 +7,11 @@
    The function computes predicted values, corresponding standard errors, confidence intervals, and prediction intervals for objects of class \code{"rma"}. \loadmathjax
 }
 \usage{
-\method{predict}{rma}(object, newmods, intercept, tau2.levels, gamma2.levels, hetvar,
+\method{predict}{rma}(object, newmods, intercept, tau2.levels, gamma2.levels, hetvar, prob,
         addx=FALSE, level, adjust=FALSE, digits, transf, targs, vcov=FALSE, \dots)
 
 \method{predict}{rma.ls}(object, newmods, intercept, addx=FALSE, newscale, addz=FALSE,
-        level, adjust=FALSE, digits, transf, targs, vcov=FALSE, \dots)
+        prob, level, adjust=FALSE, digits, transf, targs, vcov=FALSE, \dots)
 }
 \arguments{
    \item{object}{an object of class \code{"rma"} or \code{"rma.ls"}.}
@@ -20,6 +20,7 @@
    \item{tau2.levels}{optional vector to specify the levels of the inner factor when computing prediction intervals. Only relevant for models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) and when the model includes more than a single \mjseqn{\tau^2} value. See \sQuote{Details}.}
    \item{gamma2.levels}{optional vector to specify the levels of the inner factor when computing prediction intervals. Only relevant for models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) and when the model includes more than a single \mjseqn{\gamma^2} value. See \sQuote{Details}.}
    \item{hetvar}{optional numeric vector with the amount of heterogeneity for computing prediction intervals. See \sQuote{Details}.}
+   \item{prob}{optional character string to obtain probabilistic estimates from predictive distributions. See \sQuote{Details}.}
    \item{addx}{logical to specify whether the values of the moderator variables should be added to the returned object. See \sQuote{Examples}.}
    \item{newscale}{optional vector or matrix to specify the values of the scale variables for which the predicted values should be calculated. Only relevant for location-scale models (see \code{\link{rma.uni}}). See \sQuote{Details}.}
    \item{addz}{logical to specify whether the values of the scale variables should be added to the returned object.}
@@ -40,7 +41,9 @@
 
    For models including \mjseqn{p'} moderator variables, new moderator values (for \mjeqn{k_{new}}{k_new} hypothetical new studies) can be specified by setting \code{newmods} equal to a \mjeqn{k_{new} \times p'}{k_new x p'} matrix with the corresponding new moderator values (if \code{newmods} is a vector, then only a single predicted value is computed unless the model only includes a single moderator variable, in which case predicted values corresponding to all the vector values are computed). If the model object includes an intercept (so that the model matrix has \mjseqn{p' + 1} columns), then it will be automatically added to \code{newmods} unless one sets \code{intercept=FALSE}; alternatively, if \code{newmods} is a \mjeqn{k_{new} \times (p'+1)}{k_new x (p'+1)} matrix, then the \code{intercept} argument is ignored and the first column of the matrix determines whether the intercept is included when computing the predicted values or not. Note that any factors in the original model get turned into the appropriate contrast variables within the \code{\link{rma.uni}} function, so that \code{newmods} should actually include the values for the contrast variables. If the matrix specified via \code{newmods} has row names, then these are used to label the predicted values in the output. Examples are shown below.
 
-   For random/mixed-effects models, a prediction interval is also computed (Riley et al., 2011, but see \sQuote{Note}). The interval estimates where \code{level}\% of the true effects fall in the hypothetical population of studies (and hence where the true effect of a new study from the population of studies should fall in \code{level}\% of the cases).
+   For random/mixed-effects models, a prediction interval is also computed (Riley et al., 2011, but see \sQuote{Note}). The interval estimates where \code{level}\% of the true effects fall in the population of studies (and hence where the true effect of a new study from the population of studies should fall in \code{level}\% of the cases).
+
+   Analogously, argument \code{prob} can be used to specify a string along the lines of \code{prob="<0"} or \code{prob=">0"} to estimate based on the predictive distribution the proportion of true effects below/above 0 (or some other cutoff, such as a minimally clinically useful value). Equivalently, this is the probability that the true effect in a new study (from the same population of studies) will fall below/above the specified cutoff value (e.g., \mjseqn{\textrm{Pr}(\theta_{i,new} < 0)} or \mjseqn{\textrm{Pr}(\theta_{i,new} > 0)}).
 
    For random-effects models that were fitted with the \code{\link{rma.mv}} function, the model may actually include multiple \mjseqn{\tau^2} values (i.e., when the \code{random} argument includes an \sQuote{\code{~ inner | outer}} term and \code{struct="HCS"}, \code{struct="DIAG"}, \code{struct="HAR"}, or \code{struct="UN"}). In that case, the function will provide prediction intervals for each level of the inner factor (since the prediction intervals differ depending on the \mjseqn{\tau^2} value). Alternatively, one can use the \code{tau2.levels} argument to specify for which level(s) the prediction interval should be provided. If the model includes a second \sQuote{\code{~ inner | outer}} term with multiple \mjseqn{\gamma^2} values, prediction intervals for each combination of levels of the inner factors will be provided. Alternatively, one can use the \code{tau2.levels} and \code{gamma2.levels} arguments to specify for which level combination(s) the prediction interval should be provided.
 
@@ -58,6 +61,7 @@
    \item{ci.ub}{upper bound of the confidence interval(s).}
    \item{pi.lb}{lower bound of the prediction interval(s) (only for random/mixed-effects models).}
    \item{pi.ub}{upper bound of the prediction interval(s) (only for random/mixed-effects models).}
+   \item{prob}{probabilistic estimate(s) from the predictive distribution (only when \code{prob} was specified).}
    \item{tau2.level}{the level(s) of the inner factor (only for models of class \code{"rma.mv"} with multiple \mjseqn{\tau^2} values).}
    \item{gamma2.level}{the level(s) of the inner factor (only for models of class \code{"rma.mv"} with multiple \mjseqn{\gamma^2} values).}
    \item{X}{the moderator value(s) used to calculate the predicted values (only when \code{addx=TRUE}).}
@@ -117,6 +121,9 @@ predict(res, transf=transf.exp.int, digits=2)
 ### note: the prediction interval is not printed here, because the regular back-
 ### transformation gives the correct bounds for the PI (the integral transformation
 ### is only needed to obtain the estimated average risk ratio and its CI)
+
+### estimate the probability that the true log risk ratio is below 0 in a new study
+predict(res, digits=2, prob="<0")
 
 ### fit mixed-effects model with absolute latitude as a moderator
 res <- rma(yi, vi, mods = ~ ablat, data=dat)
