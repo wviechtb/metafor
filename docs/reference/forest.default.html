@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.3-0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.3-1</span>
       </span>
     </div>
 
@@ -262,7 +262,8 @@
 <p>By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row <em></em>\(k\), the second study in row <em></em>\(k-1\), and so on, until the last study, which is placed in the first row). The studies can be reordered with the <code>order</code> argument:</p>
 <p></p><ul><li><p><code>order="est"</code>: the studies are ordered by the estimates,</p></li>
 <li><p><code>order="prec"</code>: the studies are ordered by their sampling    variances.</p></li>
-</ul><p>Alternatively, it is also possible to set <code>order</code> equal to a variable based on which the studies will be ordered (see ‘Examples’). One can also use the <code>rows</code> argument to specify the rows (or more generally, the positions) for plotting the estimates.</p>
+</ul><p>So-called ‘caterpillar plots’ use <code>order="est"</code> (and typically suppress the study labels and annotations with <code>slab=NA</code> and <code>annotate=FALSE</code> when there are many studies).</p>
+<p>Alternatively, it is also possible to set <code>order</code> equal to a variable based on which the studies will be ordered (see ‘Examples’). One can also use the <code>rows</code> argument to specify the rows (or more generally, the positions) for plotting the estimates.</p>
 <p></p>
 </div>
 

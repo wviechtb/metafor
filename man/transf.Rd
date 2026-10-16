@@ -200,7 +200,7 @@ transf.lnortortet.digby(xi)
    A vector with the transformed values.
 }
 \note{
-   The integral transformation method for a transformation function \mjseqn{h(z)} is given by \mjsdeqn{\int_{\text{lower}}^{\text{upper}} h(z) f(z) dz} using the limits \code{targs$lower} and \code{targs$upper}, where \mjseqn{f(z)} is the density of a normal distribution with mean equal to \code{xi} and variance equal to \code{targs$tau2}. By default, \code{targs$lower} and \code{targs$upper} are set to reasonable values and, if possible, \code{targs$tau2} is extracted from the model object in functions where such transformation functions are typically applied (e.g., \code{\link[=predict.rma]{predict}}). An example is provided below.
+   The integral transformation method (Igelmann et al., in press) for a transformation function \mjseqn{h(z)} is given by \mjsdeqn{\int_{\text{lower}}^{\text{upper}} h(z) f(z) dz} using the limits \code{targs$lower} and \code{targs$upper}, where \mjseqn{f(z)} is the density of a normal distribution with mean equal to \code{xi} and variance equal to \code{targs$tau2}. By default, \code{targs$lower} and \code{targs$upper} are set to reasonable values and, if possible, \code{targs$tau2} is extracted from the model object in functions where such transformation functions are typically applied (e.g., \code{\link[=predict.rma]{predict}}). An example is provided below.
 }
 \author{
    Wolfgang Viechtbauer (\email{wvb@metafor-project.org}, \url{https://www.metafor-project.org}).
@@ -223,6 +223,8 @@ transf.lnortortet.digby(xi)
    Grice, J. W., & Barrett, P. T. (2014). A note on Cohen's overlapping proportions of normal distributions. \emph{Psychological Reports}, \bold{115}(3), 741--747. \verb{https://doi.org/10.2466/03.pr0.115c29z4}
 
    Hakstian, A. R., & Whalen, T. E. (1976). A k-sample significance test for independent alpha coefficients. \emph{Psychometrika}, \bold{41}(2), 219--231. \verb{https://doi.org/10.1007/BF02291840}
+
+   Igelmann, J.-B., Pauly, M., & Viechtbauer, W. (in press). Back-transformations in random-effects meta-analysis – Impact and interpretation. \emph{Research Synthesis Methods}. \verb{https://doi.org/10.1017/rsm.2026.10096}
 
    Inman, H. F., & Bradley Jr, E. L. (1989). The overlapping coefficient as a measure of agreement between probability distributions and point estimation of the overlap of two normal densities. \emph{Communications in Statistics, Theory and Methods}, \bold{18}(10), 3851--3874. \verb{https://doi.org/10.1080/03610928908830127}
 

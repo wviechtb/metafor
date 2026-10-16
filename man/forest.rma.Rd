@@ -20,7 +20,7 @@
    \item{annotate}{logical to specify whether annotations should be added to the plot (the default is \code{TRUE}).}
    \item{addfit}{logical to specify whether the pooled estimate (for models without moderators) or fitted values (for models with moderators) should be added to the plot (the default is \code{TRUE}). See \sQuote{Details}.}
    \item{addpred}{logical to specify whether the prediction interval should be added to the plot (the default is \code{FALSE}). See \sQuote{Details}.}
-   \item{predstyle}{character string to specify the style of the prediction interval (either \code{"line"} (the default), \code{"polygon"}, \code{"bar"}, \code{"shade"}, or \code{"dist"}). Can be abbreviated. Specifying this argument automatically flips \code{addpred=FALSE} to \code{addpred=TRUE}.}
+   \item{predstyle}{character string to specify the style of the prediction interval (either \code{"line"} (the default), \code{"line2"}, \code{"polygon"}, \code{"bar"}, \code{"shade"}, or \code{"dist"}). Can be abbreviated. Specifying this argument automatically flips \code{addpred=FALSE} to \code{addpred=TRUE}.}
    \item{preddist}{optional list of two elements to manually specify the predictive distribution.}
    \item{showweights}{logical to specify whether the annotations should also include the weights given to the estimates during the model fitting (the default is \code{FALSE}). See \sQuote{Details}.}
    \item{header}{logical to specify whether column headings should be added to the plot (the default is \code{TRUE}). Can also be a character vector to specify the left and right headings (or only the left one).}
@@ -47,7 +47,7 @@
    \item{atransf}{optional argument to specify a function to transform the x-axis labels and annotations (e.g., \code{atransf=exp}; see also \link{transf}). If unspecified, no transformation is used.}
    \item{targs}{optional arguments needed by the function specified via \code{transf} or \code{atransf}.}
    \item{rows}{optional vector to specify the rows (or more generally, the positions) for plotting the estimates. Can also be a single value to specify the row of the first estimate (the remaining estimates are then plotted below this starting row).}
-   \item{efac}{vertical expansion factor for confidence interval limits, arrows, and the polygon. The default value of 1 should usually work fine. Can also be a vector of two numbers, the first for CI limits and arrows, the second for the polygon. Can also be a vector of three numbers, the first for CI limits, the second for arrows, the third for the polygon. Can also include a fourth element to adjust the height of the prediction interval/distribution when \code{predstyle} is not \code{"line"}.}
+   \item{efac}{vertical expansion factor for confidence interval limits, arrows, and the polygon. The default value of 1 should usually work fine. Can also be a vector of two numbers, the first for CI limits and arrows, the second for the polygon. Can also be a vector of three numbers, the first for CI limits, the second for arrows, the third for the polygon. Can also include a fourth element to adjust the height of the prediction interval/distribution when \code{predstyle} is not \code{"line"} or \code{"line2"}.}
    \item{pch}{plotting symbol to use for the estimates. By default, a filled square is used. See \code{\link{points}} for other options. Can also be a vector of values.}
    \item{psize}{optional numeric value to specify the point sizes for the estimates. If unspecified, the point sizes are a function of the model weights. Can also be a vector of values.}
    \item{plim}{numeric vector of length 2 to scale the point sizes (ignored when \code{psize} is specified). See \sQuote{Details}.}
@@ -76,9 +76,11 @@
 
    \subsection{Prediction Interval for Random-Effects Models}{
 
-      For random-effects models and if \code{addpred=TRUE}, a dotted line is added to the polygon which indicates the bounds of the prediction interval (Riley et al., 2011). For random-effects models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) with multiple \mjseqn{\tau^2} values, the \code{addpred} argument can be used to specify for which level of the inner factor the prediction interval should be provided (since the intervals differ depending on the \mjseqn{\tau^2} value). If the model also contains multiple \mjseqn{\gamma^2} values, the \code{addpred} argument should then be of length 2 to specify the levels of both inner factors. See also \code{\link[=predict.rma]{predict}}, which is used to compute these interval bounds.
+      For random-effects models and if \code{addpred=TRUE} (with \code{predstyle="line"}, the default)), a dotted line is added to the polygon which indicates the bounds of the prediction interval (Riley et al., 2011). When using \code{predstyle="line2"}, the prediction interval bounds are also provided as part of the annotations.
 
-      Instead of showing the prediction interval as a dotted line (which corresponds to \code{predstyle="line"}), one can choose a different style via the \code{predstyle} argument:
+      For random-effects models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) with multiple \mjseqn{\tau^2} values, the \code{addpred} argument can be used to specify for which level of the inner factor the prediction interval should be provided (since the intervals differ depending on the \mjseqn{\tau^2} value). If the model also contains multiple \mjseqn{\gamma^2} values, the \code{addpred} argument should then be of length 2 to specify the levels of both inner factors. See also \code{\link[=predict.rma]{predict}}, which is used to compute these interval bounds.
+
+      Instead of showing the prediction interval as a dotted line, one can choose a different style via the \code{predstyle} argument:
 
       \itemize{
       \item \code{predstyle="polygon"}: the prediction interval is shown as an additional polygon below the polygon for the pooled estimate,
@@ -245,6 +247,7 @@ forest(res, alim=c(-3,3), order=ablat)
 ### various ways to show the prediction interval
 forest(res, addpred=TRUE)
 forest(res, predstyle="line") # same
+forest(res, predstyle="line2") # also show the prediction interval bounds
 forest(res, predstyle="polygon")
 forest(res, predstyle="polygon", col=c("black","white"))
 forest(res, predstyle="bar")

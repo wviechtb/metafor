@@ -79,6 +79,8 @@
       \item \code{order="prec"}: the studies are ordered by their sampling    variances.
       }
 
+      So-called \sQuote{caterpillar plots} use \code{order="est"} (and typically suppress the study labels and annotations with \code{slab=NA} and \code{annotate=FALSE} when there are many studies).
+
       Alternatively, it is also possible to set \code{order} equal to a variable based on which the studies will be ordered (see \sQuote{Examples}). One can also use the \code{rows} argument to specify the rows (or more generally, the positions) for plotting the estimates.
 
    }

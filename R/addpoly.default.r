@@ -99,7 +99,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
    if (missing(predstyle))
       predstyle <- "line"
 
-   predstyle <- match.arg(predstyle, c("line", "polygon", "bar", "shade", "dist"))
+   predstyle <- match.arg(predstyle, c("line", "line2", "polygon", "bar", "shade", "dist"))
 
    if (missing(predlim))
       predlim <- NULL
@@ -132,7 +132,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
       efac <- .expand1(efac, 4L)
 
-      if (predstyle == "line") {
+      if (predstyle == "line" || predstyle == "line2") {
 
          ### if user specified two values, then use 1st = summary polygon(s), 2nd = PI end lines and arrows
 
@@ -249,7 +249,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
       if (predstyle == "line") {
          mlab <- rep("", k)
       } else {
-         if (predstyle %in% c("polygon","bar","shade"))
+         if (predstyle %in% c("line2","polygon","bar","shade"))
             mlab <- c("", paste0("Prediction Interval", annosym[1], round(100*(1-pi.level),digits[[1]]), "% PI", annosym[3]))
          if (predstyle == "dist")
             mlab <- c("", paste0("Predictive Distribution", annosym[1], round(100*(1-pi.level),digits[[1]]), "% PI", annosym[3]))
@@ -261,7 +261,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
          if (length(mlab) != k)
             stop(mstyle$stop(paste0("Length of the 'mlab' argument (", length(mlab), ") does not correspond to the number of polygons to be plotted (", k, ").")))
       } else {
-         if (length(mlab) == 1L && predstyle %in% c("polygon","bar","shade"))
+         if (length(mlab) == 1L && predstyle %in% c("line2","polygon","bar","shade"))
             mlab <- c(mlab, paste0("Prediction Interval", annosym[1], round(100*(1-pi.level),digits[[1]]), "% PI", annosym[3]))
          if (length(mlab) == 1L && predstyle == "dist")
             mlab <- c(mlab, paste0("Predictive Distribution", annosym[1], round(100*(1-pi.level),digits[[1]]), "% PI", annosym[3]))
@@ -513,13 +513,13 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
       if (is.function(atransf)) {
          if (is.null(targs)) {
-            if (predstyle %in% c("polygon","bar","shade","dist")) {
+            if (predstyle %in% c("line2","polygon","bar","shade","dist")) {
                annotext <- cbind(sapply(c(yi, NA_real_), atransf), sapply(c(ci.lb, pi.lb), atransf), sapply(c(ci.ub, pi.ub), atransf))
             } else {
                annotext <- cbind(sapply(yi, atransf), sapply(ci.lb, atransf), sapply(ci.ub, atransf))
             }
          } else {
-            if (predstyle %in% c("polygon","bar","shade","dist")) {
+            if (predstyle %in% c("line2","polygon","bar","shade","dist")) {
                annotext <- cbind(sapply(c(yi, NA_real_), atransf, targs), sapply(c(ci.lb, pi.lb), atransf, targs), sapply(c(ci.ub, pi.ub), atransf, targs))
             } else {
                annotext <- cbind(sapply(yi, atransf, targs), sapply(ci.lb, atransf, targs), sapply(ci.ub, atransf, targs))
@@ -533,7 +533,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
       } else {
 
-         if (predstyle %in% c("polygon","bar","shade","dist")) {
+         if (predstyle %in% c("line2","polygon","bar","shade","dist")) {
             annotext <- cbind(c(yi, NA_real_), c(ci.lb, pi.lb), c(ci.ub, pi.ub))
          } else {
             annotext <- cbind(yi, ci.lb, ci.ub)
@@ -556,13 +556,13 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
       annotext <- cbind(annotext[,1], annosym[1], annotext[,2], annosym[2], annotext[,3], annosym[3])
 
       annotext <- apply(annotext, 1, paste, collapse="")
-      if (predstyle %in% c("polygon","bar","shade","dist"))
+      if (predstyle %in% c("line2","polygon","bar","shade","dist"))
          annotext[2] <- gsub("NA", "", annotext[2], fixed=TRUE)
       annotext <- gsub("-", annosym[4], annotext, fixed=TRUE)
       annotext <- gsub(" ", annosym[5], annotext, fixed=TRUE)
 
       par(family=names(fonts)[2], font=fonts[2])
-      if (predstyle %in% c("polygon","bar","shade","dist")) {
+      if (predstyle %in% c("line2","polygon","bar","shade","dist")) {
          ltext(x=textpos[2], c(rows[1],rows[2])+rowadj[2], labels=annotext, pos=2, cex=cex, ...)
       } else {
          ltext(x=textpos[2], rows+rowadj[2], labels=annotext, pos=2, cex=cex, ...)
@@ -596,7 +596,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
       ### add prediction interval(s)
 
-      if (predstyle == "line") {
+      if (predstyle == "line" || predstyle == "line2") {
 
          lsegments(max(pi.lb[i], alim[1]), rows[i], min(pi.ub[i], alim[2]), rows[i], lty=lty[1], col=lcol[i], ...)
 
@@ -907,7 +907,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
 
          ltext(x=textpos[1], rows[i]+rowadj[1], mlab[[i]], pos=4, cex=cex, ...)
 
-         if (predstyle %in% c("polygon","bar","shade","dist"))
+         if (predstyle %in% c("line2","polygon","bar","shade","dist"))
             ltext(textpos[1], rows[2]+rowadj[1], mlab[[2]], pos=4, cex=cex, ...)
 
       }
