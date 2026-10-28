@@ -52,7 +52,7 @@
 \details{
    The \code{\link{cumul}} function can be used to conduct a cumulative meta-analysis. Passing an object created by this function to \code{forest()} creates a cumulative forest plot that shows the pooled estimate with corresponding confidence interval bounds as one estimate at a time is added to the analysis.
 
-   See \code{\link{forest.default}} and \code{\link{forest.rma}} for further details on the purpose of the various arguments.
+   See \code{\link{forest.rma}} and \code{\link{forest.default}} for further details on the purpose of the various arguments.
 }
 \section{Note}{
    The function sets some sensible values for the optional arguments, but it may be necessary to adjust these in certain circumstances.

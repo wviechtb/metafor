@@ -66,64 +66,11 @@
 }
 \details{
 
-   The plot shows the effect size estimates (by default as filled squares) with corresponding \code{level}\% confidence intervals (as horizontal lines extending from the observed values). The confidence intervals are computed with \mjeqn{y_i \pm z_{crit} \sqrt{v_i}}{y_i ± z_crit \sqrt{v_i}}, where \mjseqn{y_i} denotes the estimate in the \mjeqn{i\text{th}}{ith} study, \mjseqn{v_i} the corresponding sampling variance (and hence \mjseqn{\sqrt{v_i}} is the corresponding standard error), and \mjeqn{z_{crit}}{z_crit} is the appropriate critical value from a standard normal distribution (e.g., \mjseqn{1.96} for a 95\% CI).
+   The plot shows the effect size estimates (by default as filled squares) with corresponding \code{level}\% confidence intervals (as horizontal lines extending from the estimates). The confidence intervals are computed with \mjeqn{y_i \pm z_{crit} \sqrt{v_i}}{y_i ± z_crit \sqrt{v_i}}, where \mjseqn{y_i} denotes the estimate in the \mjeqn{i\text{th}}{ith} study, \mjseqn{v_i} the corresponding sampling variance (and hence \mjseqn{SE_i = \sqrt{v_i}} is the corresponding standard error), and \mjeqn{z_{crit}}{z_crit} is the appropriate critical value from a standard normal distribution (e.g., \mjseqn{1.96} for a 95\% CI).
 
    \subsection{Equal- and Random-Effects Models}{
 
       For an equal- and a random-effects model (i.e., for models without moderators), a four-sided polygon, sometimes called a summary \sQuote{diamond}, is added to the bottom of the forest plot, showing the pooled estimate based on the model (with the center of the polygon corresponding to the estimate and the left/right edges indicating the confidence interval limits). The \code{col} and \code{border} arguments can be used to adjust the (border) color of the polygon. Drawing of the polygon can be suppressed by setting \code{addfit=FALSE}.
-
-   }
-
-   \subsection{Prediction Interval for Random-Effects Models}{
-
-      For random-effects models and if \code{addpred=TRUE} (with \code{predstyle="line"}, the default)), a dotted line is added to the polygon which indicates the bounds of the prediction interval (Riley et al., 2011). When using \code{predstyle="line2"}, the prediction interval bounds are also provided as part of the annotations.
-
-      For random-effects models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) with multiple \mjseqn{\tau^2} values, the \code{addpred} argument can be used to specify for which level of the inner factor the prediction interval should be provided (since the intervals differ depending on the \mjseqn{\tau^2} value). If the model also contains multiple \mjseqn{\gamma^2} values, the \code{addpred} argument should then be of length 2 to specify the levels of both inner factors. See also \code{\link[=predict.rma]{predict}}, which is used to compute these interval bounds.
-
-      Instead of showing the prediction interval as a dotted line, one can choose a different style via the \code{predstyle} argument:
-
-      \itemize{
-      \item \code{predstyle="polygon"}: the prediction interval is shown as an additional polygon below the polygon for the pooled estimate,
-      \item \code{predstyle="bar"}: the prediction interval is shown as a bar below the polygon for the pooled estimate,
-      \item \code{predstyle="shade"}: the bar is shaded in color intensity in accordance with the density of the predictive distribution,
-      \item \code{predstyle="dist"}: the entire predictive distribution is shown and the regions beyond the prediction interval bounds are shaded in gray; the region below or above zero (depending on whether the pooled estimate is positive or negative) is also shaded in a lighter shade of gray.
-      }
-
-      In all of these cases, the prediction interval bounds are then also provided as part of the annotations. For \code{predstyle="dist"}, one can adjust the range of values for which the predictive distribution is shown via the \code{predlim} argument. Note that the shaded regions may not be visible depending on the location/shape of the distribution.
-
-      Internally, \code{\link[=predict.rma]{predict}} is used to obtain the prediction interval / predictive distribution. However, one can also specify the predictive distribution manually via argument \code{preddist} (this can be useful if the distribution was estimated via some other method). The list should contain two elements, the first containing the x-values and the second the corresponding densities. The examples below illustrate the use of these arguments.
-
-      When using \code{preddist}, the bounds of the prediction interval are by default obtained numerically by constructing the corresponding empirical cumulative distribution function (the range of x-values at which the densities are given should therefore be wide enough to span the entire distribution, so that tail areas can be accurately determined). However, if \code{preddist} contains elements \code{pi.lb} and \code{pi.ub} (and optionally element \code{level} for the prediction interval level), then these are taken as the prediction interval bounds.
-
-   }
-
-   \subsection{Meta-Regression Models}{
-
-      For meta-regression models (i.e., models involving moderators), the fitted value for each study is added as a polygon to the plot. By default, the width of the polygons corresponds to the confidence interval limits for the fitted values. By setting \code{addpred=TRUE}, the width reflects the prediction interval limits. Again, the \code{col} and \code{border} arguments can be used to adjust the (border) color of the polygons. These polygons can be suppressed by setting \code{addfit=FALSE}.
-
-   }
-
-   \subsection{Applying a Transformation}{
-
-      With the \code{transf} argument, the estimates and confidence/prediction interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, one could use \code{transf=exp} to obtain a forest plot showing the odds ratios. Note that when the transformation is non-linear (as is the case for \code{transf=exp}), the interval bounds will be asymmetric (which is visually not so appealing). Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations. For example, when using \code{atransf=exp}, the x-axis will correspond to a log scale. See \link{transf} for some other useful transformation functions in the context of a meta-analysis. See below for examples.
-
-   }
-
-   \subsection{Ordering of Studies}{
-
-      By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \mjseqn{k}, the second study in row \mjseqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{order} argument:
-
-      \itemize{
-      \item \code{order="est"}: the studies are ordered by the estimates,
-      \item \code{order="fit"}: the studies are ordered by the fitted values,
-      \item \code{order="prec"}: the studies are ordered by their sampling variances,
-      \item \code{order="resid"}: the studies are ordered by the size of their residuals,
-      \item \code{order="rstandard"}: the studies are ordered by the size of their standardized residuals,
-      \item \code{order="abs.resid"}: the studies are ordered by the size of their absolute residuals,
-      \item \code{order="abs.rstandard"}: the studies are ordered by the size of their absolute standardized residuals.
-      }
-
-      Alternatively, it is also possible to set \code{order} equal to a variable based on which the studies will be ordered. One can also use the \code{rows} argument to specify the rows (or more generally, the positions) for plotting the estimates.
 
    }
 
@@ -159,19 +106,75 @@ text(c(-8.75, -5.25), res$k+2.8, c("Vaccinated", "Control"), cex=0.75, font=2)
 
       Additional pooled estimates can be added to the plot as polygons with the \code{\link{addpoly}} function. See the documentation for that function for examples.
 
-      When \code{showweights=TRUE}, the annotations will include information about the weights given to the estimates during the model fitting. For simple models (such as those fitted with the \code{\link{rma.uni}} function), these weights correspond to the \sQuote{inverse-variance weights} (but are given in percent). For models fitted with the \code{\link{rma.mv}} function, the weights are based on the diagonal of the weight matrix. Note that the weighting structure is typically more complex in such models (i.e., the weight matrix is usually not just a diagonal matrix) and the weights shown therefore do not reflect this complexity. See \code{\link[=weights.rma]{weights}} for more details (for the special case that \code{x} is an intercept-only \code{"rma.mv"} model, one can also set \code{showweights="rowsum"} to show the \sQuote{row-sum weights}).
-
-   }
-
-   \subsection{Adjusting the Point Sizes}{
-
-      By default (i.e., when \code{psize} is not specified), the point sizes are a function of the square root of the model weights. This way, their areas are proportional to the weights. However, the point sizes are rescaled so that the smallest point size is \code{plim[1]} and the largest point size is \code{plim[2]}. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights. If exactly relative point sizes are desired, one can set \code{plim[2]} to \code{NA}, in which case the points are rescaled so that the smallest point size corresponds to \code{plim[1]} and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set \code{plim[1]} to \code{NA}, in which case the points are rescaled so that the largest point size corresponds to \code{plim[2]} and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set \code{plim[3]}, which enforces a minimal point size.
+      When \code{showweights=TRUE}, the annotations will include information about the weights given to the estimates during the model fitting. For simple models (such as those fitted with the \code{\link{rma.uni}} function), these weights correspond to the \sQuote{inverse-variance weights} (but are given in percent). For models fitted with the \code{\link{rma.mv}} function, the weights are based on the diagonal of the weight matrix. Note that the weighting structure is typically more complex in such models (i.e., the weight matrix is usually not just a diagonal matrix) and the weights shown therefore do not reflect this complexity. See \code{\link[=weights.rma]{weights}} for more details (for the special case that \code{x} is an intercept-only \code{rma.mv} model, one can also set \code{showweights="rowsum"} to show the \sQuote{row-sum weights}).
 
    }
 
    \subsection{Shading Rows}{
 
       With the \code{shade} argument, one can shade rows of the plot. The argument can be set to one of the following character strings: \code{"zebra"} (same as \code{shade=TRUE}) or \code{"zebra2"} to use zebra-style shading (starting either at the first or second study) or to \code{"all"} in which case all rows are shaded. Alternatively, the argument can be set to a logical or numeric vector to specify which rows should be shaded. The \code{colshade} argument can be used to set the color of shaded rows.
+
+   }
+
+   \subsection{Prediction Interval for Random-Effects Models}{
+
+      For random-effects models and if \code{addpred=TRUE} (with \code{predstyle="line"} as the default), a dotted line is added to the polygon which indicates the bounds of the prediction interval (Riley et al., 2011). When using \code{predstyle="line2"}, the prediction interval bounds are also provided as part of the annotations.
+
+      Instead of showing the prediction interval as a dotted line around the polygon for the pooled estimate, one can choose a different style via the \code{predstyle} argument:
+
+      \itemize{
+      \item \code{predstyle="polygon"}: the prediction interval is shown as an additional polygon below the polygon for the pooled estimate,
+      \item \code{predstyle="bar"}: the prediction interval is shown as a bar below the polygon for the pooled estimate,
+      \item \code{predstyle="shade"}: the bar is shaded in color intensity in accordance with the density of the predictive distribution,
+      \item \code{predstyle="dist"}: the entire predictive distribution is shown and the regions beyond the prediction interval bounds are shaded in gray; the region below or above zero (depending on whether the pooled estimate is positive or negative) is also shaded in a lighter shade of gray.
+      }
+
+      \if{html}{\figure{forest-predstyle.png}{options: width=800}}
+      \if{latex}{\figure{forest-predstyle.pdf}{options: width=5.5in}}
+
+      In all of these cases, the prediction interval bounds are then also provided as part of the annotations. For \code{predstyle="dist"}, one can adjust the range of values for which the predictive distribution is shown via the \code{predlim} argument. Note that the shaded regions may not be visible depending on the location/shape of the distribution.
+
+      Internally, \code{\link[=predict.rma]{predict}} is used to obtain the prediction interval / predictive distribution. However, one can also specify the predictive distribution manually via argument \code{preddist} (this can be useful if the distribution was estimated via some other method). The list should contain two elements, the first containing the x-values and the second the corresponding densities. The examples below illustrate the use of these arguments.
+
+      When using \code{preddist}, the bounds of the prediction interval are by default obtained numerically by constructing the corresponding empirical cumulative distribution function (the range of x-values at which the densities are given should therefore be wide enough to span the entire distribution, so that tail areas can be accurately determined). However, if \code{preddist} contains elements \code{pi.lb} and \code{pi.ub} (and optionally element \code{level} for the prediction interval level), then these are taken as the prediction interval bounds.
+
+      For random-effects models of class \code{"rma.mv"} (see \code{\link{rma.mv}}) with multiple \mjseqn{\tau^2} values, the \code{addpred} argument can be used to specify for which level of the inner factor the prediction interval should be provided (since the intervals differ depending on the \mjseqn{\tau^2} value). If the model also contains multiple \mjseqn{\gamma^2} values, the \code{addpred} argument should then be of length 2 to specify the levels of both inner factors. See also \code{\link[=predict.rma]{predict}}, which is used to compute these interval bounds.
+
+   }
+
+   \subsection{Meta-Regression Models}{
+
+      For meta-regression models (i.e., models involving moderators), the fitted value for each study is added as a polygon to the plot. By default, the width of the polygons corresponds to the confidence interval limits for the fitted values. By setting \code{addpred=TRUE}, the width reflects the prediction interval limits. Again, the \code{col} and \code{border} arguments can be used to adjust the (border) color of the polygons. These polygons can be suppressed by setting \code{addfit=FALSE}.
+
+   }
+
+   \subsection{Applying a Transformation}{
+
+      With the \code{transf} argument, the estimates and confidence/prediction interval bounds can be transformed with some suitable function. For example, when plotting log odds ratios, one could use \code{transf=exp} to obtain a forest plot showing the odds ratios. Note that when the transformation is non-linear (as is the case for \code{transf=exp}), the interval bounds will be asymmetric (which is visually not so appealing). Alternatively, one can use the \code{atransf} argument to transform the x-axis labels and annotations. For example, when using \code{atransf=exp}, the x-axis will correspond to a log scale. See \link{transf} for some other useful transformation functions in the context of a meta-analysis. See below for examples.
+
+   }
+
+   \subsection{Ordering of Studies}{
+
+      By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \mjseqn{k}, the second study in row \mjseqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{order} argument:
+
+      \itemize{
+      \item \code{order="est"}: the studies are ordered by the estimates,
+      \item \code{order="fit"}: the studies are ordered by the fitted values,
+      \item \code{order="prec"}: the studies are ordered by their sampling variances,
+      \item \code{order="resid"}: the studies are ordered by the size of their residuals,
+      \item \code{order="rstandard"}: the studies are ordered by the size of their standardized residuals,
+      \item \code{order="abs.resid"}: the studies are ordered by the size of their absolute residuals,
+      \item \code{order="abs.rstandard"}: the studies are ordered by the size of their absolute standardized residuals.
+      }
+
+      Alternatively, it is also possible to set \code{order} equal to a variable based on which the studies will be ordered. One can also use the \code{rows} argument to specify the rows (or more generally, the positions) for plotting the estimates.
+
+   }
+
+   \subsection{Adjusting the Point Sizes}{
+
+      By default (i.e., when \code{psize} is not specified), the point sizes are a function of the square root of the model weights. This way, their areas are proportional to the weights. However, the point sizes are rescaled so that the smallest point size is \code{plim[1]} and the largest point size is \code{plim[2]}. As a result, their relative sizes (i.e., areas) no longer exactly correspond to their relative weights. If exactly relative point sizes are desired, one can set \code{plim[2]} to \code{NA}, in which case the points are rescaled so that the smallest point size corresponds to \code{plim[1]} and all other points are scaled accordingly. As a result, the largest point may be very large. Alternatively, one can set \code{plim[1]} to \code{NA}, in which case the points are rescaled so that the largest point size corresponds to \code{plim[2]} and all other points are scaled accordingly. As a result, the smallest point may be very small and essentially indistinguishable from the confidence interval line. To avoid the latter, one can also set \code{plim[3]}, which enforces a minimal point size.
 
    }
 

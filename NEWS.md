@@ -1,6 +1,8 @@
-# metafor 5.3-1 (2026-10-16)
+# metafor 5.3-2 (2026-10-28)
 
 - added `predstyle="line2"` which is like `predstyle="line"` but the prediction interval bounds are also provided as part of the annotations
+
+- improved the documentation a bit
 
 # metafor 5.2-1 (2026-09-15)
 
