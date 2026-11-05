@@ -12,7 +12,7 @@ cmicalc(mi, method="exact")
    \item{method}{character string to specify if the exact (\code{"exact"}) or approximate (\code{"approx"}) formula should be used.}
 }
 \details{
-   Standardized mean differences (Cohen's d values) have a slight positive bias (i.e., they tend to be too large on average). Hedges (1981) derived the bias correction factor to make make standardized mean differences unbiased (yielding what is commonly referred to as Hedges' g values).
+   Standardized mean differences (Cohen's d values) have a slight positive bias (i.e., they tend to be too large on average). Hedges (1981) derived the bias correction factor to make standardized mean differences unbiased (yielding what is commonly referred to as Hedges' g values).
 
    The function computes the bias correction factor, using \mjseqn{m_i} as input. For standardized mean differences, this is equal to \mjseqn{m_i = n_{1i} + n_{2i} - 2}, where \mjseqn{n_{1i}} and \mjseqn{n_{2i}} are the number of subjects in the two groups. The same bias correction factor can be used for various other related measures, such as standardized mean changes, except that \mjseqn{m_i} may need to be calculated differently.
 
