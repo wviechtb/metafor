@@ -88,6 +88,7 @@
       By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \mjseqn{k}, the second study in row \mjseqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{order} argument:
 
       \itemize{
+      \item \code{order="rev"}: the studies are ordered in reverse order,
       \item \code{order="est"}: the studies are ordered by the estimates,
       \item \code{order="prec"}: the studies are ordered by their sampling    variances.
       }
@@ -172,7 +173,7 @@ with(dat, forest(yi, vi, atransf=exp, at=log(c(0.05,0.25,1,4,20)),
 
 ### forest plot of the observed risk ratios with studies ordered by the RRs
 with(dat, forest(yi, vi, atransf=exp, at=log(c(0.05,0.25,1,4,20)),
-                 xlim=c(-10,8), order="obs"))
+                 xlim=c(-10,8), order="est"))
 
 ### forest plot of the observed risk ratios with studies ordered by absolute latitude
 with(dat, forest(yi, vi, atransf=exp, at=log(c(0.05,0.25,1,4,20)),

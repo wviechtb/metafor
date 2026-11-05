@@ -87,7 +87,16 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
 
    pi.type  <- .chkddd(ddd$pi.type, "default", tolower(ddd$pi.type))
    predtype <- .chkddd(ddd$predtype, pi.type, tolower(ddd$predtype))
-   predtype <- match.arg(predtype, c("default","simple","riley","t"))
+   #predtype <- match.arg(predtype, c("default","simple","riley","t"))
+
+   if (any(startsWith(c("default", "simple", "riley"), predtype)) || grepl("^t[0-9]*$", predtype)) {
+      if (grepl("^t[0-9]+$", predtype)) {
+         spec.pi.ddf <- as.numeric(substr(predtype, 2L, nchar(predtype)))
+         predtype <- "tdf"
+      }
+   } else {
+      stop(mstyle$stop("Unknown option specified for the 'predtype' argument."))
+   }
 
    if (x$int.only && !is.null(newmods))
       stop(mstyle$stop("Cannot specify new moderator values for models without moderators."))
@@ -439,11 +448,13 @@ predict.rma <- function(object, newmods, intercept, tau2.levels, gamma2.levels, 
 
    pi.ddf <- ddf
 
-   if (is.element(predtype, c("riley","t"))) {
+   if (is.element(predtype, c("riley","t","tdf"))) {
       if (predtype == "riley")
          pi.ddf <- ddf - x$parms + x$p
       if (predtype == "t")
          pi.ddf <- ddf
+      if (predtype == "tdf")
+         pi.ddf <- rep(spec.pi.ddf, k.new)
       pi.ddf[pi.ddf < 1] <- 1
       crit <- sapply(seq_along(pi.ddf), function(j) if (pi.ddf[j] > 0) qt(level/ifelse(adjust, 2*k.new, 2), df=pi.ddf[j], lower.tail=FALSE) else NA_real_)
       pi.dist <- "t"

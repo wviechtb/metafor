@@ -668,7 +668,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
          }
 
          if (is.null(preddist) && pi.dist != "norm" && pi.ddf <= 1L)
-            stop(mstyle$stop("Cannot shade/draw prediction distribution when df <= 1."))
+            stop(mstyle$stop("Cannot draw/shade the predictive distribution when df <= 1."))
 
          x.len <- 10000
 
@@ -685,7 +685,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
                if (pi.dist == "norm") {
                   crits <- qnorm(c(q.lo,q.hi), mean=yi.utransf[i], sd=pi.se)
                   xs <- seq(crits[1], crits[2], length.out=x.len)
-                  ys <- dnorm(xs, mean=yi.utransf[i], sd=pi.se)
+                  ys <- dnorm(xs, mean=yi.utransf[i], sd=pi.se) # same as: dnorm((xs - yi.utransf) / pi.se) / pi.se
                } else {
                   crits <- qt(c(q.lo,q.hi), df=pi.ddf) * pi.se + yi.utransf[i]
                   xs <- seq(crits[1], crits[2], length.out=x.len)
@@ -754,6 +754,8 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, constarea=FALSE, ...
                pred.lower.tail <- grepl("<", ddd$predtail, fixed=TRUE)
                predtailtxt <- gsub("[<=>]", "", ddd$predtail)
                ddd$predtail <- try(eval(parse(text=predtailtxt)), silent=TRUE)
+               if (inherits(ddd$predtail, "try-error"))
+                  ddd$predtail <- NA_real_
             }
          }
 

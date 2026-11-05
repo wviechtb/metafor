@@ -450,7 +450,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       shade <- shade[1]
 
       if (!is.element(shade, c("zebra", "zebra1", "zebra2", "all")))
-         stop(mstyle$stop("Unknown option specified for 'shade' argument."))
+         stop(mstyle$stop("Unknown option specified for the 'shade' argument."))
 
    }
 
@@ -501,8 +501,10 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
       if (length(order) == 1L) {
 
-         order <- match.arg(order, c("est", "obs", "yi", "fit", "prec", "vi", "resid", "rstandard", "abs.resid", "abs.rstandard"))
+         order <- match.arg(order, c("rev", "est", "obs", "yi", "fit", "prec", "vi", "resid", "rstandard", "abs.resid", "abs.rstandard"))
 
+         if (order == "rev")
+            sort.vec <- seq(from=k, to=1)
          if (order == "est" || order == "obs" || order == "yi")
             sort.vec <- order(yi)
          if (order == "fit")
@@ -1169,7 +1171,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
             }
 
             if (is.null(preddist) && predres$pi.dist != "norm" && predres$pi.ddf <= 1L)
-               stop(mstyle$stop("Cannot shade/draw prediction distribution when df <= 1."))
+               stop(mstyle$stop("Cannot draw/shade the predictive distribution when df <= 1."))
 
             x.len <- 10000
 
@@ -1186,7 +1188,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
                   if (predres$pi.dist == "norm") {
                      crits <- qnorm(c(q.lo,q.hi), mean=predres$pred, sd=predres$pi.se)
                      xs <- seq(crits[1], crits[2], length.out=x.len)
-                     ys <- dnorm(xs, mean=predres$pred, sd=predres$pi.se)
+                     ys <- dnorm(xs, mean=predres$pred, sd=predres$pi.se) # same as: dnorm((xs - predres$pred) / predres$pi.se) / predres$pi.se
                   } else {
                      crits <- qt(c(q.lo,q.hi), df=predres$pi.ddf) * predres$pi.se + predres$pred
                      xs <- seq(crits[1], crits[2], length.out=x.len)
@@ -1255,6 +1257,8 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
                   pred.lower.tail <- grepl("<", ddd$predtail, fixed=TRUE)
                   predtailtxt <- gsub("[<=>]", "", ddd$predtail)
                   ddd$predtail <- try(eval(parse(text=predtailtxt)), silent=TRUE)
+                  if (inherits(ddd$predtail, "try-error"))
+                     ddd$predtail <- NA_real_
                }
             }
 

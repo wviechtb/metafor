@@ -132,9 +132,9 @@ text(c(-8.75, -5.25), res$k+2.8, c("Vaccinated", "Control"), cex=0.75, font=2)
       \if{html}{\figure{forest-predstyle.png}{options: width=800}}
       \if{latex}{\figure{forest-predstyle.pdf}{options: width=5.5in}}
 
-      In all of these cases, the prediction interval bounds are then also provided as part of the annotations. For \code{predstyle="dist"}, one can adjust the range of values for which the predictive distribution is shown via the \code{predlim} argument. Note that the shaded regions may not be visible depending on the location/shape of the distribution.
+      In all of these cases, the prediction interval bounds are then also provided as part of the annotations. For \code{predstyle="dist"}, one can adjust the range of values for which the predictive distribution is shown via the \code{predlim} argument. Note that the shaded regions may not be visible depending on the location/shape of the distribution. Also, instead of shading the region below or above zero, one can use the \code{predtail} argument to specify a string along the lines of \code{predtail="<0.5"} or \code{predtail=">0.5"} to indicate which region should be shaded. One can also use argument \code{predtype} to adjust how the prediction interval / predictive distribution is constructed (see \code{\link[=predict.rma]{predict}} for details).
 
-      Internally, \code{\link[=predict.rma]{predict}} is used to obtain the prediction interval / predictive distribution. However, one can also specify the predictive distribution manually via argument \code{preddist} (this can be useful if the distribution was estimated via some other method). The list should contain two elements, the first containing the x-values and the second the corresponding densities. The examples below illustrate the use of these arguments.
+      Alternatively, one can specify the predictive distribution manually via argument \code{preddist} (this can be useful if the distribution was estimated via some other method). This should be a list with two elements, the first containing the x-values and the second the corresponding densities. The examples below illustrate the use of these arguments.
 
       When using \code{preddist}, the bounds of the prediction interval are by default obtained numerically by constructing the corresponding empirical cumulative distribution function (the range of x-values at which the densities are given should therefore be wide enough to span the entire distribution, so that tail areas can be accurately determined). However, if \code{preddist} contains elements \code{pi.lb} and \code{pi.ub} (and optionally element \code{level} for the prediction interval level), then these are taken as the prediction interval bounds.
 
@@ -159,6 +159,7 @@ text(c(-8.75, -5.25), res$k+2.8, c("Vaccinated", "Control"), cex=0.75, font=2)
       By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row \mjseqn{k}, the second study in row \mjseqn{k-1}, and so on, until the last study, which is placed in the first row). The studies can be reordered with the \code{order} argument:
 
       \itemize{
+      \item \code{order="rev"}: the studies are ordered in reverse order,
       \item \code{order="est"}: the studies are ordered by the estimates,
       \item \code{order="fit"}: the studies are ordered by the fitted values,
       \item \code{order="prec"}: the studies are ordered by their sampling variances,
@@ -243,8 +244,9 @@ defaults
 ### several forest plots illustrating the use of various arguments
 forest(res)
 forest(res, alim=c(-3,3))
+forest(res, alim=c(-3,3), order="rev")
 forest(res, alim=c(-3,3), order="prec")
-forest(res, alim=c(-3,3), order="obs")
+forest(res, alim=c(-3,3), order="est")
 forest(res, alim=c(-3,3), order=ablat)
 
 ### various ways to show the prediction interval

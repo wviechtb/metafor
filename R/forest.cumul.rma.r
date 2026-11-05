@@ -334,7 +334,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       shade <- shade[1]
 
       if (!is.element(shade, c("zebra", "zebra1", "zebra2", "all")))
-         stop(mstyle$stop("Unknown option specified for 'shade' argument."))
+         stop(mstyle$stop("Unknown option specified for the 'shade' argument."))
 
    }
 

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">metafor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.3-2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">5.3-3</span>
       </span>
     </div>
 
@@ -276,7 +276,8 @@
 
 
 <p>By default, the studies are ordered from top to bottom (i.e., the first study in the dataset will be placed in row <em></em>\(k\), the second study in row <em></em>\(k-1\), and so on, until the last study, which is placed in the first row). The studies can be reordered with the <code>order</code> argument:</p>
-<p></p><ul><li><p><code>order="est"</code>: the studies are ordered by the estimates,</p></li>
+<p></p><ul><li><p><code>order="rev"</code>: the studies are ordered in reverse order,</p></li>
+<li><p><code>order="est"</code>: the studies are ordered by the estimates,</p></li>
 <li><p><code>order="prec"</code>: the studies are ordered by their sampling    variances.</p></li>
 </ul><p>So-called ‘caterpillar plots’ use <code>order="est"</code> (and typically suppress the study labels and annotations with <code>slab=NA</code> and <code>annotate=FALSE</code> when there are many studies).</p>
 <p>Alternatively, it is also possible to set <code>order</code> equal to a variable based on which the studies will be ordered (see ‘Examples’). One can also use the <code>rows</code> argument to specify the rows (or more generally, the positions) for plotting the estimates.</p>
@@ -376,7 +377,7 @@
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### forest plot of the observed risk ratios with studies ordered by the RRs</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="forest.html">forest</a></span><span class="op">(</span><span class="va">yi</span>, <span class="va">vi</span>, atransf<span class="op">=</span><span class="va">exp</span>, at<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>,<span class="fl">0.25</span>,<span class="fl">1</span>,<span class="fl">4</span>,<span class="fl">20</span><span class="op">)</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                 xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>,<span class="fl">8</span><span class="op">)</span>, order<span class="op">=</span><span class="st">"obs"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                 xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>,<span class="fl">8</span><span class="op">)</span>, order<span class="op">=</span><span class="st">"est"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="forest.default-8.png" alt="" width="1728" height="1536"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### forest plot of the observed risk ratios with studies ordered by absolute latitude</span></span></span>

@@ -1,6 +1,10 @@
-# metafor 5.3-2 (2026-10-28)
+# metafor 5.3-3 (2026-11-05)
+
+- added `order="rev"` to `forest.rma()` and `forest.default()`
 
 - added `predstyle="line2"` which is like `predstyle="line"` but the prediction interval bounds are also provided as part of the annotations
+
+- added `predtype="t<df>"` to manually specify the degrees of freedom for the prediction interval
 
 - improved the documentation a bit
 

@@ -74,7 +74,7 @@ transf, atransf, targs, efac, col, border, lty, fonts, cex, ...) {
    ci.ub <- predres$ci.ub
 
    if (addpred) {
-      pi.lb <- predres$pi.lb
+      pi.lb <- predres$pi.lb # has level, dist, ddf, and se attributes
       pi.ub <- predres$pi.ub
       if (is.null(pi.lb) || is.null(pi.ub))
          warning(mstyle$warning("Could not extract prediction interval bounds."), call.=FALSE)
