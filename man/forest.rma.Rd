@@ -283,7 +283,7 @@ forest(res, atransf=exp, at=log(c(0.05,0.25,1,4,20)), xlim=c(-8,7))
 forest(res, atransf=exp, at=log(c(0.05,0.25,1,4,20)), xlim=c(-8,8),
        order="prec", showweights=TRUE)
 
-### illustrade shade argument
+### illustrate the shade argument
 forest(res, shade="zebra")      # string
 forest(res, shade=year >= 1970) # logical vector
 forest(res, shade=c(1,5,10))    # numeric vector

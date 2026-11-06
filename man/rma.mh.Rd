@@ -90,7 +90,7 @@ rma.mh(ai, bi, ci, di, n1i, n2i, x1i, x2i, t1i, t2i,
    \item{ci.lb}{lower bound of the confidence interval.}
    \item{ci.ub}{upper bound of the confidence interval.}
    \item{QE}{test statistic of the test for heterogeneity.}
-   \item{QEp}{correspinding p-value.}
+   \item{QEp}{corresponding p-value.}
    \item{MH}{Cochran-Mantel-Haenszel test statistic (\code{measure="OR"}) or Mantel-Haenszel test statistic (\code{measure="IRR"}).}
    \item{MHp}{corresponding p-value.}
    \item{TA}{test statistic of Tarone's test for heterogeneity (only when \code{measure="OR"}).}
