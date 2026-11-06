@@ -117,7 +117,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
    if (is.logical(addpred) && isFALSE(addpred) && !missing(predstyle))
       addpred <- TRUE # specifying predstyle sets addpred=TRUE automatically
 
-   predstyle <- match.arg(predstyle, c("line", "line2", "polygon", "bar", "shade", "dist"))
+   predstyle <- match.arg(predstyle, c("line", "line2", "polygon", "diamond", "bar", "shade", "dist"))
 
    if (missing(predlim))
       predlim <- NULL
@@ -173,7 +173,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       }
 
       if (missing(border)) {
-         border <- c(par("fg"), par("fg")) # 1st = summary polygon, 2nd = polygon for predstyle="polygon" / bar for predstyle="bar" / distribution for predstyle="dist"
+         border <- c(par("fg"), par("fg")) # 1st = summary polygon, 2nd = polygon for predstyle="polygon/diamond" / bar for predstyle="bar" / distribution for predstyle="dist"
       } else {
          if (length(border) == 1L)
             border <- c(border, par("fg")) # if user only specified one value, assume it is for the summary polygon
@@ -187,7 +187,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       if (missing(border))
          border <- .coladj(par("bg","fg"), dark=0.3, light=-0.3) # border color of the fitted value polygons
 
-      if (predstyle %in% c("line2","polygon","bar","shade","dist"))
+      if (predstyle %in% c("line2","polygon","diamond","bar","shade","dist"))
          warning(mstyle$warning("Argument 'predstyle' not relevant for meta-regression models."), call.=FALSE)
 
    }
@@ -1126,7 +1126,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
          }
 
-         if (predstyle == "polygon") {
+         if (predstyle == "polygon" || predstyle == "diamond") {
 
             poladds <- (0:(polylen-1)) * (pipolheight/(polylen-1))
 
@@ -1414,14 +1414,14 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
          mlab <- sapply(x$method, switch, "FE"="Fixed-Effect Model", "EE"="Equal-Effects Model", "CE"="Common-Effect Model", "Random-Effects Model", USE.NAMES=FALSE)
          #mlab <- sapply(x$method, switch, "FE"="FE Model", "EE"="EE Model", "CE"="CE Model", "RE Model", USE.NAMES=FALSE)
 
-      if (length(mlab) == 1L && predstyle %in% c("line2","polygon","bar","shade"))
+      if (length(mlab) == 1L && predstyle %in% c("line2","polygon","diamond","bar","shade"))
          mlab <- c(mlab, paste0("Prediction Interval", annosym[1], round(100*(1-predlevel),digits[[1]]), "% PI", annosym[3]))
       if (length(mlab) == 1L && predstyle == "dist")
          mlab <- c(mlab, paste0("Predictive Distribution", annosym[1], round(100*(1-predlevel),digits[[1]]), "% PI", annosym[3]))
 
       ltext(textpos[1], -1+rowadj[1], mlab[[1]], pos=4, cex=cex, ...)
 
-      if (predstyle %in% c("line2","polygon","bar","shade","dist"))
+      if (predstyle %in% c("line2","polygon","diamond","bar","shade","dist"))
          ltext(textpos[1], -2+rowadj[1], mlab[[2]], pos=4, cex=cex, ...)
 
    }
@@ -1536,7 +1536,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
          if (is.null(targs)) {
             if (addfit && x$int.only) {
-               if (predstyle %in% c("line2","polygon","bar","shade","dist")) {
+               if (predstyle %in% c("line2","polygon","diamond","bar","shade","dist")) {
                   annotext <- cbind(sapply(c(yi, beta, NA_real_), atransf), sapply(c(ci.lb, beta.ci.lb, beta.pi.lb), atransf), sapply(c(ci.ub, beta.ci.ub, beta.pi.ub), atransf))
                } else {
                   annotext <- cbind(sapply(c(yi, beta), atransf), sapply(c(ci.lb, beta.ci.lb), atransf), sapply(c(ci.ub, beta.ci.ub), atransf))
@@ -1546,7 +1546,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
             }
          } else {
             if (addfit && x$int.only) {
-               if (predstyle %in% c("line2","polygon","bar","shade","dist")) {
+               if (predstyle %in% c("line2","polygon","diamond","bar","shade","dist")) {
                   annotext <- cbind(sapply(c(yi, beta, NA_real_), atransf, targs), sapply(c(ci.lb, beta.ci.lb, beta.pi.lb), atransf, targs), sapply(c(ci.ub, beta.ci.ub, beta.pi.ub), atransf, targs))
                } else {
                   annotext <- cbind(sapply(c(yi, beta), atransf, targs), sapply(c(ci.lb, beta.ci.lb), atransf, targs), sapply(c(ci.ub, beta.ci.ub), atransf, targs))
@@ -1564,7 +1564,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       } else {
 
          if (addfit && x$int.only) {
-            if (predstyle %in% c("line2","polygon","bar","shade","dist")) {
+            if (predstyle %in% c("line2","polygon","diamond","bar","shade","dist")) {
                annotext <- cbind(c(yi, beta, NA_real_), c(ci.lb, beta.ci.lb, beta.pi.lb), c(ci.ub, beta.ci.ub, beta.pi.ub))
             } else {
                annotext <- cbind(c(yi, beta), c(ci.lb, beta.ci.lb), c(ci.ub, beta.ci.ub))
@@ -1577,13 +1577,13 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
       if (showweights) {
          if (addfit && x$int.only) {
-            if (predstyle %in% c("line2","polygon","bar","shade","dist")) {
+            if (predstyle %in% c("line2","polygon","diamond","bar","shade","dist")) {
                annotext <- cbind(c(unname(weights),100, NA_real_), annotext)
             } else {
                annotext <- cbind(c(unname(weights),100), annotext)
             }
             annotext <- fmtx(annotext, c(digits[[3]], digits[[1]], digits[[1]], digits[[1]]))
-            if (predstyle %in% c("line2","polygon","bar","shade","dist")) {
+            if (predstyle %in% c("line2","polygon","diamond","bar","shade","dist")) {
                annotext[nrow(annotext)-1,1] <- "100"
             } else {
                annotext[nrow(annotext),1] <- "100"
@@ -1619,7 +1619,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
 
       annotext <- apply(annotext, 1, paste, collapse="")
       isna <- grepl("NA", annotext, fixed=TRUE)
-      if (predstyle %in% c("line2","polygon","bar","shade","dist")) {
+      if (predstyle %in% c("line2","polygon","diamond","bar","shade","dist")) {
          isna <- isna[-length(isna)]
          annotext[isna] <- ""
          annotext[length(annotext)] <- gsub("NA", "", annotext[length(annotext)], fixed=TRUE)
@@ -1633,7 +1633,7 @@ lty, fonts, cex, cex.lab, cex.axis, ...) {
       par(family=names(fonts)[2], font=fonts[2])
 
       if (addfit && x$int.only) {
-         if (predstyle %in% c("line2","polygon","bar","shade","dist")) {
+         if (predstyle %in% c("line2","polygon","diamond","bar","shade","dist")) {
             ltext(textpos[2], c(rows,-1,-2)+rowadj[2], labels=annotext, pos=2, cex=cex, ...)
          } else {
             ltext(textpos[2], c(rows,-1)+rowadj[2], labels=annotext, pos=2, cex=cex, ...)
