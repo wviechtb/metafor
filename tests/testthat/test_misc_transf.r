@@ -40,6 +40,16 @@ test_that("transformations work correctly.", {
    expect_equivalent(transf.ilogit.int(transf.logit(.1), targs=list(tau2=0)), .1)
    expect_equivalent(transf.ilogit.int(transf.logit(.1), targs=list(tau2=0.1)), 0.103591, tolerance=.tol[["est"]])
 
+   expect_equivalent(transf.iarcsin.int(c(0.1, 1.4), targs=list(tau2=0.01)),
+                     sapply(c(0.1, 1.4), transf.iarcsin.int, targs=list(tau2=0.01)),
+                     tolerance=.tol[["est"]])
+   expect_equivalent(transf.iahw.int(c(0.1, 0.9), targs=list(tau2=0.0025)),
+                     sapply(c(0.1, 0.9), transf.iahw.int, targs=list(tau2=0.0025)),
+                     tolerance=.tol[["est"]])
+   expect_equivalent(transf.iabt.int(c(0.1, 2.0), targs=list(tau2=0.01)),
+                     sapply(c(0.1, 2.0), transf.iabt.int, targs=list(tau2=0.01)),
+                     tolerance=.tol[["est"]])
+
 })
 
 rm(list=ls())
